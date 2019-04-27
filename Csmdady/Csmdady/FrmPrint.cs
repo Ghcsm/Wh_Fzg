@@ -1,0 +1,777 @@
+﻿using DAL;
+using Spire.Xls;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace Csmdady
+{
+    public partial class FrmPrint : Form
+    {
+        public FrmPrint()
+        {
+            InitializeComponent();
+        }
+        private void FrmPrint_Load(object sender, EventArgs e)
+        {
+            CreatTxt();
+            ClsPrintInfoDocument.printDocument.PrintPage += PrintDocument_PrintPage;
+            // ClsPrintInfoDocument.PrintConten.PrintPage += PrintConten_PrintPage;
+        }
+        private void FrmPrint_Shown(object sender, EventArgs e)
+        {
+            GetPrintParmXy();
+            GetContenInfo();
+        }
+
+
+
+        #region CretaTxt
+
+        private void cle()
+        {
+            ClsPrintInfo.PrintTable = "";
+            ClsPrintInfo.Tagid = 0;
+            ClsPrintInfo.lsinfoShow.Clear();
+            ClsPrintInfo.lsinfoXy.Clear();
+            ClsPrintInfo.lsSpecCol.Clear();
+            ClsPrintInfo.lsSpecFont.Clear();
+            ClsPrintInfo.lsSpecFontcolo.Clear();
+            ClsPrintInfo.lsSpecFontbuld.Clear();
+            ClsPrintInfo.lsSpecFontsize.Clear();
+            ClsPrintInfo.PrintXy.Clear();
+            ClsPrintInfo.lsSpecFontcolshow.Clear();
+            ClsPrintInfo.lsSpecFontLine.Clear();
+
+        }
+
+
+        private void CreatTxt()
+        {
+            cle();
+            ClsPrintInfo.PrintInfo = T_Sysset.GetGensetPrint();
+            if (ClsPrintInfo.PrintInfo == null || ClsPrintInfo.PrintInfo.Rows.Count <= 0)
+                return;
+            DataRow dr = ClsPrintInfo.PrintInfo.Rows[0];
+            ClsPrintInfo.PrintTable = dr["printTable"].ToString();
+            string strxy = dr["PrintxyCol"].ToString();
+            string strcol = dr["PrintColInfo"].ToString();
+            string fontall = dr["PrintFontColAll"].ToString();
+            string fontspec = dr["PrintFontSpec"].ToString();
+            if (strcol.Length > 0) {
+                string[] col = strcol.Split(';');
+                for (int i = 0; i < col.Length; i++) {
+                    string str = col[i];
+                    CreateTxtShow(i, str);
+                    ClsPrintInfo.lsinfoShow.Add(str);
+                }
+            }
+            if (strxy.Length > 0) {
+                string[] xy = strxy.Split(';');
+                for (int i = 0; i < xy.Length; i++) {
+                    string str = xy[i];
+                    CreateTxtXy(i, str);
+                    ClsPrintInfo.lsinfoXy.Add(str);
+                }
+            }
+            if (fontspec.Length > 0) {
+                string[] spec = fontspec.Split(';');
+                for (int i = 0; i < spec.Length; i++) {
+                    string str = spec[i];
+                    if (str.Trim().Length > 0) {
+                        string[] a = str.Split(':');
+                        ClsPrintInfo.lsSpecCol.Add(a[0].ToString());
+                        ClsPrintInfo.lsSpecFont.Add(a[1].ToString());
+                        ClsPrintInfo.lsSpecFontcolo.Add(a[2].ToString());
+                        ClsPrintInfo.lsSpecFontsize.Add(a[3].ToString());
+                        ClsPrintInfo.lsSpecFontbuld.Add(a[4].ToString());
+                        ClsPrintInfo.lsSpecFontcolshow.Add(a[5].ToString());
+                        ClsPrintInfo.lsSpecFontLine.Add(a[6].ToString());
+                    }
+                }
+            }
+            if (fontall.Length > 0) {
+                string[] str = fontall.Split(':');
+                ClsPrintInfo.FontName = str[0];
+                ClsPrintInfo.FontColor = str[4];
+                ClsPrintInfo.Fontsize = Convert.ToInt32(str[2]);
+                ClsPrintInfo.FontBold = str[3];
+            }
+        }
+
+        private void CreateTxtShow(int id, string strname)
+        {
+            id += 1;
+            Label lb = new Label();
+            lb.Name = "lb" + id.ToString();
+            lb.Text = strname + " : ";
+            lb.Width = 80;
+            lb.SendToBack();
+            lb.BackColor = Color.Transparent;
+            lb.Location = new Point(24, 5 + id * 30);
+            panePrintInfoShow.Controls.Add(lb);
+            TextBox txt = new TextBox();
+            txt.Name = strname;
+            txt.Width = 350;
+            txt.ReadOnly = true;
+            txt.TabIndex = id;
+            txt.Tag = id;
+            txt.BringToFront();
+            txt.Location = new Point(110, 2 + id * 30);
+            panePrintInfoShow.Controls.Add(txt);
+        }
+        private void CreateTxtXy(int id, string strname)
+        {
+            id += 1;
+            int xx1 = 0;
+            int yy1 = 0;
+            int xx = 0;
+            int yy = 0;
+            if (ClsPrintInfo.x == 0 || ClsPrintInfo.y == 0) {
+                if (id % 2 == 0) {
+                    ClsPrintInfo.y = 1;
+                    yy = ClsPrintInfo.y + 10;
+                }
+                else {
+                    ClsPrintInfo.x = 1;
+                    xx = ClsPrintInfo.x + 10;
+                }
+            }
+            else {
+                if (id % 2 == 0)
+                    yy = ClsPrintInfo.y + 30;
+                else
+                    xx = ClsPrintInfo.x + 30;
+            }
+            Label lb = new Label();
+            lb.Name = "lb" + id.ToString();
+            lb.Text = strname + " : ";
+            lb.ForeColor = Color.Red;
+            lb.Width = 80;
+            lb.SendToBack();
+            lb.BackColor = Color.Transparent;
+            if (id % 2 == 0) {
+                lb.Location = new Point(238, yy);
+                panelPrintXY.Controls.Add(lb);
+            }
+            else {
+                lb.Location = new Point(24, xx);
+                panelPrintXY.Controls.Add(lb);
+            }
+
+            for (int i = 1; i <= 2; i++) {
+                ClsPrintInfo.Tagid += 1;
+                lb = new Label();
+                lb.Name = "xy" + i.ToString();
+                if (i == 1)
+                    lb.Text = "X坐标:";
+                else
+                    lb.Text = "Y坐标:";
+                lb.Width = 50;
+                lb.SendToBack();
+                lb.BackColor = Color.Transparent;
+                if (id % 2 == 0) {
+                    yy1 = yy + i * 25;
+                    lb.Location = new Point(248, yy1);
+                }
+                else {
+                    xx1 = xx + i * 25;
+                    lb.Location = new Point(34, xx1);
+                }
+                TextBox txt = new TextBox();
+                txt.Name = "txt" + id.ToString() + i.ToString();
+                txt.Width = 80;
+                txt.TabIndex = ClsPrintInfo.Tagid;
+                txt.Tag = ClsPrintInfo.Tagid;
+                txt.KeyPress += Txt_KeyPress;
+                txt.BringToFront();
+                if (id % 2 == 0) {
+                    txt.Location = new Point(317, yy1 - 5);
+                    panelPrintXY.Controls.Add(lb);
+                    panelPrintXY.Controls.Add(txt);
+                }
+                else {
+                    txt.Location = new Point(105, xx1 - 5);
+                    panelPrintXY.Controls.Add(lb);
+                    panelPrintXY.Controls.Add(txt);
+                }
+            }
+            if (id % 2 == 0)
+                ClsPrintInfo.y = yy1;
+            else
+                ClsPrintInfo.x = xx1;
+        }
+
+        private void Txt_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+                SendKeys.Send("{Tab}");
+        }
+
+        #endregion
+
+        #region GetPrintParm
+        private void butPrintXyinfo_Click(object sender, EventArgs e)
+        {
+            SavePrintParm();
+        }
+        private void SavePrintParm()
+        {
+            try {
+                if (!istxt(panelPrintXY)) {
+                    MessageBox.Show("请输入相关坐标!");
+                    return;
+                }
+                string xy = "";
+                int a = 0;
+                foreach (var item in ClsPrintInfo.PrintXy) {
+                    a += 1;
+                    if (a != ClsPrintInfo.PrintXy.Count) {
+                        if (a % 2 != 0)
+                            xy += item.Key + ":" + item.Value + ";";
+                        else
+                            xy += item.Key + ":" + item.Value + ";";
+                    }
+                    else {
+                        xy += item.Key + ":" + item.Value;
+                    }
+                }
+                Common.SavePrintParmXy(xy);
+                MessageBox.Show("保存完成!");
+            } catch (Exception e) {
+                MessageBox.Show("保存失败" + e);
+            }
+
+        }
+
+        private bool istxt(Panel pl)
+        {
+            if (ClsPrintInfo.PrintXy != null)
+                ClsPrintInfo.PrintXy.Clear();
+            Dictionary<int, string> dic1 = new Dictionary<int, string>();
+            bool tf = true;
+            foreach (Control c in pl.Controls) {
+                if (c is TextBox) {
+                    if (c.Text.Trim().Length > 0)
+                        dic1.Add((int)c.Tag, c.Text.Trim());
+                    else
+                        tf = false;
+                }
+            }
+            ClsPrintInfo.PrintXy = dic1.OrderBy(o => o.Key).ToDictionary(o => o.Key, p => p.Value);
+            return tf;
+        }
+
+        private void GetPrintParmXy()
+        {
+            string str = Common.GetPrintParmXy();
+            if (str.Trim().Length > 0) {
+                if (ClsPrintInfo.PrintXy != null)
+                    ClsPrintInfo.PrintXy.Clear();
+                string[] a = str.Trim().Split(';');
+                for (int i = 0; i < a.Length; i++) {
+                    string b = a[i];
+                    if (b.Trim().Length > 0) {
+                        string[] c = b.Split(':');
+                        int tag = Convert.ToInt32(c[0]);
+                        string txt = c[1];
+                        ClsPrintInfo.PrintXy.Add(tag, txt);
+                        SettxtXy(tag, txt);
+                    }
+                }
+            }
+        }
+        private void SettxtXy(int tag, string txt)
+        {
+            foreach (Control c in panelPrintXY.Controls) {
+                if (c is TextBox) {
+                    if (c.Tag.ToString() == tag.ToString())
+                        c.Text = txt;
+                }
+            }
+        }
+        private void SettxtInfo(string col, string txt)
+        {
+            foreach (Control c in panePrintInfoShow.Controls) {
+                if (c is TextBox) {
+                    if (c.Name == col)
+                        c.Text = txt;
+                }
+            }
+        }
+        private void GetPrintinfoSql()
+        {
+            if (ClsPrintInfo.Archid <= 0)
+                return;
+            int stat = Common.GetArchWorkState(ClsPrintInfo.Archid);
+            if (stat < (int)T_ConFigure.ArchStat.质检完) {
+                labStat.Visible = true;
+                return;
+            }
+            labStat.Visible = false;
+            DataTable dt = Common.GetPrintInfoDataTable(ClsPrintInfo.PrintTable, ClsPrintInfo.lsinfoShow, ClsPrintInfo.Archid);
+            if (dt != null && dt.Rows.Count > 0) {
+                ClsPrintInfo.ArchInfoDataTable = dt;
+                DataRow dr = dt.Rows[0];
+                for (int i = 0; i < ClsPrintInfo.lsinfoShow.Count; i++) {
+                    string str = ClsPrintInfo.lsinfoShow[i];
+                    string a = dr[str].ToString();
+                    SettxtInfo(str, a);
+                }
+                return;
+            }
+        }
+
+        private bool GetPrintinfoSql(int archid)
+        {
+            if (archid <= 0)
+                return false;
+            int stat = Common.GetArchWorkState(archid);
+            if (stat < (int)T_ConFigure.ArchStat.质检完)
+                return false;
+            DataTable dt = Common.GetPrintInfoDataTable(ClsPrintInfo.PrintTable, ClsPrintInfo.lsinfoShow, archid);
+            if (dt == null && dt.Rows.Count <= 0)
+                return false;
+            ClsPrintInfo.ArchInfoDataTable = dt;
+            return true;
+        }
+
+        private void gArchSelect1_LineClickLoadInfo(object sender, EventArgs e)
+        {
+            ClsPrintInfo.Archid = gArchSelect1.Archid;
+            ClsPrintInfo.Boxsn = gArchSelect1.Boxsn;
+            GetPrintinfoSql();
+        }
+
+
+        #endregion
+
+        #region GetContenParm
+
+
+        private void GetContenInfo()
+        {
+            if (ClsPrintInfo.PrintInfo == null || ClsPrintInfo.PrintInfo.Rows.Count <= 0)
+                return;
+            DataRow dr = ClsPrintInfo.PrintInfo.Rows[0];
+            ClsPrintConten.PrintContenTable = dr["PrintContenTable"].ToString();
+            string str = dr["PrintContenInfo"].ToString();
+            if (str.Length > 0) {
+                string[] a = str.Split(';');
+                for (int i = 0; i < a.Length; i++) {
+                    string b = a[i];
+                    string[] c = b.Split(':');
+                    if (c.Length > 0) {
+                        if (c[0].IndexOf("SN0") >= 0) {
+                            string[] f = b.Split(':');
+                            ClsPrintConten.PrintContenSn = f[1];
+                        }
+                        else {
+                            string d = c[3];
+                            if (d == "True") {
+                                ClsPrintConten.PrintContenPagesn = c[0];
+                                ClsPrintConten.PrintContenPageMode = Convert.ToInt32(c[4]);
+                            }
+                            ClsPrintConten.PrintContenCol.Add(c[0]);
+                            ClsPrintConten.printContenXls.Add(c[1]);
+                            ClsPrintConten.PrintContenDz.Add(c[2]);
+                            ClsPrintConten.PrintContenPage.Add(c[3]);
+                        }
+                    }
+                    ClsPrintConten.PrintContenAll.Add(b);
+                }
+            }
+        }
+
+        private void butLog_Click(object sender, EventArgs e)
+        {
+            string file = "打印日志.txt";
+            string filepath = Path.Combine(Application.StartupPath, file);
+            if (!File.Exists(filepath)) {
+                MessageBox.Show("日志文件不存在！");
+            }
+            else {
+                System.Diagnostics.Process p = System.Diagnostics.Process.Start(filepath);
+            }
+        }
+
+        #endregion
+
+        #region printinfo
+
+        private async void butPrintInfo_Click(object sender, EventArgs e)
+        {
+            if (ClsPrintInfo.Archid <= 0)
+                return;
+            bool x = await PrintInfo();
+            if (x) {
+                MessageBox.Show("打印完成!");
+                lbInfo.Text = "";
+                butBoxRangeAdd.Enabled = true;
+                butDelbox.Enabled = true;
+                return;
+            }
+            MessageBox.Show("打印失败!");
+            butBoxRangeAdd.Enabled = true;
+            butDelbox.Enabled = true;
+        }
+
+        private void WriteLog(string str)
+        {
+            FileStream fs = null;
+            StreamWriter sw = null;
+            string dt = DateTime.Now.ToString();
+            try {
+                string file = "打印日志.txt";
+                string filepath = Path.Combine(Application.StartupPath, file);
+                if (!File.Exists(filepath)) {
+                    fs = new FileStream(filepath, FileMode.Create);
+                    sw = new StreamWriter(fs);
+                    sw.WriteLine(str + " 操作时间 " + dt);
+                    sw.Flush();
+                }
+                else {
+                    fs = new FileStream(filepath, FileMode.Append);
+                    sw = new StreamWriter(fs);
+                    sw.WriteLine(str + " 操作时间 " + dt);
+                    sw.Flush();
+                }
+            } catch { } finally {
+                sw.Close();
+                fs.Close();
+            }
+        }
+
+        private Task<bool> PrintInfo()
+        {
+            butBoxRangeAdd.Enabled = false;
+            butDelbox.Enabled = false;
+            return Task.Run(() =>
+             {
+                 if (tabSelectbox.IsSelected) {
+                     if (rbboxOne.Checked)
+                         ClsPrintInfoDocument.printDocument.Print();
+                     else {
+                         if (ClsPrintInfo.Boxsn <= 0) {
+                             string s1 = "盒号:" + ClsPrintInfo.Boxsn + "获取失败!";
+                             WriteLog(s1);
+                             return false;
+                         }
+                         DataTable dt = Common.GetboxArchno(ClsPrintInfo.Boxsn);
+                         if (dt == null || dt.Rows.Count <= 0) {
+                             string str = "盒号:" + ClsPrintInfo.Boxsn + "信息获取失败!";
+                             WriteLog(str);
+                             return false;
+                         }
+                         for (int id = 1; id < dt.Rows.Count; id++)
+                         {
+                             int arid = Convert.ToInt32(dt.Rows[id][0].ToString());
+                             if (GetPrintinfoSql(arid)) {
+                                 Thread.Sleep(200);
+                                 ClsPrintInfoDocument.printDocument.Print();
+                             }
+                         }
+                     }
+                     return true;
+                 }
+
+                 else {
+                     lock (ClsPrintInfo.Lsitems) {
+                         try {
+                             for (int i = 0; i < lvboxRange.Items.Count; i++) {
+                                 string[] str = ClsPrintInfo.Lsitems[i].Split('-');
+                                 int a = Convert.ToInt32(str[0]);
+                                 int b = Convert.ToInt32(str[1]);
+                                 for (int box = a; box <= b; box++) {
+                                     DataTable dt = Common.GetboxArchno(box);
+                                     if (dt == null || dt.Rows.Count <= 0)
+                                         continue;
+                                     for (int id = 1; id < dt.Rows.Count; id++) {
+                                         int arid = Convert.ToInt32(dt.Rows[id][0].ToString());
+                                         if (GetPrintinfoSql(arid)) {
+                                             this.BeginInvoke(new Action(() => { lbInfo.Text = string.Format("正在打印第{0}盒", box); }));
+                                             Thread.Sleep(200);
+                                             ClsPrintInfoDocument.printDocument.Print();
+                                         }
+                                     }
+                                 }
+                             }
+                             return true;
+                         } catch (Exception e) {
+                             WriteLog(e.ToString());
+                             return false;
+                         }
+                     }
+                 }
+             });
+        }
+        private void PrintDocument_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
+        {
+            for (int i = 0; i < ClsPrintInfo.lsinfoXy.Count; i++) {
+                string col = ClsPrintInfo.lsinfoXy[i];
+                DataRow dr = ClsPrintInfo.ArchInfoDataTable.Rows[0];
+                string str = dr[col].ToString();
+                int a = ClsPrintInfo.lsSpecCol.IndexOf(col);
+                int x = Convert.ToInt32(ClsPrintInfo.PrintXy.ElementAt(i).Value);
+                int y = Convert.ToInt32(ClsPrintInfo.PrintXy.ElementAt(i + 1).Value);
+                if (a < 0)
+                    e.Graphics.DrawString(str,
+                        new System.Drawing.Font(new FontFamily(ClsPrintInfo.FontName), Convert.ToInt32(ClsPrintInfo.Fontsize), FontStyle.Bold),
+                        new SolidBrush(Color.FromArgb(Convert.ToInt32(ClsPrintInfo.FontColor))), Convert.ToSingle(x), Convert.ToSingle(y));
+
+                else {
+                    string c = "";
+                    if (!Convert.ToBoolean(ClsPrintInfo.lsSpecFontcolshow[a]))
+                        c = str;
+                    else
+                        c = col + ":" + str;
+                    e.Graphics.DrawString(c,
+                        new System.Drawing.Font(new FontFamily(ClsPrintInfo.lsSpecFont[a]),
+                            Convert.ToInt32(ClsPrintInfo.lsSpecFontsize[a]),
+                            (FontStyle)Convert.ToInt32(ClsPrintInfo.lsSpecFontbuld[a])),
+                        new SolidBrush(Color.FromArgb(Convert.ToInt32(ClsPrintInfo.lsSpecFontcolo[a]))),
+                        Convert.ToSingle(x), Convert.ToSingle(y));
+                }
+            }
+        }
+
+        private bool isNum()
+        {
+            if (txtBox1.Text.Trim().Length <= 0 || txtBox2.Text.Trim().Length <= 0)
+                return false;
+            try {
+                int a = Convert.ToInt32(txtBox1.Text.Trim());
+                int b = Convert.ToInt32(txtBox2.Text.Trim());
+                if (a == 0 || b == 0)
+                    return false;
+                if (a > b)
+                    return false;
+                return true;
+            } catch {
+                return false;
+            }
+        }
+
+        private void AddlvboxRange(string a, string b)
+        {
+            string str = a + "-" + b;
+            if (ClsPrintInfo.Lsitems.IndexOf(str) >= 0) {
+                MessageBox.Show("此盒号范围已存在!");
+                return;
+            }
+            ClsPrintInfo.Lsitems.Add(str);
+            ListViewItem lvi = new ListViewItem();
+            lvi.Text = (lvboxRange.Items.Count + 1).ToString();
+            lvi.SubItems.AddRange(new[] { a, b });
+            lvboxRange.Items.Add(lvi);
+        }
+        private void butBoxRangeAdd_Click(object sender, EventArgs e)
+        {
+            if (!isNum()) {
+                MessageBox.Show("请检查盒号范围!");
+                txtBox1.Focus();
+                return;
+            }
+            AddlvboxRange(txtBox1.Text.Trim(), txtBox2.Text.Trim());
+        }
+
+        private void butDelbox_Click(object sender, EventArgs e)
+        {
+            if (lvboxRange.SelectedItems.Count <= 0 || lvboxRange.SelectedIndices.Count < 0)
+                return;
+            int id = lvboxRange.SelectedItems[0].Index;
+            lvboxRange.Items.RemoveAt(id);
+            ClsPrintInfo.Lsitems.RemoveAt(id);
+        }
+
+        #endregion
+
+        #region printxls
+        private async void butPrintConten_Click(object sender, EventArgs e)
+        {
+            if (!IsXls()) {
+                MessageBox.Show("本程序路径下找不到名为<目录模版.xlsx> 的模版文件");
+                return;
+            }
+            bool x = await PrintConten();
+            if (x) {
+                butBoxRangeAdd.Enabled = true;
+                butDelbox.Enabled = true;
+                MessageBox.Show("目录打印完成!");
+                lbInfo.Text = "";
+                return;
+            }
+            butBoxRangeAdd.Enabled = true;
+            butDelbox.Enabled = true;
+            MessageBox.Show("目录打印失败!");
+        }
+
+        private bool IsXls()
+        {
+            string strxls = Path.Combine(Application.StartupPath, "目录模版.xlsx");
+            if (!File.Exists(strxls))
+                return false;
+            return true;
+        }
+
+        private Task<bool> PrintConten()
+        {
+            butBoxRangeAdd.Enabled = false;
+            butDelbox.Enabled = false;
+            return Task.Run(() =>
+             {
+                 if (tabSelectbox.IsSelected) {
+                     if (rbboxOne.Checked)
+                       return  GetArchContenWriteXlsPrint(ClsPrintInfo.Archid);
+                     else {
+                         if (ClsPrintInfo.Boxsn <= 0) {
+                             MessageBox.Show("盒号获取失败!");
+                             return false;
+                         }
+                         DataTable dt = Common.GetboxArchno(ClsPrintInfo.Boxsn);
+                         if (dt == null || dt.Rows.Count <= 0) {
+                             string str = "盒号：" + ClsPrintInfo.Boxsn + "信息获取失败!";
+                             WriteLog(str);
+                             return false;
+                         }
+                         for (int id = 1; id <= dt.Rows.Count; id++)
+                         {
+                             int arid =Convert.ToInt32(dt.Rows[id][0].ToString());
+                             GetArchContenWriteXlsPrint(arid);
+                             Thread.Sleep(200);
+                             ClsPrintInfoDocument.printDocument.Print();
+                         }
+                     }
+                     return true;
+                 }
+                 else {
+                     try {
+                         for (int i = 0; i < lvboxRange.Items.Count; i++) {
+                             int a = Convert.ToInt32(lvboxRange.Items[i].SubItems[1].Text);
+                             int b = Convert.ToInt32(lvboxRange.Items[i].SubItems[2].Text);
+                             for (int box = a; box <= b; box++) {
+                                 DataTable dt = Common.GetboxArchno(box);
+                                 if (dt == null || dt.Rows.Count <= 0)
+                                     continue;
+                                 for (int id = 1; id <= dt.Rows.Count; id++) {
+                                     int arid = Convert.ToInt32(dt.Rows[id][0].ToString());
+                                     GetArchContenWriteXlsPrint(arid);
+                                     this.BeginInvoke(new Action(() => { lbInfo.Text = string.Format("正在打印第{0}盒", box); }));
+                                     Thread.Sleep(200);
+                                     ClsPrintInfoDocument.printDocument.Print();
+                                 }
+                             }
+                         }
+
+                         return true;
+                     } catch (Exception e) {
+                         WriteLog(e.ToString());
+                         return false;
+                     }
+                 }
+             });
+        }
+        private bool GetArchContenWriteXlsPrint(int archid)
+        {
+            DataTable ArchConten = Common.GetPrintConten(archid, ClsPrintConten.PrintContenTable, ClsPrintConten.PrintContenCol, ClsPrintConten.PrintContenPagesn);
+            if (ArchConten == null || ArchConten.Rows.Count <= 0) {
+                string str = "ID号:" + archid + "目录获取失败!";
+                WriteLog(str);
+                return false;
+            }
+            int countpage = Common.GetArchPages(archid);
+            if (countpage <= 0) {
+                string str = "ID号:" + archid + "总页码获取失败!";
+                WriteLog(str);
+                return false;
+            }
+            try {
+                Workbook work = new Workbook();
+                Worksheet wsheek = null;
+                work.LoadFromFile(Path.Combine(Application.StartupPath, "目录模版.xlsx"));
+                wsheek = work.Worksheets[0];
+                string strsn = ClsPrintConten.PrintContenSn;
+                //  string[] strxls = ClsPrintConten.printContenXls.ToArray();
+                //获取起始行和列
+                int rowsn = 0;
+                int colsn = 0;
+                if (strsn.Trim().Length > 1) {
+                    rowsn = Convert.ToInt32(strsn.Remove(0, 1));
+                    colsn = ClsInfo.ToNum(strsn.Substring(0, 1)) + 1;
+                }
+                int arow = 0;
+                int bcol = 0;
+                int dz = 0;
+                for (int i = 0; i < ArchConten.Rows.Count; i++) {
+                    dz = 0;
+                    for (int j = 0; j < ArchConten.Columns.Count; j++) {
+                        string str = ArchConten.Rows[i][j].ToString();
+                        if (rowsn > 0)
+                            wsheek.Range[rowsn + i, colsn].Text = (i + 1).ToString();
+                        if (ClsPrintConten.printContenXls.Count > 0) {
+                            if (dz < ClsPrintConten.printContenXls.Count) {
+                                arow = Convert.ToInt32(ClsPrintConten.printContenXls[dz].Remove(0, 1));
+                                bcol = ClsInfo.ToNum(ClsPrintConten.printContenXls[dz].Substring(0, 1)) + 1;
+                            }
+                            if (dz < ClsPrintConten.PrintContenPage.Count && ClsPrintConten.PrintContenPage[dz] == "True") {
+                                if (ClsPrintConten.PrintContenPageMode == 2) {
+                                    int p = Convert.ToInt32(str);
+                                    int p1 = 0;
+                                    try {
+                                        if (i != ArchConten.Rows.Count - 1) {
+                                            p1 = Convert.ToInt32(ArchConten.Rows[i + 1][j].ToString());
+                                            if (p == p1)
+                                                str = p + "-" + p1;
+                                            else {
+                                                str = p + "-" + (p1 - 1);
+                                            }
+                                        }
+                                        else {
+                                            p1 = countpage;
+                                            if (p == p1)
+                                                str = p + "-" + p1;
+                                            else {
+                                                str = p + "-" + (p1 - 1);
+                                            }
+                                        }
+                                    } catch {
+                                        string str1 = "ID号:" + archid + "目录页码不正确";
+                                        WriteLog(str1);
+                                        return false;
+                                    }
+                                }
+                                wsheek.Range[arow + i, bcol].Text = str;
+                            }
+                            else if (dz < ClsPrintConten.PrintContenDz.Count && ClsPrintConten.PrintContenDz[dz] == "True")
+                                wsheek.Range[arow + i, bcol].Text = str;
+                            else if (arow == i && j == bcol) {
+                                wsheek.Range[arow + i, bcol].Text = str;
+                            }
+                        }
+                        dz += 1;
+                    }
+                }
+                work.PrintDocument.Print();
+                return true;
+            } catch (Exception e) {
+
+                string str = "ID号:" + archid + ":" + e;
+                WriteLog(str);
+                return false;
+            }
+        }
+
+        #endregion
+
+        private void butPrintTm_Click(object sender, EventArgs e)
+        {
+           
+        }
+    }
+}

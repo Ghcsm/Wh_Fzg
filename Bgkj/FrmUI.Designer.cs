@@ -1,0 +1,172 @@
+﻿namespace Bgkj
+{
+    partial class FrmUI
+    {
+        /// <summary>
+        /// 必需的设计器变量。
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// 清理所有正在使用的资源。
+        /// </summary>
+        /// <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows 窗体设计器生成的代码
+
+        /// <summary>
+        /// 设计器支持所需的方法 - 不要修改
+        /// 使用代码编辑器修改此方法的内容。
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.panle = new System.Windows.Forms.Panel();
+            this.panleLogo = new System.Windows.Forms.Panel();
+            this.labPwd = new System.Windows.Forms.Label();
+            this.labUser = new System.Windows.Forms.Label();
+            this.txtUser = new DevComponents.DotNetBar.Controls.ComboBoxEx();
+            this.txtPwd = new DevComponents.DotNetBar.Controls.TextBoxX();
+            this.btnCle = new DevComponents.DotNetBar.ButtonX();
+            this.btnOk = new DevComponents.DotNetBar.ButtonX();
+            this.panle.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // panle
+            // 
+            this.panle.BackgroundImage = global::Bgkj.Properties.Resources.登录界面;
+            this.panle.Controls.Add(this.panleLogo);
+            this.panle.Controls.Add(this.labPwd);
+            this.panle.Controls.Add(this.labUser);
+            this.panle.Controls.Add(this.txtUser);
+            this.panle.Controls.Add(this.txtPwd);
+            this.panle.Controls.Add(this.btnCle);
+            this.panle.Controls.Add(this.btnOk);
+            this.panle.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panle.Location = new System.Drawing.Point(0, 0);
+            this.panle.Name = "panle";
+            this.panle.Size = new System.Drawing.Size(618, 379);
+            this.panle.TabIndex = 2;
+            this.panle.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panle_MouseDown);
+            this.panle.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panle_MouseMove);
+            // 
+            // panleLogo
+            // 
+            this.panleLogo.BackColor = System.Drawing.Color.Transparent;
+            this.panleLogo.BackgroundImage = global::Bgkj.Properties.Resources._11;
+            this.panleLogo.Location = new System.Drawing.Point(75, 54);
+            this.panleLogo.Name = "panleLogo";
+            this.panleLogo.Size = new System.Drawing.Size(401, 59);
+            this.panleLogo.TabIndex = 5;
+            // 
+            // labPwd
+            // 
+            this.labPwd.AutoSize = true;
+            this.labPwd.BackColor = System.Drawing.Color.Transparent;
+            this.labPwd.Location = new System.Drawing.Point(391, 274);
+            this.labPwd.Name = "labPwd";
+            this.labPwd.Size = new System.Drawing.Size(41, 12);
+            this.labPwd.TabIndex = 4;
+            this.labPwd.Text = "密码：";
+            // 
+            // labUser
+            // 
+            this.labUser.AutoSize = true;
+            this.labUser.BackColor = System.Drawing.Color.Transparent;
+            this.labUser.Location = new System.Drawing.Point(391, 244);
+            this.labUser.Name = "labUser";
+            this.labUser.Size = new System.Drawing.Size(41, 12);
+            this.labUser.TabIndex = 4;
+            this.labUser.Text = "用户：";
+            // 
+            // txtUser
+            // 
+            this.txtUser.DisplayMember = "Text";
+            this.txtUser.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.txtUser.FormattingEnabled = true;
+            this.txtUser.ItemHeight = 15;
+            this.txtUser.Location = new System.Drawing.Point(444, 239);
+            this.txtUser.Name = "txtUser";
+            this.txtUser.Size = new System.Drawing.Size(114, 21);
+            this.txtUser.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.txtUser.TabIndex = 1;
+            this.txtUser.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtUser_KeyPress);
+            // 
+            // txtPwd
+            // 
+            // 
+            // 
+            // 
+            this.txtPwd.Border.Class = "TextBoxBorder";
+            this.txtPwd.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.txtPwd.Location = new System.Drawing.Point(444, 268);
+            this.txtPwd.Name = "txtPwd";
+            this.txtPwd.PasswordChar = '*';
+            this.txtPwd.PreventEnterBeep = true;
+            this.txtPwd.Size = new System.Drawing.Size(114, 21);
+            this.txtPwd.TabIndex = 2;
+            this.txtPwd.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPwd_KeyPress);
+            // 
+            // btnCle
+            // 
+            this.btnCle.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.btnCle.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.btnCle.Location = new System.Drawing.Point(501, 308);
+            this.btnCle.Name = "btnCle";
+            this.btnCle.Size = new System.Drawing.Size(72, 35);
+            this.btnCle.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.btnCle.TabIndex = 4;
+            this.btnCle.Text = "取消";
+            this.btnCle.Click += new System.EventHandler(this.btnCle_Click);
+            // 
+            // btnOk
+            // 
+            this.btnOk.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.btnOk.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.btnOk.Location = new System.Drawing.Point(403, 308);
+            this.btnOk.Name = "btnOk";
+            this.btnOk.Size = new System.Drawing.Size(70, 35);
+            this.btnOk.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.btnOk.TabIndex = 3;
+            this.btnOk.Text = "确定";
+            this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
+            // 
+            // FrmUI
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(618, 379);
+            this.Controls.Add(this.panle);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.Name = "FrmUI";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "档案管理系统";
+            this.Load += new System.EventHandler(this.FrmUI_Load);
+            this.panle.ResumeLayout(false);
+            this.panle.PerformLayout();
+            this.ResumeLayout(false);
+
+        }
+
+        #endregion
+
+        private DevComponents.DotNetBar.ButtonX btnOk;
+        private DevComponents.DotNetBar.ButtonX btnCle;
+        private System.Windows.Forms.Panel panle;
+        private System.Windows.Forms.Label labPwd;
+        private System.Windows.Forms.Label labUser;
+        private DevComponents.DotNetBar.Controls.ComboBoxEx txtUser;
+        private DevComponents.DotNetBar.Controls.TextBoxX txtPwd;
+        private System.Windows.Forms.Panel panleLogo;
+    }
+}
+
