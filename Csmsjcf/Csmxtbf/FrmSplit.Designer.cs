@@ -452,7 +452,6 @@
             this.rab_gr2_9_juan_1.TabIndex = 1;
             this.rab_gr2_9_juan_1.Text = "每卷起始页为1";
             this.rab_gr2_9_juan_1.UseVisualStyleBackColor = true;
-            this.rab_gr2_9_juan_1.CheckedChanged += new System.EventHandler(this.rab_gr2_9_juan_1_CheckedChanged);
             // 
             // rab_gr2_9_file_1
             // 
@@ -465,7 +464,6 @@
             this.rab_gr2_9_file_1.TabStop = true;
             this.rab_gr2_9_file_1.Text = "每个目录起始页为1";
             this.rab_gr2_9_file_1.UseVisualStyleBackColor = true;
-            this.rab_gr2_9_file_1.CheckedChanged += new System.EventHandler(this.rab_gr2_9_dir_1_CheckedChanged);
             // 
             // gr2_8
             // 
@@ -500,7 +498,6 @@
             this.rab_gr2_8_mulu.TabStop = true;
             this.rab_gr2_8_mulu.Text = "案卷目录格式";
             this.rab_gr2_8_mulu.UseVisualStyleBackColor = true;
-            this.rab_gr2_8_mulu.CheckedChanged += new System.EventHandler(this.rab_gr2_8_mulu_CheckedChanged);
             // 
             // rab_gr2_8_ziduan
             // 
@@ -513,7 +510,6 @@
             this.rab_gr2_8_ziduan.TabStop = true;
             this.rab_gr2_8_ziduan.Text = "多字段：\\a\\b\\c\\d";
             this.rab_gr2_8_ziduan.UseVisualStyleBackColor = true;
-            this.rab_gr2_8_ziduan.CheckedChanged += new System.EventHandler(this.rab_gr2_8_ziduan_CheckedChanged);
             // 
             // gr2_7
             // 

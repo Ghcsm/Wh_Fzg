@@ -225,10 +225,23 @@ namespace Csmsjcf
                 }
                 ClsFrmInfoPar.FileFomat = 3;
             }
-            else if (rab_gr2_4_duo.Checked)
+            else if (rab_gr2_4_duo.Checked) {
+                if (chk_Gr2_4_jpg.Checked) {
+                    MessageBox.Show("多页文件不能使用Jpg格式");
+                    return false;
+                }
                 ClsFrmInfoPar.FileFomat = 2;
+            }
             else
                 ClsFrmInfoPar.FileFomat = 1;
+
+            if (rab_gr2_8_ziduan.Checked)
+                ClsFrmInfoPar.DirNamesn = 1;
+            else if (rab_gr2_8_mulu.Checked)
+                ClsFrmInfoPar.DirNamesn = 2;
+            else
+                ClsFrmInfoPar.DirNamesn = 3;
+
             if (rab_gr2_9_file_1.Checked) {
                 if (rab_gr2_8_ziduan.Checked) {
                     MessageBox.Show("文件名此规则必须在文件夹命名规则包含目录才可用!");
@@ -236,7 +249,6 @@ namespace Csmsjcf
                 }
                 ClsFrmInfoPar.FileNamesn = 1;
             }
-
             if (rab_gr2_9_file_ziduan.Checked) {
                 if (ClsDataSplit.ClsFilesn != 3) {
                     MessageBox.Show("此选请先设置后台！");
@@ -249,10 +261,6 @@ namespace Csmsjcf
                 ClsFrmInfoPar.FileNamesn = 3;
             }
             if (rab_gr2_9_juan_1.Checked) {
-                if (rab_gr2_8_ziduan.Checked || rab_gr2_8_ziduAndmulu.Checked) {
-                    MessageBox.Show("此文件命名规则不能包含目录规则");
-                    return false;
-                }
                 ClsFrmInfoPar.FileNamesn = 2;
             }
             if (rab_gr3_1_imgPath.Checked) {
@@ -502,214 +510,114 @@ namespace Csmsjcf
 
                                 //每卷为1
                                 if (ClsFrmInfoPar.FileNamesn == 2) {
-                                    //为多页时
+                                    //为多页时 正测
                                     if (ClsFrmInfoPar.FileFomat == 2) {
-                                        //文件夹为字段
+                                        string dirnamenew = "";
                                         if (ClsFrmInfoPar.DirNamesn == 1) {
-                                            filename = Path.Combine(dirname,
-                                                p1.ToString() + "-" + p2.ToString() + "." + fs);
-                                            if (File.Exists(filename)) {
-                                                if (ClsFrmInfoPar.ConverMode == 2)
-                                                    File.Delete(filename);
-                                                else {
-                                                    ListBshowInfo(xc, boxsn, archno, "线程正常退出");
-                                                    continue;
-                                                }
-                                            }
-
-                                            ListBshowInfo(xc, boxsn, archno,
-                                                "正在进行数据转换页：" + p1.ToString() + "-" + p2.ToString());
-                                            if (Hljsimage._SplitImg(Downfile, filename, p1, p2, fs)) {
-                                                str = "错误：未找到已质检盒号信息或已拆分 -->盒号:" + box + " --> 卷号:" + archno;
-                                                lock (str) {
-                                                    ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
-                                                }
-                                                ListBshowInfo(xc, boxsn, archno, "警告,错误线程退出");
+                                            dirnamenew = dirname;
+                                        }
+                                        else if (ClsFrmInfoPar.DirNamesn == 2 || ClsFrmInfoPar.DirNamesn == 3) {
+                                            dirnamenew = Path.Combine(dirname, ml);
+                                            if (!Directory.Exists(dirnamenew))
+                                                Directory.CreateDirectory(dirnamenew);
+                                        }
+                                        filename = Path.Combine(dirnamenew,
+                                            p1.ToString() + "-" + p2.ToString() + "." + fs);
+                                        if (File.Exists(filename)) {
+                                            if (ClsFrmInfoPar.ConverMode == 2)
+                                                File.Delete(filename);
+                                            else {
+                                                ListBshowInfo(xc, boxsn, archno, "线程正常退出");
                                                 continue;
                                             }
                                         }
-                                        //文件夹为目录
-                                        else if (ClsFrmInfoPar.DirNamesn == 2) {
-                                            dirname = Path.Combine(ClsFrmInfoPar.MimgPath, ClsFrmInfoPar.FileFormat[f]);
-                                            filename = Path.Combine(dirname, ml,
-                                                p1.ToString() + "-" + p2.ToString() + "." + fs);
-                                            if (File.Exists(filename)) {
-                                                if (ClsFrmInfoPar.ConverMode == 2)
-                                                    File.Delete(filename);
-                                                else {
-                                                    ListBshowInfo(xc, boxsn, archno, "线程正常退出");
-                                                    continue;
-                                                }
-                                            }
-
-                                            ListBshowInfo(xc, boxsn, archno,
-                                                "正在进行数据转换页：" + p1.ToString() + "-" + p2.ToString());
-                                            if (!Hljsimage._SplitImg(Downfile, filename, p1, p2, fs)) {
-                                                str = "错误：未找到已质检盒号信息或已拆分 -->盒号:" + box + " --> 卷号:" + archno;
-                                                lock (str) {
-                                                    ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
-                                                }
-                                                ListBshowInfo(xc, boxsn, archno, "警告,错误线程退出");
-                                                continue;
-                                            }
+                                        ListBshowInfo(xc, boxsn, archno,
+                                              "正在进行数据转换页：" + p1.ToString() + "-" + p2.ToString());
+                                        lsinfopdf = Himg._SplitImgls(Downfile, filename, p1, p2, fs);
+                                        if (!ClsOperate.Iserror(lsinfopdf, ClsFrmInfoPar.LogPath)) {
+                                            ListBshowInfo(xc, boxsn, archno, "警告,错误线程退出");
+                                            continue;
                                         }
-                                        //文件夹为字段+目录
-                                        else if (ClsFrmInfoPar.DirNamesn == 3) {
-                                            filename = Path.Combine(dirname, ml,
-                                                p1.ToString() + "-" + p2.ToString() + "." + fs);
-                                            if (File.Exists(filename)) {
-                                                if (ClsFrmInfoPar.ConverMode == 2)
-                                                    File.Delete(filename);
-                                                else {
-                                                    ListBshowInfo(xc, boxsn, archno, "线程正常退出");
-                                                    continue;
+                                        if (fs.IndexOf("2") >= 0) {
+                                            for (int pdf = 0; pdf < lsinfopdf.Count; pdf++) {
+                                                string yfile = lsinfopdf[pdf];
+                                                ListBshowInfo(xc, boxsn, archno, "正在进行Ocr数据转换页");
+                                                str = Hljsimage._AutoPdfOcr2(yfile, filename, 1);
+                                                if (str.IndexOf("错误") >= 0) {
+                                                    str = Hljsimage._AutoPdfOcr2(yfile, filename, 2);
+                                                    if (str.IndexOf("错误") >= 0) {
+                                                        lock (str) {
+                                                            ClsWritelog.Writelog(ClsFrmInfoPar.LogPath,
+                                                                str + "盒号:" + box + " --> 卷号:" + archno);
+                                                        }
+                                                        ListBshowInfo(xc, boxsn, archno, "警告,错误线程退出");
+                                                        continue;
+                                                    }
+
                                                 }
                                             }
 
-                                            ListBshowInfo(xc, boxsn, archno,
-                                                "正在进行数据转换页：" + p1.ToString() + "-" + p2.ToString());
-                                            if (!Hljsimage._SplitImg(Downfile, filename, p1, p2, fs)) {
-                                                str = "错误：未找到已质检盒号信息或已拆分 -->盒号:" + box + " --> 卷号:" + archno;
-                                                lock (str) {
-                                                    ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
-                                                }
-                                                ListBshowInfo(xc, boxsn, archno, "警告,错误线程退出");
-                                                continue;
-                                            }
                                         }
                                     }
-                                    //为单页时
+                                    //为单页时  已测完成
                                     else if (ClsFrmInfoPar.FileFomat == 1) {
-                                        //文件夹为字段
+                                        //文件夹为目录 已测完成
+                                        string dirnamenew = "";
                                         if (ClsFrmInfoPar.DirNamesn == 1) {
-                                            if (File.Exists(dirname)) {
-                                                if (ClsFrmInfoPar.ConverMode == 2)
-                                                    File.Delete(dirname);
-                                                else {
-                                                    ListBshowInfo(xc, boxsn, archno, "线程正常退出");
-                                                    continue;
-                                                }
-                                            }
-
-                                            ListBshowInfo(xc, boxsn, archno,
-                                                "正在进行数据转换页：" + p1.ToString() + "-" + p2.ToString());
-                                            str = Hljsimage._SplitImg(Downfile, dirname, p1, p2,
-                                                ClsDataSplit.ClsFileNameQian, ClsDataSplit.ClsFileNameHou,
-                                                ClsDataSplit.ClsFileNmaecd, ClsFrmInfoPar.ConverMode, fs, 0);
-                                            if (str.IndexOf("错误") >= 0) {
-                                                lock (str) {
-                                                    ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
-                                                }
-                                                ListBshowInfo(xc, boxsn, archno, "警告,错误线程退出");
-                                                continue;
-                                            }
+                                            dirnamenew = dirname;
                                         }
-                                        //文件夹为目录
-                                        else if (ClsFrmInfoPar.DirNamesn == 2) {
-                                            dirname = Path.Combine(ClsFrmInfoPar.MimgPath, ClsFrmInfoPar.FileFormat[f]);
-                                            filename = Path.Combine(dirname, ml,
-                                                p1.ToString() + "-" + p2.ToString() + "." + fs);
-                                            if (File.Exists(dirname)) {
-                                                if (ClsFrmInfoPar.ConverMode == 2)
-                                                    File.Delete(dirname);
-                                                else {
-                                                    ListBshowInfo(xc, boxsn, archno, "线程正常退出");
-                                                    continue;
-                                                }
-                                            }
-
-                                            ListBshowInfo(xc, boxsn, archno,
-                                                "正在进行数据转换页：" + p1.ToString() + "-" + p2.ToString());
-                                            str = Hljsimage._SplitImg(Downfile, dirname, p1, p2,
-                                                ClsDataSplit.ClsFileNameQian, ClsDataSplit.ClsFileNameHou,
-                                                ClsDataSplit.ClsFileNmaecd, ClsFrmInfoPar.ConverMode, fs, 0);
-                                            if (str.IndexOf("错误") >= 0) {
-                                                lock (str) {
-                                                    ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
-                                                }
-                                                ListBshowInfo(xc, boxsn, archno, "警告,错误线程退出");
-                                                continue;
-                                            }
+                                        else if (ClsFrmInfoPar.DirNamesn == 2 || ClsFrmInfoPar.DirNamesn == 3) {
+                                            dirnamenew = Path.Combine(dirname, ml);
+                                            if (!Directory.Exists(dirnamenew))
+                                                Directory.CreateDirectory(dirnamenew);
                                         }
-                                        //文件夹为字段+目录
-                                        else if (ClsFrmInfoPar.DirNamesn == 3) {
-                                            filename = Path.Combine(dirname, ml,
-                                                p1.ToString() + "-" + p2.ToString() + "." + fs);
-                                            if (File.Exists(dirname)) {
-                                                if (ClsFrmInfoPar.ConverMode == 2)
-                                                    File.Delete(dirname);
-                                                else {
-                                                    ListBshowInfo(xc, boxsn, archno, "线程正常退出");
-                                                    continue;
-                                                }
-                                            }
-
-                                            ListBshowInfo(xc, boxsn, archno,
+                                        ListBshowInfo(xc, boxsn, archno,
                                                 "正在进行数据转换页：" + p1.ToString() + "-" + p2.ToString());
-                                            str = Hljsimage._SplitImg(Downfile, dirname, p1, p2,
-                                                ClsDataSplit.ClsFileNameQian, ClsDataSplit.ClsFileNameHou,
-                                                ClsDataSplit.ClsFileNmaecd, ClsFrmInfoPar.ConverMode, fs, 0);
-                                            if (str.IndexOf("错误") >= 0) {
-                                                lock (str) {
-                                                    ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
+                                        str = Hljsimage._SplitImg(Downfile, dirnamenew, p1, p2,
+                                            ClsDataSplit.ClsFileNameQian, ClsDataSplit.ClsFileNameHou,
+                                            ClsDataSplit.ClsFileNmaecd, ClsFrmInfoPar.ConverMode, fs, 0);
+                                        if (str.IndexOf("错误") >= 0) {
+                                            lock (str) {
+                                                ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
+                                            }
+                                            ListBshowInfo(xc, boxsn, archno, "警告,错误线程退出");
+                                            continue;
+                                        }
+                                        if (fs.IndexOf("2") >= 0) {
+                                            for (int pdf = 0; pdf < lsinfopdf.Count; pdf++) {
+                                                string yfile = lsinfopdf[pdf];
+                                                ListBshowInfo(xc, boxsn, archno, "正在进行Ocr数据转换页");
+                                                str = Hljsimage._AutoPdfOcr2(yfile, filename, 1);
+                                                if (str.IndexOf("错误") >= 0) {
+                                                    str = Hljsimage._AutoPdfOcr2(yfile, filename, 2);
+                                                    if (str.IndexOf("错误") >= 0) {
+                                                        lock (str) {
+                                                            ClsWritelog.Writelog(ClsFrmInfoPar.LogPath,
+                                                                str + "盒号:" + box + " --> 卷号:" + archno);
+                                                        }
+                                                        ListBshowInfo(xc, boxsn, archno, "警告,错误线程退出");
+                                                        continue;
+                                                    }
+
                                                 }
-                                                ListBshowInfo(xc, boxsn, archno, "警告,错误线程退出");
-                                                continue;
                                             }
                                         }
                                     }
                                 }
-                                //每个文件夹为始1  正测
+                                //每个文件夹为始1  已测完成
                                 else if (ClsFrmInfoPar.FileNamesn == 1) {
-                                    //为多页时
+                                    //为多页时  正则
                                     if (ClsFrmInfoPar.FileFomat == 2) {
-                                        //文件夹为字段
-                                        if (ClsFrmInfoPar.DirNamesn == 1) {
-                                            filename = Path.Combine(dirname,
-                                                "1" + "-" + (p2 - p1).ToString() + "." + fs);
-                                            if (File.Exists(filename)) {
-                                                if (ClsFrmInfoPar.ConverMode == 2)
-                                                    File.Delete(filename);
-                                                else {
-                                                    ListBshowInfo(xc, boxsn, archno, "线程退出");
-                                                    continue;
-                                                }
-                                            }
-
-                                            ListBshowInfo(xc, boxsn, archno,
-                                                "正在进行数据转换页：" + p1.ToString() + "-" + p2.ToString());
-                                            lsinfopdf = Hljsimage._SplitImgls(Downfile, filename, p1, p2, fs);
-                                            if (!ClsOperate.Iserror(lsinfopdf, ClsFrmInfoPar.LogPath)) {
-                                                ListBshowInfo(xc, boxsn, archno, "警告,错误线程退出");
-                                                continue;
-                                            }
-
-                                            ListBshowInfo(xc, boxsn, archno, "正在进行Ocr数据转换页");
-                                            if (fs.IndexOf("2") >= 0) {
-                                                for (int pdf = 0; pdf < lsinfopdf.Count; pdf++) {
-                                                    string yfile = lsinfopdf[pdf];
-                                                    str = Hljsimage._AutoPdfOcr2(yfile, filename, 1);
-                                                    if (str.IndexOf("错误") >= 0) {
-                                                        str = Hljsimage._AutoPdfOcr2(yfile, filename, 2);
-                                                        if (str.IndexOf("错误") >= 0) {
-                                                            lock (str) {
-                                                                ClsWritelog.Writelog(ClsFrmInfoPar.LogPath,
-                                                                    str + "盒号:" + box + " --> 卷号:" + archno);
-                                                            }
-                                                            ListBshowInfo(xc, boxsn, archno, "警告,错误线程退出");
-                                                            continue;
-                                                        }
-
-                                                    }
-                                                }
-
-                                            }
-                                        }
-                                        //文件夹为目录
-                                        else if (ClsFrmInfoPar.DirNamesn == 2) {
-                                            dirname = Path.Combine(ClsFrmInfoPar.MimgPath, ClsFrmInfoPar.FileFormat[f]);
-                                            filename = Path.Combine(dirname, ml,
-                                                "1" + "-" + (p2 - p1).ToString() + "." + fs);
+                                        //文件夹为目录  已测完成 
+                                        if (ClsFrmInfoPar.DirNamesn == 2 || ClsFrmInfoPar.DirNamesn == 3) {
+                                            string dirnamenew = Path.Combine(dirname, ml);
+                                            if (!Directory.Exists(dirnamenew))
+                                                Directory.CreateDirectory(dirnamenew);
+                                            int pags = p2 - p1;
+                                            if (pags == 0)
+                                                pags = 1;
+                                            filename = Path.Combine(dirnamenew,
+                                                "1" + "-" + pags.ToString() + "." + fs);
                                             if (File.Exists(filename)) {
                                                 if (ClsFrmInfoPar.ConverMode == 2)
                                                     File.Delete(filename);
@@ -721,49 +629,7 @@ namespace Csmsjcf
 
                                             ListBshowInfo(xc, boxsn, archno,
                                                 "正在进行数据转换页：" + p1.ToString() + "-" + p2.ToString());
-                                            lsinfopdf = Hljsimage._SplitImgls(Downfile, filename, p1, p2, fs);
-                                            if (!ClsOperate.Iserror(lsinfopdf, ClsFrmInfoPar.LogPath)) {
-                                                ListBshowInfo(xc, boxsn, archno, "警告,错误线程退出");
-                                                continue;
-                                            }
-
-                                            if (fs.IndexOf("2") >= 0) {
-                                                for (int pdf = 0; pdf < lsinfopdf.Count; pdf++) {
-                                                    string yfile = lsinfopdf[pdf];
-                                                    ListBshowInfo(xc, boxsn, archno, "正在进行Ocr数据转换页");
-                                                    str = Hljsimage._AutoPdfOcr2(yfile, filename, 1);
-                                                    if (str.IndexOf("错误") >= 0) {
-                                                        str = Hljsimage._AutoPdfOcr2(yfile, filename, 2);
-                                                        if (str.IndexOf("错误") >= 0) {
-                                                            lock (str) {
-                                                                ClsWritelog.Writelog(ClsFrmInfoPar.LogPath,
-                                                                    str + "盒号:" + box + " --> 卷号:" + archno);
-                                                            }
-                                                            ListBshowInfo(xc, boxsn, archno, "警告,错误线程退出");
-                                                            continue;
-                                                        }
-
-                                                    }
-                                                }
-
-                                            }
-                                        }
-                                        //文件夹为字段+目录
-                                        else if (ClsFrmInfoPar.DirNamesn == 3) {
-                                            filename = Path.Combine(dirname, ml,
-                                                "1" + "-" + (p2 - p1).ToString() + "." + fs);
-                                            if (File.Exists(filename)) {
-                                                if (ClsFrmInfoPar.ConverMode == 2)
-                                                    File.Delete(filename);
-                                                else {
-                                                    ListBshowInfo(xc, boxsn, archno, "线程正常退出");
-                                                    continue;
-                                                }
-                                            }
-
-                                            ListBshowInfo(xc, boxsn, archno,
-                                                "正在进行数据转换页：" + p1.ToString() + "-" + p2.ToString());
-                                            lsinfopdf = Hljsimage._SplitImgls(Downfile, filename, p1, p2, fs);
+                                            lsinfopdf = Himg._SplitImgls(Downfile, filename, p1, p2, fs);
                                             if (!ClsOperate.Iserror(lsinfopdf, ClsFrmInfoPar.LogPath)) {
                                                 ListBshowInfo(xc, boxsn, archno, "警告,错误线程退出");
                                                 continue;
@@ -791,52 +657,10 @@ namespace Csmsjcf
                                             }
                                         }
                                     }
-                                    //为单页时
+                                    //为单页时   已测完成
                                     else if (ClsFrmInfoPar.FileFomat == 1) {
-                                        //文件夹为字段
-                                        if (ClsFrmInfoPar.DirNamesn == 1) {
-                                            if (File.Exists(dirname)) {
-                                                if (ClsFrmInfoPar.ConverMode == 2)
-                                                    File.Delete(dirname);
-                                                else {
-                                                    ListBshowInfo(xc, boxsn, archno, "线程正常退出");
-                                                    continue;
-                                                }
-                                            }
-
-                                            ListBshowInfo(xc, boxsn, archno,
-                                                "正在进行数据转换页：" + p1.ToString() + "-" + p2.ToString());
-                                            lsinfopdf = Himg._SplitImgls(Downfile, dirname, p1, p2,
-                                                ClsDataSplit.ClsFileNameQian, ClsDataSplit.ClsFileNameHou,
-                                                ClsDataSplit.ClsFileNmaecd, ClsFrmInfoPar.ConverMode, fs, 1);
-                                            if (!ClsOperate.Iserror(lsinfopdf, ClsFrmInfoPar.LogPath)) {
-                                                ListBshowInfo(xc, boxsn, archno, "警告,错误线程退出");
-                                                continue;
-                                            }
-
-                                            if (fs.IndexOf("2") >= 0) {
-                                                for (int pdf = 0; pdf < lsinfopdf.Count; pdf++) {
-                                                    string yfile = lsinfopdf[pdf];
-                                                    ListBshowInfo(xc, boxsn, archno, "正在进行Ocr数据转换页");
-                                                    str = Hljsimage._AutoPdfOcr2(yfile, filename, 1);
-                                                    if (str.IndexOf("错误") >= 0) {
-                                                        str = Hljsimage._AutoPdfOcr2(yfile, filename, 2);
-                                                        if (str.IndexOf("错误") >= 0) {
-                                                            lock (str) {
-                                                                ClsWritelog.Writelog(ClsFrmInfoPar.LogPath,
-                                                                    str + "盒号:" + box + " --> 卷号:" + archno);
-                                                            }
-                                                            ListBshowInfo(xc, boxsn, archno, "警告,错误线程退出");
-                                                            continue;
-                                                        }
-
-                                                    }
-                                                }
-                                            }
-
-                                        }
-                                        //文件夹为目录   已测
-                                        else if (ClsFrmInfoPar.DirNamesn == 2 || ClsFrmInfoPar.DirNamesn==3) {
+                                        //文件夹为目录   已测完成
+                                        if (ClsFrmInfoPar.DirNamesn == 2 || ClsFrmInfoPar.DirNamesn == 3) {
                                             string dirnamenew = Path.Combine(dirname, ml);
                                             if (!Directory.Exists(dirnamenew))
                                                 Directory.CreateDirectory(dirnamenew);
@@ -869,52 +693,6 @@ namespace Csmsjcf
                                                 }
                                             }
                                         }
-                                        //文件夹为字段+目录
-                                        //else if (ClsFrmInfoPar.DirNamesn == 3) {
-                                        //    string newdirname = Path.Combine(dirname, ml);
-                                        //    if (!Directory.Exists(newdirname))
-                                        //        Directory.CreateDirectory(newdirname);
-                                        //    filename = Path.Combine(newdirname,
-                                        //        p1.ToString() + "-" + p2.ToString() + "." + fs);
-                                        //    if (File.Exists(dirname)) {
-                                        //        if (ClsFrmInfoPar.ConverMode == 2)
-                                        //            File.Delete(dirname);
-                                        //        else {
-                                        //            ListBshowInfo(xc, boxsn, archno, "线程正常退出");
-                                        //            continue;
-                                        //        }
-                                        //    }
-
-                                        //    ListBshowInfo(xc, boxsn, archno,
-                                        //        "正在进行数据转换页：" + p1.ToString() + "-" + p2.ToString());
-                                        //    lsinfopdf = Himg._SplitImgls(Downfile, dirname, p1, p2,
-                                        //        ClsDataSplit.ClsFileNameQian, ClsDataSplit.ClsFileNameHou,
-                                        //        ClsDataSplit.ClsFileNmaecd, ClsFrmInfoPar.ConverMode, fs, 1);
-                                        //    if (!ClsOperate.Iserror(lsinfopdf, ClsFrmInfoPar.LogPath)) {
-                                        //        ListBshowInfo(xc, boxsn, archno, "警告,错误线程退出");
-                                        //        continue;
-                                        //    }
-
-                                        //    if (fs.IndexOf("2") >= 0) {
-                                        //        for (int pdf = 0; pdf < lsinfopdf.Count; pdf++) {
-                                        //            string yfile = lsinfopdf[pdf];
-                                        //            ListBshowInfo(xc, boxsn, archno, "正在进行Ocr数据转换页");
-                                        //            str = Hljsimage._AutoPdfOcr2(yfile, filename, 1);
-                                        //            if (str.IndexOf("错误") >= 0) {
-                                        //                str = Hljsimage._AutoPdfOcr2(yfile, filename, 2);
-                                        //                if (str.IndexOf("错误") >= 0) {
-                                        //                    lock (str) {
-                                        //                        ClsWritelog.Writelog(ClsFrmInfoPar.LogPath,
-                                        //                            str + "盒号:" + box + " --> 卷号:" + archno);
-                                        //                    }
-                                        //                    ListBshowInfo(xc, boxsn, archno, "警告,错误线程退出");
-                                        //                    continue;
-                                        //                }
-
-                                        //            }
-                                        //        }
-                                        //    }
-                                        //}
                                     }
                                 }
 
@@ -1050,24 +828,7 @@ namespace Csmsjcf
                 ClsFrmInfoPar.ExportType = 2;
             else ClsFrmInfoPar.ExportType = 3;
         }
-
-        private void rab_gr2_8_ziduan_CheckedChanged(object sender, EventArgs e)
-        {
-            if (rab_gr2_8_ziduan.Checked)
-                ClsFrmInfoPar.DirNamesn = 1;
-            else if (rab_gr2_8_mulu.Checked)
-                ClsFrmInfoPar.DirNamesn = 2;
-            else ClsFrmInfoPar.DirNamesn = 3;
-        }
-
-        private void rab_gr2_9_dir_1_CheckedChanged(object sender, EventArgs e)
-        {
-            if (rab_gr2_9_file_1.Checked)
-                ClsFrmInfoPar.FileNamesn = 1;
-            else if (rab_gr2_9_juan_1.Checked)
-                ClsFrmInfoPar.FileNamesn = 2;
-            else ClsFrmInfoPar.FileNamesn = 3;
-        }
+      
 
         private void comb_gr2_6_ocr_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -1121,24 +882,6 @@ namespace Csmsjcf
             chk_Gr2_4_jpg.Checked = false;
         }
 
-        private void rab_gr2_8_mulu_CheckedChanged(object sender, EventArgs e)
-        {
-            if (rab_gr2_8_ziduan.Checked)
-                ClsFrmInfoPar.DirNamesn = 1;
-            else if (rab_gr2_8_mulu.Checked)
-                ClsFrmInfoPar.DirNamesn = 2;
-            else ClsFrmInfoPar.DirNamesn = 3;
-        }
-
-        private void rab_gr2_9_juan_1_CheckedChanged(object sender, EventArgs e)
-        {
-            if (rab_gr2_9_file_1.Checked)
-                ClsFrmInfoPar.FileNamesn = 1;
-            else if (rab_gr2_9_juan_1.Checked)
-                ClsFrmInfoPar.FileNamesn = 2;
-            else ClsFrmInfoPar.FileNamesn = 3;
-        }
-
         private void rab_Gr2_3_img_CheckedChanged(object sender, EventArgs e)
         {
             if (rab_Gr2_3_tb.Checked)
@@ -1163,9 +906,8 @@ namespace Csmsjcf
 
 
 
-
         #endregion
 
-
+      
     }
 }
