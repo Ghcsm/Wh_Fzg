@@ -34,6 +34,16 @@
             this.tabControlPanel6 = new DevComponents.DotNetBar.TabControlPanel();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.tabConDataSplit = new DevComponents.DotNetBar.TabControl();
+            this.tabControlPanel8 = new DevComponents.DotNetBar.TabControlPanel();
+            this.chkDataSplit_ExportTable = new System.Windows.Forms.CheckedListBox();
+            this.butDataSplit_Export_DelInfo = new DevComponents.DotNetBar.ButtonX();
+            this.butDataSplit_Export_Save = new DevComponents.DotNetBar.ButtonX();
+            this.label20 = new System.Windows.Forms.Label();
+            this.butDataSplit_Export_delzd = new DevComponents.DotNetBar.ButtonX();
+            this.butDataSplit_Export_add = new DevComponents.DotNetBar.ButtonX();
+            this.combDataSplit_Export_Xlsid = new DevComponents.DotNetBar.Controls.ComboBoxEx();
+            this.combDataSplit_Export_table = new DevComponents.DotNetBar.Controls.ComboBoxEx();
+            this.tabDataSplit_Table = new DevComponents.DotNetBar.TabItem(this.components);
             this.tabControlPanel7 = new DevComponents.DotNetBar.TabControlPanel();
             this.butDataSplitgz = new DevComponents.DotNetBar.ButtonX();
             this.rabDataSplitFile = new System.Windows.Forms.RadioButton();
@@ -62,16 +72,6 @@
             this.labDataSplit_dir_ml = new System.Windows.Forms.Label();
             this.labDataSplit_dir_zd = new System.Windows.Forms.Label();
             this.tabDataSplit_gz = new DevComponents.DotNetBar.TabItem(this.components);
-            this.tabControlPanel8 = new DevComponents.DotNetBar.TabControlPanel();
-            this.chkDataSplit_ExportTable = new System.Windows.Forms.CheckedListBox();
-            this.butDataSplit_Export_DelInfo = new DevComponents.DotNetBar.ButtonX();
-            this.butDataSplit_Export_Save = new DevComponents.DotNetBar.ButtonX();
-            this.label20 = new System.Windows.Forms.Label();
-            this.butDataSplit_Export_delzd = new DevComponents.DotNetBar.ButtonX();
-            this.butDataSplit_Export_add = new DevComponents.DotNetBar.ButtonX();
-            this.combDataSplit_Export_Xlsid = new DevComponents.DotNetBar.Controls.ComboBoxEx();
-            this.combDataSplit_Export_table = new DevComponents.DotNetBar.Controls.ComboBoxEx();
-            this.tabDataSplit_Table = new DevComponents.DotNetBar.TabItem(this.components);
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.chkDataSplit = new System.Windows.Forms.CheckedListBox();
             this.grDataSpiteTable = new System.Windows.Forms.GroupBox();
@@ -282,10 +282,10 @@
             this.groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tabConDataSplit)).BeginInit();
             this.tabConDataSplit.SuspendLayout();
+            this.tabControlPanel8.SuspendLayout();
             this.tabControlPanel7.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.groupBox6.SuspendLayout();
-            this.tabControlPanel8.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.grDataSpiteTable.SuspendLayout();
             this.tabConPrintSet.SuspendLayout();
@@ -394,9 +394,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabContr.CanReorderTabs = true;
+            this.tabContr.Controls.Add(this.tabControlPanel6);
             this.tabContr.Controls.Add(this.tabConPrintSet);
             this.tabContr.Controls.Add(this.tabControlPanel2);
-            this.tabContr.Controls.Add(this.tabControlPanel6);
             this.tabContr.Controls.Add(this.tabControlPanel9);
             this.tabContr.Controls.Add(this.tabControlPanel5);
             this.tabContr.Controls.Add(this.tabControlPanel3);
@@ -471,6 +471,132 @@
             this.tabConDataSplit.Tabs.Add(this.tabDataSplit_gz);
             this.tabConDataSplit.Tabs.Add(this.tabDataSplit_Table);
             this.tabConDataSplit.Text = "tabControl1";
+            // 
+            // tabControlPanel8
+            // 
+            this.tabControlPanel8.Controls.Add(this.chkDataSplit_ExportTable);
+            this.tabControlPanel8.Controls.Add(this.butDataSplit_Export_DelInfo);
+            this.tabControlPanel8.Controls.Add(this.butDataSplit_Export_Save);
+            this.tabControlPanel8.Controls.Add(this.label20);
+            this.tabControlPanel8.Controls.Add(this.butDataSplit_Export_delzd);
+            this.tabControlPanel8.Controls.Add(this.butDataSplit_Export_add);
+            this.tabControlPanel8.Controls.Add(this.combDataSplit_Export_Xlsid);
+            this.tabControlPanel8.Controls.Add(this.combDataSplit_Export_table);
+            this.tabControlPanel8.DisabledBackColor = System.Drawing.Color.Empty;
+            this.tabControlPanel8.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControlPanel8.Location = new System.Drawing.Point(0, 26);
+            this.tabControlPanel8.Name = "tabControlPanel8";
+            this.tabControlPanel8.Padding = new System.Windows.Forms.Padding(1);
+            this.tabControlPanel8.Size = new System.Drawing.Size(437, 317);
+            this.tabControlPanel8.Style.BackColor1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(142)))), ((int)(((byte)(179)))), ((int)(((byte)(231)))));
+            this.tabControlPanel8.Style.BackColor2.Color = System.Drawing.Color.FromArgb(((int)(((byte)(223)))), ((int)(((byte)(237)))), ((int)(((byte)(254)))));
+            this.tabControlPanel8.Style.Border = DevComponents.DotNetBar.eBorderType.SingleLine;
+            this.tabControlPanel8.Style.BorderColor.Color = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(97)))), ((int)(((byte)(156)))));
+            this.tabControlPanel8.Style.BorderSide = ((DevComponents.DotNetBar.eBorderSide)(((DevComponents.DotNetBar.eBorderSide.Left | DevComponents.DotNetBar.eBorderSide.Right) 
+            | DevComponents.DotNetBar.eBorderSide.Bottom)));
+            this.tabControlPanel8.Style.GradientAngle = 90;
+            this.tabControlPanel8.TabIndex = 5;
+            this.tabControlPanel8.TabItem = this.tabDataSplit_Table;
+            // 
+            // chkDataSplit_ExportTable
+            // 
+            this.chkDataSplit_ExportTable.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.chkDataSplit_ExportTable.FormattingEnabled = true;
+            this.chkDataSplit_ExportTable.Location = new System.Drawing.Point(218, 20);
+            this.chkDataSplit_ExportTable.Name = "chkDataSplit_ExportTable";
+            this.chkDataSplit_ExportTable.Size = new System.Drawing.Size(155, 244);
+            this.chkDataSplit_ExportTable.TabIndex = 6;
+            // 
+            // butDataSplit_Export_DelInfo
+            // 
+            this.butDataSplit_Export_DelInfo.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.butDataSplit_Export_DelInfo.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.butDataSplit_Export_DelInfo.Location = new System.Drawing.Point(68, 268);
+            this.butDataSplit_Export_DelInfo.Name = "butDataSplit_Export_DelInfo";
+            this.butDataSplit_Export_DelInfo.Size = new System.Drawing.Size(75, 39);
+            this.butDataSplit_Export_DelInfo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.butDataSplit_Export_DelInfo.TabIndex = 5;
+            this.butDataSplit_Export_DelInfo.Text = "删除";
+            this.butDataSplit_Export_DelInfo.Click += new System.EventHandler(this.butDataSplit_Export_DelInfo_Click);
+            // 
+            // butDataSplit_Export_Save
+            // 
+            this.butDataSplit_Export_Save.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.butDataSplit_Export_Save.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.butDataSplit_Export_Save.Location = new System.Drawing.Point(68, 216);
+            this.butDataSplit_Export_Save.Name = "butDataSplit_Export_Save";
+            this.butDataSplit_Export_Save.Size = new System.Drawing.Size(75, 39);
+            this.butDataSplit_Export_Save.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.butDataSplit_Export_Save.TabIndex = 4;
+            this.butDataSplit_Export_Save.Text = "保存";
+            this.butDataSplit_Export_Save.Click += new System.EventHandler(this.butDataSplit_Export_Save_Click);
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.BackColor = System.Drawing.Color.Transparent;
+            this.label20.Location = new System.Drawing.Point(60, 57);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(107, 12);
+            this.label20.TabIndex = 0;
+            this.label20.Text = "绑定Xls工作薄ID：";
+            // 
+            // butDataSplit_Export_delzd
+            // 
+            this.butDataSplit_Export_delzd.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.butDataSplit_Export_delzd.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.butDataSplit_Export_delzd.Location = new System.Drawing.Point(68, 167);
+            this.butDataSplit_Export_delzd.Name = "butDataSplit_Export_delzd";
+            this.butDataSplit_Export_delzd.Size = new System.Drawing.Size(75, 23);
+            this.butDataSplit_Export_delzd.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.butDataSplit_Export_delzd.TabIndex = 3;
+            this.butDataSplit_Export_delzd.Text = "<<";
+            this.butDataSplit_Export_delzd.Click += new System.EventHandler(this.butDataSplit_Import_delzd_Click);
+            // 
+            // butDataSplit_Export_add
+            // 
+            this.butDataSplit_Export_add.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.butDataSplit_Export_add.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.butDataSplit_Export_add.Location = new System.Drawing.Point(68, 119);
+            this.butDataSplit_Export_add.Name = "butDataSplit_Export_add";
+            this.butDataSplit_Export_add.Size = new System.Drawing.Size(75, 23);
+            this.butDataSplit_Export_add.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.butDataSplit_Export_add.TabIndex = 2;
+            this.butDataSplit_Export_add.Text = ">>";
+            this.butDataSplit_Export_add.Click += new System.EventHandler(this.butDataSplit_Import_add_Click);
+            // 
+            // combDataSplit_Export_Xlsid
+            // 
+            this.combDataSplit_Export_Xlsid.DisplayMember = "Text";
+            this.combDataSplit_Export_Xlsid.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.combDataSplit_Export_Xlsid.FormattingEnabled = true;
+            this.combDataSplit_Export_Xlsid.ItemHeight = 15;
+            this.combDataSplit_Export_Xlsid.Location = new System.Drawing.Point(53, 75);
+            this.combDataSplit_Export_Xlsid.Name = "combDataSplit_Export_Xlsid";
+            this.combDataSplit_Export_Xlsid.Size = new System.Drawing.Size(121, 21);
+            this.combDataSplit_Export_Xlsid.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.combDataSplit_Export_Xlsid.TabIndex = 1;
+            // 
+            // combDataSplit_Export_table
+            // 
+            this.combDataSplit_Export_table.DisplayMember = "Text";
+            this.combDataSplit_Export_table.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.combDataSplit_Export_table.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.combDataSplit_Export_table.FormattingEnabled = true;
+            this.combDataSplit_Export_table.ItemHeight = 15;
+            this.combDataSplit_Export_table.Location = new System.Drawing.Point(53, 23);
+            this.combDataSplit_Export_table.Name = "combDataSplit_Export_table";
+            this.combDataSplit_Export_table.Size = new System.Drawing.Size(121, 21);
+            this.combDataSplit_Export_table.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.combDataSplit_Export_table.TabIndex = 0;
+            this.combDataSplit_Export_table.SelectedIndexChanged += new System.EventHandler(this.combDataSplit_Export_table_SelectedIndexChanged);
+            // 
+            // tabDataSplit_Table
+            // 
+            this.tabDataSplit_Table.AttachedControl = this.tabControlPanel8;
+            this.tabDataSplit_Table.Name = "tabDataSplit_Table";
+            this.tabDataSplit_Table.Text = "导出表设置";
             // 
             // tabControlPanel7
             // 
@@ -661,6 +787,7 @@
             this.rabDataSplit_File_zd.TabIndex = 2;
             this.rabDataSplit_File_zd.Text = "字段为文件名 (每卷为一个文件)";
             this.rabDataSplit_File_zd.UseVisualStyleBackColor = true;
+            this.rabDataSplit_File_zd.Click += new System.EventHandler(this.rabDataSplit_File_zd_Click);
             // 
             // rabDataSplit_File_anjuan
             // 
@@ -784,132 +911,6 @@
             this.tabDataSplit_gz.AttachedControl = this.tabControlPanel7;
             this.tabDataSplit_gz.Name = "tabDataSplit_gz";
             this.tabDataSplit_gz.Text = "文件夹文件名规则";
-            // 
-            // tabControlPanel8
-            // 
-            this.tabControlPanel8.Controls.Add(this.chkDataSplit_ExportTable);
-            this.tabControlPanel8.Controls.Add(this.butDataSplit_Export_DelInfo);
-            this.tabControlPanel8.Controls.Add(this.butDataSplit_Export_Save);
-            this.tabControlPanel8.Controls.Add(this.label20);
-            this.tabControlPanel8.Controls.Add(this.butDataSplit_Export_delzd);
-            this.tabControlPanel8.Controls.Add(this.butDataSplit_Export_add);
-            this.tabControlPanel8.Controls.Add(this.combDataSplit_Export_Xlsid);
-            this.tabControlPanel8.Controls.Add(this.combDataSplit_Export_table);
-            this.tabControlPanel8.DisabledBackColor = System.Drawing.Color.Empty;
-            this.tabControlPanel8.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControlPanel8.Location = new System.Drawing.Point(0, 26);
-            this.tabControlPanel8.Name = "tabControlPanel8";
-            this.tabControlPanel8.Padding = new System.Windows.Forms.Padding(1);
-            this.tabControlPanel8.Size = new System.Drawing.Size(437, 317);
-            this.tabControlPanel8.Style.BackColor1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(142)))), ((int)(((byte)(179)))), ((int)(((byte)(231)))));
-            this.tabControlPanel8.Style.BackColor2.Color = System.Drawing.Color.FromArgb(((int)(((byte)(223)))), ((int)(((byte)(237)))), ((int)(((byte)(254)))));
-            this.tabControlPanel8.Style.Border = DevComponents.DotNetBar.eBorderType.SingleLine;
-            this.tabControlPanel8.Style.BorderColor.Color = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(97)))), ((int)(((byte)(156)))));
-            this.tabControlPanel8.Style.BorderSide = ((DevComponents.DotNetBar.eBorderSide)(((DevComponents.DotNetBar.eBorderSide.Left | DevComponents.DotNetBar.eBorderSide.Right) 
-            | DevComponents.DotNetBar.eBorderSide.Bottom)));
-            this.tabControlPanel8.Style.GradientAngle = 90;
-            this.tabControlPanel8.TabIndex = 5;
-            this.tabControlPanel8.TabItem = this.tabDataSplit_Table;
-            // 
-            // chkDataSplit_ExportTable
-            // 
-            this.chkDataSplit_ExportTable.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.chkDataSplit_ExportTable.FormattingEnabled = true;
-            this.chkDataSplit_ExportTable.Location = new System.Drawing.Point(218, 20);
-            this.chkDataSplit_ExportTable.Name = "chkDataSplit_ExportTable";
-            this.chkDataSplit_ExportTable.Size = new System.Drawing.Size(155, 36);
-            this.chkDataSplit_ExportTable.TabIndex = 6;
-            // 
-            // butDataSplit_Export_DelInfo
-            // 
-            this.butDataSplit_Export_DelInfo.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.butDataSplit_Export_DelInfo.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.butDataSplit_Export_DelInfo.Location = new System.Drawing.Point(68, 268);
-            this.butDataSplit_Export_DelInfo.Name = "butDataSplit_Export_DelInfo";
-            this.butDataSplit_Export_DelInfo.Size = new System.Drawing.Size(75, 39);
-            this.butDataSplit_Export_DelInfo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.butDataSplit_Export_DelInfo.TabIndex = 5;
-            this.butDataSplit_Export_DelInfo.Text = "删除";
-            this.butDataSplit_Export_DelInfo.Click += new System.EventHandler(this.butDataSplit_Export_DelInfo_Click);
-            // 
-            // butDataSplit_Export_Save
-            // 
-            this.butDataSplit_Export_Save.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.butDataSplit_Export_Save.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.butDataSplit_Export_Save.Location = new System.Drawing.Point(68, 216);
-            this.butDataSplit_Export_Save.Name = "butDataSplit_Export_Save";
-            this.butDataSplit_Export_Save.Size = new System.Drawing.Size(75, 39);
-            this.butDataSplit_Export_Save.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.butDataSplit_Export_Save.TabIndex = 4;
-            this.butDataSplit_Export_Save.Text = "保存";
-            this.butDataSplit_Export_Save.Click += new System.EventHandler(this.butDataSplit_Export_Save_Click);
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.BackColor = System.Drawing.Color.Transparent;
-            this.label20.Location = new System.Drawing.Point(60, 57);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(107, 12);
-            this.label20.TabIndex = 0;
-            this.label20.Text = "绑定Xls工作薄ID：";
-            // 
-            // butDataSplit_Export_delzd
-            // 
-            this.butDataSplit_Export_delzd.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.butDataSplit_Export_delzd.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.butDataSplit_Export_delzd.Location = new System.Drawing.Point(68, 167);
-            this.butDataSplit_Export_delzd.Name = "butDataSplit_Export_delzd";
-            this.butDataSplit_Export_delzd.Size = new System.Drawing.Size(75, 23);
-            this.butDataSplit_Export_delzd.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.butDataSplit_Export_delzd.TabIndex = 3;
-            this.butDataSplit_Export_delzd.Text = "<<";
-            this.butDataSplit_Export_delzd.Click += new System.EventHandler(this.butDataSplit_Import_delzd_Click);
-            // 
-            // butDataSplit_Export_add
-            // 
-            this.butDataSplit_Export_add.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.butDataSplit_Export_add.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.butDataSplit_Export_add.Location = new System.Drawing.Point(68, 119);
-            this.butDataSplit_Export_add.Name = "butDataSplit_Export_add";
-            this.butDataSplit_Export_add.Size = new System.Drawing.Size(75, 23);
-            this.butDataSplit_Export_add.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.butDataSplit_Export_add.TabIndex = 2;
-            this.butDataSplit_Export_add.Text = ">>";
-            this.butDataSplit_Export_add.Click += new System.EventHandler(this.butDataSplit_Import_add_Click);
-            // 
-            // combDataSplit_Export_Xlsid
-            // 
-            this.combDataSplit_Export_Xlsid.DisplayMember = "Text";
-            this.combDataSplit_Export_Xlsid.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.combDataSplit_Export_Xlsid.FormattingEnabled = true;
-            this.combDataSplit_Export_Xlsid.ItemHeight = 15;
-            this.combDataSplit_Export_Xlsid.Location = new System.Drawing.Point(53, 75);
-            this.combDataSplit_Export_Xlsid.Name = "combDataSplit_Export_Xlsid";
-            this.combDataSplit_Export_Xlsid.Size = new System.Drawing.Size(121, 21);
-            this.combDataSplit_Export_Xlsid.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.combDataSplit_Export_Xlsid.TabIndex = 1;
-            // 
-            // combDataSplit_Export_table
-            // 
-            this.combDataSplit_Export_table.DisplayMember = "Text";
-            this.combDataSplit_Export_table.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.combDataSplit_Export_table.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.combDataSplit_Export_table.FormattingEnabled = true;
-            this.combDataSplit_Export_table.ItemHeight = 15;
-            this.combDataSplit_Export_table.Location = new System.Drawing.Point(53, 23);
-            this.combDataSplit_Export_table.Name = "combDataSplit_Export_table";
-            this.combDataSplit_Export_table.Size = new System.Drawing.Size(121, 21);
-            this.combDataSplit_Export_table.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.combDataSplit_Export_table.TabIndex = 0;
-            this.combDataSplit_Export_table.SelectedIndexChanged += new System.EventHandler(this.combDataSplit_Export_table_SelectedIndexChanged);
-            // 
-            // tabDataSplit_Table
-            // 
-            this.tabDataSplit_Table.AttachedControl = this.tabControlPanel8;
-            this.tabDataSplit_Table.Name = "tabDataSplit_Table";
-            this.tabDataSplit_Table.Text = "导出表设置";
             // 
             // groupBox3
             // 
@@ -1058,8 +1059,8 @@
             // 
             this.tabContrPrintxyCol.BackColor = System.Drawing.Color.Transparent;
             this.tabContrPrintxyCol.CanReorderTabs = true;
-            this.tabContrPrintxyCol.Controls.Add(this.tabControlPanel1);
             this.tabContrPrintxyCol.Controls.Add(this.tabContrPrintpanlesqlXy);
+            this.tabContrPrintxyCol.Controls.Add(this.tabControlPanel1);
             this.tabContrPrintxyCol.Controls.Add(this.tabContrPrintPanlcolshow);
             this.tabContrPrintxyCol.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabContrPrintxyCol.Location = new System.Drawing.Point(3, 17);
@@ -3186,14 +3187,14 @@
             this.groupBox4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.tabConDataSplit)).EndInit();
             this.tabConDataSplit.ResumeLayout(false);
+            this.tabControlPanel8.ResumeLayout(false);
+            this.tabControlPanel8.PerformLayout();
             this.tabControlPanel7.ResumeLayout(false);
             this.tabControlPanel7.PerformLayout();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
-            this.tabControlPanel8.ResumeLayout(false);
-            this.tabControlPanel8.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.grDataSpiteTable.ResumeLayout(false);
             this.grDataSpiteTable.PerformLayout();

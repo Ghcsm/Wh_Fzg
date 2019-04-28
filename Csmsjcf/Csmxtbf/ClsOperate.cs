@@ -96,10 +96,10 @@ namespace Csmsjcf
                 return "错误：后台未设置文件规则表";
             if (ClsFrmInfoPar.FileNamesn == 3) {
                 DataTable dt =
-                    Common.GetDataExporTableFileName(archid, ClsDataSplit.ClsFileTable, ClsDataSplit.ClsFileNamecol);
+                    Common.GetDataExporTableFileName(archid, ClsDataSplit.ClsFileTable, ClsDataSplit.ClsFileDlname);
                 if (dt == null || dt.Rows.Count <= 0)
                     return "错误：未找到文件名规则表中的字段信息";
-                str = dt.Rows[0][1].ToString();
+                str = dt.Rows[0][0].ToString();
             }
             return str;
         }

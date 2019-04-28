@@ -43,6 +43,7 @@ namespace Csmsjcf
                     ClsDataSplit.ClsFileNamecol = file;
             }
             ClsDataSplit.ClsFilezero = Convert.ToBoolean(dt.Rows[0][8].ToString());
+            ClsDataSplit.ClsFileDlname = dt.Rows[0][9].ToString();
             GetExportTable();
         }
 

@@ -21,6 +21,7 @@ namespace Csmsjcf
         public static string ClsFileNameHou { get; set; }
         public static string ClsFileNamecol { get; set; }
         public static bool ClsFilezero { get; set; }
+        public static string ClsFileDlname { get; set; }
 
         public static List<string> ClsExportTable = new List<string>();
         public static List<string> ClsExportCol = new List<string>();

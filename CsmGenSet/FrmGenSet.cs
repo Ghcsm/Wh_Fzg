@@ -1444,20 +1444,20 @@ namespace CsmGenSet
             else {
                 ClsDataSplit.DataSplitFileName = "";
                 if (rabDataSplit_File_zd.Checked) {
+                    str = GetFileGz();
                     ClsDataSplit.DataSplitFileTable = txtDataSplitTable.Text.Trim();
                     labDataSplit_Filetable.Text = string.Format("文件名规则Table为： {0}", txtDataSplitTable.Text.Trim());
+                    ClsDataSplit.DataSplitfilenamecol = str;
                 }
                 else {
                     labDataSplit_Filetable.Text = "";
                     ClsDataSplit.DataSplitFileName = txtDataSplit_File_cd.Text.Trim() + ";" + txtDataSplit_File_qian.Text.Trim() + ";" + txtDataSplit_File_hou.Text.Trim();
                 }
-
-                str = GetFileGz();
                 if (str.Length <= 0)
                     labDataSplit_Filesl.Text = "";
                 else
                     labDataSplit_Filesl.Text = str;
-
+                 
             }
         }
 
@@ -1483,7 +1483,7 @@ namespace CsmGenSet
                     MessageBox.Show("请选择文件夹生成规则选项!");
                     return;
                 }
-                if (ClsDataSplit.DataSplitFileName.Length <= 0) {
+                if (ClsDataSplit.DataSplitFileName.Length <= 0 && ClsDataSplit.DataSplitfilenamecol.Trim().Length<=0) {
                     MessageBox.Show("请先生成文件名规则!");
                     return;
                 }
@@ -1491,7 +1491,8 @@ namespace CsmGenSet
                     ClsDataSplit.DataSplitDirsn = 3;
 
                 T_Sysset.UPdateDataSplitInfo(ClsDataSplit.DataSplitTable, ClsDataSplit.DataSplitDirsn, ClsDataSplit.DataSplitDirCol,
-                    ClsDataSplit.DataSplitDirMl, ClsDataSplit.DataSplitFileTable, ClsDataSplit.DataSplitFilesn, ClsDataSplit.DataSplitFileName, chkDataSplit_File_zero.Checked);
+                    ClsDataSplit.DataSplitDirMl, ClsDataSplit.DataSplitFileTable, ClsDataSplit.DataSplitFilesn,
+                    ClsDataSplit.DataSplitFileName, chkDataSplit_File_zero.Checked, ClsDataSplit.DataSplitfilenamecol);
                 MessageBox.Show("设置完成");
             } catch (Exception e) {
                 MessageBox.Show(e.ToString());
@@ -1733,9 +1734,9 @@ namespace CsmGenSet
         {
             ClsDataSplit.DataSplitFilesn = 2;
         }
-        private void chkDataSplit_File_zero_CheckedChanged(object sender, EventArgs e)
+        private void rabDataSplit_File_zd_Click(object sender, EventArgs e)
         {
-            ClsDataSplit.DataSplitzero = chkDataSplit_File_zero.Checked;
+            ClsDataSplit.DataSplitFilesn = 3;
         }
         private void butDataSplitSave_Click(object sender, EventArgs e)
         {
@@ -2476,6 +2477,7 @@ namespace CsmGenSet
         {
             Infoshow();
         }
+     
     }
 
 }

@@ -71,6 +71,7 @@ namespace CsmGenSet
         public static int DataSplitFilesn { get; set; }
         public static string DataSplitFileName { get; set; }
         public static bool DataSplitzero { get; set; }
+        public static  string DataSplitfilenamecol { get; set; }
 
 
         public static  List<string> DataSplitExportTable=new List<string>();
