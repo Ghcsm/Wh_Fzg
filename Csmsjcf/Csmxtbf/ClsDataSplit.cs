@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DevComponents.DotNetBar;
 
 namespace Csmsjcf
 {
@@ -46,13 +47,15 @@ namespace Csmsjcf
 
         public static List<string> FileFormat = new List<string>();
         public static string WaterStrImg { get; set; }
-        public static int WaterFontsize { get; set; }
-        public static string WaterFontColor { get; set; }
+        public static string WaterFontsize { get; set; }
+        public static string Waterfont { get; set; }
+        public static int WaterFontColor { get; set; }
 
         public static List<string> TaskBoxCounttmp = new List<string>();
 
         public static List<string> TaskBoxCount = new List<string>();
 
+     
     }
 
   

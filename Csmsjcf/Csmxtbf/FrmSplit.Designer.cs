@@ -105,6 +105,8 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.FdigXls = new System.Windows.Forms.OpenFileDialog();
             this.fBdigImgPath = new System.Windows.Forms.FolderBrowserDialog();
+            this.fontDialog = new System.Windows.Forms.FontDialog();
+            this.colorDialog = new System.Windows.Forms.ColorDialog();
             ((System.ComponentModel.ISupportInitialize)(this.superTabControl1)).BeginInit();
             this.superTabControl1.SuspendLayout();
             this.superTabControlPanel1.SuspendLayout();
@@ -619,6 +621,7 @@
             this.lab_gr2_7_font_color.Size = new System.Drawing.Size(77, 12);
             this.lab_gr2_7_font_color.TabIndex = 2;
             this.lab_gr2_7_font_color.Text = "设置字体颜色";
+            this.lab_gr2_7_font_color.Click += new System.EventHandler(this.lab_gr2_7_font_color_Click);
             // 
             // lab_gr2_7_font_size
             // 
@@ -628,6 +631,7 @@
             this.lab_gr2_7_font_size.Size = new System.Drawing.Size(77, 12);
             this.lab_gr2_7_font_size.TabIndex = 2;
             this.lab_gr2_7_font_size.Text = "设置字体字号";
+            this.lab_gr2_7_font_size.Click += new System.EventHandler(this.lab_gr2_7_font_size_Click);
             // 
             // gr2_6
             // 
@@ -1149,5 +1153,7 @@
         private System.Windows.Forms.FolderBrowserDialog fBdigImgPath;
         private DevComponents.DotNetBar.ButtonX but_gr2_5_del;
         private System.Windows.Forms.ListBox listB_gr3_2_log;
+        private System.Windows.Forms.FontDialog fontDialog;
+        private System.Windows.Forms.ColorDialog colorDialog;
     }
 }

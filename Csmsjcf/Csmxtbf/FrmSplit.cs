@@ -194,6 +194,10 @@ namespace Csmsjcf
                         txt_gr2_7_wenzi.Focus();
                         return false;
                     }
+                    if (ClsFrmInfoPar.WaterFontsize.Trim().Length <= 0 || ClsFrmInfoPar.WaterFontColor <= 0) {
+                        MessageBox.Show("请设置字号或字体颜色");
+                        return false;
+                    }
                     ClsFrmInfoPar.WaterStrImg = txt_gr2_7_wenzi.Text.Trim();
                 }
                 if (rab_gr2_7_img.Checked) {
@@ -204,10 +208,7 @@ namespace Csmsjcf
                     }
                     ClsFrmInfoPar.WaterStrImg = txt_gr2_7_img.Text.Trim();
                 }
-                if (ClsFrmInfoPar.WaterFontsize <= 0 || ClsFrmInfoPar.WaterFontColor.Trim().Length <= 0) {
-                    MessageBox.Show("请设置字号或字体颜色");
-                    return false;
-                }
+
             }
             if (rab_gr2_4_duli.Checked) {
                 if (chk_Gr2_4_jpg.Checked) {
@@ -300,6 +301,28 @@ namespace Csmsjcf
             Addboxsn();
         }
 
+        private void lab_gr2_7_font_size_Click(object sender, EventArgs e)
+        {
+            if (fontDialog.ShowDialog() == DialogResult.OK) {
+                ClsFrmInfoPar.Waterfont = fontDialog.Font.Name;
+                ClsFrmInfoPar.WaterFontsize = fontDialog.Font.Size.ToString();
+                return;
+            }
+
+            ClsFrmInfoPar.Waterfont = "";
+            ClsFrmInfoPar.WaterFontsize = "";
+
+        }
+
+        private void lab_gr2_7_font_color_Click(object sender, EventArgs e)
+        {
+            if (colorDialog.ShowDialog() == DialogResult.OK) {
+                ClsFrmInfoPar.WaterFontColor = Convert.ToInt32(colorDialog.Color.ToArgb());
+                return;
+            }
+            ClsFrmInfoPar.WaterFontColor = 0;
+        }
+
         private void but_gr2_5_del_Click(object sender, EventArgs e)
         {
             Delboxsn();
@@ -388,6 +411,14 @@ namespace Csmsjcf
                     ListBshowInfo(xc, boxsn, archno, "警告,错误线程退出");
                     continue;
                 }
+                if (Himg.GetFilePage(str).ToString() != pages) {
+                    str = "图像页码和登记页码不一致!";
+                    lock (str) {
+                        ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
+                    }
+                    ListBshowInfo(xc, boxsn, archno, "警告,错误线程退出");
+                    continue;
+                }
                 ListBshowInfo(xc, boxsn, archno, "准备进行数据转换");
                 List<string> lsinfopdf = new List<string>();
                 try {
@@ -466,7 +497,7 @@ namespace Csmsjcf
                             }
                         }
 
-                        //文件为每案卷或每文件夹 起始1   
+                        //文件为每案卷或每文件夹 起始1   测试完成 
                         else if (ClsFrmInfoPar.FileNamesn == 2 || ClsFrmInfoPar.FileNamesn == 1) {
 
                             if (ClsFrmInfoPar.DirNamesn != 2) {
@@ -495,7 +526,6 @@ namespace Csmsjcf
                                     continue;
                                 }
                             }
-
                             for (int d = 0; d < dirtTable.Rows.Count; d++) {
                                 int p1 = 0;
                                 int p2 = 0;
@@ -508,9 +538,9 @@ namespace Csmsjcf
                                     p2 = Convert.ToInt32(pages);
                                 }
 
-                                //每卷为1
+                                //每卷为1 已测完成
                                 if (ClsFrmInfoPar.FileNamesn == 2) {
-                                    //为多页时 正测
+                                    //为多页时 已测完成
                                     if (ClsFrmInfoPar.FileFomat == 2) {
                                         string dirnamenew = "";
                                         if (ClsFrmInfoPar.DirNamesn == 1) {
@@ -828,7 +858,7 @@ namespace Csmsjcf
                 ClsFrmInfoPar.ExportType = 2;
             else ClsFrmInfoPar.ExportType = 3;
         }
-      
+
 
         private void comb_gr2_6_ocr_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -906,8 +936,9 @@ namespace Csmsjcf
 
 
 
+
         #endregion
 
-      
+    
     }
 }
