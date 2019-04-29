@@ -19,6 +19,12 @@ namespace Csmsjcf
             ClsDataSplit.ClsFilesn = 0;
             ClsDataSplit.ClsdirCol = "";
             ClsDataSplit.ClsdirMl = "";
+            ClsDataSplit.ClsFileNmaecd = 0;
+            ClsDataSplit.ClsFileNameQian = "";
+            ClsDataSplit.ClsFileNameHou = "";
+            ClsDataSplit.ClsFileNamecol = "";
+            ClsDataSplit.ClsFileDlname = "";
+            ClsDataSplit.ClsFilezero = false;
             DataTable dt = T_Sysset.GetDataSplit();
             if (dt == null || dt.Rows.Count <= 0)
                 return;

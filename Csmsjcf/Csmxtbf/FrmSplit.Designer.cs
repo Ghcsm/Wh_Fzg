@@ -31,7 +31,7 @@
             this.superTabControlPanel1 = new DevComponents.DotNetBar.SuperTabControlPanel();
             this.gr1 = new DevComponents.DotNetBar.Controls.GroupPanel();
             this.gr3 = new System.Windows.Forms.GroupBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.gr3_3 = new System.Windows.Forms.GroupBox();
             this.butLog = new DevComponents.DotNetBar.ButtonX();
             this.butStart = new DevComponents.DotNetBar.ButtonX();
             this.gr3_2 = new System.Windows.Forms.GroupBox();
@@ -112,7 +112,7 @@
             this.superTabControlPanel1.SuspendLayout();
             this.gr1.SuspendLayout();
             this.gr3.SuspendLayout();
-            this.groupBox2.SuspendLayout();
+            this.gr3_3.SuspendLayout();
             this.gr3_2.SuspendLayout();
             this.gr3_1.SuspendLayout();
             this.gr2.SuspendLayout();
@@ -216,7 +216,7 @@
             this.gr3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.gr3.BackColor = System.Drawing.Color.Transparent;
-            this.gr3.Controls.Add(this.groupBox2);
+            this.gr3.Controls.Add(this.gr3_3);
             this.gr3.Controls.Add(this.gr3_2);
             this.gr3.Controls.Add(this.gr3_1);
             this.gr3.Location = new System.Drawing.Point(489, 9);
@@ -226,17 +226,17 @@
             this.gr3.TabStop = false;
             this.gr3.Text = "参数设置";
             // 
-            // groupBox2
+            // gr3_3
             // 
-            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.groupBox2.Controls.Add(this.butLog);
-            this.groupBox2.Controls.Add(this.butStart);
-            this.groupBox2.Location = new System.Drawing.Point(6, 414);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(363, 93);
-            this.groupBox2.TabIndex = 2;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "相关操作";
+            this.gr3_3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.gr3_3.Controls.Add(this.butLog);
+            this.gr3_3.Controls.Add(this.butStart);
+            this.gr3_3.Location = new System.Drawing.Point(6, 414);
+            this.gr3_3.Name = "gr3_3";
+            this.gr3_3.Size = new System.Drawing.Size(363, 93);
+            this.gr3_3.TabIndex = 2;
+            this.gr3_3.TabStop = false;
+            this.gr3_3.Text = "相关操作";
             // 
             // butLog
             // 
@@ -875,7 +875,6 @@
             this.comb_gr2_2_task.Size = new System.Drawing.Size(107, 21);
             this.comb_gr2_2_task.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.comb_gr2_2_task.TabIndex = 3;
-            this.comb_gr2_2_task.SelectedIndexChanged += new System.EventHandler(this.comb_gr2_2_task_SelectedIndexChanged);
             // 
             // label2
             // 
@@ -1044,7 +1043,7 @@
             this.superTabControlPanel1.ResumeLayout(false);
             this.gr1.ResumeLayout(false);
             this.gr3.ResumeLayout(false);
-            this.groupBox2.ResumeLayout(false);
+            this.gr3_3.ResumeLayout(false);
             this.gr3_2.ResumeLayout(false);
             this.gr3_1.ResumeLayout(false);
             this.gr3_1.PerformLayout();
@@ -1145,7 +1144,7 @@
         private DevComponents.DotNetBar.SuperTabItem TabDatedb;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.RadioButton rab_gr2_7_wu;
-        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.GroupBox gr3_3;
         private DevComponents.DotNetBar.ButtonX butLog;
         private DevComponents.DotNetBar.ButtonX butStart;
         private System.Windows.Forms.RadioButton rab_gr2_8_ziduAndmulu;

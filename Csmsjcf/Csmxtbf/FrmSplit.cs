@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -18,6 +19,7 @@ namespace Csmsjcf
         }
 
         private Hljsimage Himg;
+
         #region baseInfo
 
         private void CombAddinfo()
@@ -283,6 +285,8 @@ namespace Csmsjcf
                     return false;
                 }
             }
+
+            ClsFrmInfoPar.Taskxc = Convert.ToInt32(comb_gr2_2_task.Text.Trim());
             return true;
         }
 
@@ -333,11 +337,12 @@ namespace Csmsjcf
 
 
         #region init
-        private void ListBshowInfo(string xc, string boxsn, string archno, string str)
+        private void ListBshowInfo(int xc, string boxsn, string archno, string str)
         {
-            string log = "线程：" + xc + "--> 盒号:" + boxsn + "-->  卷号:" + archno + " --> " + str;
+            Application.DoEvents();
+            string log = "线程：" + xc.ToString() + "--> 盒号:" + boxsn + "-->卷号:" + archno + " --> " + str;
             lock (log) {
-                this.BeginInvoke(new Action(() =>
+                listB_gr3_2_log.Invoke(new Action(() =>
                 {
                     listB_gr3_2_log.BeginUpdate();
                     listB_gr3_2_log.Items.Add(log);
@@ -347,11 +352,11 @@ namespace Csmsjcf
             }
         }
 
-        private void Init(string xc, string box, string arno)
+        private void Init(int xc, string box, string arno)
         {
             DataTable dtArchNo = null;
             string str = "";
-            Thread.Sleep(1000);
+            Thread.Sleep(200);
             if (ClsFrmInfoPar.OneJuan == 0)
                 dtArchNo = ClsOperate.SelectSql(box.ToString());
             else
@@ -745,36 +750,78 @@ namespace Csmsjcf
                     }
                     ListBshowInfo(xc, boxsn, archno, "警告,错误线程退出");
                 } finally {
-                    try
-                    {
+                    try {
                         File.Delete(Downfile);
                         Directory.Delete(Path.GetDirectoryName(Downfile));
-                    }
-                    catch {}
+                    } catch { }
                     ListBshowInfo(xc, boxsn, archno, "线程退出");
                 }
 
             }
         }
 
-
-        private void StartTask()
+        private void TxtEnd(bool x)
         {
-            for (int i = 0; i <= ClsFrmInfoPar.Taskxc; i++) {
-                lock (ClsFrmInfoPar.TaskBoxCount) {
-                    Thread.Sleep(1000);
-                    if (ClsFrmInfoPar.TaskBoxCount.Count > 0) {
-                        string b = ClsFrmInfoPar.TaskBoxCount[0];
-                        ClsFrmInfoPar.TaskBoxCount.RemoveAt(0);
-                        ThreadPool.QueueUserWorkItem(h =>
-                            {
-                                Init((i + 1).ToString(), b, "");
-                                Thread.Sleep(1000);
-                                StartTask();
-                            });
+
+            if (x) {
+                this.BeginInvoke(new Action(() =>
+                    {
+                        gr2.Enabled = true;
+                        gr3_1.Enabled = true;
+                        gr3_3.Enabled = true;
                     }
-                }
+                ));
+                return;
             }
+            this.BeginInvoke(new Action(() =>
+                {
+                    gr2.Enabled = false;
+                    gr3_1.Enabled = false;
+                    gr3_3.Enabled = false;
+                }
+            ));
+        }
+
+
+        private void StartTaskxc()
+        {
+            AutoResetEvent[] waitEnents = new AutoResetEvent[ClsFrmInfoPar.Taskxc];
+            for (int i = 1; i <= ClsFrmInfoPar.Taskxc; i++) {
+
+                waitEnents[i - 1] = new AutoResetEvent(false);
+                StatTask(i, waitEnents[i - 1]);
+            }
+            AutoResetEvent.WaitAll(waitEnents);
+            TxtEnd(true);
+
+        }
+
+        private void StatTask(int id, AutoResetEvent obj)
+        {
+            lock (ClsFrmInfoPar.TaskBoxCount) {
+                if (ClsFrmInfoPar.TaskBoxCount.Count > 0) {
+                    string b = ClsFrmInfoPar.TaskBoxCount[0];
+                    ClsFrmInfoPar.TaskBoxCount.RemoveAt(0);
+                    ThreadPool.QueueUserWorkItem(h =>
+                    {
+                        Init(id
+                          , b, "");
+                        Thread.Sleep(1000);
+                        StatTask(id, obj);
+
+                    });
+                }
+                else 
+                 obj.Set();
+            }
+        }
+
+
+        private void Stattask()
+        {
+            Task t = Task.Run(() => { Init(1, txt_gr2_5_box1.Text.Trim(), txt_gr2_5_juan.Text.Trim()); });
+            Task.WaitAll(t);
+            TxtEnd(true);
         }
 
         #endregion
@@ -783,14 +830,16 @@ namespace Csmsjcf
         {
             if (!IsTxtInfo())
                 return;
+            TxtEnd(false);
             if (ClsFrmInfoPar.OneJuan == 1) {
-                Task.Run(() => { Init("1", txt_gr2_5_box1.Text.Trim(), txt_gr2_5_juan.Text.Trim()); });
+                Action Act = Stattask;
+                Act.BeginInvoke(null, null);
                 return;
             }
             else {
                 if (!ClsOperate.AddTask())
                     return;
-                Action Act = StartTask;
+                Action Act = StartTaskxc;
                 Act.BeginInvoke(null, null);
             }
 
@@ -812,10 +861,6 @@ namespace Csmsjcf
             }
             else MessageBox.Show("日志文件不存在!");
 
-        }
-        private void comb_gr2_2_task_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            ClsFrmInfoPar.Taskxc = comb_gr2_2_task.SelectedIndex;
         }
         private void but_gr3_1_Xls_Click(object sender, EventArgs e)
         {
