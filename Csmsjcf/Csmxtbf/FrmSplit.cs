@@ -106,7 +106,11 @@ namespace Csmsjcf
         private bool IsTxtInfo()
         {
             ClsFrmInfoPar.OneJuan = 0;
-            if (rab_Gr2_3_tb.Checked || rab_Gr2_3_xls.Checked) {
+            if (rab_gr2_1_Zengliang.Checked)
+                ClsFrmInfoPar.ConverMode = 1;
+            if (rab_gr2_1_Newzhuanhuan.Checked)
+                ClsFrmInfoPar.ConverMode = 2;
+            if (rab_Gr2_3_tb.Checked) {
                 if (comb_gr2_2_task.SelectedIndex > 0) {
                     MessageBox.Show("只有在单转图像时才可以使用多任务");
                     return false;
@@ -115,7 +119,21 @@ namespace Csmsjcf
                     MessageBox.Show("请先后台设置要导出的数据库表及字段!");
                     return false;
                 }
+                ClsFrmInfoPar.ExportType = 1;
             }
+            if (rab_Gr2_3_xls.Checked) {
+                if (comb_gr2_2_task.SelectedIndex > 0) {
+                    MessageBox.Show("只有在单转图像时才可以使用多任务");
+                    return false;
+                }
+                if (ClsDataSplit.ClsExportTable.Count <= 0) {
+                    MessageBox.Show("请先后台设置要导出的数据库表及字段!");
+                    return false;
+                }
+                ClsFrmInfoPar.ExportType = 3;
+            }
+            if (rab_Gr2_3_img.Checked)
+                ClsFrmInfoPar.ExportType = 2;
             if (chk_gr2_5_juan.Checked) {
                 if (txt_gr2_5_box1.Text.Trim().Length <= 0 || txt_gr2_5_box2.Text.Trim().Length <= 0 ||
                     txt_gr2_5_juan.Text.Trim().Length <= 0) {
@@ -363,7 +381,7 @@ namespace Csmsjcf
                 dtArchNo = ClsOperate.SelectSql(box, arno);
             if (dtArchNo == null || dtArchNo.Rows.Count <= 0) {
                 str = "错误：未找到已质检盒号信息或已拆分 -->盒号:" + box;
-                lock (str) {
+                lock (ClsFrmInfoPar.Filelock) {
                     ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
                     ListBshowInfo(xc, "0", "0", "警告,错误线程退出");
                     return;
@@ -377,8 +395,8 @@ namespace Csmsjcf
                 string imgfile = dtArchNo.Rows[i][4].ToString();
                 ListBshowInfo(xc, boxsn, archno, "正在查询信息");
                 if (Convert.ToInt32(pages) <= 0 || imgfile.Trim().Length <= 0) {
-                    str = "错误：此卷页码不正确或数据库中文件名不正确  -->盒号:" + boxsn + " -->卷号" + archno;
-                    lock (str) {
+                    lock (ClsFrmInfoPar.Filelock) {
+                        str = "错误：此卷页码不正确或数据库中文件名不正确  -->盒号:" + boxsn + " -->卷号" + archno;
                         ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
                     }
                     ListBshowInfo(xc, boxsn, archno, "警告,错误线程退出");
@@ -388,7 +406,7 @@ namespace Csmsjcf
                     ListBshowInfo(xc, boxsn, archno, "正在写入Xls信息");
                     str = ClsOperate.GetAnjuanInfo(archid, ClsOperate.XlsPath());
                     if (str.IndexOf("错误") >= 0) {
-                        lock (str) {
+                        lock (ClsFrmInfoPar.Filelock) {
                             ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
                         }
                         ListBshowInfo(xc, boxsn, archno, "警告,错误线程退出");
@@ -399,7 +417,7 @@ namespace Csmsjcf
                     ListBshowInfo(xc, boxsn, archno, "正在写入Xls信息");
                     str = ClsOperate.GetAnjuanInfo(archid, ClsOperate.XlsPath());
                     if (str.IndexOf("错误") >= 0) {
-                        lock (str) {
+                        lock (ClsFrmInfoPar.Filelock) {
                             ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
                         }
                         ListBshowInfo(xc, boxsn, archno, "警告,错误线程退出");
@@ -410,7 +428,7 @@ namespace Csmsjcf
                 str = ClsOperate.DownFile(ClsFrmInfoPar.YimgPath, imgfile);
                 string Downfile = str;
                 if (str.IndexOf("错误") >= 0) {
-                    lock (str) {
+                    lock (ClsFrmInfoPar.Filelock) {
                         ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
                     }
                     ListBshowInfo(xc, boxsn, archno, "警告,错误线程退出");
@@ -418,7 +436,7 @@ namespace Csmsjcf
                 }
                 if (Himg.GetFilePage(str).ToString() != pages) {
                     str = "图像页码和登记页码不一致!";
-                    lock (str) {
+                    lock (ClsFrmInfoPar.Filelock) {
                         ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
                     }
                     ListBshowInfo(xc, boxsn, archno, "警告,错误线程退出");
@@ -435,7 +453,7 @@ namespace Csmsjcf
                         if (ClsFrmInfoPar.FileNamesn == 3) {
                             string dir = ClsOperate.GetDirColName(archid);
                             if (dir.IndexOf("错误") >= 0) {
-                                lock (dir) {
+                                lock (ClsFrmInfoPar.Filelock) {
                                     ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, dir);
                                 }
                                 ListBshowInfo(xc, boxsn, archno, "警告,错误线程退出");
@@ -443,7 +461,7 @@ namespace Csmsjcf
                             }
                             string file = ClsOperate.GetFileName(archid);
                             if (file.IndexOf("错误") >= 0) {
-                                lock (file) {
+                                lock (ClsFrmInfoPar.Filelock) {
                                     ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, file);
                                 }
                                 ListBshowInfo(xc, boxsn, archno, "警告,错误线程退出");
@@ -459,7 +477,7 @@ namespace Csmsjcf
                                 if (ClsFrmInfoPar.ConverMode == 2)
                                     File.Delete(filename);
                                 else {
-                                    ListBshowInfo(xc, boxsn, archno, "线程正常退出");
+                                    ListBshowInfo(xc, boxsn, archno, "文件存在线程正常退出");
                                     continue;
                                 }
                             }
@@ -467,7 +485,7 @@ namespace Csmsjcf
                                 ListBshowInfo(xc, boxsn, archno, "正在转换格式为双层pdf的Ocr单独文件");
                                 str = Himg._AutoPdfOcr2(Downfile, filename, ClsFrmInfoPar.Ocr);
                                 if (str.IndexOf("错误") >= 0) {
-                                    lock (str) {
+                                    lock (ClsFrmInfoPar.Filelock) {
                                         ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
                                     }
                                     ListBshowInfo(xc, boxsn, archno, "警告,错误线程退出");
@@ -482,7 +500,7 @@ namespace Csmsjcf
                                     } catch (Exception ex) {
                                         str = ex.ToString();
                                         if (str.IndexOf("错误") >= 0) {
-                                            lock (str) {
+                                            lock (ClsFrmInfoPar.Filelock) {
                                                 ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
                                             }
                                         }
@@ -493,7 +511,7 @@ namespace Csmsjcf
                                 else {
                                     str = Himg._SplitImg(Downfile, filename, fs);
                                     if (str.IndexOf("错误") >= 0) {
-                                        lock (str) {
+                                        lock (ClsFrmInfoPar.Filelock) {
                                             ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
                                         }
                                         ListBshowInfo(xc, boxsn, archno, "警告,错误线程退出");
@@ -510,7 +528,7 @@ namespace Csmsjcf
                             if (ClsFrmInfoPar.DirNamesn != 2) {
                                 string dir = ClsOperate.GetDirColName(archid);
                                 if (dir.IndexOf("错误") >= 0) {
-                                    lock (dir) {
+                                    lock (ClsFrmInfoPar.Filelock) {
                                         ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, dir);
                                     }
                                     ListBshowInfo(xc, boxsn, archno, "警告,错误线程退出");
@@ -525,8 +543,8 @@ namespace Csmsjcf
                             DataTable dirtTable = ClsOperate.GetdirmlInfo(archid);
                             if (dirtTable == null || dirtTable.Rows.Count <= 0) {
                                 str = "未找到文件夹命名规则目录信息  -->盒号:" + boxsn + " -->卷号" + archno;
-                                lock (str) {
-                                    lock (str) {
+                                lock (ClsFrmInfoPar.Filelock) {
+                                    lock (ClsFrmInfoPar.Filelock) {
                                         ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
                                     }
                                     ListBshowInfo(xc, boxsn, archno, "警告,错误线程退出");
@@ -564,7 +582,7 @@ namespace Csmsjcf
                                             if (ClsFrmInfoPar.ConverMode == 2)
                                                 File.Delete(filename);
                                             else {
-                                                ListBshowInfo(xc, boxsn, archno, "线程正常退出");
+                                                ListBshowInfo(xc, boxsn, archno, "文件线程正常退出");
                                                 continue;
                                             }
                                         }
@@ -585,7 +603,7 @@ namespace Csmsjcf
                                                 if (str.IndexOf("错误") >= 0) {
                                                     str = Himg._AutoPdfOcr2(yfile, filename, 2);
                                                     if (str.IndexOf("错误") >= 0) {
-                                                        lock (str) {
+                                                        lock (ClsFrmInfoPar.Filelock) {
                                                             ClsWritelog.Writelog(ClsFrmInfoPar.LogPath,
                                                                 str + "盒号:" + box + " --> 卷号:" + archno);
                                                         }
@@ -613,11 +631,11 @@ namespace Csmsjcf
                                         ListBshowInfo(xc, boxsn, archno,
                                                 "正在进行数据转换页：" + p1.ToString() + "-" + p2.ToString());
                                         if (fs.IndexOf("2") < 0) {
-                                            str = Hljsimage._SplitImg(Downfile, dirnamenew, p1, p2,
+                                            str = Himg._SplitImg(Downfile, dirnamenew, p1, p2,
                                             ClsDataSplit.ClsFileNameQian, ClsDataSplit.ClsFileNameHou,
                                             ClsDataSplit.ClsFileNmaecd, ClsFrmInfoPar.ConverMode, fs, 0);
                                             if (str.IndexOf("错误") >= 0) {
-                                                lock (str) {
+                                                lock (ClsFrmInfoPar.Filelock) {
                                                     ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
                                                 }
                                                 ListBshowInfo(xc, boxsn, archno, "警告,错误线程退出");
@@ -632,7 +650,7 @@ namespace Csmsjcf
                                                 if (str.IndexOf("错误") >= 0) {
                                                     str = Himg._AutoPdfOcr2(yfile, filename, 2);
                                                     if (str.IndexOf("错误") >= 0) {
-                                                        lock (str) {
+                                                        lock (ClsFrmInfoPar.Filelock) {
                                                             ClsWritelog.Writelog(ClsFrmInfoPar.LogPath,
                                                                 str + "盒号:" + box + " --> 卷号:" + archno);
                                                         }
@@ -663,7 +681,7 @@ namespace Csmsjcf
                                                 if (ClsFrmInfoPar.ConverMode == 2)
                                                     File.Delete(filename);
                                                 else {
-                                                    ListBshowInfo(xc, boxsn, archno, "线程正常退出");
+                                                    ListBshowInfo(xc, boxsn, archno, "文件存在线程正常退出");
                                                     continue;
                                                 }
                                             }
@@ -685,7 +703,7 @@ namespace Csmsjcf
                                                     if (str.IndexOf("错误") >= 0) {
                                                         str = Himg._AutoPdfOcr2(yfile, filename, 2);
                                                         if (str.IndexOf("错误") >= 0) {
-                                                            lock (str) {
+                                                            lock (ClsFrmInfoPar.Filelock) {
                                                                 ClsWritelog.Writelog(ClsFrmInfoPar.LogPath,
                                                                     str + "盒号:" + box + " --> 卷号:" + archno);
                                                             }
@@ -725,7 +743,7 @@ namespace Csmsjcf
                                                     if (str.IndexOf("错误") >= 0) {
                                                         str = Himg._AutoPdfOcr2(yfile, filename, 2);
                                                         if (str.IndexOf("错误") >= 0) {
-                                                            lock (str) {
+                                                            lock (ClsFrmInfoPar.Filelock) {
                                                                 ClsWritelog.Writelog(ClsFrmInfoPar.LogPath,
                                                                     str + "盒号:" + box + " --> 卷号:" + archno);
                                                             }
@@ -745,7 +763,7 @@ namespace Csmsjcf
                     }
                 } catch (Exception e) {
                     str = e.ToString();
-                    lock (str) {
+                    lock (ClsFrmInfoPar.Filelock) {
                         ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str + "盒号:" + box + " --> 卷号:" + archno);
                     }
                     ListBshowInfo(xc, boxsn, archno, "警告,错误线程退出");
@@ -793,7 +811,6 @@ namespace Csmsjcf
             }
             AutoResetEvent.WaitAll(waitEnents);
             TxtEnd(true);
-
         }
 
         private void StatTask(int id, AutoResetEvent obj)
@@ -811,8 +828,8 @@ namespace Csmsjcf
 
                     });
                 }
-                else 
-                 obj.Set();
+                else
+                    obj.Set();
             }
         }
 
@@ -903,23 +920,6 @@ namespace Csmsjcf
         }
 
 
-        private void rab_gr2_1_Zengliang_CheckedChanged(object sender, EventArgs e)
-        {
-            if (rab_gr2_1_Zengliang.Checked)
-                ClsFrmInfoPar.ConverMode = 1;
-            else ClsFrmInfoPar.ConverMode = 2;
-        }
-
-        private void rab_Gr2_3_tb_CheckedChanged(object sender, EventArgs e)
-        {
-            if (rab_Gr2_3_tb.Checked)
-                ClsFrmInfoPar.ExportType = 1;
-            else if (rab_Gr2_3_img.Checked)
-                ClsFrmInfoPar.ExportType = 2;
-            else ClsFrmInfoPar.ExportType = 3;
-        }
-
-
         private void comb_gr2_6_ocr_SelectedIndexChanged(object sender, EventArgs e)
         {
             ClsFrmInfoPar.Ocr = comb_gr2_6_ocr.SelectedIndex;
@@ -972,13 +972,21 @@ namespace Csmsjcf
             chk_Gr2_4_jpg.Checked = false;
         }
 
-        private void rab_Gr2_3_img_CheckedChanged(object sender, EventArgs e)
+
+        private void rab_Gr2_3_tb_Click(object sender, EventArgs e)
         {
             if (rab_Gr2_3_tb.Checked)
                 ClsFrmInfoPar.ExportType = 1;
-            else if (rab_Gr2_3_img.Checked)
+        }
+        private void rab_Gr2_3_img_Click(object sender, EventArgs e)
+        {
+            if (rab_Gr2_3_img.Checked)
                 ClsFrmInfoPar.ExportType = 2;
-            else ClsFrmInfoPar.ExportType = 3;
+        }
+        private void rab_Gr2_3_xls_Click(object sender, EventArgs e)
+        {
+            if (rab_Gr2_3_xls.Checked)
+                ClsFrmInfoPar.ExportType = 3;
         }
 
         private void rab_gr2_7_wenzi_CheckedChanged(object sender, EventArgs e)
@@ -992,6 +1000,19 @@ namespace Csmsjcf
             else
                 ClsFrmInfoPar.Watermark = 3;
             comb_gr2_7_weizhi.Enabled = false;
+        }
+
+
+        private void rab_gr2_1_Zengliang_Click(object sender, EventArgs e)
+        {
+            if (rab_gr2_1_Zengliang.Checked)
+                ClsFrmInfoPar.ConverMode = 1;
+        }
+
+        private void rab_gr2_1_Newzhuanhuan_Click(object sender, EventArgs e)
+        {
+            if (rab_gr2_1_Zengliang.Checked)
+                ClsFrmInfoPar.ConverMode = 2;
         }
 
 

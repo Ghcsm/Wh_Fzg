@@ -206,16 +206,20 @@ namespace Csmsjcf
             if (Lsstr.Count == 1) {
                 str = Lsstr[0];
                 if (str.Contains("错误")) {
-                    ClsWritelog.Writelog(strpath, str);
+                    lock (ClsFrmInfoPar.Filelock) {
+                        ClsWritelog.Writelog(strpath, str);
                     error = false;
+                    }
                 }
             }
             else {
                 for (int i = 0; i < Lsstr.Count; i++) {
                     str = Lsstr[i];
                     if (str.Contains("错误")) {
-                        ClsWritelog.Writelog(strpath, str);
-                        error = false;
+                        lock (ClsFrmInfoPar.Filelock) {
+                            ClsWritelog.Writelog(strpath, str);
+                            error = false;
+                        }
                     }
                 }
             }

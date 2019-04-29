@@ -907,6 +907,7 @@
             this.rab_Gr2_3_xls.TabStop = true;
             this.rab_Gr2_3_xls.Text = "单导案卷信息";
             this.rab_Gr2_3_xls.UseVisualStyleBackColor = true;
+            this.rab_Gr2_3_xls.Click += new System.EventHandler(this.rab_Gr2_3_xls_Click);
             // 
             // rab_Gr2_3_img
             // 
@@ -918,7 +919,7 @@
             this.rab_Gr2_3_img.TabStop = true;
             this.rab_Gr2_3_img.Text = "单转换图像";
             this.rab_Gr2_3_img.UseVisualStyleBackColor = true;
-            this.rab_Gr2_3_img.CheckedChanged += new System.EventHandler(this.rab_Gr2_3_img_CheckedChanged);
+            this.rab_Gr2_3_img.Click += new System.EventHandler(this.rab_Gr2_3_img_Click);
             // 
             // rab_Gr2_3_tb
             // 
@@ -931,7 +932,7 @@
             this.rab_Gr2_3_tb.TabStop = true;
             this.rab_Gr2_3_tb.Text = "案卷信息及图像同时时行";
             this.rab_Gr2_3_tb.UseVisualStyleBackColor = true;
-            this.rab_Gr2_3_tb.CheckedChanged += new System.EventHandler(this.rab_Gr2_3_tb_CheckedChanged);
+            this.rab_Gr2_3_tb.Click += new System.EventHandler(this.rab_Gr2_3_tb_Click);
             // 
             // combHouseid
             // 
@@ -977,6 +978,7 @@
             this.rab_gr2_1_Newzhuanhuan.TabStop = true;
             this.rab_gr2_1_Newzhuanhuan.Text = "重新转换";
             this.rab_gr2_1_Newzhuanhuan.UseVisualStyleBackColor = true;
+            this.rab_gr2_1_Newzhuanhuan.Click += new System.EventHandler(this.rab_gr2_1_Newzhuanhuan_Click);
             // 
             // rab_gr2_1_Zengliang
             // 
@@ -989,7 +991,7 @@
             this.rab_gr2_1_Zengliang.TabStop = true;
             this.rab_gr2_1_Zengliang.Text = "增量差异";
             this.rab_gr2_1_Zengliang.UseVisualStyleBackColor = true;
-            this.rab_gr2_1_Zengliang.CheckedChanged += new System.EventHandler(this.rab_gr2_1_Zengliang_CheckedChanged);
+            this.rab_gr2_1_Zengliang.Click += new System.EventHandler(this.rab_gr2_1_Zengliang_Click);
             // 
             // TabSplit
             // 

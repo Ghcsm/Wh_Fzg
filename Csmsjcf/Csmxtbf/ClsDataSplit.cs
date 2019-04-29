@@ -56,6 +56,8 @@ namespace Csmsjcf
         public static List<string> TaskBoxCounttmp = new List<string>();
 
         public static List<string> TaskBoxCount = new List<string>();
+
+        public static object Filelock=new object();
      
        
     }
