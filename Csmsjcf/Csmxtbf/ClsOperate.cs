@@ -30,25 +30,25 @@ namespace Csmsjcf
         //获取自定义table及字段 写入xls
         public static string GetAnjuanInfo(string archid, string xls)
         {
-            if (ClsDataSplit.ClsExportTable.Count <= 0)
+            if (ClsDataSplitPar.ClsExportTable.Count <= 0)
                 return "错误：后台未设置导出表";
-            DataTable dt = null;
             Workbook work = new Workbook();
             Worksheet wsheek = null;
             try {
                 work.LoadFromFile(xls);
-                for (int i = 0; i < ClsDataSplit.ClsExportTable.Count; i++) {
-                    dt = Common.GetDataExporTableInfo(archid, ClsDataSplit.ClsExportTable[i], ClsDataSplit.ClsExportCol[i]);
+                for (int i = 0; i < ClsDataSplitPar.ClsExportTable.Count; i++) {
+                    DataTable dt = Common.GetDataExporTableInfo(archid, ClsDataSplitPar.ClsExportTable[i], ClsDataSplitPar.ClsExportCol[i]);
                     if (dt == null || dt.Rows.Count <= 0)
                         continue;
-                    wsheek = work.Worksheets[ClsDataSplit.ClsExportxlsid[i]];
+                    wsheek = work.Worksheets[Convert.ToInt32(ClsDataSplitPar.ClsExportxlsid[i])];
                     int rows = wsheek.LastRow + 1;
+                    if (rows == 0)
+                        rows = 1;
                     for (int t = 0; t < dt.Rows.Count; t++) {
                         for (int c = 0; c < dt.Columns.Count; c++) {
                             wsheek.Range[rows + t, c + 1].Text = dt.Rows[t][c].ToString();
                         }
                     }
-                    wsheek.SaveToFile(xls, "");
                 }
                 work.SaveToFile(xls, FileFormat.Version2007);
                 work.Dispose();
@@ -63,9 +63,9 @@ namespace Csmsjcf
         public static string GetDirColName(string archid)
         {
             string str = "";
-            if (ClsDataSplit.ClsdirTable.Trim().Length <= 0)
+            if (ClsDataSplitPar.ClsdirTable.Trim().Length <= 0)
                 return "错误：文件夹命名规则中的表名未定义!";
-            DataTable dt = Common.GetDataExporTableDirName(archid, ClsDataSplit.ClsdirTable, ClsDataSplit.ClsdirCol);
+            DataTable dt = Common.GetDataExporTableDirName(archid, ClsDataSplitPar.ClsdirTable, ClsDataSplitPar.ClsdirCol);
             if (dt == null || dt.Rows.Count <= 0)
                 return "错误：未找到文件夹字段信息!";
             for (int i = 0; i < dt.Columns.Count; i++) {
@@ -79,10 +79,10 @@ namespace Csmsjcf
         public static DataTable GetdirmlInfo(string archid)
         {
             DataTable dt = null;
-            if (ClsDataSplit.ClsdirTable.Trim().Length <= 0 || ClsDataSplit.ClsdirMl.Trim().Length <= 0)
+            if (ClsDataSplitPar.ClsdirTable.Trim().Length <= 0 || ClsDataSplitPar.ClsdirMl.Trim().Length <= 0)
                 return null;
-            string str = ClsDataSplit.ClsdirMl.Replace('\\', ',');
-            dt = Common.GetDataExporTableConentName(archid, ClsDataSplit.ClsdirTable, str);
+            string str = ClsDataSplitPar.ClsdirMl.Replace('\\', ',');
+            dt = Common.GetDataExporTableConentName(archid, ClsDataSplitPar.ClsdirTable, str);
             if (dt == null || dt.Rows.Count <= 0)
                 return null;
             return dt;
@@ -92,40 +92,16 @@ namespace Csmsjcf
         public static string GetFileName(string archid)
         {
             string str = "";
-            if (ClsDataSplit.ClsFileTable.Trim().Length <= 0)
+            if (ClsDataSplitPar.ClsFileTable.Trim().Length <= 0)
                 return "错误：后台未设置文件规则表";
             if (ClsFrmInfoPar.FileNamesn == 3) {
                 DataTable dt =
-                    Common.GetDataExporTableFileName(archid, ClsDataSplit.ClsFileTable, ClsDataSplit.ClsFileDlname);
+                    Common.GetDataExporTableFileName(archid, ClsDataSplitPar.ClsFileTable, ClsDataSplitPar.ClsFileDlname);
                 if (dt == null || dt.Rows.Count <= 0)
                     return "错误：未找到文件名规则表中的字段信息";
                 str = dt.Rows[0][0].ToString();
             }
             return str;
-        }
-
-
-        //获取文件名
-        public static string GetFileName(string path, string fileformat)
-        {
-            try {
-                string str = "";
-                var files = Directory.GetFiles(path, fileformat);
-                if (files.Length == 0)
-                    str = "1";
-                else
-                    str = (files.Length + 1).ToString();
-
-                if (ClsDataSplit.ClsFilezero) {
-                    int cd = ClsDataSplit.ClsFileNmaecd - str.Length - ClsDataSplit.ClsFileNameQian.Length - ClsDataSplit.ClsFileNameHou.Length;
-                    str = str.PadLeft(cd, '0');
-                }
-                str = ClsDataSplit.ClsFileNameQian + str + ClsDataSplit.ClsFileNameHou;
-
-                return str;
-            } catch (Exception e) {
-                return "错误：" + e.ToString();
-            }
         }
 
         //下载文件

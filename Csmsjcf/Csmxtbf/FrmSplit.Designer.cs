@@ -362,7 +362,6 @@
             this.rab_gr3_1_ftp.TabStop = true;
             this.rab_gr3_1_ftp.Text = "Ftp传输下载";
             this.rab_gr3_1_ftp.UseVisualStyleBackColor = true;
-            this.rab_gr3_1_ftp.CheckedChanged += new System.EventHandler(this.rab_gr3_1_ftp_CheckedChanged);
             // 
             // but_gr3_1_ImgPath
             // 
@@ -543,7 +542,6 @@
             this.rab_gr2_7_wu.TabStop = true;
             this.rab_gr2_7_wu.Text = "无";
             this.rab_gr2_7_wu.UseVisualStyleBackColor = true;
-            this.rab_gr2_7_wu.CheckedChanged += new System.EventHandler(this.rab_gr2_7_wu_CheckedChanged);
             // 
             // comb_gr2_7_weizhi
             // 
@@ -602,7 +600,6 @@
             this.rab_gr2_7_wenzi.TabIndex = 0;
             this.rab_gr2_7_wenzi.Text = "显示文字";
             this.rab_gr2_7_wenzi.UseVisualStyleBackColor = true;
-            this.rab_gr2_7_wenzi.CheckedChanged += new System.EventHandler(this.rab_gr2_7_wenzi_CheckedChanged);
             // 
             // label5
             // 
@@ -656,7 +653,6 @@
             this.comb_gr2_6_ocr.Size = new System.Drawing.Size(107, 21);
             this.comb_gr2_6_ocr.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.comb_gr2_6_ocr.TabIndex = 3;
-            this.comb_gr2_6_ocr.SelectedIndexChanged += new System.EventHandler(this.comb_gr2_6_ocr_SelectedIndexChanged);
             // 
             // label4
             // 
@@ -797,7 +793,6 @@
             this.rab_gr2_4_duo.TabIndex = 5;
             this.rab_gr2_4_duo.Text = "多页";
             this.rab_gr2_4_duo.UseVisualStyleBackColor = true;
-            this.rab_gr2_4_duo.CheckedChanged += new System.EventHandler(this.rab_gr2_4_duo_CheckedChanged);
             // 
             // chk_gr2_4_dou_pdf
             // 
@@ -820,7 +815,6 @@
             this.rab_gr2_4_dan.TabStop = true;
             this.rab_gr2_4_dan.Text = "单页";
             this.rab_gr2_4_dan.UseVisualStyleBackColor = true;
-            this.rab_gr2_4_dan.CheckedChanged += new System.EventHandler(this.rab_gr2_4_dian_CheckedChanged);
             // 
             // chk_gr2_4_tif
             // 
@@ -907,7 +901,6 @@
             this.rab_Gr2_3_xls.TabStop = true;
             this.rab_Gr2_3_xls.Text = "单导案卷信息";
             this.rab_Gr2_3_xls.UseVisualStyleBackColor = true;
-            this.rab_Gr2_3_xls.Click += new System.EventHandler(this.rab_Gr2_3_xls_Click);
             // 
             // rab_Gr2_3_img
             // 
@@ -919,7 +912,6 @@
             this.rab_Gr2_3_img.TabStop = true;
             this.rab_Gr2_3_img.Text = "单转换图像";
             this.rab_Gr2_3_img.UseVisualStyleBackColor = true;
-            this.rab_Gr2_3_img.Click += new System.EventHandler(this.rab_Gr2_3_img_Click);
             // 
             // rab_Gr2_3_tb
             // 
@@ -932,7 +924,6 @@
             this.rab_Gr2_3_tb.TabStop = true;
             this.rab_Gr2_3_tb.Text = "案卷信息及图像同时时行";
             this.rab_Gr2_3_tb.UseVisualStyleBackColor = true;
-            this.rab_Gr2_3_tb.Click += new System.EventHandler(this.rab_Gr2_3_tb_Click);
             // 
             // combHouseid
             // 
@@ -946,7 +937,6 @@
             this.combHouseid.Size = new System.Drawing.Size(154, 21);
             this.combHouseid.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.combHouseid.TabIndex = 3;
-            this.combHouseid.SelectedIndexChanged += new System.EventHandler(this.combHouseid_SelectedIndexChanged);
             // 
             // label1
             // 
@@ -978,7 +968,6 @@
             this.rab_gr2_1_Newzhuanhuan.TabStop = true;
             this.rab_gr2_1_Newzhuanhuan.Text = "重新转换";
             this.rab_gr2_1_Newzhuanhuan.UseVisualStyleBackColor = true;
-            this.rab_gr2_1_Newzhuanhuan.Click += new System.EventHandler(this.rab_gr2_1_Newzhuanhuan_Click);
             // 
             // rab_gr2_1_Zengliang
             // 
@@ -991,7 +980,6 @@
             this.rab_gr2_1_Zengliang.TabStop = true;
             this.rab_gr2_1_Zengliang.Text = "增量差异";
             this.rab_gr2_1_Zengliang.UseVisualStyleBackColor = true;
-            this.rab_gr2_1_Zengliang.Click += new System.EventHandler(this.rab_gr2_1_Zengliang_Click);
             // 
             // TabSplit
             // 

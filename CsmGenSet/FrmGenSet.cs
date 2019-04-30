@@ -1636,35 +1636,42 @@ namespace CsmGenSet
 
         private void GetDataSplitExport()
         {
-            DataTable dt = T_Sysset.GetDataSplitExporTable();
-            if (dt == null || dt.Rows.Count < 0)
-                return;
-            ClsDataSplit.DataSplitExportTable.Clear();
-            ClsDataSplit.DataSplitExportCol.Clear();
-            ClsDataSplit.DataSplitExportxlsid.Clear();
-            chkDataSplit_ExportTable.Items.Clear();
-            foreach (DataRow dr in dt.Rows) {
-                string table = dr["ImportTable"].ToString();
-                string col = dr["ImportCol"].ToString();
-                string xlsid = dr["BindId"].ToString();
-                combDataSplit_Export_table.Items.Add(table);
-                ClsDataSplit.DataSplitExportTable.Add(table);
-                combDataSplit_Export_Xlsid.Items.Add(xlsid);
-                ClsDataSplit.DataSplitExportxlsid.Add(xlsid);
-                ClsDataSplit.DataSplitExportCol.Add(col);
-            }
-            string col1 = dt.Rows[0][2].ToString();
-            if (col1.IndexOf(';') >= 0) {
-                string[] c = col1.Split(';');
-                for (int i = 0; i < c.Length; i++) {
-                    chkDataSplit_ExportTable.Items.Add(c[i].ToString());
-                    ClsDataSplit.DataSplitExportxlsid.Add(c[i].ToString());
+            try
+            {
+                DataTable dt = T_Sysset.GetDataSplitExporTable();
+                if (dt == null || dt.Rows.Count < 0)
+                    return;
+                ClsDataSplit.DataSplitExportTable.Clear();
+                ClsDataSplit.DataSplitExportCol.Clear();
+                ClsDataSplit.DataSplitExportxlsid.Clear();
+                chkDataSplit_ExportTable.Items.Clear();
+                foreach (DataRow dr in dt.Rows) {
+                    string table = dr["ImportTable"].ToString();
+                    string col = dr["ImportCol"].ToString();
+                    string xlsid = dr["BindId"].ToString();
+                    combDataSplit_Export_table.Items.Add(table);
+                    ClsDataSplit.DataSplitExportTable.Add(table);
+                    combDataSplit_Export_Xlsid.Items.Add(xlsid);
+                    ClsDataSplit.DataSplitExportxlsid.Add(xlsid);
+                    ClsDataSplit.DataSplitExportCol.Add(col);
+                }
+
+                string col1 = dt.Rows[0][2].ToString();
+                if (col1.IndexOf(';') >= 0) {
+                    string[] c = col1.Split(';');
+                    for (int i = 0; i < c.Length; i++) {
+                        chkDataSplit_ExportTable.Items.Add(c[i].ToString());
+                        ClsDataSplit.DataSplitExportxlsid.Add(c[i].ToString());
+                    }
+                }
+                else {
+                    chkDataSplit_ExportTable.Items.Add(col1);
+                    ClsDataSplit.DataSplitExportxlsid.Add(col1);
                 }
             }
-            else {
-                chkDataSplit_ExportTable.Items.Add(col1);
-                ClsDataSplit.DataSplitExportxlsid.Add(col1);
-            }
+            catch 
+            {}
+           
         }
 
 

@@ -105,35 +105,28 @@ namespace Csmsjcf
 
         private bool IsTxtInfo()
         {
-            ClsFrmInfoPar.OneJuan = 0;
-            if (rab_gr2_1_Zengliang.Checked)
-                ClsFrmInfoPar.ConverMode = 1;
-            if (rab_gr2_1_Newzhuanhuan.Checked)
-                ClsFrmInfoPar.ConverMode = 2;
-            if (rab_Gr2_3_tb.Checked) {
-                if (comb_gr2_2_task.SelectedIndex > 0) {
-                    MessageBox.Show("只有在单转图像时才可以使用多任务");
+            if (rab_Gr2_3_tb.Checked || rab_Gr2_3_xls.Checked) {
+                if (txt_gr3_1_xlsPath.Text.Trim().Length <= 0) {
+                    MessageBox.Show("请选择xls模版文件!");
+                    txt_gr3_1_xlsPath.Focus();
                     return false;
                 }
-                if (ClsDataSplit.ClsExportTable.Count <= 0) {
-                    MessageBox.Show("请先后台设置要导出的数据库表及字段!");
-                    return false;
-                }
-                ClsFrmInfoPar.ExportType = 1;
             }
             if (rab_Gr2_3_xls.Checked) {
                 if (comb_gr2_2_task.SelectedIndex > 0) {
                     MessageBox.Show("只有在单转图像时才可以使用多任务");
                     return false;
                 }
-                if (ClsDataSplit.ClsExportTable.Count <= 0) {
+                if (ClsDataSplitPar.ClsExportTable.Count <= 0) {
                     MessageBox.Show("请先后台设置要导出的数据库表及字段!");
                     return false;
                 }
-                ClsFrmInfoPar.ExportType = 3;
+                if (txt_gr3_1_xlsPath.Text.Trim().Length <= 0) {
+                    MessageBox.Show("请选择xls模版文件!");
+                    txt_gr3_1_xlsPath.Focus();
+                    return false;
+                }
             }
-            if (rab_Gr2_3_img.Checked)
-                ClsFrmInfoPar.ExportType = 2;
             if (chk_gr2_5_juan.Checked) {
                 if (txt_gr2_5_box1.Text.Trim().Length <= 0 || txt_gr2_5_box2.Text.Trim().Length <= 0 ||
                     txt_gr2_5_juan.Text.Trim().Length <= 0) {
@@ -151,161 +144,192 @@ namespace Csmsjcf
                     comb_gr2_2_task.Focus();
                     return false;
                 }
-                ClsFrmInfoPar.OneJuan = 1;
             }
             else if (lv_gr2_5_boxCount.Items.Count <= 0) {
                 MessageBox.Show("请先添加盒号范围!");
                 txt_gr2_5_box1.Focus();
                 return false;
             }
-            if (ClsDataSplit.ClsdirDirsn == 0) {
-                MessageBox.Show("文件夹命名规则不正确或请后台设置!");
-                return false;
-            }
-            if (ClsDataSplit.ClsFilesn == 0) {
-                MessageBox.Show("文件命名规则不正确或请后台设置!");
-                return false;
-            }
-            if (ClsDataSplit.ClsdirDirsn < dirsn()) {
-                MessageBox.Show("文件夹命名规则不正确或请后台设置!");
-                return false;
-            }
+            if (!rab_Gr2_3_xls.Checked) {
+                if (!chk_Gr2_4_jpg.Checked && !chk_gr2_4_tif.Checked && !chk_gr2_4_pdf.Checked &&
+                    !chk_gr2_4_dou_pdf.Checked) {
+                    MessageBox.Show("请选择要生成的图像格式!");
+                    return false;
+                }
+                else {
+                    ClsFrmInfoPar.FileFormat.Clear();
+                    if (chk_Gr2_4_jpg.Checked)
+                        ClsFrmInfoPar.FileFormat.Add("jpg");
+                    if (chk_gr2_4_pdf.Checked)
+                        ClsFrmInfoPar.FileFormat.Add("pdf");
+                    if (chk_gr2_4_tif.Checked)
+                        ClsFrmInfoPar.FileFormat.Add("tif");
+                    if (chk_gr2_4_dou_pdf.Checked) {
+                        ClsFrmInfoPar.FileFormat.Add("2pdf");
+                        if (comb_gr2_6_ocr.Text.Trim().Length <= 0) {
+                            MessageBox.Show("生成双层Pdf必须选择Ocr引擎!");
+                            comb_gr2_6_ocr.Focus();
+                            return false;
+                        }
+                    }
+                }
 
-            if (!chk_Gr2_4_jpg.Checked && !chk_gr2_4_tif.Checked && !chk_gr2_4_pdf.Checked &&
-                !chk_gr2_4_dou_pdf.Checked) {
-                MessageBox.Show("请选择要生成的图像格式!");
-                return false;
-            }
-            else {
-                ClsFrmInfoPar.FileFormat.Clear();
-                if (chk_Gr2_4_jpg.Checked)
-                    ClsFrmInfoPar.FileFormat.Add("jpg");
-                if (chk_gr2_4_pdf.Checked)
-                    ClsFrmInfoPar.FileFormat.Add("pdf");
-                if (chk_gr2_4_tif.Checked)
-                    ClsFrmInfoPar.FileFormat.Add("tif");
+                if (ClsDataSplitPar.ClsdirDirsn == 0) {
+                    MessageBox.Show("文件夹命名规则不正确或请后台设置!");
+                    return false;
+                }
+                if (ClsDataSplitPar.ClsFilesn == 0) {
+                    MessageBox.Show("文件命名规则不正确或请后台设置!");
+                    return false;
+                }
+                if (ClsDataSplitPar.ClsdirDirsn < dirsn()) {
+                    MessageBox.Show("文件夹命名规则不正确或请后台设置!");
+                    return false;
+                }
                 if (chk_gr2_4_dou_pdf.Checked) {
-                    ClsFrmInfoPar.FileFormat.Add("2pdf");
                     if (comb_gr2_6_ocr.Text.Trim().Length <= 0) {
-                        MessageBox.Show("生成双层Pdf必须选择Ocr引擎!");
+                        MessageBox.Show("生成双层PDF文件必须选择OCR引擎");
                         comb_gr2_6_ocr.Focus();
                         return false;
                     }
                 }
-
-
-            }
-            if (chk_gr2_4_dou_pdf.Checked) {
-                if (comb_gr2_6_ocr.Text.Trim().Length <= 0) {
-                    MessageBox.Show("生成双层PDF文件必须选择OCR引擎");
-                    comb_gr2_6_ocr.Focus();
-                    return false;
-                }
-            }
-            if (!rab_gr2_7_wu.Checked) {
-                if (comb_gr2_7_weizhi.Text.Trim().Length <= 0) {
-                    MessageBox.Show("请选择水印生成位置!");
-                    comb_gr2_7_weizhi.Focus();
-                    return false;
-                }
-                if (rab_gr2_7_wenzi.Checked) {
-                    if (txt_gr2_7_wenzi.Text.Trim().Length <= 0) {
-                        MessageBox.Show("生成水印文字不能为空!");
-                        txt_gr2_7_wenzi.Focus();
+                if (!rab_gr2_7_wu.Checked) {
+                    if (comb_gr2_7_weizhi.Text.Trim().Length <= 0) {
+                        MessageBox.Show("请选择水印生成位置!");
+                        comb_gr2_7_weizhi.Focus();
                         return false;
                     }
-                    if (ClsFrmInfoPar.WaterFontsize.Trim().Length <= 0 || ClsFrmInfoPar.WaterFontColor <= 0) {
-                        MessageBox.Show("请设置字号或字体颜色");
-                        return false;
+                    if (rab_gr2_7_wenzi.Checked) {
+                        if (txt_gr2_7_wenzi.Text.Trim().Length <= 0) {
+                            MessageBox.Show("生成水印文字不能为空!");
+                            txt_gr2_7_wenzi.Focus();
+                            return false;
+                        }
+                        if (ClsFrmInfoPar.WaterFontsize.Trim().Length <= 0 || ClsFrmInfoPar.WaterFontColor <= 0) {
+                            MessageBox.Show("请设置字号或字体颜色");
+                            return false;
+                        }
                     }
-                    ClsFrmInfoPar.WaterStrImg = txt_gr2_7_wenzi.Text.Trim();
-                }
-                if (rab_gr2_7_img.Checked) {
-                    if (txt_gr2_7_img.Text.Trim().Length <= 0) {
-                        MessageBox.Show("生成水印图像路径不能为空!");
-                        txt_gr2_7_img.Focus();
-                        return false;
+                    if (rab_gr2_7_img.Checked) {
+                        if (txt_gr2_7_img.Text.Trim().Length <= 0) {
+                            MessageBox.Show("生成水印图像路径不能为空!");
+                            txt_gr2_7_img.Focus();
+                            return false;
+                        }
                     }
-                    ClsFrmInfoPar.WaterStrImg = txt_gr2_7_img.Text.Trim();
-                }
 
-            }
-            if (rab_gr2_4_duli.Checked) {
-                if (chk_Gr2_4_jpg.Checked) {
-                    MessageBox.Show("单独文件不能使用Jpg格式");
-                    return false;
                 }
-                if (!rab_gr2_8_ziduan.Checked) {
-                    MessageBox.Show("单独文件时：文件夹名只能为<字段格式>");
-                    return false;
+                if (rab_gr2_4_duli.Checked) {
+                    if (chk_Gr2_4_jpg.Checked) {
+                        MessageBox.Show("单独文件不能使用Jpg格式");
+                        return false;
+                    }
+                    if (!rab_gr2_8_ziduan.Checked) {
+                        MessageBox.Show("单独文件时：文件夹名只能为<字段格式>");
+                        return false;
+                    }
+
+                    if (rab_gr2_9_file_1.Checked) {
+                        MessageBox.Show("单独文件时：文件名不能使用<每个文件夹为1>");
+                        return false;
+                    }
+                }
+                else if (rab_gr2_4_duo.Checked) {
+                    if (chk_Gr2_4_jpg.Checked) {
+                        MessageBox.Show("多页文件不能使用Jpg格式");
+                        return false;
+                    }
                 }
 
                 if (rab_gr2_9_file_1.Checked) {
-                    MessageBox.Show("单独文件时：文件名不能使用<每个文件夹为1>");
-                    return false;
+                    if (rab_gr2_8_ziduan.Checked) {
+                        MessageBox.Show("文件名此规则必须在文件夹命名规则包含目录才可用!");
+                        return false;
+                    }
                 }
-                ClsFrmInfoPar.FileFomat = 3;
-            }
-            else if (rab_gr2_4_duo.Checked) {
-                if (chk_Gr2_4_jpg.Checked) {
-                    MessageBox.Show("多页文件不能使用Jpg格式");
-                    return false;
+                if (rab_gr2_9_file_ziduan.Checked) {
+                    if (ClsDataSplitPar.ClsFilesn != 3) {
+                        MessageBox.Show("此选请先设置后台！");
+                        return false;
+                    }
+                    if (!rab_gr2_8_ziduan.Checked || !rab_gr2_4_duli.Checked) {
+                        MessageBox.Show("文件名为字段时：文件夹名只能为<字段格式>，图像生成格式只能是<单独文件>");
+                        return false;
+                    }
                 }
-                ClsFrmInfoPar.FileFomat = 2;
+                if (rab_gr3_1_imgPath.Checked) {
+                    if (txt_gr3_1_imgPath.Text.Trim().Length <= 0) {
+                        MessageBox.Show("图像源路径不能为空,或改为Ftp传输!");
+                        txt_gr3_1_imgPath.Focus();
+                        return false;
+                    }
+                }
             }
-            else
-                ClsFrmInfoPar.FileFomat = 1;
+            if (txt_gr3_1_splitPath.Text.Trim().Length <= 0) {
+                MessageBox.Show("请指定转换后的路径!");
+                txt_gr3_1_splitPath.Focus();
+                return false;
+            }
+            GetParinfo();
+            return true;
+        }
 
+        private void GetParinfo()
+        {
+            ClsFrmInfoPar.OneJuan = 0;
+            V_HouseSet v_house = combHouseid.SelectedItem as V_HouseSet;
+            ClsFrmInfoPar.Houseid = v_house.HouseID;
+            if (rab_gr2_1_Zengliang.Checked)
+                ClsFrmInfoPar.ConverMode = 1;
+            if (rab_gr2_1_Newzhuanhuan.Checked)
+                ClsFrmInfoPar.ConverMode = 2;
+            if (rab_Gr2_3_tb.Checked)
+                ClsFrmInfoPar.ExportType = 1;
+            else if (rab_Gr2_3_img.Checked)
+                ClsFrmInfoPar.ExportType = 2;
+            else if (rab_Gr2_3_xls.Checked)
+                ClsFrmInfoPar.ExportType = 3;
+            if (chk_gr2_5_juan.Checked)
+                ClsFrmInfoPar.OneJuan = 1;
             if (rab_gr2_8_ziduan.Checked)
                 ClsFrmInfoPar.DirNamesn = 1;
             else if (rab_gr2_8_mulu.Checked)
                 ClsFrmInfoPar.DirNamesn = 2;
-            else
+            else if (rab_gr2_8_ziduAndmulu.Checked)
                 ClsFrmInfoPar.DirNamesn = 3;
-
-            if (rab_gr2_9_file_1.Checked) {
-                if (rab_gr2_8_ziduan.Checked) {
-                    MessageBox.Show("文件名此规则必须在文件夹命名规则包含目录才可用!");
-                    return false;
-                }
+            if (rab_gr2_4_dan.Checked)
+                ClsFrmInfoPar.FileFomat = 1;
+            else if (rab_gr2_4_duo.Checked)
+                ClsFrmInfoPar.FileFomat = 2;
+            else if (rab_gr2_4_duli.Checked)
+                ClsFrmInfoPar.FileFomat = 3;
+            if (rab_gr2_7_wu.Checked)
+                ClsFrmInfoPar.Watermark = 1;
+            else if (rab_gr2_7_wenzi.Checked) {
+                ClsFrmInfoPar.Watermark = 2;
+                ClsFrmInfoPar.WaterStrImg = txt_gr2_7_wenzi.Text.Trim();
+            }
+            else if (rab_gr2_7_img.Checked) {
+                ClsFrmInfoPar.Watermark = 3;
+                ClsFrmInfoPar.WaterStrImg = txt_gr2_7_img.Text.Trim();
+            }
+            if (rab_gr2_9_file_1.Checked)
                 ClsFrmInfoPar.FileNamesn = 1;
-            }
-            if (rab_gr2_9_file_ziduan.Checked) {
-                if (ClsDataSplit.ClsFilesn != 3) {
-                    MessageBox.Show("此选请先设置后台！");
-                    return false;
-                }
-                if (!rab_gr2_8_ziduan.Checked || !rab_gr2_4_duli.Checked) {
-                    MessageBox.Show("文件名为字段时：文件夹名只能为<字段格式>，图像生成格式只能是<单独文件>");
-                    return false;
-                }
-                ClsFrmInfoPar.FileNamesn = 3;
-            }
-            if (rab_gr2_9_juan_1.Checked) {
+            else if (rab_gr2_9_juan_1.Checked)
                 ClsFrmInfoPar.FileNamesn = 2;
-            }
-            if (rab_gr3_1_imgPath.Checked) {
-                if (txt_gr3_1_imgPath.Text.Trim().Length <= 0) {
-                    MessageBox.Show("图像源路径不能为空,或改为Ftp传输!");
-                    txt_gr3_1_imgPath.Focus();
-                    return false;
-                }
-            }
-            if (txt_gr3_1_splitPath.Text.Trim().Length <= 0) {
-                MessageBox.Show("请指定图像转换后的路径!");
-                txt_gr3_1_splitPath.Focus();
-                return false;
-            }
-            if (rab_Gr2_3_tb.Checked || rab_Gr2_3_xls.Checked) {
-                if (txt_gr3_1_xlsPath.Text.Trim().Length <= 0) {
-                    MessageBox.Show("请选择xls模版文件!");
-                    txt_gr3_1_xlsPath.Focus();
-                    return false;
-                }
-            }
-
+            else if (rab_gr2_9_file_ziduan.Checked)
+                ClsFrmInfoPar.FileNamesn = 3;
+            if (comb_gr2_6_ocr.Text.Trim().Length > 0)
+                ClsFrmInfoPar.Ocr = comb_gr2_6_ocr.SelectedIndex;
+            if (rab_gr3_1_ftp.Checked)
+                ClsFrmInfoPar.Ftp = 1;
+            else if (rab_gr3_1_imgPath.Checked)
+                ClsFrmInfoPar.Ftp = 2;
             ClsFrmInfoPar.Taskxc = Convert.ToInt32(comb_gr2_2_task.Text.Trim());
-            return true;
+            ClsFrmInfoPar.YimgPath = txt_gr3_1_imgPath.Text.Trim();
+            ClsFrmInfoPar.MimgPath = txt_gr3_1_splitPath.Text.Trim();
+            ClsFrmInfoPar.XlsPath = txt_gr3_1_xlsPath.Text.Trim();
+
         }
 
         private void chk_gr2_5_juan_CheckedChanged(object sender, EventArgs e)
@@ -403,15 +427,28 @@ namespace Csmsjcf
                     continue;
                 }
                 if (ClsFrmInfoPar.ExportType == 3) {
-                    ListBshowInfo(xc, boxsn, archno, "正在写入Xls信息");
-                    str = ClsOperate.GetAnjuanInfo(archid, ClsOperate.XlsPath());
+                    ListBshowInfo(xc, boxsn, archno, "正在准备写入Xls信息");
+                    str = ClsOperate.XlsPath();
                     if (str.IndexOf("错误") >= 0) {
                         lock (ClsFrmInfoPar.Filelock) {
                             ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
                         }
                         ListBshowInfo(xc, boxsn, archno, "警告,错误线程退出");
+                        continue;
                     }
-                    continue;
+                    str = ClsOperate.GetAnjuanInfo(archid, str);
+                    if (str.IndexOf("错误") >= 0) {
+                        lock (ClsFrmInfoPar.Filelock) {
+                            ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
+                        }
+                        ListBshowInfo(xc, boxsn, archno, "警告,错误线程退出");
+                        continue;
+                    }
+                    else {
+                        ListBshowInfo(xc, boxsn, archno, "单导xls信息完成线程退出");
+                        continue;
+                    }
+
                 }
                 else if (ClsFrmInfoPar.ExportType == 1) {
                     ListBshowInfo(xc, boxsn, archno, "正在写入Xls信息");
@@ -632,8 +669,8 @@ namespace Csmsjcf
                                                 "正在进行数据转换页：" + p1.ToString() + "-" + p2.ToString());
                                         if (fs.IndexOf("2") < 0) {
                                             str = Himg._SplitImg(Downfile, dirnamenew, p1, p2,
-                                            ClsDataSplit.ClsFileNameQian, ClsDataSplit.ClsFileNameHou,
-                                            ClsDataSplit.ClsFileNmaecd, ClsFrmInfoPar.ConverMode, fs, 0);
+                                            ClsDataSplitPar.ClsFileNameQian, ClsDataSplitPar.ClsFileNameHou,
+                                            ClsDataSplitPar.ClsFileNmaecd, ClsFrmInfoPar.ConverMode, fs, 0);
                                             if (str.IndexOf("错误") >= 0) {
                                                 lock (ClsFrmInfoPar.Filelock) {
                                                     ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
@@ -728,8 +765,8 @@ namespace Csmsjcf
                                                 "正在进行数据转换页：" + p1.ToString() + "-" + p2.ToString());
                                             if (fs.IndexOf("2") >= 0) {
                                                 lsinfopdf = Himg._SplitImgls(Downfile, dirnamenew, p1, p2,
-                                                ClsDataSplit.ClsFileNameQian, ClsDataSplit.ClsFileNameHou,
-                                                ClsDataSplit.ClsFileNmaecd, ClsFrmInfoPar.ConverMode, fs, 1);
+                                                ClsDataSplitPar.ClsFileNameQian, ClsDataSplitPar.ClsFileNameHou,
+                                                ClsDataSplitPar.ClsFileNmaecd, ClsFrmInfoPar.ConverMode, fs, 1);
                                                 if (!ClsOperate.Iserror(lsinfopdf, ClsFrmInfoPar.LogPath)) {
                                                     ListBshowInfo(xc, boxsn, archno, "警告,错误线程退出");
                                                     continue;
@@ -911,112 +948,6 @@ namespace Csmsjcf
             but_gr3_1_ImgPath.Text = str;
             ClsFrmInfoPar.YimgPath = str;
         }
-
-
-        private void combHouseid_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            V_HouseSet v_house = combHouseid.SelectedItem as V_HouseSet;
-            ClsFrmInfoPar.Houseid = v_house.HouseID;
-        }
-
-
-        private void comb_gr2_6_ocr_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            ClsFrmInfoPar.Ocr = comb_gr2_6_ocr.SelectedIndex;
-        }
-
-        private void rab_gr2_7_wu_CheckedChanged(object sender, EventArgs e)
-        {
-            if (rab_gr2_7_wu.Checked) {
-                comb_gr2_7_weizhi.Enabled = true;
-                ClsFrmInfoPar.Watermark = 1;
-            }
-            else if (rab_gr2_7_wenzi.Checked)
-                ClsFrmInfoPar.Watermark = 2;
-            else
-                ClsFrmInfoPar.Watermark = 3;
-            comb_gr2_7_weizhi.Enabled = false;
-        }
-
-        private void rab_gr2_4_dian_CheckedChanged(object sender, EventArgs e)
-        {
-            if (rab_gr2_4_dan.Checked) {
-                ClsFrmInfoPar.FileFomat = 1;
-                return;
-            }
-            else if (rab_gr2_4_duo.Checked)
-                ClsFrmInfoPar.FileFomat = 2;
-            else
-                ClsFrmInfoPar.FileNamesn = 3;
-            chk_Gr2_4_jpg.Checked = false;
-        }
-
-        private void rab_gr3_1_ftp_CheckedChanged(object sender, EventArgs e)
-        {
-            if (rab_gr3_1_ftp.Checked)
-                ClsFrmInfoPar.Ftp = 1;
-            else
-                ClsFrmInfoPar.Ftp = 2;
-        }
-
-        private void rab_gr2_4_duo_CheckedChanged(object sender, EventArgs e)
-        {
-            if (rab_gr2_4_dan.Checked) {
-                ClsFrmInfoPar.FileFomat = 1;
-                return;
-            }
-            else if (rab_gr2_4_duo.Checked)
-                ClsFrmInfoPar.FileFomat = 2;
-            else
-                ClsFrmInfoPar.FileNamesn = 3;
-            chk_Gr2_4_jpg.Checked = false;
-        }
-
-
-        private void rab_Gr2_3_tb_Click(object sender, EventArgs e)
-        {
-            if (rab_Gr2_3_tb.Checked)
-                ClsFrmInfoPar.ExportType = 1;
-        }
-        private void rab_Gr2_3_img_Click(object sender, EventArgs e)
-        {
-            if (rab_Gr2_3_img.Checked)
-                ClsFrmInfoPar.ExportType = 2;
-        }
-        private void rab_Gr2_3_xls_Click(object sender, EventArgs e)
-        {
-            if (rab_Gr2_3_xls.Checked)
-                ClsFrmInfoPar.ExportType = 3;
-        }
-
-        private void rab_gr2_7_wenzi_CheckedChanged(object sender, EventArgs e)
-        {
-            if (rab_gr2_7_wu.Checked) {
-                comb_gr2_7_weizhi.Enabled = true;
-                ClsFrmInfoPar.Watermark = 1;
-            }
-            else if (rab_gr2_7_wenzi.Checked)
-                ClsFrmInfoPar.Watermark = 2;
-            else
-                ClsFrmInfoPar.Watermark = 3;
-            comb_gr2_7_weizhi.Enabled = false;
-        }
-
-
-        private void rab_gr2_1_Zengliang_Click(object sender, EventArgs e)
-        {
-            if (rab_gr2_1_Zengliang.Checked)
-                ClsFrmInfoPar.ConverMode = 1;
-        }
-
-        private void rab_gr2_1_Newzhuanhuan_Click(object sender, EventArgs e)
-        {
-            if (rab_gr2_1_Zengliang.Checked)
-                ClsFrmInfoPar.ConverMode = 2;
-        }
-
-
-
 
         #endregion
 

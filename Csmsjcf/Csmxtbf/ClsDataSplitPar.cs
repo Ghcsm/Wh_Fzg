@@ -8,7 +8,7 @@ using DevComponents.DotNetBar;
 
 namespace Csmsjcf
 {
-  public static class ClsDataSplit
+  public static class ClsDataSplitPar
     {
         public static string ClsdirTable { get; set; }
         public static int ClsdirDirsn { get; set; }
