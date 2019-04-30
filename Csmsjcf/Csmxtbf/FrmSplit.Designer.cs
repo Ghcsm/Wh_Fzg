@@ -68,8 +68,6 @@
             this.lab_gr2_7_font_color = new System.Windows.Forms.Label();
             this.lab_gr2_7_font_size = new System.Windows.Forms.Label();
             this.gr2_6 = new System.Windows.Forms.GroupBox();
-            this.comb_gr2_6_ocr = new DevComponents.DotNetBar.Controls.ComboBoxEx();
-            this.label4 = new System.Windows.Forms.Label();
             this.gr2_5 = new System.Windows.Forms.GroupBox();
             this.but_gr2_5_del = new DevComponents.DotNetBar.ButtonX();
             this.txt_gr2_5_juan = new System.Windows.Forms.TextBox();
@@ -107,6 +105,13 @@
             this.fBdigImgPath = new System.Windows.Forms.FolderBrowserDialog();
             this.fontDialog = new System.Windows.Forms.FontDialog();
             this.colorDialog = new System.Windows.Forms.ColorDialog();
+            this.butStop = new DevComponents.DotNetBar.ButtonX();
+            this.labinfo = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.txt_gr2_6_ocrPath = new System.Windows.Forms.TextBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.chk_gr2_6_ocrpdf = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.superTabControl1)).BeginInit();
             this.superTabControl1.SuspendLayout();
             this.superTabControlPanel1.SuspendLayout();
@@ -229,8 +234,10 @@
             // gr3_3
             // 
             this.gr3_3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.gr3_3.Controls.Add(this.butStop);
             this.gr3_3.Controls.Add(this.butLog);
             this.gr3_3.Controls.Add(this.butStart);
+            this.gr3_3.Controls.Add(this.labinfo);
             this.gr3_3.Location = new System.Drawing.Point(6, 414);
             this.gr3_3.Name = "gr3_3";
             this.gr3_3.Size = new System.Drawing.Size(363, 93);
@@ -242,9 +249,9 @@
             // 
             this.butLog.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.butLog.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.butLog.Location = new System.Drawing.Point(209, 38);
+            this.butLog.Location = new System.Drawing.Point(249, 45);
             this.butLog.Name = "butLog";
-            this.butLog.Size = new System.Drawing.Size(75, 37);
+            this.butLog.Size = new System.Drawing.Size(75, 36);
             this.butLog.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.butLog.TabIndex = 1;
             this.butLog.Text = "日志";
@@ -254,9 +261,9 @@
             // 
             this.butStart.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.butStart.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.butStart.Location = new System.Drawing.Point(48, 38);
+            this.butStart.Location = new System.Drawing.Point(40, 45);
             this.butStart.Name = "butStart";
-            this.butStart.Size = new System.Drawing.Size(72, 37);
+            this.butStart.Size = new System.Drawing.Size(75, 36);
             this.butStart.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.butStart.TabIndex = 0;
             this.butStart.Text = "开始";
@@ -632,36 +639,17 @@
             // 
             // gr2_6
             // 
-            this.gr2_6.Controls.Add(this.comb_gr2_6_ocr);
+            this.gr2_6.Controls.Add(this.chk_gr2_6_ocrpdf);
+            this.gr2_6.Controls.Add(this.button1);
+            this.gr2_6.Controls.Add(this.txt_gr2_6_ocrPath);
             this.gr2_6.Controls.Add(this.label4);
-            this.gr2_6.Location = new System.Drawing.Point(234, 206);
+            this.gr2_6.Controls.Add(this.label6);
+            this.gr2_6.Location = new System.Drawing.Point(234, 168);
             this.gr2_6.Name = "gr2_6";
-            this.gr2_6.Size = new System.Drawing.Size(224, 49);
+            this.gr2_6.Size = new System.Drawing.Size(224, 87);
             this.gr2_6.TabIndex = 8;
             this.gr2_6.TabStop = false;
             this.gr2_6.Text = "OCR";
-            // 
-            // comb_gr2_6_ocr
-            // 
-            this.comb_gr2_6_ocr.DisplayMember = "Text";
-            this.comb_gr2_6_ocr.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.comb_gr2_6_ocr.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comb_gr2_6_ocr.FormattingEnabled = true;
-            this.comb_gr2_6_ocr.ItemHeight = 15;
-            this.comb_gr2_6_ocr.Location = new System.Drawing.Point(96, 19);
-            this.comb_gr2_6_ocr.Name = "comb_gr2_6_ocr";
-            this.comb_gr2_6_ocr.Size = new System.Drawing.Size(107, 21);
-            this.comb_gr2_6_ocr.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.comb_gr2_6_ocr.TabIndex = 3;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(8, 25);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(83, 12);
-            this.label4.TabIndex = 2;
-            this.label4.Text = "选择OCR引擎：";
             // 
             // gr2_5
             // 
@@ -766,7 +754,7 @@
             this.gr2_4.Controls.Add(this.chk_gr2_4_tif);
             this.gr2_4.Controls.Add(this.chk_gr2_4_pdf);
             this.gr2_4.Controls.Add(this.chk_Gr2_4_jpg);
-            this.gr2_4.Location = new System.Drawing.Point(234, 110);
+            this.gr2_4.Location = new System.Drawing.Point(234, 75);
             this.gr2_4.Name = "gr2_4";
             this.gr2_4.Size = new System.Drawing.Size(224, 87);
             this.gr2_4.TabIndex = 6;
@@ -850,7 +838,7 @@
             // 
             this.gr2_2.Controls.Add(this.comb_gr2_2_task);
             this.gr2_2.Controls.Add(this.label2);
-            this.gr2_2.Location = new System.Drawing.Point(234, 52);
+            this.gr2_2.Location = new System.Drawing.Point(234, 20);
             this.gr2_2.Name = "gr2_2";
             this.gr2_2.Size = new System.Drawing.Size(224, 49);
             this.gr2_2.TabIndex = 5;
@@ -934,7 +922,7 @@
             this.combHouseid.ItemHeight = 15;
             this.combHouseid.Location = new System.Drawing.Point(85, 22);
             this.combHouseid.Name = "combHouseid";
-            this.combHouseid.Size = new System.Drawing.Size(154, 21);
+            this.combHouseid.Size = new System.Drawing.Size(140, 21);
             this.combHouseid.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.combHouseid.TabIndex = 3;
             // 
@@ -1016,6 +1004,74 @@
             // 
             this.FdigXls.Filter = "Xls文件|*.xls;*xlsx";
             // 
+            // butStop
+            // 
+            this.butStop.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.butStop.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.butStop.Location = new System.Drawing.Point(141, 46);
+            this.butStop.Name = "butStop";
+            this.butStop.Size = new System.Drawing.Size(75, 36);
+            this.butStop.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.butStop.TabIndex = 2;
+            this.butStop.Text = "暂停";
+            this.butStop.Click += new System.EventHandler(this.butStop_Click);
+            // 
+            // labinfo
+            // 
+            this.labinfo.AutoSize = true;
+            this.labinfo.ForeColor = System.Drawing.Color.Red;
+            this.labinfo.Location = new System.Drawing.Point(69, 20);
+            this.labinfo.Name = "labinfo";
+            this.labinfo.Size = new System.Drawing.Size(221, 12);
+            this.labinfo.TabIndex = 2;
+            this.labinfo.Text = "正在完成当前任务稍候停止请等待......";
+            this.labinfo.Visible = false;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(10, 42);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(71, 12);
+            this.label6.TabIndex = 2;
+            this.label6.Text = "OCR语言包：";
+            // 
+            // txt_gr2_6_ocrPath
+            // 
+            this.txt_gr2_6_ocrPath.Location = new System.Drawing.Point(80, 38);
+            this.txt_gr2_6_ocrPath.Name = "txt_gr2_6_ocrPath";
+            this.txt_gr2_6_ocrPath.ReadOnly = true;
+            this.txt_gr2_6_ocrPath.Size = new System.Drawing.Size(95, 21);
+            this.txt_gr2_6_ocrPath.TabIndex = 4;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(181, 37);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(33, 23);
+            this.button1.TabIndex = 5;
+            this.button1.Text = "...";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(10, 19);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(191, 12);
+            this.label4.TabIndex = 2;
+            this.label4.Text = "OCR语言包文件夹为:OcrPro,OcrAdv";
+            // 
+            // chk_gr2_6_ocrpdf
+            // 
+            this.chk_gr2_6_ocrpdf.AutoSize = true;
+            this.chk_gr2_6_ocrpdf.Location = new System.Drawing.Point(25, 65);
+            this.chk_gr2_6_ocrpdf.Name = "chk_gr2_6_ocrpdf";
+            this.chk_gr2_6_ocrpdf.Size = new System.Drawing.Size(156, 16);
+            this.chk_gr2_6_ocrpdf.TabIndex = 6;
+            this.chk_gr2_6_ocrpdf.Text = "Ocr失败时转换为普通Pdf";
+            this.chk_gr2_6_ocrpdf.UseVisualStyleBackColor = true;
+            // 
             // FrmSplit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -1034,6 +1090,7 @@
             this.gr1.ResumeLayout(false);
             this.gr3.ResumeLayout(false);
             this.gr3_3.ResumeLayout(false);
+            this.gr3_3.PerformLayout();
             this.gr3_2.ResumeLayout(false);
             this.gr3_1.ResumeLayout(false);
             this.gr3_1.PerformLayout();
@@ -1099,8 +1156,6 @@
         private System.Windows.Forms.Label lab_gr2_7_font_color;
         private System.Windows.Forms.Label lab_gr2_7_font_size;
         private System.Windows.Forms.GroupBox gr2_6;
-        private DevComponents.DotNetBar.Controls.ComboBoxEx comb_gr2_6_ocr;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.GroupBox gr2_5;
         private System.Windows.Forms.TextBox txt_gr2_5_juan;
         private System.Windows.Forms.CheckBox chk_gr2_5_juan;
@@ -1144,5 +1199,12 @@
         private System.Windows.Forms.ListBox listB_gr3_2_log;
         private System.Windows.Forms.FontDialog fontDialog;
         private System.Windows.Forms.ColorDialog colorDialog;
+        private DevComponents.DotNetBar.ButtonX butStop;
+        private System.Windows.Forms.Label labinfo;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox txt_gr2_6_ocrPath;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.CheckBox chk_gr2_6_ocrpdf;
     }
 }

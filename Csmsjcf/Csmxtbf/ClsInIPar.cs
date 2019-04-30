@@ -65,14 +65,11 @@ namespace Csmsjcf
                 string table = dr["ImportTable"].ToString();
                 string col = dr["ImportCol"].ToString();
                 string xlsid = dr["BindId"].ToString();
-
                 ClsDataSplitPar.ClsExportTable.Add(table);
                 ClsDataSplitPar.ClsExportxlsid.Add(xlsid);
                 ClsDataSplitPar.ClsExportCol.Add(col);
             }
         }
-
-
         #endregion
     }
 }

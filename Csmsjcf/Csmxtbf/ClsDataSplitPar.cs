@@ -38,7 +38,9 @@ namespace Csmsjcf
         public static int OneJuan { get; set; }
         public static int DirNamesn { get; set; }
         public static int FileNamesn { get; set; }
-        public static int Ocr { get; set; }
+        public static string OcrPath { get; set; }
+        public static bool Ocrpdf { get; set; }
+        public static int Doublecor { get; set; }
         public static int Watermark { get; set; }
         public static int FileFomat { get; set; }
         public static int Ftp { get; set; }
@@ -58,8 +60,8 @@ namespace Csmsjcf
         public static List<string> TaskBoxCount = new List<string>();
 
         public static object Filelock=new object();
-     
-       
+
+        public static int StopTag = 0;
     }
 
   

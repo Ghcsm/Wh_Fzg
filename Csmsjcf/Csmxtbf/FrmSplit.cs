@@ -24,14 +24,10 @@ namespace Csmsjcf
 
         private void CombAddinfo()
         {
-            comb_gr2_6_ocr.Items.Clear();
+          
             comb_gr2_2_task.Items.Clear();
             comb_gr2_7_weizhi.Items.Clear();
             combHouseid.Items.Clear();
-            comb_gr2_6_ocr.Items.Add("无");
-            comb_gr2_6_ocr.Items.Add("Pro");
-            comb_gr2_6_ocr.Items.Add("Adv");
-            comb_gr2_6_ocr.SelectedIndex = 0;
             for (int i = 1; i <= 10; i++) {
                 comb_gr2_2_task.Items.Add(i.ToString());
             }
@@ -164,14 +160,6 @@ namespace Csmsjcf
                         ClsFrmInfoPar.FileFormat.Add("pdf");
                     if (chk_gr2_4_tif.Checked)
                         ClsFrmInfoPar.FileFormat.Add("tif");
-                    if (chk_gr2_4_dou_pdf.Checked) {
-                        ClsFrmInfoPar.FileFormat.Add("2pdf");
-                        if (comb_gr2_6_ocr.Text.Trim().Length <= 0) {
-                            MessageBox.Show("生成双层Pdf必须选择Ocr引擎!");
-                            comb_gr2_6_ocr.Focus();
-                            return false;
-                        }
-                    }
                 }
 
                 if (ClsDataSplitPar.ClsdirDirsn == 0) {
@@ -187,9 +175,9 @@ namespace Csmsjcf
                     return false;
                 }
                 if (chk_gr2_4_dou_pdf.Checked) {
-                    if (comb_gr2_6_ocr.Text.Trim().Length <= 0) {
-                        MessageBox.Show("生成双层PDF文件必须选择OCR引擎");
-                        comb_gr2_6_ocr.Focus();
+                    if (txt_gr2_6_ocrPath.Text.Trim().Length <= 0) {
+                        MessageBox.Show("请指定ocr语言包路径！");
+                        txt_gr2_6_ocrPath.Focus();
                         return false;
                     }
                 }
@@ -303,6 +291,13 @@ namespace Csmsjcf
                 ClsFrmInfoPar.FileFomat = 2;
             else if (rab_gr2_4_duli.Checked)
                 ClsFrmInfoPar.FileFomat = 3;
+            if (chk_gr2_4_dou_pdf.Checked)
+            {
+                ClsFrmInfoPar.Doublecor = 1;
+                ClsFrmInfoPar.OcrPath = txt_gr2_6_ocrPath.Text.Trim();
+                ClsFrmInfoPar.Ocrpdf = chk_gr2_6_ocrpdf.Checked;
+            }
+            else ClsFrmInfoPar.Doublecor = 0;
             if (rab_gr2_7_wu.Checked)
                 ClsFrmInfoPar.Watermark = 1;
             else if (rab_gr2_7_wenzi.Checked) {
@@ -319,8 +314,6 @@ namespace Csmsjcf
                 ClsFrmInfoPar.FileNamesn = 2;
             else if (rab_gr2_9_file_ziduan.Checked)
                 ClsFrmInfoPar.FileNamesn = 3;
-            if (comb_gr2_6_ocr.Text.Trim().Length > 0)
-                ClsFrmInfoPar.Ocr = comb_gr2_6_ocr.SelectedIndex;
             if (rab_gr3_1_ftp.Checked)
                 ClsFrmInfoPar.Ftp = 1;
             else if (rab_gr3_1_imgPath.Checked)
@@ -412,6 +405,10 @@ namespace Csmsjcf
                 }
             }
             for (int i = 0; i < dtArchNo.Rows.Count; i++) {
+                if (ClsFrmInfoPar.StopTag == 2) {
+                    ListBshowInfo(xc, "0", "0", "已停止线程退出");
+                    return;
+                }
                 string archid = dtArchNo.Rows[i][0].ToString();
                 string boxsn = dtArchNo.Rows[i][1].ToString();
                 string archno = dtArchNo.Rows[i][2].ToString();
@@ -448,7 +445,6 @@ namespace Csmsjcf
                         ListBshowInfo(xc, boxsn, archno, "单导xls信息完成线程退出");
                         continue;
                     }
-
                 }
                 else if (ClsFrmInfoPar.ExportType == 1) {
                     ListBshowInfo(xc, boxsn, archno, "正在写入Xls信息");
@@ -486,6 +482,7 @@ namespace Csmsjcf
                         string fs = ClsFrmInfoPar.FileFormat[f];
                         string dirname = "";
                         string filename = "";
+                        string dpdfdir = "";
                         //文件名为字段 
                         if (ClsFrmInfoPar.FileNamesn == 3) {
                             string dir = ClsOperate.GetDirColName(archid);
@@ -504,10 +501,8 @@ namespace Csmsjcf
                                 ListBshowInfo(xc, boxsn, archno, "警告,错误线程退出");
                                 continue;
                             }
-
                             dirname = Path.Combine(ClsFrmInfoPar.MimgPath, ClsFrmInfoPar.FileFormat[f], dir);
                             filename = Path.Combine(dirname, file + "." + fs);
-
                             if (!Directory.Exists(dirname))
                                 Directory.CreateDirectory(dirname);
                             if (File.Exists(filename)) {
@@ -518,18 +513,17 @@ namespace Csmsjcf
                                     continue;
                                 }
                             }
-                            if (fs.IndexOf("2") >= 0) {
-                                ListBshowInfo(xc, boxsn, archno, "正在转换格式为双层pdf的Ocr单独文件");
-                                str = Himg._AutoPdfOcr2(Downfile, filename, ClsFrmInfoPar.Ocr);
-                                if (str.IndexOf("错误") >= 0) {
-                                    lock (ClsFrmInfoPar.Filelock) {
-                                        ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
-                                    }
-                                    ListBshowInfo(xc, boxsn, archno, "警告,错误线程退出");
-                                    continue;
+
+                            ListBshowInfo(xc, boxsn, archno, "正在转换格式为双层pdf的Ocr单独文件");
+                            str = Himg._AutoPdfOcr2(Downfile, filename,ClsFrmInfoPar.OcrPath, 1);
+                            if (str.IndexOf("错误") >= 0) {
+                                lock (ClsFrmInfoPar.Filelock) {
+                                    ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
                                 }
+                                ListBshowInfo(xc, boxsn, archno, "警告,错误线程退出");
+                                continue;
                             }
-                            else {
+                            if (ClsFrmInfoPar.Doublecor == 1) {
                                 ListBshowInfo(xc, boxsn, archno, "正在转换格式为" + fs + "的单独文件");
                                 if (fs == "tif") {
                                     try {
@@ -558,7 +552,6 @@ namespace Csmsjcf
 
                             }
                         }
-
                         //文件为每案卷或每文件夹 起始1   测试完成 
                         else if (ClsFrmInfoPar.FileNamesn == 2 || ClsFrmInfoPar.FileNamesn == 1) {
 
@@ -572,11 +565,18 @@ namespace Csmsjcf
                                     continue;
                                 }
                                 dirname = Path.Combine(ClsFrmInfoPar.MimgPath, ClsFrmInfoPar.FileFormat[f], dir);
+                                dpdfdir = Path.Combine(ClsFrmInfoPar.MimgPath, "Dpdf", dir);
                             }
-                            else
+                            else {
                                 dirname = Path.Combine(ClsFrmInfoPar.MimgPath, ClsFrmInfoPar.FileFormat[f], boxsn, archno);
+                                dpdfdir = Path.Combine(ClsFrmInfoPar.MimgPath, "Dpdf", boxsn, archno);
+                            }
                             if (!Directory.Exists(dirname))
                                 Directory.CreateDirectory(dirname);
+                            if (ClsFrmInfoPar.Doublecor == 1) {
+                                if (!Directory.Exists(dpdfdir))
+                                    Directory.CreateDirectory(dpdfdir);
+                            }
                             DataTable dirtTable = ClsOperate.GetdirmlInfo(archid);
                             if (dirtTable == null || dirtTable.Rows.Count <= 0) {
                                 str = "未找到文件夹命名规则目录信息  -->盒号:" + boxsn + " -->卷号" + archno;
@@ -589,6 +589,9 @@ namespace Csmsjcf
                                 }
                             }
                             for (int d = 0; d < dirtTable.Rows.Count; d++) {
+                                string doublepdf = "";
+                                string dirnamenew = "";
+                                lsinfopdf.Clear();
                                 int p1 = 0;
                                 int p2 = 0;
                                 string ml = dirtTable.Rows[d][0].ToString();
@@ -599,19 +602,23 @@ namespace Csmsjcf
                                 } catch {
                                     p2 = Convert.ToInt32(pages);
                                 }
-
                                 //每卷为1 已测完成
                                 if (ClsFrmInfoPar.FileNamesn == 2) {
                                     //为多页时 已测完成
                                     if (ClsFrmInfoPar.FileFomat == 2) {
-                                        string dirnamenew = "";
                                         if (ClsFrmInfoPar.DirNamesn == 1) {
                                             dirnamenew = dirname;
+                                            doublepdf = dpdfdir;
                                         }
                                         else if (ClsFrmInfoPar.DirNamesn == 2 || ClsFrmInfoPar.DirNamesn == 3) {
                                             dirnamenew = Path.Combine(dirname, ml);
                                             if (!Directory.Exists(dirnamenew))
                                                 Directory.CreateDirectory(dirnamenew);
+                                            doublepdf = Path.Combine(dpdfdir, ml);
+                                            if (ClsFrmInfoPar.Doublecor == 1) {
+                                                if (!Directory.Exists(doublepdf))
+                                                    Directory.CreateDirectory(doublepdf);
+                                            }
                                         }
                                         filename = Path.Combine(dirnamenew,
                                             p1.ToString() + "-" + p2.ToString() + "." + fs);
@@ -623,22 +630,23 @@ namespace Csmsjcf
                                                 continue;
                                             }
                                         }
-                                        if (fs.IndexOf("2") < 0) {
-                                            ListBshowInfo(xc, boxsn, archno,
-                                              "正在进行数据转换页：" + p1.ToString() + "-" + p2.ToString());
-                                            lsinfopdf = Himg._SplitImgls(Downfile, filename, p1, p2, fs);
-                                            if (!ClsOperate.Iserror(lsinfopdf, ClsFrmInfoPar.LogPath)) {
-                                                ListBshowInfo(xc, boxsn, archno, "警告,错误线程退出");
-                                                continue;
-                                            }
+
+                                        ListBshowInfo(xc, boxsn, archno,
+                                          "正在进行" + fs + "数据转换页：" + p1.ToString() + "-" + p2.ToString());
+                                        lsinfopdf = Himg._SplitImgls(Downfile, filename, p1, p2, fs);
+                                        if (!ClsOperate.Iserror(lsinfopdf, ClsFrmInfoPar.LogPath)) {
+                                            ListBshowInfo(xc, boxsn, archno, "警告,错误线程退出");
+                                            continue;
                                         }
-                                        else {
+                                        if (ClsFrmInfoPar.Doublecor == 1) {
                                             for (int pdf = 0; pdf < lsinfopdf.Count; pdf++) {
                                                 string yfile = lsinfopdf[pdf];
+                                                filename = Path.Combine(doublepdf,
+                                                    Path.GetFileNameWithoutExtension(yfile) + "pdf");
                                                 ListBshowInfo(xc, boxsn, archno, "正在进行Ocr数据转换页");
-                                                str = Himg._AutoPdfOcr2(yfile, filename, 1);
+                                                str = Himg._AutoPdfOcr2(yfile, filename,ClsFrmInfoPar.OcrPath, 1);
                                                 if (str.IndexOf("错误") >= 0) {
-                                                    str = Himg._AutoPdfOcr2(yfile, filename, 2);
+                                                    str = Himg._AutoPdfOcr2(yfile, filename,ClsFrmInfoPar.OcrPath,2);
                                                     if (str.IndexOf("错误") >= 0) {
                                                         lock (ClsFrmInfoPar.Filelock) {
                                                             ClsWritelog.Writelog(ClsFrmInfoPar.LogPath,
@@ -656,36 +664,39 @@ namespace Csmsjcf
                                     //为单页时  已测完成
                                     else if (ClsFrmInfoPar.FileFomat == 1) {
                                         //文件夹为目录 已测完成
-                                        string dirnamenew = "";
                                         if (ClsFrmInfoPar.DirNamesn == 1) {
                                             dirnamenew = dirname;
+                                            doublepdf = dpdfdir;
                                         }
                                         else if (ClsFrmInfoPar.DirNamesn == 2 || ClsFrmInfoPar.DirNamesn == 3) {
                                             dirnamenew = Path.Combine(dirname, ml);
                                             if (!Directory.Exists(dirnamenew))
                                                 Directory.CreateDirectory(dirnamenew);
-                                        }
-                                        ListBshowInfo(xc, boxsn, archno,
-                                                "正在进行数据转换页：" + p1.ToString() + "-" + p2.ToString());
-                                        if (fs.IndexOf("2") < 0) {
-                                            str = Himg._SplitImg(Downfile, dirnamenew, p1, p2,
-                                            ClsDataSplitPar.ClsFileNameQian, ClsDataSplitPar.ClsFileNameHou,
-                                            ClsDataSplitPar.ClsFileNmaecd, ClsFrmInfoPar.ConverMode, fs, 0);
-                                            if (str.IndexOf("错误") >= 0) {
-                                                lock (ClsFrmInfoPar.Filelock) {
-                                                    ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
-                                                }
-                                                ListBshowInfo(xc, boxsn, archno, "警告,错误线程退出");
-                                                continue;
+                                            doublepdf = Path.Combine(dpdfdir, ml);
+                                            if (ClsFrmInfoPar.Doublecor == 1) {
+                                                if (!Directory.Exists(doublepdf))
+                                                    Directory.CreateDirectory(doublepdf);
                                             }
                                         }
-                                        else {
+                                        ListBshowInfo(xc, boxsn, archno,
+                                                "正在进行" + fs + "数据转换页：" + p1.ToString() + "-" + p2.ToString());
+
+                                        lsinfopdf = Himg._SplitImgls(Downfile, dirnamenew, p1, p2,
+                                            ClsDataSplitPar.ClsFileNameQian, ClsDataSplitPar.ClsFileNameHou,
+                                            ClsDataSplitPar.ClsFileNmaecd, ClsFrmInfoPar.ConverMode, fs, 0);
+                                        if (!ClsOperate.Iserror(lsinfopdf, ClsFrmInfoPar.LogPath)) {
+                                            ListBshowInfo(xc, boxsn, archno, "警告,错误线程退出");
+                                            continue;
+                                        }
+                                        if (ClsFrmInfoPar.Doublecor == 1) {
                                             for (int pdf = 0; pdf < lsinfopdf.Count; pdf++) {
                                                 string yfile = lsinfopdf[pdf];
+                                                filename = Path.Combine(doublepdf,
+                                                    Path.GetFileNameWithoutExtension(yfile) + ".pdf");
                                                 ListBshowInfo(xc, boxsn, archno, "正在进行Ocr数据转换页");
-                                                str = Himg._AutoPdfOcr2(yfile, filename, 1);
+                                                str = Himg._AutoPdfOcr2(yfile, filename,ClsFrmInfoPar.OcrPath,1);
                                                 if (str.IndexOf("错误") >= 0) {
-                                                    str = Himg._AutoPdfOcr2(yfile, filename, 2);
+                                                    str = Himg._AutoPdfOcr2(yfile, filename,ClsFrmInfoPar.OcrPath, 2);
                                                     if (str.IndexOf("错误") >= 0) {
                                                         lock (ClsFrmInfoPar.Filelock) {
                                                             ClsWritelog.Writelog(ClsFrmInfoPar.LogPath,
@@ -706,9 +717,14 @@ namespace Csmsjcf
                                     if (ClsFrmInfoPar.FileFomat == 2) {
                                         //文件夹为目录  已测完成 
                                         if (ClsFrmInfoPar.DirNamesn == 2 || ClsFrmInfoPar.DirNamesn == 3) {
-                                            string dirnamenew = Path.Combine(dirname, ml);
+                                            dirnamenew = Path.Combine(dirname, ml);
                                             if (!Directory.Exists(dirnamenew))
                                                 Directory.CreateDirectory(dirnamenew);
+                                            doublepdf = Path.Combine(dpdfdir, ml);
+                                            if (ClsFrmInfoPar.Doublecor == 1) {
+                                                if (!Directory.Exists(doublepdf))
+                                                    Directory.CreateDirectory(doublepdf);
+                                            }
                                             int pags = p2 - p1;
                                             if (pags == 0)
                                                 pags = 1;
@@ -722,23 +738,22 @@ namespace Csmsjcf
                                                     continue;
                                                 }
                                             }
-
                                             ListBshowInfo(xc, boxsn, archno,
-                                                "正在进行数据转换页：" + p1.ToString() + "-" + p2.ToString());
-                                            if (fs.IndexOf("2") < 0) {
-                                                lsinfopdf = Himg._SplitImgls(Downfile, filename, p1, p2, fs);
-                                                if (!ClsOperate.Iserror(lsinfopdf, ClsFrmInfoPar.LogPath)) {
-                                                    ListBshowInfo(xc, boxsn, archno, "警告,错误线程退出");
-                                                    continue;
-                                                }
+                                                "正在进行" + fs + "数据转换页：" + p1.ToString() + "-" + p2.ToString());
+                                            lsinfopdf = Himg._SplitImgls(Downfile, filename, p1, p2, fs);
+                                            if (!ClsOperate.Iserror(lsinfopdf, ClsFrmInfoPar.LogPath)) {
+                                                ListBshowInfo(xc, boxsn, archno, "警告,错误线程退出");
+                                                continue;
                                             }
-                                            else {
+                                            if (ClsFrmInfoPar.Doublecor == 1) {
                                                 for (int pdf = 0; pdf < lsinfopdf.Count; pdf++) {
                                                     string yfile = lsinfopdf[pdf];
+                                                    filename = Path.Combine(doublepdf,
+                                                        Path.GetFileNameWithoutExtension(yfile) + ".pdf");
                                                     ListBshowInfo(xc, boxsn, archno, "正在进行Ocr数据转换页");
-                                                    str = Himg._AutoPdfOcr2(yfile, filename, 1);
+                                                    str = Himg._AutoPdfOcr2(yfile, filename,ClsFrmInfoPar.OcrPath, 1);
                                                     if (str.IndexOf("错误") >= 0) {
-                                                        str = Himg._AutoPdfOcr2(yfile, filename, 2);
+                                                        str = Himg._AutoPdfOcr2(yfile, filename,ClsFrmInfoPar.OcrPath, 2);
                                                         if (str.IndexOf("错误") >= 0) {
                                                             lock (ClsFrmInfoPar.Filelock) {
                                                                 ClsWritelog.Writelog(ClsFrmInfoPar.LogPath,
@@ -758,27 +773,32 @@ namespace Csmsjcf
                                     else if (ClsFrmInfoPar.FileFomat == 1) {
                                         //文件夹为目录   已测完成
                                         if (ClsFrmInfoPar.DirNamesn == 2 || ClsFrmInfoPar.DirNamesn == 3) {
-                                            string dirnamenew = Path.Combine(dirname, ml);
+                                            dirnamenew = Path.Combine(dirname, ml);
                                             if (!Directory.Exists(dirnamenew))
                                                 Directory.CreateDirectory(dirnamenew);
-                                            ListBshowInfo(xc, boxsn, archno,
-                                                "正在进行数据转换页：" + p1.ToString() + "-" + p2.ToString());
-                                            if (fs.IndexOf("2") >= 0) {
-                                                lsinfopdf = Himg._SplitImgls(Downfile, dirnamenew, p1, p2,
-                                                ClsDataSplitPar.ClsFileNameQian, ClsDataSplitPar.ClsFileNameHou,
-                                                ClsDataSplitPar.ClsFileNmaecd, ClsFrmInfoPar.ConverMode, fs, 1);
-                                                if (!ClsOperate.Iserror(lsinfopdf, ClsFrmInfoPar.LogPath)) {
-                                                    ListBshowInfo(xc, boxsn, archno, "警告,错误线程退出");
-                                                    continue;
-                                                }
+                                            doublepdf = Path.Combine(dpdfdir, ml);
+                                            if (ClsFrmInfoPar.Doublecor == 1) {
+                                                if (!Directory.Exists(doublepdf))
+                                                    Directory.CreateDirectory(doublepdf);
                                             }
-                                            else {
+                                            ListBshowInfo(xc, boxsn, archno,
+                                                "正在进行" + fs + "数据转换页：" + p1.ToString() + "-" + p2.ToString());
+                                            lsinfopdf = Himg._SplitImgls(Downfile, dirnamenew, p1, p2,
+                                            ClsDataSplitPar.ClsFileNameQian, ClsDataSplitPar.ClsFileNameHou,
+                                            ClsDataSplitPar.ClsFileNmaecd, ClsFrmInfoPar.ConverMode, fs, 1);
+                                            if (!ClsOperate.Iserror(lsinfopdf, ClsFrmInfoPar.LogPath)) {
+                                                ListBshowInfo(xc, boxsn, archno, "警告,错误线程退出");
+                                                continue;
+                                            }
+                                            if (ClsFrmInfoPar.Doublecor == 1) {
                                                 for (int pdf = 0; pdf < lsinfopdf.Count; pdf++) {
                                                     string yfile = lsinfopdf[pdf];
+                                                    filename = Path.Combine(doublepdf,
+                                                        Path.GetFileNameWithoutExtension(yfile) + ".pdf");
                                                     ListBshowInfo(xc, boxsn, archno, "正在进行Ocr数据转换页");
-                                                    str = Himg._AutoPdfOcr2(yfile, filename, 1);
+                                                    str = Himg._AutoPdfOcr2(yfile, filename,ClsFrmInfoPar.OcrPath, 1);
                                                     if (str.IndexOf("错误") >= 0) {
-                                                        str = Himg._AutoPdfOcr2(yfile, filename, 2);
+                                                        str = Himg._AutoPdfOcr2(yfile, filename,ClsFrmInfoPar.OcrPath, 2);
                                                         if (str.IndexOf("错误") >= 0) {
                                                             lock (ClsFrmInfoPar.Filelock) {
                                                                 ClsWritelog.Writelog(ClsFrmInfoPar.LogPath,
@@ -798,6 +818,7 @@ namespace Csmsjcf
                             }
                         }
                     }
+                    Common.DataSplitUpdate(archid);
                 } catch (Exception e) {
                     str = e.ToString();
                     lock (ClsFrmInfoPar.Filelock) {
@@ -811,19 +832,19 @@ namespace Csmsjcf
                     } catch { }
                     ListBshowInfo(xc, boxsn, archno, "线程退出");
                 }
-
             }
         }
 
         private void TxtEnd(bool x)
         {
-
             if (x) {
                 this.BeginInvoke(new Action(() =>
                     {
                         gr2.Enabled = true;
-                        gr3_1.Enabled = true;
-                        gr3_3.Enabled = true;
+                        butStart.Enabled = true;
+                        butLog.Enabled = true;
+                        labinfo.Visible = false;
+                        ClsFrmInfoPar.StopTag = 0;
                     }
                 ));
                 return;
@@ -831,8 +852,9 @@ namespace Csmsjcf
             this.BeginInvoke(new Action(() =>
                 {
                     gr2.Enabled = false;
-                    gr3_1.Enabled = false;
-                    gr3_3.Enabled = false;
+                    butStart.Enabled = false;
+                    butLog.Enabled = false;
+                    ClsFrmInfoPar.StopTag = 1;
                 }
             ));
         }
@@ -862,7 +884,6 @@ namespace Csmsjcf
                           , b, "");
                         Thread.Sleep(1000);
                         StatTask(id, obj);
-
                     });
                 }
                 else
@@ -896,7 +917,6 @@ namespace Csmsjcf
                 Action Act = StartTaskxc;
                 Act.BeginInvoke(null, null);
             }
-
         }
 
         #region FrmInfoPar
@@ -947,6 +967,15 @@ namespace Csmsjcf
                 str = "";
             but_gr3_1_ImgPath.Text = str;
             ClsFrmInfoPar.YimgPath = str;
+        }
+        private void butStop_Click(object sender, EventArgs e)
+        {
+            if (ClsFrmInfoPar.StopTag == 1) {
+                ClsFrmInfoPar.StopTag = 2;
+                labinfo.Visible = true;
+                return;
+            }
+            MessageBox.Show("任务未开始无法停止");
         }
 
         #endregion
