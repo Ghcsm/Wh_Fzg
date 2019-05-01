@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
+using HLjscom;
 
 namespace Csmsjcf
 {
@@ -15,7 +16,7 @@ namespace Csmsjcf
             DataTable dt = null;
             if (ClsFrmInfoPar.ConverMode == 2)
                 Common.DataSplitUpdate(ClsFrmInfoPar.Houseid, boxsn);
-            return dt = Common.GetDataSplitBoxsn(ClsFrmInfoPar.Houseid, boxsn,ClsFrmInfoPar.ConverMode);
+            return dt = Common.GetDataSplitBoxsn(ClsFrmInfoPar.Houseid, boxsn, ClsFrmInfoPar.ConverMode);
         }
 
         public static DataTable SelectSql(string boxsn, string archno)
@@ -182,7 +183,7 @@ namespace Csmsjcf
                 if (str.Contains("错误")) {
                     lock (ClsFrmInfoPar.Filelock) {
                         ClsWritelog.Writelog(strpath, str);
-                    error = false;
+                        error = false;
                     }
                 }
             }
@@ -200,9 +201,31 @@ namespace Csmsjcf
             return error;
         }
 
-        public static void UpdateData(int archid)
+
+
+        public static string OcrPdf(Hljsimage himg, List<string> fcount, string path, int xc, string boxsn, string archno)
         {
-            
+            string str = "ok";
+            for (int pdf = 0; pdf < fcount.Count; pdf++) {
+                string yfile = fcount[pdf];
+                string fname = Path.GetFileNameWithoutExtension(yfile);
+                string filename = Path.Combine(path, fname + ".pdf");
+                str = himg._AutoPdfOcr2(yfile, filename, ClsFrmInfoPar.OcrPath, 1);
+                if (str.IndexOf("错误") >= 0) {
+                    str = himg._AutoPdfOcr2(yfile, filename, ClsFrmInfoPar.OcrPath, 2);
+                    if (str.IndexOf("错误") >= 0) {
+                        if (ClsFrmInfoPar.Ocrpdf) {
+                            str = himg.Autopdf(yfile, filename);
+                            if (str.IndexOf("错误") >= 0)
+                                return str;
+                        }
+                        else return str;
+                    }
+
+                }
+
+            }
+            return str;
         }
 
     }
