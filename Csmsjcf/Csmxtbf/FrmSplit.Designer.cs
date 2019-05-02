@@ -342,6 +342,7 @@
             this.gr3_1.Size = new System.Drawing.Size(359, 140);
             this.gr3_1.TabIndex = 0;
             this.gr3_1.TabStop = false;
+            this.gr3_1.Tag = "8";
             this.gr3_1.Text = "相关路径";
             // 
             // but_gr3_1_Xls
@@ -401,6 +402,7 @@
             this.rab_gr3_1_ftp.TabStop = true;
             this.rab_gr3_1_ftp.Text = "Ftp传输下载";
             this.rab_gr3_1_ftp.UseVisualStyleBackColor = true;
+            this.rab_gr3_1_ftp.CheckedChanged += new System.EventHandler(this.rab_gr3_1_ftp_CheckedChanged);
             // 
             // but_gr3_1_ImgPath
             // 
@@ -471,6 +473,7 @@
             this.gr2_9.Size = new System.Drawing.Size(221, 82);
             this.gr2_9.TabIndex = 11;
             this.gr2_9.TabStop = false;
+            this.gr2_9.Tag = "7";
             this.gr2_9.Text = "文件命名规则-后台综合设置";
             // 
             // rab_gr2_9_file_ziduan
@@ -492,6 +495,7 @@
             this.rab_gr2_9_juan_1.TabIndex = 1;
             this.rab_gr2_9_juan_1.Text = "每卷起始页为1";
             this.rab_gr2_9_juan_1.UseVisualStyleBackColor = true;
+            this.rab_gr2_9_juan_1.CheckedChanged += new System.EventHandler(this.rab_gr2_9_juan_1_CheckedChanged);
             // 
             // rab_gr2_9_file_1
             // 
@@ -504,6 +508,7 @@
             this.rab_gr2_9_file_1.TabStop = true;
             this.rab_gr2_9_file_1.Text = "每个目录起始页为1";
             this.rab_gr2_9_file_1.UseVisualStyleBackColor = true;
+            this.rab_gr2_9_file_1.CheckedChanged += new System.EventHandler(this.rab_gr2_9_file_1_CheckedChanged);
             // 
             // gr2_8
             // 
@@ -515,6 +520,7 @@
             this.gr2_8.Size = new System.Drawing.Size(209, 82);
             this.gr2_8.TabIndex = 10;
             this.gr2_8.TabStop = false;
+            this.gr2_8.Tag = "3";
             this.gr2_8.Text = "文件夹命名规则-后台综合设置";
             // 
             // rab_gr2_8_ziduAndmulu
@@ -538,6 +544,7 @@
             this.rab_gr2_8_mulu.TabStop = true;
             this.rab_gr2_8_mulu.Text = "案卷目录格式";
             this.rab_gr2_8_mulu.UseVisualStyleBackColor = true;
+            this.rab_gr2_8_mulu.CheckedChanged += new System.EventHandler(this.rab_gr2_8_mulu_CheckedChanged);
             // 
             // rab_gr2_8_ziduan
             // 
@@ -550,6 +557,7 @@
             this.rab_gr2_8_ziduan.TabStop = true;
             this.rab_gr2_8_ziduan.Text = "多字段：\\a\\b\\c\\d";
             this.rab_gr2_8_ziduan.UseVisualStyleBackColor = true;
+            this.rab_gr2_8_ziduan.CheckedChanged += new System.EventHandler(this.rab_gr2_8_ziduan_CheckedChanged);
             // 
             // gr2_7
             // 
@@ -576,6 +584,7 @@
             this.gr2_7.Size = new System.Drawing.Size(220, 171);
             this.gr2_7.TabIndex = 9;
             this.gr2_7.TabStop = false;
+            this.gr2_7.Tag = "6";
             this.gr2_7.Text = "水印设置";
             // 
             // txt_gr2_7_waterFontsize
@@ -592,6 +601,7 @@
             this.txt_gr2_7_waterheight.Name = "txt_gr2_7_waterheight";
             this.txt_gr2_7_waterheight.Size = new System.Drawing.Size(36, 21);
             this.txt_gr2_7_waterheight.TabIndex = 8;
+            this.txt_gr2_7_waterheight.Text = "30";
             // 
             // txt_gr2_7_waterwith
             // 
@@ -599,6 +609,7 @@
             this.txt_gr2_7_waterwith.Name = "txt_gr2_7_waterwith";
             this.txt_gr2_7_waterwith.Size = new System.Drawing.Size(36, 21);
             this.txt_gr2_7_waterwith.TabIndex = 7;
+            this.txt_gr2_7_waterwith.Text = "100";
             // 
             // rab_gr2_7_wu
             // 
@@ -627,16 +638,16 @@
             // 
             // but_gr2_7_img
             // 
-            this.but_gr2_7_img.Location = new System.Drawing.Point(167, 48);
+            this.but_gr2_7_img.Location = new System.Drawing.Point(171, 48);
             this.but_gr2_7_img.Name = "but_gr2_7_img";
-            this.but_gr2_7_img.Size = new System.Drawing.Size(41, 23);
+            this.but_gr2_7_img.Size = new System.Drawing.Size(37, 23);
             this.but_gr2_7_img.TabIndex = 4;
             this.but_gr2_7_img.Text = "...";
             this.but_gr2_7_img.UseVisualStyleBackColor = true;
             // 
             // txt_gr2_7_img
             // 
-            this.txt_gr2_7_img.Location = new System.Drawing.Point(90, 47);
+            this.txt_gr2_7_img.Location = new System.Drawing.Point(90, 50);
             this.txt_gr2_7_img.Name = "txt_gr2_7_img";
             this.txt_gr2_7_img.ReadOnly = true;
             this.txt_gr2_7_img.Size = new System.Drawing.Size(71, 21);
@@ -669,6 +680,7 @@
             this.rab_gr2_7_wenzi.TabIndex = 0;
             this.rab_gr2_7_wenzi.Text = "显示文字";
             this.rab_gr2_7_wenzi.UseVisualStyleBackColor = true;
+            this.rab_gr2_7_wenzi.CheckedChanged += new System.EventHandler(this.rab_gr2_7_wenzi_CheckedChanged);
             // 
             // label10
             // 
@@ -727,6 +739,7 @@
             this.gr2_6.Size = new System.Drawing.Size(224, 67);
             this.gr2_6.TabIndex = 8;
             this.gr2_6.TabStop = false;
+            this.gr2_6.Tag = "5";
             this.gr2_6.Text = "OCR";
             // 
             // but_gr2_6_ocrpath
@@ -881,6 +894,7 @@
             this.gr2_4.Size = new System.Drawing.Size(224, 87);
             this.gr2_4.TabIndex = 6;
             this.gr2_4.TabStop = false;
+            this.gr2_4.Tag = "4";
             this.gr2_4.Text = "转换格式";
             // 
             // chk_gr2_6_ocrpdf
@@ -935,6 +949,7 @@
             this.rab_gr2_4_dan.TabStop = true;
             this.rab_gr2_4_dan.Text = "单页";
             this.rab_gr2_4_dan.UseVisualStyleBackColor = true;
+            this.rab_gr2_4_dan.CheckedChanged += new System.EventHandler(this.rab_gr2_4_dan_CheckedChanged);
             // 
             // chk_gr2_4_tif
             // 
@@ -1009,6 +1024,7 @@
             this.gr2_3.Size = new System.Drawing.Size(209, 74);
             this.gr2_3.TabIndex = 4;
             this.gr2_3.TabStop = false;
+            this.gr2_3.Tag = "2";
             this.gr2_3.Text = "导出类型";
             // 
             // rab_Gr2_3_xls
@@ -1076,6 +1092,7 @@
             this.gr2_1.Size = new System.Drawing.Size(209, 49);
             this.gr2_1.TabIndex = 0;
             this.gr2_1.TabStop = false;
+            this.gr2_1.Tag = "1";
             this.gr2_1.Text = "转换方式";
             // 
             // rab_gr2_1_Newzhuanhuan

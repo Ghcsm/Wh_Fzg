@@ -126,6 +126,7 @@
     <Compile Include="ClsDataSplitPar.cs" />
     <Compile Include="ClsInIPar.cs" />
     <Compile Include="ClsOperate.cs" />
+    <Compile Include="ClsSplitini.cs" />
     <Compile Include="ClsWritelog.cs" />
     <Compile Include="FrmSplit.cs">
       <SubType>Form</SubType>

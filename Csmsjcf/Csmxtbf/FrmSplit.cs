@@ -99,6 +99,7 @@ namespace Csmsjcf
             ClsFrmInfoPar.TaskBoxCounttmp.RemoveAt(id);
         }
 
+
         private bool IsTxtInfo()
         {
             if (rab_Gr2_3_tb.Checked || rab_Gr2_3_xls.Checked) {
@@ -160,6 +161,10 @@ namespace Csmsjcf
                         ClsFrmInfoPar.FileFormat.Add("pdf");
                     if (chk_gr2_4_tif.Checked)
                         ClsFrmInfoPar.FileFormat.Add("tif");
+                    for (int i = 0; i < ClsFrmInfoPar.FileFormat.Count; i++) {
+                        string str = ClsFrmInfoPar.FileFormat[i];
+                        ClsWritelog.Writeini(str, str);
+                    }
                 }
 
                 if (ClsDataSplitPar.ClsdirDirsn == 0) {
@@ -180,6 +185,7 @@ namespace Csmsjcf
                         txt_gr2_6_ocrPath.Focus();
                         return false;
                     }
+                    ClsWritelog.Writeini("Dpdf", "1");
                 }
                 if (!rab_gr2_7_wu.Checked) {
                     if (comb_gr2_7_weizhi.Text.Trim().Length <= 0) {
@@ -193,7 +199,7 @@ namespace Csmsjcf
                             txt_gr2_7_wenzi.Focus();
                             return false;
                         }
-                        if (txt_gr2_7_waterFontsize.Text.Trim().Length <= 0 || ClsFrmInfoPar.WaterFontColor <= 0) {
+                        if (txt_gr2_7_waterFontsize.Text.Trim().Length <= 0 || ClsFrmInfoPar.WaterFontColor == 0) {
                             MessageBox.Show("请设置字号或字体颜色");
                             return false;
                         }
@@ -209,6 +215,26 @@ namespace Csmsjcf
                             txt_gr2_7_watertmd.Focus();
                             return false;
                         }
+                        else {
+                            try {
+                                int x = int.Parse(txt_gr2_7_watertmd.Text.Trim());
+                                if (x < 0 || x > 255) {
+                                    MessageBox.Show("透明度范围0-255");
+                                    txt_gr2_7_watertmd.Focus();
+                                    return false;
+                                }
+                            } catch {
+                                MessageBox.Show("透明度范围0-255");
+                                txt_gr2_7_watertmd.Focus();
+                                return false;
+                            }
+                        }
+                        ClsWritelog.Writeini("waterstr", txt_gr2_7_wenzi.Text.Trim());
+                        ClsWritelog.Writeini("waterfontsize", txt_gr2_7_waterFontsize.Text);
+                        ClsWritelog.Writeini("watercolor", ClsFrmInfoPar.WaterFontColor.ToString());
+                        ClsWritelog.Writeini("watertmd", txt_gr2_7_watertmd.Text.Trim());
+                        ClsWritelog.Writeini("waterwith", txt_gr2_7_waterwith.Text.Trim());
+                        ClsWritelog.Writeini("waterheiht", txt_gr2_7_waterheight.Text.Trim());
                     }
                     if (rab_gr2_7_img.Checked) {
                         if (txt_gr2_7_img.Text.Trim().Length <= 0) {
@@ -228,8 +254,12 @@ namespace Csmsjcf
                             txt_gr2_7_watertmd.Focus();
                             return false;
                         }
+                        ClsWritelog.Writeini("waterstrimg", txt_gr2_7_wenzi.Text.Trim());
+                        ClsWritelog.Writeini("watertmd", txt_gr2_7_watertmd.Text.Trim());
+                        ClsWritelog.Writeini("waterwith", txt_gr2_7_waterwith.Text.Trim());
+                        ClsWritelog.Writeini("waterheiht", txt_gr2_7_waterheight.Text.Trim());
                     }
-
+                    ClsWritelog.Writeini("waterwz", comb_gr2_7_weizhi.SelectedIndex.ToString());
                 }
                 if (rab_gr2_4_duli.Checked) {
                     if (chk_Gr2_4_jpg.Checked) {
@@ -319,6 +349,8 @@ namespace Csmsjcf
                 ClsFrmInfoPar.Doublecor = 1;
                 ClsFrmInfoPar.OcrPath = txt_gr2_6_ocrPath.Text.Trim();
                 ClsFrmInfoPar.Ocrpdf = chk_gr2_6_ocrpdf.Checked;
+                if (chk_gr2_6_ocrpdf.Checked)
+                    ClsWritelog.Writeini("ppdf", "ppdf");
             }
             else ClsFrmInfoPar.Doublecor = 0;
             if (rab_gr2_7_wu.Checked)
@@ -923,10 +955,94 @@ namespace Csmsjcf
 
         private void FrmSplit_Shown(object sender, EventArgs e)
         {
+            Himg = new Hljsimage();
             CombAddinfo();
             ClsInIPar.Getgzinfo();
-            Himg = new Hljsimage();
+            Getparinfo();
         }
+
+        private void Getparinfo()
+        {
+            try
+            {
+                List<string> lskey = new List<string>();
+                List<string> lsval = new List<string>();
+                lskey = ClsWritelog.Readinikey();
+                lsval = ClsWritelog.Readinivalue();
+                for (int i = 0; i < lskey.Count; i++) {
+                    string strkey = lskey[i];
+                    string strval = lsval[i];
+                    if (strkey.Trim().Length <= 0)
+                        continue;
+                    if (strkey == "dirname") {
+                        if (strval == "1")
+                            rab_gr2_8_ziduan.Checked = true;
+                        else if (strval == "2")
+                            rab_gr2_8_mulu.Checked = true;
+                        else rab_gr2_8_ziduAndmulu.Checked = true;
+                    }
+                    if (strkey == "filename") {
+                        if (strval == "1")
+                            rab_gr2_9_file_1.Checked = true;
+                        else if (strval == "2")
+                            rab_gr2_9_juan_1.Checked = true;
+                        else rab_gr2_9_file_ziduan.Checked = true;
+                    }
+                    if (strkey == "convfile") {
+                        if (strval == "1")
+                            rab_gr2_4_dan.Checked = true;
+                        else if (strval == "2")
+                            rab_gr2_4_duo.Checked = true;
+                        else rab_gr2_4_duli.Checked = true;
+                    }
+                    if (strkey == "water") {
+                        if (strval == "0")
+                            rab_gr2_7_wu.Checked = true;
+                        else if (strval == "1")
+                            rab_gr2_7_wenzi.Checked = true;
+                        else rab_gr2_7_img.Checked = true;
+                    }
+                    if (strkey == "ftp") {
+                        if (strval == "1")
+                            rab_gr3_1_ftp.Checked = true;
+                        else rab_gr3_1_imgPath.Checked = true;
+                    }
+                    if (strkey == "jpg")
+                        chk_Gr2_4_jpg.Checked = true;
+                    if (strkey == "pdf")
+                        chk_gr2_4_pdf.Checked = true;
+                    if (strkey == "tif")
+                        chk_gr2_4_tif.Checked = true;
+                    if (strkey == "dpdf")
+                        chk_gr2_4_dou_pdf.Checked = true;
+                    if (strkey == "ppdf")
+                        chk_gr2_6_ocrpdf.Checked = true;
+                    if (strkey == "waterstr")
+                        txt_gr2_7_wenzi.Text = strval;
+                    if (strkey == "waterfontsize")
+                        txt_gr2_7_waterFontsize.Text = strval;
+                    if (strkey == "watertmd")
+                        txt_gr2_7_watertmd.Text = strval;
+                    if (strkey == "waterwith")
+                        txt_gr2_7_waterwith.Text = strval;
+                    if (strkey == "waterheiht")
+                        txt_gr2_7_waterheight.Text = strval;
+                    if (strkey == "watercolor")
+                        ClsFrmInfoPar.WaterFontColor = Convert.ToInt32(strval);
+                    if (strkey == "waterstrimg")
+                        txt_gr2_7_img.Text = strval;
+                    if (strkey == "convpath")
+                        txt_gr3_1_splitPath.Text = strval;
+                    if (strkey == "ftppath")
+                        txt_gr3_1_splitPath.Text = strval;
+                    if (strkey == "convxls")
+                        txt_gr3_1_xlsPath.Text = strval;
+                }
+            }
+            catch
+            {}
+        }
+
         private void butLog_Click(object sender, EventArgs e)
         {
             string file = Path.Combine(ClsFrmInfoPar.LogPath, "log.txt");
@@ -939,8 +1055,10 @@ namespace Csmsjcf
         private void but_gr3_1_Xls_Click(object sender, EventArgs e)
         {
             string str = "";
-            if (FdigXls.ShowDialog() == DialogResult.OK)
+            if (FdigXls.ShowDialog() == DialogResult.OK) {
                 str = FdigXls.FileName;
+                ClsWritelog.Writeini("convxls", str);
+            }
             else
                 str = "";
             txt_gr3_1_xlsPath.Text = str;
@@ -950,8 +1068,10 @@ namespace Csmsjcf
         private void but_gr3_1_ImgToPath_Click(object sender, EventArgs e)
         {
             string str = "";
-            if (fBdigImgPath.ShowDialog() == DialogResult.OK)
+            if (fBdigImgPath.ShowDialog() == DialogResult.OK) {
                 str = fBdigImgPath.SelectedPath;
+                ClsWritelog.Writeini("convpath", str);
+            }
             else
                 str = "";
             txt_gr3_1_splitPath.Text = str;
@@ -961,8 +1081,10 @@ namespace Csmsjcf
         private void but_gr3_1_ImgPath_Click(object sender, EventArgs e)
         {
             string str = "";
-            if (fBdigImgPath.ShowDialog() == DialogResult.OK)
+            if (fBdigImgPath.ShowDialog() == DialogResult.OK) {
                 str = fBdigImgPath.SelectedPath;
+                ClsWritelog.Writeini("ftppath", str);
+            }
             else
                 str = "";
             but_gr3_1_ImgPath.Text = str;
@@ -971,8 +1093,11 @@ namespace Csmsjcf
 
         private void but_gr2_6_ocrpath_Click(object sender, EventArgs e)
         {
-            if (fBdigImgPath.ShowDialog() == DialogResult.OK)
+            if (fBdigImgPath.ShowDialog() == DialogResult.OK) {
                 txt_gr2_6_ocrPath.Text = fBdigImgPath.SelectedPath;
+                ClsWritelog.Writeini("ocr", fBdigImgPath.SelectedPath);
+            }
+
             else txt_gr2_6_ocrPath.Text = "";
         }
 
@@ -986,9 +1111,76 @@ namespace Csmsjcf
             MessageBox.Show("任务未开始无法停止");
         }
 
+        private void rab_gr2_8_ziduan_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rab_gr2_8_ziduan.Checked)
+                ClsWritelog.Writeini("dirname", "1");
+            else if (rab_gr2_8_mulu.Checked)
+                ClsWritelog.Writeini("dirname", "2");
+            else if (rab_gr2_8_ziduAndmulu.Checked)
+                ClsWritelog.Writeini("dirname", "3");
+        }
+
+        private void rab_gr2_8_mulu_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rab_gr2_8_ziduan.Checked)
+                ClsWritelog.Writeini("dirname", "1");
+            else if (rab_gr2_8_mulu.Checked)
+                ClsWritelog.Writeini("dirname", "2");
+            else if (rab_gr2_8_ziduAndmulu.Checked)
+                ClsWritelog.Writeini("dirname", "3");
+        }
+
+        private void rab_gr2_9_file_1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rab_gr2_9_file_1.Checked)
+                ClsWritelog.Writeini("filename", "1");
+            else if (rab_gr2_9_juan_1.Checked)
+                ClsWritelog.Writeini("filename", "2");
+            else if (rab_gr2_9_file_ziduan.Checked)
+                ClsWritelog.Writeini("filename", "3");
+        }
+
+        private void rab_gr2_9_juan_1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rab_gr2_9_file_1.Checked)
+                ClsWritelog.Writeini("filename", "1");
+            else if (rab_gr2_9_juan_1.Checked)
+                ClsWritelog.Writeini("filename", "2");
+            else if (rab_gr2_9_file_ziduan.Checked)
+                ClsWritelog.Writeini("filename", "3");
+        }
+
+        private void rab_gr2_4_dan_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rab_gr2_4_dan.Checked)
+                ClsWritelog.Writeini("convfile", "1");
+            else if (rab_gr2_4_duo.Checked)
+                ClsWritelog.Writeini("convfile", "2");
+            else if (rab_gr2_4_duli.Checked)
+                ClsWritelog.Writeini("convfile", "3");
+        }
+
+        private void rab_gr2_7_wenzi_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rab_gr2_7_wenzi.Checked)
+                ClsWritelog.Writeini("water", "1");
+            else if (rab_gr2_7_img.Checked)
+                ClsWritelog.Writeini("water", "2");
+            else if (rab_gr2_7_wu.Checked)
+                ClsWritelog.Writeini("water", "0");
+        }
+
+        private void rab_gr3_1_ftp_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rab_gr3_1_ftp.Checked)
+                ClsWritelog.Writeini("ftp", "1");
+            else ClsWritelog.Writeini("ftp", "0");
+        }
+
+
 
         #endregion
-
 
     }
 }

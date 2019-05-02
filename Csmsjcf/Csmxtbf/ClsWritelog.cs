@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Csmsjcf
 {
@@ -36,5 +34,25 @@ namespace Csmsjcf
                 fs.Close();
             } 
         }
+
+        public static void Writeini(string key,string value)
+        {
+            string filepath = Path.Combine(ClsFrmInfoPar.LogPath, "Splite.ini");
+            INIHelper.Write("SplitePar",key,value,filepath);
+        }
+
+        public static List<string> Readinikey()
+        {
+            string filepath = Path.Combine(ClsFrmInfoPar.LogPath, "Splite.ini");
+            return  INIHelper.GetAllKeys("SplitePar", filepath);
+        }
+
+        public static List<string> Readinivalue()
+        {
+            string filepath = Path.Combine(ClsFrmInfoPar.LogPath, "Splite.ini");
+            return INIHelper.GetAllValues("SplitePar", filepath);
+        }
+
+
     }
 }
