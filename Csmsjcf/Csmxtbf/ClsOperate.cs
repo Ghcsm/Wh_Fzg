@@ -201,8 +201,6 @@ namespace Csmsjcf
             return error;
         }
 
-
-
         public static string OcrPdf(Hljsimage himg, List<string> fcount, string path, int xc, string boxsn, string archno)
         {
             string str = "ok";
@@ -226,6 +224,21 @@ namespace Csmsjcf
 
             }
             return str;
+        }
+
+        public static void Setwaterpar()
+        {
+            if (ClsFrmInfoPar.Watermark > 0)
+            {
+                ClsInfopar.waterid = ClsFrmInfoPar.Watermark;
+                ClsInfopar.waterWith = ClsFrmInfoPar.Waterwith;
+                ClsInfopar.waterheiht = ClsFrmInfoPar.Waterheiht;
+                ClsInfopar.watercolor = ClsFrmInfoPar.WaterFontColor;
+                ClsInfopar.waterfontsize = ClsFrmInfoPar.WaterFontsize;
+                ClsInfopar.waterwz = ClsFrmInfoPar.Waterwz;
+                ClsInfopar.watertmd = ClsFrmInfoPar.Watertmd;
+                ClsInfopar.waterstr = ClsFrmInfoPar.WaterStrImg;
+            }
         }
 
     }

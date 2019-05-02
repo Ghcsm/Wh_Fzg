@@ -42,6 +42,13 @@ namespace Csmsjcf
         public static bool Ocrpdf { get; set; }
         public static int Doublecor { get; set; }
         public static int Watermark { get; set; }
+        public static int Waterwith { get; set; }
+        public static int Waterheiht { get; set; }
+        public static int WaterFontsize { get; set; }
+        public static string WaterStrImg { get; set; }
+        public static int WaterFontColor { get; set; }
+        public static int Watertmd { get; set; }
+        public static int Waterwz { get; set; }
         public static int FileFomat { get; set; }
         public static int Ftp { get; set; }
         public static string YimgPath { get; set; }
@@ -50,10 +57,6 @@ namespace Csmsjcf
         public static int Taskxc { get; set; }
 
         public static List<string> FileFormat = new List<string>();
-        public static string WaterStrImg { get; set; }
-        public static string WaterFontsize { get; set; }
-        public static string Waterfont { get; set; }
-        public static int WaterFontColor { get; set; }
 
         public static List<string> TaskBoxCounttmp = new List<string>();
 

@@ -59,6 +59,9 @@
             this.rab_gr2_8_mulu = new System.Windows.Forms.RadioButton();
             this.rab_gr2_8_ziduan = new System.Windows.Forms.RadioButton();
             this.gr2_7 = new System.Windows.Forms.GroupBox();
+            this.txt_gr2_7_waterFontsize = new System.Windows.Forms.TextBox();
+            this.txt_gr2_7_waterheight = new System.Windows.Forms.TextBox();
+            this.txt_gr2_7_waterwith = new System.Windows.Forms.TextBox();
             this.rab_gr2_7_wu = new System.Windows.Forms.RadioButton();
             this.comb_gr2_7_weizhi = new DevComponents.DotNetBar.Controls.ComboBoxEx();
             this.but_gr2_7_img = new System.Windows.Forms.Button();
@@ -66,11 +69,12 @@
             this.txt_gr2_7_wenzi = new System.Windows.Forms.TextBox();
             this.rab_gr2_7_img = new System.Windows.Forms.RadioButton();
             this.rab_gr2_7_wenzi = new System.Windows.Forms.RadioButton();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.lab_gr2_7_font_color = new System.Windows.Forms.Label();
-            this.lab_gr2_7_font_size = new System.Windows.Forms.Label();
             this.gr2_6 = new System.Windows.Forms.GroupBox();
-            this.chk_gr2_6_ocrpdf = new System.Windows.Forms.CheckBox();
             this.but_gr2_6_ocrpath = new System.Windows.Forms.Button();
             this.txt_gr2_6_ocrPath = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -81,10 +85,12 @@
             this.chk_gr2_5_juan = new System.Windows.Forms.CheckBox();
             this.but_gr2_5_add = new DevComponents.DotNetBar.ButtonX();
             this.lv_gr2_5_boxCount = new System.Windows.Forms.ListView();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.txt_gr2_5_box2 = new System.Windows.Forms.TextBox();
             this.txt_gr2_5_box1 = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.gr2_4 = new System.Windows.Forms.GroupBox();
+            this.chk_gr2_6_ocrpdf = new System.Windows.Forms.CheckBox();
             this.rab_gr2_4_duli = new System.Windows.Forms.RadioButton();
             this.rab_gr2_4_duo = new System.Windows.Forms.RadioButton();
             this.chk_gr2_4_dou_pdf = new System.Windows.Forms.CheckBox();
@@ -112,6 +118,9 @@
             this.fBdigImgPath = new System.Windows.Forms.FolderBrowserDialog();
             this.fontDialog = new System.Windows.Forms.FontDialog();
             this.colorDialog = new System.Windows.Forms.ColorDialog();
+            this.label12 = new System.Windows.Forms.Label();
+            this.txt_gr2_7_watertmd = new System.Windows.Forms.TextBox();
+            this.label13 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.superTabControl1)).BeginInit();
             this.superTabControl1.SuspendLayout();
             this.superTabControlPanel1.SuspendLayout();
@@ -544,6 +553,10 @@
             // 
             // gr2_7
             // 
+            this.gr2_7.Controls.Add(this.txt_gr2_7_watertmd);
+            this.gr2_7.Controls.Add(this.txt_gr2_7_waterFontsize);
+            this.gr2_7.Controls.Add(this.txt_gr2_7_waterheight);
+            this.gr2_7.Controls.Add(this.txt_gr2_7_waterwith);
             this.gr2_7.Controls.Add(this.rab_gr2_7_wu);
             this.gr2_7.Controls.Add(this.comb_gr2_7_weizhi);
             this.gr2_7.Controls.Add(this.but_gr2_7_img);
@@ -551,21 +564,47 @@
             this.gr2_7.Controls.Add(this.txt_gr2_7_wenzi);
             this.gr2_7.Controls.Add(this.rab_gr2_7_img);
             this.gr2_7.Controls.Add(this.rab_gr2_7_wenzi);
+            this.gr2_7.Controls.Add(this.label10);
+            this.gr2_7.Controls.Add(this.label12);
+            this.gr2_7.Controls.Add(this.label11);
+            this.gr2_7.Controls.Add(this.label7);
             this.gr2_7.Controls.Add(this.label5);
+            this.gr2_7.Controls.Add(this.label13);
             this.gr2_7.Controls.Add(this.lab_gr2_7_font_color);
-            this.gr2_7.Controls.Add(this.lab_gr2_7_font_size);
-            this.gr2_7.Location = new System.Drawing.Point(237, 261);
+            this.gr2_7.Location = new System.Drawing.Point(237, 237);
             this.gr2_7.Name = "gr2_7";
-            this.gr2_7.Size = new System.Drawing.Size(220, 147);
+            this.gr2_7.Size = new System.Drawing.Size(220, 171);
             this.gr2_7.TabIndex = 9;
             this.gr2_7.TabStop = false;
             this.gr2_7.Text = "水印设置";
+            // 
+            // txt_gr2_7_waterFontsize
+            // 
+            this.txt_gr2_7_waterFontsize.Location = new System.Drawing.Point(116, 110);
+            this.txt_gr2_7_waterFontsize.Name = "txt_gr2_7_waterFontsize";
+            this.txt_gr2_7_waterFontsize.Size = new System.Drawing.Size(32, 21);
+            this.txt_gr2_7_waterFontsize.TabIndex = 9;
+            this.txt_gr2_7_waterFontsize.Text = "12";
+            // 
+            // txt_gr2_7_waterheight
+            // 
+            this.txt_gr2_7_waterheight.Location = new System.Drawing.Point(37, 139);
+            this.txt_gr2_7_waterheight.Name = "txt_gr2_7_waterheight";
+            this.txt_gr2_7_waterheight.Size = new System.Drawing.Size(36, 21);
+            this.txt_gr2_7_waterheight.TabIndex = 8;
+            // 
+            // txt_gr2_7_waterwith
+            // 
+            this.txt_gr2_7_waterwith.Location = new System.Drawing.Point(37, 109);
+            this.txt_gr2_7_waterwith.Name = "txt_gr2_7_waterwith";
+            this.txt_gr2_7_waterwith.Size = new System.Drawing.Size(36, 21);
+            this.txt_gr2_7_waterwith.TabIndex = 7;
             // 
             // rab_gr2_7_wu
             // 
             this.rab_gr2_7_wu.AutoSize = true;
             this.rab_gr2_7_wu.Checked = true;
-            this.rab_gr2_7_wu.Location = new System.Drawing.Point(13, 19);
+            this.rab_gr2_7_wu.Location = new System.Drawing.Point(9, 80);
             this.rab_gr2_7_wu.Name = "rab_gr2_7_wu";
             this.rab_gr2_7_wu.Size = new System.Drawing.Size(35, 16);
             this.rab_gr2_7_wu.TabIndex = 6;
@@ -580,15 +619,15 @@
             this.comb_gr2_7_weizhi.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comb_gr2_7_weizhi.FormattingEnabled = true;
             this.comb_gr2_7_weizhi.ItemHeight = 15;
-            this.comb_gr2_7_weizhi.Location = new System.Drawing.Point(90, 94);
+            this.comb_gr2_7_weizhi.Location = new System.Drawing.Point(90, 78);
             this.comb_gr2_7_weizhi.Name = "comb_gr2_7_weizhi";
-            this.comb_gr2_7_weizhi.Size = new System.Drawing.Size(121, 21);
+            this.comb_gr2_7_weizhi.Size = new System.Drawing.Size(116, 21);
             this.comb_gr2_7_weizhi.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.comb_gr2_7_weizhi.TabIndex = 5;
             // 
             // but_gr2_7_img
             // 
-            this.but_gr2_7_img.Location = new System.Drawing.Point(167, 65);
+            this.but_gr2_7_img.Location = new System.Drawing.Point(167, 48);
             this.but_gr2_7_img.Name = "but_gr2_7_img";
             this.but_gr2_7_img.Size = new System.Drawing.Size(41, 23);
             this.but_gr2_7_img.TabIndex = 4;
@@ -597,7 +636,7 @@
             // 
             // txt_gr2_7_img
             // 
-            this.txt_gr2_7_img.Location = new System.Drawing.Point(90, 64);
+            this.txt_gr2_7_img.Location = new System.Drawing.Point(90, 47);
             this.txt_gr2_7_img.Name = "txt_gr2_7_img";
             this.txt_gr2_7_img.ReadOnly = true;
             this.txt_gr2_7_img.Size = new System.Drawing.Size(71, 21);
@@ -605,7 +644,7 @@
             // 
             // txt_gr2_7_wenzi
             // 
-            this.txt_gr2_7_wenzi.Location = new System.Drawing.Point(91, 39);
+            this.txt_gr2_7_wenzi.Location = new System.Drawing.Point(91, 22);
             this.txt_gr2_7_wenzi.Name = "txt_gr2_7_wenzi";
             this.txt_gr2_7_wenzi.Size = new System.Drawing.Size(117, 21);
             this.txt_gr2_7_wenzi.TabIndex = 2;
@@ -614,7 +653,7 @@
             // rab_gr2_7_img
             // 
             this.rab_gr2_7_img.AutoSize = true;
-            this.rab_gr2_7_img.Location = new System.Drawing.Point(13, 67);
+            this.rab_gr2_7_img.Location = new System.Drawing.Point(7, 52);
             this.rab_gr2_7_img.Name = "rab_gr2_7_img";
             this.rab_gr2_7_img.Size = new System.Drawing.Size(71, 16);
             this.rab_gr2_7_img.TabIndex = 1;
@@ -624,65 +663,71 @@
             // rab_gr2_7_wenzi
             // 
             this.rab_gr2_7_wenzi.AutoSize = true;
-            this.rab_gr2_7_wenzi.Location = new System.Drawing.Point(13, 41);
+            this.rab_gr2_7_wenzi.Location = new System.Drawing.Point(7, 24);
             this.rab_gr2_7_wenzi.Name = "rab_gr2_7_wenzi";
             this.rab_gr2_7_wenzi.Size = new System.Drawing.Size(71, 16);
             this.rab_gr2_7_wenzi.TabIndex = 0;
             this.rab_gr2_7_wenzi.Text = "显示文字";
             this.rab_gr2_7_wenzi.UseVisualStyleBackColor = true;
             // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(10, 144);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(29, 12);
+            this.label10.TabIndex = 2;
+            this.label10.Text = "高：";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(79, 115);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(41, 12);
+            this.label11.TabIndex = 2;
+            this.label11.Text = "字号：";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(11, 113);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(29, 12);
+            this.label7.TabIndex = 2;
+            this.label7.Text = "宽：";
+            // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(17, 100);
+            this.label5.Location = new System.Drawing.Point(53, 83);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(65, 12);
+            this.label5.Size = new System.Drawing.Size(29, 12);
             this.label5.TabIndex = 2;
-            this.label5.Text = "显示位置：";
+            this.label5.Text = "位置";
             // 
             // lab_gr2_7_font_color
             // 
             this.lab_gr2_7_font_color.AutoSize = true;
-            this.lab_gr2_7_font_color.Location = new System.Drawing.Point(116, 128);
+            this.lab_gr2_7_font_color.Location = new System.Drawing.Point(156, 114);
             this.lab_gr2_7_font_color.Name = "lab_gr2_7_font_color";
-            this.lab_gr2_7_font_color.Size = new System.Drawing.Size(77, 12);
+            this.lab_gr2_7_font_color.Size = new System.Drawing.Size(53, 12);
             this.lab_gr2_7_font_color.TabIndex = 2;
-            this.lab_gr2_7_font_color.Text = "设置字体颜色";
+            this.lab_gr2_7_font_color.Text = "字体颜色";
             this.lab_gr2_7_font_color.Click += new System.EventHandler(this.lab_gr2_7_font_color_Click);
-            // 
-            // lab_gr2_7_font_size
-            // 
-            this.lab_gr2_7_font_size.AutoSize = true;
-            this.lab_gr2_7_font_size.Location = new System.Drawing.Point(16, 128);
-            this.lab_gr2_7_font_size.Name = "lab_gr2_7_font_size";
-            this.lab_gr2_7_font_size.Size = new System.Drawing.Size(77, 12);
-            this.lab_gr2_7_font_size.TabIndex = 2;
-            this.lab_gr2_7_font_size.Text = "设置字体字号";
-            this.lab_gr2_7_font_size.Click += new System.EventHandler(this.lab_gr2_7_font_size_Click);
             // 
             // gr2_6
             // 
-            this.gr2_6.Controls.Add(this.chk_gr2_6_ocrpdf);
             this.gr2_6.Controls.Add(this.but_gr2_6_ocrpath);
             this.gr2_6.Controls.Add(this.txt_gr2_6_ocrPath);
             this.gr2_6.Controls.Add(this.label4);
             this.gr2_6.Controls.Add(this.label6);
-            this.gr2_6.Location = new System.Drawing.Point(234, 168);
+            this.gr2_6.Location = new System.Drawing.Point(234, 164);
             this.gr2_6.Name = "gr2_6";
-            this.gr2_6.Size = new System.Drawing.Size(224, 87);
+            this.gr2_6.Size = new System.Drawing.Size(224, 67);
             this.gr2_6.TabIndex = 8;
             this.gr2_6.TabStop = false;
             this.gr2_6.Text = "OCR";
-            // 
-            // chk_gr2_6_ocrpdf
-            // 
-            this.chk_gr2_6_ocrpdf.AutoSize = true;
-            this.chk_gr2_6_ocrpdf.Location = new System.Drawing.Point(25, 65);
-            this.chk_gr2_6_ocrpdf.Name = "chk_gr2_6_ocrpdf";
-            this.chk_gr2_6_ocrpdf.Size = new System.Drawing.Size(156, 16);
-            this.chk_gr2_6_ocrpdf.TabIndex = 6;
-            this.chk_gr2_6_ocrpdf.Text = "Ocr失败时转换为普通Pdf";
-            this.chk_gr2_6_ocrpdf.UseVisualStyleBackColor = true;
             // 
             // but_gr2_6_ocrpath
             // 
@@ -782,6 +827,8 @@
             // 
             // lv_gr2_5_boxCount
             // 
+            this.lv_gr2_5_boxCount.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1});
             this.lv_gr2_5_boxCount.FullRowSelect = true;
             this.lv_gr2_5_boxCount.GridLines = true;
             this.lv_gr2_5_boxCount.Location = new System.Drawing.Point(14, 53);
@@ -789,7 +836,12 @@
             this.lv_gr2_5_boxCount.Size = new System.Drawing.Size(99, 141);
             this.lv_gr2_5_boxCount.TabIndex = 4;
             this.lv_gr2_5_boxCount.UseCompatibleStateImageBehavior = false;
-            this.lv_gr2_5_boxCount.View = System.Windows.Forms.View.List;
+            this.lv_gr2_5_boxCount.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "盒号范围";
+            this.columnHeader1.Width = 90;
             // 
             // txt_gr2_5_box2
             // 
@@ -816,6 +868,7 @@
             // 
             // gr2_4
             // 
+            this.gr2_4.Controls.Add(this.chk_gr2_6_ocrpdf);
             this.gr2_4.Controls.Add(this.rab_gr2_4_duli);
             this.gr2_4.Controls.Add(this.rab_gr2_4_duo);
             this.gr2_4.Controls.Add(this.chk_gr2_4_dou_pdf);
@@ -823,12 +876,22 @@
             this.gr2_4.Controls.Add(this.chk_gr2_4_tif);
             this.gr2_4.Controls.Add(this.chk_gr2_4_pdf);
             this.gr2_4.Controls.Add(this.chk_Gr2_4_jpg);
-            this.gr2_4.Location = new System.Drawing.Point(234, 75);
+            this.gr2_4.Location = new System.Drawing.Point(234, 72);
             this.gr2_4.Name = "gr2_4";
             this.gr2_4.Size = new System.Drawing.Size(224, 87);
             this.gr2_4.TabIndex = 6;
             this.gr2_4.TabStop = false;
             this.gr2_4.Text = "转换格式";
+            // 
+            // chk_gr2_6_ocrpdf
+            // 
+            this.chk_gr2_6_ocrpdf.AutoSize = true;
+            this.chk_gr2_6_ocrpdf.Location = new System.Drawing.Point(80, 68);
+            this.chk_gr2_6_ocrpdf.Name = "chk_gr2_6_ocrpdf";
+            this.chk_gr2_6_ocrpdf.Size = new System.Drawing.Size(132, 16);
+            this.chk_gr2_6_ocrpdf.TabIndex = 6;
+            this.chk_gr2_6_ocrpdf.Text = "Ocr失败转为普通Pdf";
+            this.chk_gr2_6_ocrpdf.UseVisualStyleBackColor = true;
             // 
             // rab_gr2_4_duli
             // 
@@ -854,7 +917,7 @@
             // chk_gr2_4_dou_pdf
             // 
             this.chk_gr2_4_dou_pdf.AutoSize = true;
-            this.chk_gr2_4_dou_pdf.Location = new System.Drawing.Point(148, 50);
+            this.chk_gr2_4_dou_pdf.Location = new System.Drawing.Point(148, 47);
             this.chk_gr2_4_dou_pdf.Name = "chk_gr2_4_dou_pdf";
             this.chk_gr2_4_dou_pdf.Size = new System.Drawing.Size(66, 16);
             this.chk_gr2_4_dou_pdf.TabIndex = 3;
@@ -876,7 +939,7 @@
             // chk_gr2_4_tif
             // 
             this.chk_gr2_4_tif.AutoSize = true;
-            this.chk_gr2_4_tif.Location = new System.Drawing.Point(80, 49);
+            this.chk_gr2_4_tif.Location = new System.Drawing.Point(80, 46);
             this.chk_gr2_4_tif.Name = "chk_gr2_4_tif";
             this.chk_gr2_4_tif.Size = new System.Drawing.Size(66, 16);
             this.chk_gr2_4_tif.TabIndex = 2;
@@ -907,7 +970,7 @@
             // 
             this.gr2_2.Controls.Add(this.comb_gr2_2_task);
             this.gr2_2.Controls.Add(this.label2);
-            this.gr2_2.Location = new System.Drawing.Point(234, 20);
+            this.gr2_2.Location = new System.Drawing.Point(234, 17);
             this.gr2_2.Name = "gr2_2";
             this.gr2_2.Size = new System.Drawing.Size(224, 49);
             this.gr2_2.TabIndex = 5;
@@ -979,7 +1042,7 @@
             this.rab_Gr2_3_tb.Size = new System.Drawing.Size(155, 16);
             this.rab_Gr2_3_tb.TabIndex = 0;
             this.rab_Gr2_3_tb.TabStop = true;
-            this.rab_Gr2_3_tb.Text = "案卷信息及图像同时时行";
+            this.rab_Gr2_3_tb.Text = "案卷信息及图像同时进行";
             this.rab_Gr2_3_tb.UseVisualStyleBackColor = true;
             // 
             // combHouseid
@@ -1073,6 +1136,33 @@
             // 
             this.FdigXls.Filter = "Xls文件|*.xls;*xlsx";
             // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(79, 144);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(53, 12);
+            this.label12.TabIndex = 2;
+            this.label12.Text = "透明度：";
+            // 
+            // txt_gr2_7_watertmd
+            // 
+            this.txt_gr2_7_watertmd.Location = new System.Drawing.Point(131, 139);
+            this.txt_gr2_7_watertmd.Name = "txt_gr2_7_watertmd";
+            this.txt_gr2_7_watertmd.Size = new System.Drawing.Size(29, 21);
+            this.txt_gr2_7_watertmd.TabIndex = 10;
+            this.txt_gr2_7_watertmd.Text = "128";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(169, 143);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(35, 12);
+            this.label13.TabIndex = 2;
+            this.label13.Text = "0-255";
+            this.label13.Click += new System.EventHandler(this.lab_gr2_7_font_color_Click);
+            // 
             // FrmSplit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -1155,7 +1245,6 @@
         private System.Windows.Forms.RadioButton rab_gr2_7_wenzi;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label lab_gr2_7_font_color;
-        private System.Windows.Forms.Label lab_gr2_7_font_size;
         private System.Windows.Forms.GroupBox gr2_6;
         private System.Windows.Forms.GroupBox gr2_5;
         private System.Windows.Forms.TextBox txt_gr2_5_juan;
@@ -1207,5 +1296,15 @@
         private System.Windows.Forms.Button but_gr2_6_ocrpath;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.CheckBox chk_gr2_6_ocrpdf;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
+        private System.Windows.Forms.TextBox txt_gr2_7_waterheight;
+        private System.Windows.Forms.TextBox txt_gr2_7_waterwith;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox txt_gr2_7_waterFontsize;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.TextBox txt_gr2_7_watertmd;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label13;
     }
 }

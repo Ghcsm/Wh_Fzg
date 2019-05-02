@@ -193,8 +193,20 @@ namespace Csmsjcf
                             txt_gr2_7_wenzi.Focus();
                             return false;
                         }
-                        if (ClsFrmInfoPar.WaterFontsize.Trim().Length <= 0 || ClsFrmInfoPar.WaterFontColor <= 0) {
+                        if (txt_gr2_7_waterFontsize.Text.Trim().Length <= 0 || ClsFrmInfoPar.WaterFontColor <= 0) {
                             MessageBox.Show("请设置字号或字体颜色");
+                            return false;
+                        }
+
+                        if (txt_gr2_7_waterwith.Text.Trim().Length <= 0 ||
+                            txt_gr2_7_waterheight.Text.Trim().Length <= 0) {
+                            MessageBox.Show("请设置水印宽度和高度!");
+                            txt_gr2_7_waterwith.Focus();
+                            return false;
+                        }
+                        if (txt_gr2_7_watertmd.Text.Trim().Length <= 0) {
+                            MessageBox.Show("水印透明度不能为空!");
+                            txt_gr2_7_watertmd.Focus();
                             return false;
                         }
                     }
@@ -202,6 +214,18 @@ namespace Csmsjcf
                         if (txt_gr2_7_img.Text.Trim().Length <= 0) {
                             MessageBox.Show("生成水印图像路径不能为空!");
                             txt_gr2_7_img.Focus();
+                            return false;
+                        }
+                        if (txt_gr2_7_waterwith.Text.Trim().Length <= 0 ||
+                            txt_gr2_7_waterheight.Text.Trim().Length <= 0) {
+                            MessageBox.Show("请设置水印宽度和高度!");
+                            txt_gr2_7_waterwith.Focus();
+                            return false;
+                        }
+
+                        if (txt_gr2_7_watertmd.Text.Trim().Length <= 0) {
+                            MessageBox.Show("水印透明度不能为空!");
+                            txt_gr2_7_watertmd.Focus();
                             return false;
                         }
                     }
@@ -298,14 +322,23 @@ namespace Csmsjcf
             }
             else ClsFrmInfoPar.Doublecor = 0;
             if (rab_gr2_7_wu.Checked)
-                ClsFrmInfoPar.Watermark = 1;
+                ClsFrmInfoPar.Watermark = 0;
             else if (rab_gr2_7_wenzi.Checked) {
-                ClsFrmInfoPar.Watermark = 2;
+                ClsFrmInfoPar.Watermark = 1;
                 ClsFrmInfoPar.WaterStrImg = txt_gr2_7_wenzi.Text.Trim();
+                ClsFrmInfoPar.Waterwith = Convert.ToInt32(txt_gr2_7_waterwith.Text.Trim());
+                ClsFrmInfoPar.Waterheiht = Convert.ToInt32(txt_gr2_7_waterheight.Text.Trim());
+                ClsFrmInfoPar.WaterFontsize = Convert.ToInt32(txt_gr2_7_waterFontsize.Text.Trim());
+                ClsFrmInfoPar.Watertmd = Convert.ToInt32(txt_gr2_7_watertmd.Text.Trim());
+                ClsFrmInfoPar.Waterwz = comb_gr2_7_weizhi.SelectedIndex + 1;
             }
             else if (rab_gr2_7_img.Checked) {
-                ClsFrmInfoPar.Watermark = 3;
+                ClsFrmInfoPar.Watermark = 2;
                 ClsFrmInfoPar.WaterStrImg = txt_gr2_7_img.Text.Trim();
+                ClsFrmInfoPar.Waterwith = Convert.ToInt32(txt_gr2_7_waterwith.Text.Trim());
+                ClsFrmInfoPar.Waterheiht = Convert.ToInt32(txt_gr2_7_waterheight.Text.Trim());
+                ClsFrmInfoPar.Watertmd = Convert.ToInt32(txt_gr2_7_watertmd.Text.Trim());
+                ClsFrmInfoPar.Waterwz = comb_gr2_7_weizhi.SelectedIndex + 1;
             }
             if (rab_gr2_9_file_1.Checked)
                 ClsFrmInfoPar.FileNamesn = 1;
@@ -339,23 +372,11 @@ namespace Csmsjcf
             Addboxsn();
         }
 
-        private void lab_gr2_7_font_size_Click(object sender, EventArgs e)
-        {
-            if (fontDialog.ShowDialog() == DialogResult.OK) {
-                ClsFrmInfoPar.Waterfont = fontDialog.Font.Name;
-                ClsFrmInfoPar.WaterFontsize = fontDialog.Font.Size.ToString();
-                return;
-            }
-
-            ClsFrmInfoPar.Waterfont = "";
-            ClsFrmInfoPar.WaterFontsize = "";
-
-        }
-
         private void lab_gr2_7_font_color_Click(object sender, EventArgs e)
         {
             if (colorDialog.ShowDialog() == DialogResult.OK) {
                 ClsFrmInfoPar.WaterFontColor = Convert.ToInt32(colorDialog.Color.ToArgb());
+                lab_gr2_7_font_color.BackColor = colorDialog.Color;
                 return;
             }
             ClsFrmInfoPar.WaterFontColor = 0;
@@ -403,6 +424,8 @@ namespace Csmsjcf
                     return;
                 }
             }
+            if (ClsFrmInfoPar.Watermark > 0)
+                ClsOperate.Setwaterpar();
             for (int i = 0; i < dtArchNo.Rows.Count; i++) {
                 if (ClsFrmInfoPar.StopTag == 2) {
                     ListBshowInfo(xc, "0", "0", "已停止线程退出");
@@ -514,18 +537,31 @@ namespace Csmsjcf
                             }
                             ListBshowInfo(xc, boxsn, archno, "正在转换格式为" + fs + "的单独文件");
                             if (fs == "tif") {
-                                try {
-                                    File.Copy(Downfile, filename);
-                                } catch (Exception ex) {
-                                    str = ex.ToString();
+                                if (ClsFrmInfoPar.Watermark == 0) {
+                                    try {
+                                        File.Copy(Downfile, filename);
+                                    } catch (Exception ex) {
+                                        str = ex.ToString();
+                                        if (str.IndexOf("错误") >= 0) {
+                                            lock (ClsFrmInfoPar.Filelock) {
+                                                ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
+                                            }
+                                        }
+                                        ListBshowInfo(xc, boxsn, archno, "警告,错误线程退出");
+                                        break;
+                                    }
+                                }
+                                else {
+                                    str = Himg._SplitImg(Downfile, filename, fs);
                                     if (str.IndexOf("错误") >= 0) {
                                         lock (ClsFrmInfoPar.Filelock) {
                                             ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
                                         }
+                                        ListBshowInfo(xc, boxsn, archno, "警告,错误线程退出");
+                                        break;
                                     }
-                                    ListBshowInfo(xc, boxsn, archno, "警告,错误线程退出");
-                                    break;
                                 }
+
                             }
                             else {
                                 str = Himg._SplitImg(Downfile, filename, fs);
