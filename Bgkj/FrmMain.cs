@@ -184,7 +184,7 @@ namespace Bgkj
                 this.labDate.BackColor = Color.Red;
             }
         }
-        
+
         private void CreateForms(string name, string strnamespace, string FilePath)
         {
             try {
@@ -226,11 +226,23 @@ namespace Bgkj
             }
         }
 
+        private void Setitems()
+        {
+            for (int i = 0; i < bar3.Items.Count; i++) {
+                bar3.Items[i].Visible = false;
+                bar3.SelectedDockTab = i;
+                bar3.Refresh();
+            }
+        }
+
+
         private void Item_Click(object sender, EventArgs e)
         {
             ButtonItem but = (ButtonItem)sender;
             string Fname = but.Name;
             string name = but.Text;
+            if (T_ConFigure.Bgsoft)
+                Setitems();
             if (T_User.UserId == 1 && Fname.Contains("FrmModuleSet")) {
                 if (T_ConFigure.Bgsoft)
                     showerr(2);
@@ -239,7 +251,7 @@ namespace Bgkj
                 Fset.ShowDialog();
                 return;
             }
-            else if (Fname.Contains("Csmgy.Frmgy")) {
+            else if (T_User.UserId == 1 && Fname.Contains("Csmgy.Frmgy")) {
                 if (T_ConFigure.Bgsoft)
                     showerr(2);
                 Frmgy gy = new Frmgy();
@@ -250,8 +262,10 @@ namespace Bgkj
             string path = "";
             if (!T_ConFigure.Bgsoft)
                 path = but.Tag.ToString();
-            else
-                path = "@" + but.Tag.ToString() + "!";
+            else {
+                path = DESEncrypt.DesEncrypt(but.Tag.ToString());
+                Fname = DESEncrypt.DesEncrypt(Fname);
+            }
             if (T_ConFigure.Bgsoft)
                 showerr(2);
             if (Fname.Contains("FrmModuleSet") || Fname.Contains("Csmgy.Frmgy")
@@ -273,6 +287,7 @@ namespace Bgkj
 
         private void timer_Tick(object sender, EventArgs e)
         {
+            Setitems();
             this.labDate.Text = string.Format("  当前时间： {0}  ", DateTime.Now.ToString());
         }
 
