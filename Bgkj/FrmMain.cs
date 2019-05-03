@@ -86,11 +86,13 @@ namespace Bgkj
                     string nameModuleFile = DESEncrypt.DesDecrypt(dr["ModuleFileName"].ToString());
                     int imgIdx = Convert.ToInt32(dr["ModuleImgIdx"].ToString());
                     string menuModule = dr["ModuleMenuName"].ToString();
-                    ButtonItem item = new ButtonItem();
-                    item.Name = nameModule;
-                    item.Tag = nameModuleFile;
-                    item.ImagePosition = eImagePosition.Top;
-                    item.ImageIndex = imgIdx;
+                    ButtonItem item = new ButtonItem
+                    {
+                        Name = nameModule,
+                        Tag = nameModuleFile,
+                        ImagePosition = eImagePosition.Top,
+                        ImageIndex = imgIdx
+                    };
                     item.Click += Item_Click;
                     sideBarManger.Invoke(new Action(() =>
                     {
@@ -103,10 +105,12 @@ namespace Bgkj
                         sideBarManger.Refresh();
                     }));
                 }
-                ButtonItem item1 = new ButtonItem();
-                item1.Name = "FrmModuleSet";
-                item1.ImagePosition = eImagePosition.Top;
-                item1.ImageIndex = 21;
+                ButtonItem item1 = new ButtonItem
+                {
+                    Name = "FrmModuleSet",
+                    ImagePosition = eImagePosition.Top,
+                    ImageIndex = 21
+                };
                 item1.Click += Item_Click;
                 sideBarManger.BeginInvoke(new Action(() =>
                 {
@@ -181,8 +185,7 @@ namespace Bgkj
                 this.labDate.BackColor = Color.Red;
             }
         }
-
-        //设置窗体变化时 子窗体也变化 此问题未解决
+        
         private void CreateForms(string name, string strnamespace, string FilePath)
         {
             try {
@@ -313,7 +316,6 @@ namespace Bgkj
             } catch {
                 return "";
             }
-
         }
 
         private void FrmMain_FormClosing(object sender, FormClosingEventArgs e)
