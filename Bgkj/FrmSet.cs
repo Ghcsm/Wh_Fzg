@@ -4,6 +4,7 @@ using System.Data;
 using System.Threading;
 using System.Windows.Forms;
 using CsmCheck;
+using System.Collections.Generic;
 
 namespace Bgkj
 {
@@ -14,7 +15,9 @@ namespace Bgkj
             InitializeComponent();
         }
 
-        public ImageList imList;
+
+        #region set
+
         private void butModuleCle_Click(object sender, EventArgs e)
         {
             this.Dispose();
@@ -75,7 +78,7 @@ namespace Bgkj
             T_addModule.T_moduleChName = this.txtModuleChName.Text.Trim();
             T_addModule.T_moduleName = this.txtModuleName.Text.Trim();
             T_addModule.T_moduleFileName = this.txtModuleFileName.Text.Trim();
-            T_addModule.T_moduleInt = this.comModuleFz.SelectedIndex + 1;
+            T_addModule.T_moduleInt = ClsSetInfopar.lsxh[comModuleFz.SelectedIndex].ToString();
             T_addModule.T_moduleImgIdx = this.comModuleImg.SelectedIndex;
             T_Sysset.SaveModule();
             MessageBox.Show("保存成功!");
@@ -98,19 +101,19 @@ namespace Bgkj
         void GetImgList()
         {
             this.comModuleImg.Items.Clear();
-            for (int i = 0; i < imList.Images.Count; i++) {
+            for (int i = 0; i < ClsSetInfopar.imList.Images.Count; i++) {
                 this.comModuleImg.Items.Add(i);
             }
         }
 
         private void comModuleImg_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (this.imList.Images.Count <= 0)
+            if (ClsSetInfopar.imList.Images.Count <= 0)
                 return;
             if (this.comModuleImg.Text.Trim().Length <= 0)
                 return;
             int id = Convert.ToInt32(comModuleImg.Text.Trim());
-            pict.Image = imList.Images[id];
+            pict.Image = ClsSetInfopar.imList.Images[id];
         }
         private void txtModuleChName_Leave(object sender, EventArgs e)
         {
@@ -132,7 +135,9 @@ namespace Bgkj
             txtSn.Text = T_addModule.T_sn;
             txtTime.Text = T_addModule.T_time;
         }
+        #endregion
 
+        #region module set
         private void Getmodule()
         {
             DataTable dt = T_Sysset.IsGetModule(0);
@@ -209,6 +214,7 @@ namespace Bgkj
                 }
             }
         }
+        #endregion
 
         #region 转跳
         private void txtModuleChName_KeyPress(object sender, KeyPressEventArgs e)
@@ -262,6 +268,7 @@ namespace Bgkj
         private void FrmSet_Shown(object sender, EventArgs e)
         {
             Getmodule();
+            Getmenuset();
         }
 
         private void butModulesysadd_Click(object sender, EventArgs e)
@@ -280,6 +287,108 @@ namespace Bgkj
 
         #endregion
 
+        #region meun set 
 
+        private void Getmenuset()
+        {
+            ClsSetInfopar.lsname.Clear();
+            ClsSetInfopar.lsid.Clear();
+            comModuleFz.Items.Clear();
+            DataTable dt = T_Sysset.IsGetMenuSet();
+            if (dt == null || dt.Rows.Count <= 0)
+                return;
+            for (int i = 0; i < dt.Rows.Count; i++) {
+                string strid = dt.Rows[i][0].ToString();
+                string strname = dt.Rows[i][1].ToString();
+                string strxh = dt.Rows[i][2].ToString();
+                ClsSetInfopar.lsid.Add(strid);
+                ClsSetInfopar.lsname.Add(strname);
+                ClsSetInfopar.lsxh.Add(strxh);
+                comModuleFz.Items.Add(strname);
+            }
+            chkMenuName.DataSource = dt;
+            chkMenuName.DisplayMember = "ModuleName";
+        }
+
+        private int Getmenuid()
+        {
+            int id = -1;
+
+            for (int i = 0; i < chkMenuName.Items.Count; i++) {
+                if (chkMenuName.GetItemChecked(i)) {
+                    id = Convert.ToInt32(ClsSetInfopar.lsid[i]);
+                    break;
+                }
+            }
+            return id;
+        }
+
+        private void butMenuSave_Click(object sender, EventArgs e)
+        {
+            string txtname = txtMenuname.Text.Trim();
+            string txtxh = txtMenuxh.Text.Trim();
+            int id = -1;
+            if (txtname.Length <= 0 || txtxh.Length <= 0) {
+                MessageBox.Show("请输入菜单名称或顺序号!");
+                txtMenuname.Focus();
+                return;
+            }
+            if (chkMenuName.SelectedItems.Count >= 0)
+                id = Getmenuid();
+            if (ClsSetInfopar.lsname.IndexOf(txtname) >= 0) {
+                MessageBox.Show("菜单名称已存在请更改!");
+                txtMenuname.Focus();
+                return;
+            }
+            if (ClsSetInfopar.lsxh.IndexOf(txtxh) >= 0 && id < 0) {
+                MessageBox.Show("菜单顺序号已存在!");
+                txtMenuxh.Focus();
+                return;
+            }
+            try {
+
+                T_Sysset.SaveMenuset(id.ToString(), txtname, txtxh);
+            } catch { } finally {
+                Getmenuset();
+            }
+        }
+
+        private void chkMenuName_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < chkMenuName.Items.Count; i++) {
+                chkMenuName.SetItemChecked(i, false);
+            }
+        }
+        private void chkMenuName_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            for (int i = 0; i < chkMenuName.Items.Count; i++) {
+                if (chkMenuName.GetItemChecked(i)) {
+                    txtMenuname.Text = ClsSetInfopar.lsname[i];
+                    txtMenuxh.Text = ClsSetInfopar.lsxh[i];
+                }
+            }
+        }
+
+
+        #endregion
+
+        private void butMenuDel_Click(object sender, EventArgs e)
+        {
+            int id = -1;
+            string name = txtMenuname.Text.Trim();
+            if (chkMenuName.SelectedItems.Count >= 0)
+                id = Getmenuid();
+            if (id < 0) {
+                MessageBox.Show("请选择删除的菜单!");
+                return;
+            }
+            try {
+                T_Sysset.DelMenuSet(id, name);
+            } catch {
+            } finally {
+                Getmenuset();
+            }
+
+        }
     }
 }

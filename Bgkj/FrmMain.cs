@@ -244,7 +244,7 @@ namespace Bgkj
             if (usersys && T_ConFigure.Bgsoft && Fname.Contains("FrmModuleSet")) {
                 showerr(3);
                 FrmSet Fset = new FrmSet();
-                Fset.imList = imgListManger;
+                ClsSetInfopar.imList = imgListManger;
                 Fset.ShowDialog();
                 return;
             }
@@ -253,7 +253,7 @@ namespace Bgkj
             }
             if (usersys && Fname.Contains("FrmModuleSet")) {
                 FrmSet Fset = new FrmSet();
-                Fset.imList = imgListManger;
+                ClsSetInfopar.imList = imgListManger;
                 Fset.ShowDialog();
                 return;
             }
