@@ -28,7 +28,6 @@ namespace Bgkj
             Application.Exit();
         }
 
-
         private async void FrmMain_Load(object sender, EventArgs e)
         {
             this.Text = T_ConFigure.SfName;

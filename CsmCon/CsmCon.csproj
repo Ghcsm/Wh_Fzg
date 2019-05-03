@@ -87,6 +87,12 @@
     <Compile Include="gArchSelect.Designer.cs">
       <DependentUpon>gArchSelect.cs</DependentUpon>
     </Compile>
+    <Compile Include="UcConten.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UcConten.Designer.cs">
+      <DependentUpon>UcConten.cs</DependentUpon>
+    </Compile>
     <Compile Include="UcContents.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -111,6 +117,9 @@
   <ItemGroup>
     <EmbeddedResource Include="gArchSelect.resx">
       <DependentUpon>gArchSelect.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UcConten.resx">
+      <DependentUpon>UcConten.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UcContents.resx">
       <DependentUpon>UcContents.cs</DependentUpon>

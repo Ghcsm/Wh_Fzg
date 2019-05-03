@@ -119,12 +119,17 @@ namespace Bgkj
         {
             if (txtModuleChName.Text.Trim().Length <= 0)
                 return;
-            T_addModule.T_moduleChName = txtModuleChName.Text.Trim();
-            T_Sysset.SeleModule();
-            txtModuleName.Text = T_addModule.T_moduleName;
-            txtModuleFileName.Text = T_addModule.T_moduleFileName;
-            comModuleFz.SelectedIndex = Convert.ToInt32(T_addModule.T_moduleInt.ToString()) - 1;
-            comModuleImg.Text = T_addModule.T_moduleImgIdx.ToString();
+            try
+            {
+                T_addModule.T_moduleChName = txtModuleChName.Text.Trim();
+                T_Sysset.SeleModule();
+                txtModuleName.Text = T_addModule.T_moduleName;
+                txtModuleFileName.Text = T_addModule.T_moduleFileName;
+                comModuleFz.SelectedIndex = Convert.ToInt32(T_addModule.T_moduleInt.ToString()) - 1;
+                comModuleImg.Text = T_addModule.T_moduleImgIdx.ToString();
+            }
+            catch 
+            {}
         }
         private void txtId_Leave(object sender, EventArgs e)
         {

@@ -112,6 +112,39 @@ namespace CsmCon
             });
         }
 
+        public static void LoadContents(int archid, ListView lsv)
+        {
+            if (archid <= 0)
+                return;
+            Task.Run(() =>
+            {
+                DataTable dt = Common.LoadContents(ClsContenInfo.ContenTable, ClsContenInfo.ContenCol, ClsContenInfo.ContenPages,2, archid);
+                if (dt == null || dt.Rows.Count <= 0)
+                    return;
+                int i = 1;
+                lsv.Invoke(new Action(() =>
+                {
+                    lsv.Items.Clear();
+                }));
+
+                foreach (DataRow dr in dt.Rows) {
+                    ListViewItem lvi = new ListViewItem();
+                    lvi.Text = i.ToString();
+                    string id = dr["id"].ToString();
+                    lvi.SubItems.AddRange(new string[] { id });
+                    for (int t = 0; t < ClsContenInfo.ContenCoList.Count; t++) {
+                        string str = dr[ClsContenInfo.ContenCoList[t]].ToString();
+                        lvi.SubItems.AddRange(new string[] { str });
+                    }
+                    lsv.Invoke(new Action(() =>
+                    {
+                        lsv.Items.Add(lvi);
+                    }));
+                    i++;
+                }
+            });
+        }
+
 
         public static void GetControl(Panel pl)
         {
