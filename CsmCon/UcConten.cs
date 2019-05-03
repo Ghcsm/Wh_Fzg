@@ -21,7 +21,19 @@ namespace CsmCon
 
         void Ini()
         {
+            ClsConten.GetContenInfo();
+            Lvnameadd();
             ClsConten.LoadContents(Archid, lvconten);
+        }
+
+        private void Lvnameadd()
+        {
+            if (ClsContenInfo.ContenCoList.Count <= 0)
+                return;
+            for (int i = 0; i < ClsContenInfo.ContenCoList.Count; i++) {
+                string str = ClsContenInfo.ContenCoList[i];
+                lvconten.Columns.Add(str);
+            }
         }
 
         public void LoadConten(int archid)

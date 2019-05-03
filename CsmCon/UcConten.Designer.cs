@@ -48,6 +48,7 @@
             this.lvconten.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.col1});
             this.lvconten.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lvconten.FullRowSelect = true;
             this.lvconten.GridLines = true;
             this.lvconten.Location = new System.Drawing.Point(3, 17);
             this.lvconten.Name = "lvconten";

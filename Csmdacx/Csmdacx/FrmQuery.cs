@@ -24,9 +24,11 @@ namespace Csmdacx
         {
             ImgBrow.ContentsEnabled = false;
             ImgBrow.ModuleVisible = false;
+            ImgBrow.id = 0;
             imgBrow1 = new ImgBrow();
             imgBrow1.Spage += new ImgBrow.TransmitPar(ShowPage);
             imgBrow1.Dock = DockStyle.Fill;
+            
             gr2.Controls.Add(imgBrow1);
         }
 

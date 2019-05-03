@@ -36,6 +36,7 @@ namespace WareHouse
             ImgBrow.ContentsEnabled = false;
             ImgBrow.ModuleVisible = false;
             ImgBrow.Print = ImgPrint;
+            ImgBrow.id = 0;
             imgBrow1 = new ImgBrow();
             imgBrow1.Dock = DockStyle.Fill;
             gr1.Controls.Add(imgBrow1);

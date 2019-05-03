@@ -11,10 +11,11 @@ namespace CsmCon
         {
             InitializeComponent();
             Himg.Spage += new Hljsimage.ScanPage(ShowPage);
-            Init();
+            Init(id);
         }
 
         private UcContents ucContents1;
+        private UcConten ucContents0;
         Hljsimage Himg = new Hljsimage();
         public delegate void TransmitPar(int page, int counpage);
         public event TransmitPar Spage;
@@ -23,24 +24,31 @@ namespace CsmCon
         public static bool ContentsEnabled { get; set; }
         public static bool ModuleVisible { get; set; }
         public static string FileName { get; set; }
-        public static bool Print { get;set; }
-   
+        public static bool Print { get; set; }
+        public static int id { get; set; }
+
 
         private int MaxPages;
         private int PagesCrren;
 
 
-        public void Init()
+        public void Init(int id)
         {
             Himg._Instimagtwain(ImgView, this.Handle, 0);
-            UcContents.ArchId = ArchId;
-            UcContents.ContentsEnabled = ContentsEnabled;
-            UcContents.ModuleVisible = ModuleVisible;
-            ucContents1 = new UcContents
-            {
-                Dock = DockStyle.Fill
-            };
-            gr0.Controls.Add(ucContents1);
+            if (id == 0) {
+                UcConten.Archid = ArchId;
+                ucContents0 = new UcConten();
+                ucContents0.Dock = DockStyle.Fill;
+                gr0.Controls.Add(ucContents0);
+            }
+            else {
+                UcContents.ArchId = ArchId;
+                UcContents.ContentsEnabled = ContentsEnabled;
+                UcContents.ModuleVisible = ModuleVisible;
+                ucContents1 = new UcContents();
+                ucContents1.Dock = DockStyle.Fill;
+                gr0.Controls.Add(ucContents1);
+            }
             LoadFile();
         }
 
@@ -51,7 +59,10 @@ namespace CsmCon
             ArchId = arid;
             FileName = file;
             LoadFile();
-            ucContents1.LoadContents(ArchId, MaxPages);
+            if (id == 0)
+                ucContents0.LoadConten(ArchId);
+            else
+                ucContents1.LoadContents(ArchId, MaxPages);
         }
 
         private void LoadFile()
@@ -84,7 +95,7 @@ namespace CsmCon
         public void NextPage()
         {
             if (ImgView.Image != null) {
-                if (PagesCrren< MaxPages)
+                if (PagesCrren < MaxPages)
                     Himg._Pagenext(1);
             }
         }
@@ -139,8 +150,7 @@ namespace CsmCon
 
         public void PrintImg(int img1, int img2)
         {
-            if (!Print)
-            {
+            if (!Print) {
                 MessageBox.Show("警告，您没有此项操作权限！");
                 return;
             }
