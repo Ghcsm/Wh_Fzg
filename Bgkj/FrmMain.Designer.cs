@@ -44,11 +44,7 @@
             this.bar2 = new DevComponents.DotNetBar.Bar();
             this.pandleDock2 = new DevComponents.DotNetBar.PanelDockContainer();
             this.sideBarManger = new DevComponents.DotNetBar.SideBar();
-            this.sideBarDataModule = new DevComponents.DotNetBar.SideBarPanelItem();
             this.imgListManger = new System.Windows.Forms.ImageList(this.components);
-            this.sideBarImgModule = new DevComponents.DotNetBar.SideBarPanelItem();
-            this.sideBarSysModule = new DevComponents.DotNetBar.SideBarPanelItem();
-            this.sideBarOtherModule = new DevComponents.DotNetBar.SideBarPanelItem();
             this.dock2 = new DevComponents.DotNetBar.DockContainerItem();
             this.dockSite2 = new DevComponents.DotNetBar.DockSite();
             this.dockSite8 = new DevComponents.DotNetBar.DockSite();
@@ -262,24 +258,13 @@
             this.sideBarManger.AccessibleRole = System.Windows.Forms.AccessibleRole.ToolBar;
             this.sideBarManger.BorderStyle = DevComponents.DotNetBar.eBorderType.None;
             this.sideBarManger.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.sideBarManger.ExpandedPanel = this.sideBarDataModule;
+            this.sideBarManger.ExpandedPanel = null;
             this.sideBarManger.Images = this.imgListManger;
             this.sideBarManger.Location = new System.Drawing.Point(0, 0);
             this.sideBarManger.Name = "sideBarManger";
-            this.sideBarManger.Panels.AddRange(new DevComponents.DotNetBar.BaseItem[] {
-            this.sideBarDataModule,
-            this.sideBarImgModule,
-            this.sideBarSysModule,
-            this.sideBarOtherModule});
             this.sideBarManger.Size = new System.Drawing.Size(214, 290);
             this.sideBarManger.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.sideBarManger.TabIndex = 0;
-            // 
-            // sideBarDataModule
-            // 
-            this.sideBarDataModule.FontBold = true;
-            this.sideBarDataModule.Name = "sideBarDataModule";
-            this.sideBarDataModule.Text = "数据模块";
             // 
             // imgListManger
             // 
@@ -307,24 +292,6 @@
             this.imgListManger.Images.SetKeyName(19, "20.png");
             this.imgListManger.Images.SetKeyName(20, "21.png");
             this.imgListManger.Images.SetKeyName(21, "22.png");
-            // 
-            // sideBarImgModule
-            // 
-            this.sideBarImgModule.FontBold = true;
-            this.sideBarImgModule.Name = "sideBarImgModule";
-            this.sideBarImgModule.Text = "图像模块";
-            // 
-            // sideBarSysModule
-            // 
-            this.sideBarSysModule.FontBold = true;
-            this.sideBarSysModule.Name = "sideBarSysModule";
-            this.sideBarSysModule.Text = "系统配置";
-            // 
-            // sideBarOtherModule
-            // 
-            this.sideBarOtherModule.FontBold = true;
-            this.sideBarOtherModule.Name = "sideBarOtherModule";
-            this.sideBarOtherModule.Text = "其他模块";
             // 
             // dock2
             // 
@@ -535,10 +502,6 @@
         private DevComponents.DotNetBar.DockSite dockSite7;
         private DevComponents.DotNetBar.DockSite dockSite8;
         private DevComponents.DotNetBar.SideBar sideBarManger;
-        private DevComponents.DotNetBar.SideBarPanelItem sideBarDataModule;
-        private DevComponents.DotNetBar.SideBarPanelItem sideBarImgModule;
-        private DevComponents.DotNetBar.SideBarPanelItem sideBarSysModule;
-        private DevComponents.DotNetBar.SideBarPanelItem sideBarOtherModule;
         private System.Windows.Forms.PictureBox pictTop;
         public System.Windows.Forms.ImageList imgListManger;
         private DevComponents.DotNetBar.DockContainerItem dock3;

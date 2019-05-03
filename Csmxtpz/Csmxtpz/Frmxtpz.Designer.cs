@@ -43,6 +43,7 @@
             this.txtFwqYsPath = new System.Windows.Forms.TextBox();
             this.txtFtpArchScanTmp = new System.Windows.Forms.TextBox();
             this.btnSave = new DevComponents.DotNetBar.ButtonX();
+            this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -108,7 +109,6 @@
             this.ID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.labelX4 = new DevComponents.DotNetBar.LabelX();
             this.fbdSelect = new System.Windows.Forms.FolderBrowserDialog();
-            this.label4 = new System.Windows.Forms.Label();
             sn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.groupBox1.SuspendLayout();
             this.tabCont.SuspendLayout();
@@ -129,9 +129,9 @@
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.groupBox1.Controls.Add(this.tabCont);
-            this.groupBox1.Location = new System.Drawing.Point(26, 24);
+            this.groupBox1.Location = new System.Drawing.Point(7, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(536, 446);
+            this.groupBox1.Size = new System.Drawing.Size(565, 460);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             // 
@@ -146,7 +146,7 @@
             this.tabCont.Location = new System.Drawing.Point(16, 20);
             this.tabCont.Name = "tabCont";
             this.tabCont.SelectedIndex = 0;
-            this.tabCont.Size = new System.Drawing.Size(505, 415);
+            this.tabCont.Size = new System.Drawing.Size(534, 429);
             this.tabCont.TabIndex = 0;
             this.tabCont.Enter += new System.EventHandler(this.tabCont_Enter);
             // 
@@ -159,7 +159,7 @@
             this.tabPage_path.Location = new System.Drawing.Point(4, 22);
             this.tabPage_path.Name = "tabPage_path";
             this.tabPage_path.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage_path.Size = new System.Drawing.Size(497, 389);
+            this.tabPage_path.Size = new System.Drawing.Size(526, 403);
             this.tabPage_path.TabIndex = 0;
             this.tabPage_path.Text = "服务器设置";
             // 
@@ -288,6 +288,15 @@
             this.btnSave.TabIndex = 14;
             this.btnSave.Text = "保存";
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(18, 301);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(323, 12);
+            this.label4.TabIndex = 16;
+            this.label4.Text = "注: ftp临时路径、本地映射路径、服务器路径为同一文件夹";
             // 
             // label3
             // 
@@ -928,25 +937,17 @@
             this.labelX4.TabIndex = 94;
             this.labelX4.Text = "库房:";
             // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(18, 301);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(323, 12);
-            this.label4.TabIndex = 16;
-            this.label4.Text = "注: ftp临时路径、本地映射路径、服务器路径为同一文件夹";
-            // 
             // Frmxtpz
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
-            this.ClientSize = new System.Drawing.Size(591, 499);
+            this.ClientSize = new System.Drawing.Size(584, 475);
             this.Controls.Add(this.groupBox1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "Frmxtpz";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "系统配置";

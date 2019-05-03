@@ -33,7 +33,6 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.but_Up = new System.Windows.Forms.Button();
             this.groupPanel1 = new DevComponents.DotNetBar.Controls.GroupPanel();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.groupBox1.SuspendLayout();
             this.groupPanel1.SuspendLayout();
             this.SuspendLayout();
@@ -52,7 +51,7 @@
             this.groupBox1.BackColor = System.Drawing.Color.Transparent;
             this.groupBox1.Controls.Add(this.but_Up);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Location = new System.Drawing.Point(9, 35);
+            this.groupBox1.Location = new System.Drawing.Point(9, 9);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(258, 103);
             this.groupBox1.TabIndex = 1;
@@ -73,13 +72,12 @@
             // 
             this.groupPanel1.CanvasColor = System.Drawing.SystemColors.Control;
             this.groupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007;
-            this.groupPanel1.Controls.Add(this.toolStrip1);
             this.groupPanel1.Controls.Add(this.groupBox1);
             this.groupPanel1.DisabledBackColor = System.Drawing.Color.Empty;
             this.groupPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupPanel1.Location = new System.Drawing.Point(0, 0);
             this.groupPanel1.Name = "groupPanel1";
-            this.groupPanel1.Size = new System.Drawing.Size(283, 158);
+            this.groupPanel1.Size = new System.Drawing.Size(283, 130);
             // 
             // 
             // 
@@ -110,32 +108,24 @@
             this.groupPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.groupPanel1.TabIndex = 2;
             // 
-            // toolStrip1
-            // 
-            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(277, 25);
-            this.toolStrip1.TabIndex = 2;
-            this.toolStrip1.Text = "toolStrip1";
-            // 
             // FrmUpate
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(283, 158);
+            this.ClientSize = new System.Drawing.Size(283, 130);
             this.Controls.Add(this.groupPanel1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FrmUpate";
             this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "检测更新";
             this.Shown += new System.EventHandler(this.FrmUpate_Shown);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupPanel1.ResumeLayout(false);
-            this.groupPanel1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -146,7 +136,6 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button but_Up;
         private DevComponents.DotNetBar.Controls.GroupPanel groupPanel1;
-        private System.Windows.Forms.ToolStrip toolStrip1;
     }
 }
 

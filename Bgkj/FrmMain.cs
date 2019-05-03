@@ -28,98 +28,131 @@ namespace Bgkj
         }
 
 
-        private void FrmMain_Load(object sender, EventArgs e)
+        private async void FrmMain_Load(object sender, EventArgs e)
         {
             this.Text = T_ConFigure.SfName;
             this.labUser.Text = string.Format("    当前用户： {0}    ", T_User.LoginName);
             this.labCo.Text = " " + DESEncrypt.DesDecrypt(T_ConFigure.SfCoName);
             T_ConFigure.Bgsoft = false;
             GetHouseName();
-            InitModule();
+            bool x = await IniMenu();
+            if (x)
+                InitModule();
         }
         #region
+
+        Task<bool> IniMenu()
+        {
+            return Task.Run(() =>
+            {
+                DataTable dt = T_Sysset.GetMenuSet();
+                if (dt == null || dt.Rows.Count <= 0)
+                    return false;
+                for (int i = 0; i < dt.Rows.Count; i++) {
+                    string strname = dt.Rows[i][0].ToString();
+                    if (strname.Trim().Length <= 0)
+                        continue;
+                    SideBarPanelItem item = new SideBarPanelItem();
+                    item.Name = strname;
+                    item.Text = strname;
+                    item.FontBold = true;
+                    sideBarManger.Invoke(new Action(() =>
+                    {
+                        sideBarManger.Panels.Add(item);
+                        sideBarManger.Refresh();
+                    }));
+                }
+                return true;
+            });
+
+        }
+
         void InitModule()
         {
             DataTable dt = T_Sysset.IsGetModule(1);
-            if (dt.Rows.Count > 0) {
-                Task.Run(() =>
-                {
-                    foreach (DataRow dr in dt.Rows) {
-                        int idGroup = Convert.ToInt32(dr["ModuleInt"].ToString());
-                        string nameChModule = dr["ModuleChName"].ToString();
-                        string nameModule = DESEncrypt.DesDecrypt(dr["ModuleName"].ToString());
-                        string nameModuleFile = DESEncrypt.DesDecrypt(dr["ModuleFileName"].ToString());
-                        int imgIdx = Convert.ToInt32(dr["ModuleImgIdx"].ToString());
-                        if (idGroup == 1) {
-                            ButtonItem item = new ButtonItem();
-                            item.Name = nameModule;
-                            item.Tag = nameModuleFile;
-                            item.ImagePosition = eImagePosition.Top;
-                            item.ImageIndex = imgIdx;
-                            item.Click += Item_Click;
-                            sideBarDataModule.BeginInvoke(new Action(() =>
-                                {
-                                    item.Text = nameChModule;
-                                    sideBarDataModule.SubItems.Add(item);
-                                }));
-
-                        }
-                        else if (idGroup == 2) {
-                            ButtonItem item = new ButtonItem();
-                            item.Name = nameModule;
-                            item.Tag = nameModuleFile;
-                            item.ImagePosition = eImagePosition.Top;
-                            item.ImageIndex = imgIdx;
-                            item.Click += Item_Click;
-                            sideBarImgModule.BeginInvoke(new Action(() =>
-                            {
-                                item.Text = nameChModule;
-                                sideBarImgModule.SubItems.Add(item);
-                            }));
-                        }
-                        else if (idGroup == 3) {
-                            ButtonItem item = new ButtonItem();
-                            item.Name = nameModule;
-                            item.Tag = nameModuleFile;
-                            item.ImagePosition = eImagePosition.Top;
-                            item.ImageIndex = imgIdx;
-                            item.Click += Item_Click;
-                            sideBarSysModule.BeginInvoke(new Action(() =>
-                            {
-                                item.Text = nameChModule;
-                                sideBarSysModule.SubItems.Add(item);
-                            }));
-                        }
-                        else if (idGroup == 4) {
-                            ButtonItem item = new ButtonItem();
-                            item.Name = nameModule;
-                            item.Tag = nameModuleFile;
-                            item.ImagePosition = eImagePosition.Top;
-                            item.ImageIndex = imgIdx;
-                            item.Click += Item_Click;
-                            sideBarOtherModule.BeginInvoke(new Action(() =>
-                            {
-                                item.Text = nameChModule;
-                                sideBarOtherModule.SubItems.Add(item);
-                            }));
-                        }
+            if (dt == null || dt.Rows.Count <= 0)
+                return;
+            Task.Run(() =>
+            {
+                foreach (DataRow dr in dt.Rows) {
+                    int idGroup = Convert.ToInt32(dr["ModuleInt"].ToString());
+                    string nameChModule = dr["ModuleChName"].ToString();
+                    string nameModule = DESEncrypt.DesDecrypt(dr["ModuleName"].ToString());
+                    string nameModuleFile = DESEncrypt.DesDecrypt(dr["ModuleFileName"].ToString());
+                    int imgIdx = Convert.ToInt32(dr["ModuleImgIdx"].ToString());
+                    if (idGroup == 1) {
+                        ButtonItem item = new ButtonItem();
+                        item.Name = nameModule;
+                        item.Tag = nameModuleFile;
+                        item.ImagePosition = eImagePosition.Top;
+                        item.ImageIndex = imgIdx;
+                        item.Click += Item_Click;
+                        sideBarManger.BeginInvoke(new Action(() =>
+                        {
+                            item.Text = nameChModule;
+                            sideBarManger.Panels[idGroup - 1].SubItems.Add(item);
+                            sideBarManger.Panels[idGroup - 1].Refresh();
+                        }));
                     }
-                    ButtonItem item1 = new ButtonItem();
-                    item1.Name = "FrmModuleSet";
-                    item1.ImagePosition = eImagePosition.Top;
-                    item1.ImageIndex = 21;
-                    item1.Click += Item_Click;
-                    sideBarSysModule.BeginInvoke(new Action(() =>
-                    {
-                        item1.Text = "模块授权设置";
-                        sideBarSysModule.SubItems.Add(item1);
-                    }));
-                });
-                sideBarDataModule.Refresh();
-                sideBarImgModule.Refresh();
-                sideBarSysModule.Refresh();
-                sideBarOtherModule.Refresh();
-            }
+                    else if (idGroup == 2) {
+                        ButtonItem item = new ButtonItem();
+                        item.Name = nameModule;
+                        item.Tag = nameModuleFile;
+                        item.ImagePosition = eImagePosition.Top;
+                        item.ImageIndex = imgIdx;
+                        item.Click += Item_Click;
+                        sideBarManger.BeginInvoke(new Action(() =>
+                        {
+                            item.Text = nameChModule;
+                            sideBarManger.Panels[idGroup - 1].SubItems.Add(item);
+                            sideBarManger.Panels[idGroup - 1].Refresh();
+                        }));
+                    }
+                    else if (idGroup == 3) {
+                        ButtonItem item = new ButtonItem();
+                        item.Name = nameModule;
+                        item.Tag = nameModuleFile;
+                        item.ImagePosition = eImagePosition.Top;
+                        item.ImageIndex = imgIdx;
+                        item.Click += Item_Click;
+                        sideBarManger.BeginInvoke(new Action(() =>
+                        {
+                            item.Text = nameChModule;
+                            sideBarManger.Panels[idGroup - 1].SubItems.Add(item);
+                            sideBarManger.Panels[idGroup - 1].Refresh();
+                        }));
+                    }
+                    else if (idGroup == 4) {
+                        ButtonItem item = new ButtonItem();
+                        item.Name = nameModule;
+                        item.Tag = nameModuleFile;
+                        item.ImagePosition = eImagePosition.Top;
+                        item.ImageIndex = imgIdx;
+                        item.Click += Item_Click;
+                        sideBarManger.BeginInvoke(new Action(() =>
+                        {
+                            item.Text = nameChModule;
+                            sideBarManger.Panels[idGroup - 1].SubItems.Add(item);
+                            sideBarManger.Panels[idGroup - 1].Refresh();
+                        }));
+                    }
+                }
+                ButtonItem item1 = new ButtonItem();
+                item1.Name = "FrmModuleSet";
+                item1.ImagePosition = eImagePosition.Top;
+                item1.ImageIndex = 21;
+                item1.Click += Item_Click;
+                sideBarManger.BeginInvoke(new Action(() =>
+                {
+                    item1.Text = "模块授权设置";
+                    for (int i = 0; i < sideBarManger.Panels.Count; i++) {
+                        string str = sideBarManger.Panels[i].Text;
+                        if (str.IndexOf("系统") >= 0)
+                            sideBarManger.Panels[2].SubItems.Add(item1);
+                    }
+
+                }));
+            });
             AcAbout();
         }
         #endregion
@@ -264,6 +297,16 @@ namespace Bgkj
                 path = but.Tag.ToString();
             else if (!usersys)
                 path = "@" + but.Tag.ToString() + "!";
+
+            if (Fname.Contains("FrmModuleSet") || Fname.Contains("Csmgy.Frmgy")
+              || Fname.Contains("Csmxtpz.Frmxtpz") || Fname.Contains("Update.FrmUpate")) {
+                Assembly outerAsm = Assembly.LoadFrom(path);
+                Type outerForm = outerAsm.GetType(Fname, false);
+                Form fm = Activator.CreateInstance(outerForm) as Form;
+                fm.TopLevel = true;
+                fm.ShowDialog();
+                return;
+            }
             CreateForms(name, Fname, path);
         }
 
@@ -303,7 +346,7 @@ namespace Bgkj
                 if (T_ConFigure.FtpIP == T_ConFigure.IPAddress)
                     T_ConFigure.FtpTmpPath = T_ConFigure.FtpFwqPath;
             }));
-            
+
         }
 
         private string SetLoginip()

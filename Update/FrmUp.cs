@@ -19,19 +19,15 @@ namespace Update
 
         private void but_Up_Click(object sender, EventArgs e)
         {
-            try
-            {
-                if (Common.GetUserRw(Common.OperID) >= 1)
-                {
-                    MessageBox.Show("任务正在进行中请稍候退出程序！");                   
+            try {
+                if (Common.GetUserRw(Common.OperID) >= 1) {
+                    MessageBox.Show("任务正在进行中请稍候退出程序！");
                     return;
                 }
                 string appName = Application.StartupPath + "\\" + "getupdate.exe";
                 Process.Start(appName);
                 Application.Exit();
-            }
-            catch
-            {
+            } catch {
                 MessageBox.Show("无法加载数据更新程序请重新安装！");
                 Application.Exit();
             }
