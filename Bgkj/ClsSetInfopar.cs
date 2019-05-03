@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace Bgkj
@@ -13,6 +10,13 @@ namespace Bgkj
         public static List<string> lsname = new List<string>();
         public static List<string> lsid = new List<string>();
         public static List<string> lsxh = new List<string>();
-       
+
+        public static List<int> lUserid = new List<int>();
+        public static List<string> lUserName = new List<string>();
+        public static List<string> lUserSys = new List<string>();
+        public static List<string> lUserOtherSys = new List<string>();
+        public static List<string> lUsermenu = new List<string>();
+        public static Point mPoint;
+
     }
 }

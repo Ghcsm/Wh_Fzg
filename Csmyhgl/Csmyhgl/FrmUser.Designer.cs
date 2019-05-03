@@ -34,7 +34,7 @@
             this.gr3 = new System.Windows.Forms.GroupBox();
             this.dgvData = new System.Windows.Forms.DataGridView();
             this.gr2 = new System.Windows.Forms.GroupBox();
-            this.lbModule = new System.Windows.Forms.CheckedListBox();
+            this.trModule = new System.Windows.Forms.TreeView();
             this.gr1 = new System.Windows.Forms.GroupBox();
             this.butDel = new DevComponents.DotNetBar.ButtonX();
             this.butUpdate = new DevComponents.DotNetBar.ButtonX();
@@ -165,7 +165,7 @@
             this.gr2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.gr2.BackColor = System.Drawing.Color.Transparent;
-            this.gr2.Controls.Add(this.lbModule);
+            this.gr2.Controls.Add(this.trModule);
             this.gr2.Location = new System.Drawing.Point(271, 3);
             this.gr2.Name = "gr2";
             this.gr2.Size = new System.Drawing.Size(187, 262);
@@ -173,15 +173,16 @@
             this.gr2.TabStop = false;
             this.gr2.Text = "模块权限";
             // 
-            // lbModule
+            // trModule
             // 
-            this.lbModule.CheckOnClick = true;
-            this.lbModule.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lbModule.FormattingEnabled = true;
-            this.lbModule.Location = new System.Drawing.Point(3, 17);
-            this.lbModule.Name = "lbModule";
-            this.lbModule.Size = new System.Drawing.Size(181, 242);
-            this.lbModule.TabIndex = 10;
+            this.trModule.CheckBoxes = true;
+            this.trModule.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.trModule.Font = new System.Drawing.Font("宋体", 10F);
+            this.trModule.Location = new System.Drawing.Point(3, 17);
+            this.trModule.Name = "trModule";
+            this.trModule.Size = new System.Drawing.Size(181, 242);
+            this.trModule.TabIndex = 11;
+            this.trModule.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.trModule_AfterCheck);
             // 
             // gr1
             // 
@@ -361,7 +362,6 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "FrmUser";
             this.Text = "FrmUser";
-            this.Load += new System.EventHandler(this.FrmUser_Load);
             this.Shown += new System.EventHandler(this.FrmUser_Shown);
             this.grpan.ResumeLayout(false);
             this.gr4.ResumeLayout(false);
@@ -400,6 +400,6 @@
         private System.Windows.Forms.DataGridView dgvData;
         private System.Windows.Forms.GroupBox gr4;
         private System.Windows.Forms.CheckedListBox lvOtherModule;
-        private System.Windows.Forms.CheckedListBox lbModule;
+        private System.Windows.Forms.TreeView trModule;
     }
 }

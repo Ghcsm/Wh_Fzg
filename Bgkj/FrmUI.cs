@@ -1,9 +1,7 @@
 ﻿using DAL;
 using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -15,12 +13,6 @@ namespace Bgkj
         {
             InitializeComponent();
         }
-        private List<int> lUserid = new List<int>();
-        private List<string> lUserName = new List<string>();
-        private List<string> lUserSys = new List<string>();
-        private List<string> lUserOtherSys = new List<string>();
-        private Point mPoint;
-
         private void btnOk_Click(object sender, EventArgs e)
         {
             if (this.txtUser.Text.Trim().Length <= 0 || this.txtPwd.Text.Trim().Length <= 0) {
@@ -41,24 +33,36 @@ namespace Bgkj
 
         private void Setusersys()
         {
-            T_User.LoginName = this.txtUser.Text.Trim();
-            T_User.UserId = lUserid[lUserName.IndexOf(this.txtUser.Text.Trim())];
-            string str = lUserSys[lUserName.IndexOf(this.txtUser.Text.Trim())];
-            string[] sys = DESEncrypt.DesDecrypt(str).Split(';');
-            for (int i = 0; i < sys.Length; i++) {
-                string s = DESEncrypt.DesEncrypt(sys[i]);
-                T_User.UserSys.Add(s);
+            try {
+                T_User.LoginName = this.txtUser.Text.Trim();
+                T_User.UserId = ClsSetInfopar.lUserid[ClsSetInfopar.lUserName.IndexOf(T_User.LoginName)];
+                string str = ClsSetInfopar.lUserSys[ClsSetInfopar.lUserName.IndexOf(T_User.LoginName)];
+                string[] sys = DESEncrypt.DesDecrypt(str).Split(';');
+                for (int i = 0; i < sys.Length; i++) {
+                    string s = DESEncrypt.DesEncrypt(sys[i]);
+                    T_User.UserSys.Add(s);
+                }
+                str = ClsSetInfopar.lUserOtherSys[ClsSetInfopar.lUserName.IndexOf(T_User.LoginName)];
+                sys = DESEncrypt.DesDecrypt(str).Split(';');
+                for (int i = 0; i < sys.Length; i++) {
+                    string s = DESEncrypt.DesEncrypt(sys[i]);
+                    T_User.UserOtherSys.Add(s);
+                }
+                str = ClsSetInfopar.lUsermenu[ClsSetInfopar.lUserName.IndexOf(T_User.LoginName)];
+                sys = DESEncrypt.DesDecrypt(str).Split(';');
+                for (int i = 0; i < sys.Length; i++) {
+                    string s = DESEncrypt.DesEncrypt(sys[i]);
+                    T_User.UserMenu.Add(s);
+                }
+                ClsSetInfopar.lUserid.Clear();
+                ClsSetInfopar.lUserName.Clear();
+                ClsSetInfopar.lUserSys.Clear();
+                ClsSetInfopar.lUserOtherSys.Clear();
+                ClsSetInfopar.lUsermenu.Clear();
+
+            } catch (Exception e) {
+                MessageBox.Show("权限读取失败:" + e.ToString());
             }
-            str = lUserOtherSys[lUserName.IndexOf(this.txtUser.Text.Trim())];
-            sys = DESEncrypt.DesDecrypt(str).Split(';');
-            for (int i = 0; i < sys.Length; i++) {
-                string s = DESEncrypt.DesEncrypt(sys[i]);
-                T_User.UserOtherSys.Add(s);
-            }
-            lUserid.Clear();
-            lUserName.Clear();
-            lUserSys.Clear();
-            lUserOtherSys.Clear();
         }
 
         private void btnCle_Click(object sender, EventArgs e)
@@ -77,21 +81,25 @@ namespace Bgkj
             Task.Run(() =>
             {
                 DataTable dt = T_Sysset.GetUser();
-                if (dt == null || dt.Rows.Count <= 0)
+                if (dt == null || dt.Rows.Count <= 0) {
+                    lbinfo.Visible = true;
                     return;
+                }
                 foreach (DataRow dr in dt.Rows) {
                     string strUser = dr["UserName"].ToString();
                     int uid = Convert.ToInt32(dr["id"].ToString());
                     string usersys = dr["UserSys"].ToString();
                     string Uothersys = dr["OtherSys"].ToString();
+                    string usermenu = dr["Usermenu"].ToString();
                     this.txtUser.BeginInvoke(new Action(() =>
                     {
                         this.txtUser.Items.Add(strUser);
                     }));
-                    lUserName.Add(strUser);
-                    lUserid.Add(uid);
-                    lUserSys.Add(usersys);
-                    lUserOtherSys.Add(Uothersys);
+                    ClsSetInfopar.lUserName.Add(strUser);
+                    ClsSetInfopar.lUserid.Add(uid);
+                    ClsSetInfopar.lUserSys.Add(usersys);
+                    ClsSetInfopar.lUserOtherSys.Add(Uothersys);
+                    ClsSetInfopar.lUsermenu.Add(usermenu);
                 }
             });
             T_Sysset.GetSfname();
@@ -114,13 +122,13 @@ namespace Bgkj
 
         private void panle_MouseDown(object sender, MouseEventArgs e)
         {
-            mPoint = new Point(e.X, e.Y);
+            ClsSetInfopar.mPoint = new Point(e.X, e.Y);
         }
 
         private void panle_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left) {
-                this.Location = new Point(this.Location.X + e.X - mPoint.X, this.Location.Y + e.Y - mPoint.Y);
+                this.Location = new Point(this.Location.X + e.X - ClsSetInfopar.mPoint.X, this.Location.Y + e.Y - ClsSetInfopar.mPoint.Y);
             }
         }
     }

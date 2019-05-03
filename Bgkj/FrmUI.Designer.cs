@@ -36,12 +36,14 @@
             this.txtPwd = new DevComponents.DotNetBar.Controls.TextBoxX();
             this.btnCle = new DevComponents.DotNetBar.ButtonX();
             this.btnOk = new DevComponents.DotNetBar.ButtonX();
+            this.lbinfo = new System.Windows.Forms.Label();
             this.panle.SuspendLayout();
             this.SuspendLayout();
             // 
             // panle
             // 
             this.panle.BackgroundImage = global::Bgkj.Properties.Resources.登录界面;
+            this.panle.Controls.Add(this.lbinfo);
             this.panle.Controls.Add(this.panleLogo);
             this.panle.Controls.Add(this.labPwd);
             this.panle.Controls.Add(this.labUser);
@@ -138,6 +140,18 @@
             this.btnOk.Text = "确定";
             this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
             // 
+            // lbinfo
+            // 
+            this.lbinfo.AutoSize = true;
+            this.lbinfo.BackColor = System.Drawing.Color.Transparent;
+            this.lbinfo.ForeColor = System.Drawing.Color.White;
+            this.lbinfo.Location = new System.Drawing.Point(448, 358);
+            this.lbinfo.Name = "lbinfo";
+            this.lbinfo.Size = new System.Drawing.Size(155, 12);
+            this.lbinfo.TabIndex = 6;
+            this.lbinfo.Text = "数据库连接失败,请检查网络";
+            this.lbinfo.Visible = false;
+            // 
             // FrmUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -167,6 +181,7 @@
         private DevComponents.DotNetBar.Controls.ComboBoxEx txtUser;
         private DevComponents.DotNetBar.Controls.TextBoxX txtPwd;
         private System.Windows.Forms.Panel panleLogo;
+        private System.Windows.Forms.Label lbinfo;
     }
 }
 
