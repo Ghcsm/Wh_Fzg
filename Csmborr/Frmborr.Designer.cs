@@ -54,8 +54,9 @@
             this.toolslb_archno = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolslb_f = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolslb_File = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolproess = new System.Windows.Forms.ToolStripProgressBar();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolproess = new System.Windows.Forms.ToolStripProgressBar();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.gr1.SuspendLayout();
             this.gr2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.contMenu)).BeginInit();
@@ -73,9 +74,9 @@
             this.gr1.Controls.Add(this.label3);
             this.gr1.Controls.Add(this.label2);
             this.gr1.Controls.Add(this.label1);
-            this.gr1.Location = new System.Drawing.Point(7, 2);
+            this.gr1.Location = new System.Drawing.Point(7, 24);
             this.gr1.Name = "gr1";
-            this.gr1.Size = new System.Drawing.Size(902, 85);
+            this.gr1.Size = new System.Drawing.Size(902, 63);
             this.gr1.TabIndex = 0;
             this.gr1.TabStop = false;
             // 
@@ -83,7 +84,7 @@
             // 
             this.butborrQuer.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.butborrQuer.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.butborrQuer.Location = new System.Drawing.Point(700, 29);
+            this.butborrQuer.Location = new System.Drawing.Point(700, 20);
             this.butborrQuer.Name = "butborrQuer";
             this.butborrQuer.Size = new System.Drawing.Size(75, 34);
             this.butborrQuer.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -93,7 +94,7 @@
             // 
             // txtborrgjz
             // 
-            this.txtborrgjz.Location = new System.Drawing.Point(517, 35);
+            this.txtborrgjz.Location = new System.Drawing.Point(517, 26);
             this.txtborrgjz.Name = "txtborrgjz";
             this.txtborrgjz.Size = new System.Drawing.Size(132, 21);
             this.txtborrgjz.TabIndex = 3;
@@ -102,6 +103,7 @@
             // 
             this.comborrbczf.DisplayMember = "Text";
             this.comborrbczf.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.comborrbczf.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comborrbczf.FormattingEnabled = true;
             this.comborrbczf.ItemHeight = 15;
             this.comborrbczf.Items.AddRange(new object[] {
@@ -109,7 +111,7 @@
             this.combbh,
             this.combbdy,
             this.combbbh});
-            this.comborrbczf.Location = new System.Drawing.Point(314, 35);
+            this.comborrbczf.Location = new System.Drawing.Point(314, 26);
             this.comborrbczf.Name = "comborrbczf";
             this.comborrbczf.Size = new System.Drawing.Size(115, 21);
             this.comborrbczf.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -135,9 +137,10 @@
             // 
             this.comborrbcol.DisplayMember = "Text";
             this.comborrbcol.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.comborrbcol.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comborrbcol.FormattingEnabled = true;
             this.comborrbcol.ItemHeight = 15;
-            this.comborrbcol.Location = new System.Drawing.Point(90, 35);
+            this.comborrbcol.Location = new System.Drawing.Point(90, 26);
             this.comborrbcol.Name = "comborrbcol";
             this.comborrbcol.Size = new System.Drawing.Size(144, 21);
             this.comborrbcol.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -146,7 +149,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(458, 43);
+            this.label3.Location = new System.Drawing.Point(458, 34);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(53, 12);
             this.label3.TabIndex = 0;
@@ -155,7 +158,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(255, 40);
+            this.label2.Location = new System.Drawing.Point(255, 31);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(53, 12);
             this.label2.TabIndex = 0;
@@ -164,7 +167,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(22, 40);
+            this.label1.Location = new System.Drawing.Point(22, 31);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(65, 12);
             this.label1.TabIndex = 0;
@@ -296,6 +299,13 @@
             this.toolslb_File.Name = "toolslb_File";
             this.toolslb_File.Size = new System.Drawing.Size(0, 17);
             // 
+            // toolStripStatusLabel1
+            // 
+            this.toolStripStatusLabel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(237)))), ((int)(((byte)(237)))));
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(768, 17);
+            this.toolStripStatusLabel1.Spring = true;
+            // 
             // toolproess
             // 
             this.toolproess.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
@@ -304,12 +314,13 @@
             this.toolproess.Size = new System.Drawing.Size(100, 16);
             this.toolproess.Visible = false;
             // 
-            // toolStripStatusLabel1
+            // toolStrip1
             // 
-            this.toolStripStatusLabel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(237)))), ((int)(((byte)(237)))));
-            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(635, 17);
-            this.toolStripStatusLabel1.Spring = true;
+            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(915, 25);
+            this.toolStrip1.TabIndex = 3;
+            this.toolStrip1.Text = "toolStrip1";
             // 
             // FrmBorr
             // 
@@ -317,9 +328,11 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(223)))), ((int)(((byte)(237)))), ((int)(((byte)(254)))));
             this.ClientSize = new System.Drawing.Size(915, 465);
+            this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.gr2);
             this.Controls.Add(this.gr1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "FrmBorr";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "查询借阅";
@@ -364,6 +377,7 @@
         private System.Windows.Forms.ColumnHeader colimg;
         private System.Windows.Forms.ToolStripProgressBar toolproess;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
+        private System.Windows.Forms.ToolStrip toolStrip1;
     }
 }
 

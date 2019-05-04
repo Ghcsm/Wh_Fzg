@@ -14,7 +14,6 @@ namespace Csmdacx
         public FrmQuery()
         {
             InitializeComponent();
-
             Init();
         }
 

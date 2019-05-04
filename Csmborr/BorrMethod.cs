@@ -1,18 +1,19 @@
 ﻿using DAL;
+using DevComponents.DotNetBar.Controls;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using DevComponents.DotNetBar.Controls;
 
 namespace Csmborr
 {
     public static class BorrMethod
     {
         public static List<string> lscol = new List<string>();
+        public static int Archid { get; set; }
+        public static string Filename { get; set; }
+        public static bool Imgsys { get; set; }
+
         public static void Getdata(ListView lvq, string col, string czf, string gjz)
         {
             lvq.Items.Clear();
@@ -21,7 +22,6 @@ namespace Csmborr
                 return;
             int i = 1;
             foreach (DataRow dr in dt.Rows) {
-              
                 ListViewItem lvi = new ListViewItem();
                 string s1 = dr["borrtag"].ToString();
                 if (s1 == "1")
@@ -31,9 +31,11 @@ namespace Csmborr
                 lvi.Text = i.ToString();
                 for (int t = 0; t < lscol.Count; t++) {
                     col = lscol[t];
-                   string str = dr[col].ToString();
+                    string str = dr[col].ToString();
                     lvi.SubItems.AddRange(new string[] { str });
                 }
+                string arid = dr["Archid"].ToString();
+                lvi.SubItems.AddRange(new string[] { arid });
                 lvq.Items.Add(lvi);
                 i++;
             }
@@ -59,6 +61,32 @@ namespace Csmborr
                 lv.Columns.Add(s[i].Trim());
             }
             lv.Columns.Add("Archid");
+            Getsys();
+        }
+
+        public static void Getsys()
+        {
+            Imgsys = false;
+            DataTable dt = Common.GetOthersys();
+            if (dt == null || dt.Rows.Count <= 0)
+                return;
+            string str = DESEncrypt.DesDecrypt(dt.Rows[0][0].ToString());
+            if (str.Contains("图像打印"))
+                Imgsys = true;
+        }
+
+        public static void GetArchinfo(ListView lvData, ToolStripStatusLabel boxsn, ToolStripStatusLabel archno, ToolStripStatusLabel file)
+        {
+            Archid = Convert.ToInt32(lvData.SelectedItems[0].SubItems[lscol.Count + 1].Text);
+            if (Archid <= 0)
+                return;
+            DataTable dt = Common.QuerboxsnInfo(Archid);
+            if (dt == null || dt.Rows.Count <= 0)
+                return;
+            boxsn.Text = string.Format("盒号：{0}", dt.Rows[0][0].ToString());
+            archno.Text = string.Format("卷号：{0}", dt.Rows[0][1].ToString());
+            Filename = dt.Rows[0][2].ToString();
+            file.Text = Filename;
         }
     }
 }

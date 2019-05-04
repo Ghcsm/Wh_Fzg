@@ -85,6 +85,12 @@
     <Compile Include="Frmborr.Designer.cs">
       <DependentUpon>Frmborr.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmImgshow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmImgshow.Designer.cs">
+      <DependentUpon>FrmImgshow.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FrmArchBorr.resx">
@@ -92,6 +98,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Frmborr.resx">
       <DependentUpon>Frmborr.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmImgshow.resx">
+      <DependentUpon>FrmImgshow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -114,6 +123,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CsmCon\CsmCon.csproj">
+      <Project>{6A86EABC-3A88-4759-9EA0-24B936265E28}</Project>
+      <Name>CsmCon</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
