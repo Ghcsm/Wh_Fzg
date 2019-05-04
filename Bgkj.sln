@@ -53,6 +53,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hljsarch", "..\..\..\..\Csm
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CsmGenSet", "CsmGenSet\CsmGenSet.csproj", "{D62B0C5F-B486-4123-97C9-E9D6A0C1B97A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Csmborr", "Csmborr\Csmborr.csproj", "{63B4B407-4DC2-48E2-8670-26F11CA77677}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -261,6 +263,14 @@ Global
 		{D62B0C5F-B486-4123-97C9-E9D6A0C1B97A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D62B0C5F-B486-4123-97C9-E9D6A0C1B97A}.Release|x86.ActiveCfg = Release|Any CPU
 		{D62B0C5F-B486-4123-97C9-E9D6A0C1B97A}.Release|x86.Build.0 = Release|Any CPU
+		{63B4B407-4DC2-48E2-8670-26F11CA77677}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63B4B407-4DC2-48E2-8670-26F11CA77677}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63B4B407-4DC2-48E2-8670-26F11CA77677}.Debug|x86.ActiveCfg = Debug|x86
+		{63B4B407-4DC2-48E2-8670-26F11CA77677}.Debug|x86.Build.0 = Debug|x86
+		{63B4B407-4DC2-48E2-8670-26F11CA77677}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63B4B407-4DC2-48E2-8670-26F11CA77677}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63B4B407-4DC2-48E2-8670-26F11CA77677}.Release|x86.ActiveCfg = Release|Any CPU
+		{63B4B407-4DC2-48E2-8670-26F11CA77677}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
