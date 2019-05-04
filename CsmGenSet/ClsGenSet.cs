@@ -120,5 +120,11 @@ namespace CsmGenSet
         public static string CreateTableLvsm { get; set; }
     }
 
+    public static class ClsborrTable
+    {
+        public static string Clsborrtable { get; set; }
+        public static List<string> ClsBorrColzd = new List<string>();
+    }
+
 
 }

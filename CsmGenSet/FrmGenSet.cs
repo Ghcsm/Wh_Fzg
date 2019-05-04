@@ -2466,6 +2466,143 @@ namespace CsmGenSet
         #endregion
 
 
+        #region borrset
+
+        private void IsborrTable()
+        {
+            if (txtBorrTable.Text.Trim().Length <= 0) {
+                MessageBox.Show("请输入表名称!");
+                txtQuerTable.Focus();
+                return;
+            }
+            ClsborrTable.Clsborrtable = txtBorrTable.Text.Trim();
+            string table = T_Sysset.isTable(ClsborrTable.Clsborrtable);
+            if (table.Length <= 0) {
+                MessageBox.Show("表不存！");
+                txtBorrTable.Focus();
+                return;
+            }
+            chkBorrTablecol.Items.Clear();
+            ClsborrTable.ClsBorrColzd.Clear();
+            DataTable dt = T_Sysset.GetTableName(ClsborrTable.Clsborrtable);
+            if (dt != null && dt.Rows.Count > 0) {
+                chkBorrTablecol.DataSource = dt;
+                chkBorrTablecol.DisplayMember = "Name";
+            }
+        }
+
+
+        private void Addborrcol()
+        {
+            if (chkBorrTablecol.Items.Count <= 0)
+                return;
+            if (chkBorrTablecol.CheckedItems.Count <= 0)
+                return;
+            for (int i = 0; i < chkBorrTablecol.Items.Count; i++) {
+                if (chkBorrTablecol.GetItemChecked(i)) {
+                    string strid = chkBorrTablecol.GetItemText(chkBorrTablecol.Items[i]);
+                    if (strid.ToLower() == "id" || strid.ToLower() == "archid" || strid.ToLower() == "entertag")
+                        continue;
+                    if (ClsborrTable.ClsBorrColzd.IndexOf(strid) < 0) {
+                        chkBorrtablquer.Items.Add(strid);
+                        ClsborrTable.ClsBorrColzd.Add(strid);
+                    }
+                }
+            }
+        }
+
+        private void Delborrcol()
+        {
+            if (chkBorrtablquer.Items.Count <= 0)
+                return;
+            if (chkBorrtablquer.CheckedItems.Count <= 0)
+                return;
+            for (int i = 0; i < chkBorrtablquer.Items.Count; i++) {
+                if (chkBorrtablquer.GetItemChecked(i)) {
+                    string str = chkBorrtablquer.GetItemText(chkBorrtablquer.Items[i]);
+                    chkBorrtablquer.Items.RemoveAt(i);
+                    if (ClsborrTable.ClsBorrColzd.IndexOf(str) >= 0)
+                        ClsborrTable.ClsBorrColzd.Remove(str);
+                    i--;
+                }
+            }
+        }
+
+        private void SaveborrInfo()
+        {
+            string str = "";
+            if (ClsborrTable.Clsborrtable.Length <= 0) {
+                MessageBox.Show("请设置表名称!");
+                return;
+            }
+            if (chkBorrtablquer.Items.Count <= 0) {
+                MessageBox.Show("请先添加需导入的字段!");
+                return;
+            }
+            try {
+                for (int i = 0; i < ClsborrTable.ClsBorrColzd.Count; i++) {
+                    if (i != ClsborrTable.ClsBorrColzd.Count - 1)
+                        str += ClsborrTable.ClsBorrColzd[i] + ";";
+                    else
+                        str += ClsborrTable.ClsBorrColzd[i];
+                }
+
+                T_Sysset.UpdateBorrInfo(ClsborrTable.Clsborrtable, str);
+                MessageBox.Show("保存成功!");
+            } catch (Exception e) {
+                MessageBox.Show(e.ToString());
+            } finally {
+                GetnborrInfo();
+                string s = "修改借阅表:" + ClsborrTable.Clsborrtable + "->" + str;
+                Common.Writelog(0, s);
+            }
+        }
+
+        private void GetnborrInfo()
+        {
+            ClsborrTable.Clsborrtable = "";
+            ClsborrTable.ClsBorrColzd.Clear();
+            chkBorrTablecol.DataSource = null;
+            chkBorrtablquer.Items.Clear();
+            DataTable dt = T_Sysset.GetborrTable();
+            if (dt == null || dt.Rows.Count <= 0)
+                return;
+            DataRow dr = dt.Rows[0];
+            ClsborrTable.Clsborrtable = dr["Tablename"].ToString();
+            string str = dr["Tabcolname"].ToString();
+            txtBorrTable.Text = ClsborrTable.Clsborrtable;
+            if (str.Length > 0) {
+                string[] a = str.Split(';');
+                for (int i = 0; i < a.Length; i++) {
+                    string b = a[i];
+                    if (b.Trim().Length > 0) {
+                        ClsborrTable.ClsBorrColzd.Add(b);
+                        chkBorrtablquer.Items.Add(b);
+                    }
+                }
+            }
+        }
+
+        private void butBorrIs_Click(object sender, EventArgs e)
+        {
+            IsborrTable();
+        }
+
+        private void butBorradd_Click(object sender, EventArgs e)
+        {
+            Addborrcol();
+        }
+
+        private void butBorrdel_Click(object sender, EventArgs e)
+        {
+            Delborrcol();
+        }
+
+        private void butBorrSave_Click(object sender, EventArgs e)
+        {
+            SaveborrInfo();
+        }
+        #endregion
 
         private void Infoshow()
         {
@@ -2478,12 +2615,13 @@ namespace CsmGenSet
             GetInfoCheck();
             GetnContenInfo();
             CreateTableab();
+            GetnborrInfo();
         }
         private void FrmGetSet_Shown(object sender, EventArgs e)
         {
             Infoshow();
         }
-     
+
     }
 
 }

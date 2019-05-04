@@ -38,6 +38,10 @@
             this.gr2 = new System.Windows.Forms.GroupBox();
             this.lvborrQuer = new System.Windows.Forms.ListView();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.combdy = new DevComponents.Editors.ComboItem();
+            this.combbh = new DevComponents.Editors.ComboItem();
+            this.combbdy = new DevComponents.Editors.ComboItem();
+            this.combbbh = new DevComponents.Editors.ComboItem();
             this.gr1.SuspendLayout();
             this.gr2.SuspendLayout();
             this.SuspendLayout();
@@ -63,7 +67,7 @@
             // 
             this.butQuer.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.butQuer.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.butQuer.Location = new System.Drawing.Point(700, 31);
+            this.butQuer.Location = new System.Drawing.Point(700, 29);
             this.butQuer.Name = "butQuer";
             this.butQuer.Size = new System.Drawing.Size(75, 34);
             this.butQuer.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -72,7 +76,7 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(517, 39);
+            this.textBox1.Location = new System.Drawing.Point(517, 35);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(132, 21);
             this.textBox1.TabIndex = 3;
@@ -83,7 +87,12 @@
             this.comboBoxEx2.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.comboBoxEx2.FormattingEnabled = true;
             this.comboBoxEx2.ItemHeight = 15;
-            this.comboBoxEx2.Location = new System.Drawing.Point(314, 37);
+            this.comboBoxEx2.Items.AddRange(new object[] {
+            this.combdy,
+            this.combbh,
+            this.combbdy,
+            this.combbbh});
+            this.comboBoxEx2.Location = new System.Drawing.Point(314, 35);
             this.comboBoxEx2.Name = "comboBoxEx2";
             this.comboBoxEx2.Size = new System.Drawing.Size(115, 21);
             this.comboBoxEx2.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -160,6 +169,22 @@
             this.statusStrip1.TabIndex = 2;
             this.statusStrip1.Text = "statusStrip1";
             // 
+            // combdy
+            // 
+            this.combdy.Text = "等于";
+            // 
+            // combbh
+            // 
+            this.combbh.Text = "包含";
+            // 
+            // combbdy
+            // 
+            this.combbdy.Text = "不等于";
+            // 
+            // combbbh
+            // 
+            this.combbbh.Text = "不包含";
+            // 
             // FrmBorr
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -193,6 +218,10 @@
         private System.Windows.Forms.GroupBox gr2;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ListView lvborrQuer;
+        private DevComponents.Editors.ComboItem combdy;
+        private DevComponents.Editors.ComboItem combbh;
+        private DevComponents.Editors.ComboItem combbdy;
+        private DevComponents.Editors.ComboItem combbbh;
     }
 }
 
