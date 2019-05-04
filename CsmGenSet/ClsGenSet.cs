@@ -124,6 +124,7 @@ namespace CsmGenSet
     {
         public static string Clsborrtable { get; set; }
         public static List<string> ClsBorrColzd = new List<string>();
+        public static bool Clsborrtag { get; set; }
     }
 
 

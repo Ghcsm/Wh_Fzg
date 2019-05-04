@@ -27,33 +27,49 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmBorr));
             this.gr1 = new System.Windows.Forms.GroupBox();
-            this.butQuer = new DevComponents.DotNetBar.ButtonX();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.comboBoxEx2 = new DevComponents.DotNetBar.Controls.ComboBoxEx();
-            this.comboBoxEx1 = new DevComponents.DotNetBar.Controls.ComboBoxEx();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.gr2 = new System.Windows.Forms.GroupBox();
-            this.lvborrQuer = new System.Windows.Forms.ListView();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.butborrQuer = new DevComponents.DotNetBar.ButtonX();
+            this.txtborrgjz = new System.Windows.Forms.TextBox();
+            this.comborrbczf = new DevComponents.DotNetBar.Controls.ComboBoxEx();
             this.combdy = new DevComponents.Editors.ComboItem();
             this.combbh = new DevComponents.Editors.ComboItem();
             this.combbdy = new DevComponents.Editors.ComboItem();
             this.combbbh = new DevComponents.Editors.ComboItem();
+            this.comborrbcol = new DevComponents.DotNetBar.Controls.ComboBoxEx();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.gr2 = new System.Windows.Forms.GroupBox();
+            this.contMenu = new DevComponents.DotNetBar.ContextMenuBar();
+            this.butImgload = new DevComponents.DotNetBar.ButtonItem();
+            this.butitemArchjy = new DevComponents.DotNetBar.ButtonItem();
+            this.butitemArchgh = new DevComponents.DotNetBar.ButtonItem();
+            this.lvborrQuer = new System.Windows.Forms.ListView();
+            this.colimg = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.imglist = new System.Windows.Forms.ImageList(this.components);
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.toolslb_box = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolslb_archno = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolslb_f = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolslb_File = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolproess = new System.Windows.Forms.ToolStripProgressBar();
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.gr1.SuspendLayout();
             this.gr2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.contMenu)).BeginInit();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // gr1
             // 
             this.gr1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.gr1.Controls.Add(this.butQuer);
-            this.gr1.Controls.Add(this.textBox1);
-            this.gr1.Controls.Add(this.comboBoxEx2);
-            this.gr1.Controls.Add(this.comboBoxEx1);
+            this.gr1.Controls.Add(this.butborrQuer);
+            this.gr1.Controls.Add(this.txtborrgjz);
+            this.gr1.Controls.Add(this.comborrbczf);
+            this.gr1.Controls.Add(this.comborrbcol);
             this.gr1.Controls.Add(this.label3);
             this.gr1.Controls.Add(this.label2);
             this.gr1.Controls.Add(this.label1);
@@ -63,52 +79,69 @@
             this.gr1.TabIndex = 0;
             this.gr1.TabStop = false;
             // 
-            // butQuer
+            // butborrQuer
             // 
-            this.butQuer.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.butQuer.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.butQuer.Location = new System.Drawing.Point(700, 29);
-            this.butQuer.Name = "butQuer";
-            this.butQuer.Size = new System.Drawing.Size(75, 34);
-            this.butQuer.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.butQuer.TabIndex = 4;
-            this.butQuer.Text = "查询";
+            this.butborrQuer.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.butborrQuer.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.butborrQuer.Location = new System.Drawing.Point(700, 29);
+            this.butborrQuer.Name = "butborrQuer";
+            this.butborrQuer.Size = new System.Drawing.Size(75, 34);
+            this.butborrQuer.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.butborrQuer.TabIndex = 4;
+            this.butborrQuer.Text = "查询";
+            this.butborrQuer.Click += new System.EventHandler(this.butQuer_Click);
             // 
-            // textBox1
+            // txtborrgjz
             // 
-            this.textBox1.Location = new System.Drawing.Point(517, 35);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(132, 21);
-            this.textBox1.TabIndex = 3;
+            this.txtborrgjz.Location = new System.Drawing.Point(517, 35);
+            this.txtborrgjz.Name = "txtborrgjz";
+            this.txtborrgjz.Size = new System.Drawing.Size(132, 21);
+            this.txtborrgjz.TabIndex = 3;
             // 
-            // comboBoxEx2
+            // comborrbczf
             // 
-            this.comboBoxEx2.DisplayMember = "Text";
-            this.comboBoxEx2.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.comboBoxEx2.FormattingEnabled = true;
-            this.comboBoxEx2.ItemHeight = 15;
-            this.comboBoxEx2.Items.AddRange(new object[] {
+            this.comborrbczf.DisplayMember = "Text";
+            this.comborrbczf.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.comborrbczf.FormattingEnabled = true;
+            this.comborrbczf.ItemHeight = 15;
+            this.comborrbczf.Items.AddRange(new object[] {
             this.combdy,
             this.combbh,
             this.combbdy,
             this.combbbh});
-            this.comboBoxEx2.Location = new System.Drawing.Point(314, 35);
-            this.comboBoxEx2.Name = "comboBoxEx2";
-            this.comboBoxEx2.Size = new System.Drawing.Size(115, 21);
-            this.comboBoxEx2.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.comboBoxEx2.TabIndex = 2;
+            this.comborrbczf.Location = new System.Drawing.Point(314, 35);
+            this.comborrbczf.Name = "comborrbczf";
+            this.comborrbczf.Size = new System.Drawing.Size(115, 21);
+            this.comborrbczf.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.comborrbczf.TabIndex = 2;
             // 
-            // comboBoxEx1
+            // combdy
             // 
-            this.comboBoxEx1.DisplayMember = "Text";
-            this.comboBoxEx1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.comboBoxEx1.FormattingEnabled = true;
-            this.comboBoxEx1.ItemHeight = 15;
-            this.comboBoxEx1.Location = new System.Drawing.Point(90, 35);
-            this.comboBoxEx1.Name = "comboBoxEx1";
-            this.comboBoxEx1.Size = new System.Drawing.Size(144, 21);
-            this.comboBoxEx1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.comboBoxEx1.TabIndex = 1;
+            this.combdy.Text = "等于";
+            // 
+            // combbh
+            // 
+            this.combbh.Text = "包含";
+            // 
+            // combbdy
+            // 
+            this.combbdy.Text = "不等于";
+            // 
+            // combbbh
+            // 
+            this.combbbh.Text = "不包含";
+            // 
+            // comborrbcol
+            // 
+            this.comborrbcol.DisplayMember = "Text";
+            this.comborrbcol.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.comborrbcol.FormattingEnabled = true;
+            this.comborrbcol.ItemHeight = 15;
+            this.comborrbcol.Location = new System.Drawing.Point(90, 35);
+            this.comborrbcol.Name = "comborrbcol";
+            this.comborrbcol.Size = new System.Drawing.Size(144, 21);
+            this.comborrbcol.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.comborrbcol.TabIndex = 1;
             // 
             // label3
             // 
@@ -142,6 +175,7 @@
             this.gr2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.gr2.Controls.Add(this.contMenu);
             this.gr2.Controls.Add(this.lvborrQuer);
             this.gr2.Location = new System.Drawing.Point(7, 87);
             this.gr2.Name = "gr2";
@@ -149,41 +183,133 @@
             this.gr2.TabIndex = 1;
             this.gr2.TabStop = false;
             // 
+            // contMenu
+            // 
+            this.contMenu.AntiAlias = true;
+            this.contMenu.Font = new System.Drawing.Font("微软雅黑", 9F);
+            this.contMenu.IsMaximized = false;
+            this.contMenu.Items.AddRange(new DevComponents.DotNetBar.BaseItem[] {
+            this.butImgload,
+            this.butitemArchjy,
+            this.butitemArchgh});
+            this.contMenu.Location = new System.Drawing.Point(806, 236);
+            this.contMenu.Name = "contMenu";
+            this.contMenu.Size = new System.Drawing.Size(75, 78);
+            this.contMenu.Stretch = true;
+            this.contMenu.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.contMenu.TabIndex = 3;
+            this.contMenu.TabStop = false;
+            this.contMenu.Text = "contextMenuBar1";
+            // 
+            // butImgload
+            // 
+            this.butImgload.AutoExpandOnClick = true;
+            this.butImgload.Name = "butImgload";
+            this.butImgload.Text = "查看图像";
+            this.butImgload.Click += new System.EventHandler(this.butImgload_Click);
+            // 
+            // butitemArchjy
+            // 
+            this.butitemArchjy.AutoExpandOnClick = true;
+            this.butitemArchjy.BeginGroup = true;
+            this.butitemArchjy.Name = "butitemArchjy";
+            this.butitemArchjy.Text = "档案借阅";
+            this.butitemArchjy.Click += new System.EventHandler(this.butitemArchjy_Click);
+            // 
+            // butitemArchgh
+            // 
+            this.butitemArchgh.AutoExpandOnClick = true;
+            this.butitemArchgh.Name = "butitemArchgh";
+            this.butitemArchgh.Text = "档案归还";
+            this.butitemArchgh.Click += new System.EventHandler(this.butitemArchgh_Click);
+            // 
             // lvborrQuer
             // 
+            this.lvborrQuer.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.colimg});
             this.lvborrQuer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lvborrQuer.FullRowSelect = true;
             this.lvborrQuer.GridLines = true;
+            this.lvborrQuer.LargeImageList = this.imglist;
             this.lvborrQuer.Location = new System.Drawing.Point(3, 17);
             this.lvborrQuer.Name = "lvborrQuer";
             this.lvborrQuer.Size = new System.Drawing.Size(896, 330);
+            this.lvborrQuer.SmallImageList = this.imglist;
+            this.lvborrQuer.StateImageList = this.imglist;
             this.lvborrQuer.TabIndex = 0;
             this.lvborrQuer.UseCompatibleStateImageBehavior = false;
             this.lvborrQuer.View = System.Windows.Forms.View.Details;
+            this.lvborrQuer.Click += new System.EventHandler(this.lvborrQuer_Click);
+            this.lvborrQuer.MouseClick += new System.Windows.Forms.MouseEventHandler(this.lvborrQuer_MouseClick);
+            this.lvborrQuer.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lvborrQuer_MouseUp);
+            // 
+            // colimg
+            // 
+            this.colimg.Text = "序号";
+            this.colimg.Width = 80;
+            // 
+            // imglist
+            // 
+            this.imglist.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imglist.ImageStream")));
+            this.imglist.TransparentColor = System.Drawing.Color.Transparent;
+            this.imglist.Images.SetKeyName(0, "1.png");
+            this.imglist.Images.SetKeyName(1, "2.png");
             // 
             // statusStrip1
             // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolslb_box,
+            this.toolslb_archno,
+            this.toolslb_f,
+            this.toolslb_File,
+            this.toolStripStatusLabel1,
+            this.toolproess});
             this.statusStrip1.Location = new System.Drawing.Point(0, 443);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(915, 22);
             this.statusStrip1.TabIndex = 2;
-            this.statusStrip1.Text = "statusStrip1";
             // 
-            // combdy
+            // toolslb_box
             // 
-            this.combdy.Text = "等于";
+            this.toolslb_box.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(237)))), ((int)(((byte)(237)))));
+            this.toolslb_box.Name = "toolslb_box";
+            this.toolslb_box.Size = new System.Drawing.Size(44, 17);
+            this.toolslb_box.Text = "盒号：";
             // 
-            // combbh
+            // toolslb_archno
             // 
-            this.combbh.Text = "包含";
+            this.toolslb_archno.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(237)))), ((int)(((byte)(237)))));
+            this.toolslb_archno.Name = "toolslb_archno";
+            this.toolslb_archno.Size = new System.Drawing.Size(44, 17);
+            this.toolslb_archno.Text = "卷号：";
             // 
-            // combbdy
+            // toolslb_f
             // 
-            this.combbdy.Text = "不等于";
+            this.toolslb_f.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(237)))), ((int)(((byte)(237)))));
+            this.toolslb_f.Name = "toolslb_f";
+            this.toolslb_f.Size = new System.Drawing.Size(44, 17);
+            this.toolslb_f.Text = "文件：";
             // 
-            // combbbh
+            // toolslb_File
             // 
-            this.combbbh.Text = "不包含";
+            this.toolslb_File.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(237)))), ((int)(((byte)(237)))));
+            this.toolslb_File.Name = "toolslb_File";
+            this.toolslb_File.Size = new System.Drawing.Size(0, 17);
+            // 
+            // toolproess
+            // 
+            this.toolproess.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolproess.Name = "toolproess";
+            this.toolproess.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
+            this.toolproess.Size = new System.Drawing.Size(100, 16);
+            this.toolproess.Visible = false;
+            // 
+            // toolStripStatusLabel1
+            // 
+            this.toolStripStatusLabel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(237)))), ((int)(((byte)(237)))));
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(635, 17);
+            this.toolStripStatusLabel1.Spring = true;
             // 
             // FrmBorr
             // 
@@ -197,9 +323,13 @@
             this.Name = "FrmBorr";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "查询借阅";
+            this.Shown += new System.EventHandler(this.FrmBorr_Shown);
             this.gr1.ResumeLayout(false);
             this.gr1.PerformLayout();
             this.gr2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.contMenu)).EndInit();
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -209,10 +339,10 @@
 
         private System.Windows.Forms.GroupBox gr1;
         private System.Windows.Forms.Label label1;
-        private DevComponents.DotNetBar.Controls.ComboBoxEx comboBoxEx1;
-        private DevComponents.DotNetBar.ButtonX butQuer;
-        private System.Windows.Forms.TextBox textBox1;
-        private DevComponents.DotNetBar.Controls.ComboBoxEx comboBoxEx2;
+        private DevComponents.DotNetBar.Controls.ComboBoxEx comborrbcol;
+        private DevComponents.DotNetBar.ButtonX butborrQuer;
+        private System.Windows.Forms.TextBox txtborrgjz;
+        private DevComponents.DotNetBar.Controls.ComboBoxEx comborrbczf;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.GroupBox gr2;
@@ -222,6 +352,18 @@
         private DevComponents.Editors.ComboItem combbh;
         private DevComponents.Editors.ComboItem combbdy;
         private DevComponents.Editors.ComboItem combbbh;
+        private System.Windows.Forms.ToolStripStatusLabel toolslb_box;
+        private System.Windows.Forms.ToolStripStatusLabel toolslb_archno;
+        private System.Windows.Forms.ToolStripStatusLabel toolslb_f;
+        private System.Windows.Forms.ToolStripStatusLabel toolslb_File;
+        private DevComponents.DotNetBar.ContextMenuBar contMenu;
+        private DevComponents.DotNetBar.ButtonItem butImgload;
+        private DevComponents.DotNetBar.ButtonItem butitemArchjy;
+        private DevComponents.DotNetBar.ButtonItem butitemArchgh;
+        private System.Windows.Forms.ImageList imglist;
+        private System.Windows.Forms.ColumnHeader colimg;
+        private System.Windows.Forms.ToolStripProgressBar toolproess;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
     }
 }
 

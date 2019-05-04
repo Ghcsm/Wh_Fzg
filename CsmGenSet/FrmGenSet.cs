@@ -894,7 +894,7 @@ namespace CsmGenSet
             for (int i = 0; i < chkInfoTable.Items.Count; i++) {
                 if (chkInfoTable.GetItemChecked(i)) {
                     string strid = chkInfoTable.GetItemText(chkInfoTable.Items[i]);
-                    if (strid.ToLower() == "archid" || strid.ToLower() == "id" || strid.ToLower() == "entertag")
+                    if (strid.ToLower() == "archid" || strid.ToLower() == "id" || strid.ToLower() == "entertag" ||strid.ToLower()=="borrtag")
                         continue;
                     if (ClsInfoAdd.InfoInfoZdtmp.IndexOf(strid) < 0) {
                         chkInfoZd.Items.Add(strid);
@@ -2013,7 +2013,7 @@ namespace CsmGenSet
             for (int i = 0; i < chkContenCol.Items.Count; i++) {
                 if (chkContenCol.GetItemChecked(i)) {
                     string strid = chkContenCol.GetItemText(chkContenCol.Items[i]);
-                    if (strid.ToLower() == "id" || strid.ToLower() == "archid" || strid.ToLower() == "entertag")
+                    if (strid.ToLower() == "id" || strid.ToLower() == "archid" || strid.ToLower() == "entertag" || strid.ToLower()=="borrtag")
                         continue;
                     if (ClsConten.ContenCol.IndexOf(strid) < 0) {
                         chkContenColShow.Items.Add(strid);
@@ -2470,6 +2470,7 @@ namespace CsmGenSet
 
         private void IsborrTable()
         {
+            ClsborrTable.Clsborrtag = false;
             if (txtBorrTable.Text.Trim().Length <= 0) {
                 MessageBox.Show("请输入表名称!");
                 txtQuerTable.Focus();
@@ -2482,12 +2483,19 @@ namespace CsmGenSet
                 txtBorrTable.Focus();
                 return;
             }
-            chkBorrTablecol.Items.Clear();
+            chkBorrTablecol.DataSource = null;
+            chkBorrtablquer.Items.Clear();
             ClsborrTable.ClsBorrColzd.Clear();
             DataTable dt = T_Sysset.GetTableName(ClsborrTable.Clsborrtable);
             if (dt != null && dt.Rows.Count > 0) {
                 chkBorrTablecol.DataSource = dt;
                 chkBorrTablecol.DisplayMember = "Name";
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    string str = dt.Rows[i][0].ToString();
+                    if (str.ToLower() == "borrtag")
+                        ClsborrTable.Clsborrtag = true;
+                }
             }
         }
 
@@ -2547,7 +2555,7 @@ namespace CsmGenSet
                         str += ClsborrTable.ClsBorrColzd[i];
                 }
 
-                T_Sysset.UpdateBorrInfo(ClsborrTable.Clsborrtable, str);
+                T_Sysset.UpdateBorrInfo(ClsborrTable.Clsborrtable, str,ClsborrTable.Clsborrtag);
                 MessageBox.Show("保存成功!");
             } catch (Exception e) {
                 MessageBox.Show(e.ToString());
