@@ -216,6 +216,7 @@ namespace CsmCon
                         SetInfoTxt(pl, id, str);
                     }
                 }
+                tabControl.SelectedIndex = t;
             } catch (Exception e) {
                 MessageBox.Show("加载信息失败:" + e.ToString());
             }

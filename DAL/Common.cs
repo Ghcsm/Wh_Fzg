@@ -351,6 +351,13 @@ namespace DAL
             SQLHelper.ExecuteNonQuery(strSql, CommandType.StoredProcedure, p);
         }
 
+        public static string Getpages(int arid)
+        {
+            string strSql = "SELECT PAGES FROM M_IMAGEFILE WHERE ID=@arid";
+            SqlParameter p1 = new SqlParameter("@arid", arid);
+            return SQLHelper.ExecScalar(strSql, p1).ToString();
+        }
+
 
 
         #endregion

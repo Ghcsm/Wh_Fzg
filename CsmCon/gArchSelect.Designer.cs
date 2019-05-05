@@ -108,6 +108,7 @@
             // c_sn
             // 
             this.c_sn.Text = "序号";
+            this.c_sn.Width = 90;
             // 
             // c_boxsn
             // 

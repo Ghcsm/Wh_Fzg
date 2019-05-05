@@ -63,11 +63,13 @@
             this.gArchSelect1.ArchImgFile = null;
             this.gArchSelect1.ArchRegPages = 0;
             this.gArchSelect1.Archtype = null;
+            this.gArchSelect1.Boxsn = 0;
             this.gArchSelect1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gArchSelect1.GotoPages = false;
             this.gArchSelect1.LoadFileBoole = false;
             this.gArchSelect1.Location = new System.Drawing.Point(3, 17);
             this.gArchSelect1.Name = "gArchSelect1";
+            this.gArchSelect1.PagesEnd = false;
             this.gArchSelect1.Size = new System.Drawing.Size(365, 499);
             this.gArchSelect1.TabIndex = 0;
             this.gArchSelect1.LineClickLoadInfo += new CsmCon.gArchSelect.ArchSelectHandle(this.gArchSelect1_LineClickLoadInfo);
@@ -103,7 +105,7 @@
             this.chkInfo.Name = "chkInfo";
             this.chkInfo.Size = new System.Drawing.Size(72, 16);
             this.chkInfo.TabIndex = 1;
-            this.chkInfo.Text = "一录信息";
+            this.chkInfo.Text = "二录信息";
             this.chkInfo.UseVisualStyleBackColor = true;
             this.chkInfo.CheckedChanged += new System.EventHandler(this.chkInfo_CheckedChanged);
             this.chkInfo.Click += new System.EventHandler(this.chkInfo_Click);

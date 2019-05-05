@@ -163,10 +163,10 @@ namespace CsmCon
                 string juan = LvData.SelectedItems[0].SubItems[2].Text;
                 Boxsn =Convert.ToInt32(boxs);
                 ArchPos = boxs + "-" + juan;
-                string pags = LvData.SelectedItems[0].SubItems[4].Text;
+                string pags = Common.Getpages(Archid);
                 if (pags.Length > 0) {
-                    ArchRegPages = Convert.ToInt32(LvData.SelectedItems[0].SubItems[4].Text);
-                    txtPages.Text = ArchRegPages.ToString();
+                    ArchRegPages = Convert.ToInt32(pags);
+                    txtPages.Text = pags;
                 }
                 ArchImgFile = LvData.SelectedItems[0].SubItems[3].Text;
                 if (LineClickLoadInfo != null)

@@ -78,6 +78,7 @@
             this.toolProess = new System.Windows.Forms.ToolStripProgressBar();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.toolArchno = new System.Windows.Forms.ToolStripLabel();
+            this.toollbInfo = new System.Windows.Forms.ToolStripLabel();
             this.dockCont2 = new DevComponents.DotNetBar.DockContainerItem();
             this.dockSite1 = new DevComponents.DotNetBar.DockSite();
             this.bar1 = new DevComponents.DotNetBar.Bar();
@@ -91,7 +92,6 @@
             this.dockSite7 = new DevComponents.DotNetBar.DockSite();
             this.dockSite3 = new DevComponents.DotNetBar.DockSite();
             this.odgInsterFile = new System.Windows.Forms.OpenFileDialog();
-            this.toollbInfo = new System.Windows.Forms.ToolStripLabel();
             this.dockSite9.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bar2)).BeginInit();
             this.bar2.SuspendLayout();
@@ -150,10 +150,10 @@
             this.dockSite9.Controls.Add(this.bar2);
             this.dockSite9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dockSite9.DocumentDockContainer = new DevComponents.DotNetBar.DocumentDockContainer(new DevComponents.DotNetBar.DocumentBaseContainer[] {
-            ((DevComponents.DotNetBar.DocumentBaseContainer)(new DevComponents.DotNetBar.DocumentBarContainer(this.bar2, 1070, 683)))}, DevComponents.DotNetBar.eOrientation.Horizontal);
-            this.dockSite9.Location = new System.Drawing.Point(316, 25);
+            ((DevComponents.DotNetBar.DocumentBaseContainer)(new DevComponents.DotNetBar.DocumentBarContainer(this.bar2, 991, 683)))}, DevComponents.DotNetBar.eOrientation.Horizontal);
+            this.dockSite9.Location = new System.Drawing.Point(395, 25);
             this.dockSite9.Name = "dockSite9";
-            this.dockSite9.Size = new System.Drawing.Size(1070, 683);
+            this.dockSite9.Size = new System.Drawing.Size(991, 683);
             this.dockSite9.TabIndex = 9;
             this.dockSite9.TabStop = false;
             // 
@@ -184,7 +184,7 @@
             this.bar2.Location = new System.Drawing.Point(0, 0);
             this.bar2.Name = "bar2";
             this.bar2.SelectedDockTab = 0;
-            this.bar2.Size = new System.Drawing.Size(1070, 683);
+            this.bar2.Size = new System.Drawing.Size(991, 683);
             this.bar2.Stretch = true;
             this.bar2.Style = DevComponents.DotNetBar.eDotNetBarStyle.Office2003;
             this.bar2.TabIndex = 0;
@@ -199,7 +199,7 @@
             this.panelDock2.DisabledBackColor = System.Drawing.Color.Empty;
             this.panelDock2.Location = new System.Drawing.Point(3, 28);
             this.panelDock2.Name = "panelDock2";
-            this.panelDock2.Size = new System.Drawing.Size(1064, 652);
+            this.panelDock2.Size = new System.Drawing.Size(985, 652);
             this.panelDock2.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.panelDock2.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground;
             this.panelDock2.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
@@ -221,8 +221,8 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.gr3);
-            this.splitContainer1.Size = new System.Drawing.Size(1064, 602);
-            this.splitContainer1.SplitterDistance = 399;
+            this.splitContainer1.Size = new System.Drawing.Size(985, 602);
+            this.splitContainer1.SplitterDistance = 409;
             this.splitContainer1.TabIndex = 1;
             // 
             // gr2
@@ -230,7 +230,7 @@
             this.gr2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gr2.Location = new System.Drawing.Point(0, 0);
             this.gr2.Name = "gr2";
-            this.gr2.Size = new System.Drawing.Size(399, 602);
+            this.gr2.Size = new System.Drawing.Size(409, 602);
             this.gr2.TabIndex = 0;
             this.gr2.TabStop = false;
             // 
@@ -241,7 +241,7 @@
             this.gr3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gr3.Location = new System.Drawing.Point(0, 0);
             this.gr3.Name = "gr3";
-            this.gr3.Size = new System.Drawing.Size(661, 602);
+            this.gr3.Size = new System.Drawing.Size(572, 602);
             this.gr3.TabIndex = 0;
             this.gr3.TabStop = false;
             // 
@@ -253,7 +253,7 @@
             this.ImgView.ItemPadding = new System.Windows.Forms.Padding(1);
             this.ImgView.Location = new System.Drawing.Point(3, 64);
             this.ImgView.Name = "ImgView";
-            this.ImgView.Size = new System.Drawing.Size(655, 535);
+            this.ImgView.Size = new System.Drawing.Size(566, 535);
             this.ImgView.TabIndex = 1;
             this.ImgView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ImgView_KeyDown);
             // 
@@ -267,7 +267,7 @@
             this.gr4.Dock = System.Windows.Forms.DockStyle.Top;
             this.gr4.Location = new System.Drawing.Point(3, 17);
             this.gr4.Name = "gr4";
-            this.gr4.Size = new System.Drawing.Size(655, 47);
+            this.gr4.Size = new System.Drawing.Size(566, 47);
             this.gr4.TabIndex = 0;
             this.gr4.TabStop = false;
             // 
@@ -339,7 +339,7 @@
             this.toolStripClose});
             this.toolStrip3.Location = new System.Drawing.Point(0, 25);
             this.toolStrip3.Name = "toolStrip3";
-            this.toolStrip3.Size = new System.Drawing.Size(1064, 25);
+            this.toolStrip3.Size = new System.Drawing.Size(985, 25);
             this.toolStrip3.TabIndex = 0;
             this.toolStrip3.Text = "toolStrip2";
             // 
@@ -511,7 +511,7 @@
             this.toollbInfo});
             this.toolStrip2.Location = new System.Drawing.Point(0, 0);
             this.toolStrip2.Name = "toolStrip2";
-            this.toolStrip2.Size = new System.Drawing.Size(1064, 25);
+            this.toolStrip2.Size = new System.Drawing.Size(985, 25);
             this.toolStrip2.TabIndex = 2;
             this.toolStrip2.Text = "toolStrip3";
             // 
@@ -611,6 +611,11 @@
             this.toolArchno.Size = new System.Drawing.Size(59, 22);
             this.toolArchno.Text = "当前卷号:";
             // 
+            // toollbInfo
+            // 
+            this.toollbInfo.Name = "toollbInfo";
+            this.toollbInfo.Size = new System.Drawing.Size(0, 22);
+            // 
             // dockCont2
             // 
             this.dockCont2.Control = this.panelDock2;
@@ -623,10 +628,10 @@
             this.dockSite1.Controls.Add(this.bar1);
             this.dockSite1.Dock = System.Windows.Forms.DockStyle.Left;
             this.dockSite1.DocumentDockContainer = new DevComponents.DotNetBar.DocumentDockContainer(new DevComponents.DotNetBar.DocumentBaseContainer[] {
-            ((DevComponents.DotNetBar.DocumentBaseContainer)(new DevComponents.DotNetBar.DocumentBarContainer(this.bar1, 313, 683)))}, DevComponents.DotNetBar.eOrientation.Horizontal);
+            ((DevComponents.DotNetBar.DocumentBaseContainer)(new DevComponents.DotNetBar.DocumentBarContainer(this.bar1, 392, 683)))}, DevComponents.DotNetBar.eOrientation.Horizontal);
             this.dockSite1.Location = new System.Drawing.Point(0, 25);
             this.dockSite1.Name = "dockSite1";
-            this.dockSite1.Size = new System.Drawing.Size(316, 683);
+            this.dockSite1.Size = new System.Drawing.Size(395, 683);
             this.dockSite1.TabIndex = 1;
             this.dockSite1.TabStop = false;
             // 
@@ -656,7 +661,7 @@
             this.bar1.LayoutType = DevComponents.DotNetBar.eLayoutType.DockContainer;
             this.bar1.Location = new System.Drawing.Point(0, 0);
             this.bar1.Name = "bar1";
-            this.bar1.Size = new System.Drawing.Size(313, 683);
+            this.bar1.Size = new System.Drawing.Size(392, 683);
             this.bar1.Stretch = true;
             this.bar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.Office2003;
             this.bar1.TabIndex = 0;
@@ -669,7 +674,7 @@
             this.panelDock1.DisabledBackColor = System.Drawing.Color.Empty;
             this.panelDock1.Location = new System.Drawing.Point(3, 23);
             this.panelDock1.Name = "panelDock1";
-            this.panelDock1.Size = new System.Drawing.Size(307, 657);
+            this.panelDock1.Size = new System.Drawing.Size(386, 657);
             this.panelDock1.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.panelDock1.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground;
             this.panelDock1.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
@@ -683,7 +688,7 @@
             this.gr1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gr1.Location = new System.Drawing.Point(0, 0);
             this.gr1.Name = "gr1";
-            this.gr1.Size = new System.Drawing.Size(307, 657);
+            this.gr1.Size = new System.Drawing.Size(386, 657);
             this.gr1.TabIndex = 0;
             this.gr1.TabStop = false;
             // 
@@ -754,11 +759,6 @@
             this.dockSite3.Size = new System.Drawing.Size(1386, 0);
             this.dockSite3.TabIndex = 3;
             this.dockSite3.TabStop = false;
-            // 
-            // toollbInfo
-            // 
-            this.toollbInfo.Name = "toollbInfo";
-            this.toollbInfo.Size = new System.Drawing.Size(0, 22);
             // 
             // FrmCheck
             // 
