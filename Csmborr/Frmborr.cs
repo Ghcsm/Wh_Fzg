@@ -15,6 +15,7 @@ namespace Csmborr
         }
 
         HFTP ftp = null;
+        private bool imglook = false;
         private bool istxt()
         {
             if (comborrbcol.Text.Trim().Length <= 0) {
@@ -46,6 +47,8 @@ namespace Csmborr
             string czf = comborrbczf.Text.Trim();
             string gjz = txtborrgjz.Text.Trim();
             BorrMethod.Getdata(lvborrQuer, col, czf, gjz);
+            string str = "查询:" + col + "->" + czf + "->" + gjz;
+            Common.WriteBorrLog("0", "0", 0, str);
         }
 
 
@@ -79,20 +82,24 @@ namespace Csmborr
 
         private void LoadFile()
         {
+            imglook = true;
             try {
                 if (BorrMethod.Archid <= 0) {
                     MessageBox.Show("ID获取失败请重新选择案卷!");
                     return;
                 }
+
                 if (BorrMethod.Filename.Trim().Length <= 0) {
                     MessageBox.Show("文件名称获取失败!");
                     return;
                 }
+
                 int ArchState = Common.GetArchWorkState(BorrMethod.Archid);
                 if (ArchState < (int)Common.档案状态.质检完) {
                     MessageBox.Show("此卷档案未质检无法进行查阅！");
                     return;
                 }
+
                 string FileName = BorrMethod.Filename;
                 string localPath = Path.Combine(Common.LocalTempPath, FileName.Substring(0, 8));
                 string localCheckFile = Path.Combine(Common.LocalTempPath, FileName.Substring(0, 8), FileName);
@@ -100,21 +107,26 @@ namespace Csmborr
                     if (!Directory.Exists(localPath)) {
                         Directory.CreateDirectory(localPath);
                     }
+
                     if (File.Exists(localCheckFile)) {
                         File.Delete(localCheckFile);
                     }
-                } catch { }
+                } catch {
+                }
+
                 if (ArchState == (int)(Common.档案状态.质检完)) {
                     string filjpg = Path.Combine(Common.ArchSavePah, FileName.Substring(0, 8), FileName);
                     if (ftp.FtpCheckFile(filjpg)) {
                         if (ftp.DownLoadFile(Common.ArchSavePah, FileName.Substring(0, 8), localCheckFile, FileName)) {
-                            FrmImgshow.Arhcid =BorrMethod.Archid;
+                            Common.WriteBorrLog(BorrMethod.Boxsn, BorrMethod.Archno, BorrMethod.Archid, "查看图像");
+                            FrmImgshow.Arhcid = BorrMethod.Archid;
                             FrmImgshow.Filename = localCheckFile;
                             FrmImgshow.ImgPrint = BorrMethod.Imgsys;
                             imgshow = new FrmImgshow();
                             if (imgshow == null || imgshow.IsDisposed) {
                                 imgshow = new FrmImgshow();
                             }
+
                             imgshow.Activate();
                             imgshow.ShowDialog();
                             return;
@@ -125,6 +137,8 @@ namespace Csmborr
                 }
             } catch (Exception ee) {
                 MessageBox.Show(ee.ToString());
+            } finally {
+                imglook = false;
             }
         }
 
@@ -151,18 +165,29 @@ namespace Csmborr
                 MessageBox.Show("图像文件名获取失败!");
                 return;
             }
+            if (imglook) {
+                MessageBox.Show("正在加载图像请稍候!");
+                return;
+            }
             LoadFile();
         }
         private void butitemArchgh_Click(object sender, EventArgs e)
         {
             contMenu.Visible = false;
+            FrmArchBorr.Archid = BorrMethod.Archid;
+            FrmArchBorr.Boxsn = BorrMethod.Boxsn;
+            FrmArchBorr.Archno = BorrMethod.Archno;
             FrmArchBorr borr = new FrmArchBorr();
+            borr.rabguihuan.Checked = true;
             borr.ShowDialog();
         }
 
         private void butitemArchjy_Click(object sender, EventArgs e)
         {
             contMenu.Visible = false;
+            FrmArchBorr.Archid = BorrMethod.Archid;
+            FrmArchBorr.Boxsn = BorrMethod.Boxsn;
+            FrmArchBorr.Archno = BorrMethod.Archno;
             FrmArchBorr borr = new FrmArchBorr();
             borr.ShowDialog();
         }

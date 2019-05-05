@@ -98,7 +98,7 @@ namespace Csmborr
                 txtsfz.Focus();
                 return false;
             }
-            else if (txtsfz.Text.Trim().Length != 15 || txtsfz.Text.Trim().Length != 18) {
+            else if (txtsfz.Text.Trim().Length != 15 && txtsfz.Text.Trim().Length != 18) {
                 MessageBox.Show("身份证号码不正确！");
                 txtsfz.Focus();
                 return false;
@@ -128,7 +128,7 @@ namespace Csmborr
             else if (rabguihuan.Checked)
                 worktype = rabguihuan.Text;
             else if (rabyijao.Checked)
-                worktype = rabyijao.Text;
+                worktype = rabyijao.Text; 
             return true;
         }
 
@@ -146,16 +146,17 @@ namespace Csmborr
             string time = txt2time.Text.Trim();
             string page = txt2page.Text.Trim();
             string bz = txt2sm.Text.Trim();
-            Common.SaveborrInfo(name, sex, sfz, lxfs, add, worktype, archty, yt, time, page, bz, Archid.ToString(),
+            Common.SaveborrInfo(name, sex, sfz, lxfs, add, worktype, archty, yt, time, page, bz, Archid,
                 Boxsn, Archno);
             MessageBox.Show("提交成功!");
+            this.Close();
         }
 
         private void FrmArchBorr_Shown(object sender, EventArgs e)
         {
             combsex.SelectedIndex = 0;
             combarchlx.SelectedIndex = 0;
-            txt2time.Text = DateTime.Now.ToString("u");
+            txt2time.Text = DateTime.Now.ToString();
         }
 
 

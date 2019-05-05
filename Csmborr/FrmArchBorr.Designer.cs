@@ -28,6 +28,7 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.combsex = new System.Windows.Forms.ComboBox();
             this.txtadd = new System.Windows.Forms.TextBox();
             this.txtlxfs = new System.Windows.Forms.TextBox();
             this.txtsfz = new System.Windows.Forms.TextBox();
@@ -38,6 +39,12 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.combarchlx = new System.Windows.Forms.ComboBox();
+            this.rabyijao = new System.Windows.Forms.RadioButton();
+            this.rabguihuan = new System.Windows.Forms.RadioButton();
+            this.rabjieyong = new System.Windows.Forms.RadioButton();
+            this.rablook = new System.Windows.Forms.RadioButton();
+            this.rabfy = new System.Windows.Forms.RadioButton();
             this.txt2sm = new System.Windows.Forms.TextBox();
             this.txt2page = new System.Windows.Forms.TextBox();
             this.txt2time = new System.Windows.Forms.TextBox();
@@ -51,13 +58,6 @@
             this.label9 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.rabfy = new System.Windows.Forms.RadioButton();
-            this.rablook = new System.Windows.Forms.RadioButton();
-            this.rabjieyong = new System.Windows.Forms.RadioButton();
-            this.rabguihuan = new System.Windows.Forms.RadioButton();
-            this.rabyijao = new System.Windows.Forms.RadioButton();
-            this.combsex = new System.Windows.Forms.ComboBox();
-            this.combarchlx = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -80,6 +80,18 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "借阅人";
+            // 
+            // combsex
+            // 
+            this.combsex.FormattingEnabled = true;
+            this.combsex.Items.AddRange(new object[] {
+            "男",
+            "女"});
+            this.combsex.Location = new System.Drawing.Point(175, 25);
+            this.combsex.Name = "combsex";
+            this.combsex.Size = new System.Drawing.Size(50, 20);
+            this.combsex.TabIndex = 2;
+            this.combsex.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.combsex_KeyPress);
             // 
             // txtadd
             // 
@@ -185,6 +197,74 @@
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "借阅信息";
+            // 
+            // combarchlx
+            // 
+            this.combarchlx.FormattingEnabled = true;
+            this.combarchlx.Items.AddRange(new object[] {
+            "文书档案",
+            "科技档案",
+            "财务档案",
+            "人事档案",
+            "电子档案",
+            "声像档案"});
+            this.combarchlx.Location = new System.Drawing.Point(77, 64);
+            this.combarchlx.Name = "combarchlx";
+            this.combarchlx.Size = new System.Drawing.Size(115, 20);
+            this.combarchlx.TabIndex = 6;
+            this.combarchlx.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.combarchlx_KeyPress);
+            // 
+            // rabyijao
+            // 
+            this.rabyijao.AutoSize = true;
+            this.rabyijao.Location = new System.Drawing.Point(429, 28);
+            this.rabyijao.Name = "rabyijao";
+            this.rabyijao.Size = new System.Drawing.Size(47, 16);
+            this.rabyijao.TabIndex = 16;
+            this.rabyijao.Text = "移交";
+            this.rabyijao.UseVisualStyleBackColor = true;
+            // 
+            // rabguihuan
+            // 
+            this.rabguihuan.AutoSize = true;
+            this.rabguihuan.Location = new System.Drawing.Point(338, 28);
+            this.rabguihuan.Name = "rabguihuan";
+            this.rabguihuan.Size = new System.Drawing.Size(71, 16);
+            this.rabguihuan.TabIndex = 15;
+            this.rabguihuan.Text = "归还实物";
+            this.rabguihuan.UseVisualStyleBackColor = true;
+            // 
+            // rabjieyong
+            // 
+            this.rabjieyong.AutoSize = true;
+            this.rabjieyong.Location = new System.Drawing.Point(257, 28);
+            this.rabjieyong.Name = "rabjieyong";
+            this.rabjieyong.Size = new System.Drawing.Size(71, 16);
+            this.rabjieyong.TabIndex = 14;
+            this.rabjieyong.Text = "借用实物";
+            this.rabjieyong.UseVisualStyleBackColor = true;
+            // 
+            // rablook
+            // 
+            this.rablook.AutoSize = true;
+            this.rablook.Location = new System.Drawing.Point(172, 28);
+            this.rablook.Name = "rablook";
+            this.rablook.Size = new System.Drawing.Size(71, 16);
+            this.rablook.TabIndex = 13;
+            this.rablook.Text = "查看实物";
+            this.rablook.UseVisualStyleBackColor = true;
+            // 
+            // rabfy
+            // 
+            this.rabfy.AutoSize = true;
+            this.rabfy.Checked = true;
+            this.rabfy.Location = new System.Drawing.Point(93, 28);
+            this.rabfy.Name = "rabfy";
+            this.rabfy.Size = new System.Drawing.Size(71, 16);
+            this.rabfy.TabIndex = 12;
+            this.rabfy.TabStop = true;
+            this.rabfy.Text = "查档复印";
+            this.rabfy.UseVisualStyleBackColor = true;
             // 
             // txt2sm
             // 
@@ -302,86 +382,6 @@
             this.label6.TabIndex = 0;
             this.label6.Text = "业务类型：";
             // 
-            // rabfy
-            // 
-            this.rabfy.AutoSize = true;
-            this.rabfy.Checked = true;
-            this.rabfy.Location = new System.Drawing.Point(93, 28);
-            this.rabfy.Name = "rabfy";
-            this.rabfy.Size = new System.Drawing.Size(71, 16);
-            this.rabfy.TabIndex = 12;
-            this.rabfy.TabStop = true;
-            this.rabfy.Text = "查档复印";
-            this.rabfy.UseVisualStyleBackColor = true;
-            // 
-            // rablook
-            // 
-            this.rablook.AutoSize = true;
-            this.rablook.Location = new System.Drawing.Point(172, 28);
-            this.rablook.Name = "rablook";
-            this.rablook.Size = new System.Drawing.Size(71, 16);
-            this.rablook.TabIndex = 13;
-            this.rablook.Text = "查看实物";
-            this.rablook.UseVisualStyleBackColor = true;
-            // 
-            // rabjieyong
-            // 
-            this.rabjieyong.AutoSize = true;
-            this.rabjieyong.Location = new System.Drawing.Point(257, 28);
-            this.rabjieyong.Name = "rabjieyong";
-            this.rabjieyong.Size = new System.Drawing.Size(71, 16);
-            this.rabjieyong.TabIndex = 14;
-            this.rabjieyong.Text = "借用实物";
-            this.rabjieyong.UseVisualStyleBackColor = true;
-            // 
-            // rabguihuan
-            // 
-            this.rabguihuan.AutoSize = true;
-            this.rabguihuan.Location = new System.Drawing.Point(338, 28);
-            this.rabguihuan.Name = "rabguihuan";
-            this.rabguihuan.Size = new System.Drawing.Size(71, 16);
-            this.rabguihuan.TabIndex = 15;
-            this.rabguihuan.Text = "归还实物";
-            this.rabguihuan.UseVisualStyleBackColor = true;
-            // 
-            // rabyijao
-            // 
-            this.rabyijao.AutoSize = true;
-            this.rabyijao.Location = new System.Drawing.Point(429, 28);
-            this.rabyijao.Name = "rabyijao";
-            this.rabyijao.Size = new System.Drawing.Size(47, 16);
-            this.rabyijao.TabIndex = 16;
-            this.rabyijao.Text = "移交";
-            this.rabyijao.UseVisualStyleBackColor = true;
-            // 
-            // combsex
-            // 
-            this.combsex.FormattingEnabled = true;
-            this.combsex.Items.AddRange(new object[] {
-            "男",
-            "女"});
-            this.combsex.Location = new System.Drawing.Point(175, 25);
-            this.combsex.Name = "combsex";
-            this.combsex.Size = new System.Drawing.Size(50, 20);
-            this.combsex.TabIndex = 2;
-            this.combsex.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.combsex_KeyPress);
-            // 
-            // combarchlx
-            // 
-            this.combarchlx.FormattingEnabled = true;
-            this.combarchlx.Items.AddRange(new object[] {
-            "文书档案",
-            "科技档案",
-            "财务档案",
-            "人事档案",
-            "电子档案",
-            "声像档案"});
-            this.combarchlx.Location = new System.Drawing.Point(77, 64);
-            this.combarchlx.Name = "combarchlx";
-            this.combarchlx.Size = new System.Drawing.Size(115, 20);
-            this.combarchlx.TabIndex = 6;
-            this.combarchlx.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.combarchlx_KeyPress);
-            // 
             // FrmArchBorr
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -431,11 +431,11 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.RadioButton rabyijao;
-        private System.Windows.Forms.RadioButton rabguihuan;
         private System.Windows.Forms.RadioButton rabjieyong;
         private System.Windows.Forms.RadioButton rablook;
         private System.Windows.Forms.RadioButton rabfy;
         private System.Windows.Forms.ComboBox combsex;
         private System.Windows.Forms.ComboBox combarchlx;
+        public System.Windows.Forms.RadioButton rabguihuan;
     }
 }

@@ -1,4 +1,5 @@
 ﻿using CsmCon;
+using DAL;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -51,10 +52,7 @@ namespace Csmborr
                     File.Delete(Filename);
                 Directory.Exists(Path.GetDirectoryName(Filename));
                 Directory.Delete(Path.GetDirectoryName(Filename));
-            } catch (Exception e) {
-                Console.WriteLine(e);
-                throw;
-            }
+            } catch {}
         }
 
         private bool isTxt()
@@ -110,8 +108,10 @@ namespace Csmborr
         {
             if (!isTxt())
                 return;
+            
             int p1 = Convert.ToInt32(tooltxtpage1.Text.Trim());
             int p2 = Convert.ToInt32(tooltxtpage2.Text.Trim());
+            Common.WriteBorrLog(BorrMethod.Boxsn, BorrMethod.Archno, BorrMethod.Archid, "打印图像:"+p1.ToString()+"-"+p2.ToString());
             imgBrow1.PrintImg(p1, p2);
         }
 

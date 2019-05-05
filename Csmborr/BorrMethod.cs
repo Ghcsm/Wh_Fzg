@@ -11,6 +11,8 @@ namespace Csmborr
     {
         public static List<string> lscol = new List<string>();
         public static int Archid { get; set; }
+        public static string Boxsn { get; set; }
+        public static string Archno { get; set; }
         public static string Filename { get; set; }
         public static bool Imgsys { get; set; }
 
@@ -83,8 +85,10 @@ namespace Csmborr
             DataTable dt = Common.QuerboxsnInfo(Archid);
             if (dt == null || dt.Rows.Count <= 0)
                 return;
-            boxsn.Text = string.Format("盒号：{0}", dt.Rows[0][0].ToString());
-            archno.Text = string.Format("卷号：{0}", dt.Rows[0][1].ToString());
+            Boxsn = dt.Rows[0][0].ToString();
+            Archno = dt.Rows[0][1].ToString();
+            boxsn.Text = string.Format("盒号：{0}", Boxsn);
+            archno.Text = string.Format("卷号：{0}",Archno);
             Filename = dt.Rows[0][2].ToString();
             file.Text = Filename;
         }
