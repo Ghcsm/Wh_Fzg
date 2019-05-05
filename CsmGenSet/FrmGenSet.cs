@@ -2485,7 +2485,9 @@ namespace CsmGenSet
             }
             chkBorrTablecol.DataSource = null;
             chkBorrtablquer.Items.Clear();
+            comborrTime.Items.Clear();
             ClsborrTable.ClsBorrColzd.Clear();
+            comborrTime.Items.Add("");
             DataTable dt = T_Sysset.GetTableName(ClsborrTable.Clsborrtable);
             if (dt != null && dt.Rows.Count > 0) {
                 chkBorrTablecol.DataSource = dt;
@@ -2493,6 +2495,7 @@ namespace CsmGenSet
                 for (int i = 0; i < dt.Rows.Count; i++)
                 {
                     string str = dt.Rows[i][0].ToString();
+                    comborrTime.Items.Add(str);
                     if (str.ToLower() == "borrtag")
                         ClsborrTable.Clsborrtag = true;
                 }
@@ -2539,6 +2542,7 @@ namespace CsmGenSet
         private void SaveborrInfo()
         {
             string str = "";
+            string timecol = comborrTime.Text.Trim();
             if (ClsborrTable.Clsborrtable.Length <= 0) {
                 MessageBox.Show("请设置表名称!");
                 return;
@@ -2555,7 +2559,7 @@ namespace CsmGenSet
                         str += ClsborrTable.ClsBorrColzd[i];
                 }
 
-                T_Sysset.UpdateBorrInfo(ClsborrTable.Clsborrtable, str,ClsborrTable.Clsborrtag);
+                T_Sysset.UpdateBorrInfo(ClsborrTable.Clsborrtable, str,ClsborrTable.Clsborrtag, timecol);
                 MessageBox.Show("保存成功!");
             } catch (Exception e) {
                 MessageBox.Show(e.ToString());
@@ -2578,6 +2582,7 @@ namespace CsmGenSet
             DataRow dr = dt.Rows[0];
             ClsborrTable.Clsborrtable = dr["Tablename"].ToString();
             string str = dr["Tabcolname"].ToString();
+            string time = dr["Timecol"].ToString();
             txtBorrTable.Text = ClsborrTable.Clsborrtable;
             if (str.Length > 0) {
                 string[] a = str.Split(';');
@@ -2589,6 +2594,7 @@ namespace CsmGenSet
                     }
                 }
             }
+            comborrTime.Text = time;
         }
 
         private void butBorrIs_Click(object sender, EventArgs e)

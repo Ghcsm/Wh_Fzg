@@ -30,6 +30,10 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmBorr));
             this.gr1 = new System.Windows.Forms.GroupBox();
+            this.dateborrtime2 = new System.Windows.Forms.DateTimePicker();
+            this.dateborrtime1 = new System.Windows.Forms.DateTimePicker();
+            this.chkborrtime = new System.Windows.Forms.CheckBox();
+            this.chkborrgjz = new System.Windows.Forms.CheckBox();
             this.butborrQuer = new DevComponents.DotNetBar.ButtonX();
             this.txtborrgjz = new System.Windows.Forms.TextBox();
             this.comborrbczf = new DevComponents.DotNetBar.Controls.ComboBoxEx();
@@ -67,6 +71,10 @@
             // 
             this.gr1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.gr1.Controls.Add(this.dateborrtime2);
+            this.gr1.Controls.Add(this.dateborrtime1);
+            this.gr1.Controls.Add(this.chkborrtime);
+            this.gr1.Controls.Add(this.chkborrgjz);
             this.gr1.Controls.Add(this.butborrQuer);
             this.gr1.Controls.Add(this.txtborrgjz);
             this.gr1.Controls.Add(this.comborrbczf);
@@ -76,17 +84,53 @@
             this.gr1.Controls.Add(this.label1);
             this.gr1.Location = new System.Drawing.Point(7, 24);
             this.gr1.Name = "gr1";
-            this.gr1.Size = new System.Drawing.Size(902, 63);
+            this.gr1.Size = new System.Drawing.Size(915, 99);
             this.gr1.TabIndex = 0;
             this.gr1.TabStop = false;
+            // 
+            // dateborrtime2
+            // 
+            this.dateborrtime2.Location = new System.Drawing.Point(548, 62);
+            this.dateborrtime2.Name = "dateborrtime2";
+            this.dateborrtime2.Size = new System.Drawing.Size(125, 21);
+            this.dateborrtime2.TabIndex = 8;
+            // 
+            // dateborrtime1
+            // 
+            this.dateborrtime1.Location = new System.Drawing.Point(391, 62);
+            this.dateborrtime1.Name = "dateborrtime1";
+            this.dateborrtime1.Size = new System.Drawing.Size(122, 21);
+            this.dateborrtime1.TabIndex = 7;
+            // 
+            // chkborrtime
+            // 
+            this.chkborrtime.AutoSize = true;
+            this.chkborrtime.Location = new System.Drawing.Point(301, 67);
+            this.chkborrtime.Name = "chkborrtime";
+            this.chkborrtime.Size = new System.Drawing.Size(84, 16);
+            this.chkborrtime.TabIndex = 6;
+            this.chkborrtime.Text = "时间范围：";
+            this.chkborrtime.UseVisualStyleBackColor = true;
+            // 
+            // chkborrgjz
+            // 
+            this.chkborrgjz.AutoSize = true;
+            this.chkborrgjz.Checked = true;
+            this.chkborrgjz.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkborrgjz.Location = new System.Drawing.Point(301, 29);
+            this.chkborrgjz.Name = "chkborrgjz";
+            this.chkborrgjz.Size = new System.Drawing.Size(72, 16);
+            this.chkborrgjz.TabIndex = 5;
+            this.chkborrgjz.Text = "关键字：";
+            this.chkborrgjz.UseVisualStyleBackColor = true;
             // 
             // butborrQuer
             // 
             this.butborrQuer.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.butborrQuer.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.butborrQuer.Location = new System.Drawing.Point(700, 20);
+            this.butborrQuer.Location = new System.Drawing.Point(725, 31);
             this.butborrQuer.Name = "butborrQuer";
-            this.butborrQuer.Size = new System.Drawing.Size(75, 34);
+            this.butborrQuer.Size = new System.Drawing.Size(75, 45);
             this.butborrQuer.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.butborrQuer.TabIndex = 4;
             this.butborrQuer.Text = "查询";
@@ -94,9 +138,9 @@
             // 
             // txtborrgjz
             // 
-            this.txtborrgjz.Location = new System.Drawing.Point(517, 26);
+            this.txtborrgjz.Location = new System.Drawing.Point(391, 25);
             this.txtborrgjz.Name = "txtborrgjz";
-            this.txtborrgjz.Size = new System.Drawing.Size(132, 21);
+            this.txtborrgjz.Size = new System.Drawing.Size(282, 21);
             this.txtborrgjz.TabIndex = 3;
             // 
             // comborrbczf
@@ -111,9 +155,9 @@
             this.combbh,
             this.combbdy,
             this.combbbh});
-            this.comborrbczf.Location = new System.Drawing.Point(314, 26);
+            this.comborrbczf.Location = new System.Drawing.Point(86, 62);
             this.comborrbczf.Name = "comborrbczf";
-            this.comborrbczf.Size = new System.Drawing.Size(115, 21);
+            this.comborrbczf.Size = new System.Drawing.Size(169, 21);
             this.comborrbczf.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.comborrbczf.TabIndex = 2;
             // 
@@ -140,25 +184,25 @@
             this.comborrbcol.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comborrbcol.FormattingEnabled = true;
             this.comborrbcol.ItemHeight = 15;
-            this.comborrbcol.Location = new System.Drawing.Point(90, 26);
+            this.comborrbcol.Location = new System.Drawing.Point(86, 26);
             this.comborrbcol.Name = "comborrbcol";
-            this.comborrbcol.Size = new System.Drawing.Size(144, 21);
+            this.comborrbcol.Size = new System.Drawing.Size(169, 21);
             this.comborrbcol.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.comborrbcol.TabIndex = 1;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(458, 34);
+            this.label3.Location = new System.Drawing.Point(519, 68);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(53, 12);
+            this.label3.Size = new System.Drawing.Size(23, 12);
             this.label3.TabIndex = 0;
-            this.label3.Text = "关键字：";
+            this.label3.Text = "---";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(255, 31);
+            this.label2.Location = new System.Drawing.Point(20, 67);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(53, 12);
             this.label2.TabIndex = 0;
@@ -167,7 +211,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(22, 31);
+            this.label1.Location = new System.Drawing.Point(18, 31);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(65, 12);
             this.label1.TabIndex = 0;
@@ -180,9 +224,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.gr2.Controls.Add(this.contMenu);
             this.gr2.Controls.Add(this.lvborrQuer);
-            this.gr2.Location = new System.Drawing.Point(7, 87);
+            this.gr2.Location = new System.Drawing.Point(7, 129);
             this.gr2.Name = "gr2";
-            this.gr2.Size = new System.Drawing.Size(902, 350);
+            this.gr2.Size = new System.Drawing.Size(915, 339);
             this.gr2.TabIndex = 1;
             this.gr2.TabStop = false;
             // 
@@ -236,7 +280,7 @@
             this.lvborrQuer.LargeImageList = this.imglist;
             this.lvborrQuer.Location = new System.Drawing.Point(3, 17);
             this.lvborrQuer.Name = "lvborrQuer";
-            this.lvborrQuer.Size = new System.Drawing.Size(896, 330);
+            this.lvborrQuer.Size = new System.Drawing.Size(909, 319);
             this.lvborrQuer.SmallImageList = this.imglist;
             this.lvborrQuer.StateImageList = this.imglist;
             this.lvborrQuer.TabIndex = 0;
@@ -267,9 +311,9 @@
             this.toolslb_File,
             this.toolStripStatusLabel1,
             this.toolproess});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 443);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 474);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(915, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(928, 22);
             this.statusStrip1.TabIndex = 2;
             // 
             // toolslb_box
@@ -303,7 +347,7 @@
             // 
             this.toolStripStatusLabel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(237)))), ((int)(((byte)(237)))));
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(768, 17);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(781, 17);
             this.toolStripStatusLabel1.Spring = true;
             // 
             // toolproess
@@ -318,7 +362,7 @@
             // 
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(915, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(928, 25);
             this.toolStrip1.TabIndex = 3;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -327,7 +371,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(223)))), ((int)(((byte)(237)))), ((int)(((byte)(254)))));
-            this.ClientSize = new System.Drawing.Size(915, 465);
+            this.ClientSize = new System.Drawing.Size(928, 496);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.gr2);
@@ -356,7 +400,6 @@
         private DevComponents.DotNetBar.ButtonX butborrQuer;
         private System.Windows.Forms.TextBox txtborrgjz;
         private DevComponents.DotNetBar.Controls.ComboBoxEx comborrbczf;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.GroupBox gr2;
         private System.Windows.Forms.StatusStrip statusStrip1;
@@ -378,6 +421,11 @@
         private System.Windows.Forms.ToolStripProgressBar toolproess;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.CheckBox chkborrgjz;
+        private System.Windows.Forms.CheckBox chkborrtime;
+        private System.Windows.Forms.DateTimePicker dateborrtime2;
+        private System.Windows.Forms.DateTimePicker dateborrtime1;
+        private System.Windows.Forms.Label label3;
     }
 }
 

@@ -32,6 +32,7 @@
             this.superTabControl2 = new DevComponents.DotNetBar.SuperTabControl();
             this.tabContr = new DevComponents.DotNetBar.TabControl();
             this.tabControlPanel12 = new DevComponents.DotNetBar.TabControlPanel();
+            this.label36 = new System.Windows.Forms.Label();
             this.butBorrSave = new DevComponents.DotNetBar.ButtonX();
             this.butBorrdel = new DevComponents.DotNetBar.ButtonX();
             this.butBorradd = new DevComponents.DotNetBar.ButtonX();
@@ -285,7 +286,8 @@
             this.comboItem4 = new DevComponents.Editors.ComboItem();
             this.comboItem3 = new DevComponents.Editors.ComboItem();
             this.colorDialog = new System.Windows.Forms.ColorDialog();
-            this.label36 = new System.Windows.Forms.Label();
+            this.label37 = new System.Windows.Forms.Label();
+            this.comborrTime = new DevComponents.DotNetBar.Controls.ComboBoxEx();
             ((System.ComponentModel.ISupportInitialize)(this.superTabControl1)).BeginInit();
             this.superTabControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.superTabControl2)).BeginInit();
@@ -413,15 +415,15 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabContr.CanReorderTabs = true;
             this.tabContr.Controls.Add(this.tabControlPanel12);
+            this.tabContr.Controls.Add(this.tabControlPanel10);
+            this.tabContr.Controls.Add(this.tabControlPanel4);
+            this.tabContr.Controls.Add(this.tabControlPanel5);
             this.tabContr.Controls.Add(this.tabControlPanel9);
             this.tabContr.Controls.Add(this.tabConPrintSet);
-            this.tabContr.Controls.Add(this.tabControlPanel5);
             this.tabContr.Controls.Add(this.tabControlPanel6);
-            this.tabContr.Controls.Add(this.tabControlPanel10);
             this.tabContr.Controls.Add(this.tabControlPanel11);
             this.tabContr.Controls.Add(this.tabControlPanel2);
             this.tabContr.Controls.Add(this.tabControlPanel3);
-            this.tabContr.Controls.Add(this.tabControlPanel4);
             this.tabContr.Location = new System.Drawing.Point(0, 28);
             this.tabContr.Name = "tabContr";
             this.tabContr.SelectedTabFont = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold);
@@ -443,6 +445,8 @@
             // 
             // tabControlPanel12
             // 
+            this.tabControlPanel12.Controls.Add(this.comborrTime);
+            this.tabControlPanel12.Controls.Add(this.label37);
             this.tabControlPanel12.Controls.Add(this.label36);
             this.tabControlPanel12.Controls.Add(this.butBorrSave);
             this.tabControlPanel12.Controls.Add(this.butBorrdel);
@@ -466,11 +470,21 @@
             this.tabControlPanel12.TabIndex = 118;
             this.tabControlPanel12.TabItem = this.tabItemBorr;
             // 
+            // label36
+            // 
+            this.label36.AutoSize = true;
+            this.label36.BackColor = System.Drawing.Color.Transparent;
+            this.label36.Location = new System.Drawing.Point(234, 128);
+            this.label36.Name = "label36";
+            this.label36.Size = new System.Drawing.Size(143, 12);
+            this.label36.TabIndex = 6;
+            this.label36.Text = "保存时将添加Borrtag字段";
+            // 
             // butBorrSave
             // 
             this.butBorrSave.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.butBorrSave.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.butBorrSave.Location = new System.Drawing.Point(263, 357);
+            this.butBorrSave.Location = new System.Drawing.Point(263, 404);
             this.butBorrSave.Name = "butBorrSave";
             this.butBorrSave.Size = new System.Drawing.Size(75, 47);
             this.butBorrSave.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -482,7 +496,7 @@
             // 
             this.butBorrdel.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.butBorrdel.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.butBorrdel.Location = new System.Drawing.Point(263, 289);
+            this.butBorrdel.Location = new System.Drawing.Point(263, 346);
             this.butBorrdel.Name = "butBorrdel";
             this.butBorrdel.Size = new System.Drawing.Size(75, 23);
             this.butBorrdel.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -494,7 +508,7 @@
             // 
             this.butBorradd.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.butBorradd.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.butBorradd.Location = new System.Drawing.Point(263, 224);
+            this.butBorradd.Location = new System.Drawing.Point(263, 281);
             this.butBorradd.Name = "butBorradd";
             this.butBorradd.Size = new System.Drawing.Size(75, 23);
             this.butBorradd.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -1897,7 +1911,7 @@
             this.chkDataSplit_ExportTable.FormattingEnabled = true;
             this.chkDataSplit_ExportTable.Location = new System.Drawing.Point(218, 20);
             this.chkDataSplit_ExportTable.Name = "chkDataSplit_ExportTable";
-            this.chkDataSplit_ExportTable.Size = new System.Drawing.Size(155, 164);
+            this.chkDataSplit_ExportTable.Size = new System.Drawing.Size(155, 148);
             this.chkDataSplit_ExportTable.TabIndex = 6;
             // 
             // butDataSplit_Export_DelInfo
@@ -3337,15 +3351,28 @@
             // 
             this.comboItem3.Text = "一录信息";
             // 
-            // label36
+            // label37
             // 
-            this.label36.AutoSize = true;
-            this.label36.BackColor = System.Drawing.Color.Transparent;
-            this.label36.Location = new System.Drawing.Point(232, 168);
-            this.label36.Name = "label36";
-            this.label36.Size = new System.Drawing.Size(143, 12);
-            this.label36.TabIndex = 6;
-            this.label36.Text = "保存时将添加Borrtag字段";
+            this.label37.AutoSize = true;
+            this.label37.BackColor = System.Drawing.Color.Transparent;
+            this.label37.Location = new System.Drawing.Point(261, 172);
+            this.label37.Name = "label37";
+            this.label37.Size = new System.Drawing.Size(77, 12);
+            this.label37.TabIndex = 7;
+            this.label37.Text = "指定时间字段";
+            // 
+            // comborrTime
+            // 
+            this.comborrTime.DisplayMember = "Text";
+            this.comborrTime.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.comborrTime.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comborrTime.FormattingEnabled = true;
+            this.comborrTime.ItemHeight = 15;
+            this.comborrTime.Location = new System.Drawing.Point(250, 205);
+            this.comborrTime.Name = "comborrTime";
+            this.comborrTime.Size = new System.Drawing.Size(108, 21);
+            this.comborrTime.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.comborrTime.TabIndex = 8;
             // 
             // FrmGetSet
             // 
@@ -3706,6 +3733,8 @@
         private DevComponents.DotNetBar.ButtonX butBorrdel;
         private DevComponents.DotNetBar.ButtonX butBorradd;
         private System.Windows.Forms.Label label36;
+        private System.Windows.Forms.Label label37;
+        private DevComponents.DotNetBar.Controls.ComboBoxEx comborrTime;
     }
 }
 

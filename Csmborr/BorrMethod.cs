@@ -10,16 +10,17 @@ namespace Csmborr
     public static class BorrMethod
     {
         public static List<string> lscol = new List<string>();
+        public static string Timecol { get; set; }
         public static int Archid { get; set; }
         public static string Boxsn { get; set; }
         public static string Archno { get; set; }
         public static string Filename { get; set; }
         public static bool Imgsys { get; set; }
 
-        public static void Getdata(ListView lvq, string col, string czf, string gjz)
+        public static void Getdata(ListView lvq, string col, string czf, string gjz,string time1, string time2,bool chkgjz, bool time)
         {
             lvq.Items.Clear();
-            DataTable dt = Common.QuerBorrData(col, czf, gjz);
+            DataTable dt = Common.QuerBorrData(col, czf, gjz,time1,time2,chkgjz,time, Timecol);
             if (dt == null || dt.Rows.Count <= 0)
                 return;
             int i = 1;
@@ -48,10 +49,12 @@ namespace Csmborr
         {
             lscol.Clear();
             box.Items.Clear();
+            Timecol = "";
             DataTable dt = T_Sysset.GetborrTable();
             if (dt == null || dt.Rows.Count <= 0)
                 return;
             string str = dt.Rows[0][2].ToString();
+            Timecol = dt.Rows[0][3].ToString();
             if (str.Trim().Length <= 0)
                 return;
             if (str.IndexOf(";") < 0)

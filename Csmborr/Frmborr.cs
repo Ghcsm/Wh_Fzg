@@ -16,6 +16,7 @@ namespace Csmborr
 
         HFTP ftp = null;
         private bool imglook = false;
+        private FrmImgshow imgshow;
         private bool istxt()
         {
             if (comborrbcol.Text.Trim().Length <= 0) {
@@ -23,21 +24,28 @@ namespace Csmborr
                 comborrbcol.Focus();
                 return false;
             }
-
             if (comborrbczf.Text.Trim().Length <= 0) {
                 MessageBox.Show("请选择操作符!");
                 comborrbczf.Focus();
                 return false;
             }
-            if (txtborrgjz.Text.Trim().Length <= 0) {
-                MessageBox.Show("请输入关键字!");
-                txtborrgjz.Focus();
-                return false;
+            if (chkborrgjz.Checked) {
+                if (txtborrgjz.Text.Trim().Length <= 0) {
+                    MessageBox.Show("请输入关键字!");
+                    txtborrgjz.Focus();
+                    return false;
+                }
+            }
+            if (chkborrtime.Checked) {
+                if (BorrMethod.Timecol.Trim().Length <= 0) {
+                    MessageBox.Show("未指定时间字段，无法使用时间范围!");
+                    return false;
+                }
+
             }
             return true;
         }
 
-        private FrmImgshow imgshow;
 
         private void butQuer_Click(object sender, EventArgs e)
         {
@@ -46,9 +54,18 @@ namespace Csmborr
             string col = comborrbcol.Text.Trim();
             string czf = comborrbczf.Text.Trim();
             string gjz = txtborrgjz.Text.Trim();
-            BorrMethod.Getdata(lvborrQuer, col, czf, gjz);
-            string str = "查询:" + col + "->" + czf + "->" + gjz;
-            Common.WriteBorrLog("0", "0", 0, str);
+            string dt1 = dateborrtime1.Text;
+            string dt2 = dateborrtime2.Text;
+            try {
+                butborrQuer.Enabled = false;
+                BorrMethod.Getdata(lvborrQuer, col, czf, gjz, dt1, dt2, chkborrgjz.Checked, chkborrtime.Checked);
+                string str = "查询:" + col + "->" + czf + "->" + gjz;
+                Common.WriteBorrLog("0", "0", 0, str);
+            } catch {
+            } finally {
+                butborrQuer.Enabled = true;
+            }
+
         }
 
 
