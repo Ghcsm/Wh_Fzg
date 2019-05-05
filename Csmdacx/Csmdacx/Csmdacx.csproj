@@ -78,9 +78,9 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DAL, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+    <Reference Include="DAL, Version=1.0.7062.37841, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\Csmhl\bg\DAL\bin\x86\Debug\DAL.dll</HintPath>
+      <HintPath>..\..\DAL\bin\x86\Debug\DAL.dll</HintPath>
     </Reference>
     <Reference Include="DevComponents.DotNetBar2">
       <Private>True</Private>
