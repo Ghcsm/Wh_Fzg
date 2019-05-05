@@ -195,10 +195,11 @@ namespace CsmCon
 
         public void LoadInfo(int archid, int enter, string atype)
         {
-            try {
+            try
+            {
+                Txtcle();
                 if (archid <= 0 || atype.Trim().Length <= 0)
                     return;
-                Txtcle();
                 int t = ClsInfoEnter.InfoTableName.IndexOf(atype);
                 DataTable dt = Common.GetInfoTable(t, archid, enter);
                 if (dt == null || dt.Rows.Count <= 0)

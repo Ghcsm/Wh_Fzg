@@ -1065,7 +1065,7 @@ namespace DAL
 
         #region QuerBorr
 
-        public static DataTable QuerBorrData(string Field, string operation, string FieldValue,string time1,string time2,bool chkgjz,bool time,string tablecol)
+        public static DataTable QuerBorrData(string Field, string operation, string FieldValue, string time1, string time2, bool chkgjz, bool time, string tablecol)
         {
             DataTable dt;
             try {
@@ -1136,6 +1136,20 @@ namespace DAL
             } catch (Exception e) {
                 MessageBox.Show(e.ToString());
             }
+        }
+
+        public static DataTable GetborrLog(string table, string col, string gjz, string time1, string time2, bool time)
+        {
+            string strSql = "PQueryBorrLog";
+            SqlParameter[] p = new SqlParameter[6];
+            p[0] = new SqlParameter("@col", col);
+            p[1] = new SqlParameter("@table", table);
+            p[2] = new SqlParameter("@gjz", gjz);
+            p[3] = new SqlParameter("@time1", time1);
+            p[4] = new SqlParameter("@time2", time2);
+            p[5] = new SqlParameter("@time", Convert.ToInt32(time));
+            DataTable dt = SQLHelper.GetDataTable(strSql, CommandType.StoredProcedure, p);
+            return dt;
         }
 
 

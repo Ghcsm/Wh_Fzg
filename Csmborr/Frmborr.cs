@@ -59,8 +59,8 @@ namespace Csmborr
             string col = comborrbcol.Text.Trim();
             string czf = comborrbczf.Text.Trim();
             string gjz = txtborrgjz.Text.Trim();
-            string dt1 = dateborrtime1.Text;
-            string dt2 = dateborrtime2.Text;
+            string dt1 = dateborrtime1.Value.ToString();
+            string dt2 = dateborrtime2.Value.ToString();
             try {
                 butborrQuer.Enabled = false;
                 BorrMethod.Getdata(lvborrQuer, col, czf, gjz, dt1, dt2, chkborrgjz.Checked, chkborrtime.Checked);

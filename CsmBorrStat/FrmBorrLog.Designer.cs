@@ -28,23 +28,24 @@
         private void InitializeComponent()
         {
             this.gr = new System.Windows.Forms.GroupBox();
+            this.chktime = new System.Windows.Forms.CheckBox();
+            this.ButBorrDc = new DevComponents.DotNetBar.ButtonX();
+            this.ButBorrQuer = new DevComponents.DotNetBar.ButtonX();
+            this.datetime2 = new System.Windows.Forms.DateTimePicker();
+            this.datetime1 = new System.Windows.Forms.DateTimePicker();
             this.txtgjz = new System.Windows.Forms.TextBox();
             this.combCol = new DevComponents.DotNetBar.Controls.ComboBoxEx();
             this.combTable = new DevComponents.DotNetBar.Controls.ComboBoxEx();
-            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.datetime1 = new System.Windows.Forms.DateTimePicker();
-            this.label5 = new System.Windows.Forms.Label();
-            this.datetime2 = new System.Windows.Forms.DateTimePicker();
-            this.ButBorrQuer = new DevComponents.DotNetBar.ButtonX();
             this.gr1 = new System.Windows.Forms.GroupBox();
-            this.ButBorrDc = new DevComponents.DotNetBar.ButtonX();
             this.lvQuer = new System.Windows.Forms.ListView();
-            this.comitemjy = new DevComponents.Editors.ComboItem();
-            this.comitemlog = new DevComponents.Editors.ComboItem();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.comboItem1 = new DevComponents.Editors.ComboItem();
+            this.comboItem2 = new DevComponents.Editors.ComboItem();
             this.gr.SuspendLayout();
             this.gr1.SuspendLayout();
             this.SuspendLayout();
@@ -53,6 +54,7 @@
             // 
             this.gr.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.gr.Controls.Add(this.chktime);
             this.gr.Controls.Add(this.ButBorrDc);
             this.gr.Controls.Add(this.ButBorrQuer);
             this.gr.Controls.Add(this.datetime2);
@@ -61,7 +63,6 @@
             this.gr.Controls.Add(this.combCol);
             this.gr.Controls.Add(this.combTable);
             this.gr.Controls.Add(this.label5);
-            this.gr.Controls.Add(this.label4);
             this.gr.Controls.Add(this.label3);
             this.gr.Controls.Add(this.label2);
             this.gr.Controls.Add(this.label1);
@@ -71,9 +72,56 @@
             this.gr.TabIndex = 0;
             this.gr.TabStop = false;
             // 
+            // chktime
+            // 
+            this.chktime.AutoSize = true;
+            this.chktime.Location = new System.Drawing.Point(524, 39);
+            this.chktime.Name = "chktime";
+            this.chktime.Size = new System.Drawing.Size(84, 16);
+            this.chktime.TabIndex = 8;
+            this.chktime.Text = "时间范围：";
+            this.chktime.UseVisualStyleBackColor = true;
+            // 
+            // ButBorrDc
+            // 
+            this.ButBorrDc.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.ButBorrDc.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.ButBorrDc.Location = new System.Drawing.Point(979, 26);
+            this.ButBorrDc.Name = "ButBorrDc";
+            this.ButBorrDc.Size = new System.Drawing.Size(75, 31);
+            this.ButBorrDc.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.ButBorrDc.TabIndex = 7;
+            this.ButBorrDc.Text = "导出";
+            // 
+            // ButBorrQuer
+            // 
+            this.ButBorrQuer.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.ButBorrQuer.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.ButBorrQuer.Location = new System.Drawing.Point(882, 26);
+            this.ButBorrQuer.Name = "ButBorrQuer";
+            this.ButBorrQuer.Size = new System.Drawing.Size(75, 31);
+            this.ButBorrQuer.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.ButBorrQuer.TabIndex = 6;
+            this.ButBorrQuer.Text = "查询";
+            this.ButBorrQuer.Click += new System.EventHandler(this.ButBorrQuer_Click);
+            // 
+            // datetime2
+            // 
+            this.datetime2.Location = new System.Drawing.Point(756, 36);
+            this.datetime2.Name = "datetime2";
+            this.datetime2.Size = new System.Drawing.Size(103, 21);
+            this.datetime2.TabIndex = 5;
+            // 
+            // datetime1
+            // 
+            this.datetime1.Location = new System.Drawing.Point(610, 36);
+            this.datetime1.Name = "datetime1";
+            this.datetime1.Size = new System.Drawing.Size(111, 21);
+            this.datetime1.TabIndex = 4;
+            // 
             // txtgjz
             // 
-            this.txtgjz.Location = new System.Drawing.Point(405, 36);
+            this.txtgjz.Location = new System.Drawing.Point(366, 36);
             this.txtgjz.Name = "txtgjz";
             this.txtgjz.Size = new System.Drawing.Size(124, 21);
             this.txtgjz.TabIndex = 3;
@@ -82,11 +130,12 @@
             // 
             this.combCol.DisplayMember = "Text";
             this.combCol.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.combCol.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.combCol.FormattingEnabled = true;
             this.combCol.ItemHeight = 15;
             this.combCol.Location = new System.Drawing.Point(217, 36);
             this.combCol.Name = "combCol";
-            this.combCol.Size = new System.Drawing.Size(124, 21);
+            this.combCol.Size = new System.Drawing.Size(91, 21);
             this.combCol.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.combCol.TabIndex = 2;
             // 
@@ -98,27 +147,28 @@
             this.combTable.FormattingEnabled = true;
             this.combTable.ItemHeight = 15;
             this.combTable.Items.AddRange(new object[] {
-            this.comitemjy,
-            this.comitemlog});
+            this.comboItem1,
+            this.comboItem2});
             this.combTable.Location = new System.Drawing.Point(59, 36);
             this.combTable.Name = "combTable";
             this.combTable.Size = new System.Drawing.Size(113, 21);
             this.combTable.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.combTable.TabIndex = 2;
+            this.combTable.SelectedIndexChanged += new System.EventHandler(this.combTable_SelectedIndexChanged);
             // 
-            // label4
+            // label5
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(541, 40);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(41, 12);
-            this.label4.TabIndex = 0;
-            this.label4.Text = "时间：";
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(727, 41);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(23, 12);
+            this.label5.TabIndex = 0;
+            this.label5.Text = "---";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(356, 40);
+            this.label3.Location = new System.Drawing.Point(317, 40);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(53, 12);
             this.label3.TabIndex = 0;
@@ -150,40 +200,6 @@
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
             // 
-            // datetime1
-            // 
-            this.datetime1.Location = new System.Drawing.Point(586, 36);
-            this.datetime1.Name = "datetime1";
-            this.datetime1.Size = new System.Drawing.Size(111, 21);
-            this.datetime1.TabIndex = 4;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(703, 41);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(23, 12);
-            this.label5.TabIndex = 0;
-            this.label5.Text = "---";
-            // 
-            // datetime2
-            // 
-            this.datetime2.Location = new System.Drawing.Point(732, 36);
-            this.datetime2.Name = "datetime2";
-            this.datetime2.Size = new System.Drawing.Size(103, 21);
-            this.datetime2.TabIndex = 5;
-            // 
-            // ButBorrQuer
-            // 
-            this.ButBorrQuer.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.ButBorrQuer.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.ButBorrQuer.Location = new System.Drawing.Point(866, 26);
-            this.ButBorrQuer.Name = "ButBorrQuer";
-            this.ButBorrQuer.Size = new System.Drawing.Size(75, 31);
-            this.ButBorrQuer.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.ButBorrQuer.TabIndex = 6;
-            this.ButBorrQuer.Text = "查询";
-            // 
             // gr1
             // 
             this.gr1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -197,19 +213,10 @@
             this.gr1.TabStop = false;
             this.gr1.Text = "操作日志";
             // 
-            // ButBorrDc
-            // 
-            this.ButBorrDc.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.ButBorrDc.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.ButBorrDc.Location = new System.Drawing.Point(963, 26);
-            this.ButBorrDc.Name = "ButBorrDc";
-            this.ButBorrDc.Size = new System.Drawing.Size(75, 31);
-            this.ButBorrDc.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.ButBorrDc.TabIndex = 7;
-            this.ButBorrDc.Text = "导出";
-            // 
             // lvQuer
             // 
+            this.lvQuer.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1});
             this.lvQuer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lvQuer.FullRowSelect = true;
             this.lvQuer.GridLines = true;
@@ -220,13 +227,17 @@
             this.lvQuer.UseCompatibleStateImageBehavior = false;
             this.lvQuer.View = System.Windows.Forms.View.Details;
             // 
-            // comitemjy
+            // columnHeader1
             // 
-            this.comitemjy.Text = "借阅记录";
+            this.columnHeader1.Text = "序号";
             // 
-            // comitemlog
+            // comboItem1
             // 
-            this.comitemlog.Text = "操作日志";
+            this.comboItem1.Text = "借阅记录";
+            // 
+            // comboItem2
+            // 
+            this.comboItem2.Text = "操作日志";
             // 
             // FrmBorrLog
             // 
@@ -243,6 +254,7 @@
             this.Name = "FrmBorrLog";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "借阅日志";
+            this.Shown += new System.EventHandler(this.FrmBorrLog_Shown);
             this.gr.ResumeLayout(false);
             this.gr.PerformLayout();
             this.gr1.ResumeLayout(false);
@@ -258,7 +270,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
         private DevComponents.DotNetBar.Controls.ComboBoxEx combCol;
         private DevComponents.DotNetBar.Controls.ComboBoxEx combTable;
         private System.Windows.Forms.TextBox txtgjz;
@@ -269,8 +280,10 @@
         private System.Windows.Forms.GroupBox gr1;
         private DevComponents.DotNetBar.ButtonX ButBorrDc;
         private System.Windows.Forms.ListView lvQuer;
-        private DevComponents.Editors.ComboItem comitemjy;
-        private DevComponents.Editors.ComboItem comitemlog;
+        private System.Windows.Forms.CheckBox chktime;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
+        private DevComponents.Editors.ComboItem comboItem1;
+        private DevComponents.Editors.ComboItem comboItem2;
     }
 }
 

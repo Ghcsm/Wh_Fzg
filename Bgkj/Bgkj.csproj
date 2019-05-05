@@ -51,9 +51,15 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Csmborr">
       <HintPath>..\Csmborr\bin\x86\Debug\Csmborr.dll</HintPath>
+    </Reference>
+    <Reference Include="CsmBorrStat">
+      <HintPath>..\CsmBorrStat\bin\x86\Debug\CsmBorrStat.dll</HintPath>
     </Reference>
     <Reference Include="CsmCheck">
       <HintPath>..\CsmCheck\bin\x86\Debug\CsmCheck.dll</HintPath>
