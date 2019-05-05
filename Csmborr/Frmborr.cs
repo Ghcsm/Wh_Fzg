@@ -24,12 +24,12 @@ namespace Csmborr
                 comborrbcol.Focus();
                 return false;
             }
-            if (comborrbczf.Text.Trim().Length <= 0) {
-                MessageBox.Show("请选择操作符!");
-                comborrbczf.Focus();
-                return false;
-            }
             if (chkborrgjz.Checked) {
+                if (comborrbczf.Text.Trim().Length <= 0) {
+                    MessageBox.Show("请选择操作符!");
+                    comborrbczf.Focus();
+                    return false;
+                }
                 if (txtborrgjz.Text.Trim().Length <= 0) {
                     MessageBox.Show("请输入关键字!");
                     txtborrgjz.Focus();
@@ -37,6 +37,11 @@ namespace Csmborr
                 }
             }
             if (chkborrtime.Checked) {
+                if (comborrbczf.Text.Trim().Length <= 0) {
+                    MessageBox.Show("请选择操作符!");
+                    comborrbczf.Focus();
+                    return false;
+                }
                 if (BorrMethod.Timecol.Trim().Length <= 0) {
                     MessageBox.Show("未指定时间字段，无法使用时间范围!");
                     return false;
@@ -207,6 +212,36 @@ namespace Csmborr
             FrmArchBorr.Archno = BorrMethod.Archno;
             FrmArchBorr borr = new FrmArchBorr();
             borr.ShowDialog();
+        }
+
+        private void butborrDc_Click(object sender, EventArgs e)
+        {
+            if (lvborrQuer.Items.Count <= 0) {
+                MessageBox.Show("未发现数据!");
+                return;
+            }
+            string file = "";
+            if (saveFile.ShowDialog() == DialogResult.OK)
+                file = saveFile.FileName;
+            else file = "";
+            if (file.Trim().Length <= 0)
+                return;
+            try {
+                butborrQuer.Enabled = false;
+                butborrDc.Enabled = false;
+                BorrMethod.SaveFile(lvborrQuer, file);
+
+             
+                string str = "导出数据:"+lvborrQuer.Items.Count+"字段:"+ comborrbcol.Text.Trim()+"-> 操作符:"+ comborrbczf.Text.Trim()+
+                    "-> 关键字:"+txtborrgjz.Text.Trim()+" -> 时间："+dateborrtime1.Text+"-"+dateborrtime2.Text;
+                Common.WriteBorrLog("0", "0", 0, str);
+            } catch (Exception ex) {
+                MessageBox.Show("导出失败:" + ex.ToString());
+            } finally {
+                butborrQuer.Enabled = true;
+                butborrDc.Enabled = true;
+            }
+
         }
     }
 }

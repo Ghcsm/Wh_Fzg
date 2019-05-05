@@ -61,6 +61,8 @@
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolproess = new System.Windows.Forms.ToolStripProgressBar();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.butborrDc = new DevComponents.DotNetBar.ButtonX();
+            this.saveFile = new System.Windows.Forms.SaveFileDialog();
             this.gr1.SuspendLayout();
             this.gr2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.contMenu)).BeginInit();
@@ -71,6 +73,7 @@
             // 
             this.gr1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.gr1.Controls.Add(this.butborrDc);
             this.gr1.Controls.Add(this.dateborrtime2);
             this.gr1.Controls.Add(this.dateborrtime1);
             this.gr1.Controls.Add(this.chkborrtime);
@@ -128,7 +131,7 @@
             // 
             this.butborrQuer.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.butborrQuer.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.butborrQuer.Location = new System.Drawing.Point(725, 31);
+            this.butborrQuer.Location = new System.Drawing.Point(704, 34);
             this.butborrQuer.Name = "butborrQuer";
             this.butborrQuer.Size = new System.Drawing.Size(75, 45);
             this.butborrQuer.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -366,6 +369,22 @@
             this.toolStrip1.TabIndex = 3;
             this.toolStrip1.Text = "toolStrip1";
             // 
+            // butborrDc
+            // 
+            this.butborrDc.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.butborrDc.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.butborrDc.Location = new System.Drawing.Point(817, 34);
+            this.butborrDc.Name = "butborrDc";
+            this.butborrDc.Size = new System.Drawing.Size(75, 46);
+            this.butborrDc.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.butborrDc.TabIndex = 9;
+            this.butborrDc.Text = "导出";
+            this.butborrDc.Click += new System.EventHandler(this.butborrDc_Click);
+            // 
+            // saveFile
+            // 
+            this.saveFile.Filter = "xls文件|*.xls";
+            // 
             // FrmBorr
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -426,6 +445,8 @@
         private System.Windows.Forms.DateTimePicker dateborrtime2;
         private System.Windows.Forms.DateTimePicker dateborrtime1;
         private System.Windows.Forms.Label label3;
+        private DevComponents.DotNetBar.ButtonX butborrDc;
+        private System.Windows.Forms.SaveFileDialog saveFile;
     }
 }
 

@@ -1,8 +1,10 @@
 ﻿using DAL;
 using DevComponents.DotNetBar.Controls;
+using Spire.Xls;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Windows.Forms;
 
 namespace Csmborr
@@ -17,10 +19,10 @@ namespace Csmborr
         public static string Filename { get; set; }
         public static bool Imgsys { get; set; }
 
-        public static void Getdata(ListView lvq, string col, string czf, string gjz,string time1, string time2,bool chkgjz, bool time)
+        public static void Getdata(ListView lvq, string col, string czf, string gjz, string time1, string time2, bool chkgjz, bool time)
         {
             lvq.Items.Clear();
-            DataTable dt = Common.QuerBorrData(col, czf, gjz,time1,time2,chkgjz,time, Timecol);
+            DataTable dt = Common.QuerBorrData(col, czf, gjz, time1, time2, chkgjz, time, Timecol);
             if (dt == null || dt.Rows.Count <= 0)
                 return;
             int i = 1;
@@ -91,9 +93,29 @@ namespace Csmborr
             Boxsn = dt.Rows[0][0].ToString();
             Archno = dt.Rows[0][1].ToString();
             boxsn.Text = string.Format("盒号：{0}", Boxsn);
-            archno.Text = string.Format("卷号：{0}",Archno);
+            archno.Text = string.Format("卷号：{0}", Archno);
             Filename = dt.Rows[0][2].ToString();
             file.Text = Filename;
+        }
+
+        public static void SaveFile(ListView lv, string file)
+        {
+            Workbook work = new Workbook();
+            Worksheet wsheek = null;
+            if (File.Exists(file))
+                work.LoadFromFile(file);
+            try {
+                wsheek = work.Worksheets[0];
+                int rows = wsheek.LastRow + 1;
+                for (int i = 0; i < lv.Items.Count; i++) {
+                    for (int c = 0; c < lv.Columns.Count; c++) {
+                        wsheek.Range[rows + i, c + 1].Text = lv.Items[i].SubItems[c].Text;
+                    }
+                }
+                work.SaveToFile(file, FileFormat.Version2007);
+                work.Dispose();
+            } catch { }
+
         }
     }
 }
