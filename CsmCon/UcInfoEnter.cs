@@ -5,6 +5,8 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using DevComponents.DotNetBar;
+
 namespace CsmCon
 {
     public partial class UcInfoEnter : UserControl
@@ -25,6 +27,8 @@ namespace CsmCon
             int id = 0;
             for (int i = 0; i < ClsInfoEnter.InfoTable.Count; i++) {
                 id = 0;
+                txtcol = 0;
+                txtrows = 1;
                 string name = ClsInfoEnter.InfoTableName[i];
                 if (!CreateTab(name))
                     return;
@@ -39,7 +43,7 @@ namespace CsmCon
                     string value = dr["value"].ToString();
                     if (oldname.Contains(namecol)) {
                         id += 1;
-                        CreateTxt(tabControl.TabPages[i], name, namecol, value, colnum, id, width,txtwidth);
+                        CreateTxt(tabControl.TabPages[i], name, namecol, value, colnum, id, width, txtwidth);
                     }
                 }
             }
@@ -59,6 +63,7 @@ namespace CsmCon
                 p.AutoSize = true;
                 tab.Controls.Add(p);
                 tabControl.Controls.Add(tab);
+
                 return true;
             } catch {
                 return false;
@@ -66,7 +71,7 @@ namespace CsmCon
 
         }
 
-        private void CreateTxt(TabPage tp, string tname, string name, string val, int colnum, int id, int width,int txtwith)
+        private void CreateTxt(TabPage tp, string tname, string name, string val, int colnum, int id, int width, int txtwith)
         {
             Control pl = tp.Controls.Find(tname, true)[0];
             int xx = 0;
@@ -78,7 +83,7 @@ namespace CsmCon
             txtcol += 1;
             Label lb = new Label();
             lb.Name = name;
-            if (name.IndexOf("1") >= 0|| name.IndexOf("8") >= 0) {
+            if (name.IndexOf("1") >= 0 || name.IndexOf("8") >= 0) {
                 lb.ForeColor = Color.Red;
             }
             lb.Text = name + ": ";
@@ -94,7 +99,7 @@ namespace CsmCon
             if (val.Trim().Length <= 0) {
                 TextBox txt = new TextBox();
                 txt.Name = name;
-               // txt.Width = (pl.Width - lb.Width * colnum) / colnum - 10;
+                // txt.Width = (pl.Width - lb.Width * colnum) / colnum - 10;
                 txt.Width = txtwith;
                 txt.TabIndex = id;
                 txt.Tag = id;
@@ -109,7 +114,7 @@ namespace CsmCon
             else {
                 ComboBox cb = new ComboBox();
                 cb.Name = name;
-               // cb.Width = (pl.Width - lb.Width * colnum) / colnum - 10;
+                // cb.Width = (pl.Width - lb.Width * colnum) / colnum - 10;
                 cb.Width = txtwith;
                 cb.TabIndex = id;
                 cb.Tag = id;
@@ -195,7 +200,7 @@ namespace CsmCon
                     return;
                 Txtcle();
                 int t = ClsInfoEnter.InfoTableName.IndexOf(atype);
-                DataTable dt = Common.GetInfoTable(t, archid,enter);
+                DataTable dt = Common.GetInfoTable(t, archid, enter);
                 if (dt == null || dt.Rows.Count <= 0)
                     return;
                 string name = tabControl.TabPages[t].Name;
