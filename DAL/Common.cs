@@ -798,7 +798,7 @@ namespace DAL
                 SqlParameter p3 = new SqlParameter("@Etag", enter);
                 int id = Convert.ToInt32(SQLHelper.ExecScalar(strSql, p1, p2, p3).ToString());
                 if (id <= 0) {
-                    strSql = "insert into " + table + " (" + ClsInfoEnter.InfoCol[0].Replace(';', ',') + ",Archid,Entertag ) values (";
+                    strSql = "insert into " + table + " (" + ClsInfoEnter.InfoCol[t].Replace(';', ',') + ",Archid,Entertag ) values (";
                     for (int i = 1; i < dirxx.Count + 1; i++) {
                         if (i != dirxx.Count) {
 
@@ -813,7 +813,7 @@ namespace DAL
                 }
                 else {
                     strSql = "update " + table + " set ";
-                    string[] str = ClsInfoEnter.InfoCol[0].Replace(';', ',').Split(',');
+                    string[] str = ClsInfoEnter.InfoCol[t].Replace(';', ',').Split(',');
                     for (int i = 0; i < str.Length; i++) {
                         if (i != str.Length - 1) {
                             coltmp += str[i] + "='" + dirxx[i + 1].ToString() + "',";
