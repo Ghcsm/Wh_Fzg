@@ -116,6 +116,7 @@ namespace Csmborr
                 work.Dispose();
             } catch { }
 
+            MessageBox.Show("导出完成!");
         }
     }
 }

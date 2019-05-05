@@ -1,7 +1,9 @@
 ﻿using DAL;
+using Spire.Xls;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -43,7 +45,7 @@ namespace CsmBorrStat
             if (dt == null || dt.Rows.Count <= 0)
                 return;
             for (int i = 0; i < dt.Rows.Count; i++) {
-               string str = dt.Rows[i][0].ToString();
+                string str = dt.Rows[i][0].ToString();
                 lvQuer.Columns.Add(str);
                 if (id == 0)
                     lscol.Add(str);
@@ -91,6 +93,37 @@ namespace CsmBorrStat
                 lvQuer.Items.Add(lvi);
                 i++;
             }
+        }
+
+        private void SaveFile(string file)
+        {
+            Workbook work = new Workbook();
+            Worksheet wsheek = null;
+            if (File.Exists(file))
+                work.LoadFromFile(file);
+            try {
+                wsheek = work.Worksheets[0];
+                int rows = wsheek.LastRow + 1;
+                for (int i = 0; i < lvQuer.Items.Count; i++) {
+                    for (int c = 0; c < lvQuer.Columns.Count; c++) {
+                        wsheek.Range[rows + i, c + 1].Text = lv.Items[i].SubItems[c].Text;
+                    }
+                }
+                work.SaveToFile(file, FileFormat.Version2007);
+                work.Dispose();
+            } catch { }
+            MessageBox.Show("导出完成!");
+        }
+
+        private void ButBorrDc_Click(object sender, EventArgs e)
+        {
+            string file = "";
+            if (saveFiledig.ShowDialog() == DialogResult.OK)
+                file = saveFiledig.FileName;
+            else file = "";
+            if (file.Trim().Length <= 0)
+                return;
+            SaveFile(file);
         }
     }
 }

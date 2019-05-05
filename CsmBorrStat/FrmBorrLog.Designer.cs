@@ -46,6 +46,7 @@
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.comboItem1 = new DevComponents.Editors.ComboItem();
             this.comboItem2 = new DevComponents.Editors.ComboItem();
+            this.saveFiledig = new System.Windows.Forms.SaveFileDialog();
             this.gr.SuspendLayout();
             this.gr1.SuspendLayout();
             this.SuspendLayout();
@@ -92,6 +93,7 @@
             this.ButBorrDc.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.ButBorrDc.TabIndex = 7;
             this.ButBorrDc.Text = "导出";
+            this.ButBorrDc.Click += new System.EventHandler(this.ButBorrDc_Click);
             // 
             // ButBorrQuer
             // 
@@ -239,6 +241,10 @@
             // 
             this.comboItem2.Text = "操作日志";
             // 
+            // saveFiledig
+            // 
+            this.saveFiledig.Filter = "xls文件|*.xls";
+            // 
             // FrmBorrLog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -284,6 +290,7 @@
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private DevComponents.Editors.ComboItem comboItem1;
         private DevComponents.Editors.ComboItem comboItem2;
+        private System.Windows.Forms.SaveFileDialog saveFiledig;
     }
 }
 
