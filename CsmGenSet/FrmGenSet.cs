@@ -2364,7 +2364,7 @@ namespace CsmGenSet
 
         private void CreateTableSave()
         {
-            if (txtCreateTable.Text.Trim().Length <= 0 || ClsCreateTable.CreateTable.Trim().Length <= 0) {
+            if (txtCreateTable.Text.Trim().Length <= 0 || ClsCreateTable.CreateTable==null) {
                 MessageBox.Show("请输入要创建或保存的表名称!");
                 txtCreateTable.Focus();
                 return;
@@ -2399,12 +2399,12 @@ namespace CsmGenSet
 
         private void CreatetableUpdate()
         {
-            if (txtCreateTable.Text.Trim().Length <= 0 || ClsCreateTable.CreateTable.Trim().Length <= 0) {
+            if (txtCreateTable.Text.Trim().Length <= 0 || ClsCreateTable.CreateTable==null ||ClsCreateTable.CreateTable.Trim().Length <= 0) {
                 MessageBox.Show("请输入要创建或保存的表名称!");
                 txtCreateTable.Focus();
                 return;
             }
-            if (ClsCreateTable.CreateTableLvcol.Trim().Length <= 0) {
+            if (ClsCreateTable.CreateTableLvcol==null ||ClsCreateTable.CreateTableLvcol.Trim().Length <= 0) {
                 MessageBox.Show("请选择相关字段!");
                 return;
             }

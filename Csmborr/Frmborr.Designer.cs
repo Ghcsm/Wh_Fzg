@@ -30,6 +30,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmBorr));
             this.gr1 = new System.Windows.Forms.GroupBox();
+            this.butborrDc = new DevComponents.DotNetBar.ButtonX();
             this.dateborrtime2 = new System.Windows.Forms.DateTimePicker();
             this.dateborrtime1 = new System.Windows.Forms.DateTimePicker();
             this.chkborrtime = new System.Windows.Forms.CheckBox();
@@ -61,8 +62,8 @@
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolproess = new System.Windows.Forms.ToolStripProgressBar();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.butborrDc = new DevComponents.DotNetBar.ButtonX();
             this.saveFile = new System.Windows.Forms.SaveFileDialog();
+            this.comboItem1 = new DevComponents.Editors.ComboItem();
             this.gr1.SuspendLayout();
             this.gr2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.contMenu)).BeginInit();
@@ -91,16 +92,28 @@
             this.gr1.TabIndex = 0;
             this.gr1.TabStop = false;
             // 
+            // butborrDc
+            // 
+            this.butborrDc.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.butborrDc.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.butborrDc.Location = new System.Drawing.Point(817, 34);
+            this.butborrDc.Name = "butborrDc";
+            this.butborrDc.Size = new System.Drawing.Size(75, 46);
+            this.butborrDc.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.butborrDc.TabIndex = 9;
+            this.butborrDc.Text = "导出";
+            this.butborrDc.Click += new System.EventHandler(this.butborrDc_Click);
+            // 
             // dateborrtime2
             // 
-            this.dateborrtime2.Location = new System.Drawing.Point(548, 62);
+            this.dateborrtime2.Location = new System.Drawing.Point(536, 62);
             this.dateborrtime2.Name = "dateborrtime2";
             this.dateborrtime2.Size = new System.Drawing.Size(125, 21);
             this.dateborrtime2.TabIndex = 8;
             // 
             // dateborrtime1
             // 
-            this.dateborrtime1.Location = new System.Drawing.Point(391, 62);
+            this.dateborrtime1.Location = new System.Drawing.Point(379, 62);
             this.dateborrtime1.Name = "dateborrtime1";
             this.dateborrtime1.Size = new System.Drawing.Size(122, 21);
             this.dateborrtime1.TabIndex = 7;
@@ -108,7 +121,7 @@
             // chkborrtime
             // 
             this.chkborrtime.AutoSize = true;
-            this.chkborrtime.Location = new System.Drawing.Point(301, 67);
+            this.chkborrtime.Location = new System.Drawing.Point(289, 67);
             this.chkborrtime.Name = "chkborrtime";
             this.chkborrtime.Size = new System.Drawing.Size(84, 16);
             this.chkborrtime.TabIndex = 6;
@@ -120,7 +133,7 @@
             this.chkborrgjz.AutoSize = true;
             this.chkborrgjz.Checked = true;
             this.chkborrgjz.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkborrgjz.Location = new System.Drawing.Point(301, 29);
+            this.chkborrgjz.Location = new System.Drawing.Point(289, 29);
             this.chkborrgjz.Name = "chkborrgjz";
             this.chkborrgjz.Size = new System.Drawing.Size(72, 16);
             this.chkborrgjz.TabIndex = 5;
@@ -141,7 +154,7 @@
             // 
             // txtborrgjz
             // 
-            this.txtborrgjz.Location = new System.Drawing.Point(391, 25);
+            this.txtborrgjz.Location = new System.Drawing.Point(379, 25);
             this.txtborrgjz.Name = "txtborrgjz";
             this.txtborrgjz.Size = new System.Drawing.Size(282, 21);
             this.txtborrgjz.TabIndex = 3;
@@ -154,6 +167,7 @@
             this.comborrbczf.FormattingEnabled = true;
             this.comborrbczf.ItemHeight = 15;
             this.comborrbczf.Items.AddRange(new object[] {
+            this.comboItem1,
             this.combdy,
             this.combbh,
             this.combbdy,
@@ -196,7 +210,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(519, 68);
+            this.label3.Location = new System.Drawing.Point(507, 68);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(23, 12);
             this.label3.TabIndex = 0;
@@ -369,18 +383,6 @@
             this.toolStrip1.TabIndex = 3;
             this.toolStrip1.Text = "toolStrip1";
             // 
-            // butborrDc
-            // 
-            this.butborrDc.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.butborrDc.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.butborrDc.Location = new System.Drawing.Point(817, 34);
-            this.butborrDc.Name = "butborrDc";
-            this.butborrDc.Size = new System.Drawing.Size(75, 46);
-            this.butborrDc.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.butborrDc.TabIndex = 9;
-            this.butborrDc.Text = "导出";
-            this.butborrDc.Click += new System.EventHandler(this.butborrDc_Click);
-            // 
             // saveFile
             // 
             this.saveFile.Filter = "xls文件|*.xls";
@@ -447,6 +449,7 @@
         private System.Windows.Forms.Label label3;
         private DevComponents.DotNetBar.ButtonX butborrDc;
         private System.Windows.Forms.SaveFileDialog saveFile;
+        private DevComponents.Editors.ComboItem comboItem1;
     }
 }
 

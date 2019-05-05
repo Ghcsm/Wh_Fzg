@@ -32,6 +32,8 @@
             this.superTabControl2 = new DevComponents.DotNetBar.SuperTabControl();
             this.tabContr = new DevComponents.DotNetBar.TabControl();
             this.tabControlPanel12 = new DevComponents.DotNetBar.TabControlPanel();
+            this.comborrTime = new DevComponents.DotNetBar.Controls.ComboBoxEx();
+            this.label37 = new System.Windows.Forms.Label();
             this.label36 = new System.Windows.Forms.Label();
             this.butBorrSave = new DevComponents.DotNetBar.ButtonX();
             this.butBorrdel = new DevComponents.DotNetBar.ButtonX();
@@ -45,6 +47,69 @@
             this.txtBorrTable = new System.Windows.Forms.TextBox();
             this.label23 = new System.Windows.Forms.Label();
             this.tabItemBorr = new DevComponents.DotNetBar.TabItem(this.components);
+            this.tabControlPanel10 = new DevComponents.DotNetBar.TabControlPanel();
+            this.txtContentxtWith = new System.Windows.Forms.TextBox();
+            this.combContenPages = new DevComponents.DotNetBar.Controls.ComboBoxEx();
+            this.combContenTitle = new DevComponents.DotNetBar.Controls.ComboBoxEx();
+            this.label29 = new System.Windows.Forms.Label();
+            this.label28 = new System.Windows.Forms.Label();
+            this.butContenTableSave = new DevComponents.DotNetBar.ButtonX();
+            this.butContenColDel = new DevComponents.DotNetBar.ButtonX();
+            this.butContenColAdd = new DevComponents.DotNetBar.ButtonX();
+            this.txtContenlabWith = new System.Windows.Forms.TextBox();
+            this.txtContenLieSn = new System.Windows.Forms.TextBox();
+            this.groupBox10 = new System.Windows.Forms.GroupBox();
+            this.chkContenColShow = new System.Windows.Forms.CheckedListBox();
+            this.label34 = new System.Windows.Forms.Label();
+            this.label27 = new System.Windows.Forms.Label();
+            this.label26 = new System.Windows.Forms.Label();
+            this.groupBox9 = new System.Windows.Forms.GroupBox();
+            this.chkContenCol = new System.Windows.Forms.CheckedListBox();
+            this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.butConten = new DevComponents.DotNetBar.ButtonX();
+            this.label25 = new System.Windows.Forms.Label();
+            this.txtContenTable = new System.Windows.Forms.TextBox();
+            this.tabItemConten = new DevComponents.DotNetBar.TabItem(this.components);
+            this.tabControlPanel4 = new DevComponents.DotNetBar.TabControlPanel();
+            this.combInfotxtWith = new DevComponents.DotNetBar.Controls.ComboBoxEx();
+            this.combInfoLabWith = new DevComponents.DotNetBar.Controls.ComboBoxEx();
+            this.combInfoColNum = new DevComponents.DotNetBar.Controls.ComboBoxEx();
+            this.combInfoTableName = new DevComponents.DotNetBar.Controls.ComboBoxEx();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label35 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.labInfoCol = new System.Windows.Forms.Label();
+            this.butInfoTableDel = new DevComponents.DotNetBar.ButtonX();
+            this.butInfoSave = new DevComponents.DotNetBar.ButtonX();
+            this.butInfoDel = new DevComponents.DotNetBar.ButtonX();
+            this.butInfoadd = new DevComponents.DotNetBar.ButtonX();
+            this.combInfoTable = new DevComponents.DotNetBar.Controls.ComboBoxEx();
+            this.grInfoAddzd = new System.Windows.Forms.GroupBox();
+            this.chkInfoZd = new System.Windows.Forms.CheckedListBox();
+            this.grInfoTable = new System.Windows.Forms.GroupBox();
+            this.chkInfoTable = new System.Windows.Forms.CheckedListBox();
+            this.grInfoAdd = new System.Windows.Forms.GroupBox();
+            this.butInfoAddIs = new DevComponents.DotNetBar.ButtonX();
+            this.txtInfoAdd = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.tabItemInfoAdd = new DevComponents.DotNetBar.TabItem(this.components);
+            this.tabControlPanel5 = new DevComponents.DotNetBar.TabControlPanel();
+            this.rabQuerInfoAll = new System.Windows.Forms.RadioButton();
+            this.rabQuerInfoTwo = new System.Windows.Forms.RadioButton();
+            this.rabQuerInfoone = new System.Windows.Forms.RadioButton();
+            this.butQuerSave = new DevComponents.DotNetBar.ButtonX();
+            this.butQuerDel = new DevComponents.DotNetBar.ButtonX();
+            this.butQuerAdd = new DevComponents.DotNetBar.ButtonX();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.chkQuerZd = new System.Windows.Forms.CheckedListBox();
+            this.grQuerTableinfo = new System.Windows.Forms.GroupBox();
+            this.chkQuerTable = new System.Windows.Forms.CheckedListBox();
+            this.grQuerTable = new System.Windows.Forms.GroupBox();
+            this.butQuerTable = new DevComponents.DotNetBar.ButtonX();
+            this.txtQuerTable = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.tabItemQuerTable = new DevComponents.DotNetBar.TabItem(this.components);
             this.tabControlPanel9 = new DevComponents.DotNetBar.TabControlPanel();
             this.combInfoCheckTable = new DevComponents.DotNetBar.Controls.ComboBoxEx();
             this.combInfoCheck_info = new DevComponents.DotNetBar.Controls.ComboBoxEx();
@@ -106,22 +171,6 @@
             this.txtTable = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tabItemPrintTab = new DevComponents.DotNetBar.TabItem(this.components);
-            this.tabControlPanel5 = new DevComponents.DotNetBar.TabControlPanel();
-            this.rabQuerInfoAll = new System.Windows.Forms.RadioButton();
-            this.rabQuerInfoTwo = new System.Windows.Forms.RadioButton();
-            this.rabQuerInfoone = new System.Windows.Forms.RadioButton();
-            this.butQuerSave = new DevComponents.DotNetBar.ButtonX();
-            this.butQuerDel = new DevComponents.DotNetBar.ButtonX();
-            this.butQuerAdd = new DevComponents.DotNetBar.ButtonX();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.chkQuerZd = new System.Windows.Forms.CheckedListBox();
-            this.grQuerTableinfo = new System.Windows.Forms.GroupBox();
-            this.chkQuerTable = new System.Windows.Forms.CheckedListBox();
-            this.grQuerTable = new System.Windows.Forms.GroupBox();
-            this.butQuerTable = new DevComponents.DotNetBar.ButtonX();
-            this.txtQuerTable = new System.Windows.Forms.TextBox();
-            this.label14 = new System.Windows.Forms.Label();
-            this.tabItemQuerTable = new DevComponents.DotNetBar.TabItem(this.components);
             this.tabControlPanel6 = new DevComponents.DotNetBar.TabControlPanel();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.tabConDataSplit = new DevComponents.DotNetBar.TabControl();
@@ -170,29 +219,6 @@
             this.txtDataSplitTable = new System.Windows.Forms.TextBox();
             this.label15 = new System.Windows.Forms.Label();
             this.tabItemDataSplit = new DevComponents.DotNetBar.TabItem(this.components);
-            this.tabControlPanel10 = new DevComponents.DotNetBar.TabControlPanel();
-            this.txtContentxtWith = new System.Windows.Forms.TextBox();
-            this.combContenPages = new DevComponents.DotNetBar.Controls.ComboBoxEx();
-            this.combContenTitle = new DevComponents.DotNetBar.Controls.ComboBoxEx();
-            this.label29 = new System.Windows.Forms.Label();
-            this.label28 = new System.Windows.Forms.Label();
-            this.butContenTableSave = new DevComponents.DotNetBar.ButtonX();
-            this.butContenColDel = new DevComponents.DotNetBar.ButtonX();
-            this.butContenColAdd = new DevComponents.DotNetBar.ButtonX();
-            this.txtContenlabWith = new System.Windows.Forms.TextBox();
-            this.txtContenLieSn = new System.Windows.Forms.TextBox();
-            this.groupBox10 = new System.Windows.Forms.GroupBox();
-            this.chkContenColShow = new System.Windows.Forms.CheckedListBox();
-            this.label34 = new System.Windows.Forms.Label();
-            this.label27 = new System.Windows.Forms.Label();
-            this.label26 = new System.Windows.Forms.Label();
-            this.groupBox9 = new System.Windows.Forms.GroupBox();
-            this.chkContenCol = new System.Windows.Forms.CheckedListBox();
-            this.groupBox8 = new System.Windows.Forms.GroupBox();
-            this.butConten = new DevComponents.DotNetBar.ButtonX();
-            this.label25 = new System.Windows.Forms.Label();
-            this.txtContenTable = new System.Windows.Forms.TextBox();
-            this.tabItemConten = new DevComponents.DotNetBar.TabItem(this.components);
             this.tabControlPanel11 = new DevComponents.DotNetBar.TabControlPanel();
             this.butCreateTableUpdate = new DevComponents.DotNetBar.ButtonX();
             this.butCreateTableDel = new DevComponents.DotNetBar.ButtonX();
@@ -257,37 +283,11 @@
             this.butImportzd = new DevComponents.DotNetBar.ButtonX();
             this.label9 = new System.Windows.Forms.Label();
             this.tabItemImprot = new DevComponents.DotNetBar.TabItem(this.components);
-            this.tabControlPanel4 = new DevComponents.DotNetBar.TabControlPanel();
-            this.combInfotxtWith = new DevComponents.DotNetBar.Controls.ComboBoxEx();
-            this.combInfoLabWith = new DevComponents.DotNetBar.Controls.ComboBoxEx();
-            this.combInfoColNum = new DevComponents.DotNetBar.Controls.ComboBoxEx();
-            this.combInfoTableName = new DevComponents.DotNetBar.Controls.ComboBoxEx();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label35 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
-            this.labInfoCol = new System.Windows.Forms.Label();
-            this.butInfoTableDel = new DevComponents.DotNetBar.ButtonX();
-            this.butInfoSave = new DevComponents.DotNetBar.ButtonX();
-            this.butInfoDel = new DevComponents.DotNetBar.ButtonX();
-            this.butInfoadd = new DevComponents.DotNetBar.ButtonX();
-            this.combInfoTable = new DevComponents.DotNetBar.Controls.ComboBoxEx();
-            this.grInfoAddzd = new System.Windows.Forms.GroupBox();
-            this.chkInfoZd = new System.Windows.Forms.CheckedListBox();
-            this.grInfoTable = new System.Windows.Forms.GroupBox();
-            this.chkInfoTable = new System.Windows.Forms.CheckedListBox();
-            this.grInfoAdd = new System.Windows.Forms.GroupBox();
-            this.butInfoAddIs = new DevComponents.DotNetBar.ButtonX();
-            this.txtInfoAdd = new System.Windows.Forms.TextBox();
-            this.label10 = new System.Windows.Forms.Label();
-            this.tabItemInfoAdd = new DevComponents.DotNetBar.TabItem(this.components);
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.fontdlg = new System.Windows.Forms.FontDialog();
             this.comboItem4 = new DevComponents.Editors.ComboItem();
             this.comboItem3 = new DevComponents.Editors.ComboItem();
             this.colorDialog = new System.Windows.Forms.ColorDialog();
-            this.label37 = new System.Windows.Forms.Label();
-            this.comborrTime = new DevComponents.DotNetBar.Controls.ComboBoxEx();
             ((System.ComponentModel.ISupportInitialize)(this.superTabControl1)).BeginInit();
             this.superTabControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.superTabControl2)).BeginInit();
@@ -298,6 +298,18 @@
             this.groupBox16.SuspendLayout();
             this.groupBox15.SuspendLayout();
             this.groupBox14.SuspendLayout();
+            this.tabControlPanel10.SuspendLayout();
+            this.groupBox10.SuspendLayout();
+            this.groupBox9.SuspendLayout();
+            this.groupBox8.SuspendLayout();
+            this.tabControlPanel4.SuspendLayout();
+            this.grInfoAddzd.SuspendLayout();
+            this.grInfoTable.SuspendLayout();
+            this.grInfoAdd.SuspendLayout();
+            this.tabControlPanel5.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            this.grQuerTableinfo.SuspendLayout();
+            this.grQuerTable.SuspendLayout();
             this.tabControlPanel9.SuspendLayout();
             this.groupBox7.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -312,10 +324,6 @@
             this.tabContrPrintPanlcolshow.SuspendLayout();
             this.grPrintTable.SuspendLayout();
             this.gr.SuspendLayout();
-            this.tabControlPanel5.SuspendLayout();
-            this.groupBox1.SuspendLayout();
-            this.grQuerTableinfo.SuspendLayout();
-            this.grQuerTable.SuspendLayout();
             this.tabControlPanel6.SuspendLayout();
             this.groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tabConDataSplit)).BeginInit();
@@ -326,10 +334,6 @@
             this.tabControlPanel8.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.grDataSpiteTable.SuspendLayout();
-            this.tabControlPanel10.SuspendLayout();
-            this.groupBox10.SuspendLayout();
-            this.groupBox9.SuspendLayout();
-            this.groupBox8.SuspendLayout();
             this.tabControlPanel11.SuspendLayout();
             this.groupBox13.SuspendLayout();
             this.groupBox12.SuspendLayout();
@@ -344,10 +348,6 @@
             this.grImportAddzd.SuspendLayout();
             this.grImportTable.SuspendLayout();
             this.grImportsjk.SuspendLayout();
-            this.tabControlPanel4.SuspendLayout();
-            this.grInfoAddzd.SuspendLayout();
-            this.grInfoTable.SuspendLayout();
-            this.grInfoAdd.SuspendLayout();
             this.SuspendLayout();
             // 
             // superTabControl1
@@ -414,15 +414,15 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabContr.CanReorderTabs = true;
+            this.tabContr.Controls.Add(this.tabControlPanel2);
+            this.tabContr.Controls.Add(this.tabConPrintSet);
             this.tabContr.Controls.Add(this.tabControlPanel12);
             this.tabContr.Controls.Add(this.tabControlPanel10);
             this.tabContr.Controls.Add(this.tabControlPanel4);
             this.tabContr.Controls.Add(this.tabControlPanel5);
             this.tabContr.Controls.Add(this.tabControlPanel9);
-            this.tabContr.Controls.Add(this.tabConPrintSet);
             this.tabContr.Controls.Add(this.tabControlPanel6);
             this.tabContr.Controls.Add(this.tabControlPanel11);
-            this.tabContr.Controls.Add(this.tabControlPanel2);
             this.tabContr.Controls.Add(this.tabControlPanel3);
             this.tabContr.Location = new System.Drawing.Point(0, 28);
             this.tabContr.Name = "tabContr";
@@ -469,6 +469,29 @@
             this.tabControlPanel12.Style.GradientAngle = 90;
             this.tabControlPanel12.TabIndex = 118;
             this.tabControlPanel12.TabItem = this.tabItemBorr;
+            // 
+            // comborrTime
+            // 
+            this.comborrTime.DisplayMember = "Text";
+            this.comborrTime.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.comborrTime.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comborrTime.FormattingEnabled = true;
+            this.comborrTime.ItemHeight = 15;
+            this.comborrTime.Location = new System.Drawing.Point(250, 205);
+            this.comborrTime.Name = "comborrTime";
+            this.comborrTime.Size = new System.Drawing.Size(108, 21);
+            this.comborrTime.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.comborrTime.TabIndex = 8;
+            // 
+            // label37
+            // 
+            this.label37.AutoSize = true;
+            this.label37.BackColor = System.Drawing.Color.Transparent;
+            this.label37.Location = new System.Drawing.Point(261, 172);
+            this.label37.Name = "label37";
+            this.label37.Size = new System.Drawing.Size(77, 12);
+            this.label37.TabIndex = 7;
+            this.label37.Text = "指定时间字段";
             // 
             // label36
             // 
@@ -604,6 +627,744 @@
             this.tabItemBorr.AttachedControl = this.tabControlPanel12;
             this.tabItemBorr.Name = "tabItemBorr";
             this.tabItemBorr.Text = "借阅查询表";
+            // 
+            // tabControlPanel10
+            // 
+            this.tabControlPanel10.Controls.Add(this.txtContentxtWith);
+            this.tabControlPanel10.Controls.Add(this.combContenPages);
+            this.tabControlPanel10.Controls.Add(this.combContenTitle);
+            this.tabControlPanel10.Controls.Add(this.label29);
+            this.tabControlPanel10.Controls.Add(this.label28);
+            this.tabControlPanel10.Controls.Add(this.butContenTableSave);
+            this.tabControlPanel10.Controls.Add(this.butContenColDel);
+            this.tabControlPanel10.Controls.Add(this.butContenColAdd);
+            this.tabControlPanel10.Controls.Add(this.txtContenlabWith);
+            this.tabControlPanel10.Controls.Add(this.txtContenLieSn);
+            this.tabControlPanel10.Controls.Add(this.groupBox10);
+            this.tabControlPanel10.Controls.Add(this.label34);
+            this.tabControlPanel10.Controls.Add(this.label27);
+            this.tabControlPanel10.Controls.Add(this.label26);
+            this.tabControlPanel10.Controls.Add(this.groupBox9);
+            this.tabControlPanel10.Controls.Add(this.groupBox8);
+            this.tabControlPanel10.DisabledBackColor = System.Drawing.Color.Empty;
+            this.tabControlPanel10.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControlPanel10.Location = new System.Drawing.Point(0, 26);
+            this.tabControlPanel10.Name = "tabControlPanel10";
+            this.tabControlPanel10.Padding = new System.Windows.Forms.Padding(1);
+            this.tabControlPanel10.Size = new System.Drawing.Size(694, 480);
+            this.tabControlPanel10.Style.BackColor1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(142)))), ((int)(((byte)(179)))), ((int)(((byte)(231)))));
+            this.tabControlPanel10.Style.BackColor2.Color = System.Drawing.Color.FromArgb(((int)(((byte)(223)))), ((int)(((byte)(237)))), ((int)(((byte)(254)))));
+            this.tabControlPanel10.Style.Border = DevComponents.DotNetBar.eBorderType.SingleLine;
+            this.tabControlPanel10.Style.BorderColor.Color = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(97)))), ((int)(((byte)(156)))));
+            this.tabControlPanel10.Style.BorderSide = ((DevComponents.DotNetBar.eBorderSide)(((DevComponents.DotNetBar.eBorderSide.Left | DevComponents.DotNetBar.eBorderSide.Right) 
+            | DevComponents.DotNetBar.eBorderSide.Bottom)));
+            this.tabControlPanel10.Style.GradientAngle = 90;
+            this.tabControlPanel10.TabIndex = 89;
+            this.tabControlPanel10.TabItem = this.tabItemConten;
+            // 
+            // txtContentxtWith
+            // 
+            this.txtContentxtWith.Location = new System.Drawing.Point(233, 294);
+            this.txtContentxtWith.Name = "txtContentxtWith";
+            this.txtContentxtWith.Size = new System.Drawing.Size(100, 21);
+            this.txtContentxtWith.TabIndex = 11;
+            // 
+            // combContenPages
+            // 
+            this.combContenPages.DisplayMember = "Text";
+            this.combContenPages.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.combContenPages.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.combContenPages.FormattingEnabled = true;
+            this.combContenPages.ItemHeight = 15;
+            this.combContenPages.Location = new System.Drawing.Point(583, 234);
+            this.combContenPages.Name = "combContenPages";
+            this.combContenPages.Size = new System.Drawing.Size(89, 21);
+            this.combContenPages.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.combContenPages.TabIndex = 10;
+            // 
+            // combContenTitle
+            // 
+            this.combContenTitle.DisplayMember = "Text";
+            this.combContenTitle.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.combContenTitle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.combContenTitle.FormattingEnabled = true;
+            this.combContenTitle.ItemHeight = 15;
+            this.combContenTitle.Location = new System.Drawing.Point(583, 164);
+            this.combContenTitle.Name = "combContenTitle";
+            this.combContenTitle.Size = new System.Drawing.Size(89, 21);
+            this.combContenTitle.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.combContenTitle.TabIndex = 9;
+            // 
+            // label29
+            // 
+            this.label29.AutoSize = true;
+            this.label29.BackColor = System.Drawing.Color.Transparent;
+            this.label29.Location = new System.Drawing.Point(586, 210);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(77, 12);
+            this.label29.TabIndex = 8;
+            this.label29.Text = "选择页码字段";
+            // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.BackColor = System.Drawing.Color.Transparent;
+            this.label28.Location = new System.Drawing.Point(586, 141);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(77, 12);
+            this.label28.TabIndex = 8;
+            this.label28.Text = "选择标题字段";
+            // 
+            // butContenTableSave
+            // 
+            this.butContenTableSave.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.butContenTableSave.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.butContenTableSave.Location = new System.Drawing.Point(587, 305);
+            this.butContenTableSave.Name = "butContenTableSave";
+            this.butContenTableSave.Size = new System.Drawing.Size(75, 39);
+            this.butContenTableSave.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.butContenTableSave.TabIndex = 7;
+            this.butContenTableSave.Text = "保存";
+            this.butContenTableSave.Click += new System.EventHandler(this.butContenTableSave_Click);
+            // 
+            // butContenColDel
+            // 
+            this.butContenColDel.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.butContenColDel.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.butContenColDel.Location = new System.Drawing.Point(240, 397);
+            this.butContenColDel.Name = "butContenColDel";
+            this.butContenColDel.Size = new System.Drawing.Size(75, 23);
+            this.butContenColDel.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.butContenColDel.TabIndex = 6;
+            this.butContenColDel.Text = "<<";
+            this.butContenColDel.Click += new System.EventHandler(this.butContenColDel_Click);
+            // 
+            // butContenColAdd
+            // 
+            this.butContenColAdd.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.butContenColAdd.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.butContenColAdd.Location = new System.Drawing.Point(240, 345);
+            this.butContenColAdd.Name = "butContenColAdd";
+            this.butContenColAdd.Size = new System.Drawing.Size(75, 23);
+            this.butContenColAdd.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.butContenColAdd.TabIndex = 5;
+            this.butContenColAdd.Text = ">>";
+            this.butContenColAdd.Click += new System.EventHandler(this.butContenColAdd_Click);
+            // 
+            // txtContenlabWith
+            // 
+            this.txtContenlabWith.Location = new System.Drawing.Point(233, 230);
+            this.txtContenlabWith.Name = "txtContenlabWith";
+            this.txtContenlabWith.Size = new System.Drawing.Size(100, 21);
+            this.txtContenlabWith.TabIndex = 4;
+            // 
+            // txtContenLieSn
+            // 
+            this.txtContenLieSn.Location = new System.Drawing.Point(233, 164);
+            this.txtContenLieSn.Name = "txtContenLieSn";
+            this.txtContenLieSn.Size = new System.Drawing.Size(100, 21);
+            this.txtContenLieSn.TabIndex = 3;
+            // 
+            // groupBox10
+            // 
+            this.groupBox10.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox10.Controls.Add(this.chkContenColShow);
+            this.groupBox10.Location = new System.Drawing.Point(364, 105);
+            this.groupBox10.Name = "groupBox10";
+            this.groupBox10.Size = new System.Drawing.Size(200, 363);
+            this.groupBox10.TabIndex = 2;
+            this.groupBox10.TabStop = false;
+            this.groupBox10.Text = "显示字段";
+            // 
+            // chkContenColShow
+            // 
+            this.chkContenColShow.CheckOnClick = true;
+            this.chkContenColShow.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.chkContenColShow.FormattingEnabled = true;
+            this.chkContenColShow.Location = new System.Drawing.Point(3, 17);
+            this.chkContenColShow.Name = "chkContenColShow";
+            this.chkContenColShow.Size = new System.Drawing.Size(194, 343);
+            this.chkContenColShow.TabIndex = 0;
+            // 
+            // label34
+            // 
+            this.label34.AutoSize = true;
+            this.label34.BackColor = System.Drawing.Color.Transparent;
+            this.label34.Location = new System.Drawing.Point(241, 269);
+            this.label34.Name = "label34";
+            this.label34.Size = new System.Drawing.Size(71, 12);
+            this.label34.TabIndex = 2;
+            this.label34.Text = "前台txt宽度";
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.BackColor = System.Drawing.Color.Transparent;
+            this.label27.Location = new System.Drawing.Point(241, 203);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(77, 12);
+            this.label27.TabIndex = 2;
+            this.label27.Text = "前台字段宽度";
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.BackColor = System.Drawing.Color.Transparent;
+            this.label26.Location = new System.Drawing.Point(241, 141);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(77, 12);
+            this.label26.TabIndex = 2;
+            this.label26.Text = "前台显示列数";
+            // 
+            // groupBox9
+            // 
+            this.groupBox9.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.groupBox9.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox9.Controls.Add(this.chkContenCol);
+            this.groupBox9.Location = new System.Drawing.Point(12, 105);
+            this.groupBox9.Name = "groupBox9";
+            this.groupBox9.Size = new System.Drawing.Size(200, 363);
+            this.groupBox9.TabIndex = 1;
+            this.groupBox9.TabStop = false;
+            this.groupBox9.Text = "表字段";
+            // 
+            // chkContenCol
+            // 
+            this.chkContenCol.CheckOnClick = true;
+            this.chkContenCol.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.chkContenCol.FormattingEnabled = true;
+            this.chkContenCol.Location = new System.Drawing.Point(3, 17);
+            this.chkContenCol.Name = "chkContenCol";
+            this.chkContenCol.Size = new System.Drawing.Size(194, 343);
+            this.chkContenCol.TabIndex = 0;
+            // 
+            // groupBox8
+            // 
+            this.groupBox8.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox8.Controls.Add(this.butConten);
+            this.groupBox8.Controls.Add(this.label25);
+            this.groupBox8.Controls.Add(this.txtContenTable);
+            this.groupBox8.Location = new System.Drawing.Point(12, 29);
+            this.groupBox8.Name = "groupBox8";
+            this.groupBox8.Size = new System.Drawing.Size(653, 70);
+            this.groupBox8.TabIndex = 0;
+            this.groupBox8.TabStop = false;
+            this.groupBox8.Text = "数据库表名";
+            // 
+            // butConten
+            // 
+            this.butConten.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.butConten.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.butConten.Location = new System.Drawing.Point(358, 20);
+            this.butConten.Name = "butConten";
+            this.butConten.Size = new System.Drawing.Size(75, 37);
+            this.butConten.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.butConten.TabIndex = 3;
+            this.butConten.Text = "判断连接";
+            this.butConten.Click += new System.EventHandler(this.butConten_Click);
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(26, 34);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(77, 12);
+            this.label25.TabIndex = 2;
+            this.label25.Text = "数据库表名：";
+            // 
+            // txtContenTable
+            // 
+            this.txtContenTable.Location = new System.Drawing.Point(110, 29);
+            this.txtContenTable.Name = "txtContenTable";
+            this.txtContenTable.Size = new System.Drawing.Size(196, 21);
+            this.txtContenTable.TabIndex = 0;
+            // 
+            // tabItemConten
+            // 
+            this.tabItemConten.AttachedControl = this.tabControlPanel10;
+            this.tabItemConten.Name = "tabItemConten";
+            this.tabItemConten.Text = "目录信息补录";
+            // 
+            // tabControlPanel4
+            // 
+            this.tabControlPanel4.Controls.Add(this.combInfotxtWith);
+            this.tabControlPanel4.Controls.Add(this.combInfoLabWith);
+            this.tabControlPanel4.Controls.Add(this.combInfoColNum);
+            this.tabControlPanel4.Controls.Add(this.combInfoTableName);
+            this.tabControlPanel4.Controls.Add(this.label12);
+            this.tabControlPanel4.Controls.Add(this.label11);
+            this.tabControlPanel4.Controls.Add(this.label35);
+            this.tabControlPanel4.Controls.Add(this.label13);
+            this.tabControlPanel4.Controls.Add(this.labInfoCol);
+            this.tabControlPanel4.Controls.Add(this.butInfoTableDel);
+            this.tabControlPanel4.Controls.Add(this.butInfoSave);
+            this.tabControlPanel4.Controls.Add(this.butInfoDel);
+            this.tabControlPanel4.Controls.Add(this.butInfoadd);
+            this.tabControlPanel4.Controls.Add(this.combInfoTable);
+            this.tabControlPanel4.Controls.Add(this.grInfoAddzd);
+            this.tabControlPanel4.Controls.Add(this.grInfoTable);
+            this.tabControlPanel4.Controls.Add(this.grInfoAdd);
+            this.tabControlPanel4.DisabledBackColor = System.Drawing.Color.Empty;
+            this.tabControlPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControlPanel4.Location = new System.Drawing.Point(0, 26);
+            this.tabControlPanel4.Name = "tabControlPanel4";
+            this.tabControlPanel4.Padding = new System.Windows.Forms.Padding(1);
+            this.tabControlPanel4.Size = new System.Drawing.Size(694, 480);
+            this.tabControlPanel4.Style.BackColor1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(142)))), ((int)(((byte)(179)))), ((int)(((byte)(231)))));
+            this.tabControlPanel4.Style.BackColor2.Color = System.Drawing.Color.FromArgb(((int)(((byte)(223)))), ((int)(((byte)(237)))), ((int)(((byte)(254)))));
+            this.tabControlPanel4.Style.Border = DevComponents.DotNetBar.eBorderType.SingleLine;
+            this.tabControlPanel4.Style.BorderColor.Color = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(97)))), ((int)(((byte)(156)))));
+            this.tabControlPanel4.Style.BorderSide = ((DevComponents.DotNetBar.eBorderSide)(((DevComponents.DotNetBar.eBorderSide.Left | DevComponents.DotNetBar.eBorderSide.Right) 
+            | DevComponents.DotNetBar.eBorderSide.Bottom)));
+            this.tabControlPanel4.Style.GradientAngle = 90;
+            this.tabControlPanel4.TabIndex = 22;
+            this.tabControlPanel4.TabItem = this.tabItemInfoAdd;
+            // 
+            // combInfotxtWith
+            // 
+            this.combInfotxtWith.DisplayMember = "Text";
+            this.combInfotxtWith.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.combInfotxtWith.FormattingEnabled = true;
+            this.combInfotxtWith.ItemHeight = 15;
+            this.combInfotxtWith.Location = new System.Drawing.Point(224, 341);
+            this.combInfotxtWith.Name = "combInfotxtWith";
+            this.combInfotxtWith.Size = new System.Drawing.Size(122, 21);
+            this.combInfotxtWith.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.combInfotxtWith.TabIndex = 13;
+            // 
+            // combInfoLabWith
+            // 
+            this.combInfoLabWith.DisplayMember = "Text";
+            this.combInfoLabWith.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.combInfoLabWith.FormattingEnabled = true;
+            this.combInfoLabWith.ItemHeight = 15;
+            this.combInfoLabWith.Location = new System.Drawing.Point(225, 284);
+            this.combInfoLabWith.Name = "combInfoLabWith";
+            this.combInfoLabWith.Size = new System.Drawing.Size(121, 21);
+            this.combInfoLabWith.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.combInfoLabWith.TabIndex = 12;
+            // 
+            // combInfoColNum
+            // 
+            this.combInfoColNum.DisplayMember = "Text";
+            this.combInfoColNum.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.combInfoColNum.FormattingEnabled = true;
+            this.combInfoColNum.ItemHeight = 15;
+            this.combInfoColNum.Location = new System.Drawing.Point(225, 229);
+            this.combInfoColNum.Name = "combInfoColNum";
+            this.combInfoColNum.Size = new System.Drawing.Size(121, 21);
+            this.combInfoColNum.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.combInfoColNum.TabIndex = 11;
+            this.combInfoColNum.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.combInfoColNum_KeyPress);
+            // 
+            // combInfoTableName
+            // 
+            this.combInfoTableName.DisplayMember = "Text";
+            this.combInfoTableName.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.combInfoTableName.FormattingEnabled = true;
+            this.combInfoTableName.ItemHeight = 15;
+            this.combInfoTableName.Location = new System.Drawing.Point(225, 181);
+            this.combInfoTableName.Name = "combInfoTableName";
+            this.combInfoTableName.Size = new System.Drawing.Size(121, 21);
+            this.combInfoTableName.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.combInfoTableName.TabIndex = 10;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.BackColor = System.Drawing.Color.Transparent;
+            this.label12.Location = new System.Drawing.Point(239, 110);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(83, 12);
+            this.label12.TabIndex = 8;
+            this.label12.Text = "前台关联表名:";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.BackColor = System.Drawing.Color.Transparent;
+            this.label11.Location = new System.Drawing.Point(239, 162);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(83, 12);
+            this.label11.TabIndex = 8;
+            this.label11.Text = "前台显示标题:";
+            // 
+            // label35
+            // 
+            this.label35.AutoSize = true;
+            this.label35.BackColor = System.Drawing.Color.Transparent;
+            this.label35.Location = new System.Drawing.Point(238, 317);
+            this.label35.Name = "label35";
+            this.label35.Size = new System.Drawing.Size(77, 12);
+            this.label35.TabIndex = 8;
+            this.label35.Text = "前台txt宽度:";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.BackColor = System.Drawing.Color.Transparent;
+            this.label13.Location = new System.Drawing.Point(239, 261);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(83, 12);
+            this.label13.TabIndex = 8;
+            this.label13.Text = "前台字段宽度:";
+            // 
+            // labInfoCol
+            // 
+            this.labInfoCol.AutoSize = true;
+            this.labInfoCol.BackColor = System.Drawing.Color.Transparent;
+            this.labInfoCol.Location = new System.Drawing.Point(239, 210);
+            this.labInfoCol.Name = "labInfoCol";
+            this.labInfoCol.Size = new System.Drawing.Size(83, 12);
+            this.labInfoCol.TabIndex = 8;
+            this.labInfoCol.Text = "前台显示列数:";
+            // 
+            // butInfoTableDel
+            // 
+            this.butInfoTableDel.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.butInfoTableDel.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.butInfoTableDel.Location = new System.Drawing.Point(580, 308);
+            this.butInfoTableDel.Name = "butInfoTableDel";
+            this.butInfoTableDel.Size = new System.Drawing.Size(75, 42);
+            this.butInfoTableDel.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.butInfoTableDel.TabIndex = 7;
+            this.butInfoTableDel.Text = "删除";
+            this.butInfoTableDel.Click += new System.EventHandler(this.butInfoTableDel_Click);
+            // 
+            // butInfoSave
+            // 
+            this.butInfoSave.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.butInfoSave.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.butInfoSave.Location = new System.Drawing.Point(580, 210);
+            this.butInfoSave.Name = "butInfoSave";
+            this.butInfoSave.Size = new System.Drawing.Size(75, 42);
+            this.butInfoSave.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.butInfoSave.TabIndex = 6;
+            this.butInfoSave.Text = "保存";
+            this.butInfoSave.Click += new System.EventHandler(this.butInfoSave_Click);
+            // 
+            // butInfoDel
+            // 
+            this.butInfoDel.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.butInfoDel.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.butInfoDel.Location = new System.Drawing.Point(237, 438);
+            this.butInfoDel.Name = "butInfoDel";
+            this.butInfoDel.Size = new System.Drawing.Size(75, 23);
+            this.butInfoDel.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.butInfoDel.TabIndex = 5;
+            this.butInfoDel.Text = "<<";
+            this.butInfoDel.Click += new System.EventHandler(this.butInfoDel_Click);
+            // 
+            // butInfoadd
+            // 
+            this.butInfoadd.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.butInfoadd.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.butInfoadd.Location = new System.Drawing.Point(237, 387);
+            this.butInfoadd.Name = "butInfoadd";
+            this.butInfoadd.Size = new System.Drawing.Size(75, 23);
+            this.butInfoadd.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.butInfoadd.TabIndex = 4;
+            this.butInfoadd.Text = ">>";
+            this.butInfoadd.Click += new System.EventHandler(this.butInfoadd_Click);
+            // 
+            // combInfoTable
+            // 
+            this.combInfoTable.DisplayMember = "Text";
+            this.combInfoTable.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.combInfoTable.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.combInfoTable.FormattingEnabled = true;
+            this.combInfoTable.ItemHeight = 15;
+            this.combInfoTable.Location = new System.Drawing.Point(225, 129);
+            this.combInfoTable.Name = "combInfoTable";
+            this.combInfoTable.Size = new System.Drawing.Size(121, 21);
+            this.combInfoTable.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.combInfoTable.TabIndex = 3;
+            this.combInfoTable.SelectedIndexChanged += new System.EventHandler(this.combInfoTable_SelectedIndexChanged);
+            // 
+            // grInfoAddzd
+            // 
+            this.grInfoAddzd.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.grInfoAddzd.BackColor = System.Drawing.Color.Transparent;
+            this.grInfoAddzd.Controls.Add(this.chkInfoZd);
+            this.grInfoAddzd.Location = new System.Drawing.Point(364, 105);
+            this.grInfoAddzd.Name = "grInfoAddzd";
+            this.grInfoAddzd.Size = new System.Drawing.Size(200, 363);
+            this.grInfoAddzd.TabIndex = 2;
+            this.grInfoAddzd.TabStop = false;
+            this.grInfoAddzd.Text = "显示字段";
+            // 
+            // chkInfoZd
+            // 
+            this.chkInfoZd.CheckOnClick = true;
+            this.chkInfoZd.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.chkInfoZd.FormattingEnabled = true;
+            this.chkInfoZd.Location = new System.Drawing.Point(3, 17);
+            this.chkInfoZd.Name = "chkInfoZd";
+            this.chkInfoZd.Size = new System.Drawing.Size(194, 343);
+            this.chkInfoZd.TabIndex = 0;
+            // 
+            // grInfoTable
+            // 
+            this.grInfoTable.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.grInfoTable.BackColor = System.Drawing.Color.Transparent;
+            this.grInfoTable.Controls.Add(this.chkInfoTable);
+            this.grInfoTable.Location = new System.Drawing.Point(12, 105);
+            this.grInfoTable.Name = "grInfoTable";
+            this.grInfoTable.Size = new System.Drawing.Size(200, 363);
+            this.grInfoTable.TabIndex = 1;
+            this.grInfoTable.TabStop = false;
+            this.grInfoTable.Text = "表字段";
+            // 
+            // chkInfoTable
+            // 
+            this.chkInfoTable.CheckOnClick = true;
+            this.chkInfoTable.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.chkInfoTable.FormattingEnabled = true;
+            this.chkInfoTable.Location = new System.Drawing.Point(3, 17);
+            this.chkInfoTable.Name = "chkInfoTable";
+            this.chkInfoTable.Size = new System.Drawing.Size(194, 343);
+            this.chkInfoTable.TabIndex = 0;
+            // 
+            // grInfoAdd
+            // 
+            this.grInfoAdd.BackColor = System.Drawing.Color.Transparent;
+            this.grInfoAdd.Controls.Add(this.butInfoAddIs);
+            this.grInfoAdd.Controls.Add(this.txtInfoAdd);
+            this.grInfoAdd.Controls.Add(this.label10);
+            this.grInfoAdd.Location = new System.Drawing.Point(12, 19);
+            this.grInfoAdd.Name = "grInfoAdd";
+            this.grInfoAdd.Size = new System.Drawing.Size(648, 70);
+            this.grInfoAdd.TabIndex = 0;
+            this.grInfoAdd.TabStop = false;
+            this.grInfoAdd.Text = "数据库表名";
+            // 
+            // butInfoAddIs
+            // 
+            this.butInfoAddIs.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.butInfoAddIs.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.butInfoAddIs.Location = new System.Drawing.Point(358, 20);
+            this.butInfoAddIs.Name = "butInfoAddIs";
+            this.butInfoAddIs.Size = new System.Drawing.Size(75, 37);
+            this.butInfoAddIs.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.butInfoAddIs.TabIndex = 3;
+            this.butInfoAddIs.Text = "判断连接";
+            this.butInfoAddIs.Click += new System.EventHandler(this.butInfoAddIs_Click);
+            // 
+            // txtInfoAdd
+            // 
+            this.txtInfoAdd.Location = new System.Drawing.Point(110, 29);
+            this.txtInfoAdd.Name = "txtInfoAdd";
+            this.txtInfoAdd.Size = new System.Drawing.Size(196, 21);
+            this.txtInfoAdd.TabIndex = 2;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(32, 35);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(77, 12);
+            this.label10.TabIndex = 1;
+            this.label10.Text = "数据库表名：";
+            // 
+            // tabItemInfoAdd
+            // 
+            this.tabItemInfoAdd.AttachedControl = this.tabControlPanel4;
+            this.tabItemInfoAdd.Name = "tabItemInfoAdd";
+            this.tabItemInfoAdd.Text = "信息补录设置";
+            // 
+            // tabControlPanel5
+            // 
+            this.tabControlPanel5.Controls.Add(this.rabQuerInfoAll);
+            this.tabControlPanel5.Controls.Add(this.rabQuerInfoTwo);
+            this.tabControlPanel5.Controls.Add(this.rabQuerInfoone);
+            this.tabControlPanel5.Controls.Add(this.butQuerSave);
+            this.tabControlPanel5.Controls.Add(this.butQuerDel);
+            this.tabControlPanel5.Controls.Add(this.butQuerAdd);
+            this.tabControlPanel5.Controls.Add(this.groupBox1);
+            this.tabControlPanel5.Controls.Add(this.grQuerTableinfo);
+            this.tabControlPanel5.Controls.Add(this.grQuerTable);
+            this.tabControlPanel5.DisabledBackColor = System.Drawing.Color.Empty;
+            this.tabControlPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControlPanel5.Location = new System.Drawing.Point(0, 26);
+            this.tabControlPanel5.Name = "tabControlPanel5";
+            this.tabControlPanel5.Padding = new System.Windows.Forms.Padding(1);
+            this.tabControlPanel5.Size = new System.Drawing.Size(694, 480);
+            this.tabControlPanel5.Style.BackColor1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(142)))), ((int)(((byte)(179)))), ((int)(((byte)(231)))));
+            this.tabControlPanel5.Style.BackColor2.Color = System.Drawing.Color.FromArgb(((int)(((byte)(223)))), ((int)(((byte)(237)))), ((int)(((byte)(254)))));
+            this.tabControlPanel5.Style.Border = DevComponents.DotNetBar.eBorderType.SingleLine;
+            this.tabControlPanel5.Style.BorderColor.Color = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(97)))), ((int)(((byte)(156)))));
+            this.tabControlPanel5.Style.BorderSide = ((DevComponents.DotNetBar.eBorderSide)(((DevComponents.DotNetBar.eBorderSide.Left | DevComponents.DotNetBar.eBorderSide.Right) 
+            | DevComponents.DotNetBar.eBorderSide.Bottom)));
+            this.tabControlPanel5.Style.GradientAngle = 90;
+            this.tabControlPanel5.TabIndex = 35;
+            this.tabControlPanel5.TabItem = this.tabItemQuerTable;
+            // 
+            // rabQuerInfoAll
+            // 
+            this.rabQuerInfoAll.AutoSize = true;
+            this.rabQuerInfoAll.BackColor = System.Drawing.Color.Transparent;
+            this.rabQuerInfoAll.Location = new System.Drawing.Point(241, 188);
+            this.rabQuerInfoAll.Name = "rabQuerInfoAll";
+            this.rabQuerInfoAll.Size = new System.Drawing.Size(71, 16);
+            this.rabQuerInfoAll.TabIndex = 8;
+            this.rabQuerInfoAll.Text = "全部显示";
+            this.rabQuerInfoAll.UseVisualStyleBackColor = false;
+            // 
+            // rabQuerInfoTwo
+            // 
+            this.rabQuerInfoTwo.AutoSize = true;
+            this.rabQuerInfoTwo.BackColor = System.Drawing.Color.Transparent;
+            this.rabQuerInfoTwo.Location = new System.Drawing.Point(241, 159);
+            this.rabQuerInfoTwo.Name = "rabQuerInfoTwo";
+            this.rabQuerInfoTwo.Size = new System.Drawing.Size(71, 16);
+            this.rabQuerInfoTwo.TabIndex = 7;
+            this.rabQuerInfoTwo.Text = "查询二录";
+            this.rabQuerInfoTwo.UseVisualStyleBackColor = false;
+            // 
+            // rabQuerInfoone
+            // 
+            this.rabQuerInfoone.AutoSize = true;
+            this.rabQuerInfoone.BackColor = System.Drawing.Color.Transparent;
+            this.rabQuerInfoone.Checked = true;
+            this.rabQuerInfoone.Location = new System.Drawing.Point(241, 131);
+            this.rabQuerInfoone.Name = "rabQuerInfoone";
+            this.rabQuerInfoone.Size = new System.Drawing.Size(71, 16);
+            this.rabQuerInfoone.TabIndex = 6;
+            this.rabQuerInfoone.TabStop = true;
+            this.rabQuerInfoone.Text = "查询一录";
+            this.rabQuerInfoone.UseVisualStyleBackColor = false;
+            // 
+            // butQuerSave
+            // 
+            this.butQuerSave.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.butQuerSave.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.butQuerSave.Location = new System.Drawing.Point(241, 371);
+            this.butQuerSave.Name = "butQuerSave";
+            this.butQuerSave.Size = new System.Drawing.Size(75, 49);
+            this.butQuerSave.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.butQuerSave.TabIndex = 5;
+            this.butQuerSave.Text = "保存";
+            this.butQuerSave.Click += new System.EventHandler(this.butQuerSave_Click);
+            // 
+            // butQuerDel
+            // 
+            this.butQuerDel.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.butQuerDel.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.butQuerDel.Location = new System.Drawing.Point(241, 299);
+            this.butQuerDel.Name = "butQuerDel";
+            this.butQuerDel.Size = new System.Drawing.Size(75, 23);
+            this.butQuerDel.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.butQuerDel.TabIndex = 4;
+            this.butQuerDel.Text = "<<";
+            this.butQuerDel.Click += new System.EventHandler(this.butQuerDel_Click);
+            // 
+            // butQuerAdd
+            // 
+            this.butQuerAdd.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.butQuerAdd.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.butQuerAdd.Location = new System.Drawing.Point(241, 233);
+            this.butQuerAdd.Name = "butQuerAdd";
+            this.butQuerAdd.Size = new System.Drawing.Size(75, 23);
+            this.butQuerAdd.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.butQuerAdd.TabIndex = 3;
+            this.butQuerAdd.Text = ">>";
+            this.butQuerAdd.Click += new System.EventHandler(this.butQuerAdd_Click);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.groupBox1.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox1.Controls.Add(this.chkQuerZd);
+            this.groupBox1.Location = new System.Drawing.Point(364, 105);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(200, 363);
+            this.groupBox1.TabIndex = 2;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "查询字段";
+            // 
+            // chkQuerZd
+            // 
+            this.chkQuerZd.CheckOnClick = true;
+            this.chkQuerZd.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.chkQuerZd.FormattingEnabled = true;
+            this.chkQuerZd.Location = new System.Drawing.Point(3, 17);
+            this.chkQuerZd.Name = "chkQuerZd";
+            this.chkQuerZd.Size = new System.Drawing.Size(194, 343);
+            this.chkQuerZd.TabIndex = 0;
+            // 
+            // grQuerTableinfo
+            // 
+            this.grQuerTableinfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.grQuerTableinfo.BackColor = System.Drawing.Color.Transparent;
+            this.grQuerTableinfo.Controls.Add(this.chkQuerTable);
+            this.grQuerTableinfo.Location = new System.Drawing.Point(12, 105);
+            this.grQuerTableinfo.Name = "grQuerTableinfo";
+            this.grQuerTableinfo.Size = new System.Drawing.Size(200, 363);
+            this.grQuerTableinfo.TabIndex = 1;
+            this.grQuerTableinfo.TabStop = false;
+            this.grQuerTableinfo.Text = "表字段";
+            // 
+            // chkQuerTable
+            // 
+            this.chkQuerTable.CheckOnClick = true;
+            this.chkQuerTable.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.chkQuerTable.FormattingEnabled = true;
+            this.chkQuerTable.Location = new System.Drawing.Point(3, 17);
+            this.chkQuerTable.Name = "chkQuerTable";
+            this.chkQuerTable.Size = new System.Drawing.Size(194, 343);
+            this.chkQuerTable.TabIndex = 0;
+            // 
+            // grQuerTable
+            // 
+            this.grQuerTable.BackColor = System.Drawing.Color.Transparent;
+            this.grQuerTable.Controls.Add(this.butQuerTable);
+            this.grQuerTable.Controls.Add(this.txtQuerTable);
+            this.grQuerTable.Controls.Add(this.label14);
+            this.grQuerTable.Location = new System.Drawing.Point(12, 19);
+            this.grQuerTable.Name = "grQuerTable";
+            this.grQuerTable.Size = new System.Drawing.Size(648, 70);
+            this.grQuerTable.TabIndex = 0;
+            this.grQuerTable.TabStop = false;
+            this.grQuerTable.Text = "数据库表名";
+            // 
+            // butQuerTable
+            // 
+            this.butQuerTable.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.butQuerTable.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.butQuerTable.Location = new System.Drawing.Point(358, 20);
+            this.butQuerTable.Name = "butQuerTable";
+            this.butQuerTable.Size = new System.Drawing.Size(75, 37);
+            this.butQuerTable.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.butQuerTable.TabIndex = 4;
+            this.butQuerTable.Text = "判断连接";
+            this.butQuerTable.Click += new System.EventHandler(this.butQuerTable_Click);
+            // 
+            // txtQuerTable
+            // 
+            this.txtQuerTable.Location = new System.Drawing.Point(110, 29);
+            this.txtQuerTable.Name = "txtQuerTable";
+            this.txtQuerTable.Size = new System.Drawing.Size(196, 21);
+            this.txtQuerTable.TabIndex = 3;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(32, 35);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(77, 12);
+            this.label14.TabIndex = 2;
+            this.label14.Text = "数据库表名：";
+            // 
+            // tabItemQuerTable
+            // 
+            this.tabItemQuerTable.AttachedControl = this.tabControlPanel5;
+            this.tabItemQuerTable.Name = "tabItemQuerTable";
+            this.tabItemQuerTable.Text = "查询表设置";
             // 
             // tabControlPanel9
             // 
@@ -1322,197 +2083,6 @@
             this.tabItemPrintTab.Name = "tabItemPrintTab";
             this.tabItemPrintTab.Text = "打印信息设置";
             // 
-            // tabControlPanel5
-            // 
-            this.tabControlPanel5.Controls.Add(this.rabQuerInfoAll);
-            this.tabControlPanel5.Controls.Add(this.rabQuerInfoTwo);
-            this.tabControlPanel5.Controls.Add(this.rabQuerInfoone);
-            this.tabControlPanel5.Controls.Add(this.butQuerSave);
-            this.tabControlPanel5.Controls.Add(this.butQuerDel);
-            this.tabControlPanel5.Controls.Add(this.butQuerAdd);
-            this.tabControlPanel5.Controls.Add(this.groupBox1);
-            this.tabControlPanel5.Controls.Add(this.grQuerTableinfo);
-            this.tabControlPanel5.Controls.Add(this.grQuerTable);
-            this.tabControlPanel5.DisabledBackColor = System.Drawing.Color.Empty;
-            this.tabControlPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControlPanel5.Location = new System.Drawing.Point(0, 26);
-            this.tabControlPanel5.Name = "tabControlPanel5";
-            this.tabControlPanel5.Padding = new System.Windows.Forms.Padding(1);
-            this.tabControlPanel5.Size = new System.Drawing.Size(694, 480);
-            this.tabControlPanel5.Style.BackColor1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(142)))), ((int)(((byte)(179)))), ((int)(((byte)(231)))));
-            this.tabControlPanel5.Style.BackColor2.Color = System.Drawing.Color.FromArgb(((int)(((byte)(223)))), ((int)(((byte)(237)))), ((int)(((byte)(254)))));
-            this.tabControlPanel5.Style.Border = DevComponents.DotNetBar.eBorderType.SingleLine;
-            this.tabControlPanel5.Style.BorderColor.Color = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(97)))), ((int)(((byte)(156)))));
-            this.tabControlPanel5.Style.BorderSide = ((DevComponents.DotNetBar.eBorderSide)(((DevComponents.DotNetBar.eBorderSide.Left | DevComponents.DotNetBar.eBorderSide.Right) 
-            | DevComponents.DotNetBar.eBorderSide.Bottom)));
-            this.tabControlPanel5.Style.GradientAngle = 90;
-            this.tabControlPanel5.TabIndex = 35;
-            this.tabControlPanel5.TabItem = this.tabItemQuerTable;
-            // 
-            // rabQuerInfoAll
-            // 
-            this.rabQuerInfoAll.AutoSize = true;
-            this.rabQuerInfoAll.BackColor = System.Drawing.Color.Transparent;
-            this.rabQuerInfoAll.Location = new System.Drawing.Point(241, 188);
-            this.rabQuerInfoAll.Name = "rabQuerInfoAll";
-            this.rabQuerInfoAll.Size = new System.Drawing.Size(71, 16);
-            this.rabQuerInfoAll.TabIndex = 8;
-            this.rabQuerInfoAll.Text = "全部显示";
-            this.rabQuerInfoAll.UseVisualStyleBackColor = false;
-            // 
-            // rabQuerInfoTwo
-            // 
-            this.rabQuerInfoTwo.AutoSize = true;
-            this.rabQuerInfoTwo.BackColor = System.Drawing.Color.Transparent;
-            this.rabQuerInfoTwo.Location = new System.Drawing.Point(241, 159);
-            this.rabQuerInfoTwo.Name = "rabQuerInfoTwo";
-            this.rabQuerInfoTwo.Size = new System.Drawing.Size(71, 16);
-            this.rabQuerInfoTwo.TabIndex = 7;
-            this.rabQuerInfoTwo.Text = "查询二录";
-            this.rabQuerInfoTwo.UseVisualStyleBackColor = false;
-            // 
-            // rabQuerInfoone
-            // 
-            this.rabQuerInfoone.AutoSize = true;
-            this.rabQuerInfoone.BackColor = System.Drawing.Color.Transparent;
-            this.rabQuerInfoone.Checked = true;
-            this.rabQuerInfoone.Location = new System.Drawing.Point(241, 131);
-            this.rabQuerInfoone.Name = "rabQuerInfoone";
-            this.rabQuerInfoone.Size = new System.Drawing.Size(71, 16);
-            this.rabQuerInfoone.TabIndex = 6;
-            this.rabQuerInfoone.TabStop = true;
-            this.rabQuerInfoone.Text = "查询一录";
-            this.rabQuerInfoone.UseVisualStyleBackColor = false;
-            // 
-            // butQuerSave
-            // 
-            this.butQuerSave.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.butQuerSave.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.butQuerSave.Location = new System.Drawing.Point(241, 371);
-            this.butQuerSave.Name = "butQuerSave";
-            this.butQuerSave.Size = new System.Drawing.Size(75, 49);
-            this.butQuerSave.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.butQuerSave.TabIndex = 5;
-            this.butQuerSave.Text = "保存";
-            this.butQuerSave.Click += new System.EventHandler(this.butQuerSave_Click);
-            // 
-            // butQuerDel
-            // 
-            this.butQuerDel.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.butQuerDel.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.butQuerDel.Location = new System.Drawing.Point(241, 299);
-            this.butQuerDel.Name = "butQuerDel";
-            this.butQuerDel.Size = new System.Drawing.Size(75, 23);
-            this.butQuerDel.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.butQuerDel.TabIndex = 4;
-            this.butQuerDel.Text = "<<";
-            this.butQuerDel.Click += new System.EventHandler(this.butQuerDel_Click);
-            // 
-            // butQuerAdd
-            // 
-            this.butQuerAdd.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.butQuerAdd.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.butQuerAdd.Location = new System.Drawing.Point(241, 233);
-            this.butQuerAdd.Name = "butQuerAdd";
-            this.butQuerAdd.Size = new System.Drawing.Size(75, 23);
-            this.butQuerAdd.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.butQuerAdd.TabIndex = 3;
-            this.butQuerAdd.Text = ">>";
-            this.butQuerAdd.Click += new System.EventHandler(this.butQuerAdd_Click);
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.groupBox1.BackColor = System.Drawing.Color.Transparent;
-            this.groupBox1.Controls.Add(this.chkQuerZd);
-            this.groupBox1.Location = new System.Drawing.Point(364, 105);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(200, 363);
-            this.groupBox1.TabIndex = 2;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "查询字段";
-            // 
-            // chkQuerZd
-            // 
-            this.chkQuerZd.CheckOnClick = true;
-            this.chkQuerZd.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.chkQuerZd.FormattingEnabled = true;
-            this.chkQuerZd.Location = new System.Drawing.Point(3, 17);
-            this.chkQuerZd.Name = "chkQuerZd";
-            this.chkQuerZd.Size = new System.Drawing.Size(194, 343);
-            this.chkQuerZd.TabIndex = 0;
-            // 
-            // grQuerTableinfo
-            // 
-            this.grQuerTableinfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.grQuerTableinfo.BackColor = System.Drawing.Color.Transparent;
-            this.grQuerTableinfo.Controls.Add(this.chkQuerTable);
-            this.grQuerTableinfo.Location = new System.Drawing.Point(12, 105);
-            this.grQuerTableinfo.Name = "grQuerTableinfo";
-            this.grQuerTableinfo.Size = new System.Drawing.Size(200, 363);
-            this.grQuerTableinfo.TabIndex = 1;
-            this.grQuerTableinfo.TabStop = false;
-            this.grQuerTableinfo.Text = "表字段";
-            // 
-            // chkQuerTable
-            // 
-            this.chkQuerTable.CheckOnClick = true;
-            this.chkQuerTable.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.chkQuerTable.FormattingEnabled = true;
-            this.chkQuerTable.Location = new System.Drawing.Point(3, 17);
-            this.chkQuerTable.Name = "chkQuerTable";
-            this.chkQuerTable.Size = new System.Drawing.Size(194, 343);
-            this.chkQuerTable.TabIndex = 0;
-            // 
-            // grQuerTable
-            // 
-            this.grQuerTable.BackColor = System.Drawing.Color.Transparent;
-            this.grQuerTable.Controls.Add(this.butQuerTable);
-            this.grQuerTable.Controls.Add(this.txtQuerTable);
-            this.grQuerTable.Controls.Add(this.label14);
-            this.grQuerTable.Location = new System.Drawing.Point(12, 19);
-            this.grQuerTable.Name = "grQuerTable";
-            this.grQuerTable.Size = new System.Drawing.Size(648, 70);
-            this.grQuerTable.TabIndex = 0;
-            this.grQuerTable.TabStop = false;
-            this.grQuerTable.Text = "数据库表名";
-            // 
-            // butQuerTable
-            // 
-            this.butQuerTable.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.butQuerTable.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.butQuerTable.Location = new System.Drawing.Point(358, 20);
-            this.butQuerTable.Name = "butQuerTable";
-            this.butQuerTable.Size = new System.Drawing.Size(75, 37);
-            this.butQuerTable.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.butQuerTable.TabIndex = 4;
-            this.butQuerTable.Text = "判断连接";
-            this.butQuerTable.Click += new System.EventHandler(this.butQuerTable_Click);
-            // 
-            // txtQuerTable
-            // 
-            this.txtQuerTable.Location = new System.Drawing.Point(110, 29);
-            this.txtQuerTable.Name = "txtQuerTable";
-            this.txtQuerTable.Size = new System.Drawing.Size(196, 21);
-            this.txtQuerTable.TabIndex = 3;
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(32, 35);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(77, 12);
-            this.label14.TabIndex = 2;
-            this.label14.Text = "数据库表名：";
-            // 
-            // tabItemQuerTable
-            // 
-            this.tabItemQuerTable.AttachedControl = this.tabControlPanel5;
-            this.tabItemQuerTable.Name = "tabItemQuerTable";
-            this.tabItemQuerTable.Text = "查询表设置";
-            // 
             // tabControlPanel6
             // 
             this.tabControlPanel6.Controls.Add(this.groupBox4);
@@ -1911,7 +2481,7 @@
             this.chkDataSplit_ExportTable.FormattingEnabled = true;
             this.chkDataSplit_ExportTable.Location = new System.Drawing.Point(218, 20);
             this.chkDataSplit_ExportTable.Name = "chkDataSplit_ExportTable";
-            this.chkDataSplit_ExportTable.Size = new System.Drawing.Size(155, 148);
+            this.chkDataSplit_ExportTable.Size = new System.Drawing.Size(155, 132);
             this.chkDataSplit_ExportTable.TabIndex = 6;
             // 
             // butDataSplit_Export_DelInfo
@@ -2074,264 +2644,6 @@
             this.tabItemDataSplit.AttachedControl = this.tabControlPanel6;
             this.tabItemDataSplit.Name = "tabItemDataSplit";
             this.tabItemDataSplit.Text = "数据转换设置";
-            // 
-            // tabControlPanel10
-            // 
-            this.tabControlPanel10.Controls.Add(this.txtContentxtWith);
-            this.tabControlPanel10.Controls.Add(this.combContenPages);
-            this.tabControlPanel10.Controls.Add(this.combContenTitle);
-            this.tabControlPanel10.Controls.Add(this.label29);
-            this.tabControlPanel10.Controls.Add(this.label28);
-            this.tabControlPanel10.Controls.Add(this.butContenTableSave);
-            this.tabControlPanel10.Controls.Add(this.butContenColDel);
-            this.tabControlPanel10.Controls.Add(this.butContenColAdd);
-            this.tabControlPanel10.Controls.Add(this.txtContenlabWith);
-            this.tabControlPanel10.Controls.Add(this.txtContenLieSn);
-            this.tabControlPanel10.Controls.Add(this.groupBox10);
-            this.tabControlPanel10.Controls.Add(this.label34);
-            this.tabControlPanel10.Controls.Add(this.label27);
-            this.tabControlPanel10.Controls.Add(this.label26);
-            this.tabControlPanel10.Controls.Add(this.groupBox9);
-            this.tabControlPanel10.Controls.Add(this.groupBox8);
-            this.tabControlPanel10.DisabledBackColor = System.Drawing.Color.Empty;
-            this.tabControlPanel10.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControlPanel10.Location = new System.Drawing.Point(0, 26);
-            this.tabControlPanel10.Name = "tabControlPanel10";
-            this.tabControlPanel10.Padding = new System.Windows.Forms.Padding(1);
-            this.tabControlPanel10.Size = new System.Drawing.Size(694, 480);
-            this.tabControlPanel10.Style.BackColor1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(142)))), ((int)(((byte)(179)))), ((int)(((byte)(231)))));
-            this.tabControlPanel10.Style.BackColor2.Color = System.Drawing.Color.FromArgb(((int)(((byte)(223)))), ((int)(((byte)(237)))), ((int)(((byte)(254)))));
-            this.tabControlPanel10.Style.Border = DevComponents.DotNetBar.eBorderType.SingleLine;
-            this.tabControlPanel10.Style.BorderColor.Color = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(97)))), ((int)(((byte)(156)))));
-            this.tabControlPanel10.Style.BorderSide = ((DevComponents.DotNetBar.eBorderSide)(((DevComponents.DotNetBar.eBorderSide.Left | DevComponents.DotNetBar.eBorderSide.Right) 
-            | DevComponents.DotNetBar.eBorderSide.Bottom)));
-            this.tabControlPanel10.Style.GradientAngle = 90;
-            this.tabControlPanel10.TabIndex = 89;
-            this.tabControlPanel10.TabItem = this.tabItemConten;
-            // 
-            // txtContentxtWith
-            // 
-            this.txtContentxtWith.Location = new System.Drawing.Point(233, 294);
-            this.txtContentxtWith.Name = "txtContentxtWith";
-            this.txtContentxtWith.Size = new System.Drawing.Size(100, 21);
-            this.txtContentxtWith.TabIndex = 11;
-            // 
-            // combContenPages
-            // 
-            this.combContenPages.DisplayMember = "Text";
-            this.combContenPages.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.combContenPages.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.combContenPages.FormattingEnabled = true;
-            this.combContenPages.ItemHeight = 15;
-            this.combContenPages.Location = new System.Drawing.Point(583, 234);
-            this.combContenPages.Name = "combContenPages";
-            this.combContenPages.Size = new System.Drawing.Size(89, 21);
-            this.combContenPages.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.combContenPages.TabIndex = 10;
-            // 
-            // combContenTitle
-            // 
-            this.combContenTitle.DisplayMember = "Text";
-            this.combContenTitle.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.combContenTitle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.combContenTitle.FormattingEnabled = true;
-            this.combContenTitle.ItemHeight = 15;
-            this.combContenTitle.Location = new System.Drawing.Point(583, 164);
-            this.combContenTitle.Name = "combContenTitle";
-            this.combContenTitle.Size = new System.Drawing.Size(89, 21);
-            this.combContenTitle.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.combContenTitle.TabIndex = 9;
-            // 
-            // label29
-            // 
-            this.label29.AutoSize = true;
-            this.label29.BackColor = System.Drawing.Color.Transparent;
-            this.label29.Location = new System.Drawing.Point(586, 210);
-            this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(77, 12);
-            this.label29.TabIndex = 8;
-            this.label29.Text = "选择页码字段";
-            // 
-            // label28
-            // 
-            this.label28.AutoSize = true;
-            this.label28.BackColor = System.Drawing.Color.Transparent;
-            this.label28.Location = new System.Drawing.Point(586, 141);
-            this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(77, 12);
-            this.label28.TabIndex = 8;
-            this.label28.Text = "选择标题字段";
-            // 
-            // butContenTableSave
-            // 
-            this.butContenTableSave.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.butContenTableSave.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.butContenTableSave.Location = new System.Drawing.Point(587, 305);
-            this.butContenTableSave.Name = "butContenTableSave";
-            this.butContenTableSave.Size = new System.Drawing.Size(75, 39);
-            this.butContenTableSave.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.butContenTableSave.TabIndex = 7;
-            this.butContenTableSave.Text = "保存";
-            this.butContenTableSave.Click += new System.EventHandler(this.butContenTableSave_Click);
-            // 
-            // butContenColDel
-            // 
-            this.butContenColDel.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.butContenColDel.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.butContenColDel.Location = new System.Drawing.Point(240, 397);
-            this.butContenColDel.Name = "butContenColDel";
-            this.butContenColDel.Size = new System.Drawing.Size(75, 23);
-            this.butContenColDel.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.butContenColDel.TabIndex = 6;
-            this.butContenColDel.Text = "<<";
-            this.butContenColDel.Click += new System.EventHandler(this.butContenColDel_Click);
-            // 
-            // butContenColAdd
-            // 
-            this.butContenColAdd.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.butContenColAdd.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.butContenColAdd.Location = new System.Drawing.Point(240, 345);
-            this.butContenColAdd.Name = "butContenColAdd";
-            this.butContenColAdd.Size = new System.Drawing.Size(75, 23);
-            this.butContenColAdd.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.butContenColAdd.TabIndex = 5;
-            this.butContenColAdd.Text = ">>";
-            this.butContenColAdd.Click += new System.EventHandler(this.butContenColAdd_Click);
-            // 
-            // txtContenlabWith
-            // 
-            this.txtContenlabWith.Location = new System.Drawing.Point(233, 230);
-            this.txtContenlabWith.Name = "txtContenlabWith";
-            this.txtContenlabWith.Size = new System.Drawing.Size(100, 21);
-            this.txtContenlabWith.TabIndex = 4;
-            // 
-            // txtContenLieSn
-            // 
-            this.txtContenLieSn.Location = new System.Drawing.Point(233, 164);
-            this.txtContenLieSn.Name = "txtContenLieSn";
-            this.txtContenLieSn.Size = new System.Drawing.Size(100, 21);
-            this.txtContenLieSn.TabIndex = 3;
-            // 
-            // groupBox10
-            // 
-            this.groupBox10.BackColor = System.Drawing.Color.Transparent;
-            this.groupBox10.Controls.Add(this.chkContenColShow);
-            this.groupBox10.Location = new System.Drawing.Point(364, 105);
-            this.groupBox10.Name = "groupBox10";
-            this.groupBox10.Size = new System.Drawing.Size(200, 363);
-            this.groupBox10.TabIndex = 2;
-            this.groupBox10.TabStop = false;
-            this.groupBox10.Text = "显示字段";
-            // 
-            // chkContenColShow
-            // 
-            this.chkContenColShow.CheckOnClick = true;
-            this.chkContenColShow.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.chkContenColShow.FormattingEnabled = true;
-            this.chkContenColShow.Location = new System.Drawing.Point(3, 17);
-            this.chkContenColShow.Name = "chkContenColShow";
-            this.chkContenColShow.Size = new System.Drawing.Size(194, 343);
-            this.chkContenColShow.TabIndex = 0;
-            // 
-            // label34
-            // 
-            this.label34.AutoSize = true;
-            this.label34.BackColor = System.Drawing.Color.Transparent;
-            this.label34.Location = new System.Drawing.Point(241, 269);
-            this.label34.Name = "label34";
-            this.label34.Size = new System.Drawing.Size(71, 12);
-            this.label34.TabIndex = 2;
-            this.label34.Text = "前台txt宽度";
-            // 
-            // label27
-            // 
-            this.label27.AutoSize = true;
-            this.label27.BackColor = System.Drawing.Color.Transparent;
-            this.label27.Location = new System.Drawing.Point(241, 203);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(77, 12);
-            this.label27.TabIndex = 2;
-            this.label27.Text = "前台字段宽度";
-            // 
-            // label26
-            // 
-            this.label26.AutoSize = true;
-            this.label26.BackColor = System.Drawing.Color.Transparent;
-            this.label26.Location = new System.Drawing.Point(241, 141);
-            this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(77, 12);
-            this.label26.TabIndex = 2;
-            this.label26.Text = "前台显示列数";
-            // 
-            // groupBox9
-            // 
-            this.groupBox9.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.groupBox9.BackColor = System.Drawing.Color.Transparent;
-            this.groupBox9.Controls.Add(this.chkContenCol);
-            this.groupBox9.Location = new System.Drawing.Point(12, 105);
-            this.groupBox9.Name = "groupBox9";
-            this.groupBox9.Size = new System.Drawing.Size(200, 363);
-            this.groupBox9.TabIndex = 1;
-            this.groupBox9.TabStop = false;
-            this.groupBox9.Text = "表字段";
-            // 
-            // chkContenCol
-            // 
-            this.chkContenCol.CheckOnClick = true;
-            this.chkContenCol.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.chkContenCol.FormattingEnabled = true;
-            this.chkContenCol.Location = new System.Drawing.Point(3, 17);
-            this.chkContenCol.Name = "chkContenCol";
-            this.chkContenCol.Size = new System.Drawing.Size(194, 343);
-            this.chkContenCol.TabIndex = 0;
-            // 
-            // groupBox8
-            // 
-            this.groupBox8.BackColor = System.Drawing.Color.Transparent;
-            this.groupBox8.Controls.Add(this.butConten);
-            this.groupBox8.Controls.Add(this.label25);
-            this.groupBox8.Controls.Add(this.txtContenTable);
-            this.groupBox8.Location = new System.Drawing.Point(12, 29);
-            this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(653, 70);
-            this.groupBox8.TabIndex = 0;
-            this.groupBox8.TabStop = false;
-            this.groupBox8.Text = "数据库表名";
-            // 
-            // butConten
-            // 
-            this.butConten.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.butConten.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.butConten.Location = new System.Drawing.Point(358, 20);
-            this.butConten.Name = "butConten";
-            this.butConten.Size = new System.Drawing.Size(75, 37);
-            this.butConten.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.butConten.TabIndex = 3;
-            this.butConten.Text = "判断连接";
-            this.butConten.Click += new System.EventHandler(this.butConten_Click);
-            // 
-            // label25
-            // 
-            this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(26, 34);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(77, 12);
-            this.label25.TabIndex = 2;
-            this.label25.Text = "数据库表名：";
-            // 
-            // txtContenTable
-            // 
-            this.txtContenTable.Location = new System.Drawing.Point(110, 29);
-            this.txtContenTable.Name = "txtContenTable";
-            this.txtContenTable.Size = new System.Drawing.Size(196, 21);
-            this.txtContenTable.TabIndex = 0;
-            // 
-            // tabItemConten
-            // 
-            this.tabItemConten.AttachedControl = this.tabControlPanel10;
-            this.tabItemConten.Name = "tabItemConten";
-            this.tabItemConten.Text = "目录信息补录";
             // 
             // tabControlPanel11
             // 
@@ -3046,295 +3358,6 @@
             this.tabItemImprot.Name = "tabItemImprot";
             this.tabItemImprot.Text = "导入字段设置";
             // 
-            // tabControlPanel4
-            // 
-            this.tabControlPanel4.Controls.Add(this.combInfotxtWith);
-            this.tabControlPanel4.Controls.Add(this.combInfoLabWith);
-            this.tabControlPanel4.Controls.Add(this.combInfoColNum);
-            this.tabControlPanel4.Controls.Add(this.combInfoTableName);
-            this.tabControlPanel4.Controls.Add(this.label12);
-            this.tabControlPanel4.Controls.Add(this.label11);
-            this.tabControlPanel4.Controls.Add(this.label35);
-            this.tabControlPanel4.Controls.Add(this.label13);
-            this.tabControlPanel4.Controls.Add(this.labInfoCol);
-            this.tabControlPanel4.Controls.Add(this.butInfoTableDel);
-            this.tabControlPanel4.Controls.Add(this.butInfoSave);
-            this.tabControlPanel4.Controls.Add(this.butInfoDel);
-            this.tabControlPanel4.Controls.Add(this.butInfoadd);
-            this.tabControlPanel4.Controls.Add(this.combInfoTable);
-            this.tabControlPanel4.Controls.Add(this.grInfoAddzd);
-            this.tabControlPanel4.Controls.Add(this.grInfoTable);
-            this.tabControlPanel4.Controls.Add(this.grInfoAdd);
-            this.tabControlPanel4.DisabledBackColor = System.Drawing.Color.Empty;
-            this.tabControlPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControlPanel4.Location = new System.Drawing.Point(0, 26);
-            this.tabControlPanel4.Name = "tabControlPanel4";
-            this.tabControlPanel4.Padding = new System.Windows.Forms.Padding(1);
-            this.tabControlPanel4.Size = new System.Drawing.Size(694, 480);
-            this.tabControlPanel4.Style.BackColor1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(142)))), ((int)(((byte)(179)))), ((int)(((byte)(231)))));
-            this.tabControlPanel4.Style.BackColor2.Color = System.Drawing.Color.FromArgb(((int)(((byte)(223)))), ((int)(((byte)(237)))), ((int)(((byte)(254)))));
-            this.tabControlPanel4.Style.Border = DevComponents.DotNetBar.eBorderType.SingleLine;
-            this.tabControlPanel4.Style.BorderColor.Color = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(97)))), ((int)(((byte)(156)))));
-            this.tabControlPanel4.Style.BorderSide = ((DevComponents.DotNetBar.eBorderSide)(((DevComponents.DotNetBar.eBorderSide.Left | DevComponents.DotNetBar.eBorderSide.Right) 
-            | DevComponents.DotNetBar.eBorderSide.Bottom)));
-            this.tabControlPanel4.Style.GradientAngle = 90;
-            this.tabControlPanel4.TabIndex = 22;
-            this.tabControlPanel4.TabItem = this.tabItemInfoAdd;
-            // 
-            // combInfotxtWith
-            // 
-            this.combInfotxtWith.DisplayMember = "Text";
-            this.combInfotxtWith.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.combInfotxtWith.FormattingEnabled = true;
-            this.combInfotxtWith.ItemHeight = 15;
-            this.combInfotxtWith.Location = new System.Drawing.Point(224, 341);
-            this.combInfotxtWith.Name = "combInfotxtWith";
-            this.combInfotxtWith.Size = new System.Drawing.Size(122, 21);
-            this.combInfotxtWith.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.combInfotxtWith.TabIndex = 13;
-            // 
-            // combInfoLabWith
-            // 
-            this.combInfoLabWith.DisplayMember = "Text";
-            this.combInfoLabWith.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.combInfoLabWith.FormattingEnabled = true;
-            this.combInfoLabWith.ItemHeight = 15;
-            this.combInfoLabWith.Location = new System.Drawing.Point(225, 284);
-            this.combInfoLabWith.Name = "combInfoLabWith";
-            this.combInfoLabWith.Size = new System.Drawing.Size(121, 21);
-            this.combInfoLabWith.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.combInfoLabWith.TabIndex = 12;
-            // 
-            // combInfoColNum
-            // 
-            this.combInfoColNum.DisplayMember = "Text";
-            this.combInfoColNum.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.combInfoColNum.FormattingEnabled = true;
-            this.combInfoColNum.ItemHeight = 15;
-            this.combInfoColNum.Location = new System.Drawing.Point(225, 229);
-            this.combInfoColNum.Name = "combInfoColNum";
-            this.combInfoColNum.Size = new System.Drawing.Size(121, 21);
-            this.combInfoColNum.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.combInfoColNum.TabIndex = 11;
-            this.combInfoColNum.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.combInfoColNum_KeyPress);
-            // 
-            // combInfoTableName
-            // 
-            this.combInfoTableName.DisplayMember = "Text";
-            this.combInfoTableName.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.combInfoTableName.FormattingEnabled = true;
-            this.combInfoTableName.ItemHeight = 15;
-            this.combInfoTableName.Location = new System.Drawing.Point(225, 181);
-            this.combInfoTableName.Name = "combInfoTableName";
-            this.combInfoTableName.Size = new System.Drawing.Size(121, 21);
-            this.combInfoTableName.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.combInfoTableName.TabIndex = 10;
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.BackColor = System.Drawing.Color.Transparent;
-            this.label12.Location = new System.Drawing.Point(239, 110);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(83, 12);
-            this.label12.TabIndex = 8;
-            this.label12.Text = "前台关联表名:";
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.BackColor = System.Drawing.Color.Transparent;
-            this.label11.Location = new System.Drawing.Point(239, 162);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(83, 12);
-            this.label11.TabIndex = 8;
-            this.label11.Text = "前台显示标题:";
-            // 
-            // label35
-            // 
-            this.label35.AutoSize = true;
-            this.label35.BackColor = System.Drawing.Color.Transparent;
-            this.label35.Location = new System.Drawing.Point(238, 317);
-            this.label35.Name = "label35";
-            this.label35.Size = new System.Drawing.Size(77, 12);
-            this.label35.TabIndex = 8;
-            this.label35.Text = "前台txt宽度:";
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.BackColor = System.Drawing.Color.Transparent;
-            this.label13.Location = new System.Drawing.Point(239, 261);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(83, 12);
-            this.label13.TabIndex = 8;
-            this.label13.Text = "前台字段宽度:";
-            // 
-            // labInfoCol
-            // 
-            this.labInfoCol.AutoSize = true;
-            this.labInfoCol.BackColor = System.Drawing.Color.Transparent;
-            this.labInfoCol.Location = new System.Drawing.Point(239, 210);
-            this.labInfoCol.Name = "labInfoCol";
-            this.labInfoCol.Size = new System.Drawing.Size(83, 12);
-            this.labInfoCol.TabIndex = 8;
-            this.labInfoCol.Text = "前台显示列数:";
-            // 
-            // butInfoTableDel
-            // 
-            this.butInfoTableDel.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.butInfoTableDel.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.butInfoTableDel.Location = new System.Drawing.Point(580, 308);
-            this.butInfoTableDel.Name = "butInfoTableDel";
-            this.butInfoTableDel.Size = new System.Drawing.Size(75, 42);
-            this.butInfoTableDel.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.butInfoTableDel.TabIndex = 7;
-            this.butInfoTableDel.Text = "删除";
-            this.butInfoTableDel.Click += new System.EventHandler(this.butInfoTableDel_Click);
-            // 
-            // butInfoSave
-            // 
-            this.butInfoSave.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.butInfoSave.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.butInfoSave.Location = new System.Drawing.Point(580, 210);
-            this.butInfoSave.Name = "butInfoSave";
-            this.butInfoSave.Size = new System.Drawing.Size(75, 42);
-            this.butInfoSave.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.butInfoSave.TabIndex = 6;
-            this.butInfoSave.Text = "保存";
-            this.butInfoSave.Click += new System.EventHandler(this.butInfoSave_Click);
-            // 
-            // butInfoDel
-            // 
-            this.butInfoDel.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.butInfoDel.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.butInfoDel.Location = new System.Drawing.Point(237, 438);
-            this.butInfoDel.Name = "butInfoDel";
-            this.butInfoDel.Size = new System.Drawing.Size(75, 23);
-            this.butInfoDel.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.butInfoDel.TabIndex = 5;
-            this.butInfoDel.Text = "<<";
-            this.butInfoDel.Click += new System.EventHandler(this.butInfoDel_Click);
-            // 
-            // butInfoadd
-            // 
-            this.butInfoadd.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.butInfoadd.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.butInfoadd.Location = new System.Drawing.Point(237, 387);
-            this.butInfoadd.Name = "butInfoadd";
-            this.butInfoadd.Size = new System.Drawing.Size(75, 23);
-            this.butInfoadd.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.butInfoadd.TabIndex = 4;
-            this.butInfoadd.Text = ">>";
-            this.butInfoadd.Click += new System.EventHandler(this.butInfoadd_Click);
-            // 
-            // combInfoTable
-            // 
-            this.combInfoTable.DisplayMember = "Text";
-            this.combInfoTable.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.combInfoTable.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.combInfoTable.FormattingEnabled = true;
-            this.combInfoTable.ItemHeight = 15;
-            this.combInfoTable.Location = new System.Drawing.Point(225, 129);
-            this.combInfoTable.Name = "combInfoTable";
-            this.combInfoTable.Size = new System.Drawing.Size(121, 21);
-            this.combInfoTable.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.combInfoTable.TabIndex = 3;
-            this.combInfoTable.SelectedIndexChanged += new System.EventHandler(this.combInfoTable_SelectedIndexChanged);
-            // 
-            // grInfoAddzd
-            // 
-            this.grInfoAddzd.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.grInfoAddzd.BackColor = System.Drawing.Color.Transparent;
-            this.grInfoAddzd.Controls.Add(this.chkInfoZd);
-            this.grInfoAddzd.Location = new System.Drawing.Point(364, 105);
-            this.grInfoAddzd.Name = "grInfoAddzd";
-            this.grInfoAddzd.Size = new System.Drawing.Size(200, 363);
-            this.grInfoAddzd.TabIndex = 2;
-            this.grInfoAddzd.TabStop = false;
-            this.grInfoAddzd.Text = "显示字段";
-            // 
-            // chkInfoZd
-            // 
-            this.chkInfoZd.CheckOnClick = true;
-            this.chkInfoZd.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.chkInfoZd.FormattingEnabled = true;
-            this.chkInfoZd.Location = new System.Drawing.Point(3, 17);
-            this.chkInfoZd.Name = "chkInfoZd";
-            this.chkInfoZd.Size = new System.Drawing.Size(194, 343);
-            this.chkInfoZd.TabIndex = 0;
-            // 
-            // grInfoTable
-            // 
-            this.grInfoTable.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.grInfoTable.BackColor = System.Drawing.Color.Transparent;
-            this.grInfoTable.Controls.Add(this.chkInfoTable);
-            this.grInfoTable.Location = new System.Drawing.Point(12, 105);
-            this.grInfoTable.Name = "grInfoTable";
-            this.grInfoTable.Size = new System.Drawing.Size(200, 363);
-            this.grInfoTable.TabIndex = 1;
-            this.grInfoTable.TabStop = false;
-            this.grInfoTable.Text = "表字段";
-            // 
-            // chkInfoTable
-            // 
-            this.chkInfoTable.CheckOnClick = true;
-            this.chkInfoTable.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.chkInfoTable.FormattingEnabled = true;
-            this.chkInfoTable.Location = new System.Drawing.Point(3, 17);
-            this.chkInfoTable.Name = "chkInfoTable";
-            this.chkInfoTable.Size = new System.Drawing.Size(194, 343);
-            this.chkInfoTable.TabIndex = 0;
-            // 
-            // grInfoAdd
-            // 
-            this.grInfoAdd.BackColor = System.Drawing.Color.Transparent;
-            this.grInfoAdd.Controls.Add(this.butInfoAddIs);
-            this.grInfoAdd.Controls.Add(this.txtInfoAdd);
-            this.grInfoAdd.Controls.Add(this.label10);
-            this.grInfoAdd.Location = new System.Drawing.Point(12, 19);
-            this.grInfoAdd.Name = "grInfoAdd";
-            this.grInfoAdd.Size = new System.Drawing.Size(648, 70);
-            this.grInfoAdd.TabIndex = 0;
-            this.grInfoAdd.TabStop = false;
-            this.grInfoAdd.Text = "数据库表名";
-            // 
-            // butInfoAddIs
-            // 
-            this.butInfoAddIs.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.butInfoAddIs.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.butInfoAddIs.Location = new System.Drawing.Point(358, 20);
-            this.butInfoAddIs.Name = "butInfoAddIs";
-            this.butInfoAddIs.Size = new System.Drawing.Size(75, 37);
-            this.butInfoAddIs.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.butInfoAddIs.TabIndex = 3;
-            this.butInfoAddIs.Text = "判断连接";
-            this.butInfoAddIs.Click += new System.EventHandler(this.butInfoAddIs_Click);
-            // 
-            // txtInfoAdd
-            // 
-            this.txtInfoAdd.Location = new System.Drawing.Point(110, 29);
-            this.txtInfoAdd.Name = "txtInfoAdd";
-            this.txtInfoAdd.Size = new System.Drawing.Size(196, 21);
-            this.txtInfoAdd.TabIndex = 2;
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(32, 35);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(77, 12);
-            this.label10.TabIndex = 1;
-            this.label10.Text = "数据库表名：";
-            // 
-            // tabItemInfoAdd
-            // 
-            this.tabItemInfoAdd.AttachedControl = this.tabControlPanel4;
-            this.tabItemInfoAdd.Name = "tabItemInfoAdd";
-            this.tabItemInfoAdd.Text = "信息补录设置";
-            // 
             // toolStrip1
             // 
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
@@ -3350,29 +3373,6 @@
             // comboItem3
             // 
             this.comboItem3.Text = "一录信息";
-            // 
-            // label37
-            // 
-            this.label37.AutoSize = true;
-            this.label37.BackColor = System.Drawing.Color.Transparent;
-            this.label37.Location = new System.Drawing.Point(261, 172);
-            this.label37.Name = "label37";
-            this.label37.Size = new System.Drawing.Size(77, 12);
-            this.label37.TabIndex = 7;
-            this.label37.Text = "指定时间字段";
-            // 
-            // comborrTime
-            // 
-            this.comborrTime.DisplayMember = "Text";
-            this.comborrTime.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.comborrTime.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comborrTime.FormattingEnabled = true;
-            this.comborrTime.ItemHeight = 15;
-            this.comborrTime.Location = new System.Drawing.Point(250, 205);
-            this.comborrTime.Name = "comborrTime";
-            this.comborrTime.Size = new System.Drawing.Size(108, 21);
-            this.comborrTime.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.comborrTime.TabIndex = 8;
             // 
             // FrmGetSet
             // 
@@ -3396,6 +3396,24 @@
             this.groupBox15.ResumeLayout(false);
             this.groupBox14.ResumeLayout(false);
             this.groupBox14.PerformLayout();
+            this.tabControlPanel10.ResumeLayout(false);
+            this.tabControlPanel10.PerformLayout();
+            this.groupBox10.ResumeLayout(false);
+            this.groupBox9.ResumeLayout(false);
+            this.groupBox8.ResumeLayout(false);
+            this.groupBox8.PerformLayout();
+            this.tabControlPanel4.ResumeLayout(false);
+            this.tabControlPanel4.PerformLayout();
+            this.grInfoAddzd.ResumeLayout(false);
+            this.grInfoTable.ResumeLayout(false);
+            this.grInfoAdd.ResumeLayout(false);
+            this.grInfoAdd.PerformLayout();
+            this.tabControlPanel5.ResumeLayout(false);
+            this.tabControlPanel5.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.grQuerTableinfo.ResumeLayout(false);
+            this.grQuerTable.ResumeLayout(false);
+            this.grQuerTable.PerformLayout();
             this.tabControlPanel9.ResumeLayout(false);
             this.tabControlPanel9.PerformLayout();
             this.groupBox7.ResumeLayout(false);
@@ -3415,12 +3433,6 @@
             this.grPrintTable.ResumeLayout(false);
             this.gr.ResumeLayout(false);
             this.gr.PerformLayout();
-            this.tabControlPanel5.ResumeLayout(false);
-            this.tabControlPanel5.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.grQuerTableinfo.ResumeLayout(false);
-            this.grQuerTable.ResumeLayout(false);
-            this.grQuerTable.PerformLayout();
             this.tabControlPanel6.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.tabConDataSplit)).EndInit();
@@ -3436,12 +3448,6 @@
             this.groupBox3.ResumeLayout(false);
             this.grDataSpiteTable.ResumeLayout(false);
             this.grDataSpiteTable.PerformLayout();
-            this.tabControlPanel10.ResumeLayout(false);
-            this.tabControlPanel10.PerformLayout();
-            this.groupBox10.ResumeLayout(false);
-            this.groupBox9.ResumeLayout(false);
-            this.groupBox8.ResumeLayout(false);
-            this.groupBox8.PerformLayout();
             this.tabControlPanel11.ResumeLayout(false);
             this.groupBox13.ResumeLayout(false);
             this.groupBox13.PerformLayout();
@@ -3462,12 +3468,6 @@
             this.grImportTable.ResumeLayout(false);
             this.grImportsjk.ResumeLayout(false);
             this.grImportsjk.PerformLayout();
-            this.tabControlPanel4.ResumeLayout(false);
-            this.tabControlPanel4.PerformLayout();
-            this.grInfoAddzd.ResumeLayout(false);
-            this.grInfoTable.ResumeLayout(false);
-            this.grInfoAdd.ResumeLayout(false);
-            this.grInfoAdd.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 

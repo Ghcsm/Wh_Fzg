@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace CsmBorrStat
 {
-    public partial class Form1 : Form
+    public partial class FrmBorrLog : Form
     {
-        public Form1()
+        public FrmBorrLog()
         {
             InitializeComponent();
         }
