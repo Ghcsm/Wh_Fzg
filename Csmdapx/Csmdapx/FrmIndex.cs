@@ -207,7 +207,7 @@ namespace Csmdapx
         private void NextPage()
         {
             try {
-                string txt = this.txtPages.Text;
+                string txt = this.txtPages.Text.Trim();
                 int Opage = Himg._PageCurrent();
                 if (txt == "已删除" && Opage == ClsIndex.MaxPage) {
                     this.toolStripSave_Click(null, null);
@@ -216,7 +216,7 @@ namespace Csmdapx
                     txt = "0";
                     Himg._Pagenext(1);
                 }
-                else if (txt.Length < 0 || txt == "0") {
+                else if (txt.Length <= 0 || txt == "0") {
                     MessageBox.Show("页码不正确！");
                     return;
                 }
@@ -613,9 +613,9 @@ namespace Csmdapx
                     Common.SetIndexCancel(arid, PageIndexInfo, DeleTaginfo);
                     string IndexFileName = Common.GetCurrentTime() + Common.TifExtension;
                     string RemoteDir = IndexFileName.Substring(0, 8);
-                    if (!Directory.Exists(Path.Combine(T_ConFigure.FtpTmpPath, T_ConFigure.TmpIndex)))
-                        Directory.CreateDirectory(Path.Combine(T_ConFigure.FtpTmpPath, T_ConFigure.TmpIndex));
                     if (T_ConFigure.FtpStyle == 1) {
+                        if (!Directory.Exists(Path.Combine(T_ConFigure.FtpTmpPath, T_ConFigure.TmpIndex)))
+                            Directory.CreateDirectory(Path.Combine(T_ConFigure.FtpTmpPath, T_ConFigure.TmpIndex));
                         string LocalIndexFile = Path.Combine(T_ConFigure.FtpTmpPath, T_ConFigure.TmpIndex,
                             IndexFileName);
                         Common.WiteUpTask(arid, archpos, IndexFileName, (int)T_ConFigure.ArchStat.排序完, pages, LocalIndexFile);
@@ -661,7 +661,9 @@ namespace Csmdapx
 
                     Common.SetArchWorkState(arid, (int)T_ConFigure.ArchStat.扫描完);
                 }
-            } catch {
+            } catch(Exception ex)
+            {
+                MessageBox.Show("上传失败!"+ex.ToString());
                 Common.SetArchWorkState(arid, (int)T_ConFigure.ArchStat.扫描完);
                 Common.Writelog(ClsIndex.Archid, "排序完成失败");
             } finally {
