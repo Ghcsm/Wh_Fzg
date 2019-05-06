@@ -81,8 +81,14 @@ namespace Bgkj
             Task.Run(() =>
             {
                 DataTable dt = T_Sysset.GetUser();
-                if (dt == null || dt.Rows.Count <= 0) {
-                    lbinfo.Visible = true;
+                if (dt == null || dt.Rows.Count <= 0)
+                {
+                    this.BeginInvoke(new Action(() =>
+                    {
+                        lbinfo.Visible = true;
+                        lbinfo.Refresh();
+                    }));
+                   
                     return;
                 }
                 foreach (DataRow dr in dt.Rows) {
