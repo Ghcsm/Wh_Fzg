@@ -199,7 +199,7 @@ namespace Csmsjcf
                             txt_gr2_7_wenzi.Focus();
                             return false;
                         }
-                        if (txt_gr2_7_waterFontsize.Text.Trim().Length <= 0 || ClsFrmInfoPar.WaterFontColor == 0) {
+                        if (txt_gr2_7_waterFontsize.Text.Trim().Length <= 0 || ClsFrmInfoPar.WaterFontColor == null || ClsFrmInfoPar.WaterFontColor.Trim().Length == 0) {
                             MessageBox.Show("请设置字号或字体颜色");
                             return false;
                         }
@@ -231,7 +231,7 @@ namespace Csmsjcf
                         }
                         ClsWritelog.Writeini("waterstr", txt_gr2_7_wenzi.Text.Trim());
                         ClsWritelog.Writeini("waterfontsize", txt_gr2_7_waterFontsize.Text);
-                        ClsWritelog.Writeini("watercolor", ClsFrmInfoPar.WaterFontColor.ToString());
+                        ClsWritelog.Writeini("watercolor", ClsFrmInfoPar.WaterFontColor);
                         ClsWritelog.Writeini("watertmd", txt_gr2_7_watertmd.Text.Trim());
                         ClsWritelog.Writeini("waterwith", txt_gr2_7_waterwith.Text.Trim());
                         ClsWritelog.Writeini("waterheiht", txt_gr2_7_waterheight.Text.Trim());
@@ -407,11 +407,12 @@ namespace Csmsjcf
         private void lab_gr2_7_font_color_Click(object sender, EventArgs e)
         {
             if (colorDialog.ShowDialog() == DialogResult.OK) {
-                ClsFrmInfoPar.WaterFontColor = Convert.ToInt32(colorDialog.Color.ToArgb());
+                ClsFrmInfoPar.WaterFontColor =
+                    colorDialog.Color.R + ";" + colorDialog.Color.G + ";" + colorDialog.Color.B;
                 lab_gr2_7_font_color.BackColor = colorDialog.Color;
                 return;
             }
-            ClsFrmInfoPar.WaterFontColor = 0;
+            ClsFrmInfoPar.WaterFontColor = "";
         }
 
         private void but_gr2_5_del_Click(object sender, EventArgs e)
@@ -963,8 +964,7 @@ namespace Csmsjcf
 
         private void Getparinfo()
         {
-            try
-            {
+            try {
                 List<string> lskey = new List<string>();
                 List<string> lsval = new List<string>();
                 lskey = ClsWritelog.Readinikey();
@@ -1028,7 +1028,7 @@ namespace Csmsjcf
                     if (strkey == "waterheiht")
                         txt_gr2_7_waterheight.Text = strval;
                     if (strkey == "watercolor")
-                        ClsFrmInfoPar.WaterFontColor = Convert.ToInt32(strval);
+                        ClsFrmInfoPar.WaterFontColor = strval;
                     if (strkey == "waterstrimg")
                         txt_gr2_7_img.Text = strval;
                     if (strkey == "convpath")
@@ -1038,9 +1038,7 @@ namespace Csmsjcf
                     if (strkey == "convxls")
                         txt_gr3_1_xlsPath.Text = strval;
                 }
-            }
-            catch
-            {}
+            } catch { }
         }
 
         private void butLog_Click(object sender, EventArgs e)
@@ -1163,12 +1161,23 @@ namespace Csmsjcf
 
         private void rab_gr2_7_wenzi_CheckedChanged(object sender, EventArgs e)
         {
-            if (rab_gr2_7_wenzi.Checked)
+            if (rab_gr2_7_wenzi.Checked) {
                 ClsWritelog.Writeini("water", "1");
-            else if (rab_gr2_7_img.Checked)
+                txt_gr2_7_waterFontsize.Enabled = true;
+                txt_gr2_7_waterwith.Enabled = false;
+                txt_gr2_7_waterheight.Enabled = false;
+                return;
+            }
+            else if (rab_gr2_7_img.Checked) {
                 ClsWritelog.Writeini("water", "2");
+                txt_gr2_7_waterwith.Enabled = true;
+                txt_gr2_7_waterheight.Enabled = true;
+                txt_gr2_7_waterFontsize.Enabled = false;
+            }
+
             else if (rab_gr2_7_wu.Checked)
                 ClsWritelog.Writeini("water", "0");
+
         }
 
         private void rab_gr3_1_ftp_CheckedChanged(object sender, EventArgs e)
@@ -1178,9 +1187,18 @@ namespace Csmsjcf
             else ClsWritelog.Writeini("ftp", "0");
         }
 
+        private void rab_gr2_7_img_Click(object sender, EventArgs e)
+        {
+            if (rab_gr2_7_img.Checked) {
+                txt_gr2_7_waterFontsize.Enabled = false;
+                txt_gr2_7_waterwith.Enabled = true;
+                txt_gr2_7_waterheight.Enabled = true;
+            }
 
+        }
 
         #endregion
+
 
     }
 }

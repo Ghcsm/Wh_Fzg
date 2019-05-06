@@ -59,6 +59,7 @@
             this.rab_gr2_8_mulu = new System.Windows.Forms.RadioButton();
             this.rab_gr2_8_ziduan = new System.Windows.Forms.RadioButton();
             this.gr2_7 = new System.Windows.Forms.GroupBox();
+            this.txt_gr2_7_watertmd = new System.Windows.Forms.TextBox();
             this.txt_gr2_7_waterFontsize = new System.Windows.Forms.TextBox();
             this.txt_gr2_7_waterheight = new System.Windows.Forms.TextBox();
             this.txt_gr2_7_waterwith = new System.Windows.Forms.TextBox();
@@ -70,9 +71,11 @@
             this.rab_gr2_7_img = new System.Windows.Forms.RadioButton();
             this.rab_gr2_7_wenzi = new System.Windows.Forms.RadioButton();
             this.label10 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
             this.lab_gr2_7_font_color = new System.Windows.Forms.Label();
             this.gr2_6 = new System.Windows.Forms.GroupBox();
             this.but_gr2_6_ocrpath = new System.Windows.Forms.Button();
@@ -118,9 +121,6 @@
             this.fBdigImgPath = new System.Windows.Forms.FolderBrowserDialog();
             this.fontDialog = new System.Windows.Forms.FontDialog();
             this.colorDialog = new System.Windows.Forms.ColorDialog();
-            this.label12 = new System.Windows.Forms.Label();
-            this.txt_gr2_7_watertmd = new System.Windows.Forms.TextBox();
-            this.label13 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.superTabControl1)).BeginInit();
             this.superTabControl1.SuspendLayout();
             this.superTabControlPanel1.SuspendLayout();
@@ -587,6 +587,14 @@
             this.gr2_7.Tag = "6";
             this.gr2_7.Text = "水印设置";
             // 
+            // txt_gr2_7_watertmd
+            // 
+            this.txt_gr2_7_watertmd.Location = new System.Drawing.Point(131, 139);
+            this.txt_gr2_7_watertmd.Name = "txt_gr2_7_watertmd";
+            this.txt_gr2_7_watertmd.Size = new System.Drawing.Size(29, 21);
+            this.txt_gr2_7_watertmd.TabIndex = 10;
+            this.txt_gr2_7_watertmd.Text = "128";
+            // 
             // txt_gr2_7_waterFontsize
             // 
             this.txt_gr2_7_waterFontsize.Location = new System.Drawing.Point(116, 110);
@@ -605,7 +613,7 @@
             // 
             // txt_gr2_7_waterwith
             // 
-            this.txt_gr2_7_waterwith.Location = new System.Drawing.Point(37, 109);
+            this.txt_gr2_7_waterwith.Location = new System.Drawing.Point(37, 110);
             this.txt_gr2_7_waterwith.Name = "txt_gr2_7_waterwith";
             this.txt_gr2_7_waterwith.Size = new System.Drawing.Size(36, 21);
             this.txt_gr2_7_waterwith.TabIndex = 7;
@@ -659,7 +667,7 @@
             this.txt_gr2_7_wenzi.Name = "txt_gr2_7_wenzi";
             this.txt_gr2_7_wenzi.Size = new System.Drawing.Size(117, 21);
             this.txt_gr2_7_wenzi.TabIndex = 2;
-            this.txt_gr2_7_wenzi.Text = "河北必高科技";
+            this.txt_gr2_7_wenzi.Text = "必高科技";
             // 
             // rab_gr2_7_img
             // 
@@ -670,6 +678,7 @@
             this.rab_gr2_7_img.TabIndex = 1;
             this.rab_gr2_7_img.Text = "显示图像";
             this.rab_gr2_7_img.UseVisualStyleBackColor = true;
+            this.rab_gr2_7_img.Click += new System.EventHandler(this.rab_gr2_7_img_Click);
             // 
             // rab_gr2_7_wenzi
             // 
@@ -690,6 +699,15 @@
             this.label10.Size = new System.Drawing.Size(29, 12);
             this.label10.TabIndex = 2;
             this.label10.Text = "高：";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(79, 144);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(53, 12);
+            this.label12.TabIndex = 2;
+            this.label12.Text = "透明度：";
             // 
             // label11
             // 
@@ -717,6 +735,16 @@
             this.label5.Size = new System.Drawing.Size(29, 12);
             this.label5.TabIndex = 2;
             this.label5.Text = "位置";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(169, 143);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(35, 12);
+            this.label13.TabIndex = 2;
+            this.label13.Text = "0-255";
+            this.label13.Click += new System.EventHandler(this.lab_gr2_7_font_color_Click);
             // 
             // lab_gr2_7_font_color
             // 
@@ -1152,33 +1180,6 @@
             // FdigXls
             // 
             this.FdigXls.Filter = "Xls文件|*.xls;*xlsx";
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(79, 144);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(53, 12);
-            this.label12.TabIndex = 2;
-            this.label12.Text = "透明度：";
-            // 
-            // txt_gr2_7_watertmd
-            // 
-            this.txt_gr2_7_watertmd.Location = new System.Drawing.Point(131, 139);
-            this.txt_gr2_7_watertmd.Name = "txt_gr2_7_watertmd";
-            this.txt_gr2_7_watertmd.Size = new System.Drawing.Size(29, 21);
-            this.txt_gr2_7_watertmd.TabIndex = 10;
-            this.txt_gr2_7_watertmd.Text = "128";
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(169, 143);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(35, 12);
-            this.label13.TabIndex = 2;
-            this.label13.Text = "0-255";
-            this.label13.Click += new System.EventHandler(this.lab_gr2_7_font_color_Click);
             // 
             // FrmSplit
             // 

@@ -46,7 +46,7 @@ namespace Csmsjcf
         public static int Waterheiht { get; set; }
         public static int WaterFontsize { get; set; }
         public static string WaterStrImg { get; set; }
-        public static int WaterFontColor { get; set; }
+        public static string WaterFontColor { get; set; }
         public static int Watertmd { get; set; }
         public static int Waterwz { get; set; }
         public static int FileFomat { get; set; }
