@@ -16,7 +16,7 @@ namespace Csmsjcf
             DataTable dt = null;
             if (ClsFrmInfoPar.ConverMode == 2)
                 Common.DataSplitUpdate(ClsFrmInfoPar.Houseid, boxsn);
-            return dt = Common.GetDataSplitBoxsn(ClsFrmInfoPar.Houseid, boxsn, ClsFrmInfoPar.ConverMode);
+            return dt = Common.GetDataSplitBoxsn(ClsFrmInfoPar.Houseid, boxsn);
         }
 
         public static DataTable SelectSql(string boxsn, string archno)
@@ -24,7 +24,7 @@ namespace Csmsjcf
             DataTable dt = null;
             if (ClsFrmInfoPar.ConverMode == 2)
                 Common.DataSplitUpdate(ClsFrmInfoPar.Houseid, boxsn, archno);
-            return dt = Common.GetDataSplitBoxsn(ClsFrmInfoPar.Houseid, boxsn, archno, ClsFrmInfoPar.ConverMode);
+            return dt = Common.GetDataSplitBoxsn(ClsFrmInfoPar.Houseid, boxsn, archno);
         }
 
         //获取自定义table及字段 写入xls

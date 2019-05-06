@@ -911,26 +911,17 @@ namespace DAL
             SQLHelper.ExecScalar(strSql, p1, p2, p3);
         }
 
-        public static DataTable GetDataSplitBoxsn(int houseid, string boxsn, int id)
+        public static DataTable GetDataSplitBoxsn(int houseid, string boxsn)
         {
-            string strSql = "";
-            if (id == 3)
-                strSql = "select ID,BOXSN,ARCHNO,PAGES,IMGFILE From M_IMAGEFILE where  HOUSEID=@houseid and CHECKED=1  and BOXSN=@boxsn order by ARCHNO";
-            else
-                strSql = "select ID,BOXSN,ARCHNO,PAGES,IMGFILE From M_IMAGEFILE where  HOUSEID=@houseid and CHECKED=1 and SPLITERROR is null and BOXSN=@boxsn order by ARCHNO";
+            string strSql = "select ID,BOXSN,ARCHNO,PAGES,IMGFILE From M_IMAGEFILE where  HOUSEID=@houseid and CHECKED=1 and SPLITERROR IS null and BOXSN=@boxsn order by ARCHNO";              
             SqlParameter p1 = new SqlParameter("@boxsn", boxsn);
             SqlParameter p2 = new SqlParameter("@houseid", houseid);
             DataTable dt = SQLHelper.ExcuteTable(strSql, p1, p2);
             return dt;
         }
-        public static DataTable GetDataSplitBoxsn(int houseid, string boxsn, string archno, int id)
+        public static DataTable GetDataSplitBoxsn(int houseid, string boxsn, string archno)
         {
-            string strSql = "";
-            if (id == 3)
-                strSql = "select ID,BOXSN,ARCHNO,PAGES,IMGFILE From M_IMAGEFILE where  HOUSEID=@houseid and CHECKED=1  and BOXSN=@boxsn and ARCHNO=@archno order by ARCHNO";
-            else
-                strSql = "select ID,BOXSN,ARCHNO,PAGES,IMGFILE From M_IMAGEFILE where  HOUSEID=@houseid and CHECKED=1 and SPLITERROR is null and BOXSN=@boxsn and ARCHNO=@archno order by ARCHNO";
-
+            string strSql = "select ID,BOXSN,ARCHNO,PAGES,IMGFILE From M_IMAGEFILE where  HOUSEID=@houseid and CHECKED=1 and SPLITERROR IS null and BOXSN=@boxsn and ARCHNO=@archno order by ARCHNO";
             SqlParameter p1 = new SqlParameter("@boxsn", boxsn);
             SqlParameter p2 = new SqlParameter("@houseid", houseid);
             SqlParameter p3 = new SqlParameter("@archno", archno);
