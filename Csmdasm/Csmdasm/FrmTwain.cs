@@ -193,6 +193,8 @@ namespace Csmdasm
         private void GetPages(int page, int counpage)
         {
             ClsTwain.MaxPage = counpage;
+            if (page > counpage)
+                page = counpage;
             labPagesCrrent.Text = string.Format("第  {0}   页", page);
             labPagesCount.Text = string.Format("共  {0}   页", counpage);
             GetImgInfo();
