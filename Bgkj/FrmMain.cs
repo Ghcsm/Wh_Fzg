@@ -158,15 +158,20 @@ namespace Bgkj
                 if (T_ConFigure.Mosn != null && T_ConFigure.Motm != null) {
                     if (T_ConFigure.Mosn.Length < 36 && T_ConFigure.Mosn.Length > 28 &&
                         T_ConFigure.Motm.Length < 65 && T_ConFigure.Motm.Length > 45) {
-                        if (!cid.GetId(T_ConFigure.Mosn, T_ConFigure.Motm)) {
+                        if (!cid.GetId(T_ConFigure.Mosn, T_ConFigure.Motm))
+                        {
+                            ClsIsinfo.Istime();
                             return;
                         }
                     }
                 }
                 T_ConFigure.Bgsoft = true;
                 this.BeginInvoke(new Action(() => { t.Enabled = true; }));
+                ClsIsinfo.Istime();
             });
         }
+
+
 
         private void showerr(int id)
         {
@@ -174,8 +179,10 @@ namespace Bgkj
                 MessageBox.Show(DESEncrypt.DesDecrypt("5pHKaw9paMJeZLjA4CfXwrThQRVwbLz6pgFEY1l4Fc0Gyl8gygnV7w=="));
             else if (id == 1)
                 MessageBox.Show(DESEncrypt.DesDecrypt("meoLKAkxrxANmOfAwGS12V4KHBEJUa/1VIa+qHccp9s="));
-            else if (id == 2) {
+            else if (id == 2)
                 MessageBox.Show(DESEncrypt.DesDecrypt("meoLKAkxrxAX1zZKKGeWCYni/LGcTICQE5fGlDbVoHQP7pLeyq4z0Q=="));
+            else if (id == 3) {
+                MessageBox.Show(DESEncrypt.DesDecrypt("jCYeMNb2MK7CCH4XVR2HyqqfcTePyp0XOjr8U7kIHp/6tmtJp7lHozncfoZPiDwq"));
                 this.labDate.Text = " 请先激活软件....";
                 this.labDate.BackColor = Color.Red;
             }
@@ -184,6 +191,7 @@ namespace Bgkj
                 this.labDate.BackColor = Color.Red;
             }
         }
+       
 
         private void CreateForms(string name, string strnamespace, string FilePath)
         {

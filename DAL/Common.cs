@@ -512,9 +512,28 @@ namespace DAL
             } catch {
                 return null;
             }
-
         }
 
+        public static string Getsqltime()
+        {
+            string str = "";
+            try {
+                string strSql = "select GETDATE()";
+                str = SQLHelper.ExecScalar(strSql).ToString();
+            } catch {
+                return str;
+            }
+            return str;
+        }
+
+        public static void Setsqltime(string str)
+        {
+            string strSql = "update M_Soid set Mwtime=@time where Msoid=@id";
+            SqlParameter p1 = new SqlParameter("@time", str);
+            SqlParameter p2 = new SqlParameter("@id", T_ConFigure.Moid);
+            SQLHelper.ExecScalar(strSql, p1,p2);
+
+        }
 
         #endregion
 
@@ -913,7 +932,7 @@ namespace DAL
 
         public static DataTable GetDataSplitBoxsn(int houseid, string boxsn)
         {
-            string strSql = "select ID,BOXSN,ARCHNO,PAGES,IMGFILE From M_IMAGEFILE where  HOUSEID=@houseid and CHECKED=1 and SPLITERROR IS null and BOXSN=@boxsn order by ARCHNO";              
+            string strSql = "select ID,BOXSN,ARCHNO,PAGES,IMGFILE From M_IMAGEFILE where  HOUSEID=@houseid and CHECKED=1 and SPLITERROR IS null and BOXSN=@boxsn order by ARCHNO";
             SqlParameter p1 = new SqlParameter("@boxsn", boxsn);
             SqlParameter p2 = new SqlParameter("@houseid", houseid);
             DataTable dt = SQLHelper.ExcuteTable(strSql, p1, p2);

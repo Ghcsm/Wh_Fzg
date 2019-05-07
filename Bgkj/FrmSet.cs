@@ -55,6 +55,7 @@ namespace Bgkj
             T_addModule.T_id = txtId.Text.Trim();
             T_addModule.T_sn = txtSn.Text.Trim();
             T_addModule.T_time = txtTime.Text.Trim();
+            T_addModule.T_timecs = DateTime.Now.ToString();
             T_Sysset.SaveModuleSofte(chkUpdateTime.Checked);
             MessageBox.Show("保存成功!");
 

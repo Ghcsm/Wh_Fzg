@@ -11,6 +11,7 @@ namespace DAL
         public static string T_id { get; set; }
         public static string T_sn { get; set; }
         public static string T_time { get; set; }
+        public static string T_timecs { get; set; }
         public static string T_moduleName { get; set; }
         public static string T_moduleChName { get; set; }
         public static string T_moduleInt { get; set; }

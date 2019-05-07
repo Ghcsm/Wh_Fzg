@@ -235,7 +235,7 @@ namespace DAL
                 SqlParameter p1 = new SqlParameter("@Msoid", T_addModule.T_id);
                 int count = Convert.ToInt32(SQLHelper.ExecScalar(strSql, p1));
                 strSql = "Psoftid";
-                SqlParameter[] p = new SqlParameter[5];
+                SqlParameter[] p = new SqlParameter[6];
                 p[0] = new SqlParameter("@Msoid", T_addModule.T_id);
                 p[1] = new SqlParameter("@Msosn", T_addModule.T_sn);
                 p[2] = new SqlParameter("@Msotm", T_addModule.T_time);
@@ -244,6 +244,7 @@ namespace DAL
                 else
                     p[3] = new SqlParameter("@id", 1);
                 p[4] = new SqlParameter("@userid", T_User.UserId);
+                p[5] = new SqlParameter("@Mwtime", DESEncrypt.DesEncrypt(T_addModule.T_timecs));
                 SQLHelper.ExecuteNonQuery(strSql, CommandType.StoredProcedure, p);
             }
             else {
@@ -340,13 +341,16 @@ namespace DAL
                     DataRow dr = dt.Rows[0];
                     T_ConFigure.Mosn = dr["Msosn"].ToString();
                     T_ConFigure.Motm = dr["Msotm"].ToString();
+                    T_ConFigure.Mwtime = dr["Mwtime"].ToString();
                     return;
                 }
                 T_ConFigure.Mosn = "";
                 T_ConFigure.Motm = "";
+                T_ConFigure.Mwtime = "";
             } catch {
                 T_ConFigure.Mosn = "";
                 T_ConFigure.Motm = "";
+                T_ConFigure.Mwtime = "";
             }
 
         }
@@ -870,9 +874,9 @@ namespace DAL
         {
             string strSql = "PaddDescription";
             SqlParameter[] p = new SqlParameter[3];
-            p[0] = new SqlParameter("@sm", colsm);
+            p[0] = new SqlParameter("@des", colsm);
             p[1] = new SqlParameter("@table", table);
-            p[1] = new SqlParameter("@col", col);
+            p[2] = new SqlParameter("@col", col);
             SQLHelper.ExecuteNonQuery(strSql, CommandType.StoredProcedure, p);
         }
 
@@ -880,9 +884,9 @@ namespace DAL
         {
             string strSql = "PUpdateDescription";
             SqlParameter[] p = new SqlParameter[3];
-            p[0] = new SqlParameter("@sm", colsm);
+            p[0] = new SqlParameter("@des", colsm);
             p[1] = new SqlParameter("@table", table);
-            p[1] = new SqlParameter("@col", col);
+            p[2] = new SqlParameter("@col", col);
             SQLHelper.ExecuteNonQuery(strSql, CommandType.StoredProcedure, p);
 
         }

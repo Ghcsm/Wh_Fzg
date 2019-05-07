@@ -39,6 +39,7 @@ namespace DAL
         public static string Mosn { get; set; }
         public static string Motm { get; set; }
         public static bool Bgsoft { get; set; }
+        public static string Mwtime { get; set; }
 
 
 
