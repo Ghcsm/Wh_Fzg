@@ -2281,6 +2281,11 @@ namespace CsmGenSet
                 return;
 
             string col = txtCreateTableColName.Text.Trim();
+            if (col.IndexOf("(") >= 0 || col.IndexOf("（") >= 0)
+            {
+                MessageBox.Show("字段名称不允许带各种符号!");
+                return;
+            }
             string lx = combCreateTableLx.Text.Trim();
             string sm = txtCreateTableColsm.Text.Trim();
             string nullk = "";
@@ -2420,7 +2425,6 @@ namespace CsmGenSet
                     T_Sysset.CreateTableUpdateExplain(ClsCreateTable.CreateTable, ClsCreateTable.CreateTableLvcol, txtCreateTableColsm.Text.Trim());
                 }
             }
-
             else if (ClsCreateTable.CreateTableLvsm.Trim().Length > 0 && txtCreateTableColsm.Text.Trim().Length <= 0)
                 T_Sysset.CreateTableDelExplain(ClsCreateTable.CreateTable, ClsCreateTable.CreateTableLvcol);
         }
