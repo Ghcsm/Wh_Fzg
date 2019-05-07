@@ -32,27 +32,41 @@ namespace Csmsjcf
             } catch {
                 sw.Close();
                 fs.Close();
-            } 
+            }
         }
 
-        public static void Writeini(string key,string value)
+        public static void Writeini(string key, string value)
         {
-            string filepath = Path.Combine(ClsFrmInfoPar.LogPath, "Splite.ini");
-            INIHelper.Write("SplitePar",key,value,filepath);
+            try {
+                string filepath = Path.Combine(ClsFrmInfoPar.LogPath, "Splite.ini");
+                INIHelper.Write("SplitePar", key, value, filepath);
+            } catch { }
         }
 
         public static List<string> Readinikey()
         {
-            string filepath = Path.Combine(ClsFrmInfoPar.LogPath, "Splite.ini");
-            return  INIHelper.GetAllKeys("SplitePar", filepath);
+            try
+            {
+                string filepath = Path.Combine(ClsFrmInfoPar.LogPath, "Splite.ini");
+                return INIHelper.GetAllKeys("SplitePar", filepath);
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         public static List<string> Readinivalue()
         {
-            string filepath = Path.Combine(ClsFrmInfoPar.LogPath, "Splite.ini");
-            return INIHelper.GetAllValues("SplitePar", filepath);
+            try
+            {
+                string filepath = Path.Combine(ClsFrmInfoPar.LogPath, "Splite.ini");
+                return INIHelper.GetAllValues("SplitePar", filepath);
+            }
+            catch
+            {
+                return null;
+            }
         }
-
-
     }
 }
