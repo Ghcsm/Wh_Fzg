@@ -235,7 +235,7 @@ namespace Csmsjdr
                 bool wyzbl = chbImportZhi.Checked;
                 for (int i = 0; i < count; i++)
                 {
-                    if (i < count - 1)
+                    if (i < count -1)
                         tzd += lvImportTable.Items[i].Text + ",";
                     else
                         tzd += lvImportTable.Items[i].Text;

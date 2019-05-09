@@ -721,6 +721,7 @@ namespace DAL
                 strSql = "update M_IMAGEFILE set ArchType=@type where id=@id";
                 SqlParameter p1 = new SqlParameter("@type", table);
                 SqlParameter p2 = new SqlParameter("@id", id);
+                SQLHelper.ExecScalar(strSql, p1, p2);
             }
             return id;
         }
@@ -771,7 +772,7 @@ namespace DAL
                     zdtmp += d[i];
                 }
             }
-            strSql1 += coltmp + ", Archid)" + " values " + zdtmp + archid + "')";
+            strSql1 += coltmp + ",EnterTag, Archid)" + " values " + zdtmp +"',1,"+ archid + ")";
             SQLHelper.ExecScalar(strSql1);
         }
 
