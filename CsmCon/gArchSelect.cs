@@ -60,6 +60,7 @@ namespace CsmCon
 
         private bool istxt()
         {
+            ClsContenInfo.Archtype = "ArchType";
             if (radioBoxsn.Checked) {
                 try {
                     int boxNo = int.Parse(this.txtBoxsn.Text.Trim());
@@ -70,25 +71,14 @@ namespace CsmCon
                 }
             }
             else {
-                gArchSelectInfo.garchid = 0;
-                gArchSelectInfo.garchcol = "";
-                if (gArchSelectInfo.gArchtable.Count <= 0) {
-                    MessageBox.Show("请先后台设置查询字段!");
-                    return false;
-                }
+               
                 if (comboxClass.Text.Trim().Length <= 0 || txtBoxsn.Text.Trim().Length <= 0) {
                     MessageBox.Show("档案类型选择错误或盒号为空!");
                     this.comboxClass.SelectAll();
                     return false;
                 }
-                gArchSelectInfo.garchid = gArchSelectInfo.gArchTabch.IndexOf(comboxClass.Text.Trim());
-                gArchSelectInfo.garchcol = gArchSelectInfo.gArchtableCol[gArchSelectInfo.garchid];
-                string[] coltmp = gArchSelectInfo.garchcol.Split(';');
-                string[] txttmp = txtBoxsn.Text.Trim().Split('-');
-                if (coltmp.Length != txttmp.Length) {
-                    MessageBox.Show("后台设置字段与查询信息长度不一致!");
-                    return false;
-                }
+                if (comboxClass.SelectedIndex ==1)
+                    ClsContenInfo.Archtype = "ArchConten";
             }
             return true;
         }
@@ -101,20 +91,8 @@ namespace CsmCon
             LvData.Items.Clear();
             if (radioBoxsn.Checked)
                 dt = Common.QueryBoxsn(txtBoxsn.Text.Trim());
-            else {
-
-                string tb = gArchSelectInfo.gArchtable[gArchSelectInfo.garchid];
-                string tbcol = gArchSelectInfo.garchcol;
-                string strzd = txtBoxsn.Text.Trim();
-                int arid = Common.QueryTableInfo(tb, tbcol, strzd);
-                if (arid <= 0) {
-                    MessageBox.Show("获取ID失败，此信息或不存在!");
-                    txtBoxsn.Focus();
-                    return;
-                }
-                dt = Common.QueryBoxsn(arid);
-            }
-
+            else 
+                dt = Common.QueryBoxsnid(txtBoxsn.Text.Trim());
             if (dt != null && dt.Rows.Count > 0) {
                 int i = 1;
                 int stat = 0;
@@ -125,7 +103,7 @@ namespace CsmCon
                     string archno = dr["ArchNo"].ToString();
                     string arid = dr["ID"].ToString();
                     string pages = dr["PAGES"].ToString();
-                    string type = dr["ArchType"].ToString();
+                    string type = dr[ClsContenInfo.Archtype].ToString();
                     string ImgFile = (dr["IMGFILE"] == null ? "" : dr["IMGFILE"].ToString());
                     stat = Convert.ToInt32((dr["ArchState"].ToString() == null ? "0" : dr["ArchState"].ToString()));
                     if (stat >= 3 && stat < 5)
@@ -179,50 +157,18 @@ namespace CsmCon
                         else {
                             comboxClass.Enabled = true;
                             radioClass.Checked = true;
-                            int x = gArchSelectInfo.gArchTabch.IndexOf(ClsIni.ArchNo);
-                            comboxClass.SelectedIndex = x + 1;
+                            comboxClass.Text = ClsIni.ArchNo;
                         }
                     }));
 
                 }
             } catch { }
         }
-
-        private void GetboxarchInfo()
-        {
-            gArchSelectInfo.gArchTabch.Clear();
-            gArchSelectInfo.gArchtable.Clear();
-            gArchSelectInfo.gArchtableCol.Clear();
-            DataTable dt = T_Sysset.GetBoxsncolSet();
-            if (dt == null || dt.Rows.Count <= 0)
-                return;
-            comboxClass.BeginInvoke(new Action(() =>
-            {
-                comboxClass.Items.Clear();
-                comboxClass.Items.Add("");
-            }));
-            for (int i = 0; i < dt.Rows.Count; i++) {
-                string tb = dt.Rows[i][1].ToString();
-                if (tb.Trim().Length <= 0)
-                    continue;
-                string tbch = dt.Rows[i][2].ToString();
-                string tbcol = dt.Rows[i][3].ToString();
-                gArchSelectInfo.gArchtable.Add(tb);
-                gArchSelectInfo.gArchTabch.Add(tbch);
-                gArchSelectInfo.gArchtableCol.Add(tbcol);
-                comboxClass.Invoke(new Action(() => { comboxClass.Items.Add(tbch); }));
-
-            }
-            Getini();
-        }
+      
 
         private void gArchSelect_Load(object sender, EventArgs e)
         {
-            Task.Run(new Action(() =>
-            {
-                GetboxarchInfo();
-            }));
-
+            Getini();
             if (!GotoPages)
                 butLoad.Visible = false;
             else {

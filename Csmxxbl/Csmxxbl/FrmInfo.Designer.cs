@@ -29,11 +29,11 @@
         {
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.gr1 = new System.Windows.Forms.GroupBox();
-            this.gArchSelect1 = new CsmCon.gArchSelect();
             this.gr2 = new System.Windows.Forms.GroupBox();
             this.gr3 = new System.Windows.Forms.GroupBox();
             this.chkInfo = new System.Windows.Forms.CheckBox();
             this.butSave = new DevComponents.DotNetBar.ButtonX();
+            this.gArchSelect1 = new CsmCon.gArchSelect();
             this.gr1.SuspendLayout();
             this.gr3.SuspendLayout();
             this.SuspendLayout();
@@ -53,35 +53,18 @@
             this.gr1.Controls.Add(this.gArchSelect1);
             this.gr1.Location = new System.Drawing.Point(0, 28);
             this.gr1.Name = "gr1";
-            this.gr1.Size = new System.Drawing.Size(371, 519);
+            this.gr1.Size = new System.Drawing.Size(409, 519);
             this.gr1.TabIndex = 1;
             this.gr1.TabStop = false;
-            // 
-            // gArchSelect1
-            // 
-            this.gArchSelect1.Archid = 0;
-            this.gArchSelect1.ArchImgFile = null;
-            this.gArchSelect1.ArchRegPages = 0;
-            this.gArchSelect1.Archtype = null;
-            this.gArchSelect1.Boxsn = 0;
-            this.gArchSelect1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gArchSelect1.GotoPages = false;
-            this.gArchSelect1.LoadFileBoole = false;
-            this.gArchSelect1.Location = new System.Drawing.Point(3, 17);
-            this.gArchSelect1.Name = "gArchSelect1";
-            this.gArchSelect1.PagesEnd = false;
-            this.gArchSelect1.Size = new System.Drawing.Size(365, 499);
-            this.gArchSelect1.TabIndex = 0;
-            this.gArchSelect1.LineClickLoadInfo += new CsmCon.gArchSelect.ArchSelectHandle(this.gArchSelect1_LineClickLoadInfo);
             // 
             // gr2
             // 
             this.gr2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.gr2.Location = new System.Drawing.Point(380, 28);
+            this.gr2.Location = new System.Drawing.Point(415, 28);
             this.gr2.Name = "gr2";
-            this.gr2.Size = new System.Drawing.Size(731, 447);
+            this.gr2.Size = new System.Drawing.Size(696, 447);
             this.gr2.TabIndex = 2;
             this.gr2.TabStop = false;
             this.gr2.Text = "案卷信息";
@@ -92,9 +75,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.gr3.Controls.Add(this.chkInfo);
             this.gr3.Controls.Add(this.butSave);
-            this.gr3.Location = new System.Drawing.Point(380, 484);
+            this.gr3.Location = new System.Drawing.Point(415, 484);
             this.gr3.Name = "gr3";
-            this.gr3.Size = new System.Drawing.Size(728, 60);
+            this.gr3.Size = new System.Drawing.Size(693, 60);
             this.gr3.TabIndex = 3;
             this.gr3.TabStop = false;
             // 
@@ -121,6 +104,23 @@
             this.butSave.TabIndex = 0;
             this.butSave.Text = "保存";
             this.butSave.Click += new System.EventHandler(this.butSave_Click);
+            // 
+            // gArchSelect1
+            // 
+            this.gArchSelect1.Archid = 0;
+            this.gArchSelect1.ArchImgFile = null;
+            this.gArchSelect1.ArchRegPages = 0;
+            this.gArchSelect1.Archtype = null;
+            this.gArchSelect1.Boxsn = 0;
+            this.gArchSelect1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gArchSelect1.GotoPages = false;
+            this.gArchSelect1.LoadFileBoole = false;
+            this.gArchSelect1.Location = new System.Drawing.Point(3, 17);
+            this.gArchSelect1.Name = "gArchSelect1";
+            this.gArchSelect1.PagesEnd = false;
+            this.gArchSelect1.Size = new System.Drawing.Size(403, 499);
+            this.gArchSelect1.TabIndex = 0;
+            this.gArchSelect1.LineClickLoadInfo += new CsmCon.gArchSelect.ArchSelectHandle(this.gArchSelect1_LineClickLoadInfo);
             // 
             // FrmInfo
             // 

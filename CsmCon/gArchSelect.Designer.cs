@@ -51,6 +51,8 @@
             this.butPageUpdate = new DevComponents.DotNetBar.ButtonX();
             this.label1 = new System.Windows.Forms.Label();
             this.txtPages = new System.Windows.Forms.TextBox();
+            this.comboItem1 = new DevComponents.Editors.ComboItem();
+            this.comboItem2 = new DevComponents.Editors.ComboItem();
             this.gr1.SuspendLayout();
             this.panelTop.SuspendLayout();
             this.gr2.SuspendLayout();
@@ -193,6 +195,9 @@
             this.comboxClass.Enabled = false;
             this.comboxClass.FormattingEnabled = true;
             this.comboxClass.ItemHeight = 15;
+            this.comboxClass.Items.AddRange(new object[] {
+            this.comboItem1,
+            this.comboItem2});
             this.comboxClass.Location = new System.Drawing.Point(111, 11);
             this.comboxClass.Name = "comboxClass";
             this.comboxClass.Size = new System.Drawing.Size(76, 21);
@@ -280,6 +285,14 @@
             this.txtPages.TabIndex = 1;
             this.txtPages.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPages_KeyPress);
             // 
+            // comboItem1
+            // 
+            this.comboItem1.Text = "案卷信息";
+            // 
+            // comboItem2
+            // 
+            this.comboItem2.Text = "目录信息";
+            // 
             // gArchSelect
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -321,5 +334,7 @@
         private System.Windows.Forms.TextBox txtPages;
         public DevComponents.DotNetBar.ButtonX butLoad;
         private System.Windows.Forms.ColumnHeader c_type;
+        private DevComponents.Editors.ComboItem comboItem1;
+        private DevComponents.Editors.ComboItem comboItem2;
     }
 }

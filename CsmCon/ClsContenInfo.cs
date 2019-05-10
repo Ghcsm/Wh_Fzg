@@ -11,15 +11,7 @@ using System.Windows.Forms;
 namespace CsmCon
 {
 
-    public static class gArchSelectInfo
-    {
-        public static List<string> gArchtable = new List<string>();
-        public static List<string> gArchtableCol = new List<string>();
-        public static List<string> gArchTabch = new List<string>();
-
-        public static string garchcol  {get;set;}
-        public static int garchid { get; set; }
-    }
+   
     public static class ClsContenInfo
     {
         public static string ContenTable { get; set; }
@@ -38,6 +30,8 @@ namespace CsmCon
         public static int txtrows = 1;
 
         public static string Pagestmp { get; set; }
+
+        public static string Archtype { get; set; }
     }
 
 

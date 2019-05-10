@@ -201,7 +201,7 @@ namespace DAL
         public static int IsGuiColRowsCount(int ab, int col, int row)
         {
             try {
-                string strSql = "select max(boxsn) from M_imagefile where Houseid=@houseid and CabNo=@gui and CabAb=@ab and Colno=@col and RowNo=@row ";
+                string strSql = "select top 10 max(boxsn) from M_imagefile where Houseid=@houseid and CabNo=@gui and CabAb=@ab and Colno=@col and RowNo=@row ";
                 SqlParameter p1 = new SqlParameter("@gui", V_HouseSetCs.HouseGui);
                 SqlParameter p2 = new SqlParameter("@houseid", V_HouseSetCs.Houseid);
                 SqlParameter p3 = new SqlParameter("@ab", ab);
@@ -217,7 +217,7 @@ namespace DAL
         public static int IsGuiArchNoCount(int ab, int col, int row, int boxsn)
         {
             try {
-                string strSql = "select max(ArchNO) from M_imagefile where Houseid=@houseid and CabNo=@gui and CabAb=@ab and Colno=@col and RowNo=@row and Boxsn=@boxsn";
+                string strSql = "select top 100 max(ArchNO) from M_imagefile where Houseid=@houseid and CabNo=@gui and CabAb=@ab and Colno=@col and RowNo=@row and Boxsn=@boxsn";
                 SqlParameter p1 = new SqlParameter("@gui", V_HouseSetCs.HouseGui);
                 SqlParameter p2 = new SqlParameter("@houseid", V_HouseSetCs.Houseid);
                 SqlParameter p3 = new SqlParameter("@ab", ab);
@@ -234,7 +234,7 @@ namespace DAL
         public static int IsGuiArchNoSate(int ab, int col, int row, int boxsn, int juan)
         {
             try {
-                string strSql = "select imgfile, Checked from M_imagefile where Houseid=@houseid and CabNo=@gui and CabAb=@ab and Colno=@col and RowNo=@row and Boxsn=@boxsn and ArchNo=@juan";
+                string strSql = "select top 100 imgfile, Checked from M_imagefile where Houseid=@houseid and CabNo=@gui and CabAb=@ab and Colno=@col and RowNo=@row and Boxsn=@boxsn and ArchNo=@juan";
                 SqlParameter[] p = new SqlParameter[7];
                 p[0] = new SqlParameter("@gui", V_HouseSetCs.HouseGui);
                 p[1] = new SqlParameter("@houseid", V_HouseSetCs.Houseid);
@@ -284,7 +284,7 @@ namespace DAL
 
         public static DataTable QuerboxsnInfo(int id)
         {
-            string strSql = "select boxsn,archno, IMGFILE,ArchYanShou from M_IMAGEFILE where id=@arid";
+            string strSql = "select top 100 boxsn,archno, IMGFILE,ArchYanShou from M_IMAGEFILE where id=@arid";
             SqlParameter p1 = new SqlParameter("@arid", id);
             DataTable dt = SQLHelper.ExcuteTable(strSql, p1);
             return dt;
@@ -338,14 +338,13 @@ namespace DAL
             }
         }
 
-        public static DataTable QueryBoxsn(string boxsn, string archtype)
+        public static DataTable QueryBoxsnid(string importid)
         {
             try {
-                string strSql = "select * from V_ImgFile where  houseid=@houseid and boxsn=@boxsn and ArchType=@archtype";
-                SqlParameter p1 = new SqlParameter("@boxsn", boxsn);
+                string strSql = "select * from V_ImgFile where houseid=@houseid and ArchImportID=@impotid ";
+                SqlParameter p1 = new SqlParameter("@impotid", importid);
                 SqlParameter p2 = new SqlParameter("@houseid", V_HouseSetCs.Houseid);
-                SqlParameter p3 = new SqlParameter("@archtype", archtype);
-                DataTable dt = SQLHelper.ExcuteTable(strSql, p1, p2, p3);
+                DataTable dt = SQLHelper.ExcuteTable(strSql, p1, p2);
                 return dt;
             } catch (Exception e) {
                 MessageBox.Show("获取数据失败" + e.ToString());
@@ -354,32 +353,6 @@ namespace DAL
             }
         }
 
-        public static int QueryTableInfo(string table, string col, string str)
-        {
-            int archid = 0;
-            string[] coltmp = col.Split(';');
-            string[] strtmp = str.Split('-');
-            string strsqltmp = "";
-            string strSql = "select Archid from " + table + " where ";
-            for (int i = 0; i < coltmp.Length; i++) {
-                if (i < coltmp.Length - 1)
-                    strsqltmp += coltmp[i] + "=" + strtmp[i] + " and ";
-                else
-                    strsqltmp += coltmp[i] + "=" + strtmp[i]+"";
-            }
-            strSql += strsqltmp;
-            try {
-                object obj = SQLHelper.ExecScalar(strSql);
-                if (obj == null)
-                    archid = 0;
-                else
-                    archid = Convert.ToInt32(obj.ToString());
-                return archid;
-            } catch (Exception e) {
-                MessageBox.Show("获取id失败:" + e.ToString());
-                return archid;
-            }
-        }
 
         public static void UpdatePages(string pages, int archid)
         {
@@ -394,7 +367,7 @@ namespace DAL
 
         public static string Getpages(int arid)
         {
-            string strSql = "SELECT PAGES FROM M_IMAGEFILE WHERE ID=@arid";
+            string strSql = "SELECT top 1 PAGES FROM M_IMAGEFILE WHERE ID=@arid";
             SqlParameter p1 = new SqlParameter("@arid", arid);
             return SQLHelper.ExecScalar(strSql, p1).ToString();
         }
@@ -473,7 +446,7 @@ namespace DAL
         public static DataTable ReadPageIndexInfo(int ArchID)
         {
             try {
-                string strSql = "select PageIndexInfo ,DeleTag from M_imagefile where  id=@ArchID";
+                string strSql = "select top 1 PageIndexInfo ,DeleTag from M_imagefile where  id=@ArchID";
                 SqlParameter p1 = new SqlParameter("@ArchID", ArchID);
                 DataTable dt = DAL.SQLHelper.ExcuteTable(strSql, p1);
                 return dt;
@@ -547,8 +520,9 @@ namespace DAL
         public static DataTable GetboxArchno(int b)
         {
             try {
-                string strSql = "select id from M_imagefile where boxsn=@box and CHECKED=1";
-                DataTable dt = SQLHelper.ExcuteTable(strSql);
+                string strSql = "select top 100 id from M_imagefile where boxsn=@box and CHECKED=1";
+                SqlParameter p1 = new SqlParameter("@box", b);
+                DataTable dt = SQLHelper.ExcuteTable(strSql, p1);
                 return dt;
             } catch {
                 return null;
@@ -669,7 +643,7 @@ namespace DAL
         public static int GetArchPages(int ArchID)
         {
             try {
-                string strSql = "select pages from M_IMAGEFILE where id=@id ";
+                string strSql = "select top 1 pages from M_IMAGEFILE where id=@id ";
                 SqlParameter p1 = new SqlParameter("@id", ArchID);
                 int i = Convert.ToInt32(SQLHelper.ExecScalar(strSql, p1));
                 return i;
@@ -754,12 +728,25 @@ namespace DAL
             return dt;
         }
 
-        private static string UpdateArchtype(string table)
+        private static string UpdateArchtype(string table, string artype, string wyz)
         {
-            string strSql = "select MIN(id) from M_IMAGEFILE where ArchType is null  ";
-            string id = SQLHelper.ExecScalar(strSql).ToString();
-            if (id.Trim().Length > 0) {
-                strSql = "update M_IMAGEFILE set ArchType=@type where id=@id";
+            string id = "";
+            string strSql = "select top 1 id from M_IMAGEFILE where ArchImportID='" + wyz + "'";
+            object obj = SQLHelper.ExecScalar(strSql);
+            if (obj == null) {
+                strSql = "select top 1 MIN(id) from M_IMAGEFILE where ArchType is null and ArchConten is null ";
+                id = SQLHelper.ExecScalar(strSql).ToString();
+                if (id.Trim().Length > 0) {
+                    strSql = "update M_IMAGEFILE set " + artype + "=@type, ArchImportID=@wyz where id=@id";
+                    SqlParameter p1 = new SqlParameter("@type", table);
+                    SqlParameter p2 = new SqlParameter("@id", id);
+                    SqlParameter p3 = new SqlParameter("@wyz", wyz);
+                    SQLHelper.ExecScalar(strSql, p1, p2, p3);
+                }
+            }
+            else {
+                id = obj.ToString();
+                strSql = "update M_IMAGEFILE set " + artype + "=@type where id=@id";
                 SqlParameter p1 = new SqlParameter("@type", table);
                 SqlParameter p2 = new SqlParameter("@id", id);
                 SQLHelper.ExecScalar(strSql, p1, p2);
@@ -767,54 +754,49 @@ namespace DAL
             return id;
         }
 
-        public static void ImportData(string table, string col, string data, bool ck, bool wyzbl, int wyz)
+        public static string ImportData(string table, string col, string data, bool ck, int lx, string wyz)
         {
-            if (ck == true) {
-                string coldata = "";
-                string strSql = "select count(*) from " + table + " where ";
-                string[] a = col.Split(',');
-                string[] b = data.Split(',');
-                if (wyzbl == false) {
-
-                    for (int i = 0; i < a.Length; i++) {
-                        string s = b[i];
-                        if (s.Trim().Length > 0) {
-                            if (i != a.Length - 1)
-                                coldata += a[i] + "='" + b[i] + "' and ";
-                            else
-                                coldata += a[i] + "='" + b[i] + "'";
-                        }
+            string tb = "";
+            if (lx == 1)
+                tb = "ArchType";
+            else
+                tb = "ArchConten";
+            try {
+                if (ck == true) {
+                    string strSql = "select count(*) from M_IMAGEFILE where " + tb + "='" + table + "' and ArchImportID='" + wyz + "'";
+                    int id = Convert.ToInt32(SQLHelper.ExecScalar(strSql).ToString());
+                    if (id > 0) {
+                        strSql = "delete from " + table + " where Archid=" + id;
+                        SQLHelper.ExecScalar(strSql);
                     }
                 }
-                else {
-                    coldata += a[wyz] + "='" + b[wyz] + "'";
-                }
-                strSql += coldata;
-                int id = Convert.ToInt32(SQLHelper.ExecScalar(strSql).ToString());
-                if (id > 0) {
-                    strSql = "delete from " + table + " where " + coldata;
-                    SQLHelper.ExecScalar(strSql);
-                }
-            }
-            string archid = UpdateArchtype(table);
-            string strSql1 = "insert into " + table;
-            string[] c = col.Split(',');
-            string[] d = data.Split(',');
-            string coltmp = "( ";
-            string zdtmp = "(' ";
-            for (int i = 0; i < c.Length; i++) {
-                if (i != c.Length - 1) {
+                string archid = UpdateArchtype(table, tb, wyz);
+                if (archid.Trim().Length <= 0)
+                    return "未找到最小Archid，或许数据库上架数量太小";
+                string strSql1 = "insert into " + table;
+                string[] c = col.Split(',');
+                string[] d = data.Split(',');
+                string coltmp = "( ";
+                string zdtmp = "(' ";
+                for (int i = 0; i < c.Length; i++) {
+                    if (i != c.Length - 1) {
 
-                    coltmp += c[i] + ",";
-                    zdtmp += d[i] + "','";
+                        coltmp += c[i] + ",";
+                        zdtmp += d[i] + "','";
+                    }
+                    else {
+                        coltmp += c[i];
+                        zdtmp += d[i];
+                    }
                 }
-                else {
-                    coltmp += c[i];
-                    zdtmp += d[i];
-                }
+                strSql1 += coltmp + ",EnterTag, Archid)" + " values " + zdtmp + "',1," + archid + ")";
+                SQLHelper.ExecScalar(strSql1);
+                return "ok";
+            } catch (Exception e) {
+                string str = "写入数据失败:" + e.ToString();
+                return str;
             }
-            strSql1 += coltmp + ",EnterTag, Archid)" + " values " + zdtmp + "',1," + archid + ")";
-            SQLHelper.ExecScalar(strSql1);
+
         }
 
 
@@ -974,7 +956,7 @@ namespace DAL
 
         public static DataTable GetDataSplitBoxsn(int houseid, string boxsn)
         {
-            string strSql = "select ID,BOXSN,ARCHNO,PAGES,IMGFILE From M_IMAGEFILE where  HOUSEID=@houseid and CHECKED=1 and SPLITERROR IS null and BOXSN=@boxsn order by ARCHNO";
+            string strSql = "select top 100 ID,BOXSN,ARCHNO,PAGES,IMGFILE From M_IMAGEFILE where  HOUSEID=@houseid and CHECKED=1 and SPLITERROR IS null and BOXSN=@boxsn order by ARCHNO";
             SqlParameter p1 = new SqlParameter("@boxsn", boxsn);
             SqlParameter p2 = new SqlParameter("@houseid", houseid);
             DataTable dt = SQLHelper.ExcuteTable(strSql, p1, p2);
@@ -982,7 +964,7 @@ namespace DAL
         }
         public static DataTable GetDataSplitBoxsn(int houseid, string boxsn, string archno)
         {
-            string strSql = "select ID,BOXSN,ARCHNO,PAGES,IMGFILE From M_IMAGEFILE where  HOUSEID=@houseid and CHECKED=1 and SPLITERROR IS null and BOXSN=@boxsn and ARCHNO=@archno order by ARCHNO";
+            string strSql = "select top 100 ID,BOXSN,ARCHNO,PAGES,IMGFILE From M_IMAGEFILE where  HOUSEID=@houseid and CHECKED=1 and SPLITERROR IS null and BOXSN=@boxsn and ARCHNO=@archno order by ARCHNO";
             SqlParameter p1 = new SqlParameter("@boxsn", boxsn);
             SqlParameter p2 = new SqlParameter("@houseid", houseid);
             SqlParameter p3 = new SqlParameter("@archno", archno);
@@ -1226,7 +1208,7 @@ namespace DAL
         public static int GetCode(string Code)
         {
             try {
-                string strSql = "select id from M_IMAGEFILE where ARCNUM=@code";
+                string strSql = "select top 100 id from M_IMAGEFILE where ARCNUM=@code";
                 SqlParameter p1 = new SqlParameter("@code", Code);
                 int i = Convert.ToInt32(SQLHelper.ExecScalar(strSql, p1));
                 return i;
@@ -1484,7 +1466,7 @@ namespace DAL
         {
             try {
                 int ArchState = 0;
-                string strSql = "select ArchState from M_ImageFile where  id=@ArchID";
+                string strSql = "select top 1 ArchState from M_ImageFile where  id=@ArchID";
                 SqlParameter p1 = new SqlParameter("@ArchID", ArchID);
                 ArchState = Convert.ToInt32(SQLHelper.ExecScalar(strSql, p1).ToString());
                 return ArchState;
@@ -1619,7 +1601,7 @@ namespace DAL
         public static int GetXystat(int aid)
         {
             try {
-                string strTF = "select CheckXyState from M_IMAGEFILE where id=@archid";
+                string strTF = "select top 1 CheckXyState from M_IMAGEFILE where id=@archid";
                 SqlParameter t1 = new SqlParameter("@archid", aid);
                 int tf = Convert.ToInt32(SQLHelper.ExecScalar(strTF, t1));
                 return tf;

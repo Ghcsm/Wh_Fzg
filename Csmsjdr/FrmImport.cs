@@ -6,6 +6,7 @@ using Spire.Xls;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace Csmsjdr
 {
@@ -36,19 +37,16 @@ namespace Csmsjdr
 
         private void GetImportInfo(string str)
         {
+            chkTablecol.Items.Clear();
             DataTable dt = Common.GetImportTable(str);
             if (dt == null || dt.Rows.Count <= 0)
                 return;
-            foreach (DataRow dr in dt.Rows) {
-                string s = dr[0].ToString();
-                if (s.Trim().Length >= 0) {
-                    string[] a = s.Split(';');
-                    for (int i = 0; i < a.Length; i++) {
-                        string b = a[i];
-                        lvImportTable.Items.Add(b);
-                        combImportZhi.Items.Add(b);
-                    }
-                }
+            string[] strtmp = dt.Rows[0][0].ToString().Split(';');
+            if (strtmp.Length <= 0)
+                return;
+            for (int i = 0; i < strtmp.Length; i++) {
+                string s = strtmp[i];
+                chkTablecol.Items.Add(s);
             }
         }
 
@@ -57,6 +55,7 @@ namespace Csmsjdr
             TxtEnd(0);
             combXlsTable.Items.Clear();
             dgvXlsData.DataSource = null;
+            combLx.SelectedIndex = 0;
             work = new Workbook();
             try {
                 if (opdXlsFile.ShowDialog() != DialogResult.OK) {
@@ -111,6 +110,7 @@ namespace Csmsjdr
                 combXlsTable.Enabled = false;
                 chbImportNew.Enabled = false;
                 butLog.Enabled = false;
+                combLx.Enabled = false;
                 return;
             }
             butXlsSelect.Enabled = true;
@@ -119,6 +119,7 @@ namespace Csmsjdr
             combXlsTable.Enabled = true;
             chbImportNew.Enabled = true;
             butLog.Enabled = true;
+            combLx.Enabled = true;
         }
 
         private bool Istxt()
@@ -144,13 +145,14 @@ namespace Csmsjdr
                 return false;
             }
 
-            if (chbImportZhi.Checked)
-            {
-                if (combImportZhi.Text.Trim().Length <= 0)
-                {
-                    MessageBox.Show("请选择唯一字段!");
-                    return false;
-                }
+            if (combLx.SelectedIndex == 0) {
+                MessageBox.Show("请选择本次导入xls信息类型!");
+                combLx.Focus();
+                return false;
+            }
+            if (chkTablecol.CheckedItems.Count<= 0) {
+                MessageBox.Show("请选择xls表中唯一字段!");
+                return false;
             }
             return true;
         }
@@ -179,97 +181,98 @@ namespace Csmsjdr
             }
         }
 
-        private Task<bool> StartImport(string table, string tzd, string xzd, bool chk, int count,bool wyzb ,int wyz)
+        private Task<bool> StartImport(string table, string tzd, string xzd, bool chk, int count, int lx, List<string> wyz)
         {
+            string strwy = "";
             return Task.Run(() =>
             {
-                int id = 0;;
-                 for (int i = 0; i < dgvXlsData.Rows.Count; i++) {
-                     xzd = "";
-                     i = 0;
-                     id+=1;
-                     for (int a = 0; a < count; a++) {
-                         if (a < count - 1)
-                             xzd += dgvXlsData.Rows[i].Cells[a].Value.ToString() + ",";
-                         else
-                             xzd += dgvXlsData.Rows[i].Cells[a].Value.ToString();
-                     }
-                     try {
-                         Common.ImportData(table, tzd, xzd, chk,wyzb,wyz);
-                         //this.Invoke(new Action(() =>
-                         //{
-                         //    dgvXlsData.Rows.RemoveAt(i);
-                         //    dgvXlsData.Refresh();
-                         //    lbsy.Text = string.Format("剩余 {0} 条", dgvXlsData.Rows.Count.ToString());
-                         //}));
-                         //Thread.Sleep(200);
-                     } catch (Exception e)
-                     {
-                         string s = "错误行:" + id;
-                         WriteLog(s+" 详细信息-->"+e);
-                     } finally {
-                         this.Invoke(new Action(() =>
-                         {
-                             dgvXlsData.Rows.RemoveAt(i);
-                             dgvXlsData.Refresh();
-                             lbsy.Text = string.Format("剩余 {0} 条", dgvXlsData.Rows.Count.ToString());
-                         }));
-                     }
-                 }
+                int id = 0; ;
+                for (int i = 0; i <= dgvXlsData.Rows.Count; i++) {
+                    xzd = "";
+                    strwy = "";
+                    i = 0;
+                    id += 1;
+                    for (int a = 0; a < count; a++) {
+                        string s = dgvXlsData.Rows[i].Cells[a].Value.ToString().Trim();
+                        if (a < count - 1)
+                            xzd += s + ",";
+                        else
+                            xzd += s;
+                        if (wyz.IndexOf(a.ToString()) >= 0) {
+                            if (strwy.Trim().Length <= 0)
+                                strwy += s;
+                            else
+                                strwy += "-" + s;
+                        }
+                    }
+                    try {
+                        string str = Common.ImportData(table, tzd, xzd, chk, lx, strwy);
+                        if (str != "ok") {
+                            str = "详细信息：错误行:" + id + " -->" + str;
+                            WriteLog(str);
+                        }
+                    } catch (Exception e) {
+                        string s = "错误行:" + id;
+                        WriteLog(s + " 详细信息-->" + e);
+                    } finally {
+                        this.Invoke(new Action(() =>
+                        {
+                            dgvXlsData.Rows.RemoveAt(i);
+                            dgvXlsData.Refresh();
+                            lbsy.Text = string.Format("剩余 {0} 条", dgvXlsData.Rows.Count.ToString());
+                        }));
+                    }
 
-                 return true;
-             });
+                }
+
+                return true;
+            });
         }
 
         private async void ImportData()
         {
             TxtEnd(0);
-            try
-            {
+            try {
                 if (!Istxt())
                     return;
                 string tzd = "";
                 string xzd = "";
-                int count = lvImportTable.Items.Count;
+                int count = chkTablecol.Items.Count;
                 bool chk = chbImportNew.Checked;
                 string table = combImportTable.Text.Trim();
-                int wyz = combImportZhi.SelectedIndex;
-                bool wyzbl = chbImportZhi.Checked;
-                for (int i = 0; i < count; i++)
-                {
-                    if (i < count -1)
-                        tzd += lvImportTable.Items[i].Text + ",";
+                int improtlx = combLx.SelectedIndex;
+                List<string> lswyz = new List<string>();
+                for (int i = 0; i < count; i++) {
+                    string s = chkTablecol.Items[i].ToString();
+                    if (i < count - 1)
+                        tzd += s + ",";
                     else
-                        tzd += lvImportTable.Items[i].Text;
-
+                        tzd += s;
+                    if (chkTablecol.GetItemChecked(i))
+                        lswyz.Add(i.ToString());
                 }
-                bool bl = await StartImport(table, tzd, xzd, chk, count,wyzbl,wyz);
-                if (bl == true)
+                bool bl = await StartImport(table, tzd, xzd, chk, count, improtlx, lswyz);
+                if (bl)
                     TxtEnd(1);
 
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 MessageBox.Show("错误:" + e.ToString());
-            }
-            finally
-            {
+            } finally {
                 TxtEnd(1);
                 string s = "导入数据:数据库表名:" + combImportTable.Text.Trim() + ";文件名：" + txtXlsPath.Text.Trim() + ";工作表名:" +
                            combXlsTable.Text.Trim();
-                Common.Writelog(0,s);
+                Common.Writelog(0, s);
             }
         }
 
         private void FrmImport_Shown(object sender, EventArgs e)
         {
+            combLx.SelectedIndex = 0;
             GetImportInfo();
         }
 
         private void combImportTable_SelectedIndexChanged(object sender, EventArgs e)
         {
-            lvImportTable.Items.Clear();
-            combImportZhi.Items.Clear();
             string s = combImportTable.Text.Trim();
             if (s.Length <= 0)
                 return;
@@ -289,6 +292,7 @@ namespace Csmsjdr
         private void butImport_Click(object sender, EventArgs e)
         {
             ImportData();
+
         }
 
         private void butLog_Click(object sender, EventArgs e)
@@ -303,26 +307,16 @@ namespace Csmsjdr
             }
         }
 
-        private void chbImportZhi_CheckedChanged(object sender, EventArgs e)
+        private void clschk()
         {
-            if (chbImportZhi.Checked)
-            {
-                if (!chbImportNew.Checked) {
-                    chbImportZhi.Checked = false;
-                    combImportZhi.Enabled = false;
-                    return;
-                }
-                combImportZhi.Enabled = true;
+            for (int i = 0; i < chkTablecol.Items.Count; i++) {
+                chkTablecol.SetItemChecked(i, false);
             }
         }
-
-        private void chbImportNew_CheckedChanged(object sender, EventArgs e)
+        private void combLx_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (!chbImportNew.Checked)
-            {
-                chbImportZhi.Checked = false;
-                combImportZhi.Enabled = false;
-            }
+            if (combLx.SelectedIndex>0)
+            clschk();
         }
     }
 }
