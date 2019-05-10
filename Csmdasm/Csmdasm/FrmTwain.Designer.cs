@@ -28,9 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmTwain));
             this.toolTop = new System.Windows.Forms.ToolStrip();
-            this.dotManger = new DevComponents.DotNetBar.DotNetBarManager();
+            this.dotManger = new DevComponents.DotNetBar.DotNetBarManager(this.components);
             this.dockSite4 = new DevComponents.DotNetBar.DockSite();
             this.dockSite9 = new DevComponents.DotNetBar.DockSite();
             this.bar2 = new DevComponents.DotNetBar.Bar();
@@ -588,6 +589,7 @@
             this.ImgView.Size = new System.Drawing.Size(796, 522);
             this.ImgView.TabIndex = 0;
             this.ImgView.Click += new System.EventHandler(this.ImgView_Click);
+            this.ImgView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ImgView_KeyDown);
             // 
             // grBottom
             // 
@@ -1005,6 +1007,7 @@
             this.Name = "FrmTwain";
             this.Load += new System.EventHandler(this.FrmTwain_Load);
             this.Shown += new System.EventHandler(this.FrmTwain_Shown);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FrmTwain_KeyDown);
             this.dockSite9.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.bar2)).EndInit();
             this.bar2.ResumeLayout(false);

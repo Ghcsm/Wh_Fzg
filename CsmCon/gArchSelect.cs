@@ -52,6 +52,10 @@ namespace CsmCon
             Witeini();
             if (PagesEnd)
                 txtPages.Enabled = false;
+            if (LvData.Items.Count > 0) {
+                LvData.Items[0].Selected = true;
+                LvData_Click(null, null);
+            }
         }
 
         private bool istxt()
@@ -105,6 +109,7 @@ namespace CsmCon
                 int arid = Common.QueryTableInfo(tb, tbcol, strzd);
                 if (arid <= 0) {
                     MessageBox.Show("获取ID失败，此信息或不存在!");
+                    txtBoxsn.Focus();
                     return;
                 }
                 dt = Common.QueryBoxsn(arid);
@@ -171,12 +176,11 @@ namespace CsmCon
                         txtBoxsn.Text = ClsIni.Archbox;
                         if (ClsIni.Rabchk == "true")
                             radioBoxsn.Checked = true;
-                        else
-                        {
+                        else {
                             comboxClass.Enabled = true;
                             radioClass.Checked = true;
                             int x = gArchSelectInfo.gArchTabch.IndexOf(ClsIni.ArchNo);
-                            comboxClass.SelectedIndex = x+1;
+                            comboxClass.SelectedIndex = x + 1;
                         }
                     }));
 
@@ -218,7 +222,7 @@ namespace CsmCon
             {
                 GetboxarchInfo();
             }));
-           
+
             if (!GotoPages)
                 butLoad.Visible = false;
             else {
@@ -292,10 +296,9 @@ namespace CsmCon
 
         private void butOk_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (e.KeyChar == 13) {
+            if (e.KeyChar == 13)
                 butOk_Click(null, null);
-                LvData.Focus();
-            }
+
         }
 
         private void butPageUpdate_Click(object sender, EventArgs e)

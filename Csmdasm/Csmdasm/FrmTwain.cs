@@ -556,8 +556,76 @@ namespace Csmdasm
             Himg.Rectcls();
         }
 
+
+        private void Keykuaij(object sender, KeyEventArgs e)
+        {
+            Keys keyCode = e.KeyCode;
+            switch (keyCode) {
+                case Keys.Escape:
+                    toolColse_Click(sender, e);
+                    break;
+                case Keys.Enter:
+                    toolScan_Click(sender, e);
+                    break;
+                case Keys.Delete:
+                    toolDelPages_Click(sender, e);
+                    break;
+                case Keys.PageDown:
+                    toolPagesDown_Click(sender, e);
+                    break;
+                case Keys.PageUp:
+                    toolPagesUp_Click(sender, e);
+                    break;
+                case Keys.Home:
+                    Himg._Gotopage(1);
+                    break;
+                case Keys.End:
+                    Himg._Gotopage(ClsTwain.MaxPage);
+                    break;
+                case Keys.NumPad9:
+                    rdFeedAuto.Checked = true;
+                    break;
+                case Keys.NumPad6:
+                    rdFeedFlat.Checked = true;
+                    break;
+                case Keys.NumPad0:
+                    if (chkDoublePages.Checked == false) {
+                        chkDoublePages.Checked = true;
+                    }
+                    else 
+                        chkDoublePages.Checked = false;
+                    break;
+                case Keys.NumPad1:
+                    toolColse_Click(sender, e);
+                    break;
+                case Keys.NumPad3:
+                    comPagesSize.SelectedIndex = 2;
+                    break;
+                case Keys.NumPad4:
+                    comPagesSize.SelectedIndex =1;
+                    break;
+                case Keys.Space:
+                    toolScan_Click(sender, e);
+                    break;
+                case Keys.NumPad5:
+                    comPagesSize.SelectedIndex = 0;
+                    break;
+            }
+            ImgView.Focus();
+        }
+
         #endregion
 
 
+
+        private void FrmTwain_KeyDown(object sender, KeyEventArgs e)
+        {
+            Keykuaij(sender, e);
+        }
+
+        private void ImgView_KeyDown(object sender, KeyEventArgs e)
+        {
+            Keykuaij(sender, e);
+        }
     }
 }
