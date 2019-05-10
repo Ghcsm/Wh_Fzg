@@ -4,6 +4,7 @@ using System.Data;
 using System.Windows.Forms;
 using Spire.Xls;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Csmsjdr
@@ -195,12 +196,13 @@ namespace Csmsjdr
                      }
                      try {
                          Common.ImportData(table, tzd, xzd, chk,wyzb,wyz);
-                         this.Invoke(new Action(() =>
-                         {
-                             dgvXlsData.Rows.RemoveAt(i);
-                             dgvXlsData.Refresh();
-                             lbsy.Text = string.Format("剩余 {0} 条", dgvXlsData.Rows.Count.ToString());
-                         }));
+                         //this.Invoke(new Action(() =>
+                         //{
+                         //    dgvXlsData.Rows.RemoveAt(i);
+                         //    dgvXlsData.Refresh();
+                         //    lbsy.Text = string.Format("剩余 {0} 条", dgvXlsData.Rows.Count.ToString());
+                         //}));
+                         //Thread.Sleep(200);
                      } catch (Exception e)
                      {
                          string s = "错误行:" + id;
