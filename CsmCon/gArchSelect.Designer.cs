@@ -164,6 +164,7 @@
             // butOk
             // 
             this.butOk.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.butOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.butOk.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.butOk.Location = new System.Drawing.Point(291, 7);
             this.butOk.Name = "butOk";
@@ -176,9 +177,11 @@
             // 
             // txtBoxsn
             // 
-            this.txtBoxsn.Location = new System.Drawing.Point(220, 11);
+            this.txtBoxsn.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtBoxsn.Location = new System.Drawing.Point(193, 11);
             this.txtBoxsn.Name = "txtBoxsn";
-            this.txtBoxsn.Size = new System.Drawing.Size(60, 21);
+            this.txtBoxsn.Size = new System.Drawing.Size(87, 21);
             this.txtBoxsn.TabIndex = 3;
             this.txtBoxsn.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtBoxsn_KeyPress);
             // 
@@ -190,9 +193,9 @@
             this.comboxClass.Enabled = false;
             this.comboxClass.FormattingEnabled = true;
             this.comboxClass.ItemHeight = 15;
-            this.comboxClass.Location = new System.Drawing.Point(117, 11);
+            this.comboxClass.Location = new System.Drawing.Point(111, 11);
             this.comboxClass.Name = "comboxClass";
-            this.comboxClass.Size = new System.Drawing.Size(97, 21);
+            this.comboxClass.Size = new System.Drawing.Size(76, 21);
             this.comboxClass.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.comboxClass.TabIndex = 2;
             this.comboxClass.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.comboxClass_KeyPress);
@@ -200,7 +203,7 @@
             // radioClass
             // 
             this.radioClass.AutoSize = true;
-            this.radioClass.Location = new System.Drawing.Point(65, 13);
+            this.radioClass.Location = new System.Drawing.Point(61, 13);
             this.radioClass.Name = "radioClass";
             this.radioClass.Size = new System.Drawing.Size(47, 16);
             this.radioClass.TabIndex = 1;

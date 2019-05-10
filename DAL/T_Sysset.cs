@@ -918,7 +918,33 @@ namespace DAL
                 strSql = "alter table " + table + " add BorrTag varchar(10)";
                 SQLHelper.ExecScalar(strSql);
             }
+        }
 
+        public static DataTable GetBoxsncolSet()
+        {
+            string strSql = "select * from M_GenSetBoxCol ";
+            DataTable dt = SQLHelper.ExcuteTable(strSql);
+            return dt;
+        }
+
+        public static void UpdateBoxcolInfo(string table, string str,string col,int id)
+        {
+            string strSql = "";
+            if (id > 0)
+                strSql = "update M_GenSetBoxCol set TablenameCh=@ch, TableCol=@col where  Tablename=@table";
+            else
+                strSql = "INSERT INTO M_GenSetBoxCol(Tablename,TablenameCh,TableCol) values (@table,@ch,@col)";
+            SqlParameter p0 = new SqlParameter("@table", table);
+            SqlParameter p1 = new SqlParameter("@ch", str);
+            SqlParameter p2 = new SqlParameter("@col", col);
+            SQLHelper.ExecScalar(strSql, p0, p1, p2);
+        }
+
+        public static void DelBoxsncol(string table)
+        {
+            string strSql = "delete from M_GenSetBoxCol where Tablename=@table";
+            SqlParameter p0 = new SqlParameter("@table", table);
+            SQLHelper.ExecScalar(strSql, p0);
         }
 
         #endregion

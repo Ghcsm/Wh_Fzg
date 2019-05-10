@@ -84,12 +84,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClsInfoEnter.cs" />
-    <Compile Include="CntView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="CntView.Designer.cs">
-      <DependentUpon>CntView.cs</DependentUpon>
-    </Compile>
     <Compile Include="Common.cs" />
     <Compile Include="Encrypt.cs" />
     <Compile Include="frmModel.cs">
@@ -117,9 +111,6 @@
     <Compile Include="V_House.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="CntView.resx">
-      <DependentUpon>CntView.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="frmModel.resx">
       <DependentUpon>frmModel.cs</DependentUpon>
     </EmbeddedResource>

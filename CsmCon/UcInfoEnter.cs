@@ -195,12 +195,15 @@ namespace CsmCon
 
         public void LoadInfo(int archid, int enter, string atype)
         {
-            try
-            {
+            try {
                 Txtcle();
                 if (archid <= 0 || atype.Trim().Length <= 0)
                     return;
                 int t = ClsInfoEnter.InfoTableName.IndexOf(atype);
+                if (t == -1) {
+                    MessageBox.Show("前台设置表名称范围中未包含:" + atype);
+                    return;
+                }
                 DataTable dt = Common.GetInfoTable(t, archid, enter);
                 if (dt == null || dt.Rows.Count <= 0)
                     return;

@@ -2,6 +2,7 @@
 using System;
 using System.Data;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace CsmCon
@@ -40,6 +41,7 @@ namespace CsmCon
         {
             ClsIni.Archbox = txtBoxsn.Text.Trim();
             ClsIni.ArchNo = comboxClass.Text.Trim();
+            ClsIni.Rabchk = radioBoxsn.Checked.ToString();
             new ClsWriteini().WriteInt();
         }
 
@@ -63,12 +65,27 @@ namespace CsmCon
                     return false;
                 }
             }
-            else if (radioClass.Checked && comboxClass.Text.Trim().Length <= 0 && txtBoxsn.Text.Trim().Length <= 0) {
-                MessageBox.Show("档案类型选择错误或盒号为空!");
-                this.comboxClass.SelectAll();
-                return false;
+            else {
+                gArchSelectInfo.garchid = 0;
+                gArchSelectInfo.garchcol = "";
+                if (gArchSelectInfo.gArchtable.Count <= 0) {
+                    MessageBox.Show("请先后台设置查询字段!");
+                    return false;
+                }
+                if (comboxClass.Text.Trim().Length <= 0 || txtBoxsn.Text.Trim().Length <= 0) {
+                    MessageBox.Show("档案类型选择错误或盒号为空!");
+                    this.comboxClass.SelectAll();
+                    return false;
+                }
+                gArchSelectInfo.garchid = gArchSelectInfo.gArchTabch.IndexOf(comboxClass.Text.Trim());
+                gArchSelectInfo.garchcol = gArchSelectInfo.gArchtableCol[gArchSelectInfo.garchid];
+                string[] coltmp = gArchSelectInfo.garchcol.Split(';');
+                string[] txttmp = txtBoxsn.Text.Trim().Split('-');
+                if (coltmp.Length != txttmp.Length) {
+                    MessageBox.Show("后台设置字段与查询信息长度不一致!");
+                    return false;
+                }
             }
-
             return true;
         }
 
@@ -80,8 +97,19 @@ namespace CsmCon
             LvData.Items.Clear();
             if (radioBoxsn.Checked)
                 dt = Common.QueryBoxsn(txtBoxsn.Text.Trim());
-            else
-                dt = Common.QueryBoxsn(txtBoxsn.Text.Trim(), comboxClass.Text.Trim());
+            else {
+
+                string tb = gArchSelectInfo.gArchtable[gArchSelectInfo.garchid];
+                string tbcol = gArchSelectInfo.garchcol;
+                string strzd = txtBoxsn.Text.Trim();
+                int arid = Common.QueryTableInfo(tb, tbcol, strzd);
+                if (arid <= 0) {
+                    MessageBox.Show("获取ID失败，此信息或不存在!");
+                    return;
+                }
+                dt = Common.QueryBoxsn(arid);
+            }
+
             if (dt != null && dt.Rows.Count > 0) {
                 int i = 1;
                 int stat = 0;
@@ -95,13 +123,13 @@ namespace CsmCon
                     string type = dr["ArchType"].ToString();
                     string ImgFile = (dr["IMGFILE"] == null ? "" : dr["IMGFILE"].ToString());
                     stat = Convert.ToInt32((dr["ArchState"].ToString() == null ? "0" : dr["ArchState"].ToString()));
-                    if (stat >= 3 && stat <5)
+                    if (stat >= 3 && stat < 5)
                         lvi.ImageIndex = 0;
-                    else if (stat>=5 && stat <7)
+                    else if (stat >= 5 && stat < 7)
                         lvi.ImageIndex = 1;
                     else if (stat == 7)
                         lvi.ImageIndex = 2;
-                    lvi.SubItems.AddRange(new string[] { boxsn, archno, ImgFile,  pages, arid,type });
+                    lvi.SubItems.AddRange(new string[] { boxsn, archno, ImgFile, pages, arid, type });
                     this.LvData.Items.Add(lvi);
                     i++;
                 }
@@ -132,18 +160,65 @@ namespace CsmCon
 
         private void Getini()
         {
-            if (File.Exists(new ClsWriteini().strFilePath)) {
-                ClsIni.strFile = Path.GetFileNameWithoutExtension(new ClsWriteini().strFilePath);
-                ClsIni.Archbox = (new ClsWriteini().ContentValue(ClsIni.strFile, "Archsn"));
-                ClsIni.ArchNo = (new ClsWriteini().ContentValue(ClsIni.strFile, "ArchQX"));
-                txtBoxsn.Text = ClsIni.Archbox;
-                comboxClass.Text = ClsIni.ArchNo;
+            try {
+                if (File.Exists(new ClsWriteini().strFilePath)) {
+                    ClsIni.strFile = Path.GetFileNameWithoutExtension(new ClsWriteini().strFilePath);
+                    ClsIni.Archbox = (new ClsWriteini().ContentValue(ClsIni.strFile, "Archsn"));
+                    ClsIni.ArchNo = (new ClsWriteini().ContentValue(ClsIni.strFile, "ArchQX"));
+                    ClsIni.Rabchk = (new ClsWriteini().ContentValue(ClsIni.strFile, "Rabchk"));
+                    this.BeginInvoke(new Action(() =>
+                    {
+                        txtBoxsn.Text = ClsIni.Archbox;
+                        if (ClsIni.Rabchk == "true")
+                            radioBoxsn.Checked = true;
+                        else
+                        {
+                            comboxClass.Enabled = true;
+                            radioClass.Checked = true;
+                            int x = gArchSelectInfo.gArchTabch.IndexOf(ClsIni.ArchNo);
+                            comboxClass.SelectedIndex = x+1;
+                        }
+                    }));
+
+                }
+            } catch { }
+        }
+
+        private void GetboxarchInfo()
+        {
+            gArchSelectInfo.gArchTabch.Clear();
+            gArchSelectInfo.gArchtable.Clear();
+            gArchSelectInfo.gArchtableCol.Clear();
+            DataTable dt = T_Sysset.GetBoxsncolSet();
+            if (dt == null || dt.Rows.Count <= 0)
+                return;
+            comboxClass.BeginInvoke(new Action(() =>
+            {
+                comboxClass.Items.Clear();
+                comboxClass.Items.Add("");
+            }));
+            for (int i = 0; i < dt.Rows.Count; i++) {
+                string tb = dt.Rows[i][1].ToString();
+                if (tb.Trim().Length <= 0)
+                    continue;
+                string tbch = dt.Rows[i][2].ToString();
+                string tbcol = dt.Rows[i][3].ToString();
+                gArchSelectInfo.gArchtable.Add(tb);
+                gArchSelectInfo.gArchTabch.Add(tbch);
+                gArchSelectInfo.gArchtableCol.Add(tbcol);
+                comboxClass.Invoke(new Action(() => { comboxClass.Items.Add(tbch); }));
+
             }
+            Getini();
         }
 
         private void gArchSelect_Load(object sender, EventArgs e)
         {
-            Getini();
+            Task.Run(new Action(() =>
+            {
+                GetboxarchInfo();
+            }));
+           
             if (!GotoPages)
                 butLoad.Visible = false;
             else {
@@ -151,7 +226,6 @@ namespace CsmCon
                 butPageUpdate.Visible = false;
                 txtPages.Enabled = false;
             }
-           
         }
 
         private void LvData_Click(object sender, EventArgs e)
@@ -161,7 +235,7 @@ namespace CsmCon
                 Archtype = LvData.SelectedItems[0].SubItems[6].Text;
                 string boxs = LvData.SelectedItems[0].SubItems[1].Text;
                 string juan = LvData.SelectedItems[0].SubItems[2].Text;
-                Boxsn =Convert.ToInt32(boxs);
+                Boxsn = Convert.ToInt32(boxs);
                 ArchPos = boxs + "-" + juan;
                 string pags = Common.Getpages(Archid);
                 if (pags.Length > 0) {

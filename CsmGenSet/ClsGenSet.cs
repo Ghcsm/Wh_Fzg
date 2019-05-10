@@ -127,5 +127,11 @@ namespace CsmGenSet
         public static bool Clsborrtag { get; set; }
     }
 
+    public static class ClsBoxcolSet
+    {
+        public static string ClsBoxsntable { get; set; }
+        public static List<string>ClsBoxcolTable=new List<string>();
+        public static List<string> ClsBoxcolTablename = new List<string>();
+    }
 
 }

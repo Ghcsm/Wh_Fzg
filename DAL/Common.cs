@@ -323,6 +323,20 @@ namespace DAL
 
             }
         }
+        public static DataTable QueryBoxsn(int arid)
+        {
+            try {
+                string strSql = "select * from V_ImgFile where id=@arid and houseid=@houseid ";
+                SqlParameter p1 = new SqlParameter("@arid", arid);
+                SqlParameter p2 = new SqlParameter("@houseid", V_HouseSetCs.Houseid);
+                DataTable dt = SQLHelper.ExcuteTable(strSql, p1, p2);
+                return dt;
+            } catch (Exception e) {
+                MessageBox.Show("获取数据失败" + e.ToString());
+                return null;
+
+            }
+        }
 
         public static DataTable QueryBoxsn(string boxsn, string archtype)
         {
@@ -337,6 +351,33 @@ namespace DAL
                 MessageBox.Show("获取数据失败" + e.ToString());
                 return null;
 
+            }
+        }
+
+        public static int QueryTableInfo(string table, string col, string str)
+        {
+            int archid = 0;
+            string[] coltmp = col.Split(';');
+            string[] strtmp = str.Split('-');
+            string strsqltmp = "";
+            string strSql = "select Archid from " + table + " where ";
+            for (int i = 0; i < coltmp.Length; i++) {
+                if (i < coltmp.Length - 1)
+                    strsqltmp += coltmp[i] + "=" + strtmp[i] + " and ";
+                else
+                    strsqltmp += coltmp[i] + "=" + strtmp[i]+"";
+            }
+            strSql += strsqltmp;
+            try {
+                object obj = SQLHelper.ExecScalar(strSql);
+                if (obj == null)
+                    archid = 0;
+                else
+                    archid = Convert.ToInt32(obj.ToString());
+                return archid;
+            } catch (Exception e) {
+                MessageBox.Show("获取id失败:" + e.ToString());
+                return archid;
             }
         }
 
@@ -531,7 +572,7 @@ namespace DAL
             string strSql = "update M_Soid set Mwtime=@time where Msoid=@id";
             SqlParameter p1 = new SqlParameter("@time", str);
             SqlParameter p2 = new SqlParameter("@id", T_ConFigure.Moid);
-            SQLHelper.ExecScalar(strSql, p1,p2);
+            SQLHelper.ExecScalar(strSql, p1, p2);
 
         }
 
@@ -772,7 +813,7 @@ namespace DAL
                     zdtmp += d[i];
                 }
             }
-            strSql1 += coltmp + ",EnterTag, Archid)" + " values " + zdtmp +"',1,"+ archid + ")";
+            strSql1 += coltmp + ",EnterTag, Archid)" + " values " + zdtmp + "',1," + archid + ")";
             SQLHelper.ExecScalar(strSql1);
         }
 

@@ -48,6 +48,7 @@ namespace CsmCon
                 ClsIni.strFile = Path.GetFileNameWithoutExtension(strFilePath);
                 WritePrivateProfileString(ClsIni.strFile, "Archsn", ClsIni.Archbox, strFilePath);
                 WritePrivateProfileString(ClsIni.strFile, "ArchQX", ClsIni.ArchNo, strFilePath);
+                WritePrivateProfileString(ClsIni.strFile, "Rabchk", ClsIni.Rabchk, strFilePath);
             }
             catch { }
         }
@@ -68,6 +69,7 @@ namespace CsmCon
         public static string strFile { get; set; }
         public static string Archbox { get; set; }
         public static string ArchNo { get; set; }
+        public static string Rabchk { get; set; }
 
     }
 

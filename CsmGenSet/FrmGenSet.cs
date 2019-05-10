@@ -267,7 +267,7 @@ namespace CsmGenSet
                     }
                 }
             }
-           
+
         }
 
 
@@ -320,7 +320,7 @@ namespace CsmGenSet
                 labFontSize.Text = fontdlg.Font.Size.ToString();
                 labFontx.Text = fontdlg.Font.Bold.ToString();
                 ClsGenSet.PrintFont = fontdlg.Font.Name + ":" + fontdlg.Color.Name.ToString() +
-                                      ":" + fontdlg.Font.Size + ":" + fontdlg.Font.Bold+":"+fontdlg.Color.ToArgb();
+                                      ":" + fontdlg.Font.Size + ":" + fontdlg.Font.Bold + ":" + fontdlg.Color.ToArgb();
             }
             else {
                 ClsGenSet.PrintFont = "";
@@ -437,7 +437,7 @@ namespace CsmGenSet
             ClsPrintConten.ContenXlstmp.Clear();
             ClsPrintConten.ContenPagetmp.Clear();
             ClsPrintConten.ContenallSet.Clear();
-        DataTable dt = T_Sysset.GetTableName(ClsPrintConten.ContenTable);
+            DataTable dt = T_Sysset.GetTableName(ClsPrintConten.ContenTable);
             if (dt != null && dt.Rows.Count > 0) {
                 chkPrintContenTableCol.DataSource = dt;
                 chkPrintContenTableCol.DisplayMember = "Name";
@@ -894,7 +894,7 @@ namespace CsmGenSet
             for (int i = 0; i < chkInfoTable.Items.Count; i++) {
                 if (chkInfoTable.GetItemChecked(i)) {
                     string strid = chkInfoTable.GetItemText(chkInfoTable.Items[i]);
-                    if (strid.ToLower() == "archid" || strid.ToLower() == "id" || strid.ToLower() == "entertag" ||strid.ToLower()=="borrtag")
+                    if (strid.ToLower() == "archid" || strid.ToLower() == "id" || strid.ToLower() == "entertag" || strid.ToLower() == "borrtag")
                         continue;
                     if (ClsInfoAdd.InfoInfoZdtmp.IndexOf(strid) < 0) {
                         chkInfoZd.Items.Add(strid);
@@ -1457,7 +1457,7 @@ namespace CsmGenSet
                     labDataSplit_Filesl.Text = "";
                 else
                     labDataSplit_Filesl.Text = str;
-                 
+
             }
         }
 
@@ -1483,7 +1483,7 @@ namespace CsmGenSet
                     MessageBox.Show("请选择文件夹生成规则选项!");
                     return;
                 }
-                if (ClsDataSplit.DataSplitFileName.Length <= 0 && ClsDataSplit.DataSplitfilenamecol.Trim().Length<=0) {
+                if (ClsDataSplit.DataSplitFileName.Length <= 0 && ClsDataSplit.DataSplitfilenamecol.Trim().Length <= 0) {
                     MessageBox.Show("请先生成文件名规则!");
                     return;
                 }
@@ -1636,8 +1636,7 @@ namespace CsmGenSet
 
         private void GetDataSplitExport()
         {
-            try
-            {
+            try {
                 DataTable dt = T_Sysset.GetDataSplitExporTable();
                 if (dt == null || dt.Rows.Count < 0)
                     return;
@@ -1668,9 +1667,7 @@ namespace CsmGenSet
                     chkDataSplit_ExportTable.Items.Add(col1);
                     ClsDataSplit.DataSplitExportxlsid.Add(col1);
                 }
-            }
-            catch 
-            {}
+            } catch { }
         }
 
 
@@ -1718,8 +1715,7 @@ namespace CsmGenSet
         }
         private void chkDataSplit_dir_ml_Click(object sender, EventArgs e)
         {
-            if (chkDataSplit_dir_ml.Checked)
-            {
+            if (chkDataSplit_dir_ml.Checked) {
                 combDataSplit_dir_ml.Enabled = true;
                 combDataSplit_dir_pages.Enabled = true;
                 return;
@@ -2013,7 +2009,7 @@ namespace CsmGenSet
             for (int i = 0; i < chkContenCol.Items.Count; i++) {
                 if (chkContenCol.GetItemChecked(i)) {
                     string strid = chkContenCol.GetItemText(chkContenCol.Items[i]);
-                    if (strid.ToLower() == "id" || strid.ToLower() == "archid" || strid.ToLower() == "entertag" || strid.ToLower()=="borrtag")
+                    if (strid.ToLower() == "id" || strid.ToLower() == "archid" || strid.ToLower() == "entertag" || strid.ToLower() == "borrtag")
                         continue;
                     if (ClsConten.ContenCol.IndexOf(strid) < 0) {
                         chkContenColShow.Items.Add(strid);
@@ -2281,8 +2277,7 @@ namespace CsmGenSet
                 return;
 
             string col = txtCreateTableColName.Text.Trim();
-            if (col.IndexOf("(") >= 0 || col.IndexOf("（") >= 0)
-            {
+            if (col.IndexOf("(") >= 0 || col.IndexOf("（") >= 0) {
                 MessageBox.Show("字段名称不允许带各种符号!");
                 return;
             }
@@ -2369,7 +2364,7 @@ namespace CsmGenSet
 
         private void CreateTableSave()
         {
-            if (txtCreateTable.Text.Trim().Length <= 0 || ClsCreateTable.CreateTable==null) {
+            if (txtCreateTable.Text.Trim().Length <= 0 || ClsCreateTable.CreateTable == null) {
                 MessageBox.Show("请输入要创建或保存的表名称!");
                 txtCreateTable.Focus();
                 return;
@@ -2404,12 +2399,12 @@ namespace CsmGenSet
 
         private void CreatetableUpdate()
         {
-            if (txtCreateTable.Text.Trim().Length <= 0 || ClsCreateTable.CreateTable==null ||ClsCreateTable.CreateTable.Trim().Length <= 0) {
+            if (txtCreateTable.Text.Trim().Length <= 0 || ClsCreateTable.CreateTable == null || ClsCreateTable.CreateTable.Trim().Length <= 0) {
                 MessageBox.Show("请输入要创建或保存的表名称!");
                 txtCreateTable.Focus();
                 return;
             }
-            if (ClsCreateTable.CreateTableLvcol==null ||ClsCreateTable.CreateTableLvcol.Trim().Length <= 0) {
+            if (ClsCreateTable.CreateTableLvcol == null || ClsCreateTable.CreateTableLvcol.Trim().Length <= 0) {
                 MessageBox.Show("请选择相关字段!");
                 return;
             }
@@ -2496,8 +2491,7 @@ namespace CsmGenSet
             if (dt != null && dt.Rows.Count > 0) {
                 chkBorrTablecol.DataSource = dt;
                 chkBorrTablecol.DisplayMember = "Name";
-                for (int i = 0; i < dt.Rows.Count; i++)
-                {
+                for (int i = 0; i < dt.Rows.Count; i++) {
                     string str = dt.Rows[i][0].ToString();
                     comborrTime.Items.Add(str);
                     if (str.ToLower() == "borrtag")
@@ -2563,7 +2557,7 @@ namespace CsmGenSet
                         str += ClsborrTable.ClsBorrColzd[i];
                 }
 
-                T_Sysset.UpdateBorrInfo(ClsborrTable.Clsborrtable, str,ClsborrTable.Clsborrtag, timecol);
+                T_Sysset.UpdateBorrInfo(ClsborrTable.Clsborrtable, str, ClsborrTable.Clsborrtag, timecol);
                 MessageBox.Show("保存成功!");
             } catch (Exception e) {
                 MessageBox.Show(e.ToString());
@@ -2634,12 +2628,189 @@ namespace CsmGenSet
             GetnContenInfo();
             CreateTableab();
             GetnborrInfo();
+            GetnBoxsnInfo();
         }
         private void FrmGetSet_Shown(object sender, EventArgs e)
         {
             Infoshow();
         }
 
+
+        #region BoxsncolSet
+
+        private void IsBoxsnTable()
+        {
+            ClsBoxcolSet.ClsBoxsntable = "";
+            if (txtBoxsnTable.Text.Trim().Length <= 0) {
+                MessageBox.Show("请输入表名称!");
+                txtBoxsnTable.Focus();
+                return;
+            }
+            ClsBoxcolSet.ClsBoxsntable = txtBoxsnTable.Text.Trim();
+            string table = T_Sysset.isTable(ClsBoxcolSet.ClsBoxsntable);
+            if (table.Length <= 0) {
+                MessageBox.Show("表不存！");
+                txtBoxsnTable.Focus();
+                return;
+            }
+            chkBoxsnTablecol.DataSource = null;
+            DataTable dt = T_Sysset.GetTableName(ClsBoxcolSet.ClsBoxsntable);
+            if (dt != null && dt.Rows.Count > 0) {
+                chkBoxsnTablecol.DataSource = dt;
+                chkBoxsnTablecol.DisplayMember = "Name";
+            }
+        }
+
+        private void GetnBoxsnInfo()
+        {
+            labBoxsncolinfo.Text = "";
+            ClsBoxcolSet.ClsBoxsntable = "";
+            ClsBoxcolSet.ClsBoxcolTable.Clear();
+            ClsBoxcolSet.ClsBoxcolTablename.Clear();
+            chkBoxsnTablecol.DataSource = null;
+            combBoxsncol.Items.Clear();
+            combBoxsnTable.Items.Clear();
+            combBoxsnTableName.Items.Clear();
+            combBoxsnTable.Items.Add("");
+            combBoxsncol.Items.Add("");
+            combBoxsnTableName.Items.Add("");
+           DataTable dt = T_Sysset.GetBoxsncolSet();
+            if (dt == null || dt.Rows.Count <= 0)
+                return;
+            for (int i = 0; i < dt.Rows.Count; i++) {
+                string tb = dt.Rows[i][1].ToString();
+                string tbch = dt.Rows[i][2].ToString();
+                string tbcol = dt.Rows[i][3].ToString();
+                if (tb.Trim().Length <= 0)
+                    continue;
+                ClsBoxcolSet.ClsBoxcolTable.Add(tb);
+                combBoxsnTable.Items.Add(tb);
+                ClsBoxcolSet.ClsBoxcolTablename.Add(tbch);
+                combBoxsnTableName.Items.Add(tbch);
+                combBoxsncol.Items.Add(tbcol);
+            }
+            if (combBoxsnTable.Items.Count > 0)
+                combBoxsncol.SelectedIndex = 0;
+        }
+
+        private void Boxsnaddcol()
+        {
+            string str = "";
+            for (int i = 0; i < chkBoxsnTablecol.Items.Count; i++) {
+                if (chkBoxsnTablecol.GetItemChecked(i)) {
+                    if (str.Trim().Length <= 0)
+                        str = chkBoxsnTablecol.GetItemText(chkBoxsnTablecol.Items[i]);
+                    else
+                        str += ";" + chkBoxsnTablecol.GetItemText(chkBoxsnTablecol.Items[i]);
+                }
+            }
+            labBoxsncolinfo.Text = str;
+        }
+
+        private void BoxsncolSave()
+        {
+
+            if (ClsBoxcolSet.ClsBoxsntable.Trim().Length <= 0) {
+                MessageBox.Show("请先判断表是否存在!");
+                txtBoxsnTable.Focus();
+                return;
+            }
+            if (combBoxsnTable.Text.Trim().Length <= 0) {
+                if (ClsBoxcolSet.ClsBoxcolTable.IndexOf(ClsBoxcolSet.ClsBoxsntable) >= 0) {
+                    MessageBox.Show("请要添加的表已经存在，请选择表名称列表更新!");
+                    combBoxsnTable.Focus();
+                    return;
+                }
+            }
+            if (combBoxsnTableName.Text.Trim().Length <= 0) {
+                MessageBox.Show("请输入前台表显示名称!");
+                combBoxsnTable.Focus();
+                return;
+            }
+            else {
+                if (ClsBoxcolSet.ClsBoxcolTablename.IndexOf(combBoxsnTableName.Text.Trim()) >= 0) {
+                    MessageBox.Show("你输入的前台表显示名已经存在请更换!");
+                    combBoxsnTableName.Focus();
+                    return;
+                }
+            }
+            if (labBoxsncolinfo.Text.Trim().Length <= 0) {
+                MessageBox.Show("请选择前台查询字段!");
+                chkBoxsnTablecol.Focus();
+                return;
+            }
+            try {
+                if (combBoxsnTable.Text.Trim().Length <= 0)
+                    T_Sysset.UpdateBoxcolInfo(ClsBoxcolSet.ClsBoxsntable, combBoxsnTableName.Text.Trim(),
+                        labBoxsncolinfo.Text.Trim(), 0);
+                else
+                    T_Sysset.UpdateBoxcolInfo(ClsBoxcolSet.ClsBoxsntable, combBoxsnTableName.Text.Trim(),
+                        labBoxsncolinfo.Text.Trim(), 1);
+            } catch (Exception e) {
+                MessageBox.Show("设置失败:" + e.ToString());
+                return;
+            } finally {
+                GetnBoxsnInfo();
+                string s = "修改盒号查询字段:" + ClsBoxcolSet.ClsBoxsntable + "->" + combBoxsncol.Text.Trim();
+                Common.Writelog(0, s);
+            }
+        }
+
+        private void BoxsncolDel()
+        {
+            if (combBoxsnTable.Text.Trim().Length <= 0) {
+                MessageBox.Show("请选择要删除的表!");
+                combBoxsnTable.Focus();
+                return;
+            }
+
+            try {
+                T_Sysset.DelBoxsncol(combBoxsnTable.Text.Trim());
+            } catch (Exception e) {
+                MessageBox.Show("删除表失败:" + e.ToString());
+                return;
+            } finally {
+                GetnBoxsnInfo();
+                string s = "删除盒号查询字段:" + combBoxsnTable.Text.Trim();
+                Common.Writelog(0, s);
+            }
+
+        }
+
+        private void BoxsncolSet(int id)
+        {
+            combBoxsncol.SelectedIndex = id;
+            combBoxsnTableName.SelectedIndex = id;
+        }
+
+        private void butBoxsnIs_Click(object sender, EventArgs e)
+        {
+            IsBoxsnTable();
+        }
+
+        private void combBoxsnTable_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (combBoxsnTable.Items.Count > 0)
+                BoxsncolSet(combBoxsnTable.SelectedIndex);
+
+        }
+
+        private void chkBoxsnTablecol_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (chkBoxsnTablecol.SelectedItems.Count > 0)
+                Boxsnaddcol();
+        }
+
+        private void butBoxsnSave_Click(object sender, EventArgs e)
+        {
+            BoxsncolSave();
+        }
+
+        private void butBoxsnDel_Click(object sender, EventArgs e)
+        {
+            BoxsncolDel();
+        }
+#endregion
     }
 
 }
