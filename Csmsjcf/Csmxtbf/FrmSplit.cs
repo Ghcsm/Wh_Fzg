@@ -660,7 +660,8 @@ namespace Csmsjcf
                                 lsinfopdf.Clear();
                                 int p1 = 0;
                                 int p2 = 0;
-                                string ml = dirtTable.Rows[d][0].ToString();
+                                string ml = dirtTable.Rows[d][0].ToString().Trim();
+                                string pzer = "";
                                 p1 = Convert.ToInt32(dirtTable.Rows[d][1].ToString());
                                 try {
                                     p2 = Convert.ToInt32(dirtTable.Rows[d + 1][1].ToString());
@@ -668,6 +669,10 @@ namespace Csmsjcf
                                 } catch {
                                     p2 = Convert.ToInt32(pages);
                                 }
+                                if (ClsDataSplitPar.ClsdirPageZero == 0)
+                                    pzer = p1.ToString();
+                                else
+                                    pzer = p1.ToString().PadLeft(ClsDataSplitPar.ClsdirPageZero, '0');
                                 //每卷为1 已测完成
                                 if (ClsFrmInfoPar.FileNamesn == 2) {
                                     //为多页时 已测完成
@@ -677,10 +682,10 @@ namespace Csmsjcf
                                             doublepdf = dpdfdir;
                                         }
                                         else if (ClsFrmInfoPar.DirNamesn == 2 || ClsFrmInfoPar.DirNamesn == 3) {
-                                            dirnamenew = Path.Combine(dirname, ml);
+                                            dirnamenew = Path.Combine(dirname, ml, pzer);
                                             if (!Directory.Exists(dirnamenew))
                                                 Directory.CreateDirectory(dirnamenew);
-                                            doublepdf = Path.Combine(dpdfdir, ml);
+                                            doublepdf = Path.Combine(dpdfdir, ml, pzer);
                                             if (ClsFrmInfoPar.Doublecor == 1) {
                                                 if (!Directory.Exists(doublepdf))
                                                     Directory.CreateDirectory(doublepdf);
@@ -727,10 +732,10 @@ namespace Csmsjcf
                                             doublepdf = dpdfdir;
                                         }
                                         else if (ClsFrmInfoPar.DirNamesn == 2 || ClsFrmInfoPar.DirNamesn == 3) {
-                                            dirnamenew = Path.Combine(dirname, ml);
+                                            dirnamenew = Path.Combine(dirname, ml, pzer);
                                             if (!Directory.Exists(dirnamenew))
                                                 Directory.CreateDirectory(dirnamenew);
-                                            doublepdf = Path.Combine(dpdfdir, ml);
+                                            doublepdf = Path.Combine(dpdfdir, ml, pzer);
                                             if (ClsFrmInfoPar.Doublecor == 1) {
                                                 if (!Directory.Exists(doublepdf))
                                                     Directory.CreateDirectory(doublepdf);
@@ -766,10 +771,10 @@ namespace Csmsjcf
                                     if (ClsFrmInfoPar.FileFomat == 2) {
                                         //文件夹为目录  已测完成 
                                         if (ClsFrmInfoPar.DirNamesn == 2 || ClsFrmInfoPar.DirNamesn == 3) {
-                                            dirnamenew = Path.Combine(dirname, ml);
+                                            dirnamenew = Path.Combine(dirname, ml, pzer);
                                             if (!Directory.Exists(dirnamenew))
                                                 Directory.CreateDirectory(dirnamenew);
-                                            doublepdf = Path.Combine(dpdfdir, ml);
+                                            doublepdf = Path.Combine(dpdfdir, ml, pzer);
                                             if (ClsFrmInfoPar.Doublecor == 1) {
                                                 if (!Directory.Exists(doublepdf))
                                                     Directory.CreateDirectory(doublepdf);
@@ -813,10 +818,10 @@ namespace Csmsjcf
                                     else if (ClsFrmInfoPar.FileFomat == 1) {
                                         //文件夹为目录   已测完成
                                         if (ClsFrmInfoPar.DirNamesn == 2 || ClsFrmInfoPar.DirNamesn == 3) {
-                                            dirnamenew = Path.Combine(dirname, ml);
+                                            dirnamenew = Path.Combine(dirname, ml, pzer);
                                             if (!Directory.Exists(dirnamenew))
                                                 Directory.CreateDirectory(dirnamenew);
-                                            doublepdf = Path.Combine(dpdfdir, ml);
+                                            doublepdf = Path.Combine(dpdfdir, ml, pzer);
                                             if (ClsFrmInfoPar.Doublecor == 1) {
                                                 if (!Directory.Exists(doublepdf))
                                                     Directory.CreateDirectory(doublepdf);

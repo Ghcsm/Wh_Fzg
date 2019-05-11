@@ -14,7 +14,7 @@ namespace Csmsjcf
         public static int ClsdirDirsn { get; set; }
         public static string ClsdirCol  {get;set;}
         public static string ClsdirMl  {get;set;}
-        public static string ClsdirPageZero { get; set; }
+        public static int ClsdirPageZero { get; set; }
 
         public static string ClsFileTable { get; set; }
         public static int ClsFilesn { get; set; }

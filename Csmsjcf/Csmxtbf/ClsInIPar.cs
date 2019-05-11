@@ -51,7 +51,7 @@ namespace Csmsjcf
             }
             ClsDataSplitPar.ClsFilezero = Convert.ToBoolean(dt.Rows[0][8].ToString());
             ClsDataSplitPar.ClsFileDlname = dt.Rows[0][9].ToString();
-            ClsDataSplitPar.ClsdirPageZero = dt.Rows[0][10].ToString();
+            ClsDataSplitPar.ClsdirPageZero =Convert.ToInt32(dt.Rows[0][10].ToString());
            GetExportTable();
         }
 
