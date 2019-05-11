@@ -35,6 +35,7 @@ namespace Csmdajc
                 };
                 gArch.LineLoadFile += Garch_LineLoadFile;
                 gr1.Controls.Add(gArch);
+                UcContents.Modulename = this.Text;
                 UcContents.ArchId = Clscheck.Archid;
                 UcContents.ContentsEnabled = true;
                 UcContents.ModuleVisible = false;

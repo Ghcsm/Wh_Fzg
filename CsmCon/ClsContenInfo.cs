@@ -32,6 +32,8 @@ namespace CsmCon
         public static string Pagestmp { get; set; }
 
         public static string Archtype { get; set; }
+
+        public static string Modulename { get; set; }
     }
 
 
@@ -40,7 +42,7 @@ namespace CsmCon
     {
         public static void GetContenInfo()
         {
-            DataTable dt = T_Sysset.GetConten();
+            DataTable dt = T_Sysset.GetConten(ClsContenInfo.Modulename);
             if (dt == null || dt.Rows.Count <= 0)
                 return;
             DataRow dr = dt.Rows[0];
@@ -150,7 +152,7 @@ namespace CsmCon
         }
 
 
-        public static void GetControl(Panel pl,string module)
+        public static void GetControl(Panel pl)
         {
             GetContenInfo();
             if (ClsContenInfo.ContenTable.Trim().Length <= 0)

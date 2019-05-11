@@ -68,11 +68,14 @@
             this.gArchSelect1.Archid = 0;
             this.gArchSelect1.ArchImgFile = null;
             this.gArchSelect1.ArchRegPages = 0;
+            this.gArchSelect1.Archtype = null;
+            this.gArchSelect1.Boxsn = 0;
             this.gArchSelect1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gArchSelect1.GotoPages = false;
             this.gArchSelect1.LoadFileBoole = false;
             this.gArchSelect1.Location = new System.Drawing.Point(3, 17);
             this.gArchSelect1.Name = "gArchSelect1";
+            this.gArchSelect1.PagesEnd = false;
             this.gArchSelect1.Size = new System.Drawing.Size(389, 509);
             this.gArchSelect1.TabIndex = 0;
             this.gArchSelect1.LineClickLoadInfo += new CsmCon.gArchSelect.ArchSelectHandle(this.gArchSelect1_LineClickLoadInfo);
@@ -100,7 +103,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Frmmldj";
-            this.Text = "目录登记";
+            this.Text = "目录录入";
             this.Load += new System.EventHandler(this.Frmmldj_Load);
             this.Shown += new System.EventHandler(this.Frmmldj_Shown);
             this.gr1.ResumeLayout(false);

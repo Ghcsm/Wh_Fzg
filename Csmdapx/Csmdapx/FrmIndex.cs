@@ -37,6 +37,7 @@ namespace Csmdapx
                 };
                 gArch.LineLoadFile += Garch_LineLoadFile;
                 gr1.Controls.Add(gArch);
+                UcContents.Modulename = this.Text;
                 UcContents.ArchId = ClsIndex.Archid;
                 UcContents.ContentsEnabled = true;
                 UcContents.ModuleVisible = false;

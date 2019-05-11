@@ -16,6 +16,7 @@ namespace Csmmldj
         UcContents ucContents1;
         private void Ini()
         {
+            UcContents.Modulename = this.Text;
             UcContents.ArchId =0;
             UcContents.ContentsEnabled = true;
             UcContents.ModuleVisible = false;

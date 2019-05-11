@@ -13,7 +13,7 @@ namespace CsmCon
         {
             InitializeComponent();
         }
-        public string Modulename { get; set; }
+        public static string Modulename { get; set; }
         public event CntSelectHandleG GoFous;
         public event CntSelectHandle OneClickGotoPage;
         public delegate void CntSelectHandleG(object sender, EventArgs e);
@@ -29,7 +29,10 @@ namespace CsmCon
 
         private void Init()
         {
-            ClsConten.GetControl(panel1, Modulename);
+            if (Modulename == null)
+                ClsContenInfo.Modulename = "目录录入";
+            else ClsContenInfo.Modulename = Modulename;
+            ClsConten.GetControl(panel1);
             this.chbModule.Checked = ModuleVisible;
             this.gr0.Enabled = ContentsEnabled;
             gr2.Enabled = ContentsEnabled;

@@ -213,6 +213,7 @@ namespace Bgkj
                     Assembly outerAsm = Assembly.LoadFrom(FilePath);
                     Type outerForm = outerAsm.GetType(strnamespace, false);
                     Form fm = Activator.CreateInstance(outerForm) as Form;
+                    fm.Text = name;
                     fm.TopLevel = false;
                     fm.Dock = DockStyle.Fill;
 

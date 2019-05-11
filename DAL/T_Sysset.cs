@@ -687,9 +687,9 @@ namespace DAL
 
 
 
-        public static void UPdateDataSplitInfo(string dirtable, int dirsn, string dircol, string dirml, string filetable, int filesn, string filename, bool filebool, string filecol,string pageszero)
+        public static void UPdateDataSplitInfo(string dirtable, int dirsn, string dircol, string dirml, string filetable, int filesn, string filename, bool filebool, string filecol, string pageszero)
         {
-            string strSql = "update M_GenSetDataSplit set DataTable=@dirtable, Dirsn=@dirsn,DirCol=@dircol,DirMl=@dirml,"+
+            string strSql = "update M_GenSetDataSplit set DataTable=@dirtable, Dirsn=@dirsn,DirCol=@dircol,DirMl=@dirml," +
                             "FileTable=@filetable,Filesn=@filesn,FileName=@filename,FileBool=@filebool,FileNamecol=@filecol,DirPage=@pzero";
             SqlParameter[] par =
             {
@@ -704,7 +704,7 @@ namespace DAL
                 new SqlParameter("@filecol", filecol.ToString()),
                 new SqlParameter("@pzero", pageszero)
             };
-            SQLHelper.ExecScalar(strSql,par);
+            SQLHelper.ExecScalar(strSql, par);
         }
 
         public static DataTable GetDataSplit()
@@ -784,7 +784,7 @@ namespace DAL
             SQLHelper.ExecScalar(strSql, p1);
         }
 
-        public static void UpdateConten(string table, string str, string lie, string with, string txtwith, string title, string pages,string module)
+        public static void UpdateConten(string table, string str, string lie, string with, string txtwith, string title, string pages, string module)
         {
             string strSql = "update M_GenSetConten set ContenTable=@table, ContenCol=@info ,ContenLie=@lie,ContenWith=@with,ContentxtWith=@txtwith,ContenTitle=@title,ContenPages=@pages,ContenModule=@module";
             SqlParameter[] par =
@@ -801,7 +801,7 @@ namespace DAL
             SQLHelper.ExecScalar(strSql, par);
         }
 
-        public static void InsterConten(string table, string str, string lie, string with, string txtwith, string title, string pages,string module)
+        public static void InsterConten(string table, string str, string lie, string with, string txtwith, string title, string pages, string module)
         {
             string strSql =
                 "insert into  M_GenSetConten (ContenTable,ContenCol,ContenLie,ContenWith,ContentxtWith,ContentxtWith,ContenTitle,ContenPages,ContenModule) values " +
@@ -819,9 +819,18 @@ namespace DAL
             };
             SQLHelper.ExecScalar(strSql, par);
         }
+        public static DataTable GetConten(string moduel)
+        {
+            string strSql = "select * from M_GenSetConten where ContenModule=" + moduel;
+            DataTable dt = SQLHelper.ExcuteTable(strSql);
+            if (dt == null || dt.Rows.Count <= 0)
+                strSql = "select * from M_GenSetConten";
+            dt = SQLHelper.ExcuteTable(strSql);
+            return dt;
+        }
         public static DataTable GetConten()
         {
-            string strSql = "select * from M_GenSetConten";
+            string strSql = "select * from M_GenSetConten ";
             DataTable dt = SQLHelper.ExcuteTable(strSql);
             return dt;
         }
@@ -928,13 +937,13 @@ namespace DAL
             return dt;
         }
 
-        public static void UpdateBorrInfo(string table, string str, bool tag,string time)
+        public static void UpdateBorrInfo(string table, string str, bool tag, string time)
         {
             string strSql = "update M_GenSetBorr set Tablename=@table, Tabcolname=@info, Timecol=@time";
             SqlParameter p0 = new SqlParameter("@table", table);
             SqlParameter p1 = new SqlParameter("@info", str);
             SqlParameter p2 = new SqlParameter("@time", time);
-            SQLHelper.ExecScalar(strSql, p0, p1,p2);
+            SQLHelper.ExecScalar(strSql, p0, p1, p2);
             if (!tag) {
                 strSql = "alter table " + table + " add BorrTag varchar(10)";
                 SQLHelper.ExecScalar(strSql);
