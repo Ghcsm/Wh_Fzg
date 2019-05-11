@@ -216,7 +216,7 @@ namespace CsmCon
                     string col = dt.Columns[i].ToString();
                     if (coltmp.Contains(col)) {
                         id += 1;
-                        string str = dr[i].ToString();
+                        string str = dr[i].ToString().Trim();
                         SetInfoTxt(pl, id, str);
                     }
                 }

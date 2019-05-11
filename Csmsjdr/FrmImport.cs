@@ -260,7 +260,7 @@ namespace Csmsjdr
             } finally {
                 TxtEnd(1);
                 string s = "导入数据:数据库表名:" + combImportTable.Text.Trim() + ";文件名：" + txtXlsPath.Text.Trim() + ";工作表名:" +
-                           combXlsTable.Text.Trim();
+                           combXlsTable.Text.Trim()+";导入类型："+ combLx.Text.Trim();
                 Common.Writelog(0, s);
             }
         }
