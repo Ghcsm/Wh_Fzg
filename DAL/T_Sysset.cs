@@ -784,9 +784,9 @@ namespace DAL
             SQLHelper.ExecScalar(strSql, p1);
         }
 
-        public static void UpdateConten(string table, string str, string lie, string with, string txtwith, string title, string pages)
+        public static void UpdateConten(string table, string str, string lie, string with, string txtwith, string title, string pages,string module)
         {
-            string strSql = "update M_GenSetConten set ContenTable=@table, ContenCol=@info ,ContenLie=@lie,ContenWith=@with,ContentxtWith=@txtwith,ContenTitle=@title,ContenPages=@pages";
+            string strSql = "update M_GenSetConten set ContenTable=@table, ContenCol=@info ,ContenLie=@lie,ContenWith=@with,ContentxtWith=@txtwith,ContenTitle=@title,ContenPages=@pages,ContenModule=@module";
             SqlParameter[] par =
             {
                 new SqlParameter("@table", table),
@@ -795,7 +795,27 @@ namespace DAL
                 new SqlParameter("@with", with),
                 new SqlParameter("@txtwith", txtwith),
                 new SqlParameter("@title", title),
-                new SqlParameter("@pages", pages)
+                new SqlParameter("@pages", pages),
+                new SqlParameter("@module", module)
+            };
+            SQLHelper.ExecScalar(strSql, par);
+        }
+
+        public static void InsterConten(string table, string str, string lie, string with, string txtwith, string title, string pages,string module)
+        {
+            string strSql =
+                "insert into  M_GenSetConten (ContenTable,ContenCol,ContenLie,ContenWith,ContentxtWith,ContentxtWith,ContenTitle,ContenPages,ContenModule) values " +
+                "(@table,@info,@lie,@with,@txtwith,@title,@pages,@module)";
+            SqlParameter[] par =
+            {
+                new SqlParameter("@table", table),
+                new SqlParameter("@info", str),
+                new SqlParameter("@lie", lie),
+                new SqlParameter("@with", with),
+                new SqlParameter("@txtwith", txtwith),
+                new SqlParameter("@title", title),
+                new SqlParameter("@pages", pages),
+                new SqlParameter("@module", module)
             };
             SQLHelper.ExecScalar(strSql, par);
         }

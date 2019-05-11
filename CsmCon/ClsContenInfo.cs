@@ -150,7 +150,7 @@ namespace CsmCon
         }
 
 
-        public static void GetControl(Panel pl)
+        public static void GetControl(Panel pl,string module)
         {
             GetContenInfo();
             if (ClsContenInfo.ContenTable.Trim().Length <= 0)

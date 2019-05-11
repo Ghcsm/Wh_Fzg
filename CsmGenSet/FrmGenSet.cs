@@ -212,62 +212,66 @@ namespace CsmGenSet
 
         private void GetGenSetPrint()
         {
-            cletxt();
-            DataTable dt = T_Sysset.GetGensetPrint();
-            if (dt == null || dt.Rows.Count <= 0)
-                return;
-            ClsGenSet.PrintInfo = dt;
-            DataRow dr = ClsGenSet.PrintInfo.Rows[0];
-            ClsGenSet.Sqltable = dr["printTable"].ToString();
-            string strxy = dr["PrintxyCol"].ToString();
-            string strcol = dr["PrintColInfo"].ToString();
-            string fontall = dr["PrintFontColAll"].ToString();
-            string fontspec = dr["PrintFontSpec"].ToString();
-            if (ClsGenSet.Sqltable.Length > 0) {
-                txtTable.Text = ClsGenSet.Sqltable;
-                butSqlTableName_Click(null, null);
-            }
-            if (strxy.Length > 0) {
-                string[] xy = strxy.Split(';');
-                if (xy.Length > 0) {
-                    for (int i = 0; i < xy.Length; i++) {
-                        string str = xy[i];
-                        ClsGenSet.lsxy.Add(str);
-                        chklbFieldsXy.Items.Add(str);
+            try {
+                cletxt();
+                DataTable dt = T_Sysset.GetGensetPrint();
+                if (dt == null || dt.Rows.Count <= 0)
+                    return;
+                ClsGenSet.PrintInfo = dt;
+                DataRow dr = ClsGenSet.PrintInfo.Rows[0];
+                ClsGenSet.Sqltable = dr["printTable"].ToString();
+                string strxy = dr["PrintxyCol"].ToString();
+                string strcol = dr["PrintColInfo"].ToString();
+                string fontall = dr["PrintFontColAll"].ToString();
+                string fontspec = dr["PrintFontSpec"].ToString();
+                if (ClsGenSet.Sqltable.Length > 0) {
+                    txtTable.Text = ClsGenSet.Sqltable;
+                    butSqlTableName_Click(null, null);
+                }
+                if (strxy.Length > 0) {
+                    string[] xy = strxy.Split(';');
+                    if (xy.Length > 0) {
+                        for (int i = 0; i < xy.Length; i++) {
+                            string str = xy[i];
+                            ClsGenSet.lsxy.Add(str);
+                            chklbFieldsXy.Items.Add(str);
+                        }
                     }
                 }
-            }
-            if (strcol.Length > 0) {
-                string[] col = strcol.Split(';');
-                if (col.Length > 0) {
-                    for (int i = 0; i < col.Length; i++) {
-                        string str = col[i];
-                        ClsGenSet.lscol.Add(str);
-                        chklbFieldsShow.Items.Add(str);
+                if (strcol.Length > 0) {
+                    string[] col = strcol.Split(';');
+                    if (col.Length > 0) {
+                        for (int i = 0; i < col.Length; i++) {
+                            string str = col[i];
+                            ClsGenSet.lscol.Add(str);
+                            chklbFieldsShow.Items.Add(str);
+                        }
                     }
                 }
-            }
-            if (fontall.Length > 0) {
-                ClsGenSet.PrintFont = fontall;
-                string[] a = fontall.Split(':');
-                labfont.Text = a[0];
-                labcolor.Text = a[1];
-                labFontSize.Text = a[2];
-                labFontx.Text = a[3];
-            }
-            if (fontspec.Length > 0) {
-                string[] spec = fontspec.Split(';');
-                if (spec.Length > 0) {
-                    chkFontSetTs.Checked = true;
-                    grFontSet.Enabled = true;
-                    for (int i = 0; i < spec.Length; i++) {
-                        string str = spec[i];
-                        ClsGenSet.lsFont.Add(str);
-                        lbFontSet.Items.Add(str);
+                if (fontall.Length > 0) {
+                    ClsGenSet.PrintFont = fontall;
+                    string[] a = fontall.Split(':');
+                    labfont.Text = a[0];
+                    labcolor.Text = a[1];
+                    labFontSize.Text = a[2];
+                    labFontx.Text = a[3];
+                }
+                if (fontspec.Length > 0) {
+                    string[] spec = fontspec.Split(';');
+                    if (spec.Length > 0) {
+                        chkFontSetTs.Checked = true;
+                        grFontSet.Enabled = true;
+                        for (int i = 0; i < spec.Length; i++) {
+                            string str = spec[i];
+                            ClsGenSet.lsFont.Add(str);
+                            lbFontSet.Items.Add(str);
+                        }
                     }
                 }
-            }
 
+            } catch (Exception es) {
+                MessageBox.Show("打印信息加载失败:" + es.ToString());
+            }
         }
 
 
@@ -611,33 +615,38 @@ namespace CsmGenSet
         private void GetnPrintConten()
         {
             cleConten();
-            DataTable dt = T_Sysset.GetGensetPrint();
-            if (dt == null || dt.Rows.Count <= 0)
-                return;
-            DataRow dr = dt.Rows[0];
-            ClsPrintConten.ContenTable = dr["PrintContenTable"].ToString();
-            string str = dr["PrintContenInfo"].ToString();
-            txtPrintContenPrintTable.Text = ClsPrintConten.ContenTable;
-            butContenPrintTableis_Click(null, null);
-            if (str.Length > 0) {
-                string[] a = str.Split(';');
-                for (int i = 0; i < a.Length; i++) {
-                    string b = a[i];
-                    string[] c = b.Split(':');
-                    if (c.Length > 0) {
-                        if (c[0].IndexOf("SN0") >= 0) {
-                            ClsPrintConten.ContenSn = b;
+            try {
+                DataTable dt = T_Sysset.GetGensetPrint();
+                if (dt == null || dt.Rows.Count <= 0)
+                    return;
+                DataRow dr = dt.Rows[0];
+                ClsPrintConten.ContenTable = dr["PrintContenTable"].ToString();
+                string str = dr["PrintContenInfo"].ToString();
+                txtPrintContenPrintTable.Text = ClsPrintConten.ContenTable;
+                butContenPrintTableis_Click(null, null);
+                if (str.Length > 0) {
+                    string[] a = str.Split(';');
+                    for (int i = 0; i < a.Length; i++) {
+                        string b = a[i];
+                        string[] c = b.Split(':');
+                        if (c.Length > 0) {
+                            if (c[0].IndexOf("SN0") >= 0) {
+                                ClsPrintConten.ContenSn = b;
+                            }
+                            else {
+                                ClsPrintConten.Contencoltmp.Add(c[0]);
+                                ClsPrintConten.ContenXlstmp.Add(c[1]);
+                                ClsPrintConten.ContenPagetmp.Add(c[3]);
+                            }
                         }
-                        else {
-                            ClsPrintConten.Contencoltmp.Add(c[0]);
-                            ClsPrintConten.ContenXlstmp.Add(c[1]);
-                            ClsPrintConten.ContenPagetmp.Add(c[3]);
-                        }
+                        lbPrintContenSet.Items.Add(b);
+                        ClsPrintConten.ContenallSet.Add(b);
                     }
-                    lbPrintContenSet.Items.Add(b);
-                    ClsPrintConten.ContenallSet.Add(b);
                 }
+            } catch (Exception e) {
+                MessageBox.Show("目录打印信息加载失败:" + e.ToString());
             }
+
         }
 
         #endregion
@@ -762,31 +771,36 @@ namespace CsmGenSet
         private void GetImportSet()
         {
             CleImport();
-            if (ClsGenSet.PrintInfo != null && ClsGenSet.PrintInfo.Rows.Count > 0) {
-                DataTable dt = T_Sysset.GetImportDt();
-                if (dt == null || dt.Rows.Count <= 0)
-                    return;
-                foreach (DataRow dr in dt.Rows) {
-                    string t = dr["ImportTable"].ToString();
-                    if (t.Trim().Length <= 0)
+            try {
+                if (ClsGenSet.PrintInfo != null && ClsGenSet.PrintInfo.Rows.Count > 0) {
+                    DataTable dt = T_Sysset.GetImportDt();
+                    if (dt == null || dt.Rows.Count <= 0)
                         return;
-                    combImportTable.Items.Add(t);
-                    ClsImportTable.ImportTableLs.Add(t);
-                }
-                DataRow dr1 = dt.Rows[0];
-                ClsImportTable.ImportTable = dr1["ImportTable"].ToString();
-                string str = dr1["ImportInfoZd"].ToString();
-                txtImportTable.Text = ClsImportTable.ImportTable;
-                if (str.Length > 0) {
-                    string[] a = str.Split(';');
-                    for (int i = 0; i < a.Length; i++) {
-                        string b = a[i];
-                        chkImportAddzd.Items.Add(b);
-                        ClsImportTable.ImportInfo.Add(b);
+                    foreach (DataRow dr in dt.Rows) {
+                        string t = dr["ImportTable"].ToString();
+                        if (t.Trim().Length <= 0)
+                            return;
+                        combImportTable.Items.Add(t);
+                        ClsImportTable.ImportTableLs.Add(t);
                     }
-                }
+                    DataRow dr1 = dt.Rows[0];
+                    ClsImportTable.ImportTable = dr1["ImportTable"].ToString();
+                    string str = dr1["ImportInfoZd"].ToString();
+                    txtImportTable.Text = ClsImportTable.ImportTable;
+                    if (str.Length > 0) {
+                        string[] a = str.Split(';');
+                        for (int i = 0; i < a.Length; i++) {
+                            string b = a[i];
+                            chkImportAddzd.Items.Add(b);
+                            ClsImportTable.ImportInfo.Add(b);
+                        }
+                    }
 
+                }
+            } catch (Exception e) {
+                MessageBox.Show("导入信息表加载失败:" + e.ToString());
             }
+
         }
 
         private void GetImportTabble()
@@ -943,43 +957,48 @@ namespace CsmGenSet
         private void GetInfoSet()
         {
             CleInfo();
-            if (ClsGenSet.PrintInfo != null && ClsGenSet.PrintInfo.Rows.Count > 0) {
-                DataTable dt = T_Sysset.GetInfoTable();
-                if (dt == null || dt.Rows.Count <= 0)
-                    return;
-                foreach (DataRow dr in dt.Rows) {
-                    string t = dr["InfoTable"].ToString();
-                    string zd = dr["InfoAddzd"].ToString();
-                    string name = dr["InfoName"].ToString();
-                    string num = dr["InfoNum"].ToString();
-                    string width = dr["InfoLabWidth"].ToString();
-                    string txtwidth = dr["InfoTxtWidth"].ToString();
-                    if (t.Trim().Length <= 0)
+            try {
+                if (ClsGenSet.PrintInfo != null && ClsGenSet.PrintInfo.Rows.Count > 0) {
+                    DataTable dt = T_Sysset.GetInfoTable();
+                    if (dt == null || dt.Rows.Count <= 0)
                         return;
-                    combInfoTable.Items.Add(t);
-                    ClsInfoAdd.InfoTableLs.Add(t);
-                    ClsInfoAdd.InfoInfoZd.Add(zd);
-                    combInfoTableName.Items.Add(name);
-                    ClsInfoAdd.InfoTableName.Add(name);
-                    combInfoColNum.Items.Add(num);
-                    ClsInfoAdd.InfoColNum.Add(num);
-                    combInfoLabWith.Items.Add(width);
-                    ClsInfoAdd.InfoLabWidth.Add(width);
-                    combInfotxtWith.Items.Add(txtwidth);
-                    ClsInfoAdd.InfotxtWidth.Add(txtwidth);
-                }
-                DataRow dr1 = dt.Rows[0];
-                ClsInfoAdd.InfoTable = dr1["InfoTable"].ToString();
-                string str = dr1["InfoAddzd"].ToString();
-                txtInfoAdd.Text = ClsInfoAdd.InfoTable;
-                if (str.Length > 0) {
-                    string[] a = str.Split(';');
-                    for (int i = 0; i < a.Length; i++) {
-                        string b = a[i];
-                        chkInfoZd.Items.Add(b);
+                    foreach (DataRow dr in dt.Rows) {
+                        string t = dr["InfoTable"].ToString();
+                        string zd = dr["InfoAddzd"].ToString();
+                        string name = dr["InfoName"].ToString();
+                        string num = dr["InfoNum"].ToString();
+                        string width = dr["InfoLabWidth"].ToString();
+                        string txtwidth = dr["InfoTxtWidth"].ToString();
+                        if (t.Trim().Length <= 0)
+                            return;
+                        combInfoTable.Items.Add(t);
+                        ClsInfoAdd.InfoTableLs.Add(t);
+                        ClsInfoAdd.InfoInfoZd.Add(zd);
+                        combInfoTableName.Items.Add(name);
+                        ClsInfoAdd.InfoTableName.Add(name);
+                        combInfoColNum.Items.Add(num);
+                        ClsInfoAdd.InfoColNum.Add(num);
+                        combInfoLabWith.Items.Add(width);
+                        ClsInfoAdd.InfoLabWidth.Add(width);
+                        combInfotxtWith.Items.Add(txtwidth);
+                        ClsInfoAdd.InfotxtWidth.Add(txtwidth);
+                    }
+                    DataRow dr1 = dt.Rows[0];
+                    ClsInfoAdd.InfoTable = dr1["InfoTable"].ToString();
+                    string str = dr1["InfoAddzd"].ToString();
+                    txtInfoAdd.Text = ClsInfoAdd.InfoTable;
+                    if (str.Length > 0) {
+                        string[] a = str.Split(';');
+                        for (int i = 0; i < a.Length; i++) {
+                            string b = a[i];
+                            chkInfoZd.Items.Add(b);
+                        }
                     }
                 }
+            } catch (Exception e) {
+                MessageBox.Show("信息补录表加载失败:" + e.ToString());
             }
+
         }
 
         private void SaveInfoAdd()
@@ -1231,25 +1250,28 @@ namespace CsmGenSet
         private void GetnQuerInfo()
         {
             Txtcls();
-            DataTable dt = T_Sysset.GetGensetPrint();
-            if (dt == null || dt.Rows.Count <= 0)
-                return;
-            DataRow dr = dt.Rows[0];
-            ClsQuerInfo.QuerTable = dr["QuerTable"].ToString();
-            string str = dr["QuerInfoZd"].ToString();
-            txtQuerTable.Text = ClsQuerInfo.QuerTable;
-            if (str.Length > 0) {
-                string[] a = str.Split(';');
-                for (int i = 0; i < a.Length; i++) {
-                    string b = a[i];
-                    if (b.Trim().Length > 0) {
-                        ClsQuerInfo.QuerInfoZd.Add(b);
-                        chkQuerZd.Items.Add(b);
+            try {
+                DataTable dt = T_Sysset.GetGensetPrint();
+                if (dt == null || dt.Rows.Count <= 0)
+                    return;
+                DataRow dr = dt.Rows[0];
+                ClsQuerInfo.QuerTable = dr["QuerTable"].ToString();
+                string str = dr["QuerInfoZd"].ToString();
+                txtQuerTable.Text = ClsQuerInfo.QuerTable;
+                if (str.Length > 0) {
+                    string[] a = str.Split(';');
+                    for (int i = 0; i < a.Length; i++) {
+                        string b = a[i];
+                        if (b.Trim().Length > 0) {
+                            ClsQuerInfo.QuerInfoZd.Add(b);
+                            chkQuerZd.Items.Add(b);
+                        }
                     }
                 }
+
+            } catch (Exception e) {
+                MessageBox.Show("查询表加载失败:" + e.ToString());
             }
-
-
         }
 
         private void butQuerTable_Click(object sender, EventArgs e)
@@ -1341,9 +1363,9 @@ namespace CsmGenSet
                 if (chkDataSplit.GetItemChecked(i)) {
                     id += 1;
                     string s = chkDataSplit.GetItemText(chkDataSplit.Items[i]);
-                   if (str.Trim().Length<=0)
+                    if (str.Trim().Length <= 0)
                         str += s;
-                    else str +="\\"+s;
+                    else str += "\\" + s;
                 }
             }
             return str;
@@ -1418,8 +1440,8 @@ namespace CsmGenSet
                     ClsDataSplit.DataSplitDirCol = str;
                 }
                 if (chkDataSplit_dir_ml.Checked) {
-                    if (combDataSplit_dir_ml.Text.Trim().Length <= 0 || combDataSplit_dir_pages.Text.Trim().Length <= 0) {
-                        MessageBox.Show("请选择目录字段或页码字段!");
+                    if (combDataSplit_dir_pages.Text.Trim().Length <= 0) {
+                        MessageBox.Show("请选择页码字段!");
                         combDataSplit_dir_ml.Focus();
                         labDataSplit_dir_zd.Text = string.Format("字段示例：{0}", "");
                         return;
@@ -1440,8 +1462,7 @@ namespace CsmGenSet
                 }
 
             }
-            else
-            {
+            else {
                 ClsDataSplit.DataSplitfilenamecol = "";
                 ClsDataSplit.DataSplitFileName = "";
                 if (rabDataSplit_File_zd.Checked) {
@@ -1484,7 +1505,7 @@ namespace CsmGenSet
                     MessageBox.Show("请选择文件夹生成规则选项!");
                     return;
                 }
-                if (ClsDataSplit.DataSplitFileName.Length <= 0 || ClsDataSplit.DataSplitfilenamecol ==null && ClsDataSplit.DataSplitfilenamecol.Trim().Length <= 0) {
+                if (ClsDataSplit.DataSplitFileName.Length <= 0 || ClsDataSplit.DataSplitfilenamecol == null && ClsDataSplit.DataSplitfilenamecol.Trim().Length <= 0) {
                     MessageBox.Show("请先生成文件名规则!");
                     return;
                 }
@@ -1499,6 +1520,7 @@ namespace CsmGenSet
             } catch (Exception e) {
                 MessageBox.Show(e.ToString());
             } finally {
+                GetdataSplit();
                 string s = "修改数据拆分信息:" + ClsDataSplit.DataSplitDirCol + ";" + ClsDataSplit.DataSplitDirMl + ";" + ClsDataSplit.DataSplitFileName;
                 Common.Writelog(0, s);
             }
@@ -1506,60 +1528,71 @@ namespace CsmGenSet
 
         private void GetdataSplit()
         {
-            DataTable dt = T_Sysset.GetDataSplit();
-            if (dt == null || dt.Rows.Count <= 0)
-                return;
-            ClsDataSplit.DataSplitTable = dt.Rows[0][1].ToString();
-            ClsDataSplit.DataSplitDirsn = Convert.ToInt32(dt.Rows[0][2].ToString());
-            ClsDataSplit.DataSplitDirCol = dt.Rows[0][3].ToString();
-            ClsDataSplit.DataSplitDirMl = dt.Rows[0][4].ToString();
-            ClsDataSplit.DataSplitFileTable = dt.Rows[0][5].ToString();
-            ClsDataSplit.DataSplitFilesn = Convert.ToInt32(dt.Rows[0][6].ToString());
-            ClsDataSplit.DataSplitFileName = dt.Rows[0][7].ToString();
-            ClsDataSplit.DataSplitzero = Convert.ToBoolean(dt.Rows[0][8].ToString());
-            ClsDataSplit.DataSplitfilenamecol= dt.Rows[0][9].ToString();
-            txtDataSplit_pagezero.Text = dt.Rows[0][10].ToString();
-            txtDataSplitTable.Text = ClsDataSplit.DataSplitTable;
+            try {
+                DataTable dt = T_Sysset.GetDataSplit();
+                if (dt == null || dt.Rows.Count <= 0)
+                    return;
+                ClsDataSplit.DataSplitTable = dt.Rows[0][1].ToString();
+                ClsDataSplit.DataSplitDirsn = Convert.ToInt32(dt.Rows[0][2].ToString());
+                ClsDataSplit.DataSplitDirCol = dt.Rows[0][3].ToString();
+                ClsDataSplit.DataSplitDirMl = dt.Rows[0][4].ToString();
+                ClsDataSplit.DataSplitFileTable = dt.Rows[0][5].ToString();
+                ClsDataSplit.DataSplitFilesn = Convert.ToInt32(dt.Rows[0][6].ToString());
+                ClsDataSplit.DataSplitFileName = dt.Rows[0][7].ToString();
+                ClsDataSplit.DataSplitzero = Convert.ToBoolean(dt.Rows[0][8].ToString());
+                ClsDataSplit.DataSplitfilenamecol = dt.Rows[0][9].ToString();
+                txtDataSplit_pagezero.Text = dt.Rows[0][10].ToString();
+                txtDataSplitTable.Text = ClsDataSplit.DataSplitTable;
 
-            butDataSplit_Click(null, null);
-            if (ClsDataSplit.DataSplitDirsn == 3) {
-                chkDataSplit_dir_zd.Checked = true;
-                chkDataSplit_dir_ml.Checked = true;
-                string[] str = ClsDataSplit.DataSplitDirMl.Split('\\');
-                combDataSplit_dir_ml.Text = str[0];
-                combDataSplit_dir_pages.Text = str[1];
-            }
-            else if (ClsDataSplit.DataSplitDirsn == 2) {
-                chkDataSplit_dir_ml.Checked = true;
-                string[] str = ClsDataSplit.DataSplitDirMl.Split('\\');
-                combDataSplit_dir_ml.Text = str[0];
-                combDataSplit_dir_pages.Text = str[1];
-            }
-            else if (ClsDataSplit.DataSplitDirsn == 1)
-                chkDataSplit_dir_zd.Checked = true;
+                butDataSplit_Click(null, null);
+                if (ClsDataSplit.DataSplitDirsn == 3) {
+                    chkDataSplit_dir_zd.Checked = true;
+                    chkDataSplit_dir_ml.Checked = true;
+                    if (ClsDataSplit.DataSplitDirMl.IndexOf("\\") >= 0) {
+                        string[] str = ClsDataSplit.DataSplitDirMl.Split('\\');
+                        combDataSplit_dir_ml.Text = str[0];
+                        combDataSplit_dir_pages.Text = str[1];
+                    }
 
-            labDataSplit_dir_zd.Text = "字段示例：" + ClsDataSplit.DataSplitDirCol + "\\" + ClsDataSplit.DataSplitDirMl;
-            if (ClsDataSplit.DataSplitFilesn == 3) {
-                rabDataSplit_File_zd.Checked = true;
-                labDataSplit_Filesl.Text = ClsDataSplit.DataSplitFileName;
-                labDataSplit_Filetable.Text = "文件名规则Table为：" + ClsDataSplit.DataSplitFileTable;
+                }
+                else if (ClsDataSplit.DataSplitDirsn == 2) {
+                    chkDataSplit_dir_ml.Checked = true;
+                    if (ClsDataSplit.DataSplitDirMl.IndexOf("\\") >= 0) {
+                        string[] str = ClsDataSplit.DataSplitDirMl.Split('\\');
+                        combDataSplit_dir_ml.Text = str[0];
+                        combDataSplit_dir_pages.Text = str[1];
+                    }
+
+                }
+                else if (ClsDataSplit.DataSplitDirsn == 1)
+                    chkDataSplit_dir_zd.Checked = true;
+
+                labDataSplit_dir_zd.Text = "字段示例：" + ClsDataSplit.DataSplitDirCol + "\\" + ClsDataSplit.DataSplitDirMl;
+                if (ClsDataSplit.DataSplitFilesn == 3) {
+                    rabDataSplit_File_zd.Checked = true;
+                    labDataSplit_Filesl.Text = ClsDataSplit.DataSplitFileName;
+                    labDataSplit_Filetable.Text = "文件名规则Table为：" + ClsDataSplit.DataSplitFileTable;
+                }
+                else {
+                    if (ClsDataSplit.DataSplitFilesn == 1)
+                        rabDataSplit_File_dirname.Checked = true;
+                    else
+                        rabDataSplit_File_anjuan.Checked = true;
+                    string[] str = ClsDataSplit.DataSplitFileName.Split(';');
+                    txtDataSplit_File_cd.Text = str[0];
+                    txtDataSplit_File_qian.Text = str[1];
+                    txtDataSplit_File_hou.Text = str[2];
+                    GetFileGz();
+                }
+                chkDataSplit_File_zero.Checked = ClsDataSplit.DataSplitzero;
+                GetDataSplitExport();
+            } catch (Exception e) {
+                MessageBox.Show("数据转换表加载失败:" + e.ToString());
             }
-            else {
-                if (ClsDataSplit.DataSplitFilesn == 1)
-                    rabDataSplit_File_dirname.Checked = true;
-                else
-                    rabDataSplit_File_anjuan.Checked = true;
-                string[] str = ClsDataSplit.DataSplitFileName.Split(';');
-                txtDataSplit_File_cd.Text = str[0];
-                txtDataSplit_File_qian.Text = str[1];
-                txtDataSplit_File_hou.Text = str[2];
-                GetFileGz();
-            }
-            chkDataSplit_File_zero.Checked = ClsDataSplit.DataSplitzero;
-            GetDataSplitExport();
+
         }
 
-        
+
         private void AddDataSplitImport()
         {
             if (chkDataSplit.Items.Count <= 0)
@@ -1618,7 +1651,6 @@ namespace CsmGenSet
                     else
                         str += ClsDataSplit.DataSplitExportColtmp[i];
                 }
-
                 if (ClsDataSplit.DataSplitExportTable.IndexOf(txtDataSplitTable.Text.Trim()) < 0) {
                     if (ClsDataSplit.DataSplitExportxlsid.IndexOf(combDataSplit_Export_Xlsid.Text.Trim()) >= 0) {
                         MessageBox.Show("此Xls工作薄ID已绑定，请更换!");
@@ -1671,7 +1703,9 @@ namespace CsmGenSet
                     chkDataSplit_ExportTable.Items.Add(col1);
                     ClsDataSplit.DataSplitExportxlsid.Add(col1);
                 }
-            } catch { }
+            } catch (Exception ex) {
+                MessageBox.Show("数据转换xls绑定表加载失败:" + ex.ToString());
+            }
         }
 
 
@@ -1889,37 +1923,40 @@ namespace CsmGenSet
 
         private void GetInfoCheck()
         {
-            ClsInfoCheck.InfoCheckTable.Clear();
-            ClsInfoCheck.InfocheckMsg.Clear();
-            ClsInfoCheck.InfoCheckCol.Clear();
-            ClsInfoCheck.InfoCheckColtmp.Clear();
-            combInfoCheckTable.Items.Clear();
-            chkInfoCheckTableCol.Items.Clear();
-            DataTable dt = T_Sysset.GetInfoCheck();
-            if (dt == null || dt.Rows.Count <= 0)
-                return;
-            foreach (DataRow dr in dt.Rows) {
-                string tb = dr["InfoCheckTable"].ToString();
-                string col = dr["InfocheckCol"].ToString();
-                string ms = dr["InfoCheckMsg"].ToString();
-                ClsInfoCheck.InfoCheckTable.Add(tb);
-                combInfoCheckTable.Items.Add(tb);
-                ClsInfoCheck.InfoCheckCol.Add(col);
-                ClsInfoCheck.InfocheckMsg.Add(ms);
+            try {
+                ClsInfoCheck.InfoCheckTable.Clear();
+                ClsInfoCheck.InfocheckMsg.Clear();
+                ClsInfoCheck.InfoCheckCol.Clear();
+                ClsInfoCheck.InfoCheckColtmp.Clear();
+                combInfoCheckTable.Items.Clear();
+                chkInfoCheckTableCol.Items.Clear();
+                DataTable dt = T_Sysset.GetInfoCheck();
+                if (dt == null || dt.Rows.Count <= 0)
+                    return;
+                foreach (DataRow dr in dt.Rows) {
+                    string tb = dr["InfoCheckTable"].ToString();
+                    string col = dr["InfocheckCol"].ToString();
+                    string ms = dr["InfoCheckMsg"].ToString();
+                    ClsInfoCheck.InfoCheckTable.Add(tb);
+                    combInfoCheckTable.Items.Add(tb);
+                    ClsInfoCheck.InfoCheckCol.Add(col);
+                    ClsInfoCheck.InfocheckMsg.Add(ms);
 
-            }
-            ClsInfoAdd.InfoTable = ClsInfoCheck.InfoCheckTable[0];
-            txtInfoCheckTable.Text = ClsInfoCheck.InfoCheckTable[0];
-            string str = ClsInfoCheck.InfoCheckCol[0];
-            if (str.Length > 0) {
-                string[] a = str.Split(';');
-                for (int i = 0; i < a.Length; i++) {
-                    string b = a[i];
-                    chkInfoCheckTableCol.Items.Add(b);
-                    ClsInfoCheck.InfoCheckColtmp.Add(b);
                 }
+                ClsInfoAdd.InfoTable = ClsInfoCheck.InfoCheckTable[0];
+                txtInfoCheckTable.Text = ClsInfoCheck.InfoCheckTable[0];
+                string str = ClsInfoCheck.InfoCheckCol[0];
+                if (str.Length > 0) {
+                    string[] a = str.Split(';');
+                    for (int i = 0; i < a.Length; i++) {
+                        string b = a[i];
+                        chkInfoCheckTableCol.Items.Add(b);
+                        ClsInfoCheck.InfoCheckColtmp.Add(b);
+                    }
+                }
+            } catch (Exception e) {
+                MessageBox.Show("信息校验表加载失败:" + e.ToString());
             }
-
         }
 
         private void SelectInfoCheck(int id)
@@ -2059,20 +2096,19 @@ namespace CsmGenSet
                 MessageBox.Show("请设置表名称!");
                 return;
             }
-            if (txtContenLieSn.Text.Trim().Length <= 0) {
+            if (combContenLieSn.Text.Trim().Length <= 0) {
                 MessageBox.Show("请输入显示列数!");
-                txtContenLieSn.Focus();
+                combContenLieSn.Focus();
                 return;
             }
-            if (txtContenlabWith.Text.Trim().Length <= 0) {
+            if (combContenlabWith.Text.Trim().Length <= 0) {
                 MessageBox.Show("请输入字段宽度!");
-                txtContenlabWith.Focus();
+                combContenlabWith.Focus();
                 return;
             }
-
-            if (txtContentxtWith.Text.Trim().Length <= 0) {
+            if (combContentxtWith.Text.Trim().Length <= 0) {
                 MessageBox.Show("请输入前台信息框宽度!");
-                txtContentxtWith.Focus();
+                combContentxtWith.Focus();
                 return;
             }
             if (ClsConten.ContenCol.Count <= 0) {
@@ -2091,6 +2127,11 @@ namespace CsmGenSet
                     return;
                 }
             }
+            if (combContenModulename.Text.Trim().Length <= 0) {
+                MessageBox.Show("请输入模版名称:模版名称应包含模块名字");
+                combContenModulename.Focus();
+                return;
+            }
             try {
                 for (int i = 0; i < ClsConten.ContenCol.Count; i++) {
                     if (i != ClsConten.ContenCol.Count - 1)
@@ -2098,8 +2139,12 @@ namespace CsmGenSet
                     else
                         str += ClsConten.ContenCol[i];
                 }
-                T_Sysset.UpdateConten(ClsConten.ContenTable, str, txtContenLieSn.Text.Trim(), txtContenlabWith.Text.Trim(), txtContentxtWith.Text.Trim(),
-                    combContenTitle.Text.Trim(), combContenPages.Text.Trim());
+                if (ClsConten.ContenModule.IndexOf(combContenModulename.Text.Trim()) >= 0)
+                    T_Sysset.UpdateConten(ClsConten.ContenTable, str, combContenLieSn.Text.Trim(), combContenlabWith.Text.Trim(), combContentxtWith.Text.Trim(),
+                        combContenTitle.Text.Trim(), combContenPages.Text.Trim(), combContenModulename.Text.Trim());
+                else
+                    T_Sysset.InsterConten(ClsConten.ContenTable, str, combContenLieSn.Text.Trim(), combContenlabWith.Text.Trim(), combContentxtWith.Text.Trim(),
+                        combContenTitle.Text.Trim(), combContenPages.Text.Trim(), combContenModulename.Text.Trim());
                 MessageBox.Show("保存成功!");
             } catch (Exception e) {
                 MessageBox.Show(e.ToString());
@@ -2112,35 +2157,62 @@ namespace CsmGenSet
 
         private void GetnContenInfo()
         {
-            DataTable dt = T_Sysset.GetConten();
-            if (dt == null || dt.Rows.Count <= 0)
-                return;
-            chkContenColShow.Items.Clear();
-            chkContenCol.DataSource = null;
-            combContenPages.Items.Clear();
-            combContenTitle.Items.Clear();
-            ClsConten.ContenCol.Clear();
-            DataRow dr = dt.Rows[0];
-            ClsConten.ContenTable = dr["ContenTable"].ToString();
-            txtContenLieSn.Text = dr["ContenLie"].ToString();
-            txtContenlabWith.Text = dr["ContenWith"].ToString();
-            txtContentxtWith.Text = dr["ContentxtWith"].ToString();
-            string str = dr["ContenCol"].ToString();
-            txtContenTable.Text = ClsConten.ContenTable;
-            if (str.Length > 0) {
-                string[] a = str.Split(';');
-                for (int i = 0; i < a.Length; i++) {
-                    string b = a[i];
-                    if (b.Trim().Length > 0) {
-                        ClsConten.ContenCol.Add(b);
-                        chkContenColShow.Items.Add(b);
-                        combContenPages.Items.Add(b);
-                        combContenTitle.Items.Add(b);
+            try {
+                DataTable dt = T_Sysset.GetConten();
+                if (dt == null || dt.Rows.Count <= 0)
+                    return;
+                chkContenColShow.Items.Clear();
+                chkContenCol.DataSource = null;
+                combContenPages.Items.Clear();
+                combContenTitle.Items.Clear();
+                combContenModulename.Items.Clear();
+                ClsConten.ContenCol.Clear();
+                ClsConten.ContenModule.Clear();
+                DataRow dr = dt.Rows[0];
+                ClsConten.ContenTable = dr["ContenTable"].ToString();
+                combContenTitle.Text = dr["ContenTitle"].ToString();
+                combContenPages.Text = dr["ContenPages"].ToString();
+                string str = dr["ContenCol"].ToString();
+                txtContenTable.Text = ClsConten.ContenTable;
+                if (str.Length > 0) {
+                    string[] a = str.Split(';');
+                    for (int i = 0; i < a.Length; i++) {
+                        string b = a[i];
+                        if (b.Trim().Length > 0) {
+                            ClsConten.ContenCol.Add(b);
+                            chkContenColShow.Items.Add(b);
+                            combContenPages.Items.Add(b);
+                            combContenTitle.Items.Add(b);
+                        }
                     }
                 }
+                foreach (DataRow dr1 in dt.Rows) {
+                    string s = dr1["ContenModule"].ToString();
+                    if (s.Trim().Length <= 0)
+                        continue;
+                    combContenLieSn.Items.Add(dr1["ContenLie"].ToString());
+                    combContenlabWith.Items.Add(dr1["ContenWith"].ToString());
+                    combContentxtWith.Items.Add(dr1["ContentxtWith"].ToString());
+                    combContenModulename.Items.Add(s);
+                    ClsConten.ContenModule.Add(s);
+                }
+            } catch (Exception e) {
+                MessageBox.Show("目录录入表加载失败:" + e.ToString());
             }
-            combContenTitle.Text = dr["ContenTitle"].ToString();
-            combContenPages.Text = dr["ContenPages"].ToString();
+
+        }
+
+        void getContenIdx(int id)
+        {
+            combContenLieSn.SelectedIndex = id;
+            combContenlabWith.SelectedIndex = id;
+            combContentxtWith.SelectedIndex = id;
+        }
+
+
+        private void combContenModulename_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            getContenIdx(combContenModulename.SelectedIndex);
         }
 
 
@@ -2171,32 +2243,37 @@ namespace CsmGenSet
         #region CreateTable
         private void CreateTableab()
         {
-            ClsCreateTable.CreatetableTf = false;
-            labsm.Text = "警告：保存表时会自动\n创建ID及Archid\nEnterTab字段此字段\n为系统保留\n不可删除!";
-            string str = ClsCreateTable.coltmp;
-            ClsCreateTable.CreateTableCollx.Clear();
-            combCreateTableLx.Items.Clear();
-            ClsCreateTable.CreateTableSys.Clear();
-            ClsCreateTable.CreateTableCollx2.Clear();
-            ClsCreateTable.CreateTableCol.Clear();
-            ClsCreateTable.CreateTableCollx = str.Split(';').ToList();
-            for (int i = 0; i < ClsCreateTable.CreateTableCollx.Count; i++) {
-                str = ClsCreateTable.CreateTableCollx[i].ToString();
-                combCreateTableLx.Items.Add(str);
-                if (str.IndexOf("(") >= 0) {
-                    str = str.Substring(0, str.IndexOf("(") + 1);
-                    ClsCreateTable.CreateTableCollx2.Add(str);
+            try {
+                ClsCreateTable.CreatetableTf = false;
+                labsm.Text = "警告：保存表时会自动\n创建ID及Archid\nEnterTab字段此字段\n为系统保留\n不可删除!";
+                string str = ClsCreateTable.coltmp;
+                ClsCreateTable.CreateTableCollx.Clear();
+                combCreateTableLx.Items.Clear();
+                ClsCreateTable.CreateTableSys.Clear();
+                ClsCreateTable.CreateTableCollx2.Clear();
+                ClsCreateTable.CreateTableCol.Clear();
+                ClsCreateTable.CreateTableCollx = str.Split(';').ToList();
+                for (int i = 0; i < ClsCreateTable.CreateTableCollx.Count; i++) {
+                    str = ClsCreateTable.CreateTableCollx[i].ToString();
+                    combCreateTableLx.Items.Add(str);
+                    if (str.IndexOf("(") >= 0) {
+                        str = str.Substring(0, str.IndexOf("(") + 1);
+                        ClsCreateTable.CreateTableCollx2.Add(str);
+                    }
                 }
-            }
-            DataTable dt = T_Sysset.GetSysTable();
-            if (dt == null || dt.Rows.Count <= 0)
-                return;
-            foreach (DataRow dr in dt.Rows) {
-                str = dr["TableName"].ToString();
-                if (str.Trim().Length <= 0)
+                DataTable dt = T_Sysset.GetSysTable();
+                if (dt == null || dt.Rows.Count <= 0)
                     return;
-                ClsCreateTable.CreateTableSys.Add(str);
+                foreach (DataRow dr in dt.Rows) {
+                    str = dr["TableName"].ToString();
+                    if (str.Trim().Length <= 0)
+                        return;
+                    ClsCreateTable.CreateTableSys.Add(str);
+                }
+            } catch (Exception e) {
+                MessageBox.Show("创建表信息载表失败:" + e.ToString());
             }
+
         }
 
         private void IsCreateTable()
@@ -2581,29 +2658,34 @@ namespace CsmGenSet
 
         private void GetnborrInfo()
         {
-            ClsborrTable.Clsborrtable = "";
-            ClsborrTable.ClsBorrColzd.Clear();
-            chkBorrTablecol.DataSource = null;
-            chkBorrtablquer.Items.Clear();
-            DataTable dt = T_Sysset.GetborrTable();
-            if (dt == null || dt.Rows.Count <= 0)
-                return;
-            DataRow dr = dt.Rows[0];
-            ClsborrTable.Clsborrtable = dr["Tablename"].ToString();
-            string str = dr["Tabcolname"].ToString();
-            string time = dr["Timecol"].ToString();
-            txtBorrTable.Text = ClsborrTable.Clsborrtable;
-            if (str.Length > 0) {
-                string[] a = str.Split(';');
-                for (int i = 0; i < a.Length; i++) {
-                    string b = a[i];
-                    if (b.Trim().Length > 0) {
-                        ClsborrTable.ClsBorrColzd.Add(b);
-                        chkBorrtablquer.Items.Add(b);
+            try {
+                ClsborrTable.Clsborrtable = "";
+                ClsborrTable.ClsBorrColzd.Clear();
+                chkBorrTablecol.DataSource = null;
+                chkBorrtablquer.Items.Clear();
+                DataTable dt = T_Sysset.GetborrTable();
+                if (dt == null || dt.Rows.Count <= 0)
+                    return;
+                DataRow dr = dt.Rows[0];
+                ClsborrTable.Clsborrtable = dr["Tablename"].ToString();
+                string str = dr["Tabcolname"].ToString();
+                string time = dr["Timecol"].ToString();
+                txtBorrTable.Text = ClsborrTable.Clsborrtable;
+                if (str.Length > 0) {
+                    string[] a = str.Split(';');
+                    for (int i = 0; i < a.Length; i++) {
+                        string b = a[i];
+                        if (b.Trim().Length > 0) {
+                            ClsborrTable.ClsBorrColzd.Add(b);
+                            chkBorrtablquer.Items.Add(b);
+                        }
                     }
                 }
+                comborrTime.Text = time;
+            } catch (Exception e) {
+                MessageBox.Show("借阅表信息加载失败:" + e.ToString());
             }
-            comborrTime.Text = time;
+
         }
 
         private void butBorrIs_Click(object sender, EventArgs e)
@@ -2645,7 +2727,7 @@ namespace CsmGenSet
             Infoshow();
         }
 
-      
+
     }
 
 }

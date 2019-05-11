@@ -24,7 +24,7 @@ namespace Csmsjcf
             ClsDataSplitPar.ClsFileNameHou = "";
             ClsDataSplitPar.ClsFileNamecol = "";
             ClsDataSplitPar.ClsFileDlname = "";
-            ClsDataSplitPar.ClsdirPageZero = "";
+            ClsDataSplitPar.ClsdirPageZero = 0;
             ClsDataSplitPar.ClsFilezero = false;
             DataTable dt = T_Sysset.GetDataSplit();
             if (dt == null || dt.Rows.Count <= 0)

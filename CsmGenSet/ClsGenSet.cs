@@ -92,7 +92,8 @@ namespace CsmGenSet
     {
         public static string ContenTable { get; set; }
         public static List<string> ContenCol =new List<string>();
-     
+        public static List<string> ContenModule = new List<string>();
+
     }
 
     public static class ClsCreateTable

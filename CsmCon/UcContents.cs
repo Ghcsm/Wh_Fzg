@@ -13,6 +13,7 @@ namespace CsmCon
         {
             InitializeComponent();
         }
+        public string Modulename { get; set; }
         public event CntSelectHandleG GoFous;
         public event CntSelectHandle OneClickGotoPage;
         public delegate void CntSelectHandleG(object sender, EventArgs e);
@@ -28,7 +29,7 @@ namespace CsmCon
 
         private void Init()
         {
-            ClsConten.GetControl(panel1);
+            ClsConten.GetControl(panel1, Modulename);
             this.chbModule.Checked = ModuleVisible;
             this.gr0.Enabled = ContentsEnabled;
             gr2.Enabled = ContentsEnabled;
