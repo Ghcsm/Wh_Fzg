@@ -24,6 +24,7 @@ namespace Csmsjcf
             ClsDataSplitPar.ClsFileNameHou = "";
             ClsDataSplitPar.ClsFileNamecol = "";
             ClsDataSplitPar.ClsFileDlname = "";
+            ClsDataSplitPar.ClsdirPageZero = "";
             ClsDataSplitPar.ClsFilezero = false;
             DataTable dt = T_Sysset.GetDataSplit();
             if (dt == null || dt.Rows.Count <= 0)
@@ -50,7 +51,8 @@ namespace Csmsjcf
             }
             ClsDataSplitPar.ClsFilezero = Convert.ToBoolean(dt.Rows[0][8].ToString());
             ClsDataSplitPar.ClsFileDlname = dt.Rows[0][9].ToString();
-            GetExportTable();
+            ClsDataSplitPar.ClsdirPageZero = dt.Rows[0][10].ToString();
+           GetExportTable();
         }
 
         private static void GetExportTable()

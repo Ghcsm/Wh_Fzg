@@ -1317,6 +1317,7 @@ namespace CsmGenSet
             }
             combDataSplit_dir_pages.Items.Clear();
             combDataSplit_dir_ml.Items.Clear();
+            combDataSplit_dir_ml.Items.Add("");
             ClsDataSplit.DataSplitExportColtmp.Clear();
             DataTable dt = T_Sysset.GetTableName(ClsDataSplit.DataSplitTable);
             if (dt != null && dt.Rows.Count > 0) {
@@ -1333,7 +1334,6 @@ namespace CsmGenSet
         private string Getzd()
         {
             string str = "";
-            string str1 = "";
             if (chkDataSplit.Items.Count <= 0 && chkDataSplit.SelectedItems.Count <= 0)
                 return str;
             int id = 0;
@@ -1341,12 +1341,11 @@ namespace CsmGenSet
                 if (chkDataSplit.GetItemChecked(i)) {
                     id += 1;
                     string s = chkDataSplit.GetItemText(chkDataSplit.Items[i]);
-                    if (id < chkDataSplit.SelectedItems.Count - 1)
-                        str += s + "\\";
-                    else str += s;
+                   if (str.Trim().Length<=0)
+                        str += s;
+                    else str +="\\"+s;
                 }
             }
-            str1 = str.Replace('\\', ';');
             return str;
         }
 
@@ -1441,10 +1440,11 @@ namespace CsmGenSet
                 }
 
             }
-            else {
+            else
+            {
+                ClsDataSplit.DataSplitfilenamecol = "";
                 ClsDataSplit.DataSplitFileName = "";
                 if (rabDataSplit_File_zd.Checked) {
-                    str = GetFileGz();
                     ClsDataSplit.DataSplitFileTable = txtDataSplitTable.Text.Trim();
                     labDataSplit_Filetable.Text = string.Format("文件名规则Table为： {0}", txtDataSplitTable.Text.Trim());
                     ClsDataSplit.DataSplitfilenamecol = str;
@@ -1453,7 +1453,8 @@ namespace CsmGenSet
                     labDataSplit_Filetable.Text = "";
                     ClsDataSplit.DataSplitFileName = txtDataSplit_File_cd.Text.Trim() + ";" + txtDataSplit_File_qian.Text.Trim() + ";" + txtDataSplit_File_hou.Text.Trim();
                 }
-                if (str.Length <= 0)
+                str = GetFileGz();
+                if (str.Trim().Length <= 0)
                     labDataSplit_Filesl.Text = "";
                 else
                     labDataSplit_Filesl.Text = str;
@@ -1483,16 +1484,17 @@ namespace CsmGenSet
                     MessageBox.Show("请选择文件夹生成规则选项!");
                     return;
                 }
-                if (ClsDataSplit.DataSplitFileName.Length <= 0 && ClsDataSplit.DataSplitfilenamecol.Trim().Length <= 0) {
+                if (ClsDataSplit.DataSplitFileName.Length <= 0 || ClsDataSplit.DataSplitfilenamecol ==null && ClsDataSplit.DataSplitfilenamecol.Trim().Length <= 0) {
                     MessageBox.Show("请先生成文件名规则!");
                     return;
                 }
+                bool zer = chkDataSplit_File_zero.Checked;
                 if (chkDataSplit_dir_ml.Checked && chkDataSplit_dir_zd.Checked)
                     ClsDataSplit.DataSplitDirsn = 3;
 
                 T_Sysset.UPdateDataSplitInfo(ClsDataSplit.DataSplitTable, ClsDataSplit.DataSplitDirsn, ClsDataSplit.DataSplitDirCol,
                     ClsDataSplit.DataSplitDirMl, ClsDataSplit.DataSplitFileTable, ClsDataSplit.DataSplitFilesn,
-                    ClsDataSplit.DataSplitFileName, chkDataSplit_File_zero.Checked, ClsDataSplit.DataSplitfilenamecol);
+                    ClsDataSplit.DataSplitFileName, zer, ClsDataSplit.DataSplitfilenamecol, txtDataSplit_pagezero.Text.Trim());
                 MessageBox.Show("设置完成");
             } catch (Exception e) {
                 MessageBox.Show(e.ToString());
@@ -1515,6 +1517,8 @@ namespace CsmGenSet
             ClsDataSplit.DataSplitFilesn = Convert.ToInt32(dt.Rows[0][6].ToString());
             ClsDataSplit.DataSplitFileName = dt.Rows[0][7].ToString();
             ClsDataSplit.DataSplitzero = Convert.ToBoolean(dt.Rows[0][8].ToString());
+            ClsDataSplit.DataSplitfilenamecol= dt.Rows[0][9].ToString();
+            txtDataSplit_pagezero.Text = dt.Rows[0][10].ToString();
             txtDataSplitTable.Text = ClsDataSplit.DataSplitTable;
 
             butDataSplit_Click(null, null);
@@ -1555,7 +1559,7 @@ namespace CsmGenSet
             GetDataSplitExport();
         }
 
-
+        
         private void AddDataSplitImport()
         {
             if (chkDataSplit.Items.Count <= 0)
@@ -1702,6 +1706,13 @@ namespace CsmGenSet
                 GetDataSplitExport();
                 string s = "删除信息->数据导出表:" + str;
                 Common.Writelog(0, s);
+            }
+        }
+
+        private void txtPagezero_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!(Char.IsNumber(e.KeyChar))) {
+                e.Handled = true;
             }
         }
         private void butDataSplit_Click(object sender, EventArgs e)
@@ -2633,6 +2644,7 @@ namespace CsmGenSet
         {
             Infoshow();
         }
+
       
     }
 

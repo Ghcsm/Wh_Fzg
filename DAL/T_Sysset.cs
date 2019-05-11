@@ -687,23 +687,24 @@ namespace DAL
 
 
 
-        public static void UPdateDataSplitInfo(string dirtable, int dirsn, string dircol, string dirml, string filetable, int filesn, string filename, bool filebool, string filecol)
+        public static void UPdateDataSplitInfo(string dirtable, int dirsn, string dircol, string dirml, string filetable, int filesn, string filename, bool filebool, string filecol,string pageszero)
         {
-            string strSql = "update M_GenSetDataSplit set DataTable=@dirtable, Dirsn=@dirsn,DirCol=@dircol," +
-                            "DirMl=@dirml,FileTable=@filetable,Filesn=@filesn,FileName=@filename,FileBool=@filebool,FileNamecol=@filecol";
+            string strSql = "update M_GenSetDataSplit set DataTable=@dirtable, Dirsn=@dirsn,DirCol=@dircol,DirMl=@dirml,"+
+                            "FileTable=@filetable,Filesn=@filesn,FileName=@filename,FileBool=@filebool,FileNamecol=@filecol,DirPage=@pzero";
             SqlParameter[] par =
             {
                 new SqlParameter("@dirtable", dirtable),
-                new SqlParameter("@dirsn", dirsn),
+                new SqlParameter("@dirsn", dirsn.ToString()),
                 new SqlParameter("@dircol", dircol),
                 new SqlParameter("@dirml", dirml),
                 new SqlParameter("@filetable", filetable),
-                new SqlParameter("@filesn", filesn),
+                new SqlParameter("@filesn", filesn.ToString()),
                 new SqlParameter("@filename", filename),
                 new SqlParameter("@filebool", filebool.ToString()),
-                new SqlParameter("@filecol", filecol)
+                new SqlParameter("@filecol", filecol.ToString()),
+                new SqlParameter("@pzero", pageszero)
             };
-            SQLHelper.ExecScalar(strSql, par);
+            SQLHelper.ExecScalar(strSql,par);
         }
 
         public static DataTable GetDataSplit()
