@@ -51,6 +51,7 @@ namespace Csmdasm
                     ClsTwain.Archid = gArch.Archid;
                     labArchNo.Text = string.Format("当前卷号:{0}", ClsTwain.ArchPos);
                     LoadArch();
+                    ImgView.Focus();
                     return;
                 }
                 MessageBox.Show("请退出当前卷再进行操作！");
@@ -61,7 +62,6 @@ namespace Csmdasm
             } finally {
                 gArch.butLoad.Enabled = true;
             }
-
         }
 
         private void FrmTwain_Load(object sender, EventArgs e)
@@ -364,31 +364,37 @@ namespace Csmdasm
         private void toolPagesUp_Click(object sender, EventArgs e)
         {
             Himg._Pagenext(0);
+            ImgView.Focus();
         }
 
         private void toolPagesDown_Click(object sender, EventArgs e)
         {
             Himg._Pagenext(1);
+            ImgView.Focus();
         }
 
         private void toolImgBig_Click(object sender, EventArgs e)
         {
             Himg._Sizeimge(1);
+            ImgView.Focus();
         }
 
         private void toolImgSmall_Click(object sender, EventArgs e)
         {
             Himg._Sizeimge(0);
+            ImgView.Focus();
         }
 
         private void toolImgRoter_Click(object sender, EventArgs e)
         {
             Himg._Roteimage(1);
+            ImgView.Focus();
         }
 
         private void toolDelPages_Click(object sender, EventArgs e)
         {
             Himg._Delepage(1);
+            ImgView.Focus();
         }
 
         private void toolInster_Click(object sender, EventArgs e)
@@ -398,6 +404,7 @@ namespace Csmdasm
                     Himg._Insterpage(this.oFdInsterFile.FileName);
                 }
             }
+            ImgView.Focus();
         }
 
         private void toolGotoPages_Click(object sender, EventArgs e)
@@ -408,6 +415,7 @@ namespace Csmdasm
             if (page > 0 && page <= ClsTwain.MaxPage) {
                 Himg._Gotopage(Frmnum.Page);
             }
+            ImgView.Focus();
         }
 
         private void toolScan_Click(object sender, EventArgs e)
@@ -425,6 +433,7 @@ namespace Csmdasm
             } finally {
                 ClsTwain.Scanbool = false;
             }
+            ImgView.Focus();
         }
 
         private void toolColse_Click(object sender, EventArgs e)

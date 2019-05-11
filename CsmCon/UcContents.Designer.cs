@@ -146,10 +146,11 @@
             this.butDel.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.butDel.Location = new System.Drawing.Point(16, 126);
             this.butDel.Name = "butDel";
+            this.butDel.Shortcuts.Add(DevComponents.DotNetBar.eShortcut.CtrlD);
             this.butDel.Size = new System.Drawing.Size(56, 31);
             this.butDel.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.butDel.TabIndex = 6;
-            this.butDel.Text = "删除";
+            this.butDel.Text = "删除(D)";
             this.butDel.Click += new System.EventHandler(this.butDel_Click);
             // 
             // butEdit
@@ -158,10 +159,11 @@
             this.butEdit.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.butEdit.Location = new System.Drawing.Point(16, 73);
             this.butEdit.Name = "butEdit";
+            this.butEdit.Shortcuts.Add(DevComponents.DotNetBar.eShortcut.CtrlF);
             this.butEdit.Size = new System.Drawing.Size(55, 31);
             this.butEdit.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.butEdit.TabIndex = 5;
-            this.butEdit.Text = "修改";
+            this.butEdit.Text = "修改(F)";
             this.butEdit.Click += new System.EventHandler(this.butEdit_Click);
             // 
             // butAdd
@@ -170,10 +172,11 @@
             this.butAdd.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.butAdd.Location = new System.Drawing.Point(16, 22);
             this.butAdd.Name = "butAdd";
+            this.butAdd.Shortcuts.Add(DevComponents.DotNetBar.eShortcut.CtrlS);
             this.butAdd.Size = new System.Drawing.Size(54, 31);
             this.butAdd.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.butAdd.TabIndex = 4;
-            this.butAdd.Text = "新增";
+            this.butAdd.Text = "新增(S)";
             this.butAdd.Click += new System.EventHandler(this.butAdd_Click);
             // 
             // gr1
@@ -186,7 +189,7 @@
             this.gr1.Location = new System.Drawing.Point(3, 170);
             this.gr1.Name = "gr1";
             this.gr1.Size = new System.Drawing.Size(384, 343);
-            this.gr1.TabIndex = 1;
+            this.gr1.TabIndex = 2;
             this.gr1.TabStop = false;
             // 
             // LvContents
@@ -209,7 +212,8 @@
             this.LvContents.Location = new System.Drawing.Point(5, 17);
             this.LvContents.Name = "LvContents";
             this.LvContents.Size = new System.Drawing.Size(205, 320);
-            this.LvContents.TabIndex = 0;
+            this.LvContents.TabIndex = 5;
+            this.LvContents.TabStop = false;
             this.LvContents.UseCompatibleStateImageBehavior = false;
             this.LvContents.View = System.Windows.Forms.View.Details;
             this.LvContents.Click += new System.EventHandler(this.LvContents_Click);
@@ -240,7 +244,8 @@
             this.LvModule.Location = new System.Drawing.Point(207, 17);
             this.LvModule.Name = "LvModule";
             this.LvModule.Size = new System.Drawing.Size(171, 320);
-            this.LvModule.TabIndex = 1;
+            this.LvModule.TabIndex = 0;
+            this.LvModule.TabStop = false;
             this.LvModule.UseCompatibleStateImageBehavior = false;
             this.LvModule.View = System.Windows.Forms.View.Details;
             // 
@@ -264,7 +269,7 @@
             this.gr2.Location = new System.Drawing.Point(393, 170);
             this.gr2.Name = "gr2";
             this.gr2.Size = new System.Drawing.Size(80, 343);
-            this.gr2.TabIndex = 2;
+            this.gr2.TabIndex = 1;
             this.gr2.TabStop = false;
             // 
             // UcContents

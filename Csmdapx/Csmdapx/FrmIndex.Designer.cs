@@ -262,6 +262,8 @@
             this.ImgView.Size = new System.Drawing.Size(606, 535);
             this.ImgView.TabIndex = 1;
             this.ImgView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ImgView_KeyDown);
+            this.ImgView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ImgView_MouseDoubleClick);
+            this.ImgView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ImgView_MouseDown);
             // 
             // gr4
             // 

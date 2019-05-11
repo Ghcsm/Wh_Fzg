@@ -68,25 +68,48 @@ namespace Csmdajc
 
         private void Garch_LineLoadFile(object sender, EventArgs e)
         {
-            if (ImgView.Image == null && Clscheck.ArchPos == null || ImgView.Image == null && Clscheck.ArchPos.Trim().Length <= 0) {
-                Clscheck.ArchPos = gArch.ArchPos;
-                Clscheck.Archid = gArch.Archid;
-                Clscheck.RegPage = gArch.ArchRegPages;
-                Clscheck.FileNametmp = gArch.ArchImgFile;
-                toolArchno.Text = string.Format("当前卷号:{0}", Clscheck.ArchPos);
-                gArch.butLoad.Enabled = false;
-                LoadArch();
-                LoadContents();
-                Ispages();
-                return;
+            try {
+                if (ImgView.Image == null && Clscheck.ArchPos == null ||
+                    ImgView.Image == null && Clscheck.ArchPos.Trim().Length <= 0) {
+                    Clscheck.ArchPos = gArch.ArchPos;
+                    Clscheck.Archid = gArch.Archid;
+                    Clscheck.RegPage = gArch.ArchRegPages;
+                    Clscheck.FileNametmp = gArch.ArchImgFile;
+                    toolArchno.Text = string.Format("当前卷号:{0}", Clscheck.ArchPos);
+                    gArch.butLoad.Enabled = false;
+                    LoadArch();
+                    LoadContents();
+                    Ispages();
+                    ImgView.Focus();
+                    return;
+                }
+
+                MessageBox.Show("请退出当前卷再进行操作！");
+                gArch.Focus();
+            } catch (Exception exception) {
+                Cledata();
+                MessageBox.Show(exception.ToString());
+            } finally {
+                gArch.butLoad.Enabled = true;
             }
-            MessageBox.Show("请退出当前卷再进行操作！");
-            gArch.Focus();
+
         }
 
         #region ClickEve
 
+        private void ImgView_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+                toolStripCut_Click(sender, e);
+            else
+                Himg._Rectang(true);
 
+        }
+        private void ImgView_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            Himg._ImgFill(e);
+            txtPages.Focus();
+        }
         private void toolStripRevImg_Click(object sender, EventArgs e)
         {
             Himg._Fliprevimage(1);
@@ -263,7 +286,7 @@ namespace Csmdajc
             Cledata();
             Task.Run(new Action(() =>
             {
-                Repair(filetmp, archid,  archpos);
+                Repair(filetmp, archid, archpos);
             }));
         }
 
@@ -643,6 +666,7 @@ namespace Csmdajc
             }
 
         }
+
 
 
 

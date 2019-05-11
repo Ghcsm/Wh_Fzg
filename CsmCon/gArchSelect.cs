@@ -52,6 +52,7 @@ namespace CsmCon
             Witeini();
             if (PagesEnd)
                 txtPages.Enabled = false;
+            LvData.Focus();
             if (LvData.Items.Count > 0) {
                 LvData.Items[0].Selected = true;
                 LvData_Click(null, null);

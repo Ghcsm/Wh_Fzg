@@ -82,6 +82,7 @@ namespace Csmdapx
                     toolArchno.Text = string.Format("当前卷号:{0}", ClsIndex.ArchPos);
                     LoadArch();
                     LoadContents();
+                    ImgView.Focus();
                     return;
                 }
 
@@ -96,7 +97,11 @@ namespace Csmdapx
 
         }
         #region ClickEve
-
+        private void ImgView_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            Himg._ImgFill(e);
+            txtPages.Focus();
+        }
 
         private void toolStripInsterImg_Click(object sender, EventArgs e)
         {
@@ -352,6 +357,13 @@ namespace Csmdapx
         private void FrmIndex_KeyDown(object sender, KeyEventArgs e)
         {
             Keykuaij(sender, e);
+        }
+        private void ImgView_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+                toolStripCut_Click(sender, e);
+            else
+                Himg._Rectang(true);
         }
 
         #endregion
@@ -808,8 +820,10 @@ namespace Csmdapx
         }
 
 
+
+
         #endregion
 
-
+     
     }
 }
