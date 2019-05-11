@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Windows.Forms;
+using Exception = System.Exception;
 
 namespace DAL
 {
@@ -728,33 +729,52 @@ namespace DAL
             return dt;
         }
 
-        private static string UpdateArchtype(string table, string artype, string wyz)
+        private static string UpdateArchtype(string table, string artype, string wyz, string pages)
         {
+            int p = 0;
+            try {
+                p = Convert.ToInt32(pages);
+            } catch { }
             string id = "";
             string strSql = "select top 1 id from M_IMAGEFILE where ArchImportID='" + wyz + "'";
             object obj = SQLHelper.ExecScalar(strSql);
             if (obj == null) {
                 strSql = "select top 1 MIN(id) from M_IMAGEFILE where ArchType is null and ArchConten is null ";
                 id = SQLHelper.ExecScalar(strSql).ToString();
-                if (id.Trim().Length > 0) {
-                    strSql = "update M_IMAGEFILE set " + artype + "=@type, ArchImportID=@wyz where id=@id";
+                if (p > 0) {
                     SqlParameter p1 = new SqlParameter("@type", table);
                     SqlParameter p2 = new SqlParameter("@id", id);
                     SqlParameter p3 = new SqlParameter("@wyz", wyz);
-                    SQLHelper.ExecScalar(strSql, p1, p2, p3);
+                    if (pages.Trim().Length > 0) {
+                        strSql = "update M_IMAGEFILE set " + artype + "=@type,Pages=@p, ArchImportID=@wyz where id=@id";
+                        SqlParameter p4 = new SqlParameter("@p", pages);
+                        SQLHelper.ExecScalar(strSql, p1, p2, p3, p4);
+                    }
+
+                    else {
+                        strSql = "update M_IMAGEFILE set " + artype + "=@type, ArchImportID=@wyz where id=@id";
+                        SQLHelper.ExecScalar(strSql, p1, p2, p3);
+                    }
                 }
             }
             else {
                 id = obj.ToString();
-                strSql = "update M_IMAGEFILE set " + artype + "=@type where id=@id";
                 SqlParameter p1 = new SqlParameter("@type", table);
                 SqlParameter p2 = new SqlParameter("@id", id);
-                SQLHelper.ExecScalar(strSql, p1, p2);
+                if (p > 0) {
+                    strSql = "update M_IMAGEFILE set " + artype + "=@type,Pages=@p where id=@id";
+                    SqlParameter p3 = new SqlParameter("@p", pages);
+                    SQLHelper.ExecScalar(strSql, p1, p2, p3);
+                }
+                else {
+                    strSql = "update M_IMAGEFILE set " + artype + "=@type where id=@id";
+                    SQLHelper.ExecScalar(strSql, p1, p2);
+                }
             }
             return id;
         }
 
-        public static string ImportData(string table, string col, string data, bool ck, int lx, string wyz)
+        public static string ImportData(string table, string col, string data, bool ck, int lx, string wyz, string pages)
         {
             string tb = "";
             if (lx == 1)
@@ -770,7 +790,7 @@ namespace DAL
                         SQLHelper.ExecScalar(strSql);
                     }
                 }
-                string archid = UpdateArchtype(table, tb, wyz);
+                string archid = UpdateArchtype(table, tb, wyz, pages);
                 if (archid.Trim().Length <= 0)
                     return "未找到最小Archid，或许数据库上架数量太小";
                 string strSql1 = "insert into " + table;

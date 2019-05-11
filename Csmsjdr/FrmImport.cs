@@ -38,6 +38,8 @@ namespace Csmsjdr
         private void GetImportInfo(string str)
         {
             chkTablecol.Items.Clear();
+            combPages.Items.Clear();
+            combPages.Items.Add("");
             DataTable dt = Common.GetImportTable(str);
             if (dt == null || dt.Rows.Count <= 0)
                 return;
@@ -47,6 +49,7 @@ namespace Csmsjdr
             for (int i = 0; i < strtmp.Length; i++) {
                 string s = strtmp[i];
                 chkTablecol.Items.Add(s);
+                combPages.Items.Add(s);
             }
         }
 
@@ -150,7 +153,7 @@ namespace Csmsjdr
                 combLx.Focus();
                 return false;
             }
-            if (chkTablecol.CheckedItems.Count<= 0) {
+            if (chkTablecol.CheckedItems.Count <= 0) {
                 MessageBox.Show("请选择xls表中唯一字段!");
                 return false;
             }
@@ -181,15 +184,17 @@ namespace Csmsjdr
             }
         }
 
-        private Task<bool> StartImport(string table, string tzd, string xzd, bool chk, int count, int lx, List<string> wyz)
+        private Task<bool> StartImport(string table, string tzd, string xzd, bool chk, int count, int lx, List<string> wyz,int pbool)
         {
             string strwy = "";
+            string strpage = "";
             return Task.Run(() =>
             {
                 int id = 0; ;
                 for (int i = 0; i <= dgvXlsData.Rows.Count; i++) {
                     xzd = "";
                     strwy = "";
+                    strpage = "";
                     i = 0;
                     id += 1;
                     for (int a = 0; a < count; a++) {
@@ -204,9 +209,12 @@ namespace Csmsjdr
                             else
                                 strwy += "-" + s;
                         }
+
+                        if (pbool!=0 && pbool-1== a)
+                            strpage = s.Trim();
                     }
                     try {
-                        string str = Common.ImportData(table, tzd, xzd, chk, lx, strwy);
+                        string str = Common.ImportData(table, tzd, xzd, chk, lx, strwy,strpage);
                         if (str != "ok") {
                             str = "详细信息：错误行:" + id + " -->" + str;
                             WriteLog(str);
@@ -242,6 +250,7 @@ namespace Csmsjdr
                 string table = combImportTable.Text.Trim();
                 int improtlx = combLx.SelectedIndex;
                 List<string> lswyz = new List<string>();
+                int pbool = combPages.SelectedIndex;
                 for (int i = 0; i < count; i++) {
                     string s = chkTablecol.Items[i].ToString();
                     if (i < count - 1)
@@ -251,7 +260,7 @@ namespace Csmsjdr
                     if (chkTablecol.GetItemChecked(i))
                         lswyz.Add(i.ToString());
                 }
-                bool bl = await StartImport(table, tzd, xzd, chk, count, improtlx, lswyz);
+                bool bl = await StartImport(table, tzd, xzd, chk, count, improtlx, lswyz, pbool);
                 if (bl)
                     TxtEnd(1);
 
@@ -260,7 +269,7 @@ namespace Csmsjdr
             } finally {
                 TxtEnd(1);
                 string s = "导入数据:数据库表名:" + combImportTable.Text.Trim() + ";文件名：" + txtXlsPath.Text.Trim() + ";工作表名:" +
-                           combXlsTable.Text.Trim()+";导入类型："+ combLx.Text.Trim();
+                           combXlsTable.Text.Trim() + ";导入类型：" + combLx.Text.Trim();
                 Common.Writelog(0, s);
             }
         }
@@ -315,8 +324,9 @@ namespace Csmsjdr
         }
         private void combLx_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (combLx.SelectedIndex>0)
-            clschk();
+            if (combLx.SelectedIndex > 0)
+                clschk();
+            
         }
     }
 }
