@@ -1357,7 +1357,7 @@
             this.chkDataSplit_ExportTable.FormattingEnabled = true;
             this.chkDataSplit_ExportTable.Location = new System.Drawing.Point(218, 20);
             this.chkDataSplit_ExportTable.Name = "chkDataSplit_ExportTable";
-            this.chkDataSplit_ExportTable.Size = new System.Drawing.Size(155, 116);
+            this.chkDataSplit_ExportTable.Size = new System.Drawing.Size(155, 100);
             this.chkDataSplit_ExportTable.TabIndex = 6;
             // 
             // butDataSplit_Export_DelInfo

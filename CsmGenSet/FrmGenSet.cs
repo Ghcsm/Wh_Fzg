@@ -1676,12 +1676,20 @@ namespace CsmGenSet
                     else
                         str += ClsDataSplit.DataSplitExportColtmp[i];
                 }
-                if (ClsDataSplit.DataSplitExportTable.IndexOf(txtDataSplitTable.Text.Trim()) < 0) {
-                    if (ClsDataSplit.DataSplitExportxlsid.IndexOf(combDataSplit_Export_Xlsid.Text.Trim()) >= 0) {
-                        MessageBox.Show("此Xls工作薄ID已绑定，请更换!");
+
+                if (combDataSplit_Export_table.Text.Trim().Length > 0) {
+                    if (ClsDataSplit.DataSplitExportTable.IndexOf(txtDataSplitTable.Text.Trim()) < 0) {
+                        if (ClsDataSplit.DataSplitExportxlsid.IndexOf(combDataSplit_Export_Xlsid.Text.Trim()) >= 0) {
+                            MessageBox.Show("此Xls工作薄ID已绑定，请更换!");
+                            return;
+                        }
+                        T_Sysset.SaveDataSplitExport(txtDataSplitTable.Text.Trim(), str, combDataSplit_Export_Xlsid.Text.Trim());
+                    }
+                    else {
+                        MessageBox.Show("此表已经存在，如更新请先选择此表!");
+                        combDataSplit_Export_table.Focus();
                         return;
                     }
-                    T_Sysset.SaveDataSplitExport(txtDataSplitTable.Text.Trim(), str, combDataSplit_Export_Xlsid.Text.Trim());
                 }
                 else
                     T_Sysset.UpdateDataSplitExport(txtDataSplitTable.Text.Trim(), str, combDataSplit_Export_Xlsid.Text.Trim());
@@ -1705,6 +1713,8 @@ namespace CsmGenSet
                 ClsDataSplit.DataSplitExportCol.Clear();
                 ClsDataSplit.DataSplitExportxlsid.Clear();
                 chkDataSplit_ExportTable.Items.Clear();
+                combDataSplit_Export_table.Items.Clear();
+                combDataSplit_Export_Xlsid.Items.Clear();
                 foreach (DataRow dr in dt.Rows) {
                     string table = dr["ImportTable"].ToString();
                     string col = dr["ImportCol"].ToString();
@@ -2752,7 +2762,7 @@ namespace CsmGenSet
             Infoshow();
         }
 
-    
+
     }
 
 }
