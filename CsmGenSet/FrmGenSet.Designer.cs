@@ -292,6 +292,7 @@
             this.comboItem4 = new DevComponents.Editors.ComboItem();
             this.comboItem3 = new DevComponents.Editors.ComboItem();
             this.colorDialog = new System.Windows.Forms.ColorDialog();
+            this.label40 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.superTabControl1)).BeginInit();
             this.superTabControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.superTabControl2)).BeginInit();
@@ -418,14 +419,14 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabContr.CanReorderTabs = true;
-            this.tabContr.Controls.Add(this.tabConPrintSet);
-            this.tabContr.Controls.Add(this.tabControlPanel6);
-            this.tabContr.Controls.Add(this.tabControlPanel9);
+            this.tabContr.Controls.Add(this.tabControlPanel11);
             this.tabContr.Controls.Add(this.tabControlPanel10);
+            this.tabContr.Controls.Add(this.tabControlPanel9);
+            this.tabContr.Controls.Add(this.tabControlPanel6);
+            this.tabContr.Controls.Add(this.tabConPrintSet);
             this.tabContr.Controls.Add(this.tabControlPanel5);
             this.tabContr.Controls.Add(this.tabControlPanel4);
             this.tabContr.Controls.Add(this.tabControlPanel12);
-            this.tabContr.Controls.Add(this.tabControlPanel11);
             this.tabContr.Controls.Add(this.tabControlPanel3);
             this.tabContr.Controls.Add(this.tabControlPanel2);
             this.tabContr.Location = new System.Drawing.Point(0, 28);
@@ -2950,6 +2951,7 @@
             this.groupBox11.BackColor = System.Drawing.Color.Transparent;
             this.groupBox11.Controls.Add(this.butCreateTableis);
             this.groupBox11.Controls.Add(this.txtCreateTable);
+            this.groupBox11.Controls.Add(this.label40);
             this.groupBox11.Controls.Add(this.label30);
             this.groupBox11.Location = new System.Drawing.Point(12, 29);
             this.groupBox11.Name = "groupBox11";
@@ -2976,6 +2978,7 @@
             this.txtCreateTable.Name = "txtCreateTable";
             this.txtCreateTable.Size = new System.Drawing.Size(196, 21);
             this.txtCreateTable.TabIndex = 1;
+            this.txtCreateTable.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCreateTable_KeyPress);
             // 
             // label30
             // 
@@ -3439,6 +3442,16 @@
             // 
             this.comboItem3.Text = "一录信息";
             // 
+            // label40
+            // 
+            this.label40.AutoSize = true;
+            this.label40.ForeColor = System.Drawing.Color.Red;
+            this.label40.Location = new System.Drawing.Point(472, 38);
+            this.label40.Name = "label40";
+            this.label40.Size = new System.Drawing.Size(161, 12);
+            this.label40.TabIndex = 0;
+            this.label40.Text = "注：数据库表名称只能为英文";
+            // 
             // FrmGetSet
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -3804,6 +3817,7 @@
         private DevComponents.DotNetBar.Controls.ComboBoxEx combContenLieSn;
         private DevComponents.DotNetBar.Controls.ComboBoxEx combContenlabWith;
         private DevComponents.DotNetBar.Controls.ComboBoxEx combContentxtWith;
+        private System.Windows.Forms.Label label40;
     }
 }
 

@@ -2547,7 +2547,11 @@ namespace CsmGenSet
                 T_Sysset.CreateTableDelExplain(ClsCreateTable.CreateTable, ClsCreateTable.CreateTableLvcol);
         }
 
-
+        private void txtCreateTable_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!Char.IsUpper(e.KeyChar) && !Char.IsLower(e.KeyChar))
+               e.Handled = true;
+        }
         private void butCreateTableis_Click(object sender, EventArgs e)
         {
             IsCreateTable();
@@ -2762,7 +2766,7 @@ namespace CsmGenSet
             Infoshow();
         }
 
-
+      
     }
 
 }
