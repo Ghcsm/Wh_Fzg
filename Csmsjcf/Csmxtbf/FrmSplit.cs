@@ -153,7 +153,7 @@ namespace Csmsjcf
                         return false;
                     }
                 }
-               else if (lv_gr2_5_boxCount.Items.Count <= 0) {
+                else if (lv_gr2_5_boxCount.Items.Count <= 0) {
                     MessageBox.Show("请先添加任务范围!");
                     txt_gr2_5_box1.Focus();
                     return false;
@@ -168,7 +168,7 @@ namespace Csmsjcf
                     }
 
                 }
-               else if (lv_gr2_5_boxCount.Items.Count <= 0) {
+                else if (lv_gr2_5_boxCount.Items.Count <= 0) {
                     MessageBox.Show("请先添加任务范围!");
                     txt_gr2_5_box1.Focus();
                     return false;
@@ -497,8 +497,7 @@ namespace Csmsjcf
                     }
                 }
             }
-            else
-            {
+            else {
                 if (ClsFrmInfoPar.OneJuan == 0)
                     dtArchNo = dtfw.Copy();
                 else
@@ -588,6 +587,7 @@ namespace Csmsjcf
                 }
                 ListBshowInfo(xc, boxsn, archno, "准备进行数据转换");
                 List<string> lsinfopdf = new List<string>();
+                int erro = 0;
                 try {
                     for (int f = 0; f < ClsFrmInfoPar.FileFormat.Count; f++) {
                         string fs = ClsFrmInfoPar.FileFormat[f];
@@ -602,6 +602,7 @@ namespace Csmsjcf
                                     ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, dir);
                                 }
                                 ListBshowInfo(xc, boxsn, archno, "警告,错误线程退出");
+                                erro = 1;
                                 break;
                             }
                             string file = ClsOperate.GetFileName(archid);
@@ -610,6 +611,7 @@ namespace Csmsjcf
                                     ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, file);
                                 }
                                 ListBshowInfo(xc, boxsn, archno, "警告,错误线程退出");
+                                erro = 1;
                                 break;
                             }
                             dirname = Path.Combine(ClsFrmInfoPar.MimgPath, ClsFrmInfoPar.FileFormat[f], dir);
@@ -621,6 +623,7 @@ namespace Csmsjcf
                                     File.Delete(filename);
                                 else {
                                     ListBshowInfo(xc, boxsn, archno, "文件存在线程正常退出");
+                                    erro = 1;
                                     break;
                                 }
                             }
@@ -637,6 +640,7 @@ namespace Csmsjcf
                                             }
                                         }
                                         ListBshowInfo(xc, boxsn, archno, "警告,错误线程退出");
+                                        erro = 1;
                                         break;
                                     }
                                 }
@@ -647,6 +651,7 @@ namespace Csmsjcf
                                             ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
                                         }
                                         ListBshowInfo(xc, boxsn, archno, "警告,错误线程退出");
+                                        erro = 1;
                                         break;
                                     }
                                 }
@@ -659,6 +664,7 @@ namespace Csmsjcf
                                         ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
                                     }
                                     ListBshowInfo(xc, boxsn, archno, "警告,错误线程退出");
+                                    erro = 1;
                                     break;
                                 }
                             }
@@ -670,6 +676,7 @@ namespace Csmsjcf
                                         ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
                                     }
                                     ListBshowInfo(xc, boxsn, archno, "警告,错误线程退出");
+                                    erro = 1;
                                     break;
                                 }
                             }
@@ -684,6 +691,7 @@ namespace Csmsjcf
                                         ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, dir);
                                     }
                                     ListBshowInfo(xc, boxsn, archno, "警告,错误线程退出");
+                                    erro = 1;
                                     break;
                                 }
                                 dirname = Path.Combine(ClsFrmInfoPar.MimgPath, ClsFrmInfoPar.FileFormat[f], dir);
@@ -707,6 +715,7 @@ namespace Csmsjcf
                                         ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
                                     }
                                     ListBshowInfo(xc, boxsn, archno, "警告,错误线程退出");
+                                    erro = 1;
                                     break;
                                 }
                             }
@@ -756,6 +765,7 @@ namespace Csmsjcf
                                                 File.Delete(filename);
                                             else {
                                                 ListBshowInfo(xc, boxsn, archno, "文件线程正常退出");
+                                                erro = 1;
                                                 break;
                                             }
                                         }
@@ -765,6 +775,7 @@ namespace Csmsjcf
                                         lsinfopdf = Himg._SplitImgls(Downfile, filename, p1, p2, fs);
                                         if (!ClsOperate.Iserror(lsinfopdf, ClsFrmInfoPar.LogPath)) {
                                             ListBshowInfo(xc, boxsn, archno, "警告,错误线程退出");
+                                            erro = 1;
                                             break;
                                         }
                                         if (ClsFrmInfoPar.Doublecor == 1) {
@@ -778,6 +789,7 @@ namespace Csmsjcf
                                                         str + "盒号:" + box + " --> 卷号:" + archno);
                                                 }
                                                 ListBshowInfo(xc, boxsn, archno, "警告,错误线程退出");
+                                                erro = 1;
                                                 break;
                                             }
                                         }
@@ -806,6 +818,7 @@ namespace Csmsjcf
                                             ClsDataSplitPar.ClsFileNmaecd, ClsFrmInfoPar.ConverMode, fs, 0);
                                         if (!ClsOperate.Iserror(lsinfopdf, ClsFrmInfoPar.LogPath)) {
                                             ListBshowInfo(xc, boxsn, archno, "警告,错误线程退出");
+                                            erro = 1;
                                             break;
                                         }
                                         if (ClsFrmInfoPar.Doublecor == 1) {
@@ -818,6 +831,7 @@ namespace Csmsjcf
                                                         str + "盒号:" + box + " --> 卷号:" + archno);
                                                 }
                                                 ListBshowInfo(xc, boxsn, archno, "警告,错误线程退出");
+                                                erro = 1;
                                                 break;
                                             }
                                         }
@@ -847,6 +861,7 @@ namespace Csmsjcf
                                                     File.Delete(filename);
                                                 else {
                                                     ListBshowInfo(xc, boxsn, archno, "文件存在线程正常退出");
+                                                    erro = 1;
                                                     break;
                                                 }
                                             }
@@ -855,6 +870,7 @@ namespace Csmsjcf
                                             lsinfopdf = Himg._SplitImgls(Downfile, filename, p1, p2, fs);
                                             if (!ClsOperate.Iserror(lsinfopdf, ClsFrmInfoPar.LogPath)) {
                                                 ListBshowInfo(xc, boxsn, archno, "警告,错误线程退出");
+                                                erro = 1;
                                                 break;
                                             }
                                             if (ClsFrmInfoPar.Doublecor == 1) {
@@ -867,6 +883,7 @@ namespace Csmsjcf
                                                             str + "盒号:" + box + " --> 卷号:" + archno);
                                                     }
                                                     ListBshowInfo(xc, boxsn, archno, "警告,错误线程退出");
+                                                    erro = 1;
                                                     break;
                                                 }
                                             }
@@ -891,6 +908,7 @@ namespace Csmsjcf
                                             ClsDataSplitPar.ClsFileNmaecd, ClsFrmInfoPar.ConverMode, fs, 1);
                                             if (!ClsOperate.Iserror(lsinfopdf, ClsFrmInfoPar.LogPath)) {
                                                 ListBshowInfo(xc, boxsn, archno, "警告,错误线程退出");
+                                                erro = 1;
                                                 break;
                                             }
                                             if (ClsFrmInfoPar.Doublecor == 1) {
@@ -903,6 +921,7 @@ namespace Csmsjcf
                                                             str + "盒号:" + box + " --> 卷号:" + archno);
                                                     }
                                                     ListBshowInfo(xc, boxsn, archno, "警告,错误线程退出");
+                                                    erro = 1;
                                                     break;
                                                 }
                                             }
@@ -914,6 +933,7 @@ namespace Csmsjcf
                         }
 
                     }
+                    if (erro==0)
                     Common.DataSplitUpdate(archid);
                 } catch (Exception e) {
                     str = e.ToString();
@@ -928,6 +948,7 @@ namespace Csmsjcf
                     } catch { }
                     ListBshowInfo(xc, boxsn, archno, "线程退出");
                 }
+               
             }
         }
 
@@ -1042,7 +1063,7 @@ namespace Csmsjcf
                 Action Act = StartTaskxc;
                 Act.BeginInvoke(null, null);
             }
-            
+
         }
 
 
