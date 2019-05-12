@@ -153,7 +153,7 @@ namespace CsmCon
                     this.BeginInvoke(new Action(() =>
                     {
                         txtBoxsn.Text = ClsIni.Archbox;
-                        if (ClsIni.Rabchk == "true")
+                        if (ClsIni.Rabchk.ToLower() == "true")
                             radioBoxsn.Checked = true;
                         else {
                             comboxClass.Enabled = true;

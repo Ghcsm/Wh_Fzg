@@ -121,6 +121,7 @@ namespace DAL
             DataTable dt = new DataTable();
             try {
                 using (SqlConnection conn = new SqlConnection(connstr)) {
+                    conn.Open();
                     cmd = new SqlCommand(cmdText, conn);
                     reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                     dt.Load(reader);

@@ -741,21 +741,19 @@ namespace DAL
             if (obj == null) {
                 strSql = "select top 1 MIN(id) from M_IMAGEFILE where ArchType is null and ArchConten is null ";
                 id = SQLHelper.ExecScalar(strSql).ToString();
+                SqlParameter p1 = new SqlParameter("@type", table);
+                SqlParameter p2 = new SqlParameter("@id", id);
+                SqlParameter p3 = new SqlParameter("@wyz", wyz);
                 if (p > 0) {
-                    SqlParameter p1 = new SqlParameter("@type", table);
-                    SqlParameter p2 = new SqlParameter("@id", id);
-                    SqlParameter p3 = new SqlParameter("@wyz", wyz);
-                    if (pages.Trim().Length > 0) {
-                        strSql = "update M_IMAGEFILE set " + artype + "=@type,Pages=@p, ArchImportID=@wyz where id=@id";
-                        SqlParameter p4 = new SqlParameter("@p", pages);
-                        SQLHelper.ExecScalar(strSql, p1, p2, p3, p4);
-                    }
-
-                    else {
-                        strSql = "update M_IMAGEFILE set " + artype + "=@type, ArchImportID=@wyz where id=@id";
-                        SQLHelper.ExecScalar(strSql, p1, p2, p3);
-                    }
+                    strSql = "update M_IMAGEFILE set " + artype + "=@type,Pages=@p, ArchImportID=@wyz where id=@id";
+                    SqlParameter p4 = new SqlParameter("@p", pages);
+                    SQLHelper.ExecScalar(strSql, p1, p2, p3, p4);
                 }
+                else {
+                    strSql = "update M_IMAGEFILE set " + artype + "=@type, ArchImportID=@wyz where id=@id";
+                    SQLHelper.ExecScalar(strSql, p1, p2, p3);
+                }
+
             }
             else {
                 id = obj.ToString();
@@ -927,10 +925,12 @@ namespace DAL
 
         public static DataTable GetInfoTable(int t, int archid, int enter)
         {
-            string strSql = "select * from " + ClsInfoEnter.InfoTable[t] + " where Archid=@arid and EnterTag=@Etag";
-            SqlParameter p1 = new SqlParameter("@arid", archid);
-            SqlParameter p2 = new SqlParameter("@Etag", enter);
-            DataTable dt = SQLHelper.ExcuteTable(strSql, p1, p2);
+            string strSql = "PInfoSetload";
+            SqlParameter[] p = new SqlParameter[3];
+            p[0] = new SqlParameter("@archid", archid);
+            p[1] = new SqlParameter("@Etag", enter);
+            p[2] = new SqlParameter("@tabletmp", ClsInfoEnter.InfoTable[t]);
+            DataTable dt = SQLHelper.GetDataTable(strSql, CommandType.StoredProcedure, p);
             return dt;
         }
 
@@ -959,6 +959,20 @@ namespace DAL
             SqlParameter p2 = new SqlParameter("@houseid", houseid);
             SQLHelper.ExecScalar(strSql, p1, p2);
         }
+        public static void DataSplitUpdatecolFw(int houseid, string col)
+        {
+            string strSql = "update M_IMAGEFILE set SPLITERROR=null where ArchImportID like @col and HOUSEID=@houseid";
+            SqlParameter p1 = new SqlParameter("@col", "%"+col+"%");
+            SqlParameter p2 = new SqlParameter("@houseid", houseid);
+            SQLHelper.ExecScalar(strSql, p1, p2);
+        }
+        public static void DataSplitUpdatecol(int houseid,string col)
+        {
+            string strSql = "update M_IMAGEFILE set SPLITERROR=null where ArchImportID=@arid and HOUSEID=@houseid";
+            SqlParameter p1 = new SqlParameter("@arid", col);
+            SqlParameter p2 = new SqlParameter("@houseid", houseid);
+            SQLHelper.ExecScalar(strSql, p1, p2);
+        }
         public static void DataSplitUpdate(string arid)
         {
             string strSql = "update M_IMAGEFILE set SPLITERROR=1 where id=@id";
@@ -982,6 +996,33 @@ namespace DAL
             DataTable dt = SQLHelper.ExcuteTable(strSql, p1, p2);
             return dt;
         }
+        public static DataTable GetDataSplitBoxsn(int houseid, int arid)
+        {
+            string strSql = "select top 1 ID,BOXSN,ARCHNO,PAGES,IMGFILE From M_IMAGEFILE where  HOUSEID=@houseid and CHECKED=1 and SPLITERROR IS null and id=@arid order by ARCHNO";
+            SqlParameter p1 = new SqlParameter("@arid", arid);
+            SqlParameter p2 = new SqlParameter("@houseid", houseid);
+            DataTable dt = SQLHelper.ExcuteTable(strSql, p1, p2);
+            return dt;
+        }
+
+        public static DataTable GetDataSplitBoxCol(int houseid, string col)
+        {
+            string strSql = "select top 1 ID,BOXSN,ARCHNO,PAGES,IMGFILE From M_IMAGEFILE where  HOUSEID=@houseid and CHECKED=1 and SPLITERROR IS null and ArchImportID=@arid order by ARCHNO";
+            SqlParameter p1 = new SqlParameter("@arid", col);
+            SqlParameter p2 = new SqlParameter("@houseid", houseid);
+            DataTable dt = SQLHelper.ExcuteTable(strSql, p1, p2);
+            return dt;
+        }
+
+        public static DataTable GetDataSplitBoxColFw(int houseid, string arid)
+        {
+            string strSql = "select ID,BOXSN,ARCHNO,PAGES,IMGFILE From M_IMAGEFILE where  HOUSEID=@houseid and CHECKED=1 and SPLITERROR IS null and ArchImportID like @arid order by id";
+            SqlParameter p1 = new SqlParameter("@arid","%"+arid+"%");
+            SqlParameter p2 = new SqlParameter("@houseid", houseid);
+            DataTable dt = SQLHelper.ExcuteTable(strSql, p1, p2);
+            return dt;
+        }
+
         public static DataTable GetDataSplitBoxsn(int houseid, string boxsn, string archno)
         {
             string strSql = "select top 100 ID,BOXSN,ARCHNO,PAGES,IMGFILE From M_IMAGEFILE where  HOUSEID=@houseid and CHECKED=1 and SPLITERROR IS null and BOXSN=@boxsn and ARCHNO=@archno order by ARCHNO";
@@ -1001,13 +1042,14 @@ namespace DAL
             return dt;
         }
 
-        public static DataTable GetDataExporTableConentName(string archid, string table, string col)
+        public static DataTable GetDataExporTableConentName(string archid,string col,string pages)
         {
-            string[] str = col.Split(',');
-            string strSql = "select " + col;
-            strSql += " from " + table + " where Archid=@archid" + " order by " + str[1];
-            SqlParameter p1 = new SqlParameter("@archid", archid);
-            DataTable dt = SQLHelper.ExcuteTable(strSql, p1);
+            string strSql = "PQueryConten";
+            SqlParameter[] p = new SqlParameter[3];
+            p[0] = new SqlParameter("@Archid", archid);
+            p[1] = new SqlParameter("@col", col);
+            p[2] = new SqlParameter("@pages", pages);
+            DataTable dt = SQLHelper.GetDataTable(strSql, CommandType.StoredProcedure, p);
             return dt;
         }
 

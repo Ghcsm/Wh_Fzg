@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using HLjscom;
+using DataRow = System.Data.DataRow;
 
 namespace Csmsjcf
 {
@@ -72,20 +73,29 @@ namespace Csmsjcf
         private void Addboxsn()
         {
             try {
-                string t1 = txt_gr2_5_box1.Text.Trim();
-                string t2 = txt_gr2_5_box2.Text.Trim();
-                int b1 = Convert.ToInt32(t1);
-                int b2 = Convert.ToInt32(t2);
-                if (b1 > b2 || b1 == 0 || b2 == 0) {
-                    MessageBox.Show("请检查起始盒号和终止盒号!");
-                    txt_gr2_5_box1.Focus();
-                    return;
+                string str = "";
+                if (rab_gr2_5_boxsn.Checked) {
+                    string t1 = txt_gr2_5_box1.Text.Trim();
+                    string t2 = txt_gr2_5_box2.Text.Trim();
+                    int b1 = Convert.ToInt32(t1);
+                    int b2 = Convert.ToInt32(t2);
+                    if (b1 > b2 || b1 == 0 || b2 == 0) {
+                        MessageBox.Show("请检查起始盒号和终止盒号!");
+                        txt_gr2_5_box1.Focus();
+                        return;
+                    }
+                    str = t1 + "-" + t2;
+                    if (ClsFrmInfoPar.TaskBoxCounttmp.IndexOf(str) >= 0)
+                        return;
                 }
-                string str = t1 + "-" + t2;
-                if (ClsFrmInfoPar.TaskBoxCounttmp.IndexOf(str) >= 0)
-                    return;
+                else {
+                    str = txt_gr2_5_juan.Text.Trim();
+                }
                 lv_gr2_5_boxCount.Items.Add(str);
                 ClsFrmInfoPar.TaskBoxCounttmp.Add(str);
+                txt_gr2_5_juan.Text = "";
+                txt_gr2_5_box1.Text = "";
+                txt_gr2_5_box2.Text = "";
 
             } catch { }
         }
@@ -124,26 +134,50 @@ namespace Csmsjcf
                     return false;
                 }
             }
-            if (chk_gr2_5_juan.Checked) {
-                if (txt_gr2_5_box1.Text.Trim().Length <= 0 || txt_gr2_5_box2.Text.Trim().Length <= 0 ||
-                    txt_gr2_5_juan.Text.Trim().Length <= 0) {
-                    MessageBox.Show("请输入要转换的盒号及卷号!");
-                    txt_gr2_5_box1.Focus();
-                    return false;
+            if (rab_gr2_5_boxsn.Checked) {
+                if (chk_gr2_5_juan.Checked) {
+                    if (txt_gr2_5_box1.Text.Trim().Length <= 0 || txt_gr2_5_box2.Text.Trim().Length <= 0 ||
+                        txt_gr2_5_juan.Text.Trim().Length <= 0) {
+                        MessageBox.Show("请输入要转换的盒号及卷号!");
+                        txt_gr2_5_box1.Focus();
+                        return false;
+                    }
+                    else if (txt_gr2_5_box1.Text.Trim() != txt_gr2_5_box2.Text.Trim()) {
+                        MessageBox.Show("单卷时起始盒号及终止盒号必须一致！");
+                        txt_gr2_5_box1.Focus();
+                        return false;
+                    }
+                    if (comb_gr2_2_task.SelectedIndex != 0) {
+                        MessageBox.Show("转换单卷不能使用多任务模式!");
+                        comb_gr2_2_task.Focus();
+                        return false;
+                    }
                 }
-                else if (txt_gr2_5_box1.Text.Trim() != txt_gr2_5_box2.Text.Trim()) {
-                    MessageBox.Show("单卷时起始盒号及终止盒号必须一致！");
+               else if (lv_gr2_5_boxCount.Items.Count <= 0) {
+                    MessageBox.Show("请先添加任务范围!");
                     txt_gr2_5_box1.Focus();
-                    return false;
-                }
-                if (comb_gr2_2_task.SelectedIndex != 0) {
-                    MessageBox.Show("转换单卷不能使用多任务模式!");
-                    comb_gr2_2_task.Focus();
                     return false;
                 }
             }
+            else if (rab_gr2_5_col.Checked) {
+                if (chk_gr2_5_juan.Checked) {
+                    if (txt_gr2_5_juan.Text.Trim().Length <= 0) {
+                        MessageBox.Show("请输入要转换的组合字段");
+                        txt_gr2_5_juan.Focus();
+                        return false;
+                    }
+
+                }
+               else if (lv_gr2_5_boxCount.Items.Count <= 0) {
+                    MessageBox.Show("请先添加任务范围!");
+                    txt_gr2_5_box1.Focus();
+                    return false;
+
+                }
+
+            }
             else if (lv_gr2_5_boxCount.Items.Count <= 0) {
-                MessageBox.Show("请先添加盒号范围!");
+                MessageBox.Show("请先添加任务范围!");
                 txt_gr2_5_box1.Focus();
                 return false;
             }
@@ -387,6 +421,10 @@ namespace Csmsjcf
             ClsFrmInfoPar.MimgPath = txt_gr3_1_splitPath.Text.Trim();
             ClsFrmInfoPar.XlsPath = txt_gr3_1_xlsPath.Text.Trim();
 
+            if (rab_gr2_5_boxsn.Checked)
+                ClsFrmInfoPar.Task = 1;
+            else ClsFrmInfoPar.Task = 2;
+
         }
 
         private void chk_gr2_5_juan_CheckedChanged(object sender, EventArgs e)
@@ -440,23 +478,41 @@ namespace Csmsjcf
             }
         }
 
-        private void Init(int xc, string box, string arno)
+        private void Init(int xc, string box, string arno, DataTable dtfw)
         {
             DataTable dtArchNo = null;
             string str = "";
             Thread.Sleep(200);
-            if (ClsFrmInfoPar.OneJuan == 0)
-                dtArchNo = ClsOperate.SelectSql(box.ToString());
-            else
-                dtArchNo = ClsOperate.SelectSql(box, arno);
-            if (dtArchNo == null || dtArchNo.Rows.Count <= 0) {
-                str = "错误：未找到已质检盒号信息或已拆分 -->盒号:" + box;
-                lock (ClsFrmInfoPar.Filelock) {
-                    ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
-                    ListBshowInfo(xc, "0", "0", "警告,错误线程退出");
-                    return;
+            if (ClsFrmInfoPar.Task == 1) {
+                if (ClsFrmInfoPar.OneJuan == 0)
+                    dtArchNo = ClsOperate.SelectSql(box);
+                else
+                    dtArchNo = ClsOperate.SelectSql(box, arno);
+                if (dtArchNo == null || dtArchNo.Rows.Count <= 0) {
+                    str = "错误：未找到已质检盒号信息或已拆分 -->盒号:" + box;
+                    lock (ClsFrmInfoPar.Filelock) {
+                        ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
+                        ListBshowInfo(xc, "0", "0", "警告,错误线程退出");
+                        return;
+                    }
                 }
             }
+            else
+            {
+                if (ClsFrmInfoPar.OneJuan == 0)
+                    dtArchNo = dtfw.Copy();
+                else
+                    dtArchNo = ClsOperate.SelectSqlcol(box);
+                if (dtArchNo == null || dtArchNo.Rows.Count <= 0) {
+                    str = "错误：未找到已质检盒号信息或已拆分 -->字段号:" + box;
+                    lock (ClsFrmInfoPar.Filelock) {
+                        ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
+                        ListBshowInfo(xc, "0", "0", "警告,错误线程退出");
+                        return;
+                    }
+                }
+            }
+
             if (ClsFrmInfoPar.Watermark > 0)
                 ClsOperate.Setwaterpar();
             for (int i = 0; i < dtArchNo.Rows.Count; i++) {
@@ -660,7 +716,7 @@ namespace Csmsjcf
                                 lsinfopdf.Clear();
                                 int p1 = 0;
                                 int p2 = 0;
-                                string ml = dirtTable.Rows[d][0].ToString().Trim();
+                                string ml = "";
                                 string pzer = "";
                                 p1 = Convert.ToInt32(dirtTable.Rows[d][1].ToString());
                                 try {
@@ -669,6 +725,8 @@ namespace Csmsjcf
                                 } catch {
                                     p2 = Convert.ToInt32(pages);
                                 }
+                                if (ClsDataSplitPar.ClsdirMl.Trim().Length > 0)
+                                    ml = dirtTable.Rows[d][0].ToString().Trim();
                                 if (ClsDataSplitPar.ClsdirPageZero == 0)
                                     pzer = p1.ToString();
                                 else
@@ -912,27 +970,54 @@ namespace Csmsjcf
 
         private void StatTask(int id, AutoResetEvent obj)
         {
-            lock (ClsFrmInfoPar.TaskBoxCount) {
-                if (ClsFrmInfoPar.TaskBoxCount.Count > 0) {
-                    string b = ClsFrmInfoPar.TaskBoxCount[0];
-                    ClsFrmInfoPar.TaskBoxCount.RemoveAt(0);
-                    ThreadPool.QueueUserWorkItem(h =>
-                    {
-                        Init(id
-                          , b, "");
-                        Thread.Sleep(1000);
-                        StatTask(id, obj);
-                    });
+            if (ClsFrmInfoPar.Task == 1) {
+                lock (ClsFrmInfoPar.TaskBoxCount) {
+                    if (ClsFrmInfoPar.TaskBoxCount.Count > 0) {
+                        string b = ClsFrmInfoPar.TaskBoxCount[0];
+                        ClsFrmInfoPar.TaskBoxCount.RemoveAt(0);
+                        ThreadPool.QueueUserWorkItem(h =>
+                        {
+                            Init(id
+                                , b, null, null);
+                            Thread.Sleep(1000);
+                            StatTask(id, obj);
+                        });
+                    }
+                    else
+                        obj.Set();
                 }
-                else
-                    obj.Set();
             }
+            else {
+                lock (ClsFrmInfoPar.TaskBoxCountcol) {
+                    if (ClsFrmInfoPar.TaskBoxCountcol.Count > 0) {
+                        DataRow dr = ClsFrmInfoPar.TaskBoxCountcol[0];
+                        ClsFrmInfoPar.TaskBoxCountcol.RemoveAt(0);
+                        DataTable dt = dr.Table.Clone();
+                        ThreadPool.QueueUserWorkItem(h =>
+                        {
+                            dt.Rows.Add(dr.ItemArray);
+                            int x = dt.Rows.Count;
+                            Init(id
+                                , null, null, dt);
+                            Thread.Sleep(1000);
+                            StatTask(id, obj);
+                        });
+                    }
+                    else
+                        obj.Set();
+                }
+            }
+
         }
 
 
         private void Stattask()
         {
-            Task t = Task.Run(() => { Init(1, txt_gr2_5_box1.Text.Trim(), txt_gr2_5_juan.Text.Trim()); });
+            Task t = null;
+            if (ClsFrmInfoPar.Task == 1)
+                t = Task.Run(() => { Init(1, txt_gr2_5_box1.Text.Trim(), txt_gr2_5_juan.Text.Trim(), null); });
+            else
+                t = Task.Run(() => { Init(1, txt_gr2_5_juan.Text, null, null); });
             Task.WaitAll(t);
             TxtEnd(true);
         }
@@ -950,12 +1035,16 @@ namespace Csmsjcf
                 return;
             }
             else {
-                if (!ClsOperate.AddTask())
+                if (!ClsOperate.AddTask()) {
+                    TxtEnd(true);
                     return;
+                }
                 Action Act = StartTaskxc;
                 Act.BeginInvoke(null, null);
             }
+            
         }
+
 
         #region FrmInfoPar
 
@@ -1202,6 +1291,12 @@ namespace Csmsjcf
 
         }
 
+        private void rab_gr2_5_boxsn_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rab_gr2_5_boxsn.Checked)
+                txt_gr2_5_juan.Enabled = false;
+            else txt_gr2_5_juan.Enabled = true;
+        }
         #endregion
 
 

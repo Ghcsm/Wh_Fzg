@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -14,6 +15,7 @@ namespace Csmsjcf
         public static int ClsdirDirsn { get; set; }
         public static string ClsdirCol  {get;set;}
         public static string ClsdirMl  {get;set;}
+        public static string ClsdirMlpage { get; set; }
         public static int ClsdirPageZero { get; set; }
 
         public static string ClsFileTable { get; set; }
@@ -62,10 +64,12 @@ namespace Csmsjcf
         public static List<string> TaskBoxCounttmp = new List<string>();
 
         public static List<string> TaskBoxCount = new List<string>();
+        public static List<DataRow> TaskBoxCountcol = new List<DataRow>();
 
         public static object Filelock=new object();
 
         public static int StopTag = 0;
+        public static int Task { get; set; }
     }
 
   

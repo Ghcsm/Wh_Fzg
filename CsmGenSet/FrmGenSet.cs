@@ -930,6 +930,9 @@ namespace CsmGenSet
                     chkInfoZd.Items.RemoveAt(i);
                     if (ClsInfoAdd.InfoInfoZd.IndexOf(str) >= 0)
                         ClsInfoAdd.InfoInfoZd.Remove(str);
+                    if (ClsInfoAdd.InfoInfoZdtmp.IndexOf(str) >= 0)
+                        ClsInfoAdd.InfoInfoZdtmp.Remove(str);
+
                     i--;
                 }
             }
@@ -1047,11 +1050,18 @@ namespace CsmGenSet
                     else
                         str += ClsInfoAdd.InfoInfoZdtmp[i];
                 }
-                if (ClsInfoAdd.InfoTableLs.IndexOf(ClsInfoAdd.InfoTable) < 0)
-                    T_Sysset.SaveGensetInfo(ClsInfoAdd.InfoTable, str, combInfoTableName.Text.Trim(),
-                        combInfoColNum.Text.Trim(), combInfoLabWith.Text.Trim(), combInfotxtWith.Text.Trim());
+
+                if (combInfoTable.Text.Trim().Length <= 0) {
+                    if (ClsInfoAdd.InfoTableLs.IndexOf(ClsInfoAdd.InfoTable) < 0)
+                        T_Sysset.SaveGensetInfo(ClsInfoAdd.InfoTable, str, combInfoTableName.Text.Trim(),
+                            combInfoColNum.Text.Trim(), combInfoLabWith.Text.Trim(), combInfotxtWith.Text.Trim());
+                    else {
+                        MessageBox.Show("此表已经如更新请选择表!");
+                        return;
+                    }
+                }
                 else
-                    T_Sysset.UpdateGensetInfo(ClsInfoAdd.InfoTable, str, combInfoTableName.Text.Trim(),
+                    T_Sysset.UpdateGensetInfo(combInfoTable.Text.Trim(), str, combInfoTableName.Text.Trim(),
                         combInfoColNum.Text.Trim(), combInfoLabWith.Text.Trim(), combInfotxtWith.Text.Trim());
                 MessageBox.Show("保存成功!");
             } catch (Exception e) {
@@ -1337,19 +1347,11 @@ namespace CsmGenSet
                 txtDataSplitTable.Focus();
                 return;
             }
-            combDataSplit_dir_pages.Items.Clear();
-            combDataSplit_dir_ml.Items.Clear();
-            combDataSplit_dir_ml.Items.Add("");
             ClsDataSplit.DataSplitExportColtmp.Clear();
             DataTable dt = T_Sysset.GetTableName(ClsDataSplit.DataSplitTable);
             if (dt != null && dt.Rows.Count > 0) {
                 chkDataSplit.DataSource = dt;
                 chkDataSplit.DisplayMember = "Name";
-                foreach (DataRow dr in dt.Rows) {
-                    string str = dr[0].ToString();
-                    combDataSplit_dir_ml.Items.Add(str);
-                    combDataSplit_dir_pages.Items.Add(str);
-                }
             }
         }
 
@@ -1430,6 +1432,7 @@ namespace CsmGenSet
             if (rabDataSplitdir.Checked) {
                 ClsDataSplit.DataSplitDirMl = "";
                 ClsDataSplit.DataSplitDirCol = "";
+                ClsDataSplit.DataSplitDirMlpages = "";
                 if (!chkDataSplit_dir_zd.Checked && !chkDataSplit_dir_ml.Checked) {
                     MessageBox.Show("请选择文件夹要生成的规则选择！");
                     labDataSplit_dir_zd.Text = string.Format("字段示例：{0}", "");
@@ -1452,8 +1455,9 @@ namespace CsmGenSet
                         return;
                     }
                     string s = combDataSplit_dir_ml.Text.Trim() + "\\" + combDataSplit_dir_pages.Text.Trim();
-                    ClsDataSplit.DataSplitDirMl = s;
-                    str += "\\" + s;
+                    ClsDataSplit.DataSplitDirMl = combDataSplit_dir_ml.Text.Trim();
+                    ClsDataSplit.DataSplitDirMlpages = combDataSplit_dir_pages.Text.Trim();
+                    str += ClsDataSplit.DataSplitDirMl + "\\" + ClsDataSplit.DataSplitDirMlpages;
                 }
                 if (str.Length <= 0)
                     labDataSplit_dir_zd.Text = string.Format("字段示例：{0}", "");
@@ -1491,7 +1495,7 @@ namespace CsmGenSet
                     MessageBox.Show("请查询表是否存在!");
                     return;
                 }
-                else if (ClsDataSplit.DataSplitDirCol.Length <= 0 && ClsDataSplit.DataSplitDirMl.Length <= 0) {
+                else if (ClsDataSplit.DataSplitDirCol.Length <= 0 && ClsDataSplit.DataSplitDirMlpages.Length <= 0) {
                     MessageBox.Show("请选择文件夹生成规则选项!");
                     return;
                 }
@@ -1515,7 +1519,8 @@ namespace CsmGenSet
 
                 T_Sysset.UPdateDataSplitInfo(ClsDataSplit.DataSplitTable, ClsDataSplit.DataSplitDirsn, ClsDataSplit.DataSplitDirCol,
                     ClsDataSplit.DataSplitDirMl, ClsDataSplit.DataSplitFileTable, ClsDataSplit.DataSplitFilesn,
-                    ClsDataSplit.DataSplitFileName, zer, ClsDataSplit.DataSplitfilenamecol, txtDataSplit_pagezero.Text.Trim());
+                    ClsDataSplit.DataSplitFileName, zer, ClsDataSplit.DataSplitfilenamecol, txtDataSplit_pagezero.Text.Trim(),
+                    ClsDataSplit.DataSplitDirMlpages);
                 MessageBox.Show("设置完成");
             } catch (Exception e) {
                 MessageBox.Show(e.ToString());
@@ -1526,9 +1531,34 @@ namespace CsmGenSet
             }
         }
 
+
+        private void GetDataspliteconten()
+        {
+            combDataSplit_dir_ml.Items.Clear();
+            combDataSplit_dir_pages.Items.Clear();
+            DataTable dt = T_Sysset.GetTableNameConten();
+            if (dt == null || dt.Rows.Count <= 0)
+                return;
+            combDataSplit_dir_ml.Items.Add("");
+            for (int i = 0; i < dt.Rows.Count; i++) {
+                string s = dt.Rows[i][0].ToString();
+                if (s.Trim().Length <= 0)
+                    continue;
+                combDataSplit_dir_ml.Items.Add(s);
+                combDataSplit_dir_pages.Items.Add(s);
+            }
+        }
+
+        private void tabItemDataSplit_Click(object sender, EventArgs e)
+        {
+            if (tabItemDataSplit.IsSelected)
+                GetDataspliteconten();
+        }
+
         private void GetdataSplit()
         {
             try {
+                GetDataspliteconten();
                 DataTable dt = T_Sysset.GetDataSplit();
                 if (dt == null || dt.Rows.Count <= 0)
                     return;
@@ -1542,32 +1572,28 @@ namespace CsmGenSet
                 ClsDataSplit.DataSplitzero = Convert.ToBoolean(dt.Rows[0][8].ToString());
                 ClsDataSplit.DataSplitfilenamecol = dt.Rows[0][9].ToString();
                 txtDataSplit_pagezero.Text = dt.Rows[0][10].ToString();
+                ClsDataSplit.DataSplitDirMlpages = dt.Rows[0][11].ToString();
                 txtDataSplitTable.Text = ClsDataSplit.DataSplitTable;
-
-                butDataSplit_Click(null, null);
                 if (ClsDataSplit.DataSplitDirsn == 3) {
                     chkDataSplit_dir_zd.Checked = true;
                     chkDataSplit_dir_ml.Checked = true;
-                    if (ClsDataSplit.DataSplitDirMl.IndexOf("\\") >= 0) {
-                        string[] str = ClsDataSplit.DataSplitDirMl.Split('\\');
-                        combDataSplit_dir_ml.Text = str[0];
-                        combDataSplit_dir_pages.Text = str[1];
-                    }
-
+                    combDataSplit_dir_ml.Enabled = true;
+                    combDataSplit_dir_pages.Enabled = true;
+                    combDataSplit_dir_ml.Text = ClsDataSplit.DataSplitDirMl;
+                    combDataSplit_dir_pages.Text = ClsDataSplit.DataSplitDirMlpages;
                 }
                 else if (ClsDataSplit.DataSplitDirsn == 2) {
                     chkDataSplit_dir_ml.Checked = true;
-                    if (ClsDataSplit.DataSplitDirMl.IndexOf("\\") >= 0) {
-                        string[] str = ClsDataSplit.DataSplitDirMl.Split('\\');
-                        combDataSplit_dir_ml.Text = str[0];
-                        combDataSplit_dir_pages.Text = str[1];
-                    }
+                    combDataSplit_dir_ml.Enabled = true;
+                    combDataSplit_dir_pages.Enabled = true;
+                    combDataSplit_dir_ml.Text = ClsDataSplit.DataSplitDirMl;
+                    combDataSplit_dir_pages.Text = ClsDataSplit.DataSplitDirMlpages;
 
                 }
                 else if (ClsDataSplit.DataSplitDirsn == 1)
                     chkDataSplit_dir_zd.Checked = true;
 
-                labDataSplit_dir_zd.Text = "字段示例：" + ClsDataSplit.DataSplitDirCol + "\\" + ClsDataSplit.DataSplitDirMl;
+                labDataSplit_dir_zd.Text = "字段示例：" + ClsDataSplit.DataSplitDirCol + "\\" + ClsDataSplit.DataSplitDirMl + "\\" + ClsDataSplit.DataSplitDirMlpages;
                 if (ClsDataSplit.DataSplitFilesn == 3) {
                     rabDataSplit_File_zd.Checked = true;
                     labDataSplit_Filesl.Text = ClsDataSplit.DataSplitFileName;
@@ -1589,7 +1615,6 @@ namespace CsmGenSet
             } catch (Exception e) {
                 MessageBox.Show("数据转换表加载失败:" + e.ToString());
             }
-
         }
 
 
@@ -2727,7 +2752,7 @@ namespace CsmGenSet
             Infoshow();
         }
 
-
+    
     }
 
 }

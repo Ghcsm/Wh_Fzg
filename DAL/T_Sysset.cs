@@ -549,6 +549,7 @@ namespace DAL
             }
         }
 
+
         public static DataTable GetTableCol(string table)
         {
             string strSql = "PGetTableInfo";
@@ -563,6 +564,13 @@ namespace DAL
             string strSql = "SELECT NAME FROM SYSCOLUMNS WHERE ID = OBJECT_ID(@table)";
             SqlParameter p1 = new SqlParameter("@table", table);
             DataTable dt = SQLHelper.ExcuteTable(strSql, p1);
+            return dt;
+        }
+
+        public static DataTable GetTableNameConten()
+        {
+            string strSql = "PQueryContencolName";
+            DataTable dt = SQLHelper.GetDataTable(strSql);
             return dt;
         }
 
@@ -687,9 +695,9 @@ namespace DAL
 
 
 
-        public static void UPdateDataSplitInfo(string dirtable, int dirsn, string dircol, string dirml, string filetable, int filesn, string filename, bool filebool, string filecol, string pageszero)
+        public static void UPdateDataSplitInfo(string dirtable, int dirsn, string dircol, string dirml, string filetable, int filesn, string filename, bool filebool, string filecol, string pageszero,string dirmlpage)
         {
-            string strSql = "update M_GenSetDataSplit set DataTable=@dirtable, Dirsn=@dirsn,DirCol=@dircol,DirMl=@dirml," +
+            string strSql = "update M_GenSetDataSplit set DataTable=@dirtable, Dirsn=@dirsn,DirCol=@dircol,DirMl=@dirml,DirMlPages=@dirpages," +
                             "FileTable=@filetable,Filesn=@filesn,FileName=@filename,FileBool=@filebool,FileNamecol=@filecol,DirPage=@pzero";
             SqlParameter[] par =
             {
@@ -697,6 +705,7 @@ namespace DAL
                 new SqlParameter("@dirsn", dirsn.ToString()),
                 new SqlParameter("@dircol", dircol),
                 new SqlParameter("@dirml", dirml),
+                new SqlParameter("@dirpages", dirmlpage),
                 new SqlParameter("@filetable", filetable),
                 new SqlParameter("@filesn", filesn.ToString()),
                 new SqlParameter("@filename", filename),

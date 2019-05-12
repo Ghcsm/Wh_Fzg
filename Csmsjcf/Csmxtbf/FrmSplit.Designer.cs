@@ -83,6 +83,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.gr2_5 = new System.Windows.Forms.GroupBox();
+            this.rab_gr2_5_col = new System.Windows.Forms.RadioButton();
             this.but_gr2_5_del = new DevComponents.DotNetBar.ButtonX();
             this.txt_gr2_5_juan = new System.Windows.Forms.TextBox();
             this.chk_gr2_5_juan = new System.Windows.Forms.CheckBox();
@@ -91,7 +92,7 @@
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.txt_gr2_5_box2 = new System.Windows.Forms.TextBox();
             this.txt_gr2_5_box1 = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
+            this.rab_gr2_5_boxsn = new System.Windows.Forms.RadioButton();
             this.gr2_4 = new System.Windows.Forms.GroupBox();
             this.chk_gr2_6_ocrpdf = new System.Windows.Forms.CheckBox();
             this.rab_gr2_4_duli = new System.Windows.Forms.RadioButton();
@@ -808,6 +809,7 @@
             // 
             // gr2_5
             // 
+            this.gr2_5.Controls.Add(this.rab_gr2_5_col);
             this.gr2_5.Controls.Add(this.but_gr2_5_del);
             this.gr2_5.Controls.Add(this.txt_gr2_5_juan);
             this.gr2_5.Controls.Add(this.chk_gr2_5_juan);
@@ -815,19 +817,30 @@
             this.gr2_5.Controls.Add(this.lv_gr2_5_boxCount);
             this.gr2_5.Controls.Add(this.txt_gr2_5_box2);
             this.gr2_5.Controls.Add(this.txt_gr2_5_box1);
-            this.gr2_5.Controls.Add(this.label3);
-            this.gr2_5.Location = new System.Drawing.Point(16, 205);
+            this.gr2_5.Controls.Add(this.rab_gr2_5_boxsn);
+            this.gr2_5.Location = new System.Drawing.Point(16, 187);
             this.gr2_5.Name = "gr2_5";
-            this.gr2_5.Size = new System.Drawing.Size(209, 207);
+            this.gr2_5.Size = new System.Drawing.Size(209, 225);
             this.gr2_5.TabIndex = 7;
             this.gr2_5.TabStop = false;
             this.gr2_5.Text = "任务范围";
+            // 
+            // rab_gr2_5_col
+            // 
+            this.rab_gr2_5_col.AutoSize = true;
+            this.rab_gr2_5_col.Location = new System.Drawing.Point(9, 56);
+            this.rab_gr2_5_col.Name = "rab_gr2_5_col";
+            this.rab_gr2_5_col.Size = new System.Drawing.Size(77, 16);
+            this.rab_gr2_5_col.TabIndex = 10;
+            this.rab_gr2_5_col.TabStop = true;
+            this.rab_gr2_5_col.Text = "字段范围:";
+            this.rab_gr2_5_col.UseVisualStyleBackColor = true;
             // 
             // but_gr2_5_del
             // 
             this.but_gr2_5_del.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.but_gr2_5_del.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.but_gr2_5_del.Location = new System.Drawing.Point(126, 162);
+            this.but_gr2_5_del.Location = new System.Drawing.Point(137, 163);
             this.but_gr2_5_del.Name = "but_gr2_5_del";
             this.but_gr2_5_del.Size = new System.Drawing.Size(59, 34);
             this.but_gr2_5_del.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -838,15 +851,15 @@
             // txt_gr2_5_juan
             // 
             this.txt_gr2_5_juan.Enabled = false;
-            this.txt_gr2_5_juan.Location = new System.Drawing.Point(126, 87);
+            this.txt_gr2_5_juan.Location = new System.Drawing.Point(87, 54);
             this.txt_gr2_5_juan.Name = "txt_gr2_5_juan";
-            this.txt_gr2_5_juan.Size = new System.Drawing.Size(59, 21);
+            this.txt_gr2_5_juan.Size = new System.Drawing.Size(116, 21);
             this.txt_gr2_5_juan.TabIndex = 7;
             // 
             // chk_gr2_5_juan
             // 
             this.chk_gr2_5_juan.AutoSize = true;
-            this.chk_gr2_5_juan.Location = new System.Drawing.Point(125, 60);
+            this.chk_gr2_5_juan.Location = new System.Drawing.Point(141, 84);
             this.chk_gr2_5_juan.Name = "chk_gr2_5_juan";
             this.chk_gr2_5_juan.Size = new System.Drawing.Size(48, 16);
             this.chk_gr2_5_juan.TabIndex = 6;
@@ -858,7 +871,7 @@
             // 
             this.but_gr2_5_add.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.but_gr2_5_add.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.but_gr2_5_add.Location = new System.Drawing.Point(126, 118);
+            this.but_gr2_5_add.Location = new System.Drawing.Point(137, 115);
             this.but_gr2_5_add.Name = "but_gr2_5_add";
             this.but_gr2_5_add.Size = new System.Drawing.Size(59, 32);
             this.but_gr2_5_add.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -872,40 +885,44 @@
             this.columnHeader1});
             this.lv_gr2_5_boxCount.FullRowSelect = true;
             this.lv_gr2_5_boxCount.GridLines = true;
-            this.lv_gr2_5_boxCount.Location = new System.Drawing.Point(14, 53);
+            this.lv_gr2_5_boxCount.Location = new System.Drawing.Point(14, 87);
             this.lv_gr2_5_boxCount.Name = "lv_gr2_5_boxCount";
-            this.lv_gr2_5_boxCount.Size = new System.Drawing.Size(99, 141);
+            this.lv_gr2_5_boxCount.Size = new System.Drawing.Size(99, 131);
             this.lv_gr2_5_boxCount.TabIndex = 4;
             this.lv_gr2_5_boxCount.UseCompatibleStateImageBehavior = false;
             this.lv_gr2_5_boxCount.View = System.Windows.Forms.View.Details;
             // 
             // columnHeader1
             // 
-            this.columnHeader1.Text = "盒号范围";
-            this.columnHeader1.Width = 90;
+            this.columnHeader1.Text = "任务范围";
+            this.columnHeader1.Width = 94;
             // 
             // txt_gr2_5_box2
             // 
-            this.txt_gr2_5_box2.Location = new System.Drawing.Point(140, 23);
+            this.txt_gr2_5_box2.Location = new System.Drawing.Point(154, 23);
             this.txt_gr2_5_box2.Name = "txt_gr2_5_box2";
             this.txt_gr2_5_box2.Size = new System.Drawing.Size(45, 21);
             this.txt_gr2_5_box2.TabIndex = 3;
             // 
             // txt_gr2_5_box1
             // 
-            this.txt_gr2_5_box1.Location = new System.Drawing.Point(71, 23);
+            this.txt_gr2_5_box1.Location = new System.Drawing.Point(87, 23);
             this.txt_gr2_5_box1.Name = "txt_gr2_5_box1";
             this.txt_gr2_5_box1.Size = new System.Drawing.Size(42, 21);
             this.txt_gr2_5_box1.TabIndex = 0;
             // 
-            // label3
+            // rab_gr2_5_boxsn
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(8, 27);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(125, 12);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "盒号范围：        --";
+            this.rab_gr2_5_boxsn.AutoSize = true;
+            this.rab_gr2_5_boxsn.Checked = true;
+            this.rab_gr2_5_boxsn.Location = new System.Drawing.Point(10, 25);
+            this.rab_gr2_5_boxsn.Name = "rab_gr2_5_boxsn";
+            this.rab_gr2_5_boxsn.Size = new System.Drawing.Size(143, 16);
+            this.rab_gr2_5_boxsn.TabIndex = 9;
+            this.rab_gr2_5_boxsn.TabStop = true;
+            this.rab_gr2_5_boxsn.Text = "盒号范围:         --";
+            this.rab_gr2_5_boxsn.UseVisualStyleBackColor = true;
+            this.rab_gr2_5_boxsn.CheckedChanged += new System.EventHandler(this.rab_gr2_5_boxsn_CheckedChanged);
             // 
             // gr2_4
             // 
@@ -1047,7 +1064,7 @@
             this.gr2_3.Controls.Add(this.rab_Gr2_3_xls);
             this.gr2_3.Controls.Add(this.rab_Gr2_3_img);
             this.gr2_3.Controls.Add(this.rab_Gr2_3_tb);
-            this.gr2_3.Location = new System.Drawing.Point(16, 118);
+            this.gr2_3.Location = new System.Drawing.Point(16, 107);
             this.gr2_3.Name = "gr2_3";
             this.gr2_3.Size = new System.Drawing.Size(209, 74);
             this.gr2_3.TabIndex = 4;
@@ -1271,7 +1288,6 @@
         private System.Windows.Forms.ListView lv_gr2_5_boxCount;
         private System.Windows.Forms.TextBox txt_gr2_5_box2;
         private System.Windows.Forms.TextBox txt_gr2_5_box1;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.GroupBox gr2_4;
         private System.Windows.Forms.RadioButton rab_gr2_4_duli;
         private System.Windows.Forms.RadioButton rab_gr2_4_duo;
@@ -1324,5 +1340,7 @@
         private System.Windows.Forms.TextBox txt_gr2_7_watertmd;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.RadioButton rab_gr2_5_boxsn;
+        private System.Windows.Forms.RadioButton rab_gr2_5_col;
     }
 }

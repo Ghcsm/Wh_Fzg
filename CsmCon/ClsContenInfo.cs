@@ -11,7 +11,7 @@ using System.Windows.Forms;
 namespace CsmCon
 {
 
-   
+
     public static class ClsContenInfo
     {
         public static string ContenTable { get; set; }
@@ -91,15 +91,15 @@ namespace CsmCon
                 return;
             Task.Run(() =>
             {
-                DataTable dt = Common.LoadContents(ClsContenInfo.ContenTable, ClsContenInfo.ContenCol, ClsContenInfo.ContenPages, Convert.ToInt32(ch), archid);
-                if (dt == null || dt.Rows.Count <= 0)
-                    return;
-                int i = 1;
                 lsv.Invoke(new Action(() =>
                 {
                     lsv.Items.Clear();
                 }));
 
+                DataTable dt = Common.LoadContents(ClsContenInfo.ContenTable, ClsContenInfo.ContenCol, ClsContenInfo.ContenPages, Convert.ToInt32(ch), archid);
+                if (dt == null || dt.Rows.Count <= 0)
+                    return;
+                int i = 1;
                 foreach (DataRow dr in dt.Rows) {
                     ListViewItem lvi = new ListViewItem();
                     lvi.Text = i.ToString();
@@ -124,7 +124,7 @@ namespace CsmCon
                 return;
             Task.Run(() =>
             {
-                DataTable dt = Common.LoadContents(ClsContenInfo.ContenTable, ClsContenInfo.ContenCol, ClsContenInfo.ContenPages,2, archid);
+                DataTable dt = Common.LoadContents(ClsContenInfo.ContenTable, ClsContenInfo.ContenCol, ClsContenInfo.ContenPages, 2, archid);
                 if (dt == null || dt.Rows.Count <= 0)
                     return;
                 int i = 1;
@@ -165,17 +165,20 @@ namespace CsmCon
             int width = Convert.ToInt32(ClsContenInfo.ContenWith);
             int txtwidth = Convert.ToInt32(ClsContenInfo.ContenTxtwith);
             string[] oldname = ClsContenInfo.ContenCol.Split(';');
-            foreach (DataRow dr in dt.Rows) {
-                string namecol = dr["name"].ToString();
-                string value = dr["value"].ToString();
-                if (oldname.Contains(namecol)) {
-                    id += 1;
-                    CreateTxt(pl, namecol, value, colnum, id, width,txtwidth);
+            for (int i = 0; i < oldname.Length; i++) {
+                string str = oldname[i];
+                foreach (DataRow dr in dt.Rows) {
+                    string namecol = dr["name"].ToString();
+                    string value = dr["value"].ToString();
+                    if (str == namecol) {
+                        id += 1;
+                        CreateTxt(pl, namecol, value, colnum, id, width, txtwidth);
+                    }
                 }
             }
         }
 
-        private static void CreateTxt(Panel pl, string name, string val, int colnum, int id, int width,int txtwidth)
+        private static void CreateTxt(Panel pl, string name, string val, int colnum, int id, int width, int txtwidth)
         {
             int xx = 0;
             int yy = 0;
@@ -202,7 +205,7 @@ namespace CsmCon
             if (val.Trim().Length <= 0) {
                 TextBox txt = new TextBox();
                 txt.Name = name;
-               // txt.Width = (pl.Width - width * colnum) / colnum - 10;
+                // txt.Width = (pl.Width - width * colnum) / colnum - 10;
                 txt.Width = txtwidth;
                 txt.TabIndex = id;
                 txt.Tag = id;
@@ -217,7 +220,7 @@ namespace CsmCon
             else {
                 ComboBox cb = new ComboBox();
                 cb.Name = name;
-               // cb.Width = (pl.Width - lb.Width * colnum) / colnum - 10;
+                // cb.Width = (pl.Width - lb.Width * colnum) / colnum - 10;
                 cb.Width = txtwidth;
                 cb.TabIndex = id;
                 cb.Tag = id;
@@ -270,19 +273,17 @@ namespace CsmCon
             bool tf = false;
             ClsContenInfo.Pagestmp = "";
             int id = 0;
-            int title = ClsContenInfo.ContenCoList.IndexOf(ClsContenInfo.ContenTitle)+1;
-            int page= ClsContenInfo.ContenCoList.IndexOf(ClsContenInfo.ContenPages)+1;
+            int title = ClsContenInfo.ContenCoList.IndexOf(ClsContenInfo.ContenTitle) + 1;
+            int page = ClsContenInfo.ContenCoList.IndexOf(ClsContenInfo.ContenPages) + 1;
             foreach (Control ct in p.Controls) {
                 if (ct is TextBox || ct is ComboBox) {
-                    if (ct.Tag.ToString() == title.ToString() ) {
+                    if (ct.Tag.ToString() == title.ToString()) {
                         if (ct.Text.Trim().Length > 0) {
                             id += 1;
                         }
                     }
-                    else if (ct.Tag.ToString() == page.ToString())
-                    {
-                        if (ct.Text.Trim().Length > 0)
-                        {
+                    else if (ct.Tag.ToString() == page.ToString()) {
+                        if (ct.Text.Trim().Length > 0) {
                             id += 1;
                             ClsContenInfo.Pagestmp = ct.Text.Trim();
                         }
@@ -295,7 +296,7 @@ namespace CsmCon
             else
                 return tf;
         }
-        
+
 
         private static void Cb_KeyPress(object sender, KeyPressEventArgs e)
         {

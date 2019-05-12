@@ -108,7 +108,6 @@ namespace Csmdajc
         private void ImgView_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             Himg._ImgFill(e);
-            txtPages.Focus();
         }
         private void toolStripRevImg_Click(object sender, EventArgs e)
         {

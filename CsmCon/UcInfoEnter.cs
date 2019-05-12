@@ -38,14 +38,18 @@ namespace CsmCon
                 int width = Convert.ToInt32(ClsInfoEnter.InfoLbWidth[i]);
                 int txtwidth = Convert.ToInt32(ClsInfoEnter.InfotxtWidth[i]);
                 string[] oldname = ClsInfoEnter.InfoCol[i].Split(';');
-                foreach (DataRow dr in dt.Rows) {
-                    string namecol = dr["name"].ToString();
-                    string value = dr["value"].ToString();
-                    if (oldname.Contains(namecol)) {
-                        id += 1;
-                        CreateTxt(tabControl.TabPages[i], name, namecol, value, colnum, id, width, txtwidth);
+                for (int j = 0; j < oldname.Length; j++) {
+                    string strcol = oldname[j];
+                    foreach (DataRow dr in dt.Rows) {
+                        string namecol = dr["name"].ToString();
+                        string value = dr["value"].ToString();
+                        if (strcol == namecol) {
+                            id += 1;
+                            CreateTxt(tabControl.TabPages[i], name, namecol, value, colnum, id, width, txtwidth);
+                        }
                     }
                 }
+
             }
         }
 
@@ -199,7 +203,7 @@ namespace CsmCon
                 Txtcle();
                 if (archid <= 0 || atype.Trim().Length <= 0)
                     return;
-                int t = ClsInfoEnter.InfoTableName.IndexOf(atype);
+                int t = ClsInfoEnter.InfoTable.IndexOf(atype);
                 if (t == -1) {
                     MessageBox.Show("前台设置表名称范围中未包含:" + atype);
                     return;

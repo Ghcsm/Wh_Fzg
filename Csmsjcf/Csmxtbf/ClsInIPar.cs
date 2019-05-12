@@ -19,6 +19,7 @@ namespace Csmsjcf
             ClsDataSplitPar.ClsFilesn = 0;
             ClsDataSplitPar.ClsdirCol = "";
             ClsDataSplitPar.ClsdirMl = "";
+            ClsDataSplitPar.ClsdirMlpage = "";
             ClsDataSplitPar.ClsFileNmaecd = 0;
             ClsDataSplitPar.ClsFileNameQian = "";
             ClsDataSplitPar.ClsFileNameHou = "";
@@ -32,7 +33,7 @@ namespace Csmsjcf
             ClsDataSplitPar.ClsdirTable = dt.Rows[0][1].ToString();
             ClsDataSplitPar.ClsdirDirsn = Convert.ToInt32(dt.Rows[0][2].ToString());
             ClsDataSplitPar.ClsdirCol = dt.Rows[0][3].ToString().Replace('\\', ',');
-            ClsDataSplitPar.ClsdirMl = dt.Rows[0][4].ToString().Replace('\\', ',');
+            ClsDataSplitPar.ClsdirMl = dt.Rows[0][4].ToString();
 
             ClsDataSplitPar.ClsFileTable = dt.Rows[0][5].ToString();
             ClsDataSplitPar.ClsFilesn = Convert.ToInt32(dt.Rows[0][6].ToString());
@@ -52,6 +53,7 @@ namespace Csmsjcf
             ClsDataSplitPar.ClsFilezero = Convert.ToBoolean(dt.Rows[0][8].ToString());
             ClsDataSplitPar.ClsFileDlname = dt.Rows[0][9].ToString();
             ClsDataSplitPar.ClsdirPageZero =Convert.ToInt32(dt.Rows[0][10].ToString());
+            ClsDataSplitPar.ClsdirMlpage = dt.Rows[0][11].ToString();
            GetExportTable();
         }
 

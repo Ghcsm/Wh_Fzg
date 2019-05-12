@@ -18,6 +18,21 @@ namespace Csmsjcf
                 Common.DataSplitUpdate(ClsFrmInfoPar.Houseid, boxsn);
             return dt = Common.GetDataSplitBoxsn(ClsFrmInfoPar.Houseid, boxsn);
         }
+        public static DataTable SelectSqlcol(string str)
+        {
+            DataTable dt = null;
+            if (ClsFrmInfoPar.ConverMode == 2)
+                Common.DataSplitUpdatecol(ClsFrmInfoPar.Houseid, str);
+            return dt = Common.GetDataSplitBoxCol(ClsFrmInfoPar.Houseid, str);
+        }
+
+        public static DataTable SelectSqlColFw(string str)
+        {
+            DataTable dt = null;
+            if (ClsFrmInfoPar.ConverMode == 2)
+                Common.DataSplitUpdatecolFw(ClsFrmInfoPar.Houseid, str);
+            return dt = Common.GetDataSplitBoxColFw(ClsFrmInfoPar.Houseid, str);
+        }
 
         public static DataTable SelectSql(string boxsn, string archno)
         {
@@ -69,8 +84,8 @@ namespace Csmsjcf
                 return "错误：未找到文件夹字段信息!";
             for (int i = 0; i < dt.Columns.Count; i++) {
                 if (i != dt.Columns.Count - 1)
-                    str += dt.Columns[i].ToString() + "\\";
-                else str += dt.Columns[i].ToString();
+                    str += dt.Rows[0][i].ToString() + "\\";
+                else str += dt.Rows[0][i].ToString();
             }
             return str;
         }
@@ -78,10 +93,9 @@ namespace Csmsjcf
         public static DataTable GetdirmlInfo(string archid)
         {
             DataTable dt = null;
-            if (ClsDataSplitPar.ClsdirTable.Trim().Length <= 0 || ClsDataSplitPar.ClsdirMl.Trim().Length <= 0)
+            if (ClsDataSplitPar.ClsdirMlpage.Trim().Length <= 0)
                 return null;
-            string str = ClsDataSplitPar.ClsdirMl.Replace('\\', ',');
-            dt = Common.GetDataExporTableConentName(archid, ClsDataSplitPar.ClsdirTable, str);
+            dt = Common.GetDataExporTableConentName(archid, ClsDataSplitPar.ClsdirMl, ClsDataSplitPar.ClsdirMlpage);
             if (dt == null || dt.Rows.Count <= 0)
                 return null;
             return dt;
@@ -140,22 +154,38 @@ namespace Csmsjcf
         //添加任务
         public static bool AddTask()
         {
-            ClsFrmInfoPar.TaskBoxCount.Clear();
             if (ClsFrmInfoPar.TaskBoxCounttmp.Count <= 0)
                 return false;
-            for (int i = 0; i < ClsFrmInfoPar.TaskBoxCounttmp.Count; i++) {
-                string s = ClsFrmInfoPar.TaskBoxCounttmp[i];
-                string[] b = s.Split('-');
-                int b1 = Convert.ToInt32(b[0]);
-                int b2 = Convert.ToInt32(b[1]);
-                for (int t = b1; t <= b2; t++) {
-                    ClsFrmInfoPar.TaskBoxCount.Add(t.ToString());
+            if (ClsFrmInfoPar.Task == 1) {
+                ClsFrmInfoPar.TaskBoxCount.Clear();
+                for (int i = 0; i < ClsFrmInfoPar.TaskBoxCounttmp.Count; i++) {
+                    string s = ClsFrmInfoPar.TaskBoxCounttmp[i];
+                    string[] b = s.Split('-');
+                    int b1 = Convert.ToInt32(b[0]);
+                    int b2 = Convert.ToInt32(b[1]);
+                    for (int t = b1; t <= b2; t++) {
+                        ClsFrmInfoPar.TaskBoxCount.Add(t.ToString());
+                    }
                 }
+                if (ClsFrmInfoPar.TaskBoxCount.Count > 0)
+                    return true;
             }
-            if (ClsFrmInfoPar.TaskBoxCount.Count > 0)
-                return true;
-            else
-                return false;
+            else {
+                DataTable dt;
+                ClsFrmInfoPar.TaskBoxCountcol.Clear();
+                for (int i = 0; i < ClsFrmInfoPar.TaskBoxCounttmp.Count; i++) {
+                    string s = ClsFrmInfoPar.TaskBoxCounttmp[i];
+                    dt = SelectSqlColFw(s);
+                    if (dt == null || dt.Rows.Count <= 0)
+                        continue;
+                    foreach (DataRow dr in dt.Rows) {
+                        ClsFrmInfoPar.TaskBoxCountcol.Add(dr);
+                    }
+                }
+                if (ClsFrmInfoPar.TaskBoxCountcol.Count > 0)
+                    return true;
+            }
+            return false;
         }
 
         //获取xls模版
@@ -228,8 +258,7 @@ namespace Csmsjcf
 
         public static void Setwaterpar()
         {
-            if (ClsFrmInfoPar.Watermark > 0)
-            {
+            if (ClsFrmInfoPar.Watermark > 0) {
                 ClsInfopar.waterid = ClsFrmInfoPar.Watermark;
                 ClsInfopar.waterWith = ClsFrmInfoPar.Waterwith;
                 ClsInfopar.waterheiht = ClsFrmInfoPar.Waterheiht;
