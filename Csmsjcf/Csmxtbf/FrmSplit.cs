@@ -322,6 +322,16 @@ namespace Csmsjcf
                         MessageBox.Show("文件名此规则必须在文件夹命名规则包含目录才可用!");
                         return false;
                     }
+                    if (ClsDataSplitPar.ClsdirMl.Trim().Length <= 0 || ClsDataSplitPar.ClsdirMlpage.Trim().Length <= 0) {
+                        MessageBox.Show("未发现后台目录相关设置数据");
+                        return false;
+                    }
+                }
+                if (rab_gr2_9_juan_1.Checked) {
+                    if (ClsDataSplitPar.ClsdirMlpage.Trim().Length <= 0) {
+                        MessageBox.Show("请先在后台设置页码字段！");
+                        return false;
+                    }
                 }
                 if (rab_gr2_9_file_ziduan.Checked) {
                     if (ClsDataSplitPar.ClsFilesn != 3) {
@@ -330,6 +340,12 @@ namespace Csmsjcf
                     }
                     if (!rab_gr2_8_ziduan.Checked || !rab_gr2_4_duli.Checked) {
                         MessageBox.Show("文件名为字段时：文件夹名只能为<字段格式>，图像生成格式只能是<单独文件>");
+                        return false;
+                    }
+
+                    if (ClsDataSplitPar.ClsFileNamecol.Trim().Length <= 0)
+                    {
+                        MessageBox.Show("未发现字段相关信息，请后台设置!");
                         return false;
                     }
                 }
@@ -727,15 +743,20 @@ namespace Csmsjcf
                                 int p2 = 0;
                                 string ml = "";
                                 string pzer = "";
-                                p1 = Convert.ToInt32(dirtTable.Rows[d][1].ToString());
+                                int p = 0;
+                                if (ClsDataSplitPar.ClsdirMl.Trim().Length > 0) {
+                                    ml = dirtTable.Rows[d][0].ToString().Trim();
+                                    p = 1;
+                                }
+
+                                p1 = Convert.ToInt32(dirtTable.Rows[d][p].ToString());
                                 try {
-                                    p2 = Convert.ToInt32(dirtTable.Rows[d + 1][1].ToString());
+                                    p2 = Convert.ToInt32(dirtTable.Rows[d + 1][p].ToString());
                                     p2 -= 1;
                                 } catch {
                                     p2 = Convert.ToInt32(pages);
                                 }
-                                if (ClsDataSplitPar.ClsdirMl.Trim().Length > 0)
-                                    ml = dirtTable.Rows[d][0].ToString().Trim();
+
                                 if (ClsDataSplitPar.ClsdirPageZero == 0)
                                     pzer = p1.ToString();
                                 else
@@ -933,8 +954,8 @@ namespace Csmsjcf
                         }
 
                     }
-                    if (erro==0)
-                    Common.DataSplitUpdate(archid);
+                    if (erro == 0)
+                        Common.DataSplitUpdate(archid);
                 } catch (Exception e) {
                     str = e.ToString();
                     lock (ClsFrmInfoPar.Filelock) {
@@ -948,7 +969,7 @@ namespace Csmsjcf
                     } catch { }
                     ListBshowInfo(xc, boxsn, archno, "线程退出");
                 }
-               
+
             }
         }
 
