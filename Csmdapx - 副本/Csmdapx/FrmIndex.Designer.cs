@@ -37,6 +37,7 @@
             this.bar2 = new DevComponents.DotNetBar.Bar();
             this.panelDock2 = new DevComponents.DotNetBar.PanelDockContainer();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.gr2 = new System.Windows.Forms.GroupBox();
             this.gr3 = new System.Windows.Forms.GroupBox();
             this.ImgView = new Leadtools.Controls.ImageViewer();
             this.gr4 = new System.Windows.Forms.GroupBox();
@@ -102,6 +103,7 @@
             this.bar2.SuspendLayout();
             this.panelDock2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.gr3.SuspendLayout();
@@ -217,15 +219,26 @@
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer1.Location = new System.Drawing.Point(0, 50);
             this.splitContainer1.Name = "splitContainer1";
-            this.splitContainer1.Panel1Collapsed = true;
-            this.splitContainer1.Panel1MinSize = 0;
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.gr2);
             // 
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.gr3);
             this.splitContainer1.Size = new System.Drawing.Size(985, 602);
-            this.splitContainer1.SplitterDistance = 25;
+            this.splitContainer1.SplitterDistance = 369;
             this.splitContainer1.TabIndex = 1;
+            // 
+            // gr2
+            // 
+            this.gr2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gr2.Location = new System.Drawing.Point(0, 0);
+            this.gr2.Name = "gr2";
+            this.gr2.Size = new System.Drawing.Size(369, 602);
+            this.gr2.TabIndex = 0;
+            this.gr2.TabStop = false;
             // 
             // gr3
             // 
@@ -234,7 +247,7 @@
             this.gr3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gr3.Location = new System.Drawing.Point(0, 0);
             this.gr3.Name = "gr3";
-            this.gr3.Size = new System.Drawing.Size(985, 602);
+            this.gr3.Size = new System.Drawing.Size(612, 602);
             this.gr3.TabIndex = 0;
             this.gr3.TabStop = false;
             // 
@@ -246,7 +259,7 @@
             this.ImgView.ItemPadding = new System.Windows.Forms.Padding(1);
             this.ImgView.Location = new System.Drawing.Point(3, 64);
             this.ImgView.Name = "ImgView";
-            this.ImgView.Size = new System.Drawing.Size(979, 535);
+            this.ImgView.Size = new System.Drawing.Size(606, 535);
             this.ImgView.TabIndex = 1;
             this.ImgView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ImgView_KeyDown);
             this.ImgView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ImgView_MouseDoubleClick);
@@ -264,7 +277,7 @@
             this.gr4.Dock = System.Windows.Forms.DockStyle.Top;
             this.gr4.Location = new System.Drawing.Point(3, 17);
             this.gr4.Name = "gr4";
-            this.gr4.Size = new System.Drawing.Size(979, 47);
+            this.gr4.Size = new System.Drawing.Size(606, 47);
             this.gr4.TabIndex = 0;
             this.gr4.TabStop = false;
             // 
@@ -844,6 +857,7 @@
             this.bar2.ResumeLayout(false);
             this.panelDock2.ResumeLayout(false);
             this.panelDock2.PerformLayout();
+            this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
@@ -885,6 +899,7 @@
         private DevComponents.DotNetBar.DockContainerItem dockCont2;
         private System.Windows.Forms.ToolStrip toolStrip3;
         private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.GroupBox gr2;
         private System.Windows.Forms.GroupBox gr3;
         private System.Windows.Forms.ToolStripButton toolStripCenter;
         private System.Windows.Forms.ToolStripButton toolStripDel;

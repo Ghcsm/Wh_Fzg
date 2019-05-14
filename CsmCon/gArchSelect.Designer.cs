@@ -44,6 +44,8 @@
             this.butOk = new DevComponents.DotNetBar.ButtonX();
             this.txtBoxsn = new System.Windows.Forms.TextBox();
             this.comboxClass = new DevComponents.DotNetBar.Controls.ComboBoxEx();
+            this.comboItem1 = new DevComponents.Editors.ComboItem();
+            this.comboItem2 = new DevComponents.Editors.ComboItem();
             this.radioClass = new System.Windows.Forms.RadioButton();
             this.radioBoxsn = new System.Windows.Forms.RadioButton();
             this.gr2 = new System.Windows.Forms.GroupBox();
@@ -51,8 +53,7 @@
             this.butPageUpdate = new DevComponents.DotNetBar.ButtonX();
             this.label1 = new System.Windows.Forms.Label();
             this.txtPages = new System.Windows.Forms.TextBox();
-            this.comboItem1 = new DevComponents.Editors.ComboItem();
-            this.comboItem2 = new DevComponents.Editors.ComboItem();
+            this.c_stat = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.gr1.SuspendLayout();
             this.panelTop.SuspendLayout();
             this.gr2.SuspendLayout();
@@ -90,7 +91,8 @@
             this.c_file,
             this.c_pages,
             this.c_archid,
-            this.c_type});
+            this.c_type,
+            this.c_stat});
             this.LvData.DisabledBackColor = System.Drawing.Color.Empty;
             this.LvData.FullRowSelect = true;
             this.LvData.GridLines = true;
@@ -205,6 +207,14 @@
             this.comboxClass.TabIndex = 2;
             this.comboxClass.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.comboxClass_KeyPress);
             // 
+            // comboItem1
+            // 
+            this.comboItem1.Text = "案卷信息";
+            // 
+            // comboItem2
+            // 
+            this.comboItem2.Text = "目录信息";
+            // 
             // radioClass
             // 
             this.radioClass.AutoSize = true;
@@ -285,13 +295,10 @@
             this.txtPages.TabIndex = 1;
             this.txtPages.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPages_KeyPress);
             // 
-            // comboItem1
+            // c_stat
             // 
-            this.comboItem1.Text = "案卷信息";
-            // 
-            // comboItem2
-            // 
-            this.comboItem2.Text = "目录信息";
+            this.c_stat.Text = "stat";
+            this.c_stat.Width = 0;
             // 
             // gArchSelect
             // 
@@ -336,5 +343,6 @@
         private System.Windows.Forms.ColumnHeader c_type;
         private DevComponents.Editors.ComboItem comboItem1;
         private DevComponents.Editors.ComboItem comboItem2;
+        private System.Windows.Forms.ColumnHeader c_stat;
     }
 }

@@ -211,7 +211,7 @@
             // 
             this.splitContainer1.BackColor = System.Drawing.Color.Transparent;
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 50);
+            this.splitContainer1.Location = new System.Drawing.Point(0, 54);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -221,7 +221,7 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.gr3);
-            this.splitContainer1.Size = new System.Drawing.Size(985, 602);
+            this.splitContainer1.Size = new System.Drawing.Size(985, 598);
             this.splitContainer1.SplitterDistance = 409;
             this.splitContainer1.TabIndex = 1;
             // 
@@ -230,7 +230,7 @@
             this.gr2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gr2.Location = new System.Drawing.Point(0, 0);
             this.gr2.Name = "gr2";
-            this.gr2.Size = new System.Drawing.Size(409, 602);
+            this.gr2.Size = new System.Drawing.Size(409, 598);
             this.gr2.TabIndex = 0;
             this.gr2.TabStop = false;
             // 
@@ -241,7 +241,7 @@
             this.gr3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gr3.Location = new System.Drawing.Point(0, 0);
             this.gr3.Name = "gr3";
-            this.gr3.Size = new System.Drawing.Size(572, 602);
+            this.gr3.Size = new System.Drawing.Size(572, 598);
             this.gr3.TabIndex = 0;
             this.gr3.TabStop = false;
             // 
@@ -253,7 +253,7 @@
             this.ImgView.ItemPadding = new System.Windows.Forms.Padding(1);
             this.ImgView.Location = new System.Drawing.Point(3, 64);
             this.ImgView.Name = "ImgView";
-            this.ImgView.Size = new System.Drawing.Size(566, 535);
+            this.ImgView.Size = new System.Drawing.Size(566, 531);
             this.ImgView.TabIndex = 1;
             this.ImgView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ImgView_KeyDown);
             this.ImgView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ImgView_MouseDoubleClick);
@@ -339,159 +339,174 @@
             this.toolStripOutSpeck,
             this.toolStripSave,
             this.toolStripClose});
-            this.toolStrip3.Location = new System.Drawing.Point(0, 25);
+            this.toolStrip3.Location = new System.Drawing.Point(0, 27);
             this.toolStrip3.Name = "toolStrip3";
-            this.toolStrip3.Size = new System.Drawing.Size(985, 25);
+            this.toolStrip3.Size = new System.Drawing.Size(985, 27);
             this.toolStrip3.TabIndex = 0;
             this.toolStrip3.Text = "toolStrip2";
             // 
             // toolStripCenter
             // 
+            this.toolStripCenter.Font = new System.Drawing.Font("微软雅黑", 11F);
             this.toolStripCenter.Image = ((System.Drawing.Image)(resources.GetObject("toolStripCenter.Image")));
             this.toolStripCenter.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripCenter.Name = "toolStripCenter";
-            this.toolStripCenter.Size = new System.Drawing.Size(52, 22);
+            this.toolStripCenter.Size = new System.Drawing.Size(59, 24);
             this.toolStripCenter.Text = "居中";
             this.toolStripCenter.Click += new System.EventHandler(this.toolStripCenter_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 27);
             // 
             // toolStripUppage
             // 
+            this.toolStripUppage.Font = new System.Drawing.Font("微软雅黑", 11F);
             this.toolStripUppage.Image = ((System.Drawing.Image)(resources.GetObject("toolStripUppage.Image")));
             this.toolStripUppage.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripUppage.Name = "toolStripUppage";
-            this.toolStripUppage.Size = new System.Drawing.Size(52, 22);
+            this.toolStripUppage.Size = new System.Drawing.Size(59, 24);
             this.toolStripUppage.Text = "前翻";
             this.toolStripUppage.Click += new System.EventHandler(this.toolStripUppage_Click);
             // 
             // toolStripDownPage
             // 
+            this.toolStripDownPage.Font = new System.Drawing.Font("微软雅黑", 11F);
             this.toolStripDownPage.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDownPage.Image")));
             this.toolStripDownPage.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDownPage.Name = "toolStripDownPage";
-            this.toolStripDownPage.Size = new System.Drawing.Size(52, 22);
+            this.toolStripDownPage.Size = new System.Drawing.Size(59, 24);
             this.toolStripDownPage.Text = "后翻";
             this.toolStripDownPage.Click += new System.EventHandler(this.toolStripDownPage_Click);
             // 
             // toolStripBigPage
             // 
+            this.toolStripBigPage.Font = new System.Drawing.Font("微软雅黑", 11F);
             this.toolStripBigPage.Image = ((System.Drawing.Image)(resources.GetObject("toolStripBigPage.Image")));
             this.toolStripBigPage.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripBigPage.Name = "toolStripBigPage";
-            this.toolStripBigPage.Size = new System.Drawing.Size(52, 22);
+            this.toolStripBigPage.Size = new System.Drawing.Size(59, 24);
             this.toolStripBigPage.Text = "放大";
             this.toolStripBigPage.Click += new System.EventHandler(this.toolStripBigPage_Click);
             // 
             // toolStripSamllPage
             // 
+            this.toolStripSamllPage.Font = new System.Drawing.Font("微软雅黑", 11F);
             this.toolStripSamllPage.Image = ((System.Drawing.Image)(resources.GetObject("toolStripSamllPage.Image")));
             this.toolStripSamllPage.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripSamllPage.Name = "toolStripSamllPage";
-            this.toolStripSamllPage.Size = new System.Drawing.Size(52, 22);
+            this.toolStripSamllPage.Size = new System.Drawing.Size(59, 24);
             this.toolStripSamllPage.Text = "缩小";
             this.toolStripSamllPage.Click += new System.EventHandler(this.toolStripSamllPage_Click);
             // 
             // toolStripRoteImg
             // 
+            this.toolStripRoteImg.Font = new System.Drawing.Font("微软雅黑", 11F);
             this.toolStripRoteImg.Image = ((System.Drawing.Image)(resources.GetObject("toolStripRoteImg.Image")));
             this.toolStripRoteImg.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripRoteImg.Name = "toolStripRoteImg";
-            this.toolStripRoteImg.Size = new System.Drawing.Size(52, 22);
+            this.toolStripRoteImg.Size = new System.Drawing.Size(59, 24);
             this.toolStripRoteImg.Text = "旋转";
             this.toolStripRoteImg.Click += new System.EventHandler(this.toolStripRoteImg_Click);
             // 
             // toolStripDeskew
             // 
+            this.toolStripDeskew.Font = new System.Drawing.Font("微软雅黑", 11F);
             this.toolStripDeskew.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDeskew.Image")));
             this.toolStripDeskew.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDeskew.Name = "toolStripDeskew";
-            this.toolStripDeskew.Size = new System.Drawing.Size(52, 22);
+            this.toolStripDeskew.Size = new System.Drawing.Size(59, 24);
             this.toolStripDeskew.Text = "矫正";
             this.toolStripDeskew.Click += new System.EventHandler(this.toolStripDeskew_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 27);
             // 
             // toolStripCleSide
             // 
+            this.toolStripCleSide.Font = new System.Drawing.Font("微软雅黑", 11F);
             this.toolStripCleSide.Image = ((System.Drawing.Image)(resources.GetObject("toolStripCleSide.Image")));
             this.toolStripCleSide.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripCleSide.Name = "toolStripCleSide";
-            this.toolStripCleSide.Size = new System.Drawing.Size(52, 22);
+            this.toolStripCleSide.Size = new System.Drawing.Size(59, 24);
             this.toolStripCleSide.Text = "去边";
             this.toolStripCleSide.Click += new System.EventHandler(this.toolStripCleSide_Click);
             // 
             // toolStripCut
             // 
+            this.toolStripCut.Font = new System.Drawing.Font("微软雅黑", 11F);
             this.toolStripCut.Image = ((System.Drawing.Image)(resources.GetObject("toolStripCut.Image")));
             this.toolStripCut.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripCut.Name = "toolStripCut";
-            this.toolStripCut.Size = new System.Drawing.Size(52, 22);
+            this.toolStripCut.Size = new System.Drawing.Size(59, 24);
             this.toolStripCut.Text = "剪切";
             this.toolStripCut.Click += new System.EventHandler(this.toolStripCut_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 27);
             // 
             // toolStripColorDeep
             // 
+            this.toolStripColorDeep.Font = new System.Drawing.Font("微软雅黑", 11F);
             this.toolStripColorDeep.Image = ((System.Drawing.Image)(resources.GetObject("toolStripColorDeep.Image")));
             this.toolStripColorDeep.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripColorDeep.Name = "toolStripColorDeep";
-            this.toolStripColorDeep.Size = new System.Drawing.Size(52, 22);
+            this.toolStripColorDeep.Size = new System.Drawing.Size(59, 24);
             this.toolStripColorDeep.Text = "色深";
             this.toolStripColorDeep.Click += new System.EventHandler(this.toolStripColorDeep_Click);
             // 
             // toolStripColorShall
             // 
+            this.toolStripColorShall.Font = new System.Drawing.Font("微软雅黑", 11F);
             this.toolStripColorShall.Image = ((System.Drawing.Image)(resources.GetObject("toolStripColorShall.Image")));
             this.toolStripColorShall.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripColorShall.Name = "toolStripColorShall";
-            this.toolStripColorShall.Size = new System.Drawing.Size(52, 22);
+            this.toolStripColorShall.Size = new System.Drawing.Size(59, 24);
             this.toolStripColorShall.Text = "色浅";
             this.toolStripColorShall.Click += new System.EventHandler(this.toolStripColorShall_Click);
             // 
             // toolStripInterSpeck
             // 
+            this.toolStripInterSpeck.Font = new System.Drawing.Font("微软雅黑", 11F);
             this.toolStripInterSpeck.Image = ((System.Drawing.Image)(resources.GetObject("toolStripInterSpeck.Image")));
             this.toolStripInterSpeck.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripInterSpeck.Name = "toolStripInterSpeck";
-            this.toolStripInterSpeck.Size = new System.Drawing.Size(52, 22);
+            this.toolStripInterSpeck.Size = new System.Drawing.Size(59, 24);
             this.toolStripInterSpeck.Text = "内斑";
             this.toolStripInterSpeck.Click += new System.EventHandler(this.toolStripInterSpeck_Click);
             // 
             // toolStripOutSpeck
             // 
+            this.toolStripOutSpeck.Font = new System.Drawing.Font("微软雅黑", 11F);
             this.toolStripOutSpeck.Image = ((System.Drawing.Image)(resources.GetObject("toolStripOutSpeck.Image")));
             this.toolStripOutSpeck.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripOutSpeck.Name = "toolStripOutSpeck";
-            this.toolStripOutSpeck.Size = new System.Drawing.Size(52, 22);
+            this.toolStripOutSpeck.Size = new System.Drawing.Size(59, 24);
             this.toolStripOutSpeck.Text = "外斑";
             this.toolStripOutSpeck.Click += new System.EventHandler(this.toolStripOutSpeck_Click);
             // 
             // toolStripSave
             // 
+            this.toolStripSave.Font = new System.Drawing.Font("微软雅黑", 11F);
             this.toolStripSave.Image = ((System.Drawing.Image)(resources.GetObject("toolStripSave.Image")));
             this.toolStripSave.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripSave.Name = "toolStripSave";
-            this.toolStripSave.Size = new System.Drawing.Size(52, 22);
+            this.toolStripSave.Size = new System.Drawing.Size(59, 24);
             this.toolStripSave.Text = "保存";
             this.toolStripSave.Click += new System.EventHandler(this.toolStripSave_Click);
             // 
             // toolStripClose
             // 
+            this.toolStripClose.Font = new System.Drawing.Font("微软雅黑", 11F);
             this.toolStripClose.Image = global::Csmdajc.Properties.Resources._23;
             this.toolStripClose.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripClose.Name = "toolStripClose";
-            this.toolStripClose.Size = new System.Drawing.Size(52, 22);
+            this.toolStripClose.Size = new System.Drawing.Size(59, 24);
             this.toolStripClose.Text = "退出";
             this.toolStripClose.Click += new System.EventHandler(this.toolStripClose_Click);
             // 
@@ -513,84 +528,92 @@
             this.toollbInfo});
             this.toolStrip2.Location = new System.Drawing.Point(0, 0);
             this.toolStrip2.Name = "toolStrip2";
-            this.toolStrip2.Size = new System.Drawing.Size(985, 25);
+            this.toolStrip2.Size = new System.Drawing.Size(985, 27);
             this.toolStrip2.TabIndex = 2;
             this.toolStrip2.Text = "toolStrip3";
             // 
             // toolStripRepair
             // 
+            this.toolStripRepair.Font = new System.Drawing.Font("微软雅黑", 11F);
             this.toolStripRepair.Image = ((System.Drawing.Image)(resources.GetObject("toolStripRepair.Image")));
             this.toolStripRepair.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripRepair.Name = "toolStripRepair";
-            this.toolStripRepair.Size = new System.Drawing.Size(52, 22);
+            this.toolStripRepair.Size = new System.Drawing.Size(59, 24);
             this.toolStripRepair.Text = "返工";
             this.toolStripRepair.Click += new System.EventHandler(this.toolStripRepair_Click);
             // 
             // toolStripRevImg
             // 
+            this.toolStripRevImg.Font = new System.Drawing.Font("微软雅黑", 11F);
             this.toolStripRevImg.Image = ((System.Drawing.Image)(resources.GetObject("toolStripRevImg.Image")));
             this.toolStripRevImg.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripRevImg.Name = "toolStripRevImg";
-            this.toolStripRevImg.Size = new System.Drawing.Size(52, 22);
+            this.toolStripRevImg.Size = new System.Drawing.Size(59, 24);
             this.toolStripRevImg.Text = "反像";
             this.toolStripRevImg.Click += new System.EventHandler(this.toolStripRevImg_Click);
             // 
             // toolStripTrimImg
             // 
+            this.toolStripTrimImg.Font = new System.Drawing.Font("微软雅黑", 11F);
             this.toolStripTrimImg.Image = global::Csmdajc.Properties.Resources._24;
             this.toolStripTrimImg.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripTrimImg.Name = "toolStripTrimImg";
-            this.toolStripTrimImg.Size = new System.Drawing.Size(52, 22);
+            this.toolStripTrimImg.Size = new System.Drawing.Size(59, 24);
             this.toolStripTrimImg.Text = "微调";
             this.toolStripTrimImg.Click += new System.EventHandler(this.toolStripTrimImg_Click);
             // 
             // toolStripFontDeep
             // 
+            this.toolStripFontDeep.Font = new System.Drawing.Font("微软雅黑", 11F);
             this.toolStripFontDeep.Image = ((System.Drawing.Image)(resources.GetObject("toolStripFontDeep.Image")));
             this.toolStripFontDeep.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripFontDeep.Name = "toolStripFontDeep";
-            this.toolStripFontDeep.Size = new System.Drawing.Size(52, 22);
+            this.toolStripFontDeep.Size = new System.Drawing.Size(59, 24);
             this.toolStripFontDeep.Text = "字深";
             this.toolStripFontDeep.Click += new System.EventHandler(this.toolStripFontDeep_Click);
             // 
             // toolStripFontShall
             // 
+            this.toolStripFontShall.Font = new System.Drawing.Font("微软雅黑", 11F);
             this.toolStripFontShall.Image = ((System.Drawing.Image)(resources.GetObject("toolStripFontShall.Image")));
             this.toolStripFontShall.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripFontShall.Name = "toolStripFontShall";
-            this.toolStripFontShall.Size = new System.Drawing.Size(52, 22);
+            this.toolStripFontShall.Size = new System.Drawing.Size(59, 24);
             this.toolStripFontShall.Text = "字浅";
             this.toolStripFontShall.Click += new System.EventHandler(this.toolStripFontShall_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 27);
             // 
             // toolStripGotoPage
             // 
+            this.toolStripGotoPage.Font = new System.Drawing.Font("微软雅黑", 11F);
             this.toolStripGotoPage.Image = ((System.Drawing.Image)(resources.GetObject("toolStripGotoPage.Image")));
             this.toolStripGotoPage.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripGotoPage.Name = "toolStripGotoPage";
-            this.toolStripGotoPage.Size = new System.Drawing.Size(64, 22);
+            this.toolStripGotoPage.Size = new System.Drawing.Size(74, 24);
             this.toolStripGotoPage.Text = "转跳页";
             this.toolStripGotoPage.Click += new System.EventHandler(this.toolStripGotoPage_Click);
             // 
             // toolStripAutoSide
             // 
+            this.toolStripAutoSide.Font = new System.Drawing.Font("微软雅黑", 11F);
             this.toolStripAutoSide.Image = ((System.Drawing.Image)(resources.GetObject("toolStripAutoSide.Image")));
             this.toolStripAutoSide.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripAutoSide.Name = "toolStripAutoSide";
-            this.toolStripAutoSide.Size = new System.Drawing.Size(76, 22);
+            this.toolStripAutoSide.Size = new System.Drawing.Size(89, 24);
             this.toolStripAutoSide.Text = "自动去边";
             this.toolStripAutoSide.Click += new System.EventHandler(this.toolStripAutoSide_Click);
             // 
             // toolStripFiltr
             // 
+            this.toolStripFiltr.Font = new System.Drawing.Font("微软雅黑", 11F);
             this.toolStripFiltr.Image = global::Csmdajc.Properties.Resources._19;
             this.toolStripFiltr.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripFiltr.Name = "toolStripFiltr";
-            this.toolStripFiltr.Size = new System.Drawing.Size(52, 22);
+            this.toolStripFiltr.Size = new System.Drawing.Size(59, 24);
             this.toolStripFiltr.Text = "滤底";
             this.toolStripFiltr.Click += new System.EventHandler(this.toolStripFiltr_Click);
             // 
@@ -598,25 +621,25 @@
             // 
             this.toolProess.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.toolProess.Name = "toolProess";
-            this.toolProess.Size = new System.Drawing.Size(100, 22);
+            this.toolProess.Size = new System.Drawing.Size(100, 24);
             this.toolProess.Visible = false;
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 27);
             // 
             // toolArchno
             // 
             this.toolArchno.ForeColor = System.Drawing.Color.Red;
             this.toolArchno.Name = "toolArchno";
-            this.toolArchno.Size = new System.Drawing.Size(59, 22);
+            this.toolArchno.Size = new System.Drawing.Size(59, 24);
             this.toolArchno.Text = "当前卷号:";
             // 
             // toollbInfo
             // 
             this.toollbInfo.Name = "toollbInfo";
-            this.toollbInfo.Size = new System.Drawing.Size(0, 22);
+            this.toollbInfo.Size = new System.Drawing.Size(0, 24);
             // 
             // dockCont2
             // 

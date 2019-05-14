@@ -22,6 +22,7 @@ namespace Csmdapx
             Init();
         }
         private gArchSelect gArch;
+        private UcContents ucContents1;
         Hljsimage Himg = new Hljsimage();
         HFTP ftp = new HFTP();
 
@@ -36,6 +37,15 @@ namespace Csmdapx
                 };
                 gArch.LineLoadFile += Garch_LineLoadFile;
                 gr1.Controls.Add(gArch);
+                UcContents.Modulename = this.Text;
+                UcContents.ArchId = ClsIndex.Archid;
+                UcContents.ContentsEnabled = true;
+                UcContents.ModuleVisible = false;
+                ucContents1 = new UcContents();
+                {
+                    ucContents1.Dock = DockStyle.Fill;
+                }
+                gr2.Controls.Add(ucContents1);
             } catch { }
         }
 
@@ -71,6 +81,7 @@ namespace Csmdapx
                     Himg.RegPage = ClsIndex.RegPage;
                     toolArchno.Text = string.Format("当前卷号:{0}", ClsIndex.ArchPos);
                     LoadArch();
+                    LoadContents();
                     txtPages.Focus();
                     return;
                 }
@@ -359,6 +370,10 @@ namespace Csmdapx
 
         #region Method
 
+        private void LoadContents()
+        {
+            ucContents1.LoadContents(ClsIndex.Archid, ClsIndex.RegPage);
+        }
 
         private void GetPages(int page, int counpage)
         {
@@ -452,12 +467,8 @@ namespace Csmdapx
                         }
                         Himg.DelTag = TagInfo;
                     }
-                    maxpage = pagenumber.Keys.Max();
                 }
-                else {
-                    txtPages.Text = "1";
-                    maxpage = 1;
-                }
+                maxpage = Himg._PageNumber.Keys.Max();
             } catch {
                 maxpage = 1;
             } finally {
@@ -663,8 +674,9 @@ namespace Csmdapx
 
                     Common.SetArchWorkState(arid, (int)T_ConFigure.ArchStat.扫描完);
                 }
-            } catch (Exception ex) {
-                MessageBox.Show("上传失败!" + ex.ToString());
+            } catch(Exception ex)
+            {
+                MessageBox.Show("上传失败!"+ex.ToString());
                 Common.SetArchWorkState(arid, (int)T_ConFigure.ArchStat.扫描完);
                 Common.Writelog(ClsIndex.Archid, "排序完成失败");
             } finally {
@@ -812,6 +824,6 @@ namespace Csmdapx
 
         #endregion
 
-
+     
     }
 }

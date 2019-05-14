@@ -894,7 +894,7 @@ namespace DAL
                 }
                 SQLHelper.ExecScalar(strSql);
                 WirteWork(archid, ts, enter, table);
-                SetInfoEnterTable(archid, ClsInfoEnter.InfoTableName[t]);
+                SetInfoEnterTable(archid, table);
                 return 1;
             } catch (Exception ex) {
                 MessageBox.Show(ex.ToString());

@@ -13,7 +13,7 @@ namespace CsmCon
         {
             InitializeComponent();
         }
-
+        #region const
         public delegate void ArchSelectHandle(object sender, EventArgs e);
 
         public delegate void ArchSelectHandleFocus(object sender, EventArgs e);
@@ -25,7 +25,6 @@ namespace CsmCon
         public event ArchSelectHandleFocus LineFocus;
         public event ArchSelectHandleGetInfo LineGetInfo;
         public event ArchSelectHandleLoadFile LineLoadFile;
-
         public bool GotoPages { get; set; }
         public bool LoadFileBoole { get; set; }
         public bool PagesEnd { get; set; }
@@ -34,9 +33,11 @@ namespace CsmCon
         public string Archtype { get; set; }
         public string ArchImgFile { get; set; }
         public int ArchRegPages { get; set; }
+        public string Archstat { get; set; }
 
         public string ArchPos;
 
+        #endregion
         private void Witeini()
         {
             ClsIni.Archbox = txtBoxsn.Text.Trim();
@@ -72,13 +73,12 @@ namespace CsmCon
                 }
             }
             else {
-               
                 if (comboxClass.Text.Trim().Length <= 0 || txtBoxsn.Text.Trim().Length <= 0) {
                     MessageBox.Show("档案类型选择错误或盒号为空!");
                     this.comboxClass.SelectAll();
                     return false;
                 }
-                if (comboxClass.SelectedIndex ==1)
+                if (comboxClass.SelectedIndex == 1)
                     ClsContenInfo.Archtype = "ArchConten";
             }
             return true;
@@ -92,7 +92,7 @@ namespace CsmCon
             LvData.Items.Clear();
             if (radioBoxsn.Checked)
                 dt = Common.QueryBoxsn(txtBoxsn.Text.Trim());
-            else 
+            else
                 dt = Common.QueryBoxsnid(txtBoxsn.Text.Trim());
             if (dt != null && dt.Rows.Count > 0) {
                 int i = 1;
@@ -113,7 +113,7 @@ namespace CsmCon
                         lvi.ImageIndex = 1;
                     else if (stat == 7)
                         lvi.ImageIndex = 2;
-                    lvi.SubItems.AddRange(new string[] { boxsn, archno, ImgFile, pages, arid, type });
+                    lvi.SubItems.AddRange(new string[] { boxsn, archno, ImgFile, pages, arid, type, stat.ToString() });
                     this.LvData.Items.Add(lvi);
                     i++;
                 }
@@ -165,7 +165,7 @@ namespace CsmCon
                 }
             } catch { }
         }
-      
+
 
         private void gArchSelect_Load(object sender, EventArgs e)
         {
@@ -186,6 +186,7 @@ namespace CsmCon
                 Archtype = LvData.SelectedItems[0].SubItems[6].Text;
                 string boxs = LvData.SelectedItems[0].SubItems[1].Text;
                 string juan = LvData.SelectedItems[0].SubItems[2].Text;
+                Archstat = LvData.SelectedItems[0].SubItems[7].Text;
                 Boxsn = Convert.ToInt32(boxs);
                 ArchPos = boxs + "-" + juan;
                 string pags = Common.Getpages(Archid);
@@ -251,6 +252,14 @@ namespace CsmCon
         private void butPageUpdate_Click(object sender, EventArgs e)
         {
 
+            if (Archstat.Trim().Length > 0) {
+                int p = Convert.ToInt32(Archstat);
+                if (p >= (int)T_ConFigure.ArchStat.排序完) {
+                    MessageBox.Show("已经排序完成无法进行更改页码!");
+                    LvData.Focus();
+                    return;
+                }
+            }
             try {
                 int pages = Convert.ToInt32(txtPages.Text.Trim());
                 if (pages <= 0)

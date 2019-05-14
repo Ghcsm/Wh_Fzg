@@ -26,6 +26,7 @@ namespace CsmCon
         public static int Mtmpid = 0;
 
         public static int PageCrren = 0;
+        public static string PageMl = "0";
 
         private void Init()
         {
@@ -104,8 +105,7 @@ namespace CsmCon
             if (id) {
                 foreach (ListViewItem item in LvContents.Items) {
                     pagestmp = item.SubItems[p + 2].Text.ToString();
-                    if (pages == pagestmp)
-                    {
+                    if (pages == pagestmp) {
                         MessageBox.Show("页码已存在！");
                         return false;
                     }
@@ -225,7 +225,7 @@ namespace CsmCon
                     return;
                 if (ClsContenInfo.LsModuleIndex.Count > 0 && ClsContenInfo.LsModule.Count > 0) {
                     string sttCode = this.txtCode.Text.Trim();
-                    string str=ClsContenInfo.LsModule[ClsContenInfo.LsModuleIndex.IndexOf(sttCode)];
+                    string str = ClsContenInfo.LsModule[ClsContenInfo.LsModuleIndex.IndexOf(sttCode)];
                     ClsConten.SetInfoTxt(panel1, str);
                 }
             }
@@ -248,13 +248,13 @@ namespace CsmCon
         private void LvContents_Click(object sender, EventArgs e)
         {
             if (LvContents.SelectedItems != null && LvContents.SelectedItems.Count > 0) {
-                Settxt();
-                OneClickGotoPage?.Invoke(sender, e);
+                Settxt(sender, e);
             }
         }
 
-        private void Settxt()
+        private void Settxt(object sender, EventArgs e)
         {
+            int id = ClsContenInfo.ContenCoList.IndexOf(ClsContenInfo.ContenPages);
             for (int i = 1; i < LvContents.Columns.Count; i++) {
                 string str = LvContents.SelectedItems[0].SubItems[i].Text;
                 if (i == 1)
@@ -262,6 +262,11 @@ namespace CsmCon
                 else {
                     ClsConten.SetInfoTxt(panel1, (i - 1), str);
                 }
+                if (i == id + 2) {
+                    PageMl =str;
+                    OneClickGotoPage?.Invoke(sender, e);
+                }
+
             }
         }
         private void butDel_Click(object sender, EventArgs e)

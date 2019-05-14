@@ -165,10 +165,10 @@
             this.dockSite9.Controls.Add(this.bar3);
             this.dockSite9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dockSite9.DocumentDockContainer = new DevComponents.DotNetBar.DocumentDockContainer(new DevComponents.DotNetBar.DocumentBaseContainer[] {
-            ((DevComponents.DotNetBar.DocumentBaseContainer)(new DevComponents.DotNetBar.DocumentBarContainer(this.bar3, 577, 316)))}, DevComponents.DotNetBar.eOrientation.Horizontal);
-            this.dockSite9.Location = new System.Drawing.Point(223, 109);
+            ((DevComponents.DotNetBar.DocumentBaseContainer)(new DevComponents.DotNetBar.DocumentBarContainer(this.bar3, 641, 316)))}, DevComponents.DotNetBar.eOrientation.Horizontal);
+            this.dockSite9.Location = new System.Drawing.Point(159, 109);
             this.dockSite9.Name = "dockSite9";
-            this.dockSite9.Size = new System.Drawing.Size(577, 316);
+            this.dockSite9.Size = new System.Drawing.Size(641, 316);
             this.dockSite9.TabIndex = 9;
             this.dockSite9.TabStop = false;
             // 
@@ -195,7 +195,7 @@
             this.bar3.LayoutType = DevComponents.DotNetBar.eLayoutType.DockContainer;
             this.bar3.Location = new System.Drawing.Point(0, 0);
             this.bar3.Name = "bar3";
-            this.bar3.Size = new System.Drawing.Size(577, 316);
+            this.bar3.Size = new System.Drawing.Size(641, 316);
             this.bar3.Stretch = true;
             this.bar3.Style = DevComponents.DotNetBar.eDotNetBarStyle.Office2003;
             this.bar3.TabIndex = 0;
@@ -209,10 +209,10 @@
             this.dockSite1.Controls.Add(this.bar2);
             this.dockSite1.Dock = System.Windows.Forms.DockStyle.Left;
             this.dockSite1.DocumentDockContainer = new DevComponents.DotNetBar.DocumentDockContainer(new DevComponents.DotNetBar.DocumentBaseContainer[] {
-            ((DevComponents.DotNetBar.DocumentBaseContainer)(new DevComponents.DotNetBar.DocumentBarContainer(this.bar2, 220, 316)))}, DevComponents.DotNetBar.eOrientation.Horizontal);
+            ((DevComponents.DotNetBar.DocumentBaseContainer)(new DevComponents.DotNetBar.DocumentBarContainer(this.bar2, 156, 316)))}, DevComponents.DotNetBar.eOrientation.Horizontal);
             this.dockSite1.Location = new System.Drawing.Point(0, 109);
             this.dockSite1.Name = "dockSite1";
-            this.dockSite1.Size = new System.Drawing.Size(223, 316);
+            this.dockSite1.Size = new System.Drawing.Size(159, 316);
             this.dockSite1.TabIndex = 1;
             this.dockSite1.TabStop = false;
             // 
@@ -232,7 +232,7 @@
             this.bar2.LayoutType = DevComponents.DotNetBar.eLayoutType.DockContainer;
             this.bar2.Location = new System.Drawing.Point(0, 0);
             this.bar2.Name = "bar2";
-            this.bar2.Size = new System.Drawing.Size(220, 316);
+            this.bar2.Size = new System.Drawing.Size(156, 316);
             this.bar2.Stretch = true;
             this.bar2.Style = DevComponents.DotNetBar.eDotNetBarStyle.Office2003;
             this.bar2.TabIndex = 0;
@@ -245,7 +245,7 @@
             this.pandleDock2.DisabledBackColor = System.Drawing.Color.Empty;
             this.pandleDock2.Location = new System.Drawing.Point(3, 23);
             this.pandleDock2.Name = "pandleDock2";
-            this.pandleDock2.Size = new System.Drawing.Size(214, 290);
+            this.pandleDock2.Size = new System.Drawing.Size(150, 290);
             this.pandleDock2.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.pandleDock2.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground;
             this.pandleDock2.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
@@ -262,7 +262,7 @@
             this.sideBarManger.Images = this.imgListManger;
             this.sideBarManger.Location = new System.Drawing.Point(0, 0);
             this.sideBarManger.Name = "sideBarManger";
-            this.sideBarManger.Size = new System.Drawing.Size(214, 290);
+            this.sideBarManger.Size = new System.Drawing.Size(150, 290);
             this.sideBarManger.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.sideBarManger.TabIndex = 0;
             // 

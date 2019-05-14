@@ -206,6 +206,7 @@
             this.colContentsSn,
             this.colContentsTitle});
             this.LvContents.DisabledBackColor = System.Drawing.Color.Empty;
+            this.LvContents.Font = new System.Drawing.Font("宋体", 12F);
             this.LvContents.FullRowSelect = true;
             this.LvContents.GridLines = true;
             this.LvContents.HideSelection = false;

@@ -43,11 +43,23 @@ namespace Csmdajc
                 {
                     ucContents1.Dock = DockStyle.Fill;
                 }
+                ucContents1.OneClickGotoPage += UcContents1_OneClickGotoPage;
                 gr2.Controls.Add(ucContents1);
-            } catch { }
+            } catch (Exception ex) {
+                MessageBox.Show("窗体控件初始化失败:" + ex.ToString());
+            }
         }
 
+        private void UcContents1_OneClickGotoPage(object sender, EventArgs e)
+        {
+            int p = 0;
+            try {
+               p = Convert.ToInt32(UcContents.PageMl);
+            } catch { }
+            if (p>0)
+                Himg._Gotopage(p);
 
+        }
 
         private void FrmIndex_Load(object sender, EventArgs e)
         {
@@ -79,11 +91,10 @@ namespace Csmdajc
                     gArch.butLoad.Enabled = false;
                     LoadArch();
                     LoadContents();
-                    Ispages();
+                    //Ispages();
                     ImgView.Focus();
                     return;
                 }
-
                 MessageBox.Show("请退出当前卷再进行操作！");
                 gArch.Focus();
             } catch (Exception exception) {
@@ -593,11 +604,11 @@ namespace Csmdajc
                 PageIndexInfo = PageIndexInfo.Trim();
                 Common.SetIndexCancel(arid, PageIndexInfo, "");
                 string sourefile = "";
-                if (archzt==1)
-                    sourefile= Path.Combine(T_ConFigure.FtpArchIndex, Clscheck.FileNametmp.Substring(0, 8), Clscheck.FileNametmp);
+                if (archzt == 1)
+                    sourefile = Path.Combine(T_ConFigure.FtpArchIndex, Clscheck.FileNametmp.Substring(0, 8), Clscheck.FileNametmp);
                 else
                     sourefile = Path.Combine(T_ConFigure.FtpArchIndex, Clscheck.FileNametmp.Substring(0, 8), Clscheck.FileNametmp);
-                string goalfile = Path.Combine(T_ConFigure.gArchScanPath, archpos,T_ConFigure.ScanTempFile);
+                string goalfile = Path.Combine(T_ConFigure.gArchScanPath, archpos, T_ConFigure.ScanTempFile);
                 string path = Path.Combine(T_ConFigure.gArchScanPath, archpos);
                 if (ftp.FtpMoveFile(sourefile, goalfile, path)) {
                     Common.SetArchWorkState(arid, (int)T_ConFigure.ArchStat.扫描完);
@@ -618,6 +629,9 @@ namespace Csmdajc
         {
             Keys keyCode = e.KeyCode;
             switch (keyCode) {
+                case Keys.F2:
+                    toolStripRepair_Click(sender, e);
+                    break;
                 case Keys.Escape:
                     toolStripClose_Click(sender, e);
                     break;
