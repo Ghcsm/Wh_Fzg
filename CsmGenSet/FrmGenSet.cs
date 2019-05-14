@@ -1677,7 +1677,7 @@ namespace CsmGenSet
                         str += ClsDataSplit.DataSplitExportColtmp[i];
                 }
 
-                if (combDataSplit_Export_table.Text.Trim().Length > 0) {
+                if (combDataSplit_Export_table.Text.Trim().Length <=0) {
                     if (ClsDataSplit.DataSplitExportTable.IndexOf(txtDataSplitTable.Text.Trim()) < 0) {
                         if (ClsDataSplit.DataSplitExportxlsid.IndexOf(combDataSplit_Export_Xlsid.Text.Trim()) >= 0) {
                             MessageBox.Show("此Xls工作薄ID已绑定，请更换!");

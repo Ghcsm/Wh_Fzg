@@ -61,7 +61,7 @@ namespace Csmsjcf
                         rows = 1;
                     for (int t = 0; t < dt.Rows.Count; t++) {
                         for (int c = 0; c < dt.Columns.Count; c++) {
-                            wsheek.Range[rows + t, c + 1].Text = dt.Rows[t][c].ToString();
+                            wsheek.Range[rows + t, c + 1].Text = dt.Rows[t][c].ToString().Trim();
                         }
                     }
                 }
@@ -84,8 +84,8 @@ namespace Csmsjcf
                 return "错误：未找到文件夹字段信息!";
             for (int i = 0; i < dt.Columns.Count; i++) {
                 if (i != dt.Columns.Count - 1)
-                    str += dt.Rows[0][i].ToString() + "\\";
-                else str += dt.Rows[0][i].ToString();
+                    str += dt.Rows[0][i].ToString().Trim() + "\\";
+                else str += dt.Rows[0][i].ToString().Trim();
             }
             return str;
         }
@@ -112,7 +112,7 @@ namespace Csmsjcf
                     Common.GetDataExporTableFileName(archid, ClsDataSplitPar.ClsFileTable, ClsDataSplitPar.ClsFileDlname);
                 if (dt == null || dt.Rows.Count <= 0)
                     return "错误：未找到文件名规则表中的字段信息";
-                str = dt.Rows[0][0].ToString();
+                str = dt.Rows[0][0].ToString().Trim();
             }
             return str;
         }

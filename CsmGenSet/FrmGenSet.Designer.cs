@@ -292,6 +292,8 @@
             this.comboItem4 = new DevComponents.Editors.ComboItem();
             this.comboItem3 = new DevComponents.Editors.ComboItem();
             this.colorDialog = new System.Windows.Forms.ColorDialog();
+            this.groupBox17 = new System.Windows.Forms.GroupBox();
+            this.label40 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.superTabControl1)).BeginInit();
             this.superTabControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.superTabControl2)).BeginInit();
@@ -352,6 +354,7 @@
             this.grContenPage.SuspendLayout();
             this.grContencol.SuspendLayout();
             this.grConten1.SuspendLayout();
+            this.groupBox17.SuspendLayout();
             this.SuspendLayout();
             // 
             // superTabControl1
@@ -418,11 +421,11 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabContr.CanReorderTabs = true;
+            this.tabContr.Controls.Add(this.tabControlPanel6);
             this.tabContr.Controls.Add(this.tabConPrintSet);
             this.tabContr.Controls.Add(this.tabControlPanel11);
             this.tabContr.Controls.Add(this.tabControlPanel10);
             this.tabContr.Controls.Add(this.tabControlPanel9);
-            this.tabContr.Controls.Add(this.tabControlPanel6);
             this.tabContr.Controls.Add(this.tabControlPanel5);
             this.tabContr.Controls.Add(this.tabControlPanel4);
             this.tabContr.Controls.Add(this.tabControlPanel12);
@@ -1781,8 +1784,8 @@
             // 
             this.tabConDataSplit.BackColor = System.Drawing.Color.Transparent;
             this.tabConDataSplit.CanReorderTabs = true;
-            this.tabConDataSplit.Controls.Add(this.tabControlPanel7);
             this.tabConDataSplit.Controls.Add(this.tabControlPanel8);
+            this.tabConDataSplit.Controls.Add(this.tabControlPanel7);
             this.tabConDataSplit.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabConDataSplit.Location = new System.Drawing.Point(3, 17);
             this.tabConDataSplit.Name = "tabConDataSplit";
@@ -2131,9 +2134,10 @@
             // 
             // tabControlPanel8
             // 
-            this.tabControlPanel8.Controls.Add(this.chkDataSplit_ExportTable);
+            this.tabControlPanel8.Controls.Add(this.groupBox17);
             this.tabControlPanel8.Controls.Add(this.butDataSplit_Export_DelInfo);
             this.tabControlPanel8.Controls.Add(this.butDataSplit_Export_Save);
+            this.tabControlPanel8.Controls.Add(this.label40);
             this.tabControlPanel8.Controls.Add(this.label20);
             this.tabControlPanel8.Controls.Add(this.butDataSplit_Export_delzd);
             this.tabControlPanel8.Controls.Add(this.butDataSplit_Export_add);
@@ -2157,12 +2161,11 @@
             // 
             // chkDataSplit_ExportTable
             // 
-            this.chkDataSplit_ExportTable.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
+            this.chkDataSplit_ExportTable.Dock = System.Windows.Forms.DockStyle.Fill;
             this.chkDataSplit_ExportTable.FormattingEnabled = true;
-            this.chkDataSplit_ExportTable.Location = new System.Drawing.Point(218, 20);
+            this.chkDataSplit_ExportTable.Location = new System.Drawing.Point(3, 17);
             this.chkDataSplit_ExportTable.Name = "chkDataSplit_ExportTable";
-            this.chkDataSplit_ExportTable.Size = new System.Drawing.Size(155, 52);
+            this.chkDataSplit_ExportTable.Size = new System.Drawing.Size(194, 267);
             this.chkDataSplit_ExportTable.TabIndex = 6;
             // 
             // butDataSplit_Export_DelInfo
@@ -2193,7 +2196,7 @@
             // 
             this.label20.AutoSize = true;
             this.label20.BackColor = System.Drawing.Color.Transparent;
-            this.label20.Location = new System.Drawing.Point(60, 57);
+            this.label20.Location = new System.Drawing.Point(60, 67);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(107, 12);
             this.label20.TabIndex = 0;
@@ -2229,7 +2232,7 @@
             this.combDataSplit_Export_Xlsid.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.combDataSplit_Export_Xlsid.FormattingEnabled = true;
             this.combDataSplit_Export_Xlsid.ItemHeight = 15;
-            this.combDataSplit_Export_Xlsid.Location = new System.Drawing.Point(53, 75);
+            this.combDataSplit_Export_Xlsid.Location = new System.Drawing.Point(53, 85);
             this.combDataSplit_Export_Xlsid.Name = "combDataSplit_Export_Xlsid";
             this.combDataSplit_Export_Xlsid.Size = new System.Drawing.Size(121, 21);
             this.combDataSplit_Export_Xlsid.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -2242,7 +2245,7 @@
             this.combDataSplit_Export_table.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.combDataSplit_Export_table.FormattingEnabled = true;
             this.combDataSplit_Export_table.ItemHeight = 15;
-            this.combDataSplit_Export_table.Location = new System.Drawing.Point(53, 23);
+            this.combDataSplit_Export_table.Location = new System.Drawing.Point(53, 33);
             this.combDataSplit_Export_table.Name = "combDataSplit_Export_table";
             this.combDataSplit_Export_table.Size = new System.Drawing.Size(121, 21);
             this.combDataSplit_Export_table.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -3439,6 +3442,26 @@
             // 
             this.comboItem3.Text = "一录信息";
             // 
+            // groupBox17
+            // 
+            this.groupBox17.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox17.Controls.Add(this.chkDataSplit_ExportTable);
+            this.groupBox17.Location = new System.Drawing.Point(207, 16);
+            this.groupBox17.Name = "groupBox17";
+            this.groupBox17.Size = new System.Drawing.Size(200, 287);
+            this.groupBox17.TabIndex = 7;
+            this.groupBox17.TabStop = false;
+            // 
+            // label40
+            // 
+            this.label40.AutoSize = true;
+            this.label40.BackColor = System.Drawing.Color.Transparent;
+            this.label40.Location = new System.Drawing.Point(60, 11);
+            this.label40.Name = "label40";
+            this.label40.Size = new System.Drawing.Size(101, 12);
+            this.label40.TabIndex = 0;
+            this.label40.Text = "已绑定数据库表：";
+            // 
             // FrmGetSet
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -3533,6 +3556,7 @@
             this.grContencol.ResumeLayout(false);
             this.grConten1.ResumeLayout(false);
             this.grConten1.PerformLayout();
+            this.groupBox17.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -3804,6 +3828,8 @@
         private DevComponents.DotNetBar.Controls.ComboBoxEx combContenLieSn;
         private DevComponents.DotNetBar.Controls.ComboBoxEx combContenlabWith;
         private DevComponents.DotNetBar.Controls.ComboBoxEx combContentxtWith;
+        private System.Windows.Forms.GroupBox groupBox17;
+        private System.Windows.Forms.Label label40;
     }
 }
 

@@ -592,11 +592,15 @@ namespace Csmdajc
                 }
                 PageIndexInfo = PageIndexInfo.Trim();
                 Common.SetIndexCancel(arid, PageIndexInfo, "");
-                string sourefile = Path.Combine(T_ConFigure.FtpTmp, T_ConFigure.TmpScan, Clscheck.FileNametmp.Substring(0, 8), Clscheck.FileNametmp);
-                string goalfile = Path.Combine(T_ConFigure.gArchScanPath, archpos, Clscheck.FileNametmp);
+                string sourefile = "";
+                if (archzt==1)
+                    sourefile= Path.Combine(T_ConFigure.FtpArchIndex, Clscheck.FileNametmp.Substring(0, 8), Clscheck.FileNametmp);
+                else
+                    sourefile = Path.Combine(T_ConFigure.FtpArchIndex, Clscheck.FileNametmp.Substring(0, 8), Clscheck.FileNametmp);
+                string goalfile = Path.Combine(T_ConFigure.gArchScanPath, archpos,T_ConFigure.ScanTempFile);
                 string path = Path.Combine(T_ConFigure.gArchScanPath, archpos);
                 if (ftp.FtpMoveFile(sourefile, goalfile, path)) {
-                    Common.SetArchWorkState(arid, (int)T_ConFigure.ArchStat.质检退回);
+                    Common.SetArchWorkState(arid, (int)T_ConFigure.ArchStat.扫描完);
                 }
                 if (T_ConFigure.FtpStyle != 1) {
                     try {

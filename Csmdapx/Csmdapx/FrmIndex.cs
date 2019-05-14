@@ -82,7 +82,7 @@ namespace Csmdapx
                     toolArchno.Text = string.Format("当前卷号:{0}", ClsIndex.ArchPos);
                     LoadArch();
                     LoadContents();
-                    ImgView.Focus();
+                    txtPages.Focus();
                     return;
                 }
 
