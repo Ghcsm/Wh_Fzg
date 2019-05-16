@@ -1,17 +1,11 @@
 ﻿using DAL;
+using HLFtp;
+using Spire.Xls;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Net;
-using System.Text;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using HLFtp;
-using System.IO;
-using Spire.Xls;
 
 namespace Csmtool
 {
@@ -140,10 +134,6 @@ namespace Csmtool
 
         }
 
-        private void Frmtool_Shown(object sender, EventArgs e)
-        {
-            ftp = new HFTP();
-        }
 
         void Querinfo()
         {
@@ -281,6 +271,157 @@ namespace Csmtool
             sfd.Filter = "xls文件|*.xls";
             if (sfd.ShowDialog() == DialogResult.OK)
                 Exportxls(sfd.FileName);
+        }
+        #endregion
+
+        private void Frmtool_Shown(object sender, EventArgs e)
+        {
+            ftp = new HFTP();
+            GetModul();
+            Getkeys();
+        }
+
+
+        #region keys
+
+        void GetModul()
+        {
+            Task.Run(() =>
+            {
+                DataTable dt = T_Sysset.GetModulezhname();
+                if (dt == null || dt.Rows.Count <= 0)
+                    return;
+                for (int i = 0; i < dt.Rows.Count; i++) {
+                    string str = dt.Rows[i][0].ToString();
+                    if (str.Trim().Length <= 0)
+                        continue;
+                    this.BeginInvoke(new Action(() =>
+                    {
+                        combKeyNewModulList.Items.Add(str);
+                        Toolskeys.lsModule.Add(str);
+                    }));
+                }
+            });
+        }
+
+        void Getkeys()
+        {
+            Toolskeys.LskeyModule.Clear();
+            Toolskeys.LskeyOper.Clear();
+            combKeyzdyoperlx.Items.Clear();
+            combKeyZdymodlx.Items.Clear();
+            Task.Run(() =>
+            {
+                Toolskeys.dtkeys = Common.GetkeysInfo();
+                if (Toolskeys.dtkeys == null || Toolskeys.dtkeys.Rows.Count <= 0)
+                    return;
+                for (int i = 0; i < Toolskeys.dtkeys.Rows.Count; i++) {
+                    string strmod = Toolskeys.dtkeys.Rows[i][0].ToString();
+                    if (strmod.Trim().Length <= 0)
+                        continue;
+                    this.BeginInvoke(new Action(() =>
+                    {
+                        if (Toolskeys.LskeyModule.IndexOf(strmod) < 0) {
+                            Toolskeys.LskeyModule.Add(strmod);
+                            combKeyZdymodlx.Items.Add(strmod);
+                        }
+
+                    }));
+                }
+            });
+        }
+
+        void GetkeysOper(int x)
+        {
+            if (Toolskeys.isbool == true)
+                return;
+            Toolskeys.isbool = true;
+            try {
+                string str = Toolskeys.LskeyModule[x];
+                str = "Module='" + str + "'";
+                DataTable dt = Toolskeys.dtkeys.Select(str).CopyToDataTable();
+                if (dt == null || dt.Rows.Count <= 0)
+                    return;
+                Toolskeys.LskeyOper.Clear();
+                combKeyzdyoperlx.Items.Clear();
+                for (int i = 0; i < dt.Rows.Count; i++) {
+                    string opernu = dt.Rows[i][1].ToString();
+                    Toolskeys.LskeyOper.Add(opernu);
+                    combKeyzdyoperlx.Items.Add(opernu);
+                }
+            } catch {
+
+            } finally {
+                Toolskeys.isbool = false;
+            }
+
+        }
+
+
+        bool Iskeystxt()
+        {
+            if (T_User.UserId != 1) {
+                MessageBox.Show("此功能只能Admin管理员操作!");
+                return false;
+            }
+            if (combKeyNewModulList.Text.Trim().Length <= 0) {
+                MessageBox.Show("请选择模块!");
+                combKeyNewModulList.Focus();
+                return false;
+            }
+
+            if (txtKeyNewOperlx.Text.Trim().Length <= 0) {
+                MessageBox.Show("请输入操作类型!");
+                txtKeyNewOperlx.Focus();
+                return false;
+            }
+            if (txtKeyNewOpernum.Text.Trim().Length <= 0) {
+                MessageBox.Show("请输入操作值!");
+                txtKeyNewOpernum.Focus();
+                return false;
+            }
+            else {
+                bool x = Common.IsKeyscount(combKeyNewModulList.Text.Trim(), txtKeyNewOperlx.Text.Trim(),
+                    txtKeyNewOpernum.Text.Trim());
+                if (x) {
+                    MessageBox.Show("此操作类型或操作值已存在请更换!");
+                    txtKeyNewOperlx.Focus();
+                    return false;
+                }
+
+            }
+            return true;
+        }
+
+
+        private void butKeyNew_Click(object sender, EventArgs e)
+        {
+            if (!Iskeystxt())
+                return;
+            Common.KeysInster(combKeyNewModulList.Text.Trim(), txtKeyNewOperlx.Text.Trim(), txtKeyNewOpernum.Text.Trim());
+            Getkeys();
+        }
+
+        private void butKeysDel_Click(object sender, EventArgs e)
+        {
+            if (!Iskeystxt())
+                return;
+        }
+
+        private void txtKeyNewOpernum_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!(Char.IsNumber(e.KeyChar))) {
+                e.Handled = true;
+            }
+            Common.Keysdel(combKeyNewModulList.Text.Trim(), txtKeyNewOperlx.Text.Trim(), txtKeyNewOpernum.Text.Trim());
+            Getkeys();
+        }
+
+        private void combKeyZdymodlx_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int x = combKeyZdymodlx.SelectedIndex;
+            GetkeysOper(x);
+
         }
         #endregion
     }

@@ -1321,8 +1321,7 @@ namespace DAL
 
         public static DataTable GetArchQuerstat(string str, string boxsn, string boxsn2, string col)
         {
-            try
-            {
+            try {
                 string strSql = "PQueryArchStat";
                 SqlParameter[] p = new SqlParameter[4];
                 p[0] = new SqlParameter("@str", str);
@@ -1331,15 +1330,55 @@ namespace DAL
                 p[3] = new SqlParameter("@strcol", col);
                 DataTable dt = SQLHelper.GetDataTable(strSql, CommandType.StoredProcedure, p);
                 return dt;
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 MessageBox.Show("查询失败:" + e.ToString());
                 return null;
             }
-           
+
         }
 
+        public static DataTable GetkeysInfo()
+        {
+            try {
+                string strSql = "select Module,Operter from M_OperterKey order by id";
+                DataTable dt = SQLHelper.ExcuteTable(strSql);
+                return dt;
+            } catch {
+                return null;
+            }
+        }
+
+        public static bool IsKeyscount(string modul, string oper, string num)
+        {
+            string strSql = "select count(*) from M_OperterKey where Module=@name and Operter=@oper and OperterKey=@key";
+            SqlParameter p1 = new SqlParameter("@name", modul);
+            SqlParameter p2 = new SqlParameter("@oper", oper);
+            SqlParameter p3 = new SqlParameter("@key", num);
+            object obj = SQLHelper.ExecScalar(strSql, p1, p2, p3);
+            if (obj == null)
+                return false;
+            if (Convert.ToInt32(obj) == 0)
+                return false;
+            return true;
+        }
+
+        public static void KeysInster(string modul, string oper, string num)
+        {
+            string strSql = "Insert into M_OperterKey (Module,Operter,OperterKey) values (@mod,@oper,@key)";
+            SqlParameter p1 = new SqlParameter("@mod", modul);
+            SqlParameter p2 = new SqlParameter("@oper", oper);
+            SqlParameter p3 = new SqlParameter("@key", num);
+            SQLHelper.ExecScalar(strSql, p1, p2, p3);
+        }
+
+        public static void Keysdel(string modul, string oper, string num)
+        {
+            string strSql = "delete from M_OperterKey where Module=@mod and Operter=@oper and OperterKey=@key";
+            SqlParameter p1 = new SqlParameter("@mod", modul);
+            SqlParameter p2 = new SqlParameter("@oper", oper);
+            SqlParameter p3 = new SqlParameter("@key", num);
+            SQLHelper.ExecScalar(strSql, p1, p2, p3);
+        }
 
         #endregion
 

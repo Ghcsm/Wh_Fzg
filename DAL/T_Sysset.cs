@@ -125,6 +125,13 @@ namespace DAL
             DataTable dt = SQLHelper.ExcuteTable(strStr);
             return dt;
         }
+
+        public static DataTable GetModulezhname()
+        {
+            string strStr = "select ModuleChName from M_Moudule order by id";
+            DataTable dt = SQLHelper.ExcuteTable(strStr);
+            return dt;
+        }
         public static void SaveMenuset(string id, string name, string xh)
         {
             string strSql = "PupdateMenuset";
