@@ -323,7 +323,7 @@ namespace DAL
         public static DataTable QueryBoxsn(string boxsn)
         {
             try {
-                string strSql = "select * from V_ImgFile where boxsn=@boxsn and houseid=@houseid ";
+                string strSql = "select top 100 * from V_ImgFile where boxsn=@boxsn and houseid=@houseid ";
                 SqlParameter p1 = new SqlParameter("@boxsn", boxsn);
                 SqlParameter p2 = new SqlParameter("@houseid", V_HouseSetCs.Houseid);
                 DataTable dt = SQLHelper.ExcuteTable(strSql, p1, p2);
@@ -334,10 +334,25 @@ namespace DAL
 
             }
         }
+        public static DataTable QueryBoxsn(string boxsn, string archno)
+        {
+            try {
+                string strSql = "select top 1 * from V_ImgFile where boxsn=@boxsn and archno=@arno and houseid=@houseid ";
+                SqlParameter p1 = new SqlParameter("@boxsn", boxsn);
+                SqlParameter p2 = new SqlParameter("@houseid", V_HouseSetCs.Houseid);
+                SqlParameter p3 = new SqlParameter("@arno", archno);
+                DataTable dt = SQLHelper.ExcuteTable(strSql, p1, p2, p3);
+                return dt;
+            } catch (Exception e) {
+                MessageBox.Show("获取数据失败" + e.ToString());
+                return null;
+
+            }
+        }
         public static DataTable QueryBoxsn(int arid)
         {
             try {
-                string strSql = "select * from V_ImgFile where id=@arid and houseid=@houseid ";
+                string strSql = "select top 1 * from V_ImgFile where id=@arid and houseid=@houseid ";
                 SqlParameter p1 = new SqlParameter("@arid", arid);
                 SqlParameter p2 = new SqlParameter("@houseid", V_HouseSetCs.Houseid);
                 DataTable dt = SQLHelper.ExcuteTable(strSql, p1, p2);
@@ -352,7 +367,7 @@ namespace DAL
         public static DataTable QueryBoxsnid(string importid)
         {
             try {
-                string strSql = "select * from V_ImgFile where houseid=@houseid and ArchImportID=@impotid ";
+                string strSql = "select top 1 * from V_ImgFile where houseid=@houseid and ArchImportID=@impotid ";
                 SqlParameter p1 = new SqlParameter("@impotid", importid);
                 SqlParameter p2 = new SqlParameter("@houseid", V_HouseSetCs.Houseid);
                 DataTable dt = SQLHelper.ExcuteTable(strSql, p1, p2);
@@ -427,16 +442,17 @@ namespace DAL
             p[6] = new SqlParameter("@stat", 1);
             SQLHelper.ExecuteNonQuery(strSql, CommandType.StoredProcedure, p);
         }
-        public static void SetCheckFinish(int arid, string file)
+        public static void SetCheckFinish(int arid, string file, int check, int stat, string info, string delinfo)
         {
             string strSql = "PUpdateCheckInfo";
             SqlParameter[] p = new SqlParameter[6];
             p[0] = new SqlParameter("@UserID", T_User.UserId);
             p[1] = new SqlParameter("@FileName", file);
             p[2] = new SqlParameter("@Archid", arid);
-            p[3] = new SqlParameter("@ArchState", (int)T_ConFigure.ArchStat.质检完);
-            p[4] = new SqlParameter("@PageIndexInfo", "");
-            p[5] = new SqlParameter("@DeleTag", "");
+            p[3] = new SqlParameter("@ArchState", stat);
+            p[4] = new SqlParameter("@PageIndexInfo", info);
+            p[5] = new SqlParameter("@DeleTag", delinfo);
+            p[6] = new SqlParameter("@check", check);
             SQLHelper.ExecuteNonQuery(strSql, CommandType.StoredProcedure, p);
         }
 
@@ -972,11 +988,11 @@ namespace DAL
         public static void DataSplitUpdatecolFw(int houseid, string col)
         {
             string strSql = "update M_IMAGEFILE set SPLITERROR=null where ArchImportID like @col and HOUSEID=@houseid";
-            SqlParameter p1 = new SqlParameter("@col", "%"+col+"%");
+            SqlParameter p1 = new SqlParameter("@col", "%" + col + "%");
             SqlParameter p2 = new SqlParameter("@houseid", houseid);
             SQLHelper.ExecScalar(strSql, p1, p2);
         }
-        public static void DataSplitUpdatecol(int houseid,string col)
+        public static void DataSplitUpdatecol(int houseid, string col)
         {
             string strSql = "update M_IMAGEFILE set SPLITERROR=null where ArchImportID=@arid and HOUSEID=@houseid";
             SqlParameter p1 = new SqlParameter("@arid", col);
@@ -1027,7 +1043,7 @@ namespace DAL
         public static DataTable GetDataSplitBoxColFw(int houseid, string arid)
         {
             string strSql = "select ID,BOXSN,ARCHNO,PAGES,IMGFILE From M_IMAGEFILE where  HOUSEID=@houseid and CHECKED=1 and SPLITERROR IS null and ArchImportID like @arid order by id";
-            SqlParameter p1 = new SqlParameter("@arid","%"+arid+"%");
+            SqlParameter p1 = new SqlParameter("@arid", "%" + arid + "%");
             SqlParameter p2 = new SqlParameter("@houseid", houseid);
             DataTable dt = SQLHelper.ExcuteTable(strSql, p1, p2);
             return dt;
@@ -1052,7 +1068,7 @@ namespace DAL
             return dt;
         }
 
-        public static DataTable GetDataExporTableConentName(string archid,string col,string pages)
+        public static DataTable GetDataExporTableConentName(string archid, string col, string pages)
         {
             string strSql = "PQueryConten";
             SqlParameter[] p = new SqlParameter[3];
@@ -1193,10 +1209,6 @@ namespace DAL
             }
         }
 
-        #endregion
-
-        #region borr
-
         public static void SaveborrInfo(string name, string sex, string sfz, string phone, string add, string work,
             string artype, string yt, string time, string page, string bz, int arid, string boxsn, string archno)
         {
@@ -1256,6 +1268,76 @@ namespace DAL
             p[5] = new SqlParameter("@time", Convert.ToInt32(time));
             DataTable dt = SQLHelper.GetDataTable(strSql, CommandType.StoredProcedure, p);
             return dt;
+        }
+
+
+        #endregion
+
+        #region tools
+        public static void ClearScanWrok(int arid)
+        {
+            try {
+                string strSql = "PcleScan";
+                SqlParameter[] p = new SqlParameter[3];
+                p[0] = new SqlParameter("@userid", T_User.UserId);
+                p[1] = new SqlParameter("@ip", T_ConFigure.IPAddress);
+                p[2] = new SqlParameter("@arid", arid);
+                SQLHelper.ExcuteProc(strSql, p);
+            } catch (Exception ex) {
+                MessageBox.Show("执行失败:" + ex.ToString());
+            }
+        }
+        public static void ClearInfoWrok(int arid, int id)
+        {
+            try {
+                string strSql = "";
+                if (id == 1)
+                    strSql = "PcleInfo";
+                else if (id == 2)
+                    strSql = "PcleConten";
+                else if (id == 3)
+                    strSql = "Pclecheck";
+                SqlParameter[] p = new SqlParameter[3];
+                p[0] = new SqlParameter("@userid", T_User.UserId);
+                p[1] = new SqlParameter("@ip", T_ConFigure.IPAddress);
+                p[2] = new SqlParameter("@arid", arid);
+                SQLHelper.ExcuteProc(strSql, p);
+            } catch (Exception ex) {
+                MessageBox.Show("执行失败:" + ex.ToString());
+            }
+        }
+
+        public static int CleaState(int ArchID)
+        {
+            try {
+                string strSql = "update M_IMAGEFILE set ArchState=0 where ID=@id";
+                SqlParameter p1 = new SqlParameter("@id", ArchID);
+                int i = Convert.ToInt32(SQLHelper.ExecScalar(strSql, p1));
+                return i;
+            } catch {
+                return 0;
+            }
+        }
+
+        public static DataTable GetArchQuerstat(string str, string boxsn, string boxsn2, string col)
+        {
+            try
+            {
+                string strSql = "PQueryArchStat";
+                SqlParameter[] p = new SqlParameter[4];
+                p[0] = new SqlParameter("@str", str);
+                p[1] = new SqlParameter("@boxsn", boxsn);
+                p[2] = new SqlParameter("boxsn2", boxsn2);
+                p[3] = new SqlParameter("@strcol", col);
+                DataTable dt = SQLHelper.GetDataTable(strSql, CommandType.StoredProcedure, p);
+                return dt;
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("查询失败:" + e.ToString());
+                return null;
+            }
+           
         }
 
 
@@ -1446,17 +1528,7 @@ namespace DAL
         }
 
 
-        public static int CleaState(int ArchID)
-        {
-            try {
-                string strSql = "update M_IMAGEFILE set ArchState=0 where ID=@id";
-                SqlParameter p1 = new SqlParameter("@id", ArchID);
-                int i = Convert.ToInt32(SQLHelper.ExecScalar(strSql, p1));
-                return i;
-            } catch {
-                return 0;
-            }
-        }
+
 
         public static int GaiBRwState(int ArchID)
         {
@@ -1534,6 +1606,19 @@ namespace DAL
             }
         }
 
+        public static int GetArchCheckState(int ArchID)
+        {
+            try {
+                int ArchState = 0;
+                string strSql = "select top 1 CHECKED from M_ImageFile where  id=@ArchID";
+                SqlParameter p1 = new SqlParameter("@ArchID", ArchID);
+                ArchState = Convert.ToInt32(SQLHelper.ExecScalar(strSql, p1).ToString());
+                return ArchState;
+            } catch {
+                return 0;
+            }
+        }
+
         public static int GetArchWorkState(int ArchID)
         {
             try {
@@ -1542,6 +1627,35 @@ namespace DAL
                 SqlParameter p1 = new SqlParameter("@ArchID", ArchID);
                 ArchState = Convert.ToInt32(SQLHelper.ExecScalar(strSql, p1).ToString());
                 return ArchState;
+            } catch {
+                return 0;
+            }
+        }
+        public static int GetArchCheckState(string archcol)
+        {
+            try {
+                int ArchState = 0;
+                string strSql = "select top 1 CHECKED from M_ImageFile where  ArchImportID=@arcol";
+                SqlParameter p1 = new SqlParameter("@arcol", archcol);
+                ArchState = Convert.ToInt32(SQLHelper.ExecScalar(strSql, p1).ToString());
+                return ArchState;
+            } catch {
+                return 0;
+            }
+        }
+        public static int GetArchCheckState(string boxsn, string archon)
+        {
+            try {
+                int ArchState = 0;
+                string strSql = "select top 1 CHECKED from M_ImageFile where  Boxsn=@box and Archno=@arno";
+                SqlParameter p1 = new SqlParameter("@box", boxsn);
+                SqlParameter p2 = new SqlParameter("@arno", archon);
+                object obj = SQLHelper.ExecScalar(strSql, p1, p2);
+                if (obj != null) {
+                    ArchState = Convert.ToInt32(SQLHelper.ExecScalar(strSql, p1, p2).ToString());
+                    return ArchState;
+                }
+                return 0;
             } catch {
                 return 0;
             }
@@ -2232,19 +2346,19 @@ namespace DAL
 
         }
 
-        public static int ClearScanWrok(int ArchID)
-        {
-            try {
-                // string strSql = " update T_ScanWork set ARCHPAGES=null,SCANSTAFF=null,SMALLSCANPAGES=null,ScanTime=null,DoTime=null where ARCHID=@ArchID";
-                string strSql = " delete from T_ScanWork where ARCHID=@ArchID";
-                SqlParameter p1 = new SqlParameter("@ArchID", ArchID);
-                int i = Convert.ToInt32(SQLHelper.ExecScalar(strSql, p1));
-                return i;
-            } catch {
-                return 0;
-            }
+        //public static int ClearScanWrok(int ArchID)
+        //{
+        //    try {
+        //        // string strSql = " update T_ScanWork set ARCHPAGES=null,SCANSTAFF=null,SMALLSCANPAGES=null,ScanTime=null,DoTime=null where ARCHID=@ArchID";
+        //        string strSql = " delete from T_ScanWork where ARCHID=@ArchID";
+        //        SqlParameter p1 = new SqlParameter("@ArchID", ArchID);
+        //        int i = Convert.ToInt32(SQLHelper.ExecScalar(strSql, p1));
+        //        return i;
+        //    } catch {
+        //        return 0;
+        //    }
 
-        }
+        //}
 
 
 

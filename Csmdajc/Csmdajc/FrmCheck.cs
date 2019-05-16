@@ -556,7 +556,7 @@ namespace Csmdajc
                         string path = Path.Combine(T_ConFigure.FtpArchSave, Clscheck.FileNametmp.Substring(0, 8));
                         if (ftp.FtpMoveFile(sourefile, goalfile, path)) {
                             Common.DelTask(arid);
-                            Common.SetCheckFinish(arid, filename);
+                            Common.SetCheckFinish(arid, filename,1, (int)T_ConFigure.ArchStat.质检完,"","");
                             return;
                         }
                     }
@@ -568,7 +568,7 @@ namespace Csmdajc
                         bool x = await ftp.FtpUpFile(filetmp, newfile, newpath);
                         if (x) {
                             Common.DelTask(arid);
-                            Common.SetCheckFinish(arid, filename);
+                            Common.SetCheckFinish(arid, filename,1, (int)T_ConFigure.ArchStat.质检完, "","");
                             try {
                                 File.Delete(filetmp);
                                 Directory.Delete(localPath);
@@ -602,7 +602,6 @@ namespace Csmdajc
                     PageIndexInfo += page + ":" + page2 + " ";
                 }
                 PageIndexInfo = PageIndexInfo.Trim();
-                Common.SetIndexCancel(arid, PageIndexInfo, "");
                 string sourefile = "";
                 if (archzt == 1)
                     sourefile = Path.Combine(T_ConFigure.FtpArchIndex, Clscheck.FileNametmp.Substring(0, 8), Clscheck.FileNametmp);
@@ -612,6 +611,8 @@ namespace Csmdajc
                 string path = Path.Combine(T_ConFigure.gArchScanPath, archpos);
                 if (ftp.FtpMoveFile(sourefile, goalfile, path)) {
                     Common.SetArchWorkState(arid, (int)T_ConFigure.ArchStat.扫描完);
+                    Common.Writelog(Clscheck.Archid, "质检退!");
+                    Common.SetCheckFinish(arid, "", 2, (int)T_ConFigure.ArchStat.扫描完, PageIndexInfo, "");
                 }
                 if (T_ConFigure.FtpStyle != 1) {
                     try {

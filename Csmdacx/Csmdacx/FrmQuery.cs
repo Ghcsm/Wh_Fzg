@@ -27,7 +27,7 @@ namespace Csmdacx
             imgBrow1 = new ImgBrow();
             imgBrow1.Spage += new ImgBrow.TransmitPar(ShowPage);
             imgBrow1.Dock = DockStyle.Fill;
-            
+
             gr2.Controls.Add(imgBrow1);
         }
 
@@ -102,8 +102,8 @@ namespace Csmdacx
                     MessageBox.Show("文件名称获取失败!");
                     return;
                 }
-                int ArchState = Common.GetArchWorkState(ClsQuery.ArchID);
-                if (ArchState < (int)Common.档案状态.质检完) {
+                int ArchState = Common.GetArchCheckState(ClsQuery.ArchID);
+                if (ArchState != 1) {
                     MessageBox.Show("此卷档案未质检无法进行查阅！");
                     return;
                 }
@@ -325,14 +325,11 @@ namespace Csmdacx
         {
             ClsQuery.Imgsys = false;
             ClsQuery.Imgys = false;
-            DataTable dt = Common.GetOthersys();
-            if (dt == null || dt.Rows.Count <= 0) {
-                return;
-            }
-            string str = DESEncrypt.DesDecrypt(dt.Rows[0][0].ToString());
-            if (str.Contains("图像打印"))
+            string str = DESEncrypt.DesEncrypt("图像打印");
+            if (T_User.UserOtherSys.IndexOf(str) >= 0)
                 ClsQuery.Imgsys = true;
-            if (str.Contains("验收图像"))
+            str = DESEncrypt.DesEncrypt("验收图像");
+            if (T_User.UserOtherSys.IndexOf(str) >= 0)
                 ClsQuery.Imgys = true;
         }
 

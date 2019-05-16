@@ -34,12 +34,12 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.gr1 = new System.Windows.Forms.GroupBox();
             this.splitCont = new DevComponents.DotNetBar.Controls.CollapsibleSplitContainer();
+            this.gArchSelect1 = new CsmCon.gArchSelect();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.butSaveInfo = new DevComponents.DotNetBar.ButtonX();
             this.grinfo = new System.Windows.Forms.GroupBox();
             this.gr2 = new System.Windows.Forms.GroupBox();
-            this.gArchSelect1 = new CsmCon.gArchSelect();
-            this.label1 = new System.Windows.Forms.Label();
             this.gr1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitCont)).BeginInit();
             this.splitCont.Panel1.SuspendLayout();
@@ -67,9 +67,9 @@
             this.gr1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.gr1.Controls.Add(this.splitCont);
-            this.gr1.Location = new System.Drawing.Point(12, 28);
+            this.gr1.Location = new System.Drawing.Point(7, 28);
             this.gr1.Name = "gr1";
-            this.gr1.Size = new System.Drawing.Size(395, 529);
+            this.gr1.Size = new System.Drawing.Size(400, 529);
             this.gr1.TabIndex = 1;
             this.gr1.TabStop = false;
             // 
@@ -88,10 +88,29 @@
             // 
             this.splitCont.Panel2.Controls.Add(this.groupBox1);
             this.splitCont.Panel2.Controls.Add(this.grinfo);
-            this.splitCont.Size = new System.Drawing.Size(389, 509);
+            this.splitCont.Panel2Collapsed = true;
+            this.splitCont.Size = new System.Drawing.Size(394, 509);
             this.splitCont.SplitterDistance = 301;
             this.splitCont.SplitterWidth = 20;
             this.splitCont.TabIndex = 0;
+            // 
+            // gArchSelect1
+            // 
+            this.gArchSelect1.Archid = 0;
+            this.gArchSelect1.ArchImgFile = null;
+            this.gArchSelect1.ArchRegPages = 0;
+            this.gArchSelect1.Archstat = null;
+            this.gArchSelect1.Archtype = null;
+            this.gArchSelect1.Boxsn = 0;
+            this.gArchSelect1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gArchSelect1.GotoPages = false;
+            this.gArchSelect1.LoadFileBoole = false;
+            this.gArchSelect1.Location = new System.Drawing.Point(0, 0);
+            this.gArchSelect1.Name = "gArchSelect1";
+            this.gArchSelect1.PagesEnd = false;
+            this.gArchSelect1.Size = new System.Drawing.Size(394, 509);
+            this.gArchSelect1.TabIndex = 0;
+            this.gArchSelect1.LineClickLoadInfo += new CsmCon.gArchSelect.ArchSelectHandle(this.gArchSelect1_LineClickLoadInfo);
             // 
             // groupBox1
             // 
@@ -100,9 +119,18 @@
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.groupBox1.Location = new System.Drawing.Point(0, 133);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(389, 55);
+            this.groupBox1.Size = new System.Drawing.Size(394, 55);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 30);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(113, 12);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "注：此界面只有一录";
             // 
             // butSaveInfo
             // 
@@ -124,7 +152,7 @@
             this.grinfo.BackColor = System.Drawing.Color.Transparent;
             this.grinfo.Location = new System.Drawing.Point(0, 2);
             this.grinfo.Name = "grinfo";
-            this.grinfo.Size = new System.Drawing.Size(389, 130);
+            this.grinfo.Size = new System.Drawing.Size(382, 130);
             this.grinfo.TabIndex = 0;
             this.grinfo.TabStop = false;
             // 
@@ -138,34 +166,6 @@
             this.gr2.Size = new System.Drawing.Size(529, 529);
             this.gr2.TabIndex = 2;
             this.gr2.TabStop = false;
-            // 
-            // gArchSelect1
-            // 
-            this.gArchSelect1.Archid = 0;
-            this.gArchSelect1.ArchImgFile = null;
-            this.gArchSelect1.ArchRegPages = 0;
-            this.gArchSelect1.Archstat = null;
-            this.gArchSelect1.Archtype = null;
-            this.gArchSelect1.Boxsn = 0;
-            this.gArchSelect1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gArchSelect1.GotoPages = false;
-            this.gArchSelect1.LoadFileBoole = false;
-            this.gArchSelect1.Location = new System.Drawing.Point(0, 0);
-            this.gArchSelect1.Name = "gArchSelect1";
-            this.gArchSelect1.PagesEnd = false;
-            this.gArchSelect1.Size = new System.Drawing.Size(389, 301);
-            this.gArchSelect1.TabIndex = 0;
-            this.gArchSelect1.LineClickLoadInfo += new CsmCon.gArchSelect.ArchSelectHandle(this.gArchSelect1_LineClickLoadInfo);
-          //  this.gArchSelect1.LineFocus += new CsmCon.gArchSelect.ArchSelectHandleFocus(this.gArchSelect1_LineFocus);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 30);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(113, 12);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "注：此界面只有一录";
             // 
             // Frmmldj
             // 

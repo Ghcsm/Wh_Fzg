@@ -229,8 +229,8 @@ namespace WareHouse
                     MessageBox.Show("此案卷号不存在!");
                     return;
                 }
-                int ArchState = Common.GetArchWorkState(ArchID);
-                if (ArchState < (int)Common.档案状态.质检完) {
+                int ArchState = Common.GetArchCheckState(ArchID);
+                if (ArchState != 1) {
                     MessageBox.Show("此卷档案未质检无法进行查阅！");
                     return;
                 }
@@ -245,27 +245,25 @@ namespace WareHouse
                         File.Delete(localCheckFile);
                     }
                 } catch { }
-                if (ArchState == (int)(Common.档案状态.质检完)) {
-                    if (ftp.CheckRemoteFile(Common.ArchSavePah, FileName.Substring(0, 8), FileName)) {
-                        if (ftp.DownLoadFile(Common.ArchSavePah, FileName.Substring(0, 8), localCheckFile, FileName)) {
-                            StoreImg.ArchId = ArchID;
-                            StoreImg.FileName = localCheckFile;
-                            StoreImg.ImgPrint = ClsStore.Imgsys;
-                            strImg = new StoreImg();
-                            if (strImg == null || strImg.IsDisposed) {
-                                strImg = new StoreImg();
-                            }
-                            strImg.Activate();
-                            strImg.ShowDialog();
-                            return;
-                        }
 
-                        MessageBox.Show("文件下载失败!");
+                if (ftp.CheckRemoteFile(Common.ArchSavePah, FileName.Substring(0, 8), FileName)) {
+                    if (ftp.DownLoadFile(Common.ArchSavePah, FileName.Substring(0, 8), localCheckFile, FileName)) {
+                        StoreImg.ArchId = ArchID;
+                        StoreImg.FileName = localCheckFile;
+                        StoreImg.ImgPrint = ClsStore.Imgsys;
+                        strImg = new StoreImg();
+                        if (strImg == null || strImg.IsDisposed) {
+                            strImg = new StoreImg();
+                        }
+                        strImg.Activate();
+                        strImg.ShowDialog();
                         return;
                     }
-                    MessageBox.Show("远程文件不存在!");
+                    MessageBox.Show("文件下载失败!");
                     return;
                 }
+                MessageBox.Show("远程文件不存在!");
+                return;
             } catch (Exception ee) {
                 MessageBox.Show(ee.ToString());
             }
@@ -534,16 +532,15 @@ namespace WareHouse
             ClsStore.Gdring = false;
             ClsStore.Imgsys = false;
             ClsStore.Imgys = false;
-            DataTable dt = Common.GetOthersys();
-            if (dt == null || dt.Rows.Count <= 0) {
-                return;
-            }
-            string str = DESEncrypt.DesDecrypt(dt.Rows[0][0].ToString());
-            if (str.Contains("库房上架"))
+
+            string str = DESEncrypt.DesEncrypt("库房上架");
+            if (T_User.UserOtherSys.IndexOf(str) >= 0)
                 ClsStore.Gdring = true;
-            if (str.Contains("图像打印"))
+            str = DESEncrypt.DesEncrypt("图像打印");
+            if (T_User.UserOtherSys.IndexOf(str) >= 0)
                 ClsStore.Imgsys = true;
-            if (str.Contains("验收图像"))
+            str = DESEncrypt.DesEncrypt("验收图像");
+            if (T_User.UserOtherSys.IndexOf(str) >= 0)
                 ClsStore.Imgys = true;
         }
 

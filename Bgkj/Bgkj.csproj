@@ -116,6 +116,9 @@
     <Reference Include="Csmsjid">
       <HintPath>..\..\..\..\2019\Csmsjid.dll</HintPath>
     </Reference>
+    <Reference Include="Csmtool">
+      <HintPath>..\Csmtool\bin\x86\Debug\Csmtool.dll</HintPath>
+    </Reference>
     <Reference Include="Csmxtbf, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Csmxtbf\Csmxtbf\bin\x86\Debug\Csmxtbf.dll</HintPath>
