@@ -793,9 +793,12 @@ namespace DAL
             SQLHelper.ExecScalar(strSql, p1);
         }
 
-        public static void UpdateConten(string table, string str, string lie, string with, string txtwith, string title, string pages, string module)
+        public static void UpdateConten(string table, string str, string lie, string with,
+            string txtwith, string title, string pages, string module,bool bl)
         {
-            string strSql = "update M_GenSetConten set ContenTable=@table, ContenCol=@info ,ContenLie=@lie,ContenWith=@with,ContentxtWith=@txtwith,ContenTitle=@title,ContenPages=@pages,ContenModule=@module";
+            string strSql = "update M_GenSetConten set ContenTable=@table," +
+                            " ContenCol=@info ,ContenLie=@lie,ContenWith=@with,ContentxtWith=@txtwith," +
+                            "ContenTitle=@title,ContenPages=@pages,ContenModule=@module,ContenInfoBl=@bl";
             SqlParameter[] par =
             {
                 new SqlParameter("@table", table),
@@ -805,16 +808,19 @@ namespace DAL
                 new SqlParameter("@txtwith", txtwith),
                 new SqlParameter("@title", title),
                 new SqlParameter("@pages", pages),
-                new SqlParameter("@module", module)
+                new SqlParameter("@module", module),
+                new SqlParameter("@bl", bl.ToString())
             };
             SQLHelper.ExecScalar(strSql, par);
         }
 
-        public static void InsterConten(string table, string str, string lie, string with, string txtwith, string title, string pages, string module)
+        public static void InsterConten(string table, string str, string lie, string with,
+            string txtwith, string title, string pages, string module,bool bl)
         {
             string strSql =
-                "insert into  M_GenSetConten (ContenTable,ContenCol,ContenLie,ContenWith,ContentxtWith,ContentxtWith,ContenTitle,ContenPages,ContenModule) values " +
-                "(@table,@info,@lie,@with,@txtwith,@title,@pages,@module)";
+                "insert into  M_GenSetConten (ContenTable,ContenCol,ContenLie,ContenWith," +
+                "ContentxtWith,ContentxtWith,ContenTitle,ContenPages,ContenModule,ContenInfoBl) values " +
+                "(@table,@info,@lie,@with,@txtwith,@title,@pages,@module,@bl)";
             SqlParameter[] par =
             {
                 new SqlParameter("@table", table),
@@ -824,7 +830,8 @@ namespace DAL
                 new SqlParameter("@txtwith", txtwith),
                 new SqlParameter("@title", title),
                 new SqlParameter("@pages", pages),
-                new SqlParameter("@module", module)
+                new SqlParameter("@module", module),
+                new SqlParameter("@bl", bl)
             };
             SQLHelper.ExecScalar(strSql, par);
         }

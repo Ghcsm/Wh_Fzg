@@ -53,6 +53,16 @@ namespace DAL
 
         #region  Contents
 
+        public static bool GetConteninfobl()
+        {
+            string str = "select ContenInfoBl from M_GenSetConten";
+            object obj = SQLHelper.ExecScalar(str);
+            if (obj == null)
+                return false;
+            bool bl = Convert.ToBoolean(obj);
+            return bl;
+        }
+
         public static DataTable GetContentsModule()
         {
             try {

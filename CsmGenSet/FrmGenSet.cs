@@ -2167,6 +2167,7 @@ namespace CsmGenSet
                 combContenModulename.Focus();
                 return;
             }
+            bool bl = chkConteninfo.Checked;
             try {
                 for (int i = 0; i < ClsConten.ContenCol.Count; i++) {
                     if (i != ClsConten.ContenCol.Count - 1)
@@ -2176,10 +2177,10 @@ namespace CsmGenSet
                 }
                 if (ClsConten.ContenModule.IndexOf(combContenModulename.Text.Trim()) >= 0)
                     T_Sysset.UpdateConten(ClsConten.ContenTable, str, combContenLieSn.Text.Trim(), combContenlabWith.Text.Trim(), combContentxtWith.Text.Trim(),
-                        combContenTitle.Text.Trim(), combContenPages.Text.Trim(), combContenModulename.Text.Trim());
+                        combContenTitle.Text.Trim(), combContenPages.Text.Trim(), combContenModulename.Text.Trim(),bl);
                 else
                     T_Sysset.InsterConten(ClsConten.ContenTable, str, combContenLieSn.Text.Trim(), combContenlabWith.Text.Trim(), combContentxtWith.Text.Trim(),
-                        combContenTitle.Text.Trim(), combContenPages.Text.Trim(), combContenModulename.Text.Trim());
+                        combContenTitle.Text.Trim(), combContenPages.Text.Trim(), combContenModulename.Text.Trim(),bl);
                 MessageBox.Show("保存成功!");
             } catch (Exception e) {
                 MessageBox.Show(e.ToString());
@@ -2231,6 +2232,9 @@ namespace CsmGenSet
                     combContenModulename.Items.Add(s);
                     ClsConten.ContenModule.Add(s);
                 }
+                str = dr["ContenInfoBl"].ToString();
+                if (str.Trim().Length >0)
+                    chkConteninfo.Checked = Convert.ToBoolean(str);
             } catch (Exception e) {
                 MessageBox.Show("目录录入表加载失败:" + e.ToString());
             }
@@ -2760,7 +2764,6 @@ namespace CsmGenSet
         {
             Infoshow();
         }
-
       
     }
 

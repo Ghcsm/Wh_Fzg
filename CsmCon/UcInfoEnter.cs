@@ -60,9 +60,10 @@ namespace CsmCon
                 tab.Name = str;
                 tab.Text = str;
                 tab.BackColor = Color.Transparent;
+                tab.TabStop =false;
                 Panel p = new Panel();
                 p.Name = str;
-                p.BackColor = Color.Transparent;
+                p.BackColor = SystemColors.GradientInactiveCaption;
                 p.Dock = DockStyle.Fill;
                 p.AutoSize = true;
                 tab.Controls.Add(p);

@@ -75,6 +75,7 @@
             this.chkTspages.Name = "chkTspages";
             this.chkTspages.Size = new System.Drawing.Size(96, 16);
             this.chkTspages.TabIndex = 0;
+            this.chkTspages.TabStop = false;
             this.chkTspages.Text = "显示特殊页码";
             this.chkTspages.UseVisualStyleBackColor = true;
             this.chkTspages.CheckedChanged += new System.EventHandler(this.chkTspages_CheckedChanged);
@@ -116,6 +117,7 @@
             this.chbModule.Name = "chbModule";
             this.chbModule.Size = new System.Drawing.Size(72, 16);
             this.chbModule.TabIndex = 0;
+            this.chbModule.TabStop = false;
             this.chbModule.Text = "显示模版";
             this.chbModule.UseVisualStyleBackColor = true;
             this.chbModule.CheckedChanged += new System.EventHandler(this.chbModule_CheckedChanged);

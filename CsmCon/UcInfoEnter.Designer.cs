@@ -27,21 +27,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.gr = new System.Windows.Forms.GroupBox();
             this.tabControl = new System.Windows.Forms.TabControl();
+            this.gr = new System.Windows.Forms.GroupBox();
             this.gr.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // gr
-            // 
-            this.gr.BackColor = System.Drawing.Color.Transparent;
-            this.gr.Controls.Add(this.tabControl);
-            this.gr.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gr.Location = new System.Drawing.Point(0, 0);
-            this.gr.Name = "gr";
-            this.gr.Size = new System.Drawing.Size(823, 501);
-            this.gr.TabIndex = 0;
-            this.gr.TabStop = false;
             // 
             // tabControl
             // 
@@ -51,6 +40,17 @@
             this.tabControl.SelectedIndex = 0;
             this.tabControl.Size = new System.Drawing.Size(817, 481);
             this.tabControl.TabIndex = 0;
+            // 
+            // gr
+            // 
+            this.gr.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.gr.Controls.Add(this.tabControl);
+            this.gr.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gr.Location = new System.Drawing.Point(0, 0);
+            this.gr.Name = "gr";
+            this.gr.Size = new System.Drawing.Size(823, 501);
+            this.gr.TabIndex = 0;
+            this.gr.TabStop = false;
             // 
             // UcInfoEnter
             // 
@@ -66,8 +66,7 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.GroupBox gr;
         private System.Windows.Forms.TabControl tabControl;
+        private System.Windows.Forms.GroupBox gr;
     }
 }
