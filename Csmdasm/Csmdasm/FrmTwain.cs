@@ -3,6 +3,7 @@ using DAL;
 using HLFtp;
 using HLjscom;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Threading.Tasks;
@@ -49,6 +50,7 @@ namespace Csmdasm
                     ImgView.Image == null && ClsTwain.ArchPos.Trim().Length <= 0) {
                     ClsTwain.ArchPos = gArch.ArchPos;
                     ClsTwain.Archid = gArch.Archid;
+                    ClsTwain.RegPage = gArch.ArchRegPages;
                     labArchNo.Text = string.Format("当前卷号:{0}", ClsTwain.ArchPos);
                     LoadArch();
                     ImgView.Focus();
@@ -109,6 +111,7 @@ namespace Csmdasm
                 }
                 Himg.LoadPage(pages);
                 Getuser();
+                GetQspage();
             }
         }
 
@@ -170,24 +173,77 @@ namespace Csmdasm
             Task.Run(new Action(() =>
             {
                 string Scanner = string.Empty;
+                string scantime = string.Empty;
                 string Indexer = string.Empty;
+                string indextime = string.Empty;
                 string Checker = string.Empty;
+                string chktime = string.Empty;
+                string enter = string.Empty;
+                string entertime = string.Empty;
                 DataTable dt = Common.GetOperator(ClsTwain.Archid);
                 if (dt == null || dt.Rows.Count <= 0)
                     return;
                 DataRow dr = dt.Rows[0];
                 Scanner = dr["扫描"].ToString();
+                scantime = dr["扫描时间"].ToString();
                 Indexer = dr["排序"].ToString();
+                indextime = dr["排序时间"].ToString();
                 Checker = dr["质检"].ToString();
+                chktime = dr["质检时间"].ToString();
+                enter = dr["录入"].ToString();
+                entertime = dr["录入时间"].ToString();
                 this.BeginInvoke(new Action(() =>
                 {
                     this.labScanUser.Text = string.Format("扫描：{0}", Scanner);
                     this.labIndexUser.Text = string.Format("排序：{0}", Indexer);
                     this.labCheckUser.Text = string.Format("质检：{0}", Checker);
 
+                    toollabscan.Text = string.Format("扫描:{0}", Scanner);
+                    toollabscantime.Text = string.Format("时间:{0}", scantime);
+                    toollabIndex.Text = string.Format("排序:{0}", Indexer);
+                    toollabindextime.Text = string.Format("时间:{0}", indextime);
+                    toollabcheck.Text = string.Format("质检:{0}", Checker);
+                    toollabchecktime.Text = string.Format("时间:{0}", chktime);
+                    toollabenter.Text = string.Format("录入:{0}", enter);
+                    toollabentertime.Text = string.Format("时间:{0}", entertime);
+
                 }));
                 dt.Dispose();
             }));
+        }
+
+        private void GetQspage()
+        {
+            Task.Run(() =>
+            {
+                List<string> LisPage = new List<string>();
+                string Qspages = string.Empty;
+
+                DataTable dt = Common.ReadPageIndexInfo(ClsTwain.Archid);
+                if (dt == null || dt.Rows.Count <= 0)
+                    return;
+                string PageIndexInfo = dt.Rows[0][0].ToString();
+                if (string.IsNullOrEmpty(PageIndexInfo))
+                    return;
+                string[] arrPage = PageIndexInfo.Split(' ');
+                if (arrPage==null ||arrPage.Length <= 0)
+                    return;
+                foreach (string i in arrPage) {
+                    string[] page = i.Split(':');
+                    LisPage.Add(page[1]);
+                }
+                for (int i = 1; i < ClsTwain.RegPage; i++) {
+                    if (LisPage.IndexOf(i.ToString()) < 0) {
+                        if (i != ClsTwain.RegPage - 1)
+                            Qspages += i.ToString() + ",";
+                        else {
+                            Qspages += i.ToString();
+                        }
+                    }
+                }
+                this.BeginInvoke(new Action(() => { labQsPages.Text = "当前卷缺少： " + Qspages + " 页"; }));
+            });
+
         }
 
         private void GetPages(int page, int counpage)
@@ -275,6 +331,7 @@ namespace Csmdasm
             ClsTwain.Archid = 0;
             ClsTwain.ArchPos = "";
             ClsTwain.MaxPage = 0;
+            ClsTwain.RegPage = 0;
             labPagesCrrent.Text = "第     页";
             labPagesCount.Text = "共      页";
             labScanUser.Text = "扫描:";
@@ -602,7 +659,7 @@ namespace Csmdasm
                     if (chkDoublePages.Checked == false) {
                         chkDoublePages.Checked = true;
                     }
-                    else 
+                    else
                         chkDoublePages.Checked = false;
                     break;
                 case Keys.NumPad1:
@@ -612,7 +669,7 @@ namespace Csmdasm
                     comPagesSize.SelectedIndex = 2;
                     break;
                 case Keys.NumPad4:
-                    comPagesSize.SelectedIndex =1;
+                    comPagesSize.SelectedIndex = 1;
                     break;
                 case Keys.Space:
                     toolScan_Click(sender, e);

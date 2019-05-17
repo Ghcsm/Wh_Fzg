@@ -109,6 +109,16 @@
             this.dockSite7 = new DevComponents.DotNetBar.DockSite();
             this.dockSite3 = new DevComponents.DotNetBar.DockSite();
             this.oFdInsterFile = new System.Windows.Forms.OpenFileDialog();
+            this.statuser = new System.Windows.Forms.StatusStrip();
+            this.toollabscan = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toollabscantime = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toollabIndex = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toollabindextime = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toollabcheck = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toollabchecktime = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toollabenter = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toollabentertime = new System.Windows.Forms.ToolStripStatusLabel();
+            this.labQsPages = new System.Windows.Forms.Label();
             this.dockSite9.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bar2)).BeginInit();
             this.bar2.SuspendLayout();
@@ -126,12 +136,14 @@
             this.grScanPagesSize.SuspendLayout();
             this.grPages.SuspendLayout();
             this.grDock.SuspendLayout();
+            this.grBottom.SuspendLayout();
             this.grTop.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.dockSite1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bar1)).BeginInit();
             this.bar1.SuspendLayout();
             this.panelDock1.SuspendLayout();
+            this.statuser.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolTop
@@ -243,6 +255,7 @@
             // 
             // splitCont1.Panel2
             // 
+            this.splitCont1.Panel2.Controls.Add(this.statuser);
             this.splitCont1.Panel2.Controls.Add(this.grDock);
             this.splitCont1.Panel2.Controls.Add(this.grBottom);
             this.splitCont1.Panel2.Controls.Add(this.grTop);
@@ -570,11 +583,13 @@
             // 
             // grDock
             // 
+            this.grDock.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.grDock.Controls.Add(this.ImgView);
-            this.grDock.Dock = System.Windows.Forms.DockStyle.Fill;
             this.grDock.Location = new System.Drawing.Point(0, 42);
             this.grDock.Name = "grDock";
-            this.grDock.Size = new System.Drawing.Size(802, 542);
+            this.grDock.Size = new System.Drawing.Size(802, 523);
             this.grDock.TabIndex = 2;
             this.grDock.TabStop = false;
             // 
@@ -586,15 +601,17 @@
             this.ImgView.ItemPadding = new System.Windows.Forms.Padding(1);
             this.ImgView.Location = new System.Drawing.Point(3, 17);
             this.ImgView.Name = "ImgView";
-            this.ImgView.Size = new System.Drawing.Size(796, 522);
+            this.ImgView.Size = new System.Drawing.Size(796, 503);
             this.ImgView.TabIndex = 0;
             this.ImgView.Click += new System.EventHandler(this.ImgView_Click);
             this.ImgView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ImgView_KeyDown);
             // 
             // grBottom
             // 
-            this.grBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.grBottom.Location = new System.Drawing.Point(0, 584);
+            this.grBottom.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.grBottom.Controls.Add(this.labQsPages);
+            this.grBottom.Location = new System.Drawing.Point(2, 559);
             this.grBottom.Name = "grBottom";
             this.grBottom.Size = new System.Drawing.Size(802, 41);
             this.grBottom.TabIndex = 1;
@@ -988,6 +1005,80 @@
             this.dockSite3.TabIndex = 3;
             this.dockSite3.TabStop = false;
             // 
+            // statuser
+            // 
+            this.statuser.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toollabscan,
+            this.toollabscantime,
+            this.toollabIndex,
+            this.toollabindextime,
+            this.toollabcheck,
+            this.toollabchecktime,
+            this.toollabenter,
+            this.toollabentertime});
+            this.statuser.Location = new System.Drawing.Point(0, 603);
+            this.statuser.Name = "statuser";
+            this.statuser.Size = new System.Drawing.Size(802, 22);
+            this.statuser.TabIndex = 3;
+            this.statuser.Text = "statusStrip1";
+            // 
+            // toollabscan
+            // 
+            this.toollabscan.Name = "toollabscan";
+            this.toollabscan.Size = new System.Drawing.Size(35, 17);
+            this.toollabscan.Text = "扫描:";
+            // 
+            // toollabscantime
+            // 
+            this.toollabscantime.Name = "toollabscantime";
+            this.toollabscantime.Size = new System.Drawing.Size(35, 17);
+            this.toollabscantime.Text = "时间:";
+            // 
+            // toollabIndex
+            // 
+            this.toollabIndex.Name = "toollabIndex";
+            this.toollabIndex.Size = new System.Drawing.Size(35, 17);
+            this.toollabIndex.Text = "排序:";
+            // 
+            // toollabindextime
+            // 
+            this.toollabindextime.Name = "toollabindextime";
+            this.toollabindextime.Size = new System.Drawing.Size(35, 17);
+            this.toollabindextime.Text = "时间:";
+            // 
+            // toollabcheck
+            // 
+            this.toollabcheck.Name = "toollabcheck";
+            this.toollabcheck.Size = new System.Drawing.Size(35, 17);
+            this.toollabcheck.Text = "质检:";
+            // 
+            // toollabchecktime
+            // 
+            this.toollabchecktime.Name = "toollabchecktime";
+            this.toollabchecktime.Size = new System.Drawing.Size(35, 17);
+            this.toollabchecktime.Text = "时间:";
+            // 
+            // toollabenter
+            // 
+            this.toollabenter.Name = "toollabenter";
+            this.toollabenter.Size = new System.Drawing.Size(35, 17);
+            this.toollabenter.Text = "录入:";
+            // 
+            // toollabentertime
+            // 
+            this.toollabentertime.Name = "toollabentertime";
+            this.toollabentertime.Size = new System.Drawing.Size(35, 17);
+            this.toollabentertime.Text = "时间:";
+            // 
+            // labQsPages
+            // 
+            this.labQsPages.AutoSize = true;
+            this.labQsPages.Location = new System.Drawing.Point(17, 19);
+            this.labQsPages.Name = "labQsPages";
+            this.labQsPages.Size = new System.Drawing.Size(77, 12);
+            this.labQsPages.TabIndex = 0;
+            this.labQsPages.Text = "当前卷缺少：";
+            // 
             // FrmTwain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -1015,6 +1106,7 @@
             this.panelDock2.PerformLayout();
             this.splitCont1.Panel1.ResumeLayout(false);
             this.splitCont1.Panel2.ResumeLayout(false);
+            this.splitCont1.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitCont1)).EndInit();
             this.splitCont1.ResumeLayout(false);
             this.gr2.ResumeLayout(false);
@@ -1031,6 +1123,8 @@
             this.grPages.ResumeLayout(false);
             this.grPages.PerformLayout();
             this.grDock.ResumeLayout(false);
+            this.grBottom.ResumeLayout(false);
+            this.grBottom.PerformLayout();
             this.grTop.ResumeLayout(false);
             this.grTop.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
@@ -1039,6 +1133,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.bar1)).EndInit();
             this.bar1.ResumeLayout(false);
             this.panelDock1.ResumeLayout(false);
+            this.statuser.ResumeLayout(false);
+            this.statuser.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1125,5 +1221,15 @@
         private System.Windows.Forms.ToolStripProgressBar toolProess;
         private Leadtools.Controls.ImageViewer ImgView;
         private System.Windows.Forms.OpenFileDialog oFdInsterFile;
+        private System.Windows.Forms.StatusStrip statuser;
+        private System.Windows.Forms.ToolStripStatusLabel toollabscan;
+        private System.Windows.Forms.ToolStripStatusLabel toollabscantime;
+        private System.Windows.Forms.ToolStripStatusLabel toollabIndex;
+        private System.Windows.Forms.ToolStripStatusLabel toollabindextime;
+        private System.Windows.Forms.ToolStripStatusLabel toollabcheck;
+        private System.Windows.Forms.ToolStripStatusLabel toollabchecktime;
+        private System.Windows.Forms.ToolStripStatusLabel toollabenter;
+        private System.Windows.Forms.ToolStripStatusLabel toollabentertime;
+        private System.Windows.Forms.Label labQsPages;
     }
 }
