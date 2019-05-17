@@ -246,6 +246,7 @@
             this.butKeysZdydel.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.butKeysZdydel.TabIndex = 3;
             this.butKeysZdydel.Text = "清除";
+            this.butKeysZdydel.Click += new System.EventHandler(this.butKeysZdydel_Click);
             // 
             // butKeysZdyAdd
             // 
@@ -289,6 +290,7 @@
             this.combKeyzdyoperlx.Size = new System.Drawing.Size(121, 21);
             this.combKeyzdyoperlx.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.combKeyzdyoperlx.TabIndex = 1;
+            this.combKeyzdyoperlx.SelectedIndexChanged += new System.EventHandler(this.combKeyzdyoperlx_SelectedIndexChanged);
             // 
             // combKeyZdymodlx
             // 

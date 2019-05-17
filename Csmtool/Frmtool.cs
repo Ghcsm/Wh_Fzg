@@ -275,16 +275,8 @@ namespace Csmtool
         }
         #endregion
 
-        private void Frmtool_Shown(object sender, EventArgs e)
-        {
-            ftp = new HFTP();
-            GetModul();
-            Getkeys();
-        }
-
-
         #region keys
-
+        //获取所有模块
         void GetModul()
         {
             Task.Run(() =>
@@ -305,15 +297,15 @@ namespace Csmtool
             });
         }
 
+        //将已经添加的模块添加到自定义commodul
         void Getkeys()
         {
             Toolskeys.LskeyModule.Clear();
-            Toolskeys.LskeyOper.Clear();
-            combKeyzdyoperlx.Items.Clear();
             combKeyZdymodlx.Items.Clear();
             Task.Run(() =>
             {
                 Toolskeys.dtkeys = Common.GetkeysInfo();
+
                 if (Toolskeys.dtkeys == null || Toolskeys.dtkeys.Rows.Count <= 0)
                     return;
                 for (int i = 0; i < Toolskeys.dtkeys.Rows.Count; i++) {
@@ -332,6 +324,7 @@ namespace Csmtool
             });
         }
 
+        //选择模块时添加 操作及操作值
         void GetkeysOper(int x, int id)
         {
             string str = "";
@@ -345,6 +338,7 @@ namespace Csmtool
                 Toolskeys.LsnewOperNum.Clear();
                 combKeyNewOperList.Items.Clear();
                 combKeyNewOpernumlist.Items.Clear();
+                Toolskeys.LskeyOpernum.Clear();
                 if (id > 0)
                     str = Toolskeys.LskeyModule[x];
                 else
@@ -355,9 +349,11 @@ namespace Csmtool
                     return;
                 if (id > 0) {
                     for (int i = 0; i < dt.Rows.Count; i++) {
-                        string opernu = dt.Rows[i][1].ToString();
-                        Toolskeys.LskeyOper.Add(opernu);
-                        combKeyzdyoperlx.Items.Add(opernu);
+                        string oper = dt.Rows[i][1].ToString();
+                        string opernum = dt.Rows[i][2].ToString();
+                        Toolskeys.LskeyOper.Add(oper);
+                        combKeyzdyoperlx.Items.Add(oper);
+                        Toolskeys.LskeyOpernum.Add(opernum);
                     }
                     return;
                 }
@@ -369,7 +365,6 @@ namespace Csmtool
                     Toolskeys.LsnewOperNum.Add(opernum);
                     combKeyNewOpernumlist.Items.Add(opernum);
                 }
-
 
             } catch {
 
@@ -474,6 +469,7 @@ namespace Csmtool
         {
             int x = combKeyZdymodlx.SelectedIndex;
             GetkeysOper(x, 1);
+            Getinikeyval();
 
         }
 
@@ -538,7 +534,7 @@ namespace Csmtool
             txtKeysZdyKeys.Focus();
         }
 
-        string IsInikey()
+        string IsInikeysval()
         {
             string str = "";
             if (combKeyZdymodlx.Text.Trim().Length <= 0) {
@@ -556,15 +552,146 @@ namespace Csmtool
                 txtKeysZdyKeys.Focus();
                 return str;
             }
-            str = combKeyzdyTkey.SelectedIndex.ToString() + "-" + txtKeysZdyKeys.Text.Trim();
+            str = combKeyzdyTkey.SelectedIndex.ToString() + "-" + Toolskeys.KeyAscill.ToString();
             return str;
+        }
+
+        string Isinikey()
+        {
+            string str = "";
+            if (combKeyZdymodlx.Text.Trim().Length <= 0) {
+                MessageBox.Show("模块类型不能为空!");
+                combKeyZdymodlx.Focus();
+                return str;
+            }
+            if (combKeyzdyoperlx.Text.Trim().Length <= 0) {
+                MessageBox.Show("操作类型不能为空!");
+                combKeyzdyoperlx.Focus();
+                return str;
+            }
+            str = combKeyzdyoperlx.Text.Trim();
+            int x = Toolskeys.LskeyOper.IndexOf(str);
+            if (x < 0)
+                return "";
+            string key = Toolskeys.LskeyOpernum[x];
+            if (key.Trim().Length <= 0)
+                return "";
+            str = "V" + key;
+            return str;
+        }
+
+
+        void Getinikeyval()
+        {
+            txtKeysZdyKeys.Text = "";
+            labkeys.Text = "未注册";
+            try {
+                Toolskeys.Lsinikey.Clear();
+                Toolskeys.LsiniCz.Clear();
+                Writeini.GetAllKeyValues(combKeyZdymodlx.Text.Trim(), out Toolskeys.LsiniCz, out Toolskeys.Lsinikey);
+
+            } catch {
+                MessageBox.Show("读取快捷键失败!");
+            }
+        }
+
+        void SelectKey()
+        {
+            txtKeysZdyKeys.Text = "";
+            labkeys.Text = "未注册";
+            if (combKeyzdyoperlx.Text.Length <= 0 || Toolskeys.LsiniCz.Count <= 0)
+                return;
+            string str = "V" + Toolskeys.LskeyOpernum[combKeyzdyoperlx.SelectedIndex];
+            int x = Toolskeys.LsiniCz.IndexOf(str);
+            if (x >= 0) {
+                str = Toolskeys.Lsinikey[x];
+                string[] KeyV = str.Split(new char[] { '-' });
+                if (KeyV[0].Trim().ToString() == "1") {
+                    str = "Ctrl+";
+                }
+                else if (KeyV[0].Trim().ToString() == "2") {
+                    str = "Alt+";
+                }
+                else if (KeyV[0].Trim().ToString() == "3") {
+                    str = "Shift+";
+                }
+                else {
+                    str = "";
+                }
+                int Nk = Convert.ToInt32(KeyV[1].Trim());
+                str += ((char)Nk).ToString();
+                labkeys.Text = str;
+            }
+        }
+
+        void Savekey(string keys, string val)
+        {
+            try {
+                if (Toolskeys.Lsinikey.IndexOf(val) >= 0) {
+                    if (MessageBox.Show("此快捷键已注册，是否强制重新注册？", "警告", MessageBoxButtons.OKCancel,
+                            MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.OK) {
+                        Writeini.Delkeyval(combKeyZdymodlx.Text.Trim(), keys);
+                        if (Writeini.Wirtekey(combKeyZdymodlx.Text.Trim(), keys, val)) {
+                            MessageBox.Show("注册成功!");
+                            txtKeysZdyKeys.Focus();
+                            return;
+                        }
+                        MessageBox.Show("注册失败,或请重启程序!");
+                    }
+                }
+                else {
+                    if (Writeini.Wirtekey(combKeyZdymodlx.Text.Trim(), keys, val)) {
+                        MessageBox.Show("注册成功!");
+                        txtKeysZdyKeys.Focus();
+                        return;
+                    }
+
+                    MessageBox.Show("注册失败,或请重启程序!");
+                }
+            } catch (Exception e) {
+                MessageBox.Show("注册失败:" + e.ToString());
+            } finally {
+                Getinikeyval();
+            }
         }
 
         private void butKeysZdyAdd_Click(object sender, EventArgs e)
         {
+            string val = IsInikeysval().Trim();
+            string key = Isinikey().Trim();
+            if (val.Length <= 0 || key.Length <= 0)
+                return;
+            Savekey(key, val);
+        }
+
+
+        private void combKeyzdyoperlx_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (combKeyzdyoperlx.SelectedIndex >= 0)
+                SelectKey();
+        }
+
+        private void butKeysZdydel_Click(object sender, EventArgs e)
+        {
+            string str = Isinikey().Trim();
+            if (str.Length <= 0)
+                return;
+            Writeini.Delkeyval(combKeyZdymodlx.Text.Trim(), str);
+            Getinikeyval();
+            MessageBox.Show("清除成功!");
+            txtKeysZdyKeys.Focus();
 
         }
         #endregion
+        private void Frmtool_Shown(object sender, EventArgs e)
+        {
+            ftp = new HFTP();
+            GetModul();
+            Getkeys();
+            string str = Path.Combine(Application.StartupPath, "CsmKeyVal.ini");
+            Writeini.Fileini = str;
+        }
+
 
     }
 }

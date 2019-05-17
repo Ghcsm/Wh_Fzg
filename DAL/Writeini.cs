@@ -47,11 +47,41 @@ namespace DAL
             }
         }
 
+        public static Boolean Wirtekey(string siction,string key, string val)
+        {
+            try {
+                Wirteini(siction, key, val);
+                return true;
+            } catch {
+                return false;
+            }
+        }
+
+        public static Boolean Delkeyval(string siction, string key)
+        {
+            try {
+                Wirteini(siction, key, null);
+                return true;
+            } catch {
+                return false;
+            }
+        }
+        public static Boolean Delkeyval(string siction, string key,string val)
+        {
+            try {
+                Wirteini(siction, key, val);
+                return true;
+            } catch {
+                return false;
+            }
+        }
+
+
         public static int GetAllKeyValues(string section,out List<string> keys,out List<string> value)
         {
             keys = new List<string>();
             value = new List<string>();
-            byte[] b = new byte[65535];//配置节下的所有信息
+            byte[] b = new byte[100];//配置节下的所有信息
             GetPrivateProfileSection(section, b, b.Length, Fileini);
             string s = System.Text.Encoding.Default.GetString(b);//配置信息
             string[] tmp = s.Split((char)0);//Key\Value信息
