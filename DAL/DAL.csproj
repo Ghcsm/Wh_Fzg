@@ -109,6 +109,7 @@
     <Compile Include="T_Sysset.cs" />
     <Compile Include="T_User.cs" />
     <Compile Include="V_House.cs" />
+    <Compile Include="Writeini.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="frmModel.resx">

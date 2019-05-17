@@ -546,9 +546,9 @@ namespace Csmdapx
                 if (dt == null || dt.Rows.Count <= 0)
                     return;
                 DataRow dr = dt.Rows[0];
-                Scanner = dr["Scanner"].ToString();
-                Indexer = dr["Indexer"].ToString();
-                Checker = dr["Checker"].ToString();
+                Scanner = dr["扫描"].ToString();
+                Indexer = dr["排序"].ToString();
+                Checker = dr["质检"].ToString();
                 this.BeginInvoke(new Action(() =>
                 {
                     this.labScanUser.Text = string.Format("扫描：{0}", Scanner);
@@ -584,6 +584,8 @@ namespace Csmdapx
             ImgView.Image = null;
             ClsIndex.Archid = 0;
             ClsIndex.ArchPos = "";
+            ClsIndex.MaxPage = 0;
+            ClsIndex.CrrentPage = 0;
             labPageCrrent.Text = "第     页";
             labPageCount.Text = "共      页";
             labScanUser.Text = "扫描:";

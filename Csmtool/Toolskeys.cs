@@ -11,6 +11,10 @@ namespace Csmtool
     {
 
         public static List<string> lsModule = new List<string>();
+        public static List<string>LsnewOper=new List<string>();
+        public static List<string>LsnewOperNum=new List<string>();
+
+
 
         public static List<string> LskeyModule = new List<string>();
         public static List<string> LskeyOper = new List<string>();
@@ -18,5 +22,11 @@ namespace Csmtool
         public static DataTable dtkeys { get; set; }
 
         public static bool isbool { get; set; }
+
+
+        public static  int KeyAscill = 0;
+
+
+      
     }
 }

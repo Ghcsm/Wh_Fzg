@@ -54,9 +54,9 @@ namespace Csmdajc
         {
             int p = 0;
             try {
-               p = Convert.ToInt32(UcContents.PageMl);
+                p = Convert.ToInt32(UcContents.PageMl);
             } catch { }
-            if (p>0)
+            if (p > 0)
                 Himg._Gotopage(p);
 
         }
@@ -289,15 +289,17 @@ namespace Csmdajc
         }
         private void toolStripRepair_Click(object sender, EventArgs e)
         {
-
-            string filetmp = Clscheck.ScanFilePath;
-            int archid = Clscheck.Archid;
-            string archpos = Clscheck.ArchPos;
-            Cledata();
-            Task.Run(new Action(() =>
-            {
-                Repair(filetmp, archid, archpos);
-            }));
+            if (MessageBox.Show("您确定要返工本卷档案吗？", "提示", MessageBoxButtons.OKCancel,
+                    MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.OK) {
+                string filetmp = Clscheck.ScanFilePath;
+                int archid = Clscheck.Archid;
+                string archpos = Clscheck.ArchPos;
+                Cledata();
+                Task.Run(new Action(() =>
+                {
+                    Repair(filetmp, archid, archpos);
+                }));
+            }
         }
 
         #endregion
@@ -503,9 +505,9 @@ namespace Csmdajc
                 if (dt == null || dt.Rows.Count <= 0)
                     return;
                 DataRow dr = dt.Rows[0];
-                Scanner = dr["Scanner"].ToString();
-                Indexer = dr["Indexer"].ToString();
-                Checker = dr["Checker"].ToString();
+                Scanner = dr["扫描"].ToString();
+                Indexer = dr["排序"].ToString();
+                Checker = dr["质检"].ToString();
                 this.BeginInvoke(new Action(() =>
                 {
                     this.labScanUser.Text = string.Format("扫描：{0}", Scanner);
@@ -556,7 +558,7 @@ namespace Csmdajc
                         string path = Path.Combine(T_ConFigure.FtpArchSave, Clscheck.FileNametmp.Substring(0, 8));
                         if (ftp.FtpMoveFile(sourefile, goalfile, path)) {
                             Common.DelTask(arid);
-                            Common.SetCheckFinish(arid, filename,1, (int)T_ConFigure.ArchStat.质检完,"","");
+                            Common.SetCheckFinish(arid, filename, 1, (int)T_ConFigure.ArchStat.质检完, "", "");
                             return;
                         }
                     }
@@ -568,7 +570,7 @@ namespace Csmdajc
                         bool x = await ftp.FtpUpFile(filetmp, newfile, newpath);
                         if (x) {
                             Common.DelTask(arid);
-                            Common.SetCheckFinish(arid, filename,1, (int)T_ConFigure.ArchStat.质检完, "","");
+                            Common.SetCheckFinish(arid, filename, 1, (int)T_ConFigure.ArchStat.质检完, "", "");
                             try {
                                 File.Delete(filetmp);
                                 Directory.Delete(localPath);

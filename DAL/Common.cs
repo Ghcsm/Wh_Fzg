@@ -1340,7 +1340,7 @@ namespace DAL
         public static DataTable GetkeysInfo()
         {
             try {
-                string strSql = "select Module,Operter from M_OperterKey order by id";
+                string strSql = "select Module,Operter,OperterKey from M_OperterKey order by id";
                 DataTable dt = SQLHelper.ExcuteTable(strSql);
                 return dt;
             } catch {
@@ -1706,7 +1706,7 @@ namespace DAL
         {
             DataTable dt;
             try {
-                string strSql = "select * from V_ArchOperator where id=@archid ";
+                string strSql = "select * from V_GetUsertime where Archid=@archid ";
                 SqlParameter p1 = new SqlParameter("@archid", ArchID);
                 dt = SQLHelper.ExcuteTable(strSql, p1);
                 return dt;

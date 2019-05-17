@@ -220,9 +220,9 @@ namespace Csmdacx
             if (dt == null || dt.Rows.Count <= 0)
                 return;
             DataRow dr = dt.Rows[0];
-            Scanner = dr["Scanner"].ToString();
-            Indexer = dr["Indexer"].ToString();
-            Checker = dr["Checker"].ToString();
+            Scanner = dr["扫描"].ToString();
+            Indexer = dr["排序"].ToString();
+            Checker = dr["质检"].ToString();
             this.BeginInvoke(new Action(() =>
             {
                 toolslab_scanuser.Text = string.Format("扫描：{0}", Scanner);
