@@ -51,6 +51,10 @@ namespace CsmCon
                 return;
             for (int i = 0; i < ClsContenInfo.ContenCoList.Count; i++) {
                 string str = ClsContenInfo.ContenCoList[i];
+                if (i == ClsContenInfo.TitleWz+2)
+                    LvContents.Columns[i].Width = 200;
+                else if (i>1)
+                    LvContents.Columns[i].Width = 100;
                 LvContents.Columns.Add(str);
             }
         }
@@ -287,7 +291,7 @@ namespace CsmCon
             } catch { }
         }
 
-        public  void CloseConten()
+        public void CloseConten()
         {
             LvContents.Items.Clear();
         }

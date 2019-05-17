@@ -34,6 +34,10 @@ namespace CsmCon
                 return;
             for (int i = 0; i < ClsContenInfo.ContenCoList.Count; i++) {
                 string str = ClsContenInfo.ContenCoList[i];
+                if (i == ClsContenInfo.TitleWz + 2)
+                    lvconten.Columns[i].Width = 200;
+                else if (i > 1)
+                    lvconten.Columns[i].Width = 100;
                 lvconten.Columns.Add(str);
             }
         }
@@ -46,7 +50,7 @@ namespace CsmCon
 
         public void CloseConten()
         {
-            lvconten.Items.Clear();;
+            lvconten.Items.Clear(); ;
         }
 
         private void UcConten_Load(object sender, EventArgs e)
@@ -57,8 +61,7 @@ namespace CsmCon
         private void lvconten_Click(object sender, EventArgs e)
         {
             int x = lvconten.SelectedItems[0].Index;
-            if (ClsContenInfo.PageCount2.Count > 0)
-            {
+            if (ClsContenInfo.PageCount2.Count > 0) {
                 ArchPages = Convert.ToInt32(ClsContenInfo.PageCount2[x]);
                 if (ArchPages > 0)
                     OneClickGotoPage?.Invoke(sender, e);

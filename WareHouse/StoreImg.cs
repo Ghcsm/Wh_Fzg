@@ -88,7 +88,7 @@ namespace WareHouse
                     File.Delete(FileName);
                 Directory.Exists(Path.GetDirectoryName(FileName));
                 Directory.Delete(Path.GetDirectoryName(FileName));
-            } catch  {}
+            } catch { }
         }
 
         private void StoreImg_FormClosing(object sender, FormClosingEventArgs e)

@@ -826,7 +826,7 @@ namespace DAL
         {
             string strSql =
                 "insert into  M_GenSetConten (ContenTable,ContenCol,ContenLie,ContenWith," +
-                "ContentxtWith,ContentxtWith,ContenTitle,ContenPages,ContenModule,ContenInfoBl) values " +
+                "ContentxtWith,ContenTitle,ContenPages,ContenModule,ContenInfoBl) values " +
                 "(@table,@info,@lie,@with,@txtwith,@title,@pages,@module,@bl)";
             SqlParameter[] par =
             {

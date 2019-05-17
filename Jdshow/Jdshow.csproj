@@ -105,12 +105,6 @@
   <ItemGroup>
     <None Include="Resources\0_1309168158c9z6.gif" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\Csmhl\bg\Hljsarch\Hljsarch\Hljsarch.csproj">
-      <Project>{8D7460D2-DD0A-4D26-B8C9-FBF0493D923F}</Project>
-      <Name>Hljsarch</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -191,6 +191,9 @@ namespace Csmdapx
                 //  Application.DoEvents();
                 Thread.Sleep(100);
                 Himg._Pagenext(0);
+                string txt = this.txtPages.Text.Trim();
+                if (txt == "已删除")
+                    txtPages.ReadOnly = true;
             }
         }
 
@@ -198,6 +201,9 @@ namespace Csmdapx
         {
             // ImgSide = 0;
             NextPage();
+            string txt = this.txtPages.Text.Trim();
+            if (txt == "已删除")
+                txtPages.ReadOnly = true;
         }
         private void NextPage()
         {
@@ -210,8 +216,8 @@ namespace Csmdapx
                 else if (txt == "已删除") {
                     txt = "0";
                     Himg._Pagenext(1);
-                    txtPages.Text = "";
-                    txtPages.ReadOnly = true;
+                //    txtPages.Text = "";
+                //    txtPages.ReadOnly = false;
                     txtPages.Focus();
                 }
                 else if (txt.Length <= 0 || txt == "0") {
@@ -220,7 +226,6 @@ namespace Csmdapx
                     return;
                 }
                 else {
-                    // txtpage = txt;
                     //当前页小于注册页码 同时小于扫描最大页码                   
                     if (Opage < ClsIndex.RegPage - Himg._PageAbc.Count && Opage < ClsIndex.MaxPage) {
                         Himg._Oderpage(txt);
@@ -234,14 +239,10 @@ namespace Csmdapx
                     }
                     //当前页等于注册页码  同时 当前 等于扫描最大页码 
                     else if (Opage == ClsIndex.MaxPage) {
-                        //if (WanCtf == false)
-                        //{
-                        //   WanCtf = true;
                         Himg._Oderpage(txt);
                         Application.DoEvents();
                         this.toolStripSave_Click(null, null);
-                        //  WanCtf = false;
-                        // }
+                      
                     }
                 }
             } catch { }
@@ -262,6 +263,7 @@ namespace Csmdapx
                     Himg._PageNumber.Clear();
                     Cledata();
                     Task.Run(new Action(() => { FtpUpFinish(filetmp, arid, archpos, pages, pageabc, pagenum); }));
+                    txtPages.Text = "";
                     gArch.LvData.Focus();
                 }
             }
@@ -279,6 +281,7 @@ namespace Csmdapx
             int pages = ClsIndex.MaxPage;
             Cledata();
             Task.Run(new Action(() => { FtpUpCanCel(filetmp, arid, archpos, pageabc, pagenum, ClsIndex.MaxPage); }));
+            txtPages.Text = "";
             gArch.LvData.Focus();
         }
 

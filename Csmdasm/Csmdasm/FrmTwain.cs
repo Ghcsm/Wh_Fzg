@@ -333,6 +333,7 @@ namespace Csmdasm
             ClsTwain.ArchPos = "";
             ClsTwain.MaxPage = 0;
             ClsTwain.RegPage = 0;
+            Himg.SetpageZero();
             labPagesCrrent.Text = "第     页";
             labPagesCount.Text = "共      页";
             labScanUser.Text = "扫描:";

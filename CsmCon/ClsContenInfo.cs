@@ -21,7 +21,7 @@ namespace CsmCon
         public static string ContenTitle { get; set; }
         public static string ContenPages { get; set; }
         public static int PagesWz { get; set; }
-
+        public static int TitleWz { get; set; }
         public static List<string> ContenCoList = new List<string>();
         public static string ContenCol { get; set; }
         public static List<string> PageCount = new List<string>();
@@ -67,6 +67,7 @@ namespace CsmCon
                 }
             }
             ClsContenInfo.PagesWz = ClsContenInfo.ContenCoList.IndexOf(ClsContenInfo.ContenPages);
+            ClsContenInfo.TitleWz= ClsContenInfo.ContenCoList.IndexOf(ClsContenInfo.ContenTitle);
         }
 
         public static void LoadModule(ListViewEx lsv)
@@ -269,7 +270,7 @@ namespace CsmCon
 
         public static void SetInfoTxt(Control p, string str)
         {
-            int id = ClsContenInfo.ContenCoList.IndexOf(ClsContenInfo.ContenTitle);
+            int id = ClsContenInfo.TitleWz;
             foreach (Control ct in p.Controls) {
                 if (ct is TextBox || ct is ComboBox) {
                     if (ct.Tag.ToString() == id.ToString()) {
@@ -284,7 +285,7 @@ namespace CsmCon
             bool tf = false;
             ClsContenInfo.Pagestmp = "";
             int id = 0;
-            int title = ClsContenInfo.ContenCoList.IndexOf(ClsContenInfo.ContenTitle) + 1;
+            int title = ClsContenInfo.TitleWz + 1;
             int page = ClsContenInfo.PagesWz + 1;
             foreach (Control ct in p.Controls) {
                 if (ct is TextBox || ct is ComboBox) {

@@ -32,6 +32,11 @@
             this.superTabControlPanel1 = new DevComponents.DotNetBar.SuperTabControlPanel();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.combKeyzdyTkey = new DevComponents.DotNetBar.Controls.ComboBoxEx();
+            this.comboItem4 = new DevComponents.Editors.ComboItem();
+            this.comboItem5 = new DevComponents.Editors.ComboItem();
+            this.comboItem6 = new DevComponents.Editors.ComboItem();
+            this.comboItem7 = new DevComponents.Editors.ComboItem();
             this.butKeysZdydel = new DevComponents.DotNetBar.ButtonX();
             this.butKeysZdyAdd = new DevComponents.DotNetBar.ButtonX();
             this.txtKeysZdyKeys = new DevComponents.DotNetBar.Controls.TextBoxX();
@@ -39,6 +44,7 @@
             this.combKeyZdymodlx = new DevComponents.DotNetBar.Controls.ComboBoxEx();
             this.labkeys = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
@@ -97,12 +103,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.TabitemlArchStat = new DevComponents.DotNetBar.SuperTabItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.label16 = new System.Windows.Forms.Label();
-            this.combKeyzdyTkey = new DevComponents.DotNetBar.Controls.ComboBoxEx();
-            this.comboItem4 = new DevComponents.Editors.ComboItem();
-            this.comboItem5 = new DevComponents.Editors.ComboItem();
-            this.comboItem6 = new DevComponents.Editors.ComboItem();
-            this.comboItem7 = new DevComponents.Editors.ComboItem();
             this.gr1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TabControl)).BeginInit();
             this.TabControl.SuspendLayout();
@@ -206,6 +206,36 @@
             this.groupBox8.TabIndex = 0;
             this.groupBox8.TabStop = false;
             // 
+            // combKeyzdyTkey
+            // 
+            this.combKeyzdyTkey.DisplayMember = "Text";
+            this.combKeyzdyTkey.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.combKeyzdyTkey.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.combKeyzdyTkey.FormattingEnabled = true;
+            this.combKeyzdyTkey.ItemHeight = 15;
+            this.combKeyzdyTkey.Items.AddRange(new object[] {
+            this.comboItem4,
+            this.comboItem5,
+            this.comboItem6,
+            this.comboItem7});
+            this.combKeyzdyTkey.Location = new System.Drawing.Point(98, 94);
+            this.combKeyzdyTkey.Name = "combKeyzdyTkey";
+            this.combKeyzdyTkey.Size = new System.Drawing.Size(121, 21);
+            this.combKeyzdyTkey.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.combKeyzdyTkey.TabIndex = 4;
+            // 
+            // comboItem5
+            // 
+            this.comboItem5.Text = "Ctrl";
+            // 
+            // comboItem6
+            // 
+            this.comboItem6.Text = "Alt";
+            // 
+            // comboItem7
+            // 
+            this.comboItem7.Text = "Shift";
+            // 
             // butKeysZdydel
             // 
             this.butKeysZdydel.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
@@ -291,6 +321,15 @@
             this.label15.Size = new System.Drawing.Size(65, 12);
             this.label15.TabIndex = 0;
             this.label15.Text = "按键状态：";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(27, 100);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(53, 12);
+            this.label16.TabIndex = 0;
+            this.label16.Text = "特殊键：";
             // 
             // label14
             // 
@@ -905,45 +944,6 @@
             this.toolStrip1.Size = new System.Drawing.Size(908, 25);
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(27, 100);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(53, 12);
-            this.label16.TabIndex = 0;
-            this.label16.Text = "特殊键：";
-            // 
-            // combKeyzdyTkey
-            // 
-            this.combKeyzdyTkey.DisplayMember = "Text";
-            this.combKeyzdyTkey.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.combKeyzdyTkey.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.combKeyzdyTkey.FormattingEnabled = true;
-            this.combKeyzdyTkey.ItemHeight = 15;
-            this.combKeyzdyTkey.Items.AddRange(new object[] {
-            this.comboItem4,
-            this.comboItem5,
-            this.comboItem6,
-            this.comboItem7});
-            this.combKeyzdyTkey.Location = new System.Drawing.Point(98, 94);
-            this.combKeyzdyTkey.Name = "combKeyzdyTkey";
-            this.combKeyzdyTkey.Size = new System.Drawing.Size(121, 21);
-            this.combKeyzdyTkey.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.combKeyzdyTkey.TabIndex = 4;
-            // 
-            // comboItem5
-            // 
-            this.comboItem5.Text = "Ctrl";
-            // 
-            // comboItem6
-            // 
-            this.comboItem6.Text = "Alt";
-            // 
-            // comboItem7
-            // 
-            this.comboItem7.Text = "Shift";
             // 
             // Frmtool
             // 

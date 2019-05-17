@@ -81,8 +81,8 @@ namespace CsmCon
         {
             if (id == 0)
                 ucContents0.LoadConten(ArchId);
-           else
-                ucContents1.LoadContents(ArchId,0);
+            else
+                ucContents1.LoadContents(ArchId, 0);
         }
 
         private void LoadFile()
@@ -199,8 +199,7 @@ namespace CsmCon
         }
         public void Close()
         {
-            if (ImgView.Image != null)
-            {
+            if (ImgView.Image != null) {
                 if (id == 0)
                     ucContents0.CloseConten();
                 else
