@@ -77,7 +77,7 @@ namespace DAL
         }
 
 
-        public static int GetAllKeyValues(string section,out List<string> keys,out List<string> value)
+        public static void GetAllKeyValues(string section,out List<string> keys,out List<string> value)
         {
             keys = new List<string>();
             value = new List<string>();
@@ -105,7 +105,6 @@ namespace DAL
                     value.Add("");
                 }
             }
-            return 0;
         }
     }
 }

@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -67,11 +68,12 @@ namespace Csmdasm
 
         private void FrmTwain_Load(object sender, EventArgs e)
         {
-            try
-            {
+            try {
                 Init();
                 Himg._Instimagtwain(this.ImgView, this.Handle, 1);
                 Himg._Rectang(true);
+                Writeini.Fileini = Path.Combine(Application.StartupPath, "Csmkeyval.ini");
+                Getsqlkey();
             } catch (Exception ex) {
                 MessageBox.Show("初始化失败请重新加载" + ex.ToString());
                 Himg.Dispose();
@@ -227,7 +229,7 @@ namespace Csmdasm
                 if (string.IsNullOrEmpty(PageIndexInfo))
                     return;
                 string[] arrPage = PageIndexInfo.Split(' ');
-                if (arrPage==null ||arrPage.Length <= 0)
+                if (arrPage == null || arrPage.Length <= 0)
                     return;
                 foreach (string i in arrPage) {
                     string[] page = i.Split(':');
@@ -389,6 +391,29 @@ namespace Csmdasm
 
         #region butEven
 
+        private void ImgView_Click(object sender, EventArgs e)
+        {
+            Himg.Rectcls();
+        }
+
+        private void FrmTwain_KeyDown(object sender, KeyEventArgs e)
+        {
+            KeyShortDown(e);
+          //  Keykuaij(sender, e);
+            Keys keyCode = e.KeyCode;
+            if (e.KeyCode == Keys.Escape)
+                gArch.LvData.Focus();
+        }
+
+        private void ImgView_KeyDown(object sender, KeyEventArgs e)
+        {
+            KeyShortDown(e);
+           // Keykuaij(sender, e);
+            Keys keyCode = e.KeyCode;
+            if (e.KeyCode == Keys.Escape)
+                gArch.LvData.Focus();
+        }
+
         private void toolSelectTwain_Click(object sender, EventArgs e)
         {
             Himg._Twainscan(0);
@@ -480,7 +505,7 @@ namespace Csmdasm
 
         private void toolScan_Click(object sender, EventArgs e)
         {
-            if (ClsTwain.ArchPos.Trim().Length <= 0) {
+            if (ClsTwain.ArchPos==null ||ClsTwain.ArchPos.Trim().Length <= 0) {
                 MessageBox.Show("请先加载相关案卷！");
                 return;
             }
@@ -621,10 +646,6 @@ namespace Csmdasm
             Himg._Twainscan(1);
         }
 
-        private void ImgView_Click(object sender, EventArgs e)
-        {
-            Himg.Rectcls();
-        }
 
 
         private void Keykuaij(object sender, KeyEventArgs e)
@@ -684,24 +705,81 @@ namespace Csmdasm
             ImgView.Focus();
         }
 
+        void Getsqlkey()
+        {
+            Task.Run(() =>
+            {
+                ClsTwain.lsSqlOper.Clear();
+                ClsTwain.lssqlOpernum.Clear();
+                ClsTwain.lsinival.Clear();
+                ClsTwain.Lsinikeys.Clear();
+                DataTable dt = Common.GetSqlkey(this.Text);
+                if (dt == null || dt.Rows.Count <= 0)
+                    return;
+                for (int i = 0; i < dt.Rows.Count; i++) {
+                    string key = dt.Rows[i][0].ToString();
+                    string val = dt.Rows[i][1].ToString();
+                    ClsTwain.lsSqlOper.Add(key);
+                    ClsTwain.lssqlOpernum.Add(val);
+                }
+                Writeini.GetAllKeyValues(this.Text, out ClsTwain.Lsinikeys, out ClsTwain.lsinival);
+
+            });
+        }
+
+
+        private void KeyShortDown(KeyEventArgs e)
+        {
+            StringBuilder keyValue = new StringBuilder
+            {
+                Length = 0
+            };
+            keyValue.Append("");
+            if (e.Control) {
+                keyValue.Append("1-");
+            }
+            else if (e.Alt) {
+                keyValue.Append("2-");
+            }
+            else if (e.Shift) {
+                keyValue.Append("3-");
+            }
+            else {
+                keyValue.Append("0-");
+            }
+            if ((e.KeyValue >= 33 && e.KeyValue <= 40) ||
+                (e.KeyValue >= 65 && e.KeyValue <= 90) ||   //a-z/A-Z
+                (e.KeyValue >= 112 && e.KeyValue <= 123))   //F1-F12
+            {
+                keyValue.Append(e.KeyValue);
+            }
+            else if ((e.KeyValue >= 48 && e.KeyValue <= 57))    //0-9
+                keyValue.Append(e.KeyValue.ToString().Substring(1));
+            else if (e.KeyValue == 13 || e.KeyValue == 32)
+                keyValue.Append(e.KeyCode.ToString().Substring(1));
+            string str = keyValue.ToString();
+            int x = ClsTwain.lsinival.IndexOf(str);
+            if (x >= 0) {
+                str = ClsTwain.Lsinikeys[x].Remove(0, 1);
+                x = ClsTwain.lssqlOpernum.IndexOf(str);
+            }
+            if (x >= 0) {
+                str = ClsTwain.lsSqlOper[x];
+                Keysdown(str);
+            }
+        }
+        void Keysdown(string key)
+        {
+            foreach (var item in toolStrip1.Items) {
+                if (item is ToolStripButton) {
+                    ToolStripButton t = (ToolStripButton)item;
+                    if (t.Text == key) {
+                        t.PerformClick();
+                    }
+                }
+            }
+        }
+
         #endregion
-
-
-
-        private void FrmTwain_KeyDown(object sender, KeyEventArgs e)
-        {
-            Keykuaij(sender, e);
-            Keys keyCode = e.KeyCode;
-            if (e.KeyCode==Keys.Escape)
-                gArch.LvData.Focus();
-        }
-
-        private void ImgView_KeyDown(object sender, KeyEventArgs e)
-        {
-            Keykuaij(sender, e);
-            Keys keyCode = e.KeyCode;
-            if (e.KeyCode == Keys.Escape)
-                gArch.LvData.Focus();
-        }
     }
 }

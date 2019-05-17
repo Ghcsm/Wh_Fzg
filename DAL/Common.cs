@@ -403,6 +403,16 @@ namespace DAL
         #endregion
 
         #region ScanIndexCheckModule
+
+
+        public static DataTable GetSqlkey(string str)
+        {
+            string strSql = "select Operter,OperterKey from  M_OperterKey where Module=@mod";
+            SqlParameter p1 = new SqlParameter("@mod", str);
+            DataTable dt = DAL.SQLHelper.ExcuteTable(strSql, p1);
+            return dt;
+        }
+
         public static void SetArchWorkState(int ArchID, int ArchState)
         {
             try {

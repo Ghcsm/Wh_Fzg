@@ -1,4 +1,7 @@
-﻿namespace Csmdasm
+﻿using System.Collections.Generic;
+using System.Windows.Forms;
+
+namespace Csmdasm
 {
     public static class ClsTwain
     {
@@ -8,5 +11,12 @@
         public static string ArchPos;
         public static bool Scanbool = false;
         public static string ScanFileTmp;
+
+        public static List<Control> lscontrol=new List<Control>();
+        public static List<string> Lsinikeys=new List<string>();
+        public static List<string> lsinival = new List<string>();
+
+        public static List<string> lsSqlOper = new List<string>();
+        public static List<string> lssqlOpernum=new List<string>();
     }
 }

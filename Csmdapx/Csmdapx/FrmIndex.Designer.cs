@@ -37,6 +37,15 @@
             this.bar2 = new DevComponents.DotNetBar.Bar();
             this.panelDock2 = new DevComponents.DotNetBar.PanelDockContainer();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.statUser = new System.Windows.Forms.StatusStrip();
+            this.toollabscan = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toollabscantime = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toollabindex = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toollabindextime = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toollabcheck = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toollabchecktime = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toollabenter = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toollabentertime = new System.Windows.Forms.ToolStripStatusLabel();
             this.gr3 = new System.Windows.Forms.GroupBox();
             this.ImgView = new Leadtools.Controls.ImageViewer();
             this.gr4 = new System.Windows.Forms.GroupBox();
@@ -97,15 +106,6 @@
             this.dockSite7 = new DevComponents.DotNetBar.DockSite();
             this.dockSite3 = new DevComponents.DotNetBar.DockSite();
             this.odgInsterFile = new System.Windows.Forms.OpenFileDialog();
-            this.statUser = new System.Windows.Forms.StatusStrip();
-            this.toollabscan = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toollabscantime = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toollabindex = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toollabindextime = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toollabcheck = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toollabchecktime = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toollabenter = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toollabentertime = new System.Windows.Forms.ToolStripStatusLabel();
             this.dockSite9.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bar2)).BeginInit();
             this.bar2.SuspendLayout();
@@ -113,6 +113,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            this.statUser.SuspendLayout();
             this.gr3.SuspendLayout();
             this.gr4.SuspendLayout();
             this.toolStrip3.SuspendLayout();
@@ -121,7 +122,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.bar1)).BeginInit();
             this.bar1.SuspendLayout();
             this.panelDock1.SuspendLayout();
-            this.statUser.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStrip1
@@ -237,6 +237,71 @@
             this.splitContainer1.Size = new System.Drawing.Size(985, 602);
             this.splitContainer1.SplitterDistance = 25;
             this.splitContainer1.TabIndex = 1;
+            // 
+            // statUser
+            // 
+            this.statUser.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toollabscan,
+            this.toollabscantime,
+            this.toollabindex,
+            this.toollabindextime,
+            this.toollabcheck,
+            this.toollabchecktime,
+            this.toollabenter,
+            this.toollabentertime});
+            this.statUser.Location = new System.Drawing.Point(0, 580);
+            this.statUser.Name = "statUser";
+            this.statUser.Size = new System.Drawing.Size(985, 22);
+            this.statUser.TabIndex = 1;
+            this.statUser.Text = "statusStrip1";
+            // 
+            // toollabscan
+            // 
+            this.toollabscan.Name = "toollabscan";
+            this.toollabscan.Size = new System.Drawing.Size(35, 17);
+            this.toollabscan.Text = "扫描:";
+            // 
+            // toollabscantime
+            // 
+            this.toollabscantime.Name = "toollabscantime";
+            this.toollabscantime.Size = new System.Drawing.Size(35, 17);
+            this.toollabscantime.Text = "时间:";
+            // 
+            // toollabindex
+            // 
+            this.toollabindex.Name = "toollabindex";
+            this.toollabindex.Size = new System.Drawing.Size(35, 17);
+            this.toollabindex.Text = "排序:";
+            // 
+            // toollabindextime
+            // 
+            this.toollabindextime.Name = "toollabindextime";
+            this.toollabindextime.Size = new System.Drawing.Size(35, 17);
+            this.toollabindextime.Text = "时间:";
+            // 
+            // toollabcheck
+            // 
+            this.toollabcheck.Name = "toollabcheck";
+            this.toollabcheck.Size = new System.Drawing.Size(35, 17);
+            this.toollabcheck.Text = "质检:";
+            // 
+            // toollabchecktime
+            // 
+            this.toollabchecktime.Name = "toollabchecktime";
+            this.toollabchecktime.Size = new System.Drawing.Size(35, 17);
+            this.toollabchecktime.Text = "时间:";
+            // 
+            // toollabenter
+            // 
+            this.toollabenter.Name = "toollabenter";
+            this.toollabenter.Size = new System.Drawing.Size(35, 17);
+            this.toollabenter.Text = "录入:";
+            // 
+            // toollabentertime
+            // 
+            this.toollabentertime.Name = "toollabentertime";
+            this.toollabentertime.Size = new System.Drawing.Size(35, 17);
+            this.toollabentertime.Text = "时间:";
             // 
             // gr3
             // 
@@ -832,71 +897,6 @@
             this.dockSite3.TabIndex = 3;
             this.dockSite3.TabStop = false;
             // 
-            // statUser
-            // 
-            this.statUser.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toollabscan,
-            this.toollabscantime,
-            this.toollabindex,
-            this.toollabindextime,
-            this.toollabcheck,
-            this.toollabchecktime,
-            this.toollabenter,
-            this.toollabentertime});
-            this.statUser.Location = new System.Drawing.Point(0, 580);
-            this.statUser.Name = "statUser";
-            this.statUser.Size = new System.Drawing.Size(985, 22);
-            this.statUser.TabIndex = 1;
-            this.statUser.Text = "statusStrip1";
-            // 
-            // toollabscan
-            // 
-            this.toollabscan.Name = "toollabscan";
-            this.toollabscan.Size = new System.Drawing.Size(35, 17);
-            this.toollabscan.Text = "扫描:";
-            // 
-            // toollabscantime
-            // 
-            this.toollabscantime.Name = "toollabscantime";
-            this.toollabscantime.Size = new System.Drawing.Size(35, 17);
-            this.toollabscantime.Text = "时间:";
-            // 
-            // toollabindex
-            // 
-            this.toollabindex.Name = "toollabindex";
-            this.toollabindex.Size = new System.Drawing.Size(35, 17);
-            this.toollabindex.Text = "排序:";
-            // 
-            // toollabindextime
-            // 
-            this.toollabindextime.Name = "toollabindextime";
-            this.toollabindextime.Size = new System.Drawing.Size(35, 17);
-            this.toollabindextime.Text = "时间:";
-            // 
-            // toollabcheck
-            // 
-            this.toollabcheck.Name = "toollabcheck";
-            this.toollabcheck.Size = new System.Drawing.Size(35, 17);
-            this.toollabcheck.Text = "质检:";
-            // 
-            // toollabchecktime
-            // 
-            this.toollabchecktime.Name = "toollabchecktime";
-            this.toollabchecktime.Size = new System.Drawing.Size(35, 17);
-            this.toollabchecktime.Text = "时间:";
-            // 
-            // toollabenter
-            // 
-            this.toollabenter.Name = "toollabenter";
-            this.toollabenter.Size = new System.Drawing.Size(35, 17);
-            this.toollabenter.Text = "录入:";
-            // 
-            // toollabentertime
-            // 
-            this.toollabentertime.Name = "toollabentertime";
-            this.toollabentertime.Size = new System.Drawing.Size(35, 17);
-            this.toollabentertime.Text = "时间:";
-            // 
             // FrmIndex
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -913,6 +913,7 @@
             this.Controls.Add(this.dockSite7);
             this.Controls.Add(this.dockSite8);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.KeyPreview = true;
             this.Name = "FrmIndex";
             this.Load += new System.EventHandler(this.FrmIndex_Load);
             this.Shown += new System.EventHandler(this.FrmIndex_Shown);
@@ -926,6 +927,8 @@
             this.splitContainer1.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            this.statUser.ResumeLayout(false);
+            this.statUser.PerformLayout();
             this.gr3.ResumeLayout(false);
             this.gr4.ResumeLayout(false);
             this.gr4.PerformLayout();
@@ -937,8 +940,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.bar1)).EndInit();
             this.bar1.ResumeLayout(false);
             this.panelDock1.ResumeLayout(false);
-            this.statUser.ResumeLayout(false);
-            this.statUser.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
