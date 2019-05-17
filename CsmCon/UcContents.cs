@@ -100,7 +100,7 @@ namespace CsmCon
                 return false;
             }
             string pages = ClsContenInfo.Pagestmp;
-            int p = ClsContenInfo.ContenCoList.IndexOf(ClsContenInfo.ContenPages);
+            int p = ClsContenInfo.PagesWz;
             string pagestmp = "";
             if (id) {
                 foreach (ListViewItem item in LvContents.Items) {
@@ -254,7 +254,7 @@ namespace CsmCon
 
         private void Settxt(object sender, EventArgs e)
         {
-            int id = ClsContenInfo.ContenCoList.IndexOf(ClsContenInfo.ContenPages);
+            int id = ClsContenInfo.PagesWz;
             for (int i = 1; i < LvContents.Columns.Count; i++) {
                 string str = LvContents.SelectedItems[0].SubItems[i].Text;
                 if (i == 1)
@@ -263,7 +263,7 @@ namespace CsmCon
                     ClsConten.SetInfoTxt(panel1, (i - 1), str);
                 }
                 if (i == id + 2) {
-                    PageMl =str;
+                    PageMl = str;
                     OneClickGotoPage?.Invoke(sender, e);
                 }
 
@@ -279,16 +279,18 @@ namespace CsmCon
         {
             try {
                 PageCrren = page;
-                //  txtPage.Text = page.ToString();
-                ListViewItem li = LvContents.Items.Cast<ListViewItem>().First(x => x.SubItems[2].Text == Convert.ToString(page));
-                if (li != null) {
+                int x = ClsContenInfo.PageCount.IndexOf(page.ToString());
+                if (x >= 0) {
                     LvContents.SelectedItems.Clear();
-                    li.Selected = true;
+                    LvContents.Items[x].Selected = true;
                 }
             } catch { }
-
         }
 
+        public  void CloseConten()
+        {
+            LvContents.Items.Clear();
+        }
         private void UcContents_Load(object sender, EventArgs e)
         {
             Init();

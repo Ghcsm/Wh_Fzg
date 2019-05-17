@@ -42,8 +42,7 @@ namespace Csmdapx
 
         private void FrmIndex_Load(object sender, EventArgs e)
         {
-            try
-            {
+            try {
                 Init();
                 Himg._Instimagtwain(this.ImgView, this.Handle, 0);
                 Himg._Rectang(true);
@@ -211,9 +210,13 @@ namespace Csmdapx
                 else if (txt == "已删除") {
                     txt = "0";
                     Himg._Pagenext(1);
+                    txtPages.Text = "";
+                    txtPages.ReadOnly = true;
+                    txtPages.Focus();
                 }
                 else if (txt.Length <= 0 || txt == "0") {
                     MessageBox.Show("页码不正确！");
+                    txtPages.Focus();
                     return;
                 }
                 else {
@@ -259,6 +262,7 @@ namespace Csmdapx
                     Himg._PageNumber.Clear();
                     Cledata();
                     Task.Run(new Action(() => { FtpUpFinish(filetmp, arid, archpos, pages, pageabc, pagenum); }));
+                    gArch.LvData.Focus();
                 }
             }
         }
@@ -275,6 +279,7 @@ namespace Csmdapx
             int pages = ClsIndex.MaxPage;
             Cledata();
             Task.Run(new Action(() => { FtpUpCanCel(filetmp, arid, archpos, pageabc, pagenum, ClsIndex.MaxPage); }));
+            gArch.LvData.Focus();
         }
 
         private void toolStripBigPage_Click(object sender, EventArgs e)
@@ -337,16 +342,25 @@ namespace Csmdapx
         private void ImgView_KeyDown(object sender, KeyEventArgs e)
         {
             Keykuaij(sender, e);
+            Keys keyCode = e.KeyCode;
+            if (e.KeyCode == Keys.Escape)
+                gArch.LvData.Focus();
         }
 
         private void txtPages_KeyDown(object sender, KeyEventArgs e)
         {
             Keykuaij(sender, e);
+            Keys keyCode = e.KeyCode;
+            if (e.KeyCode == Keys.Escape)
+                gArch.LvData.Focus();
         }
 
         private void FrmIndex_KeyDown(object sender, KeyEventArgs e)
         {
             Keykuaij(sender, e);
+            Keys keyCode = e.KeyCode;
+            if (e.KeyCode == Keys.Escape)
+                gArch.LvData.Focus();
         }
         private void ImgView_MouseDown(object sender, MouseEventArgs e)
         {

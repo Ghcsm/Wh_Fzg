@@ -47,6 +47,7 @@ namespace WareHouse
         private void StoreImg_Load(object sender, EventArgs e)
         {
             imgBrow1.LoadFile(ArchId, FileName);
+            imgBrow1.LoadConten(ArchId);
         }
 
         private void toolsPrivePages_Click(object sender, EventArgs e)
@@ -76,7 +77,7 @@ namespace WareHouse
 
         private void toolsColse_Click(object sender, EventArgs e)
         {
-            Imgclose();
+            this.Close();
         }
 
         private void Imgclose()
@@ -87,15 +88,11 @@ namespace WareHouse
                     File.Delete(FileName);
                 Directory.Exists(Path.GetDirectoryName(FileName));
                 Directory.Delete(Path.GetDirectoryName(FileName));
-            } catch (Exception e) {
-                Console.WriteLine(e);
-                throw;
-            }
+            } catch  {}
         }
 
         private void StoreImg_FormClosing(object sender, FormClosingEventArgs e)
         {
-
             Imgclose();
         }
 

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.gr0 = new System.Windows.Forms.GroupBox();
             this.chkTspages = new System.Windows.Forms.CheckBox();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -47,6 +48,7 @@
             this.colDoduleTitle = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colDoduleCode = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.gr2 = new System.Windows.Forms.GroupBox();
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.gr0.SuspendLayout();
             this.gr1.SuspendLayout();
             this.gr2.SuspendLayout();
@@ -215,6 +217,7 @@
             this.LvContents.Location = new System.Drawing.Point(5, 17);
             this.LvContents.Name = "LvContents";
             this.LvContents.Size = new System.Drawing.Size(205, 320);
+            this.LvContents.SmallImageList = this.imageList1;
             this.LvContents.TabIndex = 5;
             this.LvContents.TabStop = false;
             this.LvContents.UseCompatibleStateImageBehavior = false;
@@ -275,6 +278,12 @@
             this.gr2.TabIndex = 1;
             this.gr2.TabStop = false;
             // 
+            // imageList1
+            // 
+            this.imageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+            this.imageList1.ImageSize = new System.Drawing.Size(16, 25);
+            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
+            // 
             // UcContents
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -314,5 +323,6 @@
         public System.Windows.Forms.TextBox txtId;
         private System.Windows.Forms.GroupBox gr2;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.ImageList imageList1;
     }
 }

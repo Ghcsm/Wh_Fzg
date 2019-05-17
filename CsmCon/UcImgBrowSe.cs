@@ -39,6 +39,7 @@ namespace CsmCon
                 UcConten.Archid = ArchId;
                 ucContents0 = new UcConten();
                 ucContents0.Dock = DockStyle.Fill;
+                ucContents0.OneClickGotoPage += UcContents0_OneClickGotoPage;
                 gr0.Controls.Add(ucContents0);
             }
             else {
@@ -47,9 +48,24 @@ namespace CsmCon
                 UcContents.ModuleVisible = ModuleVisible;
                 ucContents1 = new UcContents();
                 ucContents1.Dock = DockStyle.Fill;
+                ucContents1.OneClickGotoPage += UcContents1_OneClickGotoPage;
                 gr0.Controls.Add(ucContents1);
             }
             LoadFile();
+        }
+
+        private void UcContents1_OneClickGotoPage(object sender, EventArgs e)
+        {
+            int p = UcConten.ArchPages;
+            if (p >= 1 && p < MaxPages)
+                Himg._Gotopage(p);
+        }
+
+        private void UcContents0_OneClickGotoPage(object sender, EventArgs e)
+        {
+            int p = UcConten.ArchPages;
+            if (p >= 1 && p < MaxPages)
+                Himg._Gotopage(p);
         }
 
         public void LoadFile(int arid, string file)
@@ -59,10 +75,14 @@ namespace CsmCon
             ArchId = arid;
             FileName = file;
             LoadFile();
+        }
+
+        public void LoadConten(int arid)
+        {
             if (id == 0)
                 ucContents0.LoadConten(ArchId);
-            else
-                ucContents1.LoadContents(ArchId, MaxPages);
+           else
+                ucContents1.LoadContents(ArchId,0);
         }
 
         private void LoadFile()
@@ -179,7 +199,12 @@ namespace CsmCon
         }
         public void Close()
         {
-            if (ImgView.Image != null) {
+            if (ImgView.Image != null)
+            {
+                if (id == 0)
+                    ucContents0.CloseConten();
+                else
+                    ucContents1.CloseConten();
                 ImgView.Image = null;
                 ArchId = 0;
                 try {

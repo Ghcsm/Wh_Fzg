@@ -118,19 +118,18 @@ namespace Csmdacx
                         File.Delete(localCheckFile);
                     }
                 } catch { }
-                if (ArchState == (int)(Common.档案状态.质检完)) {
-
-                    string filjpg = Path.Combine(Common.ArchSavePah, FileName.Substring(0, 8), FileName);
-                    if (ftp.FtpCheckFile(filjpg)) {
-                        if (ftp.DownLoadFile(Common.ArchSavePah, FileName.Substring(0, 8), localCheckFile, FileName)) {
-                            ImgBrow.Print = ClsQuery.Imgsys;
-                            imgBrow1.LoadFile(ClsQuery.ArchID, localCheckFile);
-                            return;
-                        }
+                string filjpg = Path.Combine(Common.ArchSavePah, FileName.Substring(0, 8), FileName);
+                if (ftp.FtpCheckFile(filjpg)) {
+                    if (ftp.DownLoadFile(Common.ArchSavePah, FileName.Substring(0, 8), localCheckFile, FileName)) {
+                        ImgBrow.Print = ClsQuery.Imgsys;
+                        imgBrow1.LoadFile(ClsQuery.ArchID, localCheckFile);
+                        imgBrow1.LoadConten(ClsQuery.ArchID);
+                        return;
                     }
-                    MessageBox.Show("警告，文件不存在!");
-                    return;
                 }
+                MessageBox.Show("警告，文件不存在!");
+                return;
+
             } catch (Exception ee) {
                 MessageBox.Show(ee.ToString());
             }

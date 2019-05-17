@@ -20,8 +20,12 @@ namespace CsmCon
         public static string ContenLie { get; set; }
         public static string ContenTitle { get; set; }
         public static string ContenPages { get; set; }
+        public static int PagesWz { get; set; }
+
         public static List<string> ContenCoList = new List<string>();
         public static string ContenCol { get; set; }
+        public static List<string> PageCount = new List<string>();
+        public static List<string> PageCount2 = new List<string>();
 
         public static List<string> LsModule = new List<string>();
         public static List<string> LsModuleIndex = new List<string>();
@@ -42,6 +46,8 @@ namespace CsmCon
     {
         public static void GetContenInfo()
         {
+            if (ClsContenInfo.ContenTable!=null && ClsContenInfo.ContenTable.Length>0)
+                return;
             DataTable dt = T_Sysset.GetConten(ClsContenInfo.Modulename);
             if (dt == null || dt.Rows.Count <= 0)
                 return;
@@ -60,6 +66,7 @@ namespace CsmCon
                     ClsContenInfo.ContenCoList.Add(col[i]);
                 }
             }
+            ClsContenInfo.PagesWz = ClsContenInfo.ContenCoList.IndexOf(ClsContenInfo.ContenPages);
         }
 
         public static void LoadModule(ListViewEx lsv)
@@ -95,7 +102,7 @@ namespace CsmCon
                 {
                     lsv.Items.Clear();
                 }));
-
+                ClsContenInfo.PageCount.Clear();
                 DataTable dt = Common.LoadContents(ClsContenInfo.ContenTable, ClsContenInfo.ContenCol, ClsContenInfo.ContenPages, Convert.ToInt32(ch), archid);
                 if (dt == null || dt.Rows.Count <= 0)
                     return;
@@ -107,6 +114,8 @@ namespace CsmCon
                     lvi.SubItems.AddRange(new string[] { id });
                     for (int t = 0; t < ClsContenInfo.ContenCoList.Count; t++) {
                         string str = dr[ClsContenInfo.ContenCoList[t]].ToString();
+                        if (t==ClsContenInfo.PagesWz)
+                            ClsContenInfo.PageCount.Add(str);
                         lvi.SubItems.AddRange(new string[] { str });
                     }
                     lsv.Invoke(new Action(() =>
@@ -124,15 +133,15 @@ namespace CsmCon
                 return;
             Task.Run(() =>
             {
-                DataTable dt = Common.LoadContents(ClsContenInfo.ContenTable, ClsContenInfo.ContenCol, ClsContenInfo.ContenPages, 2, archid);
-                if (dt == null || dt.Rows.Count <= 0)
-                    return;
-                int i = 1;
                 lsv.Invoke(new Action(() =>
                 {
                     lsv.Items.Clear();
                 }));
-
+                ClsContenInfo.PageCount2.Clear();
+                DataTable dt = Common.LoadContents(ClsContenInfo.ContenTable, ClsContenInfo.ContenCol, ClsContenInfo.ContenPages, 2, archid);
+                if (dt == null || dt.Rows.Count <= 0)
+                    return;
+                int i = 1;
                 foreach (DataRow dr in dt.Rows) {
                     ListViewItem lvi = new ListViewItem();
                     lvi.Text = i.ToString();
@@ -140,6 +149,8 @@ namespace CsmCon
                     lvi.SubItems.AddRange(new string[] { id });
                     for (int t = 0; t < ClsContenInfo.ContenCoList.Count; t++) {
                         string str = dr[ClsContenInfo.ContenCoList[t]].ToString();
+                        if (t == ClsContenInfo.PagesWz)
+                            ClsContenInfo.PageCount2.Add(str);
                         lvi.SubItems.AddRange(new string[] { str });
                     }
                     lsv.Invoke(new Action(() =>
@@ -274,7 +285,7 @@ namespace CsmCon
             ClsContenInfo.Pagestmp = "";
             int id = 0;
             int title = ClsContenInfo.ContenCoList.IndexOf(ClsContenInfo.ContenTitle) + 1;
-            int page = ClsContenInfo.ContenCoList.IndexOf(ClsContenInfo.ContenPages) + 1;
+            int page = ClsContenInfo.PagesWz + 1;
             foreach (Control ct in p.Controls) {
                 if (ct is TextBox || ct is ComboBox) {
                     if (ct.Tag.ToString() == title.ToString()) {

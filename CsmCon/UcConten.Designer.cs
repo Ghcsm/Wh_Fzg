@@ -27,9 +27,12 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.gr = new System.Windows.Forms.GroupBox();
             this.lvconten = new System.Windows.Forms.ListView();
             this.col1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.gr.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -46,20 +49,34 @@
             // lvconten
             // 
             this.lvconten.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.col1});
+            this.col1,
+            this.columnHeader1});
             this.lvconten.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lvconten.FullRowSelect = true;
             this.lvconten.GridLines = true;
             this.lvconten.Location = new System.Drawing.Point(3, 17);
             this.lvconten.Name = "lvconten";
             this.lvconten.Size = new System.Drawing.Size(213, 322);
+            this.lvconten.SmallImageList = this.imageList1;
             this.lvconten.TabIndex = 0;
             this.lvconten.UseCompatibleStateImageBehavior = false;
             this.lvconten.View = System.Windows.Forms.View.Details;
+            this.lvconten.Click += new System.EventHandler(this.lvconten_Click);
             // 
             // col1
             // 
             this.col1.Text = "序号";
+            // 
+            // imageList1
+            // 
+            this.imageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+            this.imageList1.ImageSize = new System.Drawing.Size(16, 25);
+            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "id";
+            this.columnHeader1.Width = 0;
             // 
             // UcConten
             // 
@@ -79,5 +96,7 @@
         private System.Windows.Forms.GroupBox gr;
         private System.Windows.Forms.ListView lvconten;
         private System.Windows.Forms.ColumnHeader col1;
+        private System.Windows.Forms.ImageList imageList1;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
     }
 }

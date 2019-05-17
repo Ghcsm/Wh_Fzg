@@ -4,6 +4,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -223,6 +224,7 @@ namespace WareHouse
 
         private void LoadFile()
         {
+            butOpenFile.Enabled = false;
             try {
                 int ArchID = Common.GetCode(ClsStore.ArchPos);
                 if (ArchID == 0) {
@@ -235,16 +237,20 @@ namespace WareHouse
                     return;
                 }
                 string FileName = Common.GetFileNameByArchID(ArchID);
+                toolFileName.Text = FileName;
+                toolFileId.Text = ArchID.ToString()+" ";
                 string localPath = Path.Combine(Common.LocalTempPath, FileName.Substring(0, 8));
                 string localCheckFile = Path.Combine(Common.LocalTempPath, FileName.Substring(0, 8), FileName);
                 try {
                     if (!Directory.Exists(localPath)) {
                         Directory.CreateDirectory(localPath);
                     }
+
                     if (File.Exists(localCheckFile)) {
                         File.Delete(localCheckFile);
                     }
-                } catch { }
+                } catch {
+                }
 
                 if (ftp.CheckRemoteFile(Common.ArchSavePah, FileName.Substring(0, 8), FileName)) {
                     if (ftp.DownLoadFile(Common.ArchSavePah, FileName.Substring(0, 8), localCheckFile, FileName)) {
@@ -259,13 +265,17 @@ namespace WareHouse
                         strImg.ShowDialog();
                         return;
                     }
+
                     MessageBox.Show("文件下载失败!");
                     return;
                 }
+
                 MessageBox.Show("远程文件不存在!");
                 return;
             } catch (Exception ee) {
                 MessageBox.Show(ee.ToString());
+            } finally {
+                butOpenFile.Enabled = true;
             }
         }
 

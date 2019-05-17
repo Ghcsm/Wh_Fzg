@@ -56,7 +56,7 @@ namespace Csmdajc
             try {
                 p = Convert.ToInt32(UcContents.PageMl);
             } catch { }
-            if (p > 0)
+            if (p > 0 && p<Clscheck.MaxPage)
                 Himg._Gotopage(p);
 
         }
@@ -90,8 +90,6 @@ namespace Csmdajc
                     toolArchno.Text = string.Format("当前卷号:{0}", Clscheck.ArchPos);
                     gArch.butLoad.Enabled = false;
                     LoadArch();
-                    LoadContents();
-                    //Ispages();
                     ImgView.Focus();
                     return;
                 }
@@ -176,6 +174,7 @@ namespace Csmdajc
             if (ImgView.Image != null && Clscheck.CrrentPage > 1) {
                 Thread.Sleep(100);
                 Himg._Pagenext(0);
+                ucContents1.OnChangContents(Clscheck.CrrentPage);
             }
         }
 
@@ -190,6 +189,7 @@ namespace Csmdajc
                     Himg._SavePage();
                     Thread.Sleep(100);
                     Himg._Pagenext(1);
+                    ucContents1.OnChangContents(Clscheck.CrrentPage);
                 }
                 else if (Clscheck.CrrentPage == Clscheck.MaxPage) {
                     Himg._SavePage();
@@ -203,6 +203,10 @@ namespace Csmdajc
 
         private void toolStripSave_Click(object sender, EventArgs e)
         {
+            if (Clscheck.MaxPage != Clscheck.RegPage) {
+                MessageBox.Show("登记页码和图像页码不一致无法完成质检!");
+                return;
+            }
             if (MessageBox.Show("质检完成您确定要上传档案吗？", "提示", MessageBoxButtons.OKCancel,
                     MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.OK) {
                 string filepath = Clscheck.ScanFilePath;
@@ -211,6 +215,7 @@ namespace Csmdajc
                 int pages = Clscheck.MaxPage;
                 Cledata();
                 Task.Run(new Action(() => { FtpUpFinish(filepath, arid, filename, pages); }));
+                gArch.LvData.Focus();
             }
         }
 
@@ -225,7 +230,7 @@ namespace Csmdajc
                 }
             } catch {
             }
-
+            gArch.LvData.Focus();
         }
 
         private void toolStripBigPage_Click(object sender, EventArgs e)
@@ -281,11 +286,17 @@ namespace Csmdajc
         private void ImgView_KeyDown(object sender, KeyEventArgs e)
         {
             Keykuaij(sender, e);
+            Keys keyCode = e.KeyCode;
+            if (e.KeyCode == Keys.Escape)
+                gArch.LvData.Focus();
         }
 
         private void FrmIndex_KeyDown(object sender, KeyEventArgs e)
         {
             Keykuaij(sender, e);
+            Keys keyCode = e.KeyCode;
+            if (e.KeyCode == Keys.Escape)
+                gArch.LvData.Focus();
         }
         private void toolStripRepair_Click(object sender, EventArgs e)
         {
@@ -299,6 +310,7 @@ namespace Csmdajc
                 {
                     Repair(filetmp, archid, archpos);
                 }));
+                gArch.LvData.Focus();
             }
         }
 
@@ -366,7 +378,9 @@ namespace Csmdajc
                 }
                 Himg.Filename = Clscheck.ScanFilePath;
                 Himg.LoadPage(pages);
+                LoadContents();
                 Getuser();
+                Ispages();
                 return;
             }
             MessageBox.Show("文件加载失败或不存在!");
@@ -499,20 +513,38 @@ namespace Csmdajc
             Task.Run(new Action(() =>
             {
                 string Scanner = string.Empty;
+                string scantime = string.Empty;
                 string Indexer = string.Empty;
+                string indextime = string.Empty;
                 string Checker = string.Empty;
+                string chktime = string.Empty;
+                string enter = string.Empty;
+                string entertime = string.Empty;
                 DataTable dt = Common.GetOperator(Clscheck.Archid);
                 if (dt == null || dt.Rows.Count <= 0)
                     return;
                 DataRow dr = dt.Rows[0];
                 Scanner = dr["扫描"].ToString();
+                scantime = dr["扫描时间"].ToString();
                 Indexer = dr["排序"].ToString();
+                indextime = dr["排序时间"].ToString();
                 Checker = dr["质检"].ToString();
+                chktime = dr["质检时间"].ToString();
+                enter = dr["录入"].ToString();
+                entertime = dr["录入时间"].ToString();
                 this.BeginInvoke(new Action(() =>
                 {
                     this.labScanUser.Text = string.Format("扫描：{0}", Scanner);
                     this.labIndexUser.Text = string.Format("排序：{0}", Indexer);
                     this.labCheckUser.Text = string.Format("质检：{0}", Checker);
+                    toollabscan.Text = string.Format("扫描:{0}", Scanner);
+                    toollabscantime.Text = string.Format("时间:{0}", scantime);
+                    toollabindex.Text = string.Format("排序:{0}", Indexer);
+                    toollabindextime.Text = string.Format("时间:{0}", indextime);
+                    toollabcheck.Text = string.Format("质检:{0}", Checker);
+                    toollabchecktime.Text = string.Format("时间:{0}", chktime);
+                    toollabenter.Text = string.Format("录入:{0}", enter);
+                    toollabentertime.Text = string.Format("时间:{0}", entertime);
 
                 }));
                 dt.Dispose();

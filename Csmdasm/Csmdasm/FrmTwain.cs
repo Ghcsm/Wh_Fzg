@@ -503,6 +503,7 @@ namespace Csmdasm
             int arid = ClsTwain.Archid;
             Cledata();
             Task.Run(new Action(() => { FtpUp(filetmp, archpos, maxpage, arid); }));
+            gArch.LvData.Focus();
         }
 
 
@@ -689,11 +690,17 @@ namespace Csmdasm
         private void FrmTwain_KeyDown(object sender, KeyEventArgs e)
         {
             Keykuaij(sender, e);
+            Keys keyCode = e.KeyCode;
+            if (e.KeyCode==Keys.Escape)
+                gArch.LvData.Focus();
         }
 
         private void ImgView_KeyDown(object sender, KeyEventArgs e)
         {
             Keykuaij(sender, e);
+            Keys keyCode = e.KeyCode;
+            if (e.KeyCode == Keys.Escape)
+                gArch.LvData.Focus();
         }
     }
 }

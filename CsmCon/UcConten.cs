@@ -17,13 +17,15 @@ namespace CsmCon
         {
             InitializeComponent();
         }
+        public event CntSelectHandle OneClickGotoPage;
+        public delegate void CntSelectHandle(object sender, EventArgs e);
         public static int Archid { get; set; }
+        public static int ArchPages { get; set; }
 
         void Ini()
         {
             ClsConten.GetContenInfo();
             Lvnameadd();
-            ClsConten.LoadContents(Archid, lvconten);
         }
 
         private void Lvnameadd()
@@ -42,9 +44,26 @@ namespace CsmCon
             ClsConten.LoadContents(archid, lvconten);
         }
 
+        public void CloseConten()
+        {
+            lvconten.Items.Clear();;
+        }
+
         private void UcConten_Load(object sender, EventArgs e)
         {
             Ini();
         }
+
+        private void lvconten_Click(object sender, EventArgs e)
+        {
+            int x = lvconten.SelectedItems[0].Index;
+            if (ClsContenInfo.PageCount2.Count > 0)
+            {
+                ArchPages = Convert.ToInt32(ClsContenInfo.PageCount2[x]);
+                if (ArchPages > 0)
+                    OneClickGotoPage?.Invoke(sender, e);
+            }
+        }
+
     }
 }

@@ -39,6 +39,7 @@
             this.c_pages = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.c_archid = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.c_type = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.c_stat = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ImgList = new System.Windows.Forms.ImageList(this.components);
             this.panelTop = new System.Windows.Forms.Panel();
             this.butOk = new DevComponents.DotNetBar.ButtonX();
@@ -53,7 +54,6 @@
             this.butPageUpdate = new DevComponents.DotNetBar.ButtonX();
             this.label1 = new System.Windows.Forms.Label();
             this.txtPages = new System.Windows.Forms.TextBox();
-            this.c_stat = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.gr1.SuspendLayout();
             this.panelTop.SuspendLayout();
             this.gr2.SuspendLayout();
@@ -143,6 +143,11 @@
             // 
             this.c_type.Text = "ctype";
             this.c_type.Width = 0;
+            // 
+            // c_stat
+            // 
+            this.c_stat.Text = "stat";
+            this.c_stat.Width = 0;
             // 
             // ImgList
             // 
@@ -295,11 +300,6 @@
             this.txtPages.TabIndex = 1;
             this.txtPages.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPages_KeyPress);
             // 
-            // c_stat
-            // 
-            this.c_stat.Text = "stat";
-            this.c_stat.Width = 0;
-            // 
             // gArchSelect
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -327,7 +327,6 @@
         private DevComponents.DotNetBar.Controls.ComboBoxEx comboxClass;
         private System.Windows.Forms.TextBox txtBoxsn;
         private DevComponents.DotNetBar.ButtonX butOk;
-        private DevComponents.DotNetBar.Controls.ListViewEx LvData;
         private System.Windows.Forms.GroupBox gr2;
         private System.Windows.Forms.Label label1;
         private DevComponents.DotNetBar.ButtonX butPageUpdate;
@@ -344,5 +343,6 @@
         private DevComponents.Editors.ComboItem comboItem1;
         private DevComponents.Editors.ComboItem comboItem2;
         private System.Windows.Forms.ColumnHeader c_stat;
+        public DevComponents.DotNetBar.Controls.ListViewEx LvData;
     }
 }
