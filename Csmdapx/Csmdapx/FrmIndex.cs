@@ -19,7 +19,6 @@ namespace Csmdapx
         public FrmIndex()
         {
             InitializeComponent();
-            Init();
         }
         private gArchSelect gArch;
         Hljsimage Himg = new Hljsimage();
@@ -43,7 +42,9 @@ namespace Csmdapx
 
         private void FrmIndex_Load(object sender, EventArgs e)
         {
-            try {
+            try
+            {
+                Init();
                 Himg._Instimagtwain(this.ImgView, this.Handle, 0);
                 Himg._Rectang(true);
             } catch (Exception ex) {
@@ -540,20 +541,39 @@ namespace Csmdapx
             Task.Run(new Action(() =>
             {
                 string Scanner = string.Empty;
+                string scantime = string.Empty;
                 string Indexer = string.Empty;
+                string indextime = string.Empty;
                 string Checker = string.Empty;
+                string chktime = string.Empty;
+                string enter = string.Empty;
+                string entertime = string.Empty;
                 DataTable dt = Common.GetOperator(ClsIndex.Archid);
                 if (dt == null || dt.Rows.Count <= 0)
                     return;
                 DataRow dr = dt.Rows[0];
                 Scanner = dr["扫描"].ToString();
+                scantime = dr["扫描时间"].ToString();
                 Indexer = dr["排序"].ToString();
+                indextime = dr["排序时间"].ToString();
                 Checker = dr["质检"].ToString();
+                chktime = dr["质检时间"].ToString();
+                enter = dr["录入"].ToString();
+                entertime = dr["录入时间"].ToString();
                 this.BeginInvoke(new Action(() =>
                 {
                     this.labScanUser.Text = string.Format("扫描：{0}", Scanner);
                     this.labIndexUser.Text = string.Format("排序：{0}", Indexer);
                     this.labCheckUser.Text = string.Format("质检：{0}", Checker);
+
+                    toollabscan.Text = string.Format("扫描:{0}", Scanner);
+                    toollabscantime.Text = string.Format("时间:{0}", scantime);
+                    toollabindex.Text = string.Format("排序:{0}", Indexer);
+                    toollabindextime.Text = string.Format("时间:{0}", indextime);
+                    toollabcheck.Text = string.Format("质检:{0}", Checker);
+                    toollabchecktime.Text = string.Format("时间:{0}", chktime);
+                    toollabenter.Text = string.Format("录入:{0}", enter);
+                    toollabentertime.Text = string.Format("时间:{0}", entertime);
 
                 }));
                 dt.Dispose();

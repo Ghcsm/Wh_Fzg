@@ -16,7 +16,6 @@ namespace Csmdasm
         public FrmTwain()
         {
             InitializeComponent();
-            Init();
         }
 
         #region InitCs
@@ -68,7 +67,9 @@ namespace Csmdasm
 
         private void FrmTwain_Load(object sender, EventArgs e)
         {
-            try {
+            try
+            {
+                Init();
                 Himg._Instimagtwain(this.ImgView, this.Handle, 1);
                 Himg._Rectang(true);
             } catch (Exception ex) {
