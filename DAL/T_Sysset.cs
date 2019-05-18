@@ -805,7 +805,7 @@ namespace DAL
         {
             string strSql = "update M_GenSetConten set ContenTable=@table," +
                             " ContenCol=@info ,ContenLie=@lie,ContenWith=@with,ContentxtWith=@txtwith," +
-                            "ContenTitle=@title,ContenPages=@pages,ContenModule=@module,ContenInfoBl=@bl";
+                            "ContenTitle=@title,ContenPages=@pages,ContenInfoBl=@bl where ContenModule=@module";
             SqlParameter[] par =
             {
                 new SqlParameter("@table", table),
@@ -815,8 +815,8 @@ namespace DAL
                 new SqlParameter("@txtwith", txtwith),
                 new SqlParameter("@title", title),
                 new SqlParameter("@pages", pages),
+                new SqlParameter("@bl", bl.ToString()),
                 new SqlParameter("@module", module),
-                new SqlParameter("@bl", bl.ToString())
             };
             SQLHelper.ExecScalar(strSql, par);
         }
@@ -844,11 +844,14 @@ namespace DAL
         }
         public static DataTable GetConten(string moduel)
         {
-            string strSql = "select * from M_GenSetConten where ContenModule=" + moduel;
-            DataTable dt = SQLHelper.ExcuteTable(strSql);
+            string strSql = "select * from M_GenSetConten where ContenModule=@table";
+            SqlParameter p0 = new SqlParameter("@table", moduel);
+            DataTable dt = SQLHelper.ExcuteTable(strSql,p0);
             if (dt == null || dt.Rows.Count <= 0)
+            {
                 strSql = "select * from M_GenSetConten";
-            dt = SQLHelper.ExcuteTable(strSql);
+                dt = SQLHelper.ExcuteTable(strSql);
+            }
             return dt;
         }
         public static DataTable GetConten()
@@ -858,6 +861,12 @@ namespace DAL
             return dt;
         }
 
+        public static void DelContenTable(string str)
+        {
+            string strSql = "delete from M_GenSetConten where ContenModule=@table";
+            SqlParameter p0 = new SqlParameter("@table", str);
+            SQLHelper.ExecScalar(strSql,p0);
+        }
         public static void DelTableCol(string table, string col)
         {
             string strSql = "ALTER TABLE " + table + " DROP COLUMN " + col;

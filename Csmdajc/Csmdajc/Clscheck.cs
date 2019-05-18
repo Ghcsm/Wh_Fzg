@@ -1,4 +1,6 @@
-﻿namespace Csmdajc
+﻿using System.Collections.Generic;
+
+namespace Csmdajc
 {
     public static class Clscheck
     {
@@ -10,5 +12,11 @@
         public static string ArchPos;
         public static string ScanFilePath;
         public static string FileNametmp;
+
+        public static List<string> Lsinikeys = new List<string>();
+        public static List<string> lsinival = new List<string>();
+
+        public static List<string> lsSqlOper = new List<string>();
+        public static List<string> lssqlOpernum = new List<string>();
     }
 }

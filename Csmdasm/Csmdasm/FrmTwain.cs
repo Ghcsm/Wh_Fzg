@@ -399,7 +399,7 @@ namespace Csmdasm
         private void FrmTwain_KeyDown(object sender, KeyEventArgs e)
         {
             KeyShortDown(e);
-          //  Keykuaij(sender, e);
+            //  Keykuaij(sender, e);
             Keys keyCode = e.KeyCode;
             if (e.KeyCode == Keys.Escape)
                 gArch.LvData.Focus();
@@ -408,7 +408,7 @@ namespace Csmdasm
         private void ImgView_KeyDown(object sender, KeyEventArgs e)
         {
             KeyShortDown(e);
-           // Keykuaij(sender, e);
+            // Keykuaij(sender, e);
             Keys keyCode = e.KeyCode;
             if (e.KeyCode == Keys.Escape)
                 gArch.LvData.Focus();
@@ -505,7 +505,7 @@ namespace Csmdasm
 
         private void toolScan_Click(object sender, EventArgs e)
         {
-            if (ClsTwain.ArchPos==null ||ClsTwain.ArchPos.Trim().Length <= 0) {
+            if (ClsTwain.ArchPos == null || ClsTwain.ArchPos.Trim().Length <= 0) {
                 MessageBox.Show("请先加载相关案卷！");
                 return;
             }
@@ -646,64 +646,62 @@ namespace Csmdasm
             Himg._Twainscan(1);
         }
 
-
-
-        private void Keykuaij(object sender, KeyEventArgs e)
-        {
-            Keys keyCode = e.KeyCode;
-            switch (keyCode) {
-                case Keys.Escape:
-                    toolColse_Click(sender, e);
-                    break;
-                case Keys.Enter:
-                    toolScan_Click(sender, e);
-                    break;
-                case Keys.Delete:
-                    toolDelPages_Click(sender, e);
-                    break;
-                case Keys.PageDown:
-                    toolPagesDown_Click(sender, e);
-                    break;
-                case Keys.PageUp:
-                    toolPagesUp_Click(sender, e);
-                    break;
-                case Keys.Home:
-                    Himg._Gotopage(1);
-                    break;
-                case Keys.End:
-                    Himg._Gotopage(ClsTwain.MaxPage);
-                    break;
-                case Keys.NumPad9:
-                    rdFeedAuto.Checked = true;
-                    break;
-                case Keys.NumPad6:
-                    rdFeedFlat.Checked = true;
-                    break;
-                case Keys.NumPad0:
-                    if (chkDoublePages.Checked == false) {
-                        chkDoublePages.Checked = true;
-                    }
-                    else
-                        chkDoublePages.Checked = false;
-                    break;
-                case Keys.NumPad1:
-                    toolColse_Click(sender, e);
-                    break;
-                case Keys.NumPad3:
-                    comPagesSize.SelectedIndex = 2;
-                    break;
-                case Keys.NumPad4:
-                    comPagesSize.SelectedIndex = 1;
-                    break;
-                case Keys.Space:
-                    toolScan_Click(sender, e);
-                    break;
-                case Keys.NumPad5:
-                    comPagesSize.SelectedIndex = 0;
-                    break;
-            }
-            ImgView.Focus();
-        }
+        //private void Keykuaij(object sender, KeyEventArgs e)
+        //{
+        //    Keys keyCode = e.KeyCode;
+        //    switch (keyCode) {
+        //        case Keys.Escape:
+        //            toolColse_Click(sender, e);
+        //            break;
+        //        case Keys.Enter:
+        //            toolScan_Click(sender, e);
+        //            break;
+        //        case Keys.Delete:
+        //            toolDelPages_Click(sender, e);
+        //            break;
+        //        case Keys.PageDown:
+        //            toolPagesDown_Click(sender, e);
+        //            break;
+        //        case Keys.PageUp:
+        //            toolPagesUp_Click(sender, e);
+        //            break;
+        //        case Keys.Home:
+        //            Himg._Gotopage(1);
+        //            break;
+        //        case Keys.End:
+        //            Himg._Gotopage(ClsTwain.MaxPage);
+        //            break;
+        //        case Keys.NumPad9:
+        //            rdFeedAuto.Checked = true;
+        //            break;
+        //        case Keys.NumPad6:
+        //            rdFeedFlat.Checked = true;
+        //            break;
+        //        case Keys.NumPad0:
+        //            if (chkDoublePages.Checked == false) {
+        //                chkDoublePages.Checked = true;
+        //            }
+        //            else
+        //                chkDoublePages.Checked = false;
+        //            break;
+        //        case Keys.NumPad1:
+        //            toolColse_Click(sender, e);
+        //            break;
+        //        case Keys.NumPad3:
+        //            comPagesSize.SelectedIndex = 2;
+        //            break;
+        //        case Keys.NumPad4:
+        //            comPagesSize.SelectedIndex = 1;
+        //            break;
+        //        case Keys.Space:
+        //            toolScan_Click(sender, e);
+        //            break;
+        //        case Keys.NumPad5:
+        //            comPagesSize.SelectedIndex = 0;
+        //            break;
+        //    }
+        //    ImgView.Focus();
+        //}
 
         void Getsqlkey()
         {
@@ -723,7 +721,6 @@ namespace Csmdasm
                     ClsTwain.lssqlOpernum.Add(val);
                 }
                 Writeini.GetAllKeyValues(this.Text, out ClsTwain.Lsinikeys, out ClsTwain.lsinival);
-
             });
         }
 
@@ -758,6 +755,8 @@ namespace Csmdasm
             else if (e.KeyValue == 13 || e.KeyValue == 32)
                 keyValue.Append(e.KeyCode.ToString().Substring(1));
             string str = keyValue.ToString();
+            if (ClsTwain.lsinival.Count <= 0)
+                return;
             int x = ClsTwain.lsinival.IndexOf(str);
             if (x >= 0) {
                 str = ClsTwain.Lsinikeys[x].Remove(0, 1);
@@ -765,11 +764,65 @@ namespace Csmdasm
             }
             if (x >= 0) {
                 str = ClsTwain.lsSqlOper[x];
-                Keysdown(str);
+                KeysDownEve(str);
             }
         }
-        void Keysdown(string key)
+        void KeysDownEve(string key)
         {
+            bool bl = false;
+            switch (key) {
+                case "双面选择":
+                    if (chkDoublePages.Checked == false) {
+                        chkDoublePages.Checked = true;
+                    }
+                    else
+                        chkDoublePages.Checked = false;
+
+                    bl = true;
+                    break;
+                case "纵向":
+                    rdVerPages.Checked = true;
+                    bl = true;
+                    break;
+                case "横向":
+                    rdHorpages.Checked = true;
+                    bl = true;
+                    break;
+                case "A3":
+                    comPagesSize.SelectedIndex = 2;
+                    bl = true;
+                    break;
+                case "A4":
+                    comPagesSize.SelectedIndex = 1;
+                    bl = true;
+                    break;
+                case "B5":
+                    comPagesSize.SelectedIndex = 0;
+                    bl = true;
+                    break;
+                case "彩色":
+                    rdColorRed.Checked = true;
+                    bl = true;
+                    break;
+                case "灰度":
+                    rdColorGray.Checked = true;
+                    bl = true;
+                    break;
+                case "黑白":
+                    rdColorWithe.Checked = true;
+                    bl = true;
+                    break;
+                case "ADF":
+                    rdFeedAuto.Checked = true;
+                    bl = true;
+                    break;
+                case "平板":
+                    rdFeedFlat.Checked = true;
+                    bl = true;
+                    break;
+            }
+            if (bl)
+                return;
             foreach (var item in toolStrip1.Items) {
                 if (item is ToolStripButton) {
                     ToolStripButton t = (ToolStripButton)item;
@@ -779,6 +832,9 @@ namespace Csmdasm
                 }
             }
         }
+
+
+
 
         #endregion
     }

@@ -2191,6 +2191,18 @@ namespace CsmGenSet
             }
         }
 
+        private void butContenTableDel_Click(object sender, EventArgs e)
+        {
+            if (combContenModulename.Text.Trim().Length <= 0)
+            {
+                MessageBox.Show("请选择要删除的模版名称!");
+                combContenModulename.Focus();
+                return;
+            }
+            T_Sysset.DelContenTable(combContenModulename.Text.Trim());
+            GetnContenInfo();
+        }
+
         private void GetnContenInfo()
         {
             try {
@@ -2200,8 +2212,17 @@ namespace CsmGenSet
                 chkContenColShow.Items.Clear();
                 chkContenCol.DataSource = null;
                 combContenPages.Items.Clear();
+                combContenPages.Text = "";
                 combContenTitle.Items.Clear();
+                combContenTitle.Text = "";
                 combContenModulename.Items.Clear();
+                combContenModulename.Text = "";
+                combContenLieSn.Items.Clear();
+                combContenLieSn.Text = "";
+                combContenlabWith.Items.Clear();
+                combContenlabWith.Text = "";
+                combContentxtWith.Items.Clear();
+                combContentxtWith.Text = "";
                 ClsConten.ContenCol.Clear();
                 ClsConten.ContenModule.Clear();
                 DataRow dr = dt.Rows[0];
@@ -2764,7 +2785,8 @@ namespace CsmGenSet
         {
             Infoshow();
         }
-      
+
+       
     }
 
 }

@@ -15,10 +15,7 @@ namespace Csmmldj
         }
         UcContents ucContents1;
         UcInfoEnter ucInfo;
-        private void Ini()
-        {
-
-        }
+      
         private void Frmmldj_Load(object sender, EventArgs e)
         {
             splitCont.Panel2Collapsed = true;

@@ -56,7 +56,7 @@
             this.labPageCrrent = new System.Windows.Forms.Label();
             this.txtPages = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.toolStrip3 = new System.Windows.Forms.ToolStrip();
+            this.toolstripmain2 = new System.Windows.Forms.ToolStrip();
             this.toolStripCenter = new System.Windows.Forms.ToolStripButton();
             this.toolStripDel = new System.Windows.Forms.ToolStripButton();
             this.toolStripRecov = new System.Windows.Forms.ToolStripButton();
@@ -78,7 +78,7 @@
             this.toolStripCheckImg = new System.Windows.Forms.ToolStripButton();
             this.toolStripSave = new System.Windows.Forms.ToolStripButton();
             this.toolStripClose = new System.Windows.Forms.ToolStripButton();
-            this.toolStrip2 = new System.Windows.Forms.ToolStrip();
+            this.toolstripmain1 = new System.Windows.Forms.ToolStrip();
             this.toolStripInsterImg = new System.Windows.Forms.ToolStripButton();
             this.toolStripRevImg = new System.Windows.Forms.ToolStripButton();
             this.toolStripTrimImg = new System.Windows.Forms.ToolStripButton();
@@ -116,8 +116,8 @@
             this.statUser.SuspendLayout();
             this.gr3.SuspendLayout();
             this.gr4.SuspendLayout();
-            this.toolStrip3.SuspendLayout();
-            this.toolStrip2.SuspendLayout();
+            this.toolstripmain2.SuspendLayout();
+            this.toolstripmain1.SuspendLayout();
             this.dockSite1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bar1)).BeginInit();
             this.bar1.SuspendLayout();
@@ -208,8 +208,8 @@
             // panelDock2
             // 
             this.panelDock2.Controls.Add(this.splitContainer1);
-            this.panelDock2.Controls.Add(this.toolStrip3);
-            this.panelDock2.Controls.Add(this.toolStrip2);
+            this.panelDock2.Controls.Add(this.toolstripmain2);
+            this.panelDock2.Controls.Add(this.toolstripmain1);
             this.panelDock2.DisabledBackColor = System.Drawing.Color.Empty;
             this.panelDock2.Location = new System.Drawing.Point(3, 28);
             this.panelDock2.Name = "panelDock2";
@@ -409,9 +409,9 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "应编页码:";
             // 
-            // toolStrip3
+            // toolstripmain2
             // 
-            this.toolStrip3.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolstripmain2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripCenter,
             this.toolStripDel,
             this.toolStripRecov,
@@ -433,11 +433,11 @@
             this.toolStripCheckImg,
             this.toolStripSave,
             this.toolStripClose});
-            this.toolStrip3.Location = new System.Drawing.Point(0, 25);
-            this.toolStrip3.Name = "toolStrip3";
-            this.toolStrip3.Size = new System.Drawing.Size(985, 25);
-            this.toolStrip3.TabIndex = 0;
-            this.toolStrip3.Text = "toolStrip2";
+            this.toolstripmain2.Location = new System.Drawing.Point(0, 25);
+            this.toolstripmain2.Name = "toolstripmain2";
+            this.toolstripmain2.Size = new System.Drawing.Size(985, 25);
+            this.toolstripmain2.TabIndex = 0;
+            this.toolstripmain2.Text = "toolStrip2";
             // 
             // toolStripCenter
             // 
@@ -616,9 +616,9 @@
             this.toolStripClose.Text = "退出";
             this.toolStripClose.Click += new System.EventHandler(this.toolStripClose_Click);
             // 
-            // toolStrip2
+            // toolstripmain1
             // 
-            this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolstripmain1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripInsterImg,
             this.toolStripRevImg,
             this.toolStripTrimImg,
@@ -633,11 +633,11 @@
             this.toolProess,
             this.toolStripSeparator5,
             this.toolArchno});
-            this.toolStrip2.Location = new System.Drawing.Point(0, 0);
-            this.toolStrip2.Name = "toolStrip2";
-            this.toolStrip2.Size = new System.Drawing.Size(985, 25);
-            this.toolStrip2.TabIndex = 2;
-            this.toolStrip2.Text = "toolStrip3";
+            this.toolstripmain1.Location = new System.Drawing.Point(0, 0);
+            this.toolstripmain1.Name = "toolstripmain1";
+            this.toolstripmain1.Size = new System.Drawing.Size(985, 25);
+            this.toolstripmain1.TabIndex = 2;
+            this.toolstripmain1.Text = "toolStrip3";
             // 
             // toolStripInsterImg
             // 
@@ -932,10 +932,10 @@
             this.gr3.ResumeLayout(false);
             this.gr4.ResumeLayout(false);
             this.gr4.PerformLayout();
-            this.toolStrip3.ResumeLayout(false);
-            this.toolStrip3.PerformLayout();
-            this.toolStrip2.ResumeLayout(false);
-            this.toolStrip2.PerformLayout();
+            this.toolstripmain2.ResumeLayout(false);
+            this.toolstripmain2.PerformLayout();
+            this.toolstripmain1.ResumeLayout(false);
+            this.toolstripmain1.PerformLayout();
             this.dockSite1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.bar1)).EndInit();
             this.bar1.ResumeLayout(false);
@@ -965,7 +965,7 @@
         private DevComponents.DotNetBar.Bar bar2;
         private DevComponents.DotNetBar.PanelDockContainer panelDock2;
         private DevComponents.DotNetBar.DockContainerItem dockCont2;
-        private System.Windows.Forms.ToolStrip toolStrip3;
+        private System.Windows.Forms.ToolStrip toolstripmain2;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.GroupBox gr3;
         private System.Windows.Forms.ToolStripButton toolStripCenter;
@@ -986,7 +986,7 @@
         private System.Windows.Forms.ToolStripButton toolStripColorShall;
         private System.Windows.Forms.ToolStripButton toolStripInterSpeck;
         private System.Windows.Forms.ToolStripButton toolStripCheckImg;
-        private System.Windows.Forms.ToolStrip toolStrip2;
+        private System.Windows.Forms.ToolStrip toolstripmain1;
         private System.Windows.Forms.ToolStripButton toolStripRevImg;
         private System.Windows.Forms.ToolStripButton toolStripTrimImg;
         private System.Windows.Forms.ToolStripButton toolStripFontDeep;

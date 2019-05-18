@@ -5,6 +5,7 @@ using HLjscom;
 using System;
 using System.Data;
 using System.IO;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -16,7 +17,7 @@ namespace Csmdajc
         public FrmCheck()
         {
             InitializeComponent();
-            Init();
+            
         }
 
         Hljsimage Himg = new Hljsimage();
@@ -64,8 +65,11 @@ namespace Csmdajc
         private void FrmIndex_Load(object sender, EventArgs e)
         {
             try {
+                Init();
                 Himg._Instimagtwain(this.ImgView, this.Handle, 0);
                 Himg._Rectang(true);
+                Writeini.Fileini = Path.Combine(Application.StartupPath, "Csmkeyval.ini");
+                Getsqlkey();
             } catch (Exception ex) {
                 MessageBox.Show("初始化失败请重新加载" + ex.ToString());
                 Himg.Dispose();
@@ -285,15 +289,15 @@ namespace Csmdajc
 
         private void ImgView_KeyDown(object sender, KeyEventArgs e)
         {
-            Keykuaij(sender, e);
-            Keys keyCode = e.KeyCode;
+            KeyShortDown(e);
+             Keys keyCode = e.KeyCode;
             if (e.KeyCode == Keys.Escape)
                 gArch.LvData.Focus();
         }
 
         private void FrmIndex_KeyDown(object sender, KeyEventArgs e)
         {
-            Keykuaij(sender, e);
+            KeyShortDown(e);
             Keys keyCode = e.KeyCode;
             if (e.KeyCode == Keys.Escape)
                 gArch.LvData.Focus();
@@ -318,6 +322,96 @@ namespace Csmdajc
 
         #region Method
 
+
+        void Getsqlkey()
+        {
+            Task.Run(() =>
+            {
+                Clscheck.lsSqlOper.Clear();
+                Clscheck.lssqlOpernum.Clear();
+                Clscheck.lsinival.Clear();
+                Clscheck.Lsinikeys.Clear();
+                DataTable dt = Common.GetSqlkey(this.Text);
+                if (dt == null || dt.Rows.Count <= 0)
+                    return;
+                for (int i = 0; i < dt.Rows.Count; i++) {
+                    string key = dt.Rows[i][0].ToString();
+                    string val = dt.Rows[i][1].ToString();
+                    Clscheck.lsSqlOper.Add(key);
+                    Clscheck.lssqlOpernum.Add(val);
+                }
+                Writeini.GetAllKeyValues(this.Text, out Clscheck.Lsinikeys, out Clscheck.lsinival);
+            });
+        }
+
+        private void KeyShortDown(KeyEventArgs e)
+        {
+            StringBuilder keyValue = new StringBuilder
+            {
+                Length = 0
+            };
+            keyValue.Append("");
+            if (e.Control) {
+                keyValue.Append("1-");
+            }
+            else if (e.Alt) {
+                keyValue.Append("2-");
+            }
+            else if (e.Shift) {
+                keyValue.Append("3-");
+            }
+            else {
+                keyValue.Append("0-");
+            }
+            if ((e.KeyValue >= 33 && e.KeyValue <= 40) ||
+                (e.KeyValue >= 65 && e.KeyValue <= 90) ||   //a-z/A-Z
+                (e.KeyValue >= 112 && e.KeyValue <= 123))   //F1-F12
+            {
+                keyValue.Append(e.KeyValue);
+            }
+            else if ((e.KeyValue >= 48 && e.KeyValue <= 57))    //0-9
+                keyValue.Append(e.KeyValue.ToString().Substring(1));
+            else if (e.KeyValue == 13 || e.KeyValue == 32)
+                keyValue.Append(e.KeyCode.ToString().Substring(1));
+            string str = keyValue.ToString();
+            if (Clscheck.lsinival.Count <= 0)
+                return;
+            int x = Clscheck.lsinival.IndexOf(str);
+            if (x >= 0) {
+                str = Clscheck.Lsinikeys[x].Remove(0, 1);
+                x = Clscheck.lssqlOpernum.IndexOf(str);
+            }
+            if (x >= 0) {
+                str = Clscheck.lsSqlOper[x];
+                KeysDownEve(str);
+            }
+        }
+
+        void KeysDownEve(string key)
+        {
+            bool bl = false;
+            foreach (var item in toolstripmain1.Items) {
+                if (item is ToolStripButton) {
+                    ToolStripButton t = (ToolStripButton)item;
+                    if (t.Text == key) {
+                        t.PerformClick();
+                        bl = true;
+                    }
+                }
+            }
+
+            if (!bl) {
+                foreach (var item in toolstripmain2.Items) {
+                    if (item is ToolStripButton) {
+                        ToolStripButton t = (ToolStripButton)item;
+                        if (t.Text == key) {
+                            t.PerformClick();
+                            bl = true;
+                        }
+                    }
+                }
+            }
+        }
         private void Ispages()
         {
             if (Clscheck.RegPage != Clscheck.MaxPage)
@@ -660,64 +754,64 @@ namespace Csmdajc
         }
 
 
-        private void Keykuaij(object sender, KeyEventArgs e)
-        {
-            Keys keyCode = e.KeyCode;
-            switch (keyCode) {
-                case Keys.F2:
-                    toolStripRepair_Click(sender, e);
-                    break;
-                case Keys.Escape:
-                    toolStripClose_Click(sender, e);
-                    break;
-                case Keys.Enter:
-                    toolStripDownPage_Click(sender, e);
-                    break;
-                case Keys.Space:
-                    toolStripDownPage_Click(sender, e);
-                    break;
-                case Keys.PageDown:
-                    toolStripDownPage_Click(sender, e);
-                    break;
-                case Keys.PageUp:
-                    toolStripUppage_Click(sender, e);
-                    break;
-                case Keys.E:
-                    toolStripRoteImg_Click(sender, e);
-                    break;
-                case Keys.D:
-                    toolStripDeskew_Click(sender, e);
-                    break;
-                case Keys.F:
-                    toolStripCleSide_Click(sender, e);
-                    break;
-                case Keys.C:
-                    toolStripColorShall_Click(sender, e);
-                    break;
-                case Keys.G:
-                    toolStripInterSpeck_Click(sender, e);
-                    break;
-                case Keys.T:
-                    toolStripOutSpeck_Click(sender, e);
-                    break;
-                case Keys.V:
-                    toolStripCenter_Click(sender, e);
-                    break;
-                case Keys.A:
-                    toolStripBigPage_Click(sender, e);
-                    break;
-                case Keys.S:
-                    toolStripSamllPage_Click(sender, e);
-                    break;
-                case Keys.Z:
-                    Himg._RoteimgWt(ImgView, 0);
-                    break;
-                case Keys.X:
-                    Himg._RoteimgWt(ImgView, 1);
-                    break;
-            }
+        //private void Keykuaij(object sender, KeyEventArgs e)
+        //{
+        //    Keys keyCode = e.KeyCode;
+        //    switch (keyCode) {
+        //        case Keys.F2:
+        //            toolStripRepair_Click(sender, e);
+        //            break;
+        //        case Keys.Escape:
+        //            toolStripClose_Click(sender, e);
+        //            break;
+        //        case Keys.Enter:
+        //            toolStripDownPage_Click(sender, e);
+        //            break;
+        //        case Keys.Space:
+        //            toolStripDownPage_Click(sender, e);
+        //            break;
+        //        case Keys.PageDown:
+        //            toolStripDownPage_Click(sender, e);
+        //            break;
+        //        case Keys.PageUp:
+        //            toolStripUppage_Click(sender, e);
+        //            break;
+        //        case Keys.E:
+        //            toolStripRoteImg_Click(sender, e);
+        //            break;
+        //        case Keys.D:
+        //            toolStripDeskew_Click(sender, e);
+        //            break;
+        //        case Keys.F:
+        //            toolStripCleSide_Click(sender, e);
+        //            break;
+        //        case Keys.C:
+        //            toolStripColorShall_Click(sender, e);
+        //            break;
+        //        case Keys.G:
+        //            toolStripInterSpeck_Click(sender, e);
+        //            break;
+        //        case Keys.T:
+        //            toolStripOutSpeck_Click(sender, e);
+        //            break;
+        //        case Keys.V:
+        //            toolStripCenter_Click(sender, e);
+        //            break;
+        //        case Keys.A:
+        //            toolStripBigPage_Click(sender, e);
+        //            break;
+        //        case Keys.S:
+        //            toolStripSamllPage_Click(sender, e);
+        //            break;
+        //        case Keys.Z:
+        //            Himg._RoteimgWt(ImgView, 0);
+        //            break;
+        //        case Keys.X:
+        //            Himg._RoteimgWt(ImgView, 1);
+        //            break;
+        //    }
 
-        }
+        //}
 
 
 

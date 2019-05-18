@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -46,6 +47,8 @@ namespace Csmdapx
                 Init();
                 Himg._Instimagtwain(this.ImgView, this.Handle, 0);
                 Himg._Rectang(true);
+                Writeini.Fileini = Path.Combine(Application.StartupPath, "Csmkeyval.ini");
+                Getsqlkey();
             } catch (Exception ex) {
                 MessageBox.Show("初始化失败请重新加载" + ex.ToString());
                 Himg.Dispose();
@@ -216,8 +219,8 @@ namespace Csmdapx
                 else if (txt == "已删除") {
                     txt = "0";
                     Himg._Pagenext(1);
-                //    txtPages.Text = "";
-                //    txtPages.ReadOnly = false;
+                    //    txtPages.Text = "";
+                    //    txtPages.ReadOnly = false;
                     txtPages.Focus();
                 }
                 else if (txt.Length <= 0 || txt == "0") {
@@ -242,7 +245,7 @@ namespace Csmdapx
                         Himg._Oderpage(txt);
                         Application.DoEvents();
                         this.toolStripSave_Click(null, null);
-                      
+
                     }
                 }
             } catch { }
@@ -344,7 +347,7 @@ namespace Csmdapx
 
         private void ImgView_KeyDown(object sender, KeyEventArgs e)
         {
-            Keykuaij(sender, e);
+            KeyShortDown(e);
             Keys keyCode = e.KeyCode;
             if (e.KeyCode == Keys.Escape)
                 gArch.LvData.Focus();
@@ -352,7 +355,7 @@ namespace Csmdapx
 
         private void txtPages_KeyDown(object sender, KeyEventArgs e)
         {
-            Keykuaij(sender, e);
+            KeyShortDown(e);
             Keys keyCode = e.KeyCode;
             if (e.KeyCode == Keys.Escape)
                 gArch.LvData.Focus();
@@ -360,7 +363,7 @@ namespace Csmdapx
 
         private void FrmIndex_KeyDown(object sender, KeyEventArgs e)
         {
-            Keykuaij(sender, e);
+            KeyShortDown(e);
             Keys keyCode = e.KeyCode;
             if (e.KeyCode == Keys.Escape)
                 gArch.LvData.Focus();
@@ -377,6 +380,95 @@ namespace Csmdapx
 
         #region Method
 
+        void Getsqlkey()
+        {
+            Task.Run(() =>
+            {
+                ClsIndex.lsSqlOper.Clear();
+                ClsIndex.lssqlOpernum.Clear();
+                ClsIndex.lsinival.Clear();
+                ClsIndex.Lsinikeys.Clear();
+                DataTable dt = Common.GetSqlkey(this.Text);
+                if (dt == null || dt.Rows.Count <= 0)
+                    return;
+                for (int i = 0; i < dt.Rows.Count; i++) {
+                    string key = dt.Rows[i][0].ToString();
+                    string val = dt.Rows[i][1].ToString();
+                    ClsIndex.lsSqlOper.Add(key);
+                    ClsIndex.lssqlOpernum.Add(val);
+                }
+                Writeini.GetAllKeyValues(this.Text, out ClsIndex.Lsinikeys, out ClsIndex.lsinival);
+            });
+        }
+
+        private void KeyShortDown(KeyEventArgs e)
+        {
+            StringBuilder keyValue = new StringBuilder
+            {
+                Length = 0
+            };
+            keyValue.Append("");
+            if (e.Control) {
+                keyValue.Append("1-");
+            }
+            else if (e.Alt) {
+                keyValue.Append("2-");
+            }
+            else if (e.Shift) {
+                keyValue.Append("3-");
+            }
+            else {
+                keyValue.Append("0-");
+            }
+            if ((e.KeyValue >= 33 && e.KeyValue <= 40) ||
+                (e.KeyValue >= 65 && e.KeyValue <= 90) ||   //a-z/A-Z
+                (e.KeyValue >= 112 && e.KeyValue <= 123))   //F1-F12
+            {
+                keyValue.Append(e.KeyValue);
+            }
+            else if ((e.KeyValue >= 48 && e.KeyValue <= 57))    //0-9
+                keyValue.Append(e.KeyValue.ToString().Substring(1));
+            else if (e.KeyValue == 13 || e.KeyValue == 32)
+                keyValue.Append(e.KeyCode.ToString().Substring(1));
+            string str = keyValue.ToString();
+            if (ClsIndex.lsinival.Count <= 0)
+                return;
+            int x = ClsIndex.lsinival.IndexOf(str);
+            if (x >= 0) {
+                str = ClsIndex.Lsinikeys[x].Remove(0, 1);
+                x = ClsIndex.lssqlOpernum.IndexOf(str);
+            }
+            if (x >= 0) {
+                str = ClsIndex.lsSqlOper[x];
+                KeysDownEve(str);
+            }
+        }
+
+        void KeysDownEve(string key)
+        {
+            bool bl = false;
+            foreach (var item in toolstripmain1.Items) {
+                if (item is ToolStripButton) {
+                    ToolStripButton t = (ToolStripButton)item;
+                    if (t.Text == key) {
+                        t.PerformClick();
+                        bl = true;
+                    }
+                }
+            }
+
+            if (!bl) {
+                foreach (var item in toolstripmain2.Items) {
+                    if (item is ToolStripButton) {
+                        ToolStripButton t = (ToolStripButton)item;
+                        if (t.Text == key) {
+                            t.PerformClick();
+                            bl = true;
+                        }
+                    }
+                }
+            }
+        }
 
         private void GetPages(int page, int counpage)
         {
@@ -778,75 +870,73 @@ namespace Csmdapx
             }
         }
 
-        private void Keykuaij(object sender, KeyEventArgs e)
-        {
-            Keys keyCode = e.KeyCode;
-            switch (keyCode) {
-                case Keys.Escape:
-                    toolStripClose_Click(sender, e);
-                    break;
-                case Keys.Enter:
-                    toolStripDownPage_Click(sender, e);
-                    break;
-                case Keys.Space:
-                    toolStripDownPage_Click(sender, e);
-                    break;
-                case Keys.Delete:
-                    toolStripDel_Click(sender, e);
-                    break;
-                case Keys.PageDown:
-                    toolStripDownPage_Click(sender, e);
-                    break;
-                case Keys.PageUp:
-                    toolStripUppage_Click(sender, e);
-                    break;
-                case Keys.W:
-                    toolStripDel_Click(sender, e);
-                    break;
-                case Keys.Q:
-                    toolStripRecov_Click(sender, e);
-                    break;
-                case Keys.E:
-                    toolStripRoteImg_Click(sender, e);
-                    break;
-                case Keys.D:
-                    toolStripDeskew_Click(sender, e);
-                    break;
-                case Keys.F:
-                    toolStripCleSide_Click(sender, e);
-                    break;
-                case Keys.C:
-                    toolStripColorShall_Click(sender, e);
-                    break;
-                case Keys.G:
-                    toolStripInterSpeck_Click(sender, e);
-                    break;
-                case Keys.T:
-                    toolStripOutSpeck_Click(sender, e);
-                    break;
-                case Keys.R:
-                    toolStripCheckImg_Click(sender, e);
-                    break;
-                case Keys.V:
-                    toolStripCenter_Click(sender, e);
-                    break;
-                case Keys.A:
-                    toolStripBigPage_Click(sender, e);
-                    break;
-                case Keys.S:
-                    toolStripSamllPage_Click(sender, e);
-                    break;
-                case Keys.Z:
-                    Himg._RoteimgWt(ImgView, 0);
-                    break;
-                case Keys.X:
-                    Himg._RoteimgWt(ImgView, 1);
-                    break;
-            }
+        //private void Keykuaij(object sender, KeyEventArgs e)
+        //{
+        //    Keys keyCode = e.KeyCode;
+        //    switch (keyCode) {
+        //        case Keys.Escape:
+        //            toolStripClose_Click(sender, e);
+        //            break;
+        //        case Keys.Enter:
+        //            toolStripDownPage_Click(sender, e);
+        //            break;
+        //        case Keys.Space:
+        //            toolStripDownPage_Click(sender, e);
+        //            break;
+        //        case Keys.Delete:
+        //            toolStripDel_Click(sender, e);
+        //            break;
+        //        case Keys.PageDown:
+        //            toolStripDownPage_Click(sender, e);
+        //            break;
+        //        case Keys.PageUp:
+        //            toolStripUppage_Click(sender, e);
+        //            break;
+        //        case Keys.W:
+        //            toolStripDel_Click(sender, e);
+        //            break;
+        //        case Keys.Q:
+        //            toolStripRecov_Click(sender, e);
+        //            break;
+        //        case Keys.E:
+        //            toolStripRoteImg_Click(sender, e);
+        //            break;
+        //        case Keys.D:
+        //            toolStripDeskew_Click(sender, e);
+        //            break;
+        //        case Keys.F:
+        //            toolStripCleSide_Click(sender, e);
+        //            break;
+        //        case Keys.C:
+        //            toolStripColorShall_Click(sender, e);
+        //            break;
+        //        case Keys.G:
+        //            toolStripInterSpeck_Click(sender, e);
+        //            break;
+        //        case Keys.T:
+        //            toolStripOutSpeck_Click(sender, e);
+        //            break;
+        //        case Keys.R:
+        //            toolStripCheckImg_Click(sender, e);
+        //            break;
+        //        case Keys.V:
+        //            toolStripCenter_Click(sender, e);
+        //            break;
+        //        case Keys.A:
+        //            toolStripBigPage_Click(sender, e);
+        //            break;
+        //        case Keys.S:
+        //            toolStripSamllPage_Click(sender, e);
+        //            break;
+        //        case Keys.Z:
+        //            Himg._RoteimgWt(ImgView, 0);
+        //            break;
+        //        case Keys.X:
+        //            Himg._RoteimgWt(ImgView, 1);
+        //            break;
+        //    }
 
-        }
-
-
+        //}
 
 
         #endregion

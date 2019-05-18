@@ -46,8 +46,8 @@ namespace CsmCon
     {
         public static void GetContenInfo()
         {
-            if (ClsContenInfo.ContenTable!=null && ClsContenInfo.ContenTable.Length>0)
-                return;
+            //if (ClsContenInfo.ContenTable ==null && ClsContenInfo.ContenTable.Length<=0)
+            //    return;
             DataTable dt = T_Sysset.GetConten(ClsContenInfo.Modulename);
             if (dt == null || dt.Rows.Count <= 0)
                 return;
@@ -167,7 +167,7 @@ namespace CsmCon
         public static void GetControl(Panel pl)
         {
             GetContenInfo();
-            if (ClsContenInfo.ContenTable.Trim().Length <= 0)
+            if (ClsContenInfo.ContenTable==null|| ClsContenInfo.ContenTable.Trim().Length <= 0)
                 return;
             DataTable dt = Common.GetTableCol(ClsContenInfo.ContenTable);
             if (dt == null || dt.Rows.Count <= 0)

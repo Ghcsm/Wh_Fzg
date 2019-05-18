@@ -11,8 +11,7 @@ namespace Csmdasm
         public static string ArchPos;
         public static bool Scanbool = false;
         public static string ScanFileTmp;
-
-        public static List<Control> lscontrol=new List<Control>();
+      
         public static List<string> Lsinikeys=new List<string>();
         public static List<string> lsinival = new List<string>();
 

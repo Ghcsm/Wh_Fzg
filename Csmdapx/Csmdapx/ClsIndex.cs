@@ -1,4 +1,6 @@
-﻿namespace Csmdapx
+﻿using System.Collections.Generic;
+
+namespace Csmdapx
 {
     public static class ClsIndex
     {
@@ -8,6 +10,12 @@
         public static int Archid;
         public static string ArchPos;
         public static string ScanFilePath;
-        // private int ImgSide;
+
+
+        public static List<string> Lsinikeys = new List<string>();
+        public static List<string> lsinival = new List<string>();
+
+        public static List<string> lsSqlOper = new List<string>();
+        public static List<string> lssqlOpernum = new List<string>();
     }
 }
