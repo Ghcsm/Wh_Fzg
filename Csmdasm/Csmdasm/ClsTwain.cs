@@ -17,5 +17,7 @@ namespace Csmdasm
 
         public static List<string> lsSqlOper = new List<string>();
         public static List<string> lssqlOpernum=new List<string>();
+
+        public static string keystr = "";
     }
 }

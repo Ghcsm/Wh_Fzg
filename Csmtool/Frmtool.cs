@@ -494,7 +494,7 @@ namespace Csmtool
 
         private void txtKeysZdyKeys_KeyDown(object sender, KeyEventArgs e)
         {
-            StringBuilder keyValue = new StringBuilder
+             StringBuilder keyValue = new StringBuilder
             {
                 Length = 0
             };
@@ -507,7 +507,7 @@ namespace Csmtool
             }
             else if ((e.KeyValue >= 48 && e.KeyValue <= 57))    //0-9
                 keyValue.Append(e.KeyCode.ToString().Substring(1));
-            else if (e.KeyValue == 13 || e.KeyValue == 32)
+            else if (e.KeyValue == 13  || e.KeyValue== 27 || e.KeyValue == 32)
                 keyValue.Append(e.KeyCode.ToString().Substring(1));
             this.ActiveControl.Text = "";
             this.ActiveControl.Text = keyValue.ToString();
@@ -620,6 +620,10 @@ namespace Csmtool
                 }
                 int Nk = Convert.ToInt32(KeyV[1].Trim());
                 str += ((char)Nk).ToString();
+                if (Nk == 13)
+                    str = "回车";
+                else if (Nk == 32)
+                    str = "空格";
                 labkeys.Text = str;
             }
         }
@@ -690,6 +694,7 @@ namespace Csmtool
             Getkeys();
             string str = Path.Combine(Application.StartupPath, "CsmKeyVal.ini");
             Writeini.Fileini = str;
+            combKeyzdyTkey.SelectedIndex = 0;
         }
 
 

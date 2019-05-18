@@ -224,6 +224,10 @@
             this.combKeyzdyTkey.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.combKeyzdyTkey.TabIndex = 4;
             // 
+            // comboItem4
+            // 
+            this.comboItem4.Text = "空";
+            // 
             // comboItem5
             // 
             this.comboItem5.Text = "Ctrl";

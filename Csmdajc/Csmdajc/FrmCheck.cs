@@ -25,6 +25,7 @@ namespace Csmdajc
         gArchSelect gArch;
         UcContents ucContents1;
         private int archzt = 0;
+        private Pubcls pub;
         private void Init()
         {
             try {
@@ -70,6 +71,7 @@ namespace Csmdajc
                 Himg._Rectang(true);
                 Writeini.Fileini = Path.Combine(Application.StartupPath, "Csmkeyval.ini");
                 Getsqlkey();
+                pub=new Pubcls();
             } catch (Exception ex) {
                 MessageBox.Show("初始化失败请重新加载" + ex.ToString());
                 Himg.Dispose();
@@ -287,17 +289,11 @@ namespace Csmdajc
             Himg._Fillrect(1);
         }
 
-        private void ImgView_KeyDown(object sender, KeyEventArgs e)
-        {
-            KeyShortDown(e);
-             Keys keyCode = e.KeyCode;
-            if (e.KeyCode == Keys.Escape)
-                gArch.LvData.Focus();
-        }
-
         private void FrmIndex_KeyDown(object sender, KeyEventArgs e)
         {
-            KeyShortDown(e);
+            pub.KeyShortDown(e,Clscheck.lsinival, Clscheck.Lsinikeys, Clscheck.lssqlOpernum, Clscheck.lsSqlOper, out Clscheck.keystr);
+            if (Clscheck.keystr.Trim().Length > 0)
+                KeysDownEve(Clscheck.keystr.Trim());
             Keys keyCode = e.KeyCode;
             if (e.KeyCode == Keys.Escape)
                 gArch.LvData.Focus();
@@ -343,49 +339,7 @@ namespace Csmdajc
                 Writeini.GetAllKeyValues(this.Text, out Clscheck.Lsinikeys, out Clscheck.lsinival);
             });
         }
-
-        private void KeyShortDown(KeyEventArgs e)
-        {
-            StringBuilder keyValue = new StringBuilder
-            {
-                Length = 0
-            };
-            keyValue.Append("");
-            if (e.Control) {
-                keyValue.Append("1-");
-            }
-            else if (e.Alt) {
-                keyValue.Append("2-");
-            }
-            else if (e.Shift) {
-                keyValue.Append("3-");
-            }
-            else {
-                keyValue.Append("0-");
-            }
-            if ((e.KeyValue >= 33 && e.KeyValue <= 40) ||
-                (e.KeyValue >= 65 && e.KeyValue <= 90) ||   //a-z/A-Z
-                (e.KeyValue >= 112 && e.KeyValue <= 123))   //F1-F12
-            {
-                keyValue.Append(e.KeyValue);
-            }
-            else if ((e.KeyValue >= 48 && e.KeyValue <= 57))    //0-9
-                keyValue.Append(e.KeyValue.ToString().Substring(1));
-            else if (e.KeyValue == 13 || e.KeyValue == 32)
-                keyValue.Append(e.KeyCode.ToString().Substring(1));
-            string str = keyValue.ToString();
-            if (Clscheck.lsinival.Count <= 0)
-                return;
-            int x = Clscheck.lsinival.IndexOf(str);
-            if (x >= 0) {
-                str = Clscheck.Lsinikeys[x].Remove(0, 1);
-                x = Clscheck.lssqlOpernum.IndexOf(str);
-            }
-            if (x >= 0) {
-                str = Clscheck.lsSqlOper[x];
-                KeysDownEve(str);
-            }
-        }
+     
 
         void KeysDownEve(string key)
         {

@@ -669,7 +669,6 @@
             this.ImgView.Size = new System.Drawing.Size(796, 503);
             this.ImgView.TabIndex = 0;
             this.ImgView.Click += new System.EventHandler(this.ImgView_Click);
-            this.ImgView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ImgView_KeyDown);
             // 
             // grBottom
             // 

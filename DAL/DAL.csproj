@@ -101,6 +101,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Pubcls.cs" />
     <Compile Include="SqlHelper.cs" />
     <Compile Include="SqlHelper2.cs" />
     <Compile Include="T_ ConFigure.cs" />
