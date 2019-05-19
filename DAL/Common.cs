@@ -442,17 +442,16 @@ namespace DAL
         public static void SetIndexFinish(int arid, string file, int zt)
         {
             string strSql = "PUpdateIndexInfo";
-            SqlParameter[] p = new SqlParameter[7];
+            SqlParameter[] p = new SqlParameter[6];
             p[0] = new SqlParameter("@UserID", T_User.UserId);
             p[1] = new SqlParameter("@FileName", file);
             p[2] = new SqlParameter("@Archid", arid);
             p[3] = new SqlParameter("@ArchState", zt);
             p[4] = new SqlParameter("@PageIndexInfo", "");
-            p[5] = new SqlParameter("@DeleTag", "");
-            p[6] = new SqlParameter("@stat", 1);
+            p[5] = new SqlParameter("@stat", 1);
             SQLHelper.ExecuteNonQuery(strSql, CommandType.StoredProcedure, p);
         }
-        public static void SetCheckFinish(int arid, string file, int check, int stat, string info, string delinfo)
+        public static void SetCheckFinish(int arid, string file, int check, int stat, string info)
         {
             string strSql = "PUpdateCheckInfo";
             SqlParameter[] p = new SqlParameter[6];
@@ -461,29 +460,27 @@ namespace DAL
             p[2] = new SqlParameter("@Archid", arid);
             p[3] = new SqlParameter("@ArchState", stat);
             p[4] = new SqlParameter("@PageIndexInfo", info);
-            p[5] = new SqlParameter("@DeleTag", delinfo);
-            p[6] = new SqlParameter("@check", check);
+            p[5] = new SqlParameter("@check", check);
             SQLHelper.ExecuteNonQuery(strSql, CommandType.StoredProcedure, p);
         }
 
-        public static void SetIndexCancel(int arid, string pageindex, string deletag)
+        public static void SetIndexCancel(int arid, string pageindex)
         {
             string strSql = "PUpdateIndexInfo";
-            SqlParameter[] p = new SqlParameter[7];
+            SqlParameter[] p = new SqlParameter[6];
             p[0] = new SqlParameter("@UserID", T_User.UserId);
             p[1] = new SqlParameter("@FileName", "");
             p[2] = new SqlParameter("@Archid", arid);
             p[3] = new SqlParameter("@ArchState", 3);
             p[4] = new SqlParameter("@PageIndexInfo", pageindex);
-            p[5] = new SqlParameter("@DeleTag", deletag);
-            p[6] = new SqlParameter("@stat", "0");
+            p[5] = new SqlParameter("@stat", "0");
             SQLHelper.ExecuteNonQuery(strSql, CommandType.StoredProcedure, p);
         }
 
         public static DataTable ReadPageIndexInfo(int ArchID)
         {
             try {
-                string strSql = "select top 1 PageIndexInfo ,DeleTag from M_imagefile where  id=@ArchID";
+                string strSql = "select top 1 PageIndexInfo from M_imagefile where  id=@ArchID";
                 SqlParameter p1 = new SqlParameter("@ArchID", ArchID);
                 DataTable dt = DAL.SQLHelper.ExcuteTable(strSql, p1);
                 return dt;
@@ -2385,7 +2382,7 @@ namespace DAL
         public static int ClearScan(int ArchID)
         {
             try {
-                string strSql = "update M_IMAGEFILE set IMGFILE=null ,INDEXSTAFF=null,ScanStaff=null,IndexTime=null,ScanTime=null,PageIndexInfo=null,DeleTag=null,dotime=null,archstate=0 where ID=@id";
+                string strSql = "update M_IMAGEFILE set IMGFILE=null ,INDEXSTAFF=null,ScanStaff=null,IndexTime=null,ScanTime=null,PageIndexInfo=null,dotime=null,archstate=0 where ID=@id";
                 SqlParameter p1 = new SqlParameter("@id", ArchID);
                 int i = Convert.ToInt32(SQLHelper.ExecScalar(strSql, p1));
                 return i;

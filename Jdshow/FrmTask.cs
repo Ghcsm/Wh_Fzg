@@ -184,18 +184,6 @@ namespace Jdshow
                 }
 
             }
-            //else if (archstat == (int)T_ConFigure.ArchStat.质检退回) {
-            //    string RemoteDir = filename.Substring(0, 8);
-            //    if (ftp.SaveRemoteFileUp(T_ConFigure.gArchScanPath, archpos, filepath, T_ConFigure.ScanTempFile)) {
-            //        Common.DelTask(Convert.ToInt32(archid));
-            //        Common.SetArchWorkState(Convert.ToInt32(archid), (int)T_ConFigure.ArchStat.质检退回);
-            //        try {
-            //            File.Delete(filepath);
-            //            Directory.Delete(RemoteDir);
-            //        } catch { }
-
-            //    }
-            //}
         }
 
         private void butUpdate_Click(object sender, EventArgs e)

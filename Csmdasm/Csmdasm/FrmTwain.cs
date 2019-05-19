@@ -221,27 +221,25 @@ namespace Csmdasm
             Task.Run(() =>
             {
                 List<string> LisPage = new List<string>();
-                string Qspages = string.Empty;
-
+                string Qspages = "";
                 DataTable dt = Common.ReadPageIndexInfo(ClsTwain.Archid);
                 if (dt == null || dt.Rows.Count <= 0)
                     return;
                 string PageIndexInfo = dt.Rows[0][0].ToString();
                 if (string.IsNullOrEmpty(PageIndexInfo))
                     return;
-                string[] arrPage = PageIndexInfo.Split(' ');
+                string[] arrPage = PageIndexInfo.Split(';');
                 if (arrPage == null || arrPage.Length <= 0)
                     return;
                 foreach (string i in arrPage) {
-                    string[] page = i.Split(':');
-                    LisPage.Add(page[1]);
+                    LisPage.Add(i);
                 }
                 for (int i = 1; i < ClsTwain.RegPage; i++) {
                     if (LisPage.IndexOf(i.ToString()) < 0) {
-                        if (i != ClsTwain.RegPage - 1)
-                            Qspages += i.ToString() + ",";
-                        else {
+                        if (Qspages.Trim().Length<=0)
                             Qspages += i.ToString();
+                        else {
+                            Qspages +="," +i.ToString();
                         }
                     }
                 }

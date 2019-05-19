@@ -209,6 +209,8 @@ namespace Csmdajc
 
         private void toolStripSave_Click(object sender, EventArgs e)
         {
+            if (ImgView.Image == null)
+                return;
             if (Clscheck.MaxPage != Clscheck.RegPage) {
                 MessageBox.Show("登记页码和图像页码不一致无法完成质检!");
                 return;
@@ -227,6 +229,8 @@ namespace Csmdajc
 
         private void toolStripClose_Click(object sender, EventArgs e)
         {
+            if (ImgView.Image == null)
+                return;
             try {
                 Cledata();
                 if (File.Exists(Clscheck.ScanFilePath)) {
@@ -300,6 +304,8 @@ namespace Csmdajc
         }
         private void toolStripRepair_Click(object sender, EventArgs e)
         {
+            if (ImgView.Image == null)
+                return;
             if (MessageBox.Show("您确定要返工本卷档案吗？", "提示", MessageBoxButtons.OKCancel,
                     MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.OK) {
                 string filetmp = Clscheck.ScanFilePath;
@@ -638,7 +644,7 @@ namespace Csmdajc
                         string path = Path.Combine(T_ConFigure.FtpArchSave, Clscheck.FileNametmp.Substring(0, 8));
                         if (ftp.FtpMoveFile(sourefile, goalfile, path)) {
                             Common.DelTask(arid);
-                            Common.SetCheckFinish(arid, filename, 1, (int)T_ConFigure.ArchStat.质检完, "", "");
+                            Common.SetCheckFinish(arid, filename, 1, (int)T_ConFigure.ArchStat.质检完, "");
                             return;
                         }
                     }
@@ -650,7 +656,7 @@ namespace Csmdajc
                         bool x = await ftp.FtpUpFile(filetmp, newfile, newpath);
                         if (x) {
                             Common.DelTask(arid);
-                            Common.SetCheckFinish(arid, filename, 1, (int)T_ConFigure.ArchStat.质检完, "", "");
+                            Common.SetCheckFinish(arid, filename, 1, (int)T_ConFigure.ArchStat.质检完, "");
                             try {
                                 File.Delete(filetmp);
                                 Directory.Delete(localPath);
@@ -678,10 +684,16 @@ namespace Csmdajc
             try {
                 Common.Writelog(Clscheck.Archid, "质检返工!");
                 string PageIndexInfo = "";
-                string RadpageIndexinfo = "";
-                for (int page = RadpageIndexinfo.Length + 1; page <= Clscheck.MaxPage; page++) {
-                    string page2 = (page - RadpageIndexinfo.Length).ToString();
-                    PageIndexInfo += page + ":" + page2 + " ";
+                //string RadpageIndexinfo = "";
+                //for (int page = RadpageIndexinfo.Length + 1; page <= Clscheck.MaxPage; page++) {
+                //    string page2 = (page - RadpageIndexinfo.Length).ToString();
+                //    PageIndexInfo += page + ":" + page2 + " ";
+                //}
+                for (int i = 1; i <=Clscheck.MaxPage; i++)
+                {
+                    if (PageIndexInfo.Trim().Length <= 0)
+                        PageIndexInfo += i.ToString();
+                    else PageIndexInfo += ";" + i.ToString();
                 }
                 PageIndexInfo = PageIndexInfo.Trim();
                 string sourefile = "";
@@ -694,7 +706,7 @@ namespace Csmdajc
                 if (ftp.FtpMoveFile(sourefile, goalfile, path)) {
                     Common.SetArchWorkState(arid, (int)T_ConFigure.ArchStat.扫描完);
                     Common.Writelog(Clscheck.Archid, "质检退!");
-                    Common.SetCheckFinish(arid, "", 2, (int)T_ConFigure.ArchStat.扫描完, PageIndexInfo, "");
+                    Common.SetCheckFinish(arid, "", 2, (int)T_ConFigure.ArchStat.扫描完, PageIndexInfo);
                 }
                 if (T_ConFigure.FtpStyle != 1) {
                     try {

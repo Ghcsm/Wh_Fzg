@@ -7,7 +7,9 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -47,7 +49,7 @@ namespace Csmdapx
                 Himg._Rectang(true);
                 Writeini.Fileini = Path.Combine(Application.StartupPath, "Csmkeyval.ini");
                 Getsqlkey();
-                pub = new Pubcls();
+                pub=new Pubcls();
             } catch (Exception ex) {
                 MessageBox.Show("初始化失败请重新加载" + ex.ToString());
                 Himg.Dispose();
@@ -152,6 +154,11 @@ namespace Csmdapx
 
         }
 
+        private void toolStripClePage_Click(object sender, EventArgs e)
+        {
+            Himg._ClearPage();
+        }
+
         private void toolStripCenter_Click(object sender, EventArgs e)
         {
             Himg._CenterImg();
@@ -159,46 +166,90 @@ namespace Csmdapx
 
         private void toolStripDel_Click(object sender, EventArgs e)
         {
-            this.txtPages.Text = "已删除";
-            this.txtPages.ReadOnly = true;
+            try {
+                if (Himg._GetDelTag() == true) {
+                    Himg._RecovTag();
+                    txtPages.Text = Himg._PageCurrent().ToString();
+                    this.txtPages.ReadOnly = false;
+                }
+                else {
+                    Himg._Delepage(0);
+                    this.txtPages.Text = "已删除";
+                    this.txtPages.ReadOnly = true;
+                }
+                txtPages.Focus();
+                txtPages.SelectAll();
+            } catch { }
         }
 
         private void toolStripRecov_Click(object sender, EventArgs e)
         {
-            Himg.LoadPage(ClsIndex.CrrentPage);
+            Himg.LoadPage(Himg._PageCurrent());
             // ImgSide = 0;
         }
 
         private void toolStripUppage_Click(object sender, EventArgs e)
         {
-            if (ImgView.Image == null || ClsIndex.CrrentPage == 1)
-                return;
-            Himg._Pagenext(0);
-
+            if (ImgView.Image != null && ClsIndex.CrrentPage > 1) {
+                //  ImgSide = 0;
+                //  Application.DoEvents();
+                Thread.Sleep(100);
+                Himg._Pagenext(0);
+                string txt = this.txtPages.Text.Trim();
+                if (txt == "已删除")
+                    txtPages.ReadOnly = true;
+            }
         }
 
         private void toolStripDownPage_Click(object sender, EventArgs e)
         {
-            if (ImgView.Image == null)
-                return;
-            NexPage();
+            // ImgSide = 0;
+            NextPage();
+            string txt = this.txtPages.Text.Trim();
+            if (txt == "已删除")
+                txtPages.ReadOnly = true;
         }
-
-        void NexPage()
+        private void NextPage()
         {
-            string txt = txtPages.Text.Trim();
-            if (txt.Trim().Length <= 0 || txt.Trim() == "0") {
-                MessageBox.Show("页码不能为空!");
-                txtPages.Focus();
-                txtPages.SelectAll();
-                return;
-            }
-            Himg._Oderpage(txt);
-            if (ClsIndex.CrrentPage == ClsIndex.MaxPage)
-                this.toolStripSave_Click(null, null);
-            else
-                Himg._Pagenext(1);
+            try {
+                string txt = this.txtPages.Text.Trim();
+                int Opage = Himg._PageCurrent();
+                if (txt == "已删除" && Opage == ClsIndex.MaxPage) {
+                    this.toolStripSave_Click(null, null);
+                }
+                else if (txt == "已删除") {
+                    txt = "0";
+                    Himg._Pagenext(1);
+                    //    txtPages.Text = "";
+                    //    txtPages.ReadOnly = false;
+                    txtPages.Focus();
+                }
+                else if (txt.Length <= 0 || txt == "0") {
+                    MessageBox.Show("页码不正确！");
+                    txtPages.Focus();
+                    return;
+                }
+                else {
+                    //当前页小于注册页码 同时小于扫描最大页码                   
+                    if (Opage < ClsIndex.RegPage - Himg._PageAbc.Count && Opage < ClsIndex.MaxPage) {
+                        Himg._Oderpage(txt);
+                        Application.DoEvents();
+                        Himg._Pagenext(1);
+                    }
+                    else if (Opage < ClsIndex.MaxPage) {
+                        Himg._Oderpage(txt);
+                        Application.DoEvents();
+                        Himg._Pagenext(1);
+                    }
+                    //当前页等于注册页码  同时 当前 等于扫描最大页码 
+                    else if (Opage == ClsIndex.MaxPage) {
+                        Himg._Oderpage(txt);
+                        Application.DoEvents();
+                        this.toolStripSave_Click(null, null);
 
+                    }
+                }
+            } catch { }
         }
 
         private void toolStripSave_Click(object sender, EventArgs e)
@@ -294,6 +345,14 @@ namespace Csmdapx
                 MessageBox.Show("校验完成未发现问题!");
             }
         }
+     
+        private void txtPages_KeyDown(object sender, KeyEventArgs e)
+        {
+            //KeyShortDown(e);
+            //Keys keyCode = e.KeyCode;
+            //if (e.KeyCode == Keys.Escape)
+            //    gArch.LvData.Focus();
+        }
 
         private void FrmIndex_KeyDown(object sender, KeyEventArgs e)
         {
@@ -373,15 +432,30 @@ namespace Csmdapx
         }
         private void ShowPage()
         {
-            string txt = Himg._Readpage();
-            if (txt == "-1") {
-                txt = "已删除";
-                txtPages.ReadOnly = true;
-            }
-            else
-                txtPages.ReadOnly = false;
-            txtPages.Text = txt;
-            txtPages.SelectAll();
+
+            try {
+                if (ImgView.Image.PageCount > 0) {
+                    string txt = Himg._Readpage();
+                    if (txt == "") {
+                        txtPages.Text = "1";
+                    }
+                    else if (txt == "-1") {
+                        txtPages.Text = "已删除";
+                        txtPages.ReadOnly = true;
+                    }
+                    else if (txt == "0") {
+                        if (!isExists(txtPages.Text.Trim())) {
+                            txtPages.Text = (int.Parse(txtPages.Text.Trim()) + 1).ToString();
+                        }
+                    }
+                    else {
+                        txtPages.Text = txt;
+                    }
+                    txtPages.ReadOnly = false;
+                    txtPages.Focus();
+                    txtPages.SelectAll();
+                }
+            } catch { }
         }
 
         private void LoadArch()
@@ -416,20 +490,30 @@ namespace Csmdapx
                 if (dt != null && dt.Rows.Count > 0) {
                     DataRow dr = dt.Rows[0];
                     string PageIndexInfo = dr["PageIndexInfo"].ToString();
+                    string deletag = dr["DeleTag"].ToString();
                     if (!string.IsNullOrEmpty(PageIndexInfo)) {
-                        string[] arrPage = PageIndexInfo.Split(';');
-                        if (arrPage.Length > 0) {
-                            for (int i = 0; i < arrPage.Length; i++) {
-                                string str = arrPage[i];
-                                if (!isExists(str))
-                                    pagenumber.Add(i + 1, Convert.ToInt32(str));
-                                else
-                                    pageabc.Add(i + 1, str);
+                        string[] arrPage = PageIndexInfo.Split(' ');
+                        foreach (string i in arrPage) {
+                            string[] page = i.Split(':');
+                            if (isExists(page[1]) == false) {
+                                pagenumber.Add(Convert.ToInt32(page[0]), Convert.ToInt32(page[1]));
+                            }
+                            else {
+                                pageabc.Add(Convert.ToInt32(page[0]), page[1]);
                             }
                         }
                     }
                     Himg._PageNumber = pagenumber;
                     Himg._PageAbc = pageabc;
+                    List<int> TagInfo = new List<int>();
+                    if (!string.IsNullOrEmpty(deletag)) {
+                        string[] arrPage = deletag.Split(' ');
+                        foreach (string i in arrPage) {
+                            string[] page = i.Split(':');
+                            TagInfo.Add(Convert.ToInt32(page[0]));
+                        }
+                        Himg.DelTag = TagInfo;
+                    }
                     maxpage = pagenumber.Keys.Max();
                 }
                 else {
@@ -595,17 +679,23 @@ namespace Csmdapx
         {
             try {
                 if (File.Exists(filetmp)) {
-                    //Dictionary<int, string> _PageAbc = pageAbc;
-                    //Dictionary<int, int> _PageNumber = pagenumber;
-                    //string PageIndexInfo = "";
-                    //foreach (var item in _PageAbc) {
-                    //    PageIndexInfo += item.Value + ";";
-                    //}
-                    //foreach (var item in _PageNumber) {
-                    //    PageIndexInfo += item.Value + ";";
-                    //}
-                    //PageIndexInfo = PageIndexInfo.Trim();
-                    Common.SetIndexCancel(arid, "");
+                    Dictionary<int, string> _PageAbc = pageAbc;
+                    Dictionary<int, int> _PageNumber = pagenumber;
+                    string PageIndexInfo = "";
+                    foreach (var item in _PageAbc) {
+                        PageIndexInfo += item.Key + ":" + item.Value + " ";
+                    }
+                    foreach (var item in _PageNumber) {
+                        PageIndexInfo += item.Key + ":" + item.Value + " ";
+                    }
+                    PageIndexInfo = PageIndexInfo.Trim();
+                    List<int> Deletag = Himg.DelTag;
+                    string DeleTaginfo = "";
+                    foreach (var item in Deletag) {
+                        DeleTaginfo += " " + item + ":";
+                    }
+                    DeleTaginfo = DeleTaginfo.Trim();
+                    Common.SetIndexCancel(arid, PageIndexInfo, DeleTaginfo);
                     string IndexFileName = Common.GetCurrentTime() + Common.TifExtension;
                     string RemoteDir = IndexFileName.Substring(0, 8);
                     if (T_ConFigure.FtpStyle == 1) {
@@ -674,19 +764,19 @@ namespace Csmdapx
                     Dictionary<int, int> _PageNumber = pagenumber;
                     string PageIndexInfo = "";
                     foreach (var item in _PageAbc) {
-                        if (PageIndexInfo.Trim().Length <= 0)
-                            PageIndexInfo += item.Value;
-                        else
-                            PageIndexInfo += ";" + item.Value;
+                        PageIndexInfo += item.Key + ":" + item.Value + " ";
                     }
                     foreach (var item in _PageNumber) {
-                        if (PageIndexInfo.Trim().Length <= 0)
-                            PageIndexInfo += item.Value;
-                        else
-                            PageIndexInfo += ";" + item.Value;
+                        PageIndexInfo += item.Key + ":" + item.Value + " ";
                     }
                     PageIndexInfo = PageIndexInfo.Trim();
-                    Common.SetIndexCancel(arid, PageIndexInfo);
+                    List<int> Deletag = Himg.DelTag;
+                    string DeleTaginfo = "";
+                    foreach (var item in Deletag) {
+                        DeleTaginfo += " " + item + ":";
+                    }
+                    DeleTaginfo = DeleTaginfo.Trim();
+                    Common.SetIndexCancel(arid, PageIndexInfo, DeleTaginfo);
                     if (T_ConFigure.FtpStyle == 1) {
                         string sourcefile = Path.Combine(T_ConFigure.FtpTmp, T_ConFigure.TmpScan, ClsIndex.ArchPos, T_ConFigure.ScanTempFile);
                         string goalfile = Path.Combine(T_ConFigure.gArchScanPath, ClsIndex.ArchPos, T_ConFigure.ScanTempFile);

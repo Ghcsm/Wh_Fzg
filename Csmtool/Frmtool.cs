@@ -501,13 +501,14 @@ namespace Csmtool
             keyValue.Append("");
             if ((e.KeyValue >= 33 && e.KeyValue <= 40) ||
                 (e.KeyValue >= 65 && e.KeyValue <= 90) ||   //a-z/A-Z
-                (e.KeyValue >= 112 && e.KeyValue <= 123))   //F1-F12
+                (e.KeyValue >= 112 && e.KeyValue <= 123) ||
+                e.KeyValue>=96 && e.KeyValue==101 )   //F1-F12
             {
                 keyValue.Append(e.KeyCode);
             }
             else if ((e.KeyValue >= 48 && e.KeyValue <= 57))    //0-9
                 keyValue.Append(e.KeyCode.ToString().Substring(1));
-            else if (e.KeyValue == 13  || e.KeyValue== 27 || e.KeyValue == 32)
+            else if (e.KeyValue == 13  || e.KeyValue== 27 || e.KeyValue == 32 || e.KeyValue==46 )
                 keyValue.Append(e.KeyCode.ToString().Substring(1));
             this.ActiveControl.Text = "";
             this.ActiveControl.Text = keyValue.ToString();
@@ -618,12 +619,16 @@ namespace Csmtool
                 else {
                     str = "";
                 }
-                int Nk = Convert.ToInt32(KeyV[1].Trim());
-                str += ((char)Nk).ToString();
-                if (Nk == 13)
+                int nk = Convert.ToInt32(KeyV[1].Trim());
+                str += ((char)nk).ToString();
+                if (nk == 13)
                     str = "回车";
-                else if (Nk == 32)
+                else if (nk == 32)
                     str = "空格";
+                else if (nk == 27)
+                    str = "Ese";
+                else if (nk == 46)
+                    str = "Del";
                 labkeys.Text = str;
             }
         }
