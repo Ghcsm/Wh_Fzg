@@ -87,7 +87,7 @@
     </Reference>
     <Reference Include="Hljsarch, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\csmhl\不动产\昌图\Hljsarch\Hljsarch\bin\x86\Debug\Hljsarch.dll</HintPath>
+      <HintPath>..\..\Hljsarch\Hljsarch\bin\x86\Debug\Hljsarch.dll</HintPath>
     </Reference>
     <Reference Include="Leadtools, Version=19.0.0.0, Culture=neutral, PublicKeyToken=9cf889f53ea9b907, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>

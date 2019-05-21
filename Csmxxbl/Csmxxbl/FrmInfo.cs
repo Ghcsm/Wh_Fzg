@@ -31,7 +31,7 @@ namespace Csmxxbl
         private void butSave_Click(object sender, EventArgs e)
         {
             int xyid =Convert.ToInt32(gArchSelect1.Archxystat);
-            if (xyid >=1)
+            if (xyid >=1 )
             {
                 MessageBox.Show("数据已校验完成无法进行修改!");
                 return;

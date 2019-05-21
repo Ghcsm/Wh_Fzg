@@ -53,8 +53,9 @@
       <HintPath>..\DAL\bin\x86\Debug\DAL.dll</HintPath>
     </Reference>
     <Reference Include="DevComponents.DotNetBar2, Version=12.5.0.2, Culture=neutral, PublicKeyToken=c39c3242a43eee2b, processorArchitecture=MSIL" />
-    <Reference Include="Hljsarch">
-      <HintPath>..\..\..\..\..\Csmhl\bg\Hljsarch\Hljsarch\bin\x86\Debug\Hljsarch.dll</HintPath>
+    <Reference Include="Hljsarch, Version=1.0.7078.23673, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Hljsarch\Hljsarch\bin\x86\Debug\Hljsarch.dll</HintPath>
     </Reference>
     <Reference Include="Leadtools, Version=19.0.4.0, Culture=neutral, PublicKeyToken=9cf889f53ea9b907, processorArchitecture=x86" />
     <Reference Include="Leadtools.Codecs, Version=19.0.4.0, Culture=neutral, PublicKeyToken=9cf889f53ea9b907, processorArchitecture=x86" />

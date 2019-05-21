@@ -86,9 +86,9 @@
       <HintPath>..\..\DevComponents.DotNetBar2.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Hljsarch, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Hljsarch, Version=1.0.7066.19190, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\Csmhl\bg\Hljsarch\Hljsarch\bin\x86\Debug\Hljsarch.dll</HintPath>
+      <HintPath>..\..\Hljsarch\Hljsarch\bin\x86\Debug\Hljsarch.dll</HintPath>
     </Reference>
     <Reference Include="Spire.Common">
       <HintPath>..\..\..\..\..\Control\Spire.Common.dll</HintPath>

@@ -57,7 +57,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Csmtool", "Csmtool\Csmtool.csproj", "{42251EB2-5C7F-49D5-B3DE-2F2A35CE577F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hljsarch", "..\..\..\..\Csmhl\bg\Hljsarch\Hljsarch\Hljsarch.csproj", "{8D7460D2-DD0A-4D26-B8C9-FBF0493D923F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hljsarch", "Hljsarch\Hljsarch\Hljsarch.csproj", "{8D7460D2-DD0A-4D26-B8C9-FBF0493D923F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

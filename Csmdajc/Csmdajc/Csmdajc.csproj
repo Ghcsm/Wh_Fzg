@@ -90,9 +90,9 @@
     <Reference Include="Fstit">
       <HintPath>..\..\Fstit\bin\x86\Debug\Fstit.dll</HintPath>
     </Reference>
-    <Reference Include="Hljsarch, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Hljsarch, Version=1.0.7078.23673, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\Csmhl\bg\Hljsarch\Hljsarch\bin\x86\Debug\Hljsarch.dll</HintPath>
+      <HintPath>..\..\Hljsarch\Hljsarch\bin\x86\Debug\Hljsarch.dll</HintPath>
     </Reference>
     <Reference Include="Jdshow">
       <HintPath>..\..\Jdshow\bin\x86\Debug\Jdshow.dll</HintPath>
