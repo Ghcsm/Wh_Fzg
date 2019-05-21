@@ -54,6 +54,7 @@
             this.butPageUpdate = new DevComponents.DotNetBar.ButtonX();
             this.label1 = new System.Windows.Forms.Label();
             this.txtPages = new System.Windows.Forms.TextBox();
+            this.c_xyzd = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.gr1.SuspendLayout();
             this.panelTop.SuspendLayout();
             this.gr2.SuspendLayout();
@@ -92,7 +93,8 @@
             this.c_pages,
             this.c_archid,
             this.c_type,
-            this.c_stat});
+            this.c_stat,
+            this.c_xyzd});
             this.LvData.DisabledBackColor = System.Drawing.Color.Empty;
             this.LvData.FullRowSelect = true;
             this.LvData.GridLines = true;
@@ -300,6 +302,11 @@
             this.txtPages.TabIndex = 1;
             this.txtPages.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPages_KeyPress);
             // 
+            // c_xyzd
+            // 
+            this.c_xyzd.Text = "xy";
+            this.c_xyzd.Width = 0;
+            // 
             // gArchSelect
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -344,5 +351,6 @@
         private DevComponents.Editors.ComboItem comboItem2;
         private System.Windows.Forms.ColumnHeader c_stat;
         public DevComponents.DotNetBar.Controls.ListViewEx LvData;
+        private System.Windows.Forms.ColumnHeader c_xyzd;
     }
 }

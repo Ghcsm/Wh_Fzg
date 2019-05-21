@@ -32,9 +32,18 @@ namespace CsmCheck
             DataTable dt = Common.GetInfoTable(archid, table, col);
             if (dt == null || dt.Rows.Count <= 0)
                 return;
-            DataTable dt1 = dt.Select("EnterTag=1").CopyToDataTable();
-            if (dt1 == null || dt1.Rows.Count <= 0)
+            DataTable dt1;
+            try {
+                dt1 = dt.Select("EnterTag=1").CopyToDataTable();
+                if (dt1 == null || dt1.Rows.Count <= 0) {
+                    MessageBox.Show("未发现一录信息!");
+                    return;
+                }
+            } catch {
+                MessageBox.Show("未发现一录信息!");
                 return;
+            }
+
             dg1.BeginInvoke(new Action(() =>
             {
                 dg1.DataSource = null;
@@ -43,9 +52,17 @@ namespace CsmCheck
                 dg1.ClearSelection();
                 Stopsort(dg1);
             }));
-            DataTable dt2 = dt.Select("EnterTag=2").CopyToDataTable();
-            if (dt2 == null || dt2.Rows.Count <= 0)
+            DataTable dt2;
+            try {
+                dt2 = dt.Select("EnterTag=2").CopyToDataTable();
+                if (dt2 == null || dt2.Rows.Count <= 0) {
+                    MessageBox.Show("未发现二录信息!");
+                    return;
+                }
+            } catch {
+                MessageBox.Show("未发现二录信息!");
                 return;
+            }
             dg2.BeginInvoke(new Action(() =>
             {
                 dg2.DataSource = null;
@@ -133,9 +150,9 @@ namespace CsmCheck
 
         }
 
-        public static void SetXyinfo()
+        public static void SetXyinfo(int bl)
         {
-            Common.SetArchXy(ClsTable.Archid);
+            Common.SetArchXy(ClsTable.Archid,bl);
         }
 
         public static void UpdateInfo(string table, int sx, DataGridView dgv1, DataGridView dgv2)

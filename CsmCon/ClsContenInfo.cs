@@ -14,30 +14,30 @@ namespace CsmCon
 
     public static class ClsContenInfo
     {
-        public static string ContenTable { get; set; }
-        public static string ContenWith { get; set; }
-        public static string ContenTxtwith { get; set; }
-        public static string ContenLie { get; set; }
-        public static string ContenTitle { get; set; }
-        public static string ContenPages { get; set; }
-        public static int PagesWz { get; set; }
-        public static int TitleWz { get; set; }
+        public static string ContenTable { get; set; } = "";
+        public static string ContenWith { get; set; } = "";
+        public static string ContenTxtwith { get; set; } = "";
+        public static string ContenLie { get; set; } = "";
+        public static string ContenTitle { get; set; } = "";
+        public static string ContenPages { get; set; } = "";
+        public static int PagesWz { get; set; } = 0;
+        public static int TitleWz { get; set; } = 0;
         public static List<string> ContenCoList = new List<string>();
-        public static string ContenCol { get; set; }
+        public static string ContenCol { get; set; } = "";
         public static List<string> PageCount = new List<string>();
         public static List<string> PageCount2 = new List<string>();
 
         public static List<string> LsModule = new List<string>();
         public static List<string> LsModuleIndex = new List<string>();
 
-        public static int txtcol = 0;
-        public static int txtrows = 1;
+        public static int txtcol { get; set; } = 0;
+        public static int txtrows { get; set; } = 1;
 
-        public static string Pagestmp { get; set; }
+        public static string Pagestmp { get; set; } = "";
 
-        public static string Archtype { get; set; }
+        public static string Archtype { get; set; } = "";
 
-        public static string Modulename { get; set; }
+        public static string Modulename { get; set; } = "";
     }
 
 

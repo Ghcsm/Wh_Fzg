@@ -45,12 +45,7 @@ namespace Csmmldj
             grinfo.Controls.Add(ucInfo);
             ucInfo.GetInfoCol();
         }
-
-        void InfoLoad()
-        {
-
-        }
-
+       
 
         private void gArchSelect1_LineClickLoadInfo(object sender, EventArgs e)
         {
@@ -59,6 +54,7 @@ namespace Csmmldj
                 return;
             UcContents.ArchId = arid;
             UcContents.ArchMaxPage = gArchSelect1.ArchRegPages;
+            UcContents.ArchStat =Convert.ToInt32(gArchSelect1.Archstat);
             ucContents1.LoadContents();
             if (ContenInfPar.Infobl) {
                 string type = gArchSelect1.Archtype;
@@ -68,6 +64,11 @@ namespace Csmmldj
 
         private void butSaveInfo_Click(object sender, EventArgs e)
         {
+            int xyid = Convert.ToInt32(gArchSelect1.Archxystat);
+            if (xyid >= 1) {
+                MessageBox.Show("数据已校验完成无法进行修改!");
+                return;
+            }
             int arid = gArchSelect1.Archid;
             if (arid <= 0)
                 return;

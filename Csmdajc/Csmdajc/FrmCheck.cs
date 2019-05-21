@@ -41,6 +41,7 @@ namespace Csmdajc
                 UcContents.ArchId = Clscheck.Archid;
                 UcContents.ContentsEnabled = true;
                 UcContents.ModuleVisible = false;
+                UcContents.ArchCheckZt = 1;
                 ucContents1 = new UcContents();
                 {
                     ucContents1.Dock = DockStyle.Fill;

@@ -34,6 +34,7 @@ namespace CsmCon
         public string ArchImgFile { get; set; }
         public int ArchRegPages { get; set; }
         public string Archstat { get; set; }
+        public string Archxystat { get; set; }
 
         public string ArchPos;
 
@@ -106,14 +107,15 @@ namespace CsmCon
                     string pages = dr["PAGES"].ToString();
                     string type = dr[ClsContenInfo.Archtype].ToString();
                     string ImgFile = (dr["IMGFILE"] == null ? "" : dr["IMGFILE"].ToString());
-                    stat = Convert.ToInt32((dr["ArchState"].ToString() == null ? "0" : dr["ArchState"].ToString()));
+                    stat = Convert.ToInt32(dr["ArchState"].ToString().Trim().Length<=0 ? "0" : dr["ArchState"].ToString());
+                    string xystat =dr["CheckXyState"].ToString().Trim().Length<=0 ? "0" : dr["CheckXyState"].ToString();
                     if (stat >= 3 && stat < 5)
                         lvi.ImageIndex = 0;
                     else if (stat >= 5 && stat < 7)
                         lvi.ImageIndex = 1;
                     else if (stat == 7)
                         lvi.ImageIndex = 2;
-                    lvi.SubItems.AddRange(new string[] { boxsn, archno, ImgFile, pages, arid, type, stat.ToString() });
+                    lvi.SubItems.AddRange(new string[] { boxsn, archno, ImgFile, pages, arid, type, stat.ToString(), xystat.ToString() });
                     this.LvData.Items.Add(lvi);
                     i++;
                 }
@@ -187,6 +189,7 @@ namespace CsmCon
                 string boxs = LvData.SelectedItems[0].SubItems[1].Text;
                 string juan = LvData.SelectedItems[0].SubItems[2].Text;
                 Archstat = LvData.SelectedItems[0].SubItems[7].Text;
+                Archxystat = LvData.SelectedItems[0].SubItems[8].Text;
                 Boxsn = Convert.ToInt32(boxs);
                 ArchPos = boxs + "-" + juan;
                 string pags = Common.Getpages(Archid);

@@ -3,6 +3,7 @@ using HLFtp;
 using Spire.Xls;
 using System;
 using System.Data;
+using System.Drawing;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
@@ -599,6 +600,7 @@ namespace Csmtool
         void SelectKey()
         {
             txtKeysZdyKeys.Text = "";
+            labkeys.ForeColor =Color.Black;
             labkeys.Text = "未注册";
             if (combKeyzdyoperlx.Text.Length <= 0 || Toolskeys.LsiniCz.Count <= 0)
                 return;
@@ -629,6 +631,7 @@ namespace Csmtool
                     str = "Ese";
                 else if (nk == 46)
                     str = "Del";
+                labkeys.ForeColor=Color.Red;
                 labkeys.Text = str;
             }
         }

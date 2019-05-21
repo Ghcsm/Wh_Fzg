@@ -1116,14 +1116,15 @@ namespace DAL
             return dt;
         }
 
-        public static void SetArchXy(int ArchID)
+        public static void SetArchXy(int ArchID,int bl)
         {
             try {
                 string strSql = "PArchXy";
-                SqlParameter[] p = new SqlParameter[3];
+                SqlParameter[] p = new SqlParameter[4];
                 p[0] = new SqlParameter("@UserID", T_User.UserId);
                 p[1] = new SqlParameter("@archid", ArchID);
                 p[2] = new SqlParameter("@ipadd", T_ConFigure.IPAddress);
+                p[3] = new SqlParameter("@xyzd", bl);
                 SQLHelper.ExecuteNonQuery(strSql, CommandType.StoredProcedure, p);
             } catch (Exception ee) {
                 MessageBox.Show(ee.ToString());

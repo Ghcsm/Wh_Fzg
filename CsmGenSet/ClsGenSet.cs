@@ -26,7 +26,7 @@ namespace CsmGenSet
     {
         public static string ContenTable { get; set; }
 
-        public static string Coltmp = "";
+        public static string Coltmp { get; set; }="";
         public static List<string> Contencoltmp =new List<string>();
         public static List<string> ContenXlstmp = new List<string>();
         public static List<string> ContenPagetmp = new List<string>();
@@ -36,7 +36,7 @@ namespace CsmGenSet
 
     public static class ClsImportTable
     {
-        public static string ImportTable { get; set; }
+        public static string ImportTable { get; set; } = "";
         public static List<string>ImportTableLs=new List<string>();
         public static List<string> ImportInfo =new List<string>();
         public static List<string> ImportInfotmp=new List<string>();
@@ -44,7 +44,7 @@ namespace CsmGenSet
 
     public static class ClsInfoAdd
     {
-        public static string InfoTable { get; set; }
+        public static string InfoTable { get; set; } = "";
         public static List<string> InfoTableLs = new List<string>();
         public static List<string> InfoInfoZd= new List<string>();
         public static List<string>InfoTableName=new List<string>();
@@ -56,23 +56,23 @@ namespace CsmGenSet
 
     public static class ClsQuerInfo
     {
-        public static string QuerTable { get; set; }
+        public static string QuerTable { get; set; } = "";
         public static List<string>QuerInfoZd=new List<string>();
     }
 
     public static class ClsDataSplit
     {
-        public static string DataSplitTable { get; set; }
-        public static int DataSplitDirsn { get; set; }
-        public static string DataSplitDirCol { get;set; }
-        public static string DataSplitDirMl {get; set; }
-        public static string DataSplitDirMlpages { get; set; }
+        public static string DataSplitTable { get; set; } = "";
+        public static int DataSplitDirsn { get; set; } = 0;
+        public static string DataSplitDirCol { get; set; } = "";
+        public static string DataSplitDirMl {get; set; } = "";
+        public static string DataSplitDirMlpages { get; set; } = "";
 
-        public static string DataSplitFileTable { get; set; }
-        public static int DataSplitFilesn { get; set; }
-        public static string DataSplitFileName { get; set; }
-        public static bool DataSplitzero { get; set; }
-        public static  string DataSplitfilenamecol { get; set; }
+        public static string DataSplitFileTable { get; set; } = "";
+        public static int DataSplitFilesn { get; set; } = 0;
+        public static string DataSplitFileName { get; set; } = "";
+        public static bool DataSplitzero { get; set; } = false;
+        public static  string DataSplitfilenamecol { get; set; } = "";
 
 
         public static  List<string> DataSplitExportTable=new List<string>();
@@ -91,7 +91,7 @@ namespace CsmGenSet
 
     public static class ClsConten
     {
-        public static string ContenTable { get; set; }
+        public static string ContenTable { get; set; } = "";
         public static List<string> ContenCol =new List<string>();
         public static List<string> ContenModule = new List<string>();
 
@@ -100,7 +100,7 @@ namespace CsmGenSet
     public static class ClsCreateTable
     {
         public static List<string>CreateTableCol=new List<string>();
-        public static string CreateTable { get; set; }
+        public static string CreateTable { get; set; } = "";
 
         public static List<string>CreateTableColtmp=new List<string>();
         public static List<string>CreateTablecolsm=new List<string>();
@@ -116,22 +116,22 @@ namespace CsmGenSet
 
         public static List<string>CreateTableSys=new List<string>();
 
-        public static bool CreatetableTf { get; set; }
+        public static bool CreatetableTf { get; set; } = "";
 
-        public static string CreateTableLvcol { get; set; }
-        public static string CreateTableLvsm { get; set; }
+        public static string CreateTableLvcol { get; set; } = "";
+        public static string CreateTableLvsm { get; set; } = "";
     }
 
     public static class ClsborrTable
     {
-        public static string Clsborrtable { get; set; }
+        public static string Clsborrtable { get; set; } = "";
         public static List<string> ClsBorrColzd = new List<string>();
-        public static bool Clsborrtag { get; set; }
+        public static bool Clsborrtag { get; set; } = "";
     }
 
     public static class ClsBoxcolSet
     {
-        public static string ClsBoxsntable { get; set; }
+        public static string ClsBoxsntable { get; set; } = "";
         public static List<string>ClsBoxcolTable=new List<string>();
         public static List<string> ClsBoxcolTablename = new List<string>();
     }

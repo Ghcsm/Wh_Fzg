@@ -149,8 +149,8 @@
             this.TabControl.ControlBox.SubItems.AddRange(new DevComponents.DotNetBar.BaseItem[] {
             this.TabControl.ControlBox.MenuBox,
             this.TabControl.ControlBox.CloseBox});
-            this.TabControl.Controls.Add(this.superTabControlPanel1);
             this.TabControl.Controls.Add(this.TabcontrolArchStat);
+            this.TabControl.Controls.Add(this.superTabControlPanel1);
             this.TabControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TabControl.Location = new System.Drawing.Point(3, 17);
             this.TabControl.Name = "TabControl";
@@ -661,6 +661,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
+            this.label8.ForeColor = System.Drawing.SystemColors.ControlText;
             this.label8.Location = new System.Drawing.Point(98, 32);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(47, 12);

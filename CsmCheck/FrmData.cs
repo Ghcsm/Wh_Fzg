@@ -53,6 +53,15 @@ namespace CsmCheck
         }
 
         #region Frminfo
+
+        private void butFg_Click(object sender, EventArgs e)
+        {
+            if (!ClsTable.Archzt) {
+                MessageBox.Show("数据未校验无需要返工!");
+                return;
+            }
+            ClsSetInfo.SetXyinfo(2);
+        }
         private void dgvInfo1_one_Scroll(object sender, ScrollEventArgs e)
         {
             if (this.dgvInfo1_two.Rows.Count > 0) {
@@ -178,8 +187,8 @@ namespace CsmCheck
                     archok2 = ClsSetInfo.ArchidCheck(dgvInfo1_one, dgvInfo1_two);
                 }
             }
-            if (archok1 = archok2 = true) {
-                ClsSetInfo.SetXyinfo();
+            if (archok1 == true || archok2 == true) {
+                ClsSetInfo.SetXyinfo(1);
             }
         }
         private void butCheck_Click(object sender, EventArgs e)
@@ -193,6 +202,7 @@ namespace CsmCheck
             }
             InfoCheck();
         }
+
 
         #endregion
 

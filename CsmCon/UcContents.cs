@@ -22,11 +22,11 @@ namespace CsmCon
         public static bool ContentsEnabled { get; set; }
         public static int ArchMaxPage { get; set; }
         public static int ArchId { get; set; }
-
-        public static int Mtmpid = 0;
-
-        public static int PageCrren = 0;
-        public static string PageMl = "0";
+        public static int ArchCheckZt { get; set; } = 0;
+        public static int ArchStat { get; set; } = 0;
+        public static int Mtmpid { get; set; } = 0;
+        public static int PageCrren { get; set; } = 0;
+        public static string PageMl { get; set; } = "0";
 
         private void Init()
         {
@@ -201,6 +201,11 @@ namespace CsmCon
 
         private void butAdd_Click(object sender, EventArgs e)
         {
+            if (ArchStat >= (int) T_ConFigure.ArchStat.质检完 && ArchCheckZt==0)
+            {
+                MessageBox.Show("案卷已经质检完成无法修改目录");
+                return;
+            }
             AddTitle();
             if (this.LvModule.Items.Count > 0)
                 this.LvModule.Items[this.LvModule.Items.Count - 1].EnsureVisible();
@@ -244,6 +249,10 @@ namespace CsmCon
 
         private void butEdit_Click(object sender, EventArgs e)
         {
+            if (ArchStat >= (int)T_ConFigure.ArchStat.质检完 && ArchCheckZt ==0) {
+                MessageBox.Show("案卷已经质检完成无法修改目录");
+                return;
+            }
             ContentsEdit();
             if (this.LvModule.Items.Count > 0)
                 this.LvModule.Items[this.LvModule.Items.Count - 1].EnsureVisible();
@@ -275,6 +284,10 @@ namespace CsmCon
         }
         private void butDel_Click(object sender, EventArgs e)
         {
+            if (ArchStat >= (int)T_ConFigure.ArchStat.质检完 && ArchCheckZt==0) {
+                MessageBox.Show("案卷已经质检完成无法修改目录");
+                return;
+            }
             DeleteContents();
             if (this.LvModule.Items.Count > 0)
                 this.LvModule.Items[this.LvModule.Items.Count - 1].EnsureVisible();

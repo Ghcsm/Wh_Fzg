@@ -28,18 +28,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle23 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle24 = new System.Windows.Forms.DataGridViewCellStyle();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.dottBarManager = new DevComponents.DotNetBar.DotNetBarManager(this.components);
             this.dockSite4 = new DevComponents.DotNetBar.DockSite();
@@ -68,6 +56,7 @@
             this.bar1 = new DevComponents.DotNetBar.Bar();
             this.panelDockContainer1 = new DevComponents.DotNetBar.PanelDockContainer();
             this.gr1 = new System.Windows.Forms.GroupBox();
+            this.gArchSelect1 = new CsmCon.gArchSelect();
             this.dockContainerItem1 = new DevComponents.DotNetBar.DockContainerItem();
             this.dockSite2 = new DevComponents.DotNetBar.DockSite();
             this.dockSite8 = new DevComponents.DotNetBar.DockSite();
@@ -80,7 +69,7 @@
             this.toolsusertime1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolsuser2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolsusertime2 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.gArchSelect1 = new CsmCon.gArchSelect();
+            this.butFg = new DevComponents.DotNetBar.ButtonX();
             this.dockSite9.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bar2)).BeginInit();
             this.bar2.SuspendLayout();
@@ -157,10 +146,10 @@
             this.dockSite9.Controls.Add(this.bar2);
             this.dockSite9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dockSite9.DocumentDockContainer = new DevComponents.DotNetBar.DocumentDockContainer(new DevComponents.DotNetBar.DocumentBaseContainer[] {
-            ((DevComponents.DotNetBar.DocumentBaseContainer)(new DevComponents.DotNetBar.DocumentBarContainer(this.bar2, 619, 621)))}, DevComponents.DotNetBar.eOrientation.Horizontal);
-            this.dockSite9.Location = new System.Drawing.Point(386, 25);
+            ((DevComponents.DotNetBar.DocumentBaseContainer)(new DevComponents.DotNetBar.DocumentBarContainer(this.bar2, 595, 621)))}, DevComponents.DotNetBar.eOrientation.Horizontal);
+            this.dockSite9.Location = new System.Drawing.Point(410, 25);
             this.dockSite9.Name = "dockSite9";
-            this.dockSite9.Size = new System.Drawing.Size(619, 621);
+            this.dockSite9.Size = new System.Drawing.Size(595, 621);
             this.dockSite9.TabIndex = 14;
             this.dockSite9.TabStop = false;
             // 
@@ -191,7 +180,7 @@
             this.bar2.Location = new System.Drawing.Point(0, 0);
             this.bar2.Name = "bar2";
             this.bar2.SelectedDockTab = 0;
-            this.bar2.Size = new System.Drawing.Size(619, 621);
+            this.bar2.Size = new System.Drawing.Size(595, 621);
             this.bar2.Stretch = true;
             this.bar2.Style = DevComponents.DotNetBar.eDotNetBarStyle.Office2003;
             this.bar2.TabIndex = 0;
@@ -206,7 +195,7 @@
             this.panelDockContainer2.DisabledBackColor = System.Drawing.Color.Empty;
             this.panelDockContainer2.Location = new System.Drawing.Point(3, 28);
             this.panelDockContainer2.Name = "panelDockContainer2";
-            this.panelDockContainer2.Size = new System.Drawing.Size(613, 590);
+            this.panelDockContainer2.Size = new System.Drawing.Size(589, 590);
             this.panelDockContainer2.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.panelDockContainer2.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground;
             this.panelDockContainer2.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
@@ -223,7 +212,7 @@
             this.gr2Data.Controls.Add(this.tableLayoutPanel1);
             this.gr2Data.Location = new System.Drawing.Point(5, 0);
             this.gr2Data.Name = "gr2Data";
-            this.gr2Data.Size = new System.Drawing.Size(603, 546);
+            this.gr2Data.Size = new System.Drawing.Size(579, 546);
             this.gr2Data.TabIndex = 4;
             this.gr2Data.TabStop = false;
             // 
@@ -250,7 +239,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(597, 526);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(573, 526);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // pict4
@@ -258,7 +247,7 @@
             this.pict4.Image = global::CsmCheck.Properties.Resources.up;
             this.pict4.Location = new System.Drawing.Point(3, 396);
             this.pict4.Name = "pict4";
-            this.pict4.Size = new System.Drawing.Size(42, 40);
+            this.pict4.Size = new System.Drawing.Size(40, 40);
             this.pict4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pict4.TabIndex = 12;
             this.pict4.TabStop = false;
@@ -268,9 +257,9 @@
             // 
             this.gr1info1Oneinfo.Controls.Add(this.dgvInfo1_one);
             this.gr1info1Oneinfo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gr1info1Oneinfo.Location = new System.Drawing.Point(51, 3);
+            this.gr1info1Oneinfo.Location = new System.Drawing.Point(49, 3);
             this.gr1info1Oneinfo.Name = "gr1info1Oneinfo";
-            this.gr1info1Oneinfo.Size = new System.Drawing.Size(543, 125);
+            this.gr1info1Oneinfo.Size = new System.Drawing.Size(521, 125);
             this.gr1info1Oneinfo.TabIndex = 1;
             this.gr1info1Oneinfo.TabStop = false;
             this.gr1info1Oneinfo.Text = "一录";
@@ -279,39 +268,15 @@
             // 
             this.dgvInfo1_one.AllowUserToAddRows = false;
             this.dgvInfo1_one.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle13.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle13.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle13.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle13.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle13.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvInfo1_one.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle13;
             this.dgvInfo1_one.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle14.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle14.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvInfo1_one.DefaultCellStyle = dataGridViewCellStyle14;
             this.dgvInfo1_one.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvInfo1_one.Location = new System.Drawing.Point(3, 17);
             this.dgvInfo1_one.MultiSelect = false;
             this.dgvInfo1_one.Name = "dgvInfo1_one";
             this.dgvInfo1_one.ReadOnly = true;
-            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle15.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle15.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle15.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle15.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle15.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvInfo1_one.RowHeadersDefaultCellStyle = dataGridViewCellStyle15;
             this.dgvInfo1_one.RowTemplate.Height = 23;
             this.dgvInfo1_one.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvInfo1_one.Size = new System.Drawing.Size(537, 105);
+            this.dgvInfo1_one.Size = new System.Drawing.Size(515, 105);
             this.dgvInfo1_one.TabIndex = 0;
             this.dgvInfo1_one.Scroll += new System.Windows.Forms.ScrollEventHandler(this.dgvInfo1_one_Scroll);
             // 
@@ -320,7 +285,7 @@
             this.pict1.Image = global::CsmCheck.Properties.Resources.down;
             this.pict1.Location = new System.Drawing.Point(3, 3);
             this.pict1.Name = "pict1";
-            this.pict1.Size = new System.Drawing.Size(42, 40);
+            this.pict1.Size = new System.Drawing.Size(40, 40);
             this.pict1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pict1.TabIndex = 9;
             this.pict1.TabStop = false;
@@ -331,7 +296,7 @@
             this.pict2.Image = global::CsmCheck.Properties.Resources.up;
             this.pict2.Location = new System.Drawing.Point(3, 134);
             this.pict2.Name = "pict2";
-            this.pict2.Size = new System.Drawing.Size(42, 40);
+            this.pict2.Size = new System.Drawing.Size(40, 40);
             this.pict2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pict2.TabIndex = 10;
             this.pict2.TabStop = false;
@@ -342,7 +307,7 @@
             this.pict3.Image = global::CsmCheck.Properties.Resources.down;
             this.pict3.Location = new System.Drawing.Point(3, 265);
             this.pict3.Name = "pict3";
-            this.pict3.Size = new System.Drawing.Size(42, 40);
+            this.pict3.Size = new System.Drawing.Size(40, 40);
             this.pict3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pict3.TabIndex = 11;
             this.pict3.TabStop = false;
@@ -352,9 +317,9 @@
             // 
             this.gr2info1Twoinfo.Controls.Add(this.dgvInfo1_two);
             this.gr2info1Twoinfo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gr2info1Twoinfo.Location = new System.Drawing.Point(51, 134);
+            this.gr2info1Twoinfo.Location = new System.Drawing.Point(49, 134);
             this.gr2info1Twoinfo.Name = "gr2info1Twoinfo";
-            this.gr2info1Twoinfo.Size = new System.Drawing.Size(543, 125);
+            this.gr2info1Twoinfo.Size = new System.Drawing.Size(521, 125);
             this.gr2info1Twoinfo.TabIndex = 13;
             this.gr2info1Twoinfo.TabStop = false;
             this.gr2info1Twoinfo.Text = "二录";
@@ -363,39 +328,15 @@
             // 
             this.dgvInfo1_two.AllowUserToAddRows = false;
             this.dgvInfo1_two.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle16.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle16.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle16.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle16.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle16.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle16.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvInfo1_two.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle16;
             this.dgvInfo1_two.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle17.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle17.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle17.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle17.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle17.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle17.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvInfo1_two.DefaultCellStyle = dataGridViewCellStyle17;
             this.dgvInfo1_two.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvInfo1_two.Location = new System.Drawing.Point(3, 17);
             this.dgvInfo1_two.MultiSelect = false;
             this.dgvInfo1_two.Name = "dgvInfo1_two";
             this.dgvInfo1_two.ReadOnly = true;
-            dataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle18.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle18.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle18.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle18.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle18.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle18.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvInfo1_two.RowHeadersDefaultCellStyle = dataGridViewCellStyle18;
             this.dgvInfo1_two.RowTemplate.Height = 23;
             this.dgvInfo1_two.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvInfo1_two.Size = new System.Drawing.Size(537, 105);
+            this.dgvInfo1_two.Size = new System.Drawing.Size(515, 105);
             this.dgvInfo1_two.TabIndex = 0;
             this.dgvInfo1_two.Scroll += new System.Windows.Forms.ScrollEventHandler(this.dgvInfo1_two_Scroll);
             // 
@@ -403,9 +344,9 @@
             // 
             this.gr1Info2Oneinfo.Controls.Add(this.dgvInfo2_one);
             this.gr1Info2Oneinfo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gr1Info2Oneinfo.Location = new System.Drawing.Point(51, 396);
+            this.gr1Info2Oneinfo.Location = new System.Drawing.Point(49, 396);
             this.gr1Info2Oneinfo.Name = "gr1Info2Oneinfo";
-            this.gr1Info2Oneinfo.Size = new System.Drawing.Size(543, 127);
+            this.gr1Info2Oneinfo.Size = new System.Drawing.Size(521, 127);
             this.gr1Info2Oneinfo.TabIndex = 14;
             this.gr1Info2Oneinfo.TabStop = false;
             this.gr1Info2Oneinfo.Text = "一录";
@@ -414,39 +355,15 @@
             // 
             this.dgvInfo2_one.AllowUserToAddRows = false;
             this.dgvInfo2_one.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle19.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle19.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle19.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle19.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle19.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle19.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvInfo2_one.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle19;
             this.dgvInfo2_one.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle20.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle20.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle20.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle20.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle20.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle20.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvInfo2_one.DefaultCellStyle = dataGridViewCellStyle20;
             this.dgvInfo2_one.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvInfo2_one.Location = new System.Drawing.Point(3, 17);
             this.dgvInfo2_one.MultiSelect = false;
             this.dgvInfo2_one.Name = "dgvInfo2_one";
             this.dgvInfo2_one.ReadOnly = true;
-            dataGridViewCellStyle21.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle21.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle21.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle21.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle21.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle21.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle21.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvInfo2_one.RowHeadersDefaultCellStyle = dataGridViewCellStyle21;
             this.dgvInfo2_one.RowTemplate.Height = 23;
             this.dgvInfo2_one.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvInfo2_one.Size = new System.Drawing.Size(537, 107);
+            this.dgvInfo2_one.Size = new System.Drawing.Size(515, 107);
             this.dgvInfo2_one.TabIndex = 0;
             this.dgvInfo2_one.Scroll += new System.Windows.Forms.ScrollEventHandler(this.dgvInfo2_one_Scroll);
             // 
@@ -454,9 +371,9 @@
             // 
             this.gr2Info2Twoinfo.Controls.Add(this.dgvInfo2_two);
             this.gr2Info2Twoinfo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gr2Info2Twoinfo.Location = new System.Drawing.Point(51, 265);
+            this.gr2Info2Twoinfo.Location = new System.Drawing.Point(49, 265);
             this.gr2Info2Twoinfo.Name = "gr2Info2Twoinfo";
-            this.gr2Info2Twoinfo.Size = new System.Drawing.Size(543, 125);
+            this.gr2Info2Twoinfo.Size = new System.Drawing.Size(521, 125);
             this.gr2Info2Twoinfo.TabIndex = 15;
             this.gr2Info2Twoinfo.TabStop = false;
             this.gr2Info2Twoinfo.Text = "二录";
@@ -465,39 +382,15 @@
             // 
             this.dgvInfo2_two.AllowUserToAddRows = false;
             this.dgvInfo2_two.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle22.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle22.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle22.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle22.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle22.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle22.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle22.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvInfo2_two.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle22;
             this.dgvInfo2_two.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle23.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle23.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle23.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle23.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle23.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle23.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle23.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvInfo2_two.DefaultCellStyle = dataGridViewCellStyle23;
             this.dgvInfo2_two.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvInfo2_two.Location = new System.Drawing.Point(3, 17);
             this.dgvInfo2_two.MultiSelect = false;
             this.dgvInfo2_two.Name = "dgvInfo2_two";
             this.dgvInfo2_two.ReadOnly = true;
-            dataGridViewCellStyle24.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle24.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle24.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle24.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle24.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle24.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle24.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvInfo2_two.RowHeadersDefaultCellStyle = dataGridViewCellStyle24;
             this.dgvInfo2_two.RowTemplate.Height = 23;
             this.dgvInfo2_two.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvInfo2_two.Size = new System.Drawing.Size(537, 105);
+            this.dgvInfo2_two.Size = new System.Drawing.Size(515, 105);
             this.dgvInfo2_two.TabIndex = 0;
             this.dgvInfo2_two.Scroll += new System.Windows.Forms.ScrollEventHandler(this.dgvInfo2_two_Scroll);
             // 
@@ -506,11 +399,12 @@
             this.gr3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.gr3.BackColor = System.Drawing.Color.Transparent;
+            this.gr3.Controls.Add(this.butFg);
             this.gr3.Controls.Add(this.butCheck);
             this.gr3.Controls.Add(this.lbCheck);
             this.gr3.Location = new System.Drawing.Point(5, 544);
             this.gr3.Name = "gr3";
-            this.gr3.Size = new System.Drawing.Size(603, 46);
+            this.gr3.Size = new System.Drawing.Size(579, 46);
             this.gr3.TabIndex = 5;
             this.gr3.TabStop = false;
             // 
@@ -548,10 +442,10 @@
             this.dockSite1.Controls.Add(this.bar1);
             this.dockSite1.Dock = System.Windows.Forms.DockStyle.Left;
             this.dockSite1.DocumentDockContainer = new DevComponents.DotNetBar.DocumentDockContainer(new DevComponents.DotNetBar.DocumentBaseContainer[] {
-            ((DevComponents.DotNetBar.DocumentBaseContainer)(new DevComponents.DotNetBar.DocumentBarContainer(this.bar1, 383, 643)))}, DevComponents.DotNetBar.eOrientation.Horizontal);
+            ((DevComponents.DotNetBar.DocumentBaseContainer)(new DevComponents.DotNetBar.DocumentBarContainer(this.bar1, 407, 643)))}, DevComponents.DotNetBar.eOrientation.Horizontal);
             this.dockSite1.Location = new System.Drawing.Point(0, 25);
             this.dockSite1.Name = "dockSite1";
-            this.dockSite1.Size = new System.Drawing.Size(386, 643);
+            this.dockSite1.Size = new System.Drawing.Size(410, 643);
             this.dockSite1.TabIndex = 5;
             this.dockSite1.TabStop = false;
             // 
@@ -579,7 +473,7 @@
             this.bar1.LayoutType = DevComponents.DotNetBar.eLayoutType.DockContainer;
             this.bar1.Location = new System.Drawing.Point(0, 0);
             this.bar1.Name = "bar1";
-            this.bar1.Size = new System.Drawing.Size(383, 643);
+            this.bar1.Size = new System.Drawing.Size(407, 643);
             this.bar1.Stretch = true;
             this.bar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.Office2003;
             this.bar1.TabIndex = 0;
@@ -592,7 +486,7 @@
             this.panelDockContainer1.DisabledBackColor = System.Drawing.Color.Empty;
             this.panelDockContainer1.Location = new System.Drawing.Point(3, 23);
             this.panelDockContainer1.Name = "panelDockContainer1";
-            this.panelDockContainer1.Size = new System.Drawing.Size(377, 617);
+            this.panelDockContainer1.Size = new System.Drawing.Size(401, 617);
             this.panelDockContainer1.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.panelDockContainer1.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground;
             this.panelDockContainer1.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
@@ -612,6 +506,25 @@
             this.gr1.Size = new System.Drawing.Size(410, 630);
             this.gr1.TabIndex = 2;
             this.gr1.TabStop = false;
+            // 
+            // gArchSelect1
+            // 
+            this.gArchSelect1.Archid = 0;
+            this.gArchSelect1.ArchImgFile = null;
+            this.gArchSelect1.ArchRegPages = 0;
+            this.gArchSelect1.Archstat = null;
+            this.gArchSelect1.Archtype = null;
+            this.gArchSelect1.BackColor = System.Drawing.Color.Transparent;
+            this.gArchSelect1.Boxsn = 0;
+            this.gArchSelect1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gArchSelect1.GotoPages = false;
+            this.gArchSelect1.LoadFileBoole = false;
+            this.gArchSelect1.Location = new System.Drawing.Point(3, 17);
+            this.gArchSelect1.Name = "gArchSelect1";
+            this.gArchSelect1.PagesEnd = false;
+            this.gArchSelect1.Size = new System.Drawing.Size(404, 610);
+            this.gArchSelect1.TabIndex = 0;
+            this.gArchSelect1.LineClickLoadInfo += new CsmCon.gArchSelect.ArchSelectHandle(this.gArchSelect1_LineClickLoadInfo);
             // 
             // dockContainerItem1
             // 
@@ -688,9 +601,9 @@
             this.toolsusertime1,
             this.toolsuser2,
             this.toolsusertime2});
-            this.statools.Location = new System.Drawing.Point(386, 646);
+            this.statools.Location = new System.Drawing.Point(410, 646);
             this.statools.Name = "statools";
-            this.statools.Size = new System.Drawing.Size(619, 22);
+            this.statools.Size = new System.Drawing.Size(595, 22);
             this.statools.TabIndex = 13;
             this.statools.Text = "statusStrip1";
             // 
@@ -722,21 +635,17 @@
             this.toolsusertime2.Size = new System.Drawing.Size(68, 17);
             this.toolsusertime2.Text = "二录时间：";
             // 
-            // gArchSelect1
+            // butFg
             // 
-            this.gArchSelect1.Archid = 0;
-            this.gArchSelect1.ArchImgFile = null;
-            this.gArchSelect1.ArchRegPages = 0;
-            this.gArchSelect1.Archtype = null;
-            this.gArchSelect1.BackColor = System.Drawing.Color.Transparent;
-            this.gArchSelect1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gArchSelect1.GotoPages = false;
-            this.gArchSelect1.LoadFileBoole = false;
-            this.gArchSelect1.Location = new System.Drawing.Point(3, 17);
-            this.gArchSelect1.Name = "gArchSelect1";
-            this.gArchSelect1.Size = new System.Drawing.Size(404, 610);
-            this.gArchSelect1.TabIndex = 0;
-            this.gArchSelect1.LineClickLoadInfo += new CsmCon.gArchSelect.ArchSelectHandle(this.gArchSelect1_LineClickLoadInfo);
+            this.butFg.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.butFg.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.butFg.Location = new System.Drawing.Point(299, 11);
+            this.butFg.Name = "butFg";
+            this.butFg.Size = new System.Drawing.Size(75, 32);
+            this.butFg.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.butFg.TabIndex = 2;
+            this.butFg.Text = "返工";
+            this.butFg.Click += new System.EventHandler(this.butFg_Click);
             // 
             // FrmData
             // 
@@ -835,5 +744,6 @@
         private System.Windows.Forms.DataGridView dgvInfo2_one;
         private System.Windows.Forms.GroupBox gr2Info2Twoinfo;
         private System.Windows.Forms.DataGridView dgvInfo2_two;
+        private DevComponents.DotNetBar.ButtonX butFg;
     }
 }
