@@ -159,8 +159,15 @@ namespace Csmdapx
 
         private void toolStripDel_Click(object sender, EventArgs e)
         {
-            this.txtPages.Text = "已删除";
-            this.txtPages.ReadOnly = true;
+
+            if (txtPages.ReadOnly) {
+                txtPages.ReadOnly = false;
+                txtPages.SelectAll();
+            }
+            else {
+                txtPages.Text = "已删除";
+                txtPages.ReadOnly = true;
+            }
         }
 
         private void toolStripRecov_Click(object sender, EventArgs e)
@@ -380,6 +387,8 @@ namespace Csmdapx
             }
             else
                 txtPages.ReadOnly = false;
+            if (txt.Trim().Length <= 0)
+                txt = ClsIndex.CrrentPage.ToString();
             txtPages.Text = txt;
             txtPages.SelectAll();
         }

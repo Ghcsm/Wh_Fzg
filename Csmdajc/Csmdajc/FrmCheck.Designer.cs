@@ -50,9 +50,7 @@
             this.gr3 = new System.Windows.Forms.GroupBox();
             this.ImgView = new Leadtools.Controls.ImageViewer();
             this.gr4 = new System.Windows.Forms.GroupBox();
-            this.labCheckUser = new System.Windows.Forms.Label();
-            this.labIndexUser = new System.Windows.Forms.Label();
-            this.labScanUser = new System.Windows.Forms.Label();
+            this.labConten = new System.Windows.Forms.Label();
             this.labPageCount = new System.Windows.Forms.Label();
             this.labPageCrrent = new System.Windows.Forms.Label();
             this.toolstripmain2 = new System.Windows.Forms.ToolStrip();
@@ -338,9 +336,7 @@
             // 
             // gr4
             // 
-            this.gr4.Controls.Add(this.labCheckUser);
-            this.gr4.Controls.Add(this.labIndexUser);
-            this.gr4.Controls.Add(this.labScanUser);
+            this.gr4.Controls.Add(this.labConten);
             this.gr4.Controls.Add(this.labPageCount);
             this.gr4.Controls.Add(this.labPageCrrent);
             this.gr4.Dock = System.Windows.Forms.DockStyle.Top;
@@ -350,32 +346,15 @@
             this.gr4.TabIndex = 0;
             this.gr4.TabStop = false;
             // 
-            // labCheckUser
+            // labConten
             // 
-            this.labCheckUser.AutoSize = true;
-            this.labCheckUser.Location = new System.Drawing.Point(402, 20);
-            this.labCheckUser.Name = "labCheckUser";
-            this.labCheckUser.Size = new System.Drawing.Size(35, 12);
-            this.labCheckUser.TabIndex = 6;
-            this.labCheckUser.Text = "质检:";
-            // 
-            // labIndexUser
-            // 
-            this.labIndexUser.AutoSize = true;
-            this.labIndexUser.Location = new System.Drawing.Point(303, 20);
-            this.labIndexUser.Name = "labIndexUser";
-            this.labIndexUser.Size = new System.Drawing.Size(35, 12);
-            this.labIndexUser.TabIndex = 5;
-            this.labIndexUser.Text = "排序:";
-            // 
-            // labScanUser
-            // 
-            this.labScanUser.AutoSize = true;
-            this.labScanUser.Location = new System.Drawing.Point(196, 20);
-            this.labScanUser.Name = "labScanUser";
-            this.labScanUser.Size = new System.Drawing.Size(35, 12);
-            this.labScanUser.TabIndex = 4;
-            this.labScanUser.Text = "扫描:";
+            this.labConten.AutoSize = true;
+            this.labConten.Font = new System.Drawing.Font("宋体", 11F);
+            this.labConten.ForeColor = System.Drawing.Color.Red;
+            this.labConten.Location = new System.Drawing.Point(196, 20);
+            this.labConten.Name = "labConten";
+            this.labConten.Size = new System.Drawing.Size(0, 15);
+            this.labConten.TabIndex = 4;
             // 
             // labPageCount
             // 
@@ -968,9 +947,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripLabel toolArchno;
         private System.Windows.Forms.GroupBox gr4;
-        private System.Windows.Forms.Label labCheckUser;
-        private System.Windows.Forms.Label labIndexUser;
-        private System.Windows.Forms.Label labScanUser;
+        private System.Windows.Forms.Label labConten;
         private System.Windows.Forms.Label labPageCount;
         private System.Windows.Forms.Label labPageCrrent;
         private System.Windows.Forms.ToolStripButton toolStripRepair;

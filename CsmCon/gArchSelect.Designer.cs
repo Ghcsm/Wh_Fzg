@@ -40,6 +40,7 @@
             this.c_archid = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.c_type = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.c_stat = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.c_xyzd = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ImgList = new System.Windows.Forms.ImageList(this.components);
             this.panelTop = new System.Windows.Forms.Panel();
             this.butOk = new DevComponents.DotNetBar.ButtonX();
@@ -54,7 +55,6 @@
             this.butPageUpdate = new DevComponents.DotNetBar.ButtonX();
             this.label1 = new System.Windows.Forms.Label();
             this.txtPages = new System.Windows.Forms.TextBox();
-            this.c_xyzd = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.gr1.SuspendLayout();
             this.panelTop.SuspendLayout();
             this.gr2.SuspendLayout();
@@ -105,6 +105,7 @@
             this.LvData.SmallImageList = this.ImgList;
             this.LvData.StateImageList = this.ImgList;
             this.LvData.TabIndex = 1;
+            this.LvData.Tag = "6";
             this.LvData.UseCompatibleStateImageBehavior = false;
             this.LvData.View = System.Windows.Forms.View.Details;
             this.LvData.Click += new System.EventHandler(this.LvData_Click);
@@ -151,6 +152,11 @@
             this.c_stat.Text = "stat";
             this.c_stat.Width = 0;
             // 
+            // c_xyzd
+            // 
+            this.c_xyzd.Text = "xy";
+            this.c_xyzd.Width = 0;
+            // 
             // ImgList
             // 
             this.ImgList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("ImgList.ImageStream")));
@@ -182,6 +188,7 @@
             this.butOk.Size = new System.Drawing.Size(53, 26);
             this.butOk.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.butOk.TabIndex = 4;
+            this.butOk.Tag = "5";
             this.butOk.Text = "确定";
             this.butOk.Click += new System.EventHandler(this.butOk_Click);
             this.butOk.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.butOk_KeyPress);
@@ -194,6 +201,7 @@
             this.txtBoxsn.Name = "txtBoxsn";
             this.txtBoxsn.Size = new System.Drawing.Size(87, 21);
             this.txtBoxsn.TabIndex = 3;
+            this.txtBoxsn.Tag = "4";
             this.txtBoxsn.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtBoxsn_KeyPress);
             // 
             // comboxClass
@@ -212,6 +220,7 @@
             this.comboxClass.Size = new System.Drawing.Size(76, 21);
             this.comboxClass.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.comboxClass.TabIndex = 2;
+            this.comboxClass.Tag = "3";
             this.comboxClass.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.comboxClass_KeyPress);
             // 
             // comboItem1
@@ -229,6 +238,7 @@
             this.radioClass.Name = "radioClass";
             this.radioClass.Size = new System.Drawing.Size(47, 16);
             this.radioClass.TabIndex = 1;
+            this.radioClass.Tag = "2";
             this.radioClass.Text = "类别";
             this.radioClass.UseVisualStyleBackColor = true;
             this.radioClass.Click += new System.EventHandler(this.radioClass_Click);
@@ -242,6 +252,7 @@
             this.radioBoxsn.Size = new System.Drawing.Size(47, 16);
             this.radioBoxsn.TabIndex = 0;
             this.radioBoxsn.TabStop = true;
+            this.radioBoxsn.Tag = "1";
             this.radioBoxsn.Text = "盒号";
             this.radioBoxsn.UseVisualStyleBackColor = true;
             this.radioBoxsn.Click += new System.EventHandler(this.radioBoxsn_Click);
@@ -301,11 +312,6 @@
             this.txtPages.Size = new System.Drawing.Size(100, 21);
             this.txtPages.TabIndex = 1;
             this.txtPages.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPages_KeyPress);
-            // 
-            // c_xyzd
-            // 
-            this.c_xyzd.Text = "xy";
-            this.c_xyzd.Width = 0;
             // 
             // gArchSelect
             // 

@@ -39,6 +39,124 @@ namespace CsmCon
         public string ArchPos;
 
         #endregion
+
+        #region click
+
+        private void radioBoxsn_Click(object sender, EventArgs e)
+        {
+            comboxClass.Enabled = false;
+        }
+
+        private void radioClass_Click(object sender, EventArgs e)
+        {
+            comboxClass.Enabled = true;
+        }
+
+        private void comboxClass_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+                SendKeys.Send("{Tab}");
+        }
+
+        private void txtBoxsn_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+                SendKeys.Send("{Tab}");
+        }
+
+        private void LvData_DoubleClick(object sender, EventArgs e)
+        {
+            if (LvData.SelectedItems.Count > 0 && LvData.SelectedIndices.Count > 0) {
+                if (LineGetInfo != null)
+                    LineGetInfo(sender, new EventArgs());
+            }
+        }
+
+        private void txtPages_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!(Char.IsNumber(e.KeyChar)) && e.KeyChar != (char)13 && e.KeyChar != (char)8)
+                e.Handled = true;
+            else if (e.KeyChar == 13)
+                SendKeys.Send("{Tab}");
+        }
+
+        private void butLoad_Click(object sender, EventArgs e)
+        {
+            if (Archid <= 0)
+                return;
+            if (ArchRegPages <= 0) {
+                MessageBox.Show("页码不正确");
+                return;
+            }
+            if (LineLoadFile != null)
+                LineLoadFile(sender, new EventArgs());
+        }
+
+        private void butOk_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+                butOk_Click(null, null);
+
+        }
+
+        private void butPageUpdate_Click(object sender, EventArgs e)
+        {
+
+            if (Archstat.Trim().Length > 0) {
+                int p = Convert.ToInt32(Archstat);
+                if (p >= (int)T_ConFigure.ArchStat.排序完) {
+                    MessageBox.Show("已经排序完成无法进行更改页码!");
+                    LvData.Focus();
+                    return;
+                }
+            }
+            try {
+                int pages = Convert.ToInt32(txtPages.Text.Trim());
+                if (pages <= 0)
+                    return;
+                Common.UpdatePages(txtPages.Text.Trim(), Archid);
+                ArchRegPages = pages;
+                if (LineFocus != null)
+                    LineFocus(sender, new EventArgs());
+            } catch {
+                MessageBox.Show("更新页码失败!");
+            }
+        }
+
+        #endregion
+
+        #region  void
+
+        public bool GetFocus()
+        {
+            bool bl = false;
+            foreach (Control ct in gr1.Controls) {
+                if (ct is Panel) {
+                    foreach (Control p in ct.Controls) {
+                        if (p.Focused)
+                            bl = true;
+                    }
+                }
+                else {
+                    if (ct.Focused)
+                        bl = true;
+                }
+            }
+            foreach (Control ct in gr2.Controls) {
+                if (ct is Panel) {
+                    foreach (Control p in ct.Controls) {
+                        if (p.Focused)
+                            bl = true;
+                    }
+                }
+                else {
+                    if (ct.Focused)
+                        bl = true;
+                }
+            }
+            return bl;
+        }
+
         private void Witeini()
         {
             ClsIni.Archbox = txtBoxsn.Text.Trim();
@@ -107,8 +225,8 @@ namespace CsmCon
                     string pages = dr["PAGES"].ToString();
                     string type = dr[ClsContenInfo.Archtype].ToString();
                     string ImgFile = (dr["IMGFILE"] == null ? "" : dr["IMGFILE"].ToString());
-                    stat = Convert.ToInt32(dr["ArchState"].ToString().Trim().Length<=0 ? "0" : dr["ArchState"].ToString());
-                    string xystat =dr["CheckXyState"].ToString().Trim().Length<=0 ? "0" : dr["CheckXyState"].ToString();
+                    stat = Convert.ToInt32(dr["ArchState"].ToString().Trim().Length <= 0 ? "0" : dr["ArchState"].ToString());
+                    string xystat = dr["CheckXyState"].ToString().Trim().Length <= 0 ? "0" : dr["CheckXyState"].ToString();
                     if (stat >= 3 && stat < 5)
                         lvi.ImageIndex = 0;
                     else if (stat >= 5 && stat < 7)
@@ -122,27 +240,7 @@ namespace CsmCon
             }
         }
 
-        private void radioBoxsn_Click(object sender, EventArgs e)
-        {
-            comboxClass.Enabled = false;
-        }
 
-        private void radioClass_Click(object sender, EventArgs e)
-        {
-            comboxClass.Enabled = true;
-        }
-
-        private void comboxClass_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == 13)
-                SendKeys.Send("{Tab}");
-        }
-
-        private void txtBoxsn_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == 13)
-                SendKeys.Send("{Tab}");
-        }
 
         private void Getini()
         {
@@ -203,13 +301,7 @@ namespace CsmCon
             }
         }
 
-        private void LvData_DoubleClick(object sender, EventArgs e)
-        {
-            if (LvData.SelectedItems.Count > 0 && LvData.SelectedIndices.Count > 0) {
-                if (LineGetInfo != null)
-                    LineGetInfo(sender, new EventArgs());
-            }
-        }
+
 
         private void LvData_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -225,55 +317,7 @@ namespace CsmCon
             }
         }
 
-        private void txtPages_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (!(Char.IsNumber(e.KeyChar)) && e.KeyChar != (char)13 && e.KeyChar != (char)8)
-                e.Handled = true;
-            else if (e.KeyChar == 13)
-                SendKeys.Send("{Tab}");
-        }
+        #endregion
 
-        private void butLoad_Click(object sender, EventArgs e)
-        {
-            if (Archid <= 0)
-                return;
-            if (ArchRegPages <= 0) {
-                MessageBox.Show("页码不正确");
-                return;
-            }
-            if (LineLoadFile != null)
-                LineLoadFile(sender, new EventArgs());
-        }
-
-        private void butOk_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == 13)
-                butOk_Click(null, null);
-
-        }
-
-        private void butPageUpdate_Click(object sender, EventArgs e)
-        {
-
-            if (Archstat.Trim().Length > 0) {
-                int p = Convert.ToInt32(Archstat);
-                if (p >= (int)T_ConFigure.ArchStat.排序完) {
-                    MessageBox.Show("已经排序完成无法进行更改页码!");
-                    LvData.Focus();
-                    return;
-                }
-            }
-            try {
-                int pages = Convert.ToInt32(txtPages.Text.Trim());
-                if (pages <= 0)
-                    return;
-                Common.UpdatePages(txtPages.Text.Trim(), Archid);
-                ArchRegPages = pages;
-                if (LineFocus != null)
-                    LineFocus(sender, new EventArgs());
-            } catch {
-                MessageBox.Show("更新页码失败!");
-            }
-        }
     }
 }

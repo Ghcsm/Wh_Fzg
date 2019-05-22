@@ -54,7 +54,7 @@ namespace CsmCon
             LoadFile();
         }
 
-        private void UcContents1_OneClickGotoPage(object sender, EventArgs e)
+        private void UcContents1_OneClickGotoPage(object sender, EventArgs e,string title,string page)
         {
             int p = UcConten.ArchPages;
             if (p >= 1 && p < MaxPages)

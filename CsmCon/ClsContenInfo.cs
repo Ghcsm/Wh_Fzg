@@ -125,6 +125,11 @@ namespace CsmCon
                 }));
                     i++;
                 }
+                lsv.BeginInvoke(new Action(() =>
+                {
+                    if (lsv.Items.Count > 0)
+                        lsv.Items[0].Selected = true;
+                }));
             });
         }
 

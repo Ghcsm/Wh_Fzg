@@ -52,12 +52,14 @@ namespace Csmdajc
                 MessageBox.Show("窗体控件初始化失败:" + ex.ToString());
             }
         }
+      
 
-        private void UcContents1_OneClickGotoPage(object sender, EventArgs e)
+        private void UcContents1_OneClickGotoPage(object sender, EventArgs e, string title, string page)
         {
+            labConten.Text = title;
             int p = 0;
             try {
-                p = Convert.ToInt32(UcContents.PageMl);
+                p = Convert.ToInt32(page);
             } catch { }
             if (p > 0 && p<Clscheck.MaxPage)
                 Himg._Gotopage(p);
@@ -589,9 +591,6 @@ namespace Csmdajc
                 entertime = dr["录入时间"].ToString();
                 this.BeginInvoke(new Action(() =>
                 {
-                    this.labScanUser.Text = string.Format("扫描：{0}", Scanner);
-                    this.labIndexUser.Text = string.Format("排序：{0}", Indexer);
-                    this.labCheckUser.Text = string.Format("质检：{0}", Checker);
                     toollabscan.Text = string.Format("扫描:{0}", Scanner);
                     toollabscantime.Text = string.Format("时间:{0}", scantime);
                     toollabindex.Text = string.Format("排序:{0}", Indexer);
@@ -628,10 +627,6 @@ namespace Csmdajc
             Clscheck.ArchPos = "";
             labPageCrrent.Text = "第     页";
             labPageCount.Text = "共      页";
-            labScanUser.Text = "扫描:";
-            labIndexUser.Text = "排序:";
-            labCheckUser.Text = "质检:";
-            toolArchno.Text = "当前卷号:";
         }
 
         private async void FtpUpFinish(string filetmp, int arid, string filename, int pages)
@@ -685,11 +680,6 @@ namespace Csmdajc
             try {
                 Common.Writelog(Clscheck.Archid, "质检返工!");
                 string PageIndexInfo = "";
-                //string RadpageIndexinfo = "";
-                //for (int page = RadpageIndexinfo.Length + 1; page <= Clscheck.MaxPage; page++) {
-                //    string page2 = (page - RadpageIndexinfo.Length).ToString();
-                //    PageIndexInfo += page + ":" + page2 + " ";
-                //}
                 for (int i = 1; i <=Clscheck.MaxPage; i++)
                 {
                     if (PageIndexInfo.Trim().Length <= 0)
@@ -719,69 +709,6 @@ namespace Csmdajc
                 Common.Writelog(Clscheck.Archid, "质检退回失败!");
             }
         }
-
-
-        //private void Keykuaij(object sender, KeyEventArgs e)
-        //{
-        //    Keys keyCode = e.KeyCode;
-        //    switch (keyCode) {
-        //        case Keys.F2:
-        //            toolStripRepair_Click(sender, e);
-        //            break;
-        //        case Keys.Escape:
-        //            toolStripClose_Click(sender, e);
-        //            break;
-        //        case Keys.Enter:
-        //            toolStripDownPage_Click(sender, e);
-        //            break;
-        //        case Keys.Space:
-        //            toolStripDownPage_Click(sender, e);
-        //            break;
-        //        case Keys.PageDown:
-        //            toolStripDownPage_Click(sender, e);
-        //            break;
-        //        case Keys.PageUp:
-        //            toolStripUppage_Click(sender, e);
-        //            break;
-        //        case Keys.E:
-        //            toolStripRoteImg_Click(sender, e);
-        //            break;
-        //        case Keys.D:
-        //            toolStripDeskew_Click(sender, e);
-        //            break;
-        //        case Keys.F:
-        //            toolStripCleSide_Click(sender, e);
-        //            break;
-        //        case Keys.C:
-        //            toolStripColorShall_Click(sender, e);
-        //            break;
-        //        case Keys.G:
-        //            toolStripInterSpeck_Click(sender, e);
-        //            break;
-        //        case Keys.T:
-        //            toolStripOutSpeck_Click(sender, e);
-        //            break;
-        //        case Keys.V:
-        //            toolStripCenter_Click(sender, e);
-        //            break;
-        //        case Keys.A:
-        //            toolStripBigPage_Click(sender, e);
-        //            break;
-        //        case Keys.S:
-        //            toolStripSamllPage_Click(sender, e);
-        //            break;
-        //        case Keys.Z:
-        //            Himg._RoteimgWt(ImgView, 0);
-        //            break;
-        //        case Keys.X:
-        //            Himg._RoteimgWt(ImgView, 1);
-        //            break;
-        //    }
-
-        //}
-
-
-
 
         #endregion
 

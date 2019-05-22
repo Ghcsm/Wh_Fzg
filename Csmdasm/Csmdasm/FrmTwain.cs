@@ -341,6 +341,7 @@ namespace Csmdasm
             labIndexUser.Text = "排序:";
             labCheckUser.Text = "质检:";
             labArchNo.Text = "当前卷号:";
+            labQsPages.Text = "当前卷缺少:";
         }
 
         private async void FtpUp(string filetmp, string archpos, int maxpage, int arid)
@@ -397,9 +398,12 @@ namespace Csmdasm
 
         private void FrmTwain_KeyDown(object sender, KeyEventArgs e)
         {
-            pub.KeyShortDown(e,ClsTwain.lsinival,ClsTwain.Lsinikeys,ClsTwain.lssqlOpernum,ClsTwain.lsSqlOper,out ClsTwain.keystr);
-            if (ClsTwain.keystr.Trim().Length > 0)
-                KeysDownEve(ClsTwain.keystr.Trim());
+            if (!gArch.GetFocus())
+            {
+                pub.KeyShortDown(e, ClsTwain.lsinival, ClsTwain.Lsinikeys, ClsTwain.lssqlOpernum, ClsTwain.lsSqlOper, out ClsTwain.keystr);
+                if (ClsTwain.keystr.Trim().Length > 0)
+                    KeysDownEve(ClsTwain.keystr.Trim());
+            }
             Keys keyCode = e.KeyCode;
             if (e.KeyCode == Keys.Escape)
                 gArch.LvData.Focus();

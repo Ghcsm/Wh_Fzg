@@ -44,11 +44,11 @@
             this.LvContents = new DevComponents.DotNetBar.Controls.ListViewEx();
             this.colContentsSn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colContentsTitle = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.LvModule = new DevComponents.DotNetBar.Controls.ListViewEx();
             this.colDoduleTitle = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colDoduleCode = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.gr2 = new System.Windows.Forms.GroupBox();
-            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.gr0.SuspendLayout();
             this.gr1.SuspendLayout();
             this.gr2.SuspendLayout();
@@ -222,6 +222,7 @@
             this.LvContents.TabStop = false;
             this.LvContents.UseCompatibleStateImageBehavior = false;
             this.LvContents.View = System.Windows.Forms.View.Details;
+            this.LvContents.SelectedIndexChanged += new System.EventHandler(this.LvContents_SelectedIndexChanged);
             this.LvContents.Click += new System.EventHandler(this.LvContents_Click);
             // 
             // colContentsSn
@@ -232,6 +233,12 @@
             // 
             this.colContentsTitle.Text = "id";
             this.colContentsTitle.Width = 0;
+            // 
+            // imageList1
+            // 
+            this.imageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+            this.imageList1.ImageSize = new System.Drawing.Size(16, 25);
+            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
             // 
             // LvModule
             // 
@@ -277,12 +284,6 @@
             this.gr2.Size = new System.Drawing.Size(80, 343);
             this.gr2.TabIndex = 1;
             this.gr2.TabStop = false;
-            // 
-            // imageList1
-            // 
-            this.imageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
-            this.imageList1.ImageSize = new System.Drawing.Size(16, 25);
-            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
             // 
             // UcContents
             // 

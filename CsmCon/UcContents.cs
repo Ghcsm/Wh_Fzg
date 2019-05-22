@@ -14,10 +14,10 @@ namespace CsmCon
             InitializeComponent();
         }
         public static string Modulename { get; set; }
-        public event CntSelectHandleG GoFous;
+        //public event CntSelectHandleG GoFous;
         public event CntSelectHandle OneClickGotoPage;
         public delegate void CntSelectHandleG(object sender, EventArgs e);
-        public delegate void CntSelectHandle(object sender, EventArgs e);
+        public delegate void CntSelectHandle(object sender, EventArgs e, string title, string page);
         public static bool ModuleVisible { get; set; }
         public static bool ContentsEnabled { get; set; }
         public static int ArchMaxPage { get; set; }
@@ -25,8 +25,6 @@ namespace CsmCon
         public static int ArchCheckZt { get; set; } = 0;
         public static int ArchStat { get; set; } = 0;
         public static int Mtmpid { get; set; } = 0;
-        public static int PageCrren { get; set; } = 0;
-        public static string PageMl { get; set; } = "0";
 
         private void Init()
         {
@@ -51,9 +49,9 @@ namespace CsmCon
                 return;
             for (int i = 0; i < ClsContenInfo.ContenCoList.Count; i++) {
                 string str = ClsContenInfo.ContenCoList[i];
-                if (i == ClsContenInfo.TitleWz+2)
+                if (i == ClsContenInfo.TitleWz + 2)
                     LvContents.Columns[i].Width = 200;
-                else if (i>1)
+                else if (i > 1)
                     LvContents.Columns[i].Width = 100;
                 LvContents.Columns.Add(str);
             }
@@ -92,6 +90,9 @@ namespace CsmCon
 
 
         #endregion
+
+        #region 目录操作
+
 
         private bool istxt(bool id)
         {
@@ -201,8 +202,7 @@ namespace CsmCon
 
         private void butAdd_Click(object sender, EventArgs e)
         {
-            if (ArchStat >= (int) T_ConFigure.ArchStat.质检完 && ArchCheckZt==0)
-            {
+            if (ArchStat >= (int)T_ConFigure.ArchStat.质检完 && ArchCheckZt == 0) {
                 MessageBox.Show("案卷已经质检完成无法修改目录");
                 return;
             }
@@ -249,7 +249,7 @@ namespace CsmCon
 
         private void butEdit_Click(object sender, EventArgs e)
         {
-            if (ArchStat >= (int)T_ConFigure.ArchStat.质检完 && ArchCheckZt ==0) {
+            if (ArchStat >= (int)T_ConFigure.ArchStat.质检完 && ArchCheckZt == 0) {
                 MessageBox.Show("案卷已经质检完成无法修改目录");
                 return;
             }
@@ -267,24 +267,30 @@ namespace CsmCon
 
         private void Settxt(object sender, EventArgs e)
         {
-            int id = ClsContenInfo.PagesWz;
+            int pid = ClsContenInfo.PagesWz;
+            int tid = ClsContenInfo.TitleWz;
+            string page = "";
+            string title = "";
             for (int i = 1; i < LvContents.Columns.Count; i++) {
                 string str = LvContents.SelectedItems[0].SubItems[i].Text;
+
                 if (i == 1)
                     Mtmpid = Convert.ToInt32(str);
                 else {
                     ClsConten.SetInfoTxt(panel1, (i - 1), str);
                 }
-                if (i == id + 2) {
-                    PageMl = str;
-                    OneClickGotoPage?.Invoke(sender, e);
-                }
-
+                if (i == pid + 2)
+                    page = str;
+                else if (i == tid + 2)
+                    title = str;
             }
+            if (title.Trim().Length > 0)
+                OneClickGotoPage?.Invoke(sender, e, title, page);
+
         }
         private void butDel_Click(object sender, EventArgs e)
         {
-            if (ArchStat >= (int)T_ConFigure.ArchStat.质检完 && ArchCheckZt==0) {
+            if (ArchStat >= (int)T_ConFigure.ArchStat.质检完 && ArchCheckZt == 0) {
                 MessageBox.Show("案卷已经质检完成无法修改目录");
                 return;
             }
@@ -295,7 +301,6 @@ namespace CsmCon
         public void OnChangContents(int page)
         {
             try {
-                PageCrren = page;
                 int x = ClsContenInfo.PageCount.IndexOf(page.ToString());
                 if (x >= 0) {
                     LvContents.SelectedItems.Clear();
@@ -312,5 +317,14 @@ namespace CsmCon
         {
             Init();
         }
+        private void LvContents_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (LvContents.Items.Count > 0)
+                LvContents_Click(null, null);
+        }
+
+        #endregion
+
+
     }
 }
