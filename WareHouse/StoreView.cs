@@ -218,6 +218,7 @@ namespace WareHouse
             labHouseJuan.Text = string.Format("当前选择：第{0}卷", ClsStore.SelectJuansn);
             this.ToolsS_code.Text = string.Format("  案卷号：{0} ", GetJuanCode());
             ClsStore.ArchPos = ToolsS_code.Text.Substring(6);
+            ClsStore.Archid = Common.GetCode(ClsStore.ArchPos);
 
         }
 
@@ -226,19 +227,18 @@ namespace WareHouse
         {
             butOpenFile.Enabled = false;
             try {
-                int ArchID = Common.GetCode(ClsStore.ArchPos);
-                if (ArchID == 0) {
+                if (ClsStore.Archid == 0) {
                     MessageBox.Show("此案卷号不存在!");
                     return;
                 }
-                int ArchState = Common.GetArchCheckState(ArchID);
+                int ArchState = Common.GetArchCheckState(ClsStore.Archid);
                 if (ArchState != 1) {
                     MessageBox.Show("此卷档案未质检无法进行查阅！");
                     return;
                 }
-                string FileName = Common.GetFileNameByArchID(ArchID);
+                string FileName = Common.GetFileNameByArchID(ClsStore.Archid);
                 toolFileName.Text = FileName;
-                toolFileId.Text = ArchID.ToString()+" ";
+                toolFileId.Text = ClsStore.Archid.ToString() + " ";
                 string localPath = Path.Combine(Common.LocalTempPath, FileName.Substring(0, 8));
                 string localCheckFile = Path.Combine(Common.LocalTempPath, FileName.Substring(0, 8), FileName);
                 try {
@@ -254,7 +254,7 @@ namespace WareHouse
 
                 if (ftp.CheckRemoteFile(Common.ArchSavePah, FileName.Substring(0, 8), FileName)) {
                     if (ftp.DownLoadFile(Common.ArchSavePah, FileName.Substring(0, 8), localCheckFile, FileName)) {
-                        StoreImg.ArchId = ArchID;
+                        StoreImg.ArchId = ClsStore.Archid;
                         StoreImg.FileName = localCheckFile;
                         StoreImg.ImgPrint = ClsStore.Imgsys;
                         strImg = new StoreImg();
@@ -532,6 +532,10 @@ namespace WareHouse
 
             if (toolFileName.Text.Length > 0) {
                 MessageBox.Show("此卷档案已有数据无法下架!");
+                return;
+            }
+            if (ClsStore.Archid <= 0) {
+                MessageBox.Show("获取案卷ID失败，无法下架!");
                 return;
             }
             Common.ArchDel(ClsStore.Archid);

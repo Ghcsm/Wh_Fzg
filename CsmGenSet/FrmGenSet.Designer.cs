@@ -31,32 +31,6 @@
             this.superTabControl1 = new DevComponents.DotNetBar.SuperTabControl();
             this.superTabControl2 = new DevComponents.DotNetBar.SuperTabControl();
             this.tabContr = new DevComponents.DotNetBar.TabControl();
-            this.tabControlPanel10 = new DevComponents.DotNetBar.TabControlPanel();
-            this.chkConteninfo = new System.Windows.Forms.CheckBox();
-            this.combContentxtWith = new DevComponents.DotNetBar.Controls.ComboBoxEx();
-            this.combContenlabWith = new DevComponents.DotNetBar.Controls.ComboBoxEx();
-            this.combContenLieSn = new DevComponents.DotNetBar.Controls.ComboBoxEx();
-            this.combContenModulename = new DevComponents.DotNetBar.Controls.ComboBoxEx();
-            this.combContenPages = new DevComponents.DotNetBar.Controls.ComboBoxEx();
-            this.combContenTitle = new DevComponents.DotNetBar.Controls.ComboBoxEx();
-            this.label29 = new System.Windows.Forms.Label();
-            this.label39 = new System.Windows.Forms.Label();
-            this.label28 = new System.Windows.Forms.Label();
-            this.butContenTableSave = new DevComponents.DotNetBar.ButtonX();
-            this.butContenColDel = new DevComponents.DotNetBar.ButtonX();
-            this.butContenColAdd = new DevComponents.DotNetBar.ButtonX();
-            this.groupBox10 = new System.Windows.Forms.GroupBox();
-            this.chkContenColShow = new System.Windows.Forms.CheckedListBox();
-            this.label34 = new System.Windows.Forms.Label();
-            this.label27 = new System.Windows.Forms.Label();
-            this.label26 = new System.Windows.Forms.Label();
-            this.groupBox9 = new System.Windows.Forms.GroupBox();
-            this.chkContenCol = new System.Windows.Forms.CheckedListBox();
-            this.groupBox8 = new System.Windows.Forms.GroupBox();
-            this.butConten = new DevComponents.DotNetBar.ButtonX();
-            this.label25 = new System.Windows.Forms.Label();
-            this.txtContenTable = new System.Windows.Forms.TextBox();
-            this.tabItemConten = new DevComponents.DotNetBar.TabItem(this.components);
             this.tabControlPanel11 = new DevComponents.DotNetBar.TabControlPanel();
             this.butCreateTableUpdate = new DevComponents.DotNetBar.ButtonX();
             this.butCreateTableDel = new DevComponents.DotNetBar.ButtonX();
@@ -84,6 +58,33 @@
             this.txtCreateTable = new System.Windows.Forms.TextBox();
             this.label30 = new System.Windows.Forms.Label();
             this.tabItemCreateTable = new DevComponents.DotNetBar.TabItem(this.components);
+            this.tabControlPanel10 = new DevComponents.DotNetBar.TabControlPanel();
+            this.butContenTableDel = new DevComponents.DotNetBar.ButtonX();
+            this.chkConteninfo = new System.Windows.Forms.CheckBox();
+            this.combContentxtWith = new DevComponents.DotNetBar.Controls.ComboBoxEx();
+            this.combContenlabWith = new DevComponents.DotNetBar.Controls.ComboBoxEx();
+            this.combContenLieSn = new DevComponents.DotNetBar.Controls.ComboBoxEx();
+            this.combContenModulename = new DevComponents.DotNetBar.Controls.ComboBoxEx();
+            this.combContenPages = new DevComponents.DotNetBar.Controls.ComboBoxEx();
+            this.combContenTitle = new DevComponents.DotNetBar.Controls.ComboBoxEx();
+            this.label29 = new System.Windows.Forms.Label();
+            this.label39 = new System.Windows.Forms.Label();
+            this.label28 = new System.Windows.Forms.Label();
+            this.butContenTableSave = new DevComponents.DotNetBar.ButtonX();
+            this.butContenColDel = new DevComponents.DotNetBar.ButtonX();
+            this.butContenColAdd = new DevComponents.DotNetBar.ButtonX();
+            this.groupBox10 = new System.Windows.Forms.GroupBox();
+            this.chkContenColShow = new System.Windows.Forms.CheckedListBox();
+            this.label34 = new System.Windows.Forms.Label();
+            this.label27 = new System.Windows.Forms.Label();
+            this.label26 = new System.Windows.Forms.Label();
+            this.groupBox9 = new System.Windows.Forms.GroupBox();
+            this.chkContenCol = new System.Windows.Forms.CheckedListBox();
+            this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.butConten = new DevComponents.DotNetBar.ButtonX();
+            this.label25 = new System.Windows.Forms.Label();
+            this.txtContenTable = new System.Windows.Forms.TextBox();
+            this.tabItemConten = new DevComponents.DotNetBar.TabItem(this.components);
             this.tabControlPanel6 = new DevComponents.DotNetBar.TabControlPanel();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.tabConDataSplit = new DevComponents.DotNetBar.TabControl();
@@ -295,21 +296,20 @@
             this.comboItem4 = new DevComponents.Editors.ComboItem();
             this.comboItem3 = new DevComponents.Editors.ComboItem();
             this.colorDialog = new System.Windows.Forms.ColorDialog();
-            this.butContenTableDel = new DevComponents.DotNetBar.ButtonX();
             ((System.ComponentModel.ISupportInitialize)(this.superTabControl1)).BeginInit();
             this.superTabControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.superTabControl2)).BeginInit();
             this.superTabControl2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tabContr)).BeginInit();
             this.tabContr.SuspendLayout();
-            this.tabControlPanel10.SuspendLayout();
-            this.groupBox10.SuspendLayout();
-            this.groupBox9.SuspendLayout();
-            this.groupBox8.SuspendLayout();
             this.tabControlPanel11.SuspendLayout();
             this.groupBox13.SuspendLayout();
             this.groupBox12.SuspendLayout();
             this.groupBox11.SuspendLayout();
+            this.tabControlPanel10.SuspendLayout();
+            this.groupBox10.SuspendLayout();
+            this.groupBox9.SuspendLayout();
+            this.groupBox8.SuspendLayout();
             this.tabControlPanel6.SuspendLayout();
             this.groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tabConDataSplit)).BeginInit();
@@ -423,8 +423,8 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabContr.CanReorderTabs = true;
-            this.tabContr.Controls.Add(this.tabControlPanel10);
             this.tabContr.Controls.Add(this.tabControlPanel11);
+            this.tabContr.Controls.Add(this.tabControlPanel10);
             this.tabContr.Controls.Add(this.tabControlPanel6);
             this.tabContr.Controls.Add(this.tabControlPanel12);
             this.tabContr.Controls.Add(this.tabControlPanel5);
@@ -451,316 +451,6 @@
             this.tabContr.Tabs.Add(this.tabItemPrintConten);
             this.tabContr.Tabs.Add(this.tabItemDataSplit);
             this.tabContr.Text = "tabControl1";
-            // 
-            // tabControlPanel10
-            // 
-            this.tabControlPanel10.Controls.Add(this.butContenTableDel);
-            this.tabControlPanel10.Controls.Add(this.chkConteninfo);
-            this.tabControlPanel10.Controls.Add(this.combContentxtWith);
-            this.tabControlPanel10.Controls.Add(this.combContenlabWith);
-            this.tabControlPanel10.Controls.Add(this.combContenLieSn);
-            this.tabControlPanel10.Controls.Add(this.combContenModulename);
-            this.tabControlPanel10.Controls.Add(this.combContenPages);
-            this.tabControlPanel10.Controls.Add(this.combContenTitle);
-            this.tabControlPanel10.Controls.Add(this.label29);
-            this.tabControlPanel10.Controls.Add(this.label39);
-            this.tabControlPanel10.Controls.Add(this.label28);
-            this.tabControlPanel10.Controls.Add(this.butContenTableSave);
-            this.tabControlPanel10.Controls.Add(this.butContenColDel);
-            this.tabControlPanel10.Controls.Add(this.butContenColAdd);
-            this.tabControlPanel10.Controls.Add(this.groupBox10);
-            this.tabControlPanel10.Controls.Add(this.label34);
-            this.tabControlPanel10.Controls.Add(this.label27);
-            this.tabControlPanel10.Controls.Add(this.label26);
-            this.tabControlPanel10.Controls.Add(this.groupBox9);
-            this.tabControlPanel10.Controls.Add(this.groupBox8);
-            this.tabControlPanel10.DisabledBackColor = System.Drawing.Color.Empty;
-            this.tabControlPanel10.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControlPanel10.Location = new System.Drawing.Point(0, 26);
-            this.tabControlPanel10.Name = "tabControlPanel10";
-            this.tabControlPanel10.Padding = new System.Windows.Forms.Padding(1);
-            this.tabControlPanel10.Size = new System.Drawing.Size(694, 480);
-            this.tabControlPanel10.Style.BackColor1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(142)))), ((int)(((byte)(179)))), ((int)(((byte)(231)))));
-            this.tabControlPanel10.Style.BackColor2.Color = System.Drawing.Color.FromArgb(((int)(((byte)(223)))), ((int)(((byte)(237)))), ((int)(((byte)(254)))));
-            this.tabControlPanel10.Style.Border = DevComponents.DotNetBar.eBorderType.SingleLine;
-            this.tabControlPanel10.Style.BorderColor.Color = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(97)))), ((int)(((byte)(156)))));
-            this.tabControlPanel10.Style.BorderSide = ((DevComponents.DotNetBar.eBorderSide)(((DevComponents.DotNetBar.eBorderSide.Left | DevComponents.DotNetBar.eBorderSide.Right) 
-            | DevComponents.DotNetBar.eBorderSide.Bottom)));
-            this.tabControlPanel10.Style.GradientAngle = 90;
-            this.tabControlPanel10.TabIndex = 89;
-            this.tabControlPanel10.TabItem = this.tabItemConten;
-            // 
-            // chkConteninfo
-            // 
-            this.chkConteninfo.AutoSize = true;
-            this.chkConteninfo.BackColor = System.Drawing.Color.Transparent;
-            this.chkConteninfo.Location = new System.Drawing.Point(559, 335);
-            this.chkConteninfo.Name = "chkConteninfo";
-            this.chkConteninfo.Size = new System.Drawing.Size(132, 16);
-            this.chkConteninfo.TabIndex = 16;
-            this.chkConteninfo.Text = "开启同界面信息补录";
-            this.chkConteninfo.UseVisualStyleBackColor = false;
-            // 
-            // combContentxtWith
-            // 
-            this.combContentxtWith.DisplayMember = "Text";
-            this.combContentxtWith.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.combContentxtWith.FormattingEnabled = true;
-            this.combContentxtWith.ItemHeight = 15;
-            this.combContentxtWith.Location = new System.Drawing.Point(233, 299);
-            this.combContentxtWith.Name = "combContentxtWith";
-            this.combContentxtWith.Size = new System.Drawing.Size(100, 21);
-            this.combContentxtWith.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.combContentxtWith.TabIndex = 15;
-            // 
-            // combContenlabWith
-            // 
-            this.combContenlabWith.DisplayMember = "Text";
-            this.combContenlabWith.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.combContenlabWith.FormattingEnabled = true;
-            this.combContenlabWith.ItemHeight = 15;
-            this.combContenlabWith.Location = new System.Drawing.Point(233, 231);
-            this.combContenlabWith.Name = "combContenlabWith";
-            this.combContenlabWith.Size = new System.Drawing.Size(100, 21);
-            this.combContenlabWith.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.combContenlabWith.TabIndex = 14;
-            // 
-            // combContenLieSn
-            // 
-            this.combContenLieSn.DisplayMember = "Text";
-            this.combContenLieSn.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.combContenLieSn.FormattingEnabled = true;
-            this.combContenLieSn.ItemHeight = 15;
-            this.combContenLieSn.Location = new System.Drawing.Point(233, 168);
-            this.combContenLieSn.Name = "combContenLieSn";
-            this.combContenLieSn.Size = new System.Drawing.Size(100, 21);
-            this.combContenLieSn.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.combContenLieSn.TabIndex = 13;
-            // 
-            // combContenModulename
-            // 
-            this.combContenModulename.DisplayMember = "Text";
-            this.combContenModulename.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.combContenModulename.FormattingEnabled = true;
-            this.combContenModulename.ItemHeight = 15;
-            this.combContenModulename.Location = new System.Drawing.Point(570, 141);
-            this.combContenModulename.Name = "combContenModulename";
-            this.combContenModulename.Size = new System.Drawing.Size(101, 21);
-            this.combContenModulename.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.combContenModulename.TabIndex = 12;
-            this.combContenModulename.WatermarkText = "包含模块名称";
-            this.combContenModulename.SelectedIndexChanged += new System.EventHandler(this.combContenModulename_SelectedIndexChanged);
-            // 
-            // combContenPages
-            // 
-            this.combContenPages.DisplayMember = "Text";
-            this.combContenPages.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.combContenPages.FormattingEnabled = true;
-            this.combContenPages.ItemHeight = 15;
-            this.combContenPages.Location = new System.Drawing.Point(570, 286);
-            this.combContenPages.Name = "combContenPages";
-            this.combContenPages.Size = new System.Drawing.Size(101, 21);
-            this.combContenPages.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.combContenPages.TabIndex = 10;
-            // 
-            // combContenTitle
-            // 
-            this.combContenTitle.DisplayMember = "Text";
-            this.combContenTitle.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.combContenTitle.FormattingEnabled = true;
-            this.combContenTitle.ItemHeight = 15;
-            this.combContenTitle.Location = new System.Drawing.Point(570, 213);
-            this.combContenTitle.Name = "combContenTitle";
-            this.combContenTitle.Size = new System.Drawing.Size(101, 21);
-            this.combContenTitle.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.combContenTitle.TabIndex = 9;
-            // 
-            // label29
-            // 
-            this.label29.AutoSize = true;
-            this.label29.BackColor = System.Drawing.Color.Transparent;
-            this.label29.Location = new System.Drawing.Point(582, 262);
-            this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(77, 12);
-            this.label29.TabIndex = 8;
-            this.label29.Text = "选择页码字段";
-            // 
-            // label39
-            // 
-            this.label39.AutoSize = true;
-            this.label39.BackColor = System.Drawing.Color.Transparent;
-            this.label39.Location = new System.Drawing.Point(582, 119);
-            this.label39.Name = "label39";
-            this.label39.Size = new System.Drawing.Size(77, 12);
-            this.label39.TabIndex = 8;
-            this.label39.Text = "设置模版名称";
-            // 
-            // label28
-            // 
-            this.label28.AutoSize = true;
-            this.label28.BackColor = System.Drawing.Color.Transparent;
-            this.label28.Location = new System.Drawing.Point(582, 190);
-            this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(77, 12);
-            this.label28.TabIndex = 8;
-            this.label28.Text = "选择标题字段";
-            // 
-            // butContenTableSave
-            // 
-            this.butContenTableSave.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.butContenTableSave.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.butContenTableSave.Location = new System.Drawing.Point(584, 371);
-            this.butContenTableSave.Name = "butContenTableSave";
-            this.butContenTableSave.Size = new System.Drawing.Size(76, 36);
-            this.butContenTableSave.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.butContenTableSave.TabIndex = 7;
-            this.butContenTableSave.Text = "保存";
-            this.butContenTableSave.Click += new System.EventHandler(this.butContenTableSave_Click);
-            // 
-            // butContenColDel
-            // 
-            this.butContenColDel.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.butContenColDel.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.butContenColDel.Location = new System.Drawing.Point(240, 397);
-            this.butContenColDel.Name = "butContenColDel";
-            this.butContenColDel.Size = new System.Drawing.Size(75, 23);
-            this.butContenColDel.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.butContenColDel.TabIndex = 6;
-            this.butContenColDel.Text = "<<";
-            this.butContenColDel.Click += new System.EventHandler(this.butContenColDel_Click);
-            // 
-            // butContenColAdd
-            // 
-            this.butContenColAdd.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.butContenColAdd.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.butContenColAdd.Location = new System.Drawing.Point(240, 345);
-            this.butContenColAdd.Name = "butContenColAdd";
-            this.butContenColAdd.Size = new System.Drawing.Size(75, 23);
-            this.butContenColAdd.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.butContenColAdd.TabIndex = 5;
-            this.butContenColAdd.Text = ">>";
-            this.butContenColAdd.Click += new System.EventHandler(this.butContenColAdd_Click);
-            // 
-            // groupBox10
-            // 
-            this.groupBox10.BackColor = System.Drawing.Color.Transparent;
-            this.groupBox10.Controls.Add(this.chkContenColShow);
-            this.groupBox10.Location = new System.Drawing.Point(353, 105);
-            this.groupBox10.Name = "groupBox10";
-            this.groupBox10.Size = new System.Drawing.Size(200, 363);
-            this.groupBox10.TabIndex = 2;
-            this.groupBox10.TabStop = false;
-            this.groupBox10.Text = "显示字段";
-            // 
-            // chkContenColShow
-            // 
-            this.chkContenColShow.CheckOnClick = true;
-            this.chkContenColShow.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.chkContenColShow.FormattingEnabled = true;
-            this.chkContenColShow.Location = new System.Drawing.Point(3, 17);
-            this.chkContenColShow.Name = "chkContenColShow";
-            this.chkContenColShow.Size = new System.Drawing.Size(194, 343);
-            this.chkContenColShow.TabIndex = 0;
-            // 
-            // label34
-            // 
-            this.label34.AutoSize = true;
-            this.label34.BackColor = System.Drawing.Color.Transparent;
-            this.label34.Location = new System.Drawing.Point(241, 269);
-            this.label34.Name = "label34";
-            this.label34.Size = new System.Drawing.Size(71, 12);
-            this.label34.TabIndex = 2;
-            this.label34.Text = "前台txt宽度";
-            // 
-            // label27
-            // 
-            this.label27.AutoSize = true;
-            this.label27.BackColor = System.Drawing.Color.Transparent;
-            this.label27.Location = new System.Drawing.Point(241, 203);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(77, 12);
-            this.label27.TabIndex = 2;
-            this.label27.Text = "前台字段宽度";
-            // 
-            // label26
-            // 
-            this.label26.AutoSize = true;
-            this.label26.BackColor = System.Drawing.Color.Transparent;
-            this.label26.Location = new System.Drawing.Point(241, 141);
-            this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(77, 12);
-            this.label26.TabIndex = 2;
-            this.label26.Text = "前台显示列数";
-            // 
-            // groupBox9
-            // 
-            this.groupBox9.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.groupBox9.BackColor = System.Drawing.Color.Transparent;
-            this.groupBox9.Controls.Add(this.chkContenCol);
-            this.groupBox9.Location = new System.Drawing.Point(12, 105);
-            this.groupBox9.Name = "groupBox9";
-            this.groupBox9.Size = new System.Drawing.Size(200, 363);
-            this.groupBox9.TabIndex = 1;
-            this.groupBox9.TabStop = false;
-            this.groupBox9.Text = "表字段";
-            // 
-            // chkContenCol
-            // 
-            this.chkContenCol.CheckOnClick = true;
-            this.chkContenCol.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.chkContenCol.FormattingEnabled = true;
-            this.chkContenCol.Location = new System.Drawing.Point(3, 17);
-            this.chkContenCol.Name = "chkContenCol";
-            this.chkContenCol.Size = new System.Drawing.Size(194, 343);
-            this.chkContenCol.TabIndex = 0;
-            // 
-            // groupBox8
-            // 
-            this.groupBox8.BackColor = System.Drawing.Color.Transparent;
-            this.groupBox8.Controls.Add(this.butConten);
-            this.groupBox8.Controls.Add(this.label25);
-            this.groupBox8.Controls.Add(this.txtContenTable);
-            this.groupBox8.Location = new System.Drawing.Point(12, 29);
-            this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(653, 70);
-            this.groupBox8.TabIndex = 0;
-            this.groupBox8.TabStop = false;
-            this.groupBox8.Text = "数据库表名";
-            // 
-            // butConten
-            // 
-            this.butConten.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.butConten.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.butConten.Location = new System.Drawing.Point(358, 20);
-            this.butConten.Name = "butConten";
-            this.butConten.Size = new System.Drawing.Size(75, 37);
-            this.butConten.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.butConten.TabIndex = 3;
-            this.butConten.Text = "判断连接";
-            this.butConten.Click += new System.EventHandler(this.butConten_Click);
-            // 
-            // label25
-            // 
-            this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(26, 34);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(77, 12);
-            this.label25.TabIndex = 2;
-            this.label25.Text = "数据库表名：";
-            // 
-            // txtContenTable
-            // 
-            this.txtContenTable.Location = new System.Drawing.Point(110, 29);
-            this.txtContenTable.Name = "txtContenTable";
-            this.txtContenTable.Size = new System.Drawing.Size(196, 21);
-            this.txtContenTable.TabIndex = 0;
-            // 
-            // tabItemConten
-            // 
-            this.tabItemConten.AttachedControl = this.tabControlPanel10;
-            this.tabItemConten.Name = "tabItemConten";
-            this.tabItemConten.Text = "目录信息补录";
             // 
             // tabControlPanel11
             // 
@@ -1044,6 +734,328 @@
             this.tabItemCreateTable.AttachedControl = this.tabControlPanel11;
             this.tabItemCreateTable.Name = "tabItemCreateTable";
             this.tabItemCreateTable.Text = "创建数据表";
+            // 
+            // tabControlPanel10
+            // 
+            this.tabControlPanel10.Controls.Add(this.butContenTableDel);
+            this.tabControlPanel10.Controls.Add(this.chkConteninfo);
+            this.tabControlPanel10.Controls.Add(this.combContentxtWith);
+            this.tabControlPanel10.Controls.Add(this.combContenlabWith);
+            this.tabControlPanel10.Controls.Add(this.combContenLieSn);
+            this.tabControlPanel10.Controls.Add(this.combContenModulename);
+            this.tabControlPanel10.Controls.Add(this.combContenPages);
+            this.tabControlPanel10.Controls.Add(this.combContenTitle);
+            this.tabControlPanel10.Controls.Add(this.label29);
+            this.tabControlPanel10.Controls.Add(this.label39);
+            this.tabControlPanel10.Controls.Add(this.label28);
+            this.tabControlPanel10.Controls.Add(this.butContenTableSave);
+            this.tabControlPanel10.Controls.Add(this.butContenColDel);
+            this.tabControlPanel10.Controls.Add(this.butContenColAdd);
+            this.tabControlPanel10.Controls.Add(this.groupBox10);
+            this.tabControlPanel10.Controls.Add(this.label34);
+            this.tabControlPanel10.Controls.Add(this.label27);
+            this.tabControlPanel10.Controls.Add(this.label26);
+            this.tabControlPanel10.Controls.Add(this.groupBox9);
+            this.tabControlPanel10.Controls.Add(this.groupBox8);
+            this.tabControlPanel10.DisabledBackColor = System.Drawing.Color.Empty;
+            this.tabControlPanel10.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControlPanel10.Location = new System.Drawing.Point(0, 26);
+            this.tabControlPanel10.Name = "tabControlPanel10";
+            this.tabControlPanel10.Padding = new System.Windows.Forms.Padding(1);
+            this.tabControlPanel10.Size = new System.Drawing.Size(694, 480);
+            this.tabControlPanel10.Style.BackColor1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(142)))), ((int)(((byte)(179)))), ((int)(((byte)(231)))));
+            this.tabControlPanel10.Style.BackColor2.Color = System.Drawing.Color.FromArgb(((int)(((byte)(223)))), ((int)(((byte)(237)))), ((int)(((byte)(254)))));
+            this.tabControlPanel10.Style.Border = DevComponents.DotNetBar.eBorderType.SingleLine;
+            this.tabControlPanel10.Style.BorderColor.Color = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(97)))), ((int)(((byte)(156)))));
+            this.tabControlPanel10.Style.BorderSide = ((DevComponents.DotNetBar.eBorderSide)(((DevComponents.DotNetBar.eBorderSide.Left | DevComponents.DotNetBar.eBorderSide.Right) 
+            | DevComponents.DotNetBar.eBorderSide.Bottom)));
+            this.tabControlPanel10.Style.GradientAngle = 90;
+            this.tabControlPanel10.TabIndex = 89;
+            this.tabControlPanel10.TabItem = this.tabItemConten;
+            // 
+            // butContenTableDel
+            // 
+            this.butContenTableDel.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.butContenTableDel.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.butContenTableDel.Location = new System.Drawing.Point(584, 422);
+            this.butContenTableDel.Name = "butContenTableDel";
+            this.butContenTableDel.Size = new System.Drawing.Size(76, 36);
+            this.butContenTableDel.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.butContenTableDel.TabIndex = 17;
+            this.butContenTableDel.Text = "删除";
+            this.butContenTableDel.Click += new System.EventHandler(this.butContenTableDel_Click);
+            // 
+            // chkConteninfo
+            // 
+            this.chkConteninfo.AutoSize = true;
+            this.chkConteninfo.BackColor = System.Drawing.Color.Transparent;
+            this.chkConteninfo.Location = new System.Drawing.Point(559, 335);
+            this.chkConteninfo.Name = "chkConteninfo";
+            this.chkConteninfo.Size = new System.Drawing.Size(132, 16);
+            this.chkConteninfo.TabIndex = 16;
+            this.chkConteninfo.Text = "开启同界面信息补录";
+            this.chkConteninfo.UseVisualStyleBackColor = false;
+            // 
+            // combContentxtWith
+            // 
+            this.combContentxtWith.DisplayMember = "Text";
+            this.combContentxtWith.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.combContentxtWith.FormattingEnabled = true;
+            this.combContentxtWith.ItemHeight = 15;
+            this.combContentxtWith.Location = new System.Drawing.Point(233, 299);
+            this.combContentxtWith.Name = "combContentxtWith";
+            this.combContentxtWith.Size = new System.Drawing.Size(100, 21);
+            this.combContentxtWith.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.combContentxtWith.TabIndex = 15;
+            // 
+            // combContenlabWith
+            // 
+            this.combContenlabWith.DisplayMember = "Text";
+            this.combContenlabWith.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.combContenlabWith.FormattingEnabled = true;
+            this.combContenlabWith.ItemHeight = 15;
+            this.combContenlabWith.Location = new System.Drawing.Point(233, 231);
+            this.combContenlabWith.Name = "combContenlabWith";
+            this.combContenlabWith.Size = new System.Drawing.Size(100, 21);
+            this.combContenlabWith.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.combContenlabWith.TabIndex = 14;
+            // 
+            // combContenLieSn
+            // 
+            this.combContenLieSn.DisplayMember = "Text";
+            this.combContenLieSn.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.combContenLieSn.FormattingEnabled = true;
+            this.combContenLieSn.ItemHeight = 15;
+            this.combContenLieSn.Location = new System.Drawing.Point(233, 168);
+            this.combContenLieSn.Name = "combContenLieSn";
+            this.combContenLieSn.Size = new System.Drawing.Size(100, 21);
+            this.combContenLieSn.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.combContenLieSn.TabIndex = 13;
+            // 
+            // combContenModulename
+            // 
+            this.combContenModulename.DisplayMember = "Text";
+            this.combContenModulename.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.combContenModulename.FormattingEnabled = true;
+            this.combContenModulename.ItemHeight = 15;
+            this.combContenModulename.Location = new System.Drawing.Point(570, 141);
+            this.combContenModulename.Name = "combContenModulename";
+            this.combContenModulename.Size = new System.Drawing.Size(101, 21);
+            this.combContenModulename.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.combContenModulename.TabIndex = 12;
+            this.combContenModulename.WatermarkText = "包含模块名称";
+            this.combContenModulename.SelectedIndexChanged += new System.EventHandler(this.combContenModulename_SelectedIndexChanged);
+            // 
+            // combContenPages
+            // 
+            this.combContenPages.DisplayMember = "Text";
+            this.combContenPages.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.combContenPages.FormattingEnabled = true;
+            this.combContenPages.ItemHeight = 15;
+            this.combContenPages.Location = new System.Drawing.Point(570, 286);
+            this.combContenPages.Name = "combContenPages";
+            this.combContenPages.Size = new System.Drawing.Size(101, 21);
+            this.combContenPages.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.combContenPages.TabIndex = 10;
+            // 
+            // combContenTitle
+            // 
+            this.combContenTitle.DisplayMember = "Text";
+            this.combContenTitle.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.combContenTitle.FormattingEnabled = true;
+            this.combContenTitle.ItemHeight = 15;
+            this.combContenTitle.Location = new System.Drawing.Point(570, 213);
+            this.combContenTitle.Name = "combContenTitle";
+            this.combContenTitle.Size = new System.Drawing.Size(101, 21);
+            this.combContenTitle.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.combContenTitle.TabIndex = 9;
+            // 
+            // label29
+            // 
+            this.label29.AutoSize = true;
+            this.label29.BackColor = System.Drawing.Color.Transparent;
+            this.label29.Location = new System.Drawing.Point(582, 262);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(77, 12);
+            this.label29.TabIndex = 8;
+            this.label29.Text = "选择页码字段";
+            // 
+            // label39
+            // 
+            this.label39.AutoSize = true;
+            this.label39.BackColor = System.Drawing.Color.Transparent;
+            this.label39.Location = new System.Drawing.Point(582, 119);
+            this.label39.Name = "label39";
+            this.label39.Size = new System.Drawing.Size(77, 12);
+            this.label39.TabIndex = 8;
+            this.label39.Text = "设置模版名称";
+            // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.BackColor = System.Drawing.Color.Transparent;
+            this.label28.Location = new System.Drawing.Point(582, 190);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(77, 12);
+            this.label28.TabIndex = 8;
+            this.label28.Text = "选择标题字段";
+            // 
+            // butContenTableSave
+            // 
+            this.butContenTableSave.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.butContenTableSave.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.butContenTableSave.Location = new System.Drawing.Point(584, 371);
+            this.butContenTableSave.Name = "butContenTableSave";
+            this.butContenTableSave.Size = new System.Drawing.Size(76, 36);
+            this.butContenTableSave.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.butContenTableSave.TabIndex = 7;
+            this.butContenTableSave.Text = "保存";
+            this.butContenTableSave.Click += new System.EventHandler(this.butContenTableSave_Click);
+            // 
+            // butContenColDel
+            // 
+            this.butContenColDel.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.butContenColDel.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.butContenColDel.Location = new System.Drawing.Point(240, 397);
+            this.butContenColDel.Name = "butContenColDel";
+            this.butContenColDel.Size = new System.Drawing.Size(75, 23);
+            this.butContenColDel.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.butContenColDel.TabIndex = 6;
+            this.butContenColDel.Text = "<<";
+            this.butContenColDel.Click += new System.EventHandler(this.butContenColDel_Click);
+            // 
+            // butContenColAdd
+            // 
+            this.butContenColAdd.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.butContenColAdd.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.butContenColAdd.Location = new System.Drawing.Point(240, 345);
+            this.butContenColAdd.Name = "butContenColAdd";
+            this.butContenColAdd.Size = new System.Drawing.Size(75, 23);
+            this.butContenColAdd.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.butContenColAdd.TabIndex = 5;
+            this.butContenColAdd.Text = ">>";
+            this.butContenColAdd.Click += new System.EventHandler(this.butContenColAdd_Click);
+            // 
+            // groupBox10
+            // 
+            this.groupBox10.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox10.Controls.Add(this.chkContenColShow);
+            this.groupBox10.Location = new System.Drawing.Point(353, 105);
+            this.groupBox10.Name = "groupBox10";
+            this.groupBox10.Size = new System.Drawing.Size(200, 363);
+            this.groupBox10.TabIndex = 2;
+            this.groupBox10.TabStop = false;
+            this.groupBox10.Text = "显示字段";
+            // 
+            // chkContenColShow
+            // 
+            this.chkContenColShow.CheckOnClick = true;
+            this.chkContenColShow.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.chkContenColShow.FormattingEnabled = true;
+            this.chkContenColShow.Location = new System.Drawing.Point(3, 17);
+            this.chkContenColShow.Name = "chkContenColShow";
+            this.chkContenColShow.Size = new System.Drawing.Size(194, 343);
+            this.chkContenColShow.TabIndex = 0;
+            // 
+            // label34
+            // 
+            this.label34.AutoSize = true;
+            this.label34.BackColor = System.Drawing.Color.Transparent;
+            this.label34.Location = new System.Drawing.Point(241, 269);
+            this.label34.Name = "label34";
+            this.label34.Size = new System.Drawing.Size(71, 12);
+            this.label34.TabIndex = 2;
+            this.label34.Text = "前台txt宽度";
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.BackColor = System.Drawing.Color.Transparent;
+            this.label27.Location = new System.Drawing.Point(241, 203);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(77, 12);
+            this.label27.TabIndex = 2;
+            this.label27.Text = "前台字段宽度";
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.BackColor = System.Drawing.Color.Transparent;
+            this.label26.Location = new System.Drawing.Point(241, 141);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(77, 12);
+            this.label26.TabIndex = 2;
+            this.label26.Text = "前台显示列数";
+            // 
+            // groupBox9
+            // 
+            this.groupBox9.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.groupBox9.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox9.Controls.Add(this.chkContenCol);
+            this.groupBox9.Location = new System.Drawing.Point(12, 105);
+            this.groupBox9.Name = "groupBox9";
+            this.groupBox9.Size = new System.Drawing.Size(200, 363);
+            this.groupBox9.TabIndex = 1;
+            this.groupBox9.TabStop = false;
+            this.groupBox9.Text = "表字段";
+            // 
+            // chkContenCol
+            // 
+            this.chkContenCol.CheckOnClick = true;
+            this.chkContenCol.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.chkContenCol.FormattingEnabled = true;
+            this.chkContenCol.Location = new System.Drawing.Point(3, 17);
+            this.chkContenCol.Name = "chkContenCol";
+            this.chkContenCol.Size = new System.Drawing.Size(194, 343);
+            this.chkContenCol.TabIndex = 0;
+            // 
+            // groupBox8
+            // 
+            this.groupBox8.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox8.Controls.Add(this.butConten);
+            this.groupBox8.Controls.Add(this.label25);
+            this.groupBox8.Controls.Add(this.txtContenTable);
+            this.groupBox8.Location = new System.Drawing.Point(12, 29);
+            this.groupBox8.Name = "groupBox8";
+            this.groupBox8.Size = new System.Drawing.Size(653, 70);
+            this.groupBox8.TabIndex = 0;
+            this.groupBox8.TabStop = false;
+            this.groupBox8.Text = "数据库表名";
+            // 
+            // butConten
+            // 
+            this.butConten.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.butConten.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.butConten.Location = new System.Drawing.Point(358, 20);
+            this.butConten.Name = "butConten";
+            this.butConten.Size = new System.Drawing.Size(75, 37);
+            this.butConten.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.butConten.TabIndex = 3;
+            this.butConten.Text = "判断连接";
+            this.butConten.Click += new System.EventHandler(this.butConten_Click);
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(26, 34);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(77, 12);
+            this.label25.TabIndex = 2;
+            this.label25.Text = "数据库表名：";
+            // 
+            // txtContenTable
+            // 
+            this.txtContenTable.Location = new System.Drawing.Point(110, 29);
+            this.txtContenTable.Name = "txtContenTable";
+            this.txtContenTable.Size = new System.Drawing.Size(196, 21);
+            this.txtContenTable.TabIndex = 0;
+            // 
+            // tabItemConten
+            // 
+            this.tabItemConten.AttachedControl = this.tabControlPanel10;
+            this.tabItemConten.Name = "tabItemConten";
+            this.tabItemConten.Text = "目录信息补录";
             // 
             // tabControlPanel6
             // 
@@ -3477,18 +3489,6 @@
             // 
             this.comboItem3.Text = "一录信息";
             // 
-            // butContenTableDel
-            // 
-            this.butContenTableDel.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.butContenTableDel.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.butContenTableDel.Location = new System.Drawing.Point(584, 422);
-            this.butContenTableDel.Name = "butContenTableDel";
-            this.butContenTableDel.Size = new System.Drawing.Size(76, 36);
-            this.butContenTableDel.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.butContenTableDel.TabIndex = 17;
-            this.butContenTableDel.Text = "删除";
-            this.butContenTableDel.Click += new System.EventHandler(this.butContenTableDel_Click);
-            // 
             // FrmGetSet
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -3505,18 +3505,18 @@
             this.superTabControl2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.tabContr)).EndInit();
             this.tabContr.ResumeLayout(false);
-            this.tabControlPanel10.ResumeLayout(false);
-            this.tabControlPanel10.PerformLayout();
-            this.groupBox10.ResumeLayout(false);
-            this.groupBox9.ResumeLayout(false);
-            this.groupBox8.ResumeLayout(false);
-            this.groupBox8.PerformLayout();
             this.tabControlPanel11.ResumeLayout(false);
             this.groupBox13.ResumeLayout(false);
             this.groupBox13.PerformLayout();
             this.groupBox12.ResumeLayout(false);
             this.groupBox11.ResumeLayout(false);
             this.groupBox11.PerformLayout();
+            this.tabControlPanel10.ResumeLayout(false);
+            this.tabControlPanel10.PerformLayout();
+            this.groupBox10.ResumeLayout(false);
+            this.groupBox9.ResumeLayout(false);
+            this.groupBox8.ResumeLayout(false);
+            this.groupBox8.PerformLayout();
             this.tabControlPanel6.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.tabConDataSplit)).EndInit();

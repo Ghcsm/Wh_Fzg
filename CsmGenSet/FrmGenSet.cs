@@ -579,10 +579,10 @@ namespace CsmGenSet
 
                 T_Sysset.UpdateGensetPrintConten(ClsPrintConten.ContenTable, str);
                 MessageBox.Show("保存成功!");
+                GetnPrintConten();
             } catch (Exception exception) {
                 MessageBox.Show(exception.ToString());
             } finally {
-                GetnPrintConten();
                 String s = "修改目录数据表:" + ClsPrintConten.ContenTable + " 及相关Xls信息:" + str;
                 Common.Writelog(0, s);
             }
@@ -747,10 +747,10 @@ namespace CsmGenSet
                 else
                     T_Sysset.UpdateGensetImport(ClsImportTable.ImportTable, str);
                 MessageBox.Show("保存成功!");
+                GetImportSet();
             } catch (Exception e) {
                 MessageBox.Show(e.ToString());
             } finally {
-                GetImportSet();
                 string s = "修改导入数据表:" + ClsImportTable.ImportTable + "->" + str;
                 Common.Writelog(0, s);
             }
@@ -837,10 +837,10 @@ namespace CsmGenSet
                 if (ClsImportTable.ImportTableLs.IndexOf(str) >= 0)
                     ClsImportTable.ImportTableLs.Remove(str);
                 T_Sysset.DelImportTable(str);
+                GetImportSet();
             } catch (Exception e) {
                 MessageBox.Show(e.ToString());
             } finally {
-                GetImportSet();
                 string s = "删除导入数据表:" + str;
                 Common.Writelog(0, s);
             }
@@ -1064,10 +1064,10 @@ namespace CsmGenSet
                     T_Sysset.UpdateGensetInfo(combInfoTable.Text.Trim(), str, combInfoTableName.Text.Trim(),
                         combInfoColNum.Text.Trim(), combInfoLabWith.Text.Trim(), combInfotxtWith.Text.Trim());
                 MessageBox.Show("保存成功!");
+                GetInfoSet();
             } catch (Exception e) {
                 MessageBox.Show(e.ToString());
             } finally {
-                GetInfoSet();
                 string s = "修改信息补录数据表:" + ClsImportTable.ImportTable + "->" + str;
                 Common.Writelog(0, s);
             }
@@ -1082,10 +1082,10 @@ namespace CsmGenSet
                 if (ClsInfoAdd.InfoTableLs.IndexOf(str) >= 0)
                     ClsInfoAdd.InfoTableLs.Remove(str);
                 T_Sysset.DelInfoTable(str);
+                GetInfoSet();
             } catch (Exception e) {
                 MessageBox.Show(e.ToString());
             } finally {
-                GetInfoSet();
                 string s = "删除信息补录数据表:" + str;
                 Common.Writelog(0, s);
             }
@@ -1240,10 +1240,10 @@ namespace CsmGenSet
                     enter = 3;
                 T_Sysset.UpdateQuerInfo(ClsQuerInfo.QuerTable, str, enter);
                 MessageBox.Show("保存成功!");
+                GetnQuerInfo();
             } catch (Exception e) {
                 MessageBox.Show(e.ToString());
             } finally {
-                GetnQuerInfo();
                 string s = "修改导入数据表:" + ClsQuerInfo.QuerTable + "->" + str;
                 Common.Writelog(0, s);
             }
@@ -1522,10 +1522,10 @@ namespace CsmGenSet
                     ClsDataSplit.DataSplitFileName, zer, ClsDataSplit.DataSplitfilenamecol, txtDataSplit_pagezero.Text.Trim(),
                     ClsDataSplit.DataSplitDirMlpages);
                 MessageBox.Show("设置完成");
+                GetdataSplit();
             } catch (Exception e) {
                 MessageBox.Show(e.ToString());
             } finally {
-                GetdataSplit();
                 string s = "修改数据拆分信息:" + ClsDataSplit.DataSplitDirCol + ";" + ClsDataSplit.DataSplitDirMl + ";" + ClsDataSplit.DataSplitFileName;
                 Common.Writelog(0, s);
             }
@@ -1677,7 +1677,7 @@ namespace CsmGenSet
                         str += ClsDataSplit.DataSplitExportColtmp[i];
                 }
 
-                if (combDataSplit_Export_table.Text.Trim().Length <=0) {
+                if (combDataSplit_Export_table.Text.Trim().Length <= 0) {
                     if (ClsDataSplit.DataSplitExportTable.IndexOf(txtDataSplitTable.Text.Trim()) < 0) {
                         if (ClsDataSplit.DataSplitExportxlsid.IndexOf(combDataSplit_Export_Xlsid.Text.Trim()) >= 0) {
                             MessageBox.Show("此Xls工作薄ID已绑定，请更换!");
@@ -1694,10 +1694,10 @@ namespace CsmGenSet
                 else
                     T_Sysset.UpdateDataSplitExport(txtDataSplitTable.Text.Trim(), str, combDataSplit_Export_Xlsid.Text.Trim());
                 MessageBox.Show("保存成功!");
+                GetDataSplitExport();
             } catch (Exception e) {
                 MessageBox.Show(e.ToString());
             } finally {
-                GetDataSplitExport();
                 string s = "修改数据拆分导出表:" + txtDataSplitTable.Text.Trim() + "->" + str + "->" + combDataSplit_Export_Xlsid.Text.Trim();
                 Common.Writelog(0, s);
             }
@@ -1769,10 +1769,10 @@ namespace CsmGenSet
             try {
                 if (ClsDataSplit.DataSplitExportTable.IndexOf(str) >= 0)
                     T_Sysset.DelDataSplitExportTable(str);
+                GetDataSplitExport();
             } catch (Exception e) {
                 MessageBox.Show(e.ToString());
             } finally {
-                GetDataSplitExport();
                 string s = "删除信息->数据导出表:" + str;
                 Common.Writelog(0, s);
             }
@@ -1942,18 +1942,22 @@ namespace CsmGenSet
                     else
                         str += ClsInfoCheck.InfoCheckColtmp[i];
                 }
-                if (ClsInfoCheck.InfoCheckTable.IndexOf(table) < 0)
+                if (ClsInfoCheck.InfoCheckTable.IndexOf(table) < 0) {
+                   if (ClsInfoCheck.InfocheckMsg.Contains(combInfoCheck_info.Text.Trim())) {
+                        MessageBox.Show("此信息框已绑定请更改!");
+                        return;
+                    }
                     T_Sysset.SaveGensetInfoCheck(table, str, combInfoCheck_info.Text.Trim().ToString());
+                }
                 else
                     T_Sysset.UpdateGensetInfoCheck(table, str, combInfoCheck_info.Text.Trim().ToString());
                 MessageBox.Show("保存成功!");
-            } catch (Exception e) {
-                MessageBox.Show(e.ToString());
-            } finally {
                 GetInfoCheck();
                 string s = "修改数据校验表:" + ClsImportTable.ImportTable + "->" + str;
                 Common.Writelog(0, s);
-            }
+            } catch (Exception e) {
+                MessageBox.Show(e.ToString());
+            } 
         }
 
         private void GetInfoCheck()
@@ -2177,15 +2181,15 @@ namespace CsmGenSet
                 }
                 if (ClsConten.ContenModule.IndexOf(combContenModulename.Text.Trim()) >= 0)
                     T_Sysset.UpdateConten(ClsConten.ContenTable, str, combContenLieSn.Text.Trim(), combContenlabWith.Text.Trim(), combContentxtWith.Text.Trim(),
-                        combContenTitle.Text.Trim(), combContenPages.Text.Trim(), combContenModulename.Text.Trim(),bl);
+                        combContenTitle.Text.Trim(), combContenPages.Text.Trim(), combContenModulename.Text.Trim(), bl);
                 else
                     T_Sysset.InsterConten(ClsConten.ContenTable, str, combContenLieSn.Text.Trim(), combContenlabWith.Text.Trim(), combContentxtWith.Text.Trim(),
-                        combContenTitle.Text.Trim(), combContenPages.Text.Trim(), combContenModulename.Text.Trim(),bl);
+                        combContenTitle.Text.Trim(), combContenPages.Text.Trim(), combContenModulename.Text.Trim(), bl);
                 MessageBox.Show("保存成功!");
+                GetnContenInfo();
             } catch (Exception e) {
                 MessageBox.Show(e.ToString());
             } finally {
-                GetnContenInfo();
                 string s = "修改目录补录表:" + ClsConten.ContenTable + "->" + str;
                 Common.Writelog(0, s);
             }
@@ -2193,8 +2197,7 @@ namespace CsmGenSet
 
         private void butContenTableDel_Click(object sender, EventArgs e)
         {
-            if (combContenModulename.Text.Trim().Length <= 0)
-            {
+            if (combContenModulename.Text.Trim().Length <= 0) {
                 MessageBox.Show("请选择要删除的模版名称!");
                 combContenModulename.Focus();
                 return;
@@ -2254,7 +2257,7 @@ namespace CsmGenSet
                     ClsConten.ContenModule.Add(s);
                 }
                 str = dr["ContenInfoBl"].ToString();
-                if (str.Trim().Length >0)
+                if (str.Trim().Length > 0)
                     chkConteninfo.Checked = Convert.ToBoolean(str);
             } catch (Exception e) {
                 MessageBox.Show("目录录入表加载失败:" + e.ToString());
@@ -2304,7 +2307,6 @@ namespace CsmGenSet
         private void CreateTableab()
         {
             try {
-                ClsCreateTable.CreatetableTf = false;
                 labsm.Text = "警告：保存表时会自动\n创建ID及Archid\nEnterTab字段此字段\n为系统保留\n不可删除!";
                 string str = ClsCreateTable.coltmp;
                 ClsCreateTable.CreateTableCollx.Clear();
@@ -2570,8 +2572,10 @@ namespace CsmGenSet
             }
             else if (ClsCreateTable.CreateTableLvsm.Trim().Length > 0 && txtCreateTableColsm.Text.Trim().Length <= 0)
                 T_Sysset.CreateTableDelExplain(ClsCreateTable.CreateTable, ClsCreateTable.CreateTableLvcol);
+
+            butCreateTableis_Click(null, null);
         }
-     
+
         private void butCreateTableis_Click(object sender, EventArgs e)
         {
             IsCreateTable();
@@ -2616,7 +2620,6 @@ namespace CsmGenSet
 
         private void IsborrTable()
         {
-            ClsborrTable.Clsborrtag = false;
             if (txtBorrTable.Text.Trim().Length <= 0) {
                 MessageBox.Show("请输入表名称!");
                 txtQuerTable.Focus();
@@ -2706,10 +2709,10 @@ namespace CsmGenSet
 
                 T_Sysset.UpdateBorrInfo(ClsborrTable.Clsborrtable, str, ClsborrTable.Clsborrtag, timecol);
                 MessageBox.Show("保存成功!");
+                GetnborrInfo();
             } catch (Exception e) {
                 MessageBox.Show(e.ToString());
             } finally {
-                GetnborrInfo();
                 string s = "修改借阅表:" + ClsborrTable.Clsborrtable + "->" + str;
                 Common.Writelog(0, s);
             }
@@ -2785,7 +2788,6 @@ namespace CsmGenSet
         {
             Infoshow();
         }
-
        
     }
 

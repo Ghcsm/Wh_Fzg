@@ -182,8 +182,8 @@ namespace DAL
         {
             string strSql = "PdelCabInfo";
             SqlParameter[] p = new SqlParameter[2];
-            p[0] = new SqlParameter("@@ArchID", arid);
-            p[1] = new SqlParameter("@@UserID", T_User.UserId);
+            p[0] = new SqlParameter("@ArchID", arid);
+            p[1] = new SqlParameter("@UserID", T_User.UserId);
             SQLHelper.ExecuteNonQuery(strSql, CommandType.StoredProcedure, p);
         }
 

@@ -30,6 +30,8 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StoreImg));
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolsImgOK = new System.Windows.Forms.ToolStripButton();
+            this.toolsImgNo = new System.Windows.Forms.ToolStripButton();
             this.toolsPrivePages = new System.Windows.Forms.ToolStripButton();
             this.toolsNextPages = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -44,9 +46,15 @@
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolsColse = new System.Windows.Forms.ToolStripButton();
             this.gr1 = new System.Windows.Forms.GroupBox();
-            this.toolsImgOK = new System.Windows.Forms.ToolStripButton();
-            this.toolsImgNo = new System.Windows.Forms.ToolStripButton();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.toolslabCheck = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolslab_PagesCount = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolslab_PagesCrre = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolslab_scanuser = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolslab_Indexuser = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolslab_Checkuser = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStrip1.SuspendLayout();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStrip1
@@ -72,6 +80,28 @@
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(1166, 28);
             this.toolStrip1.TabIndex = 1;
+            // 
+            // toolsImgOK
+            // 
+            this.toolsImgOK.Font = new System.Drawing.Font("微软雅黑", 12F);
+            this.toolsImgOK.Image = ((System.Drawing.Image)(resources.GetObject("toolsImgOK.Image")));
+            this.toolsImgOK.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolsImgOK.Name = "toolsImgOK";
+            this.toolsImgOK.Size = new System.Drawing.Size(62, 25);
+            this.toolsImgOK.Text = "通过";
+            this.toolsImgOK.ToolTipText = "验收通过";
+            this.toolsImgOK.Click += new System.EventHandler(this.toolsImgOK_Click);
+            // 
+            // toolsImgNo
+            // 
+            this.toolsImgNo.Font = new System.Drawing.Font("微软雅黑", 12F);
+            this.toolsImgNo.Image = ((System.Drawing.Image)(resources.GetObject("toolsImgNo.Image")));
+            this.toolsImgNo.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolsImgNo.Name = "toolsImgNo";
+            this.toolsImgNo.Size = new System.Drawing.Size(62, 25);
+            this.toolsImgNo.Text = "否决";
+            this.toolsImgNo.ToolTipText = "验收否决";
+            this.toolsImgNo.Click += new System.EventHandler(this.toolsImgNo_Click);
             // 
             // toolsPrivePages
             // 
@@ -179,40 +209,70 @@
             // 
             // gr1
             // 
-            this.gr1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gr1.Location = new System.Drawing.Point(0, 28);
             this.gr1.Name = "gr1";
-            this.gr1.Size = new System.Drawing.Size(1166, 507);
+            this.gr1.Size = new System.Drawing.Size(1166, 485);
             this.gr1.TabIndex = 2;
             this.gr1.TabStop = false;
             // 
-            // toolsImgOK
+            // statusStrip1
             // 
-            this.toolsImgOK.Font = new System.Drawing.Font("微软雅黑", 12F);
-            this.toolsImgOK.Image = ((System.Drawing.Image)(resources.GetObject("toolsImgOK.Image")));
-            this.toolsImgOK.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolsImgOK.Name = "toolsImgOK";
-            this.toolsImgOK.Size = new System.Drawing.Size(62, 25);
-            this.toolsImgOK.Text = "通过";
-            this.toolsImgOK.ToolTipText = "验收通过";
-            this.toolsImgOK.Click += new System.EventHandler(this.toolsImgOK_Click);
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolslabCheck,
+            this.toolslab_PagesCount,
+            this.toolslab_PagesCrre,
+            this.toolslab_scanuser,
+            this.toolslab_Indexuser,
+            this.toolslab_Checkuser});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 513);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(1166, 22);
+            this.statusStrip1.TabIndex = 3;
+            this.statusStrip1.Text = "statusStrip1";
             // 
-            // toolsImgNo
+            // toolslabCheck
             // 
-            this.toolsImgNo.Font = new System.Drawing.Font("微软雅黑", 12F);
-            this.toolsImgNo.Image = ((System.Drawing.Image)(resources.GetObject("toolsImgNo.Image")));
-            this.toolsImgNo.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolsImgNo.Name = "toolsImgNo";
-            this.toolsImgNo.Size = new System.Drawing.Size(62, 25);
-            this.toolsImgNo.Text = "否决";
-            this.toolsImgNo.ToolTipText = "验收否决";
-            this.toolsImgNo.Click += new System.EventHandler(this.toolsImgNo_Click);
+            this.toolslabCheck.ForeColor = System.Drawing.Color.Red;
+            this.toolslabCheck.Name = "toolslabCheck";
+            this.toolslabCheck.Size = new System.Drawing.Size(59, 17);
+            this.toolslabCheck.Text = "验收状态:";
+            // 
+            // toolslab_PagesCount
+            // 
+            this.toolslab_PagesCount.Name = "toolslab_PagesCount";
+            this.toolslab_PagesCount.Size = new System.Drawing.Size(39, 17);
+            this.toolslab_PagesCount.Text = "共0页";
+            // 
+            // toolslab_PagesCrre
+            // 
+            this.toolslab_PagesCrre.Name = "toolslab_PagesCrre";
+            this.toolslab_PagesCrre.Size = new System.Drawing.Size(39, 17);
+            this.toolslab_PagesCrre.Text = "第0页";
+            // 
+            // toolslab_scanuser
+            // 
+            this.toolslab_scanuser.Name = "toolslab_scanuser";
+            this.toolslab_scanuser.Size = new System.Drawing.Size(35, 17);
+            this.toolslab_scanuser.Text = "扫描:";
+            // 
+            // toolslab_Indexuser
+            // 
+            this.toolslab_Indexuser.Name = "toolslab_Indexuser";
+            this.toolslab_Indexuser.Size = new System.Drawing.Size(35, 17);
+            this.toolslab_Indexuser.Text = "排序:";
+            // 
+            // toolslab_Checkuser
+            // 
+            this.toolslab_Checkuser.Name = "toolslab_Checkuser";
+            this.toolslab_Checkuser.Size = new System.Drawing.Size(35, 17);
+            this.toolslab_Checkuser.Text = "质检:";
             // 
             // StoreImg
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1166, 535);
+            this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.gr1);
             this.Controls.Add(this.toolStrip1);
             this.Name = "StoreImg";
@@ -223,6 +283,8 @@
             this.Load += new System.EventHandler(this.StoreImg_Load);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -246,5 +308,12 @@
         private System.Windows.Forms.ToolStripTextBox txtPages2;
         private System.Windows.Forms.ToolStripButton toolsImgOK;
         private System.Windows.Forms.ToolStripButton toolsImgNo;
+        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.ToolStripStatusLabel toolslabCheck;
+        private System.Windows.Forms.ToolStripStatusLabel toolslab_PagesCount;
+        private System.Windows.Forms.ToolStripStatusLabel toolslab_PagesCrre;
+        private System.Windows.Forms.ToolStripStatusLabel toolslab_scanuser;
+        private System.Windows.Forms.ToolStripStatusLabel toolslab_Indexuser;
+        private System.Windows.Forms.ToolStripStatusLabel toolslab_Checkuser;
     }
 }

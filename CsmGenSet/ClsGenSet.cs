@@ -116,7 +116,7 @@ namespace CsmGenSet
 
         public static List<string>CreateTableSys=new List<string>();
 
-        public static bool CreatetableTf { get; set; } = "";
+        public static bool CreatetableTf { get; set; } = false;
 
         public static string CreateTableLvcol { get; set; } = "";
         public static string CreateTableLvsm { get; set; } = "";
@@ -126,7 +126,7 @@ namespace CsmGenSet
     {
         public static string Clsborrtable { get; set; } = "";
         public static List<string> ClsBorrColzd = new List<string>();
-        public static bool Clsborrtag { get; set; } = "";
+        public static bool Clsborrtag { get; set; } =false;
     }
 
     public static class ClsBoxcolSet

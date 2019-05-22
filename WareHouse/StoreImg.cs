@@ -1,7 +1,9 @@
 ﻿using CsmCon;
 using DAL;
 using System;
+using System.Data;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using Convert = System.Convert;
 using MessageBox = System.Windows.Forms.MessageBox;
@@ -48,6 +50,48 @@ namespace WareHouse
         {
             imgBrow1.LoadFile(ArchId, FileName);
             imgBrow1.LoadConten(ArchId);
+            GetUser();
+            GetArchInfo();
+        }
+        private void GetUser()
+        {
+            Task.Run(() =>
+            {
+                string Scanner = string.Empty;
+                string Indexer = string.Empty;
+                string Checker = string.Empty;
+                DataTable dt = Common.GetOperator(ArchId);
+                if (dt == null || dt.Rows.Count <= 0)
+                    return;
+                DataRow dr = dt.Rows[0];
+                Scanner = dr["扫描"].ToString();
+                Indexer = dr["排序"].ToString();
+                Checker = dr["质检"].ToString();
+                this.BeginInvoke(new Action(() =>
+                {
+                    toolslab_scanuser.Text = string.Format("扫描：{0}", Scanner);
+                    toolslab_Indexuser.Text = string.Format("排序：{0}", Indexer);
+                    toolslab_Checkuser.Text = string.Format("质检：{0}", Checker);
+
+                }));
+            });
+        }
+
+        private void GetArchInfo()
+        {
+            Task.Run(() =>
+            {
+                DataTable dt = Common.QuerboxsnInfo(ArchId);
+                if (dt == null || dt.Rows.Count <= 0)
+                    return;
+                string ys = dt.Rows[0][3].ToString();
+                if (ys == "1")
+                    this.BeginInvoke(new Action(() => { toolslabCheck.Text = "验收：完成"; }));
+                else if (ys == "2")
+                    this.BeginInvoke(new Action(() => { toolslabCheck.Text = "验收：否决"; }));
+                else
+                    this.BeginInvoke(new Action(() => { toolslabCheck.Text = "验收：未验收"; }));
+            });
         }
 
         private void toolsPrivePages_Click(object sender, EventArgs e)
