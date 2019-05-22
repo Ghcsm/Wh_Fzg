@@ -450,6 +450,7 @@ namespace WareHouse
                 butUp.Enabled = false;
                 butOpenFile.Enabled = false;
                 labGround.Visible = true;
+                txtGroundNum.Enabled = false;
             }
             else {
                 rabHouseA.Enabled = true;
@@ -461,6 +462,7 @@ namespace WareHouse
                 butUp.Enabled = true;
                 butOpenFile.Enabled = true;
                 labGround.Visible = false;
+                txtGroundNum.Enabled = true;
             }
         }
 
@@ -485,18 +487,19 @@ namespace WareHouse
                         MessageBox.Show("请选择目标盒号!");
                         return;
                     }
-
                     ArchGrounid(1);
-                    butboxsn_Click(ClsStore.Objboxsn, null);
+                    //butboxsn_Click(ClsStore.Objboxsn, null);
                 }
                 else if (radioGroundCeng.Checked) {
                     ArchGrounid(2);
-                    but_mjj_Click(ClsStore.ObjHouseColRow, null);
+                    //but_mjj_Click(ClsStore.ObjHouseColRow, null);
                 }
                 else {
                     ArchGrounid(3);
-                    but_juan_Click(ClsStore.ObjJuan, null);
+                    //but_juan_Click(ClsStore.ObjJuan, null);
                 }
+                this.PanleHouseMj.Controls.Clear();
+                LoadMjj();
             } catch (Exception e) {
                 MessageBox.Show("上架失败:" + e.ToString());
             } finally {

@@ -40,11 +40,17 @@ namespace WareHouse
             ImgBrow.Print = ImgPrint;
             ImgBrow.id = 0;
             imgBrow1 = new ImgBrow();
+            imgBrow1.Spage += new ImgBrow.TransmitPar(ShowPage);
             imgBrow1.Dock = DockStyle.Fill;
             gr1.Controls.Add(imgBrow1);
             gr1.Refresh();
         }
 
+        private void ShowPage(int page, int counpage)
+        {
+            toolslab_PagesCount.Text = string.Format("共{0}页", counpage);
+            toolslab_PagesCrre.Text = string.Format("第{0}页", page);
+        }
 
         private void StoreImg_Load(object sender, EventArgs e)
         {
