@@ -473,7 +473,20 @@ namespace Csmdasm
 
         private void toolDelPages_Click(object sender, EventArgs e)
         {
-            Himg._Delepage(1);
+            Himg._Delepage();
+            if (ImgView.Image == null)
+            {
+                try
+                {
+                    if (ftp.FtpCheckFile(Path.Combine(T_ConFigure.gArchScanPath, ClsTwain.ArchPos,
+                        T_ConFigure.ScanTempFile)))
+                    {
+                        ftp.FtpDelFile(Path.Combine(T_ConFigure.gArchScanPath, ClsTwain.ArchPos,
+                            T_ConFigure.ScanTempFile));
+                    }
+                }
+                catch {}
+            }
             ImgView.Focus();
         }
 

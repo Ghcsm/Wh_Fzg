@@ -1545,31 +1545,31 @@ namespace HLjscom
         public void _OrderSave(string _path)
         {
             try {
-               
-                    if (_PageAbc.Count >= 1) {
-                        int zimu_a = (int)Convert.ToByte('a');
-                        int oldpage = 97;
-                        for (int abc = 1; abc <= _PageAbc.Count; abc++) {
-                            string zimu = (Convert.ToChar(oldpage)).ToString();
-                            var abckeys = _PageAbc.Where(q => q.Value == zimu).Select(q => q.Key);
 
-                            foreach (var a in abckeys) {
-                                OrderSave(a, abc, _path);
-                            }
-                            oldpage = zimu_a + abc;
+                if (_PageAbc.Count >= 1) {
+                    int zimu_a = (int)Convert.ToByte('a');
+                    int oldpage = 97;
+                    for (int abc = 1; abc <= _PageAbc.Count; abc++) {
+                        string zimu = (Convert.ToChar(oldpage)).ToString();
+                        var abckeys = _PageAbc.Where(q => q.Value == zimu).Select(q => q.Key);
+
+                        foreach (var a in abckeys) {
+                            OrderSave(a, abc, _path);
+                        }
+                        oldpage = zimu_a + abc;
+                    }
+                }
+                if (_PageNumber.Count >= 1) {
+                    for (int i = 1; i <= RegPage - _PageAbc.Count; i++) {
+                        int k = _PageNumber.First(q => q.Value == i).Key;
+                        if (_PageNumber[k].Equals(i)) {
+                            OrderSave(k, _PageAbc.Count + i, _path);
                         }
                     }
-                    if (_PageNumber.Count >= 1) {
-                        for (int i = 1; i <= RegPage - _PageAbc.Count; i++) {
-                            int k = _PageNumber.First(q => q.Value == i).Key;
-                            if (_PageNumber[k].Equals(i)) {
-                                OrderSave(k, _PageAbc.Count + i, _path);
-                            }
-                        }
-                    }
-               
+                }
+
             } catch {
-               
+
             }
         }
         //排序
@@ -1765,19 +1765,30 @@ namespace HLjscom
         }
 
         //删除页码
-        public void _Delepage(int p)
+        public void _Delepage()
         {
             try {
-                if (_Imageview.Image == null || Filename.Trim().Length <= 0 || p <= 0)
+                if (_Imageview.Image == null || Filename.Trim().Length <= 0)
                     return;
-                if (p != 1) {
-                    _Codefile.DeletePage(Filename, p);
-                    LoadPage(p);
+                if (CrrentPage >= 2) {
+                    _Codefile.DeletePage(Filename, CrrentPage);
+                    LoadPage(CrrentPage - 1);
                     return;
+                }
+                else {
+                    int x = _CountPage();
+                    if (x >= 2)
+                    {
+                        _Codefile.DeletePage(Filename, CrrentPage);
+                        LoadPage(x-1);
+                        return;
+                    }
                 }
                 _Imageview.Image = null;
                 File.Delete(Filename);
-                Setpage(0, 0);
+                CrrentPage = 0;
+                CountPage = 0;
+                Setpage(CrrentPage, CountPage);
 
             } catch (Exception ex) {
                 MessageBox.Show("错误:" + ex.ToString());
@@ -2146,20 +2157,20 @@ namespace HLjscom
         {
             try {
                 string txt = "";
-                    ocrPage = ocrEngine.CreatePage(_Imageview.Image, OcrImageSharingMode.None);
-                    if (ocrPage == null) {
-                        return "";
-                    }
-                    ocrPage.Zones.Clear();
-                    LeadRect rcw = _Imageview.Image.GetRegionBounds(null);
-                    OcrZone zone = new OcrZone();
-                    zone.Bounds = LogicalRectangle.FromRectangle(rcw);
-                    zone.ZoneType = OcrZoneType.Text;
-                    zone.CharacterFilters = OcrZoneCharacterFilters.None;
-                    ocrPage.Zones.Add(zone);
-                    ocrPage.Recognize(null);
-                    txt = ocrPage.GetText(0);
-                    _Imageview.Image.MakeRegionEmpty();
+                ocrPage = ocrEngine.CreatePage(_Imageview.Image, OcrImageSharingMode.None);
+                if (ocrPage == null) {
+                    return "";
+                }
+                ocrPage.Zones.Clear();
+                LeadRect rcw = _Imageview.Image.GetRegionBounds(null);
+                OcrZone zone = new OcrZone();
+                zone.Bounds = LogicalRectangle.FromRectangle(rcw);
+                zone.ZoneType = OcrZoneType.Text;
+                zone.CharacterFilters = OcrZoneCharacterFilters.None;
+                ocrPage.Zones.Add(zone);
+                ocrPage.Recognize(null);
+                txt = ocrPage.GetText(0);
+                _Imageview.Image.MakeRegionEmpty();
                 return txt;
             } catch {
                 return "";
@@ -2328,7 +2339,7 @@ namespace HLjscom
         public void _Twainscan(int x)
         {
             try {
-            
+
                 if (x == 0) {
                     if (_twains.SelectSource(String.Empty) == DialogResult.Cancel) { }
                 }
@@ -2343,7 +2354,7 @@ namespace HLjscom
             }
         }
 
-       // 判断是否安装扫描源
+        // 判断是否安装扫描源
         public Boolean _Istwain()
         {
             bool twainAvailable = TwainSession.IsAvailable(istwan);
@@ -2354,7 +2365,7 @@ namespace HLjscom
                 return false;
             }
         }
-    
+
         /// 是否连接扫描仪
         private Boolean GetTwain()
         {
@@ -2391,7 +2402,7 @@ namespace HLjscom
             }
         }
         //单双面
-        public  void _Duplexpage(bool x)
+        public void _Duplexpage(bool x)
         {
             try {
                 _twains.EnableDuplexScanning = x;
