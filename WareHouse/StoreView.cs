@@ -5,6 +5,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -237,8 +238,11 @@ namespace WareHouse
                     return;
                 }
                 string FileName = Common.GetFileNameByArchID(ClsStore.Archid);
+                if (FileName.Trim().Length > 0)
+                    FileName = DESEncrypt.DesDecrypt(FileName);
                 toolFileName.Text = FileName;
                 toolFileId.Text = ClsStore.Archid.ToString() + " ";
+                Thread.Sleep(100);
                 string localPath = Path.Combine(Common.LocalTempPath, FileName.Substring(0, 8));
                 string localCheckFile = Path.Combine(Common.LocalTempPath, FileName.Substring(0, 8), FileName);
                 try {

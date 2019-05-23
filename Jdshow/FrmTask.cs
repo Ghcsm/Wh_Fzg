@@ -160,7 +160,7 @@ namespace Jdshow
                 task.Start();
                 task.Wait();
                 if (ftp.SaveRemoteFileUp(T_ConFigure.FtpArchIndex, RemoteDir, LocalIndexFile, IndexFileName)) {
-                    Common.SetIndexFinish(Convert.ToInt32(archid), IndexFileName, archstat);
+                    Common.SetIndexFinish(Convert.ToInt32(archid), DESEncrypt.DesEncrypt(IndexFileName), archstat);
                     Common.DelTask(Convert.ToInt32(archid));
                     File.Delete(filepath);
                     File.Delete(LocalIndexFile);
@@ -175,7 +175,7 @@ namespace Jdshow
                 string RemoteDir = filename.Substring(0, 8);
                 if (ftp.SaveRemoteFileUp(T_ConFigure.FtpArchSave, RemoteDir, filename, filepath)) {
                     Common.DelTask(Convert.ToInt32(archid));
-                    Common.SetIndexFinish(Convert.ToInt32(archid), filename, archstat);
+                    Common.SetCheckFinish(Convert.ToInt32(archid), DESEncrypt.DesEncrypt(filename), 1, (int)T_ConFigure.ArchStat.质检完, "");
                     try {
                         File.Delete(filepath);
                         Directory.Delete(RemoteDir);

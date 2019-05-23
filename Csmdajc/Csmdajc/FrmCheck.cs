@@ -640,7 +640,7 @@ namespace Csmdajc
                         string path = Path.Combine(T_ConFigure.FtpArchSave, Clscheck.FileNametmp.Substring(0, 8));
                         if (ftp.FtpMoveFile(sourefile, goalfile, path)) {
                             Common.DelTask(arid);
-                            Common.SetCheckFinish(arid, filename, 1, (int)T_ConFigure.ArchStat.质检完, "");
+                            Common.SetCheckFinish(arid,DESEncrypt.DesEncrypt(filename), 1, (int)T_ConFigure.ArchStat.质检完, "");
                             return;
                         }
                     }
@@ -652,7 +652,7 @@ namespace Csmdajc
                         bool x = await ftp.FtpUpFile(filetmp, newfile, newpath);
                         if (x) {
                             Common.DelTask(arid);
-                            Common.SetCheckFinish(arid, filename, 1, (int)T_ConFigure.ArchStat.质检完, "");
+                            Common.SetCheckFinish(arid, DESEncrypt.DesEncrypt(filename), 1, (int)T_ConFigure.ArchStat.质检完, "");
                             try {
                                 File.Delete(filetmp);
                                 Directory.Delete(localPath);

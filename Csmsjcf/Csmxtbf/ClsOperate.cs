@@ -124,6 +124,7 @@ namespace Csmsjcf
                 string str = "";
                 if (file.Trim().Length <= 0)
                     return "错误：文件名长度不正确";
+                file = DESEncrypt.DesEncrypt(file);
                 if (ClsFrmInfoPar.Ftp == 2)
                     str = Path.Combine(imgpath, "ArchSave", file.Substring(0, 8), file);
                 else {

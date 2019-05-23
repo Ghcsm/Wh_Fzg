@@ -197,7 +197,9 @@ namespace Csmdacx
                 return;
             ClsQuery.Boxsn = Convert.ToInt32(dt.Rows[0][0].ToString());
             ClsQuery.Archno = Convert.ToInt32(dt.Rows[0][1].ToString());
-            ClsQuery.FileNameTmp = dt.Rows[0][2].ToString();
+            string file = dt.Rows[0][2].ToString();
+            if (file.Trim().Length > 0)
+                ClsQuery.FileNameTmp = DESEncrypt.DesDecrypt(file);
             string ys = dt.Rows[0][3].ToString();
             if (ys == "1")
                 toolslabCheck.Text = "验收：完成";

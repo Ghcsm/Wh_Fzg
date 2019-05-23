@@ -631,7 +631,7 @@ namespace Csmdapx
                         string path = Path.Combine(T_ConFigure.FtpArchIndex, RemoteDir);
                         if (ftp.FtpMoveFile(sourcefile, goalfile, path)) {
                             Common.DelTask(arid);
-                            Common.SetIndexFinish(arid, IndexFileName, (int)T_ConFigure.ArchStat.排序完);
+                            Common.SetIndexFinish(arid,DESEncrypt.DesEncrypt(IndexFileName), (int)T_ConFigure.ArchStat.排序完);
                             try {
                                 File.Delete(filetmp);
                                 Directory.Delete(Path.Combine(T_ConFigure.FtpTmpPath, T_ConFigure.TmpScan, archpos));
@@ -649,7 +649,7 @@ namespace Csmdapx
                         string newpath = Path.Combine(T_ConFigure.FtpArchIndex, RemoteDir);
                         bool x = await ftp.FtpUpFile(LocalIndexFile, newfile, newpath);
                         if (x) {
-                            Common.SetIndexFinish(arid, IndexFileName, (int)T_ConFigure.ArchStat.排序完);
+                            Common.SetIndexFinish(arid, DESEncrypt.DesEncrypt(IndexFileName), (int)T_ConFigure.ArchStat.排序完);
                             Common.DelTask(arid);
                             try {
                                 File.Delete(filetmp);

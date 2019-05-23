@@ -224,7 +224,9 @@ namespace CsmCon
                     string arid = dr["ID"].ToString();
                     string pages = dr["PAGES"].ToString();
                     string type = dr[ClsContenInfo.Archtype].ToString();
-                    string ImgFile = (dr["IMGFILE"] == null ? "" : dr["IMGFILE"].ToString());
+                    string ImgFile = (dr["IMGFILE"].ToString().Trim().Length<=0 ? "" : dr["IMGFILE"].ToString());
+                    if (ImgFile.Trim().Length > 0)
+                        ImgFile = DESEncrypt.DesDecrypt(ImgFile);
                     stat = Convert.ToInt32(dr["ArchState"].ToString().Trim().Length <= 0 ? "0" : dr["ArchState"].ToString());
                     string xystat = dr["CheckXyState"].ToString().Trim().Length <= 0 ? "0" : dr["CheckXyState"].ToString();
                     if (stat >= 3 && stat < 5)
