@@ -9,7 +9,7 @@ namespace DAL
     {
         public static SqlConnection Sqlconn = null;
         public static SqlCommand cmd = null;
-        public static string connstr = DESEncrypt.DesDecrypt(ConfigurationManager.ConnectionStrings["ConStr"].ConnectionString);
+        public static string connstr = DESEncrypt.DesDecryptkey(ConfigurationManager.ConnectionStrings["ConStr"].ConnectionString);
 
 
         public SQLHelper()

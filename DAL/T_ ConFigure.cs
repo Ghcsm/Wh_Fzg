@@ -57,7 +57,7 @@ namespace DAL
             任务中=9
         }
 
-        public static string SfName = "档案管理系统";
+        public static string SfName = "必高档案数字化管理系统";
 
         public static string SfCoName = "5gyXVVG7v5NU4MGCWs/OGNwTVozQ06KZm443PVYA0nD295v7IGaC8g==";
     }

@@ -13,11 +13,7 @@ namespace DAL
     {
 
         #region userLogion
-
-        public static void GetSfname()
-        {
-            T_ConFigure.SfName = DESEncrypt.DesDecrypt(ConfigurationManager.ConnectionStrings["Sfname"].ConnectionString);
-        }
+     
         public static DataTable GetUser()
         {
             DataTable dt = null;

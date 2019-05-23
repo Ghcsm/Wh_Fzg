@@ -107,8 +107,10 @@ namespace Bgkj
                     ClsSetInfopar.lUserOtherSys.Add(Uothersys);
                     ClsSetInfopar.lUsermenu.Add(usermenu);
                 }
+
+                txtUser.BeginInvoke(new Action(() => { txtUser.Focus(); }));
             });
-            T_Sysset.GetSfname();
+            
         }
 
         private void txtUser_KeyPress(object sender, KeyPressEventArgs e)

@@ -14,7 +14,10 @@ namespace Csmgy
      
         private void Frmgy_Load(object sender, EventArgs e)
         {
-            lab_soft.Text = DESEncrypt.DesDecrypt( T_ConFigure.SfCoName);
+            string str= DESEncrypt.DesDecrypt(T_ConFigure.SfCoName);
+            if (str.Trim().Length<=0)
+                Application.Exit();
+            lab_soft.Text = str;
             id = T_ConFigure.Moid;            
         }
 		void FrmgyShown(object sender, EventArgs e)
