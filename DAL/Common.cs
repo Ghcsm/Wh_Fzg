@@ -137,7 +137,7 @@ namespace DAL
                 if (id == 1)
                     strSql = "select id," + coltmp + " from " + table + " where archid=@archid ";
                 else
-                    strSql = "select id," + coltmp + " from " + table + " where archid=@archid  order by " + pages;
+                    strSql = "select id," + coltmp + " from " + table + " where archid=@archid  order by  CONVERT(INT," + pages+")";
                 SqlParameter p1 = new SqlParameter("@archid", arid);
                 DataTable dt = DAL.SQLHelper.ExcuteTable(strSql, p1);
                 return dt;
