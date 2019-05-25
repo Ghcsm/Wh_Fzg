@@ -20,7 +20,7 @@ namespace Csmdasm
         }
 
         #region InitCs
-
+       
         private gArchSelect gArch;
         Hljsimage Himg = new Hljsimage();
         HFTP ftp = new HFTP();
@@ -87,6 +87,9 @@ namespace Csmdasm
 
         private async void LoadArch()
         {
+            if (ClsTwain.task)
+                return;
+                ClsTwain.task = true;
             if (Common.Gettask(ClsTwain.Archid) > 0) {
                 MessageBox.Show("正在任务中请稍后!");
                 Cledata();
@@ -123,7 +126,9 @@ namespace Csmdasm
         {
             return Task.Run(() =>
             {
-                try {
+                try
+                {
+                    ClsTwain.task = true;
                     Common.SetArchWorkState(ClsTwain.Archid, (int)T_ConFigure.ArchStat.扫描中);
                     if (T_ConFigure.FtpStyle == 1) {
                         string localPath = Path.Combine(T_ConFigure.FtpTmpPath, T_ConFigure.TmpScan, ClsTwain.ArchPos);
@@ -162,11 +167,12 @@ namespace Csmdasm
                         }
 
                     }
+                    ClsTwain.task = false;
                     return false;
-
                 } catch (Exception e) {
                     MessageBox.Show("加载文件失败!" + e.ToString());
                     Common.SetArchWorkState(ClsTwain.Archid, (int)T_ConFigure.ArchStat.无);
+                    Cledata();
                     return false;
                 }
             });
@@ -329,7 +335,9 @@ namespace Csmdasm
 
         private void Cledata()
         {
-            ImgView.Image = null;
+            this.BeginInvoke(new Action(() =>
+            {
+                ImgView.Image = null;
             ClsTwain.Archid = 0;
             ClsTwain.ArchPos = "";
             ClsTwain.MaxPage = 0;
@@ -342,6 +350,8 @@ namespace Csmdasm
             labCheckUser.Text = "质检:";
             labArchNo.Text = "当前卷号:";
             labQsPages.Text = "当前卷缺少:";
+            ClsTwain.task = false;
+            }));
         }
 
         private async void FtpUp(string filetmp, string archpos, int maxpage, int arid)

@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace CsmCon
 {
-
+   
 
     public static class ClsContenInfo
     {
@@ -26,21 +26,19 @@ namespace CsmCon
         public static string ContenCol { get; set; } = "";
         public static List<string> PageCount = new List<string>();
         public static List<string> PageCount2 = new List<string>();
-
+       
         public static List<string> LsModule = new List<string>();
         public static List<string> LsModuleIndex = new List<string>();
 
+        public static bool loadcon { get; set; }
         public static int txtcol { get; set; } = 0;
         public static int txtrows { get; set; } = 1;
-
         public static string Pagestmp { get; set; } = "";
-
         public static string Archtype { get; set; } = "";
-
         public static string Modulename { get; set; } = "";
     }
 
-
+  
 
     public static class ClsConten
     {
@@ -97,8 +95,11 @@ namespace CsmCon
         {
             if (archid <= 0)
                 return;
+            if (ClsContenInfo.loadcon)
+                return;
             Task.Run(() =>
             {
+                ClsContenInfo.loadcon = true;
                 lsv.Invoke(new Action(() =>
                 {
                     lsv.Items.Clear();
@@ -125,11 +126,12 @@ namespace CsmCon
                 }));
                     i++;
                 }
-                lsv.BeginInvoke(new Action(() =>
+                lsv.Invoke(new Action(() =>
                 {
                     if (lsv.Items.Count > 0)
                         lsv.Items[0].Selected = true;
                 }));
+                ClsContenInfo.loadcon = false;
             });
         }
 

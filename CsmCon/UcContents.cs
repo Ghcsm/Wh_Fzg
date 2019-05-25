@@ -25,7 +25,7 @@ namespace CsmCon
         public static int ArchCheckZt { get; set; } = 0;
         public static int ArchStat { get; set; } = 0;
         public static int Mtmpid { get; set; } = 0;
-
+       
         private void Init()
         {
             if (Modulename == null)

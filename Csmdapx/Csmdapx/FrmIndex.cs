@@ -66,7 +66,12 @@ namespace Csmdapx
             try {
                 gArch.butLoad.Enabled = false;
                 if (ImgView.Image == null && ClsIndex.ArchPos == null ||
-                    ImgView.Image == null && ClsIndex.ArchPos.Trim().Length <= 0) {
+                    ImgView.Image == null && ClsIndex.ArchPos.Trim().Length <= 0)
+                {
+
+                    if (ClsIndex.task)
+                        return;
+                    ClsIndex.task = true;
                     ClsIndex.ArchPos = gArch.ArchPos;
                     ClsIndex.Archid = gArch.Archid;
                     ClsIndex.RegPage = gArch.ArchRegPages;
@@ -511,6 +516,7 @@ namespace Csmdapx
                             }
                         }
                     }
+                    ClsIndex.task = false;
                     return false;
 
                 } catch (Exception e) {
@@ -587,7 +593,9 @@ namespace Csmdapx
         }
         private void Cledata()
         {
-            ImgView.Image = null;
+            this.BeginInvoke(new Action(() =>
+            {
+                ImgView.Image = null;
             ClsIndex.Archid = 0;
             ClsIndex.ArchPos = "";
             ClsIndex.MaxPage = 0;
@@ -598,6 +606,8 @@ namespace Csmdapx
             labIndexUser.Text = "排序:";
             labCheckUser.Text = "质检:";
             toolArchno.Text = "当前卷号:";
+            ClsIndex.task = false;
+            }));
         }
 
         private async void FtpUpFinish(string filetmp, int arid, string archpos, int pages, Dictionary<int, string> pageAbc, Dictionary<int, int> pagenumber)

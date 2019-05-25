@@ -88,7 +88,6 @@
             // 
             this.splitCont.Panel2.Controls.Add(this.groupBox1);
             this.splitCont.Panel2.Controls.Add(this.grinfo);
-            this.splitCont.Panel2Collapsed = true;
             this.splitCont.Size = new System.Drawing.Size(394, 509);
             this.splitCont.SplitterDistance = 301;
             this.splitCont.SplitterWidth = 20;
@@ -101,6 +100,7 @@
             this.gArchSelect1.ArchRegPages = 0;
             this.gArchSelect1.Archstat = null;
             this.gArchSelect1.Archtype = null;
+            this.gArchSelect1.Archxystat = null;
             this.gArchSelect1.Boxsn = 0;
             this.gArchSelect1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gArchSelect1.GotoPages = false;
@@ -108,7 +108,7 @@
             this.gArchSelect1.Location = new System.Drawing.Point(0, 0);
             this.gArchSelect1.Name = "gArchSelect1";
             this.gArchSelect1.PagesEnd = false;
-            this.gArchSelect1.Size = new System.Drawing.Size(394, 509);
+            this.gArchSelect1.Size = new System.Drawing.Size(394, 301);
             this.gArchSelect1.TabIndex = 0;
             this.gArchSelect1.LineClickLoadInfo += new CsmCon.gArchSelect.ArchSelectHandle(this.gArchSelect1_LineClickLoadInfo);
             // 
@@ -152,7 +152,7 @@
             this.grinfo.BackColor = System.Drawing.Color.Transparent;
             this.grinfo.Location = new System.Drawing.Point(0, 2);
             this.grinfo.Name = "grinfo";
-            this.grinfo.Size = new System.Drawing.Size(382, 130);
+            this.grinfo.Size = new System.Drawing.Size(391, 125);
             this.grinfo.TabIndex = 0;
             this.grinfo.TabStop = false;
             // 

@@ -93,7 +93,9 @@ namespace Csmdacx
 
         private void LoadFile()
         {
-            try {
+            try
+            {
+                butOk.Enabled = false;
                 if (ClsQuery.ArchID <= 0) {
                     MessageBox.Show("ID获取失败请重新选择案卷!");
                     return;
@@ -114,10 +116,13 @@ namespace Csmdacx
                     if (!Directory.Exists(localPath)) {
                         Directory.CreateDirectory(localPath);
                     }
+
                     if (File.Exists(localCheckFile)) {
                         File.Delete(localCheckFile);
                     }
-                } catch { }
+                } catch {
+                }
+
                 string filjpg = Path.Combine(Common.ArchSavePah, FileName.Substring(0, 8), FileName);
                 if (ftp.FtpCheckFile(filjpg)) {
                     if (ftp.DownLoadFile(Common.ArchSavePah, FileName.Substring(0, 8), localCheckFile, FileName)) {
@@ -132,6 +137,9 @@ namespace Csmdacx
 
             } catch (Exception ee) {
                 MessageBox.Show(ee.ToString());
+            } finally
+            {
+                butOk.Enabled = true;
             }
         }
 
@@ -173,7 +181,7 @@ namespace Csmdacx
         private void butOk_Click(object sender, EventArgs e)
         {
             if (lvData.SelectedItems != null && lvData.SelectedItems.Count > 0) {
-                if (imgBrow1.ImgNull() == false)
+                if (!imgBrow1.ImgNull())
                     LoadFile();
                 else {
                     MessageBox.Show("请先关闭正在查看的案卷!");

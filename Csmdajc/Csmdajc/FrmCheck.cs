@@ -91,7 +91,11 @@ namespace Csmdajc
         {
             try {
                 if (ImgView.Image == null && Clscheck.ArchPos == null ||
-                    ImgView.Image == null && Clscheck.ArchPos.Trim().Length <= 0) {
+                    ImgView.Image == null && Clscheck.ArchPos.Trim().Length <= 0)
+                {
+                    if (Clscheck.task)
+                        return;
+                    Clscheck.task = true;
                     Clscheck.ArchPos = gArch.ArchPos;
                     Clscheck.Archid = gArch.Archid;
                     Clscheck.RegPage = gArch.ArchRegPages;
@@ -629,7 +633,7 @@ namespace Csmdajc
         }
         private void Cledata()
         {
-            ImgView.BeginInvoke(new Action(() =>
+            this.BeginInvoke(new Action(() =>
             {
                 ImgView.Image = null;
                 Clscheck.Archid = 0;
@@ -639,6 +643,7 @@ namespace Csmdajc
                 toolArchno.Text = "当前卷号:";
                 labPageCrrent.Text = "第     页";
                 labPageCount.Text = "共      页";
+                Clscheck.task = false;
             }));
 
         }
