@@ -38,6 +38,7 @@ namespace Csmsjdr
         private void GetImportInfo(string str)
         {
             chkTablecol.Items.Clear();
+            chkZero.Items.Clear();
             combPages.Items.Clear();
             combPages.Items.Add("");
             DataTable dt = Common.GetImportTable(str);
@@ -49,6 +50,7 @@ namespace Csmsjdr
             for (int i = 0; i < strtmp.Length; i++) {
                 string s = strtmp[i];
                 chkTablecol.Items.Add(s);
+                chkZero.Items.Add(s);
                 combPages.Items.Add(s);
             }
         }
@@ -184,7 +186,7 @@ namespace Csmsjdr
             }
         }
 
-        private Task<bool> StartImport(string table, string tzd, string xzd, bool chk, int count, int lx, List<string> wyz,int pbool)
+        private Task<bool> StartImport(string table, string tzd, string xzd, bool chk, int count, int lx, List<string> wyz, int pbool, List<string> zero)
         {
             string strwy = "";
             string strpage = "";
@@ -199,22 +201,23 @@ namespace Csmsjdr
                     id += 1;
                     for (int a = 0; a < count; a++) {
                         string s = dgvXlsData.Rows[i].Cells[a].Value.ToString().Trim();
-                        if (a < count - 1)
-                            xzd += s + ",";
-                        else
+                        if (zero.IndexOf(a.ToString()) >= 0)
+                            s = s.TrimStart('0');
+                        if (xzd.Trim().Length<=0)
                             xzd += s;
+                        else
+                            xzd += ","+s;
                         if (wyz.IndexOf(a.ToString()) >= 0) {
                             if (strwy.Trim().Length <= 0)
                                 strwy += s;
                             else
                                 strwy += "-" + s;
                         }
-
-                        if (pbool!=0 && pbool-1== a)
+                        if (pbool != 0 && pbool - 1 == a)
                             strpage = s.Trim();
                     }
                     try {
-                        string str = Common.ImportData(table, tzd, xzd, chk, lx, strwy,strpage);
+                        string str = Common.ImportData(table, tzd, xzd, chk, lx, strwy, strpage);
                         if (str != "ok") {
                             str = "详细信息：错误行:" + id + " -->" + str;
                             WriteLog(str);
@@ -245,22 +248,28 @@ namespace Csmsjdr
                     return;
                 string tzd = "";
                 string xzd = "";
-                int count = chkTablecol.Items.Count;
+                int countwyz = chkTablecol.Items.Count;
                 bool chk = chbImportNew.Checked;
                 string table = combImportTable.Text.Trim();
                 int improtlx = combLx.SelectedIndex;
                 List<string> lswyz = new List<string>();
+                List<string> lszero = new List<string>();
                 int pbool = combPages.SelectedIndex;
-                for (int i = 0; i < count; i++) {
+                for (int i = 0; i < countwyz; i++) {
                     string s = chkTablecol.Items[i].ToString();
-                    if (i < count - 1)
+                    if (i < countwyz - 1)
                         tzd += s + ",";
                     else
                         tzd += s;
                     if (chkTablecol.GetItemChecked(i))
                         lswyz.Add(i.ToString());
                 }
-                bool bl = await StartImport(table, tzd, xzd, chk, count, improtlx, lswyz, pbool);
+
+                for (int i = 0; i < chkZero.Items.Count; i++) {
+                    if (chkZero.GetItemChecked(i))
+                        lszero.Add(i.ToString());
+                }
+                bool bl = await StartImport(table, tzd, xzd, chk, countwyz, improtlx, lswyz, pbool, lszero);
                 if (bl)
                     TxtEnd(1);
 
@@ -326,7 +335,7 @@ namespace Csmsjdr
         {
             if (combLx.SelectedIndex > 0)
                 clschk();
-            
+
         }
     }
 }

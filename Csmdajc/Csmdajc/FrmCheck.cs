@@ -17,7 +17,7 @@ namespace Csmdajc
         public FrmCheck()
         {
             InitializeComponent();
-            
+
         }
 
         Hljsimage Himg = new Hljsimage();
@@ -52,7 +52,7 @@ namespace Csmdajc
                 MessageBox.Show("窗体控件初始化失败:" + ex.ToString());
             }
         }
-      
+
 
         private void UcContents1_OneClickGotoPage(object sender, EventArgs e, string title, string page)
         {
@@ -61,7 +61,7 @@ namespace Csmdajc
             try {
                 p = Convert.ToInt32(page);
             } catch { }
-            if (p > 0 && p<Clscheck.MaxPage)
+            if (p > 0 && p < Clscheck.MaxPage)
                 Himg._Gotopage(p);
 
         }
@@ -74,7 +74,7 @@ namespace Csmdajc
                 Himg._Rectang(true);
                 Writeini.Fileini = Path.Combine(Application.StartupPath, "Csmkeyval.ini");
                 Getsqlkey();
-                pub=new Pubcls();
+                pub = new Pubcls();
             } catch (Exception ex) {
                 MessageBox.Show("初始化失败请重新加载" + ex.ToString());
                 Himg.Dispose();
@@ -232,10 +232,10 @@ namespace Csmdajc
 
         private void toolStripClose_Click(object sender, EventArgs e)
         {
+            Cledata();
             if (ImgView.Image == null)
                 return;
             try {
-                Cledata();
                 if (File.Exists(Clscheck.ScanFilePath)) {
                     string path = Clscheck.ScanFilePath.Substring(0, 8);
                     File.Delete(Clscheck.ScanFilePath);
@@ -298,7 +298,7 @@ namespace Csmdajc
 
         private void FrmIndex_KeyDown(object sender, KeyEventArgs e)
         {
-            pub.KeyShortDown(e,Clscheck.lsinival, Clscheck.Lsinikeys, Clscheck.lssqlOpernum, Clscheck.lsSqlOper, out Clscheck.keystr);
+            pub.KeyShortDown(e, Clscheck.lsinival, Clscheck.Lsinikeys, Clscheck.lssqlOpernum, Clscheck.lsSqlOper, out Clscheck.keystr);
             if (Clscheck.keystr.Trim().Length > 0)
                 KeysDownEve(Clscheck.keystr.Trim());
             Keys keyCode = e.KeyCode;
@@ -348,7 +348,7 @@ namespace Csmdajc
                 Writeini.GetAllKeyValues(this.Text, out Clscheck.Lsinikeys, out Clscheck.lsinival);
             });
         }
-     
+
 
         void KeysDownEve(string key)
         {
@@ -426,21 +426,27 @@ namespace Csmdajc
 
         private async void LoadImgShow(int pages, int stattmp)
         {
-            bool loadfile = await LoadFile(stattmp);
-            gArch.butLoad.Enabled = true;
-            if (loadfile == true) {
-                if (!File.Exists(Clscheck.ScanFilePath)) {
-                    Cledata();
+            try {
+                bool loadfile = await LoadFile(stattmp);
+                gArch.butLoad.Enabled = true;
+                if (loadfile == true) {
+                    if (!File.Exists(Clscheck.ScanFilePath)) {
+                        Cledata();
+                        return;
+                    }
+                    Himg.Filename = Clscheck.ScanFilePath;
+                    Himg.LoadPage(pages);
+                    LoadContents();
+                    Getuser();
+                    Ispages();
                     return;
                 }
-                Himg.Filename = Clscheck.ScanFilePath;
-                Himg.LoadPage(pages);
-                LoadContents();
-                Getuser();
-                Ispages();
-                return;
+                MessageBox.Show("文件加载失败或不存在!");
+                Cledata();
+            } catch {
+                Cledata();
             }
-            MessageBox.Show("文件加载失败或不存在!");
+
         }
 
         private Task<bool> LoadFile(int stsa)
@@ -555,6 +561,7 @@ namespace Csmdajc
                     return false;
 
                 } catch (Exception e) {
+                    Cledata();
                     MessageBox.Show("加载文件失败!" + e.ToString());
                     if (stsa == 2)
                         Common.SetArchWorkState(Clscheck.Archid, (int)T_ConFigure.ArchStat.质检完);
@@ -622,11 +629,18 @@ namespace Csmdajc
         }
         private void Cledata()
         {
-            ImgView.Image = null;
-            Clscheck.Archid = 0;
-            Clscheck.ArchPos = "";
-            labPageCrrent.Text = "第     页";
-            labPageCount.Text = "共      页";
+            ImgView.BeginInvoke(new Action(() =>
+            {
+                ImgView.Image = null;
+                Clscheck.Archid = 0;
+                Clscheck.ArchPos = "";
+                Clscheck.RegPage = 0;
+                Clscheck.FileNametmp = "";
+                toolArchno.Text = "当前卷号:";
+                labPageCrrent.Text = "第     页";
+                labPageCount.Text = "共      页";
+            }));
+
         }
 
         private async void FtpUpFinish(string filetmp, int arid, string filename, int pages)
@@ -640,7 +654,7 @@ namespace Csmdajc
                         string path = Path.Combine(T_ConFigure.FtpArchSave, Clscheck.FileNametmp.Substring(0, 8));
                         if (ftp.FtpMoveFile(sourefile, goalfile, path)) {
                             Common.DelTask(arid);
-                            Common.SetCheckFinish(arid,DESEncrypt.DesEncrypt(filename), 1, (int)T_ConFigure.ArchStat.质检完, "");
+                            Common.SetCheckFinish(arid, DESEncrypt.DesEncrypt(filename), 1, (int)T_ConFigure.ArchStat.质检完, "");
                             return;
                         }
                     }
@@ -680,8 +694,7 @@ namespace Csmdajc
             try {
                 Common.Writelog(Clscheck.Archid, "质检返工!");
                 string PageIndexInfo = "";
-                for (int i = 1; i <=Clscheck.MaxPage; i++)
-                {
+                for (int i = 1; i <= Clscheck.MaxPage; i++) {
                     if (PageIndexInfo.Trim().Length <= 0)
                         PageIndexInfo += i.ToString();
                     else PageIndexInfo += ";" + i.ToString();

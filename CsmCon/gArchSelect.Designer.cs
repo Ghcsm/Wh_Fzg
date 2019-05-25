@@ -108,6 +108,7 @@
             this.LvData.Tag = "6";
             this.LvData.UseCompatibleStateImageBehavior = false;
             this.LvData.View = System.Windows.Forms.View.Details;
+            this.LvData.SelectedIndexChanged += new System.EventHandler(this.LvData_SelectedIndexChanged);
             this.LvData.Click += new System.EventHandler(this.LvData_Click);
             this.LvData.DoubleClick += new System.EventHandler(this.LvData_DoubleClick);
             this.LvData.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.LvData_KeyPress);

@@ -41,6 +41,10 @@ namespace CsmCon
         #endregion
 
         #region click
+        private void LvData_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            LvData_Click(null, null);
+        }
 
         private void radioBoxsn_Click(object sender, EventArgs e)
         {
@@ -327,5 +331,6 @@ namespace CsmCon
 
         #endregion
 
+     
     }
 }

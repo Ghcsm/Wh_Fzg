@@ -27,14 +27,17 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.gr0 = new DevComponents.DotNetBar.Controls.GroupPanel();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.gr4 = new System.Windows.Forms.GroupBox();
+            this.combPages = new DevComponents.DotNetBar.Controls.ComboBoxEx();
             this.combLx = new DevComponents.DotNetBar.Controls.ComboBoxEx();
             this.comboItem2 = new DevComponents.Editors.ComboItem();
             this.comboItem1 = new DevComponents.Editors.ComboItem();
             this.comboItem3 = new DevComponents.Editors.ComboItem();
             this.butLog = new DevComponents.DotNetBar.ButtonX();
+            this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.chbImportNew = new System.Windows.Forms.CheckBox();
             this.butImport = new DevComponents.DotNetBar.ButtonX();
@@ -54,9 +57,8 @@
             this.combImportTable = new DevComponents.DotNetBar.Controls.ComboBoxEx();
             this.label1 = new System.Windows.Forms.Label();
             this.opdXlsFile = new System.Windows.Forms.OpenFileDialog();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.combPages = new DevComponents.DotNetBar.Controls.ComboBoxEx();
-            this.label5 = new System.Windows.Forms.Label();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.chkZero = new System.Windows.Forms.CheckedListBox();
             this.gr0.SuspendLayout();
             this.gr4.SuspendLayout();
             this.gr3.SuspendLayout();
@@ -64,6 +66,7 @@
             this.gr2.SuspendLayout();
             this.gr1.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // gr0
@@ -110,6 +113,14 @@
             this.gr0.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.gr0.TabIndex = 0;
             // 
+            // toolStrip1
+            // 
+            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(1171, 25);
+            this.toolStrip1.TabIndex = 4;
+            this.toolStrip1.Text = "toolStrip1";
+            // 
             // gr4
             // 
             this.gr4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
@@ -129,6 +140,19 @@
             this.gr4.Size = new System.Drawing.Size(914, 72);
             this.gr4.TabIndex = 3;
             this.gr4.TabStop = false;
+            // 
+            // combPages
+            // 
+            this.combPages.DisplayMember = "Text";
+            this.combPages.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.combPages.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.combPages.FormattingEnabled = true;
+            this.combPages.ItemHeight = 15;
+            this.combPages.Location = new System.Drawing.Point(420, 43);
+            this.combPages.Name = "combPages";
+            this.combPages.Size = new System.Drawing.Size(97, 21);
+            this.combPages.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.combPages.TabIndex = 5;
             // 
             // combLx
             // 
@@ -167,6 +191,16 @@
             this.butLog.TabIndex = 2;
             this.butLog.Text = "查看日志";
             this.butLog.Click += new System.EventHandler(this.butLog_Click);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.ForeColor = System.Drawing.Color.Red;
+            this.label5.Location = new System.Drawing.Point(339, 48);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(77, 12);
+            this.label5.TabIndex = 1;
+            this.label5.Text = "总页码字段：";
             // 
             // label4
             // 
@@ -237,14 +271,14 @@
             this.dgvXlsData.AllowUserToAddRows = false;
             this.dgvXlsData.AllowUserToDeleteRows = false;
             this.dgvXlsData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvXlsData.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvXlsData.DefaultCellStyle = dataGridViewCellStyle3;
             this.dgvXlsData.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvXlsData.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(215)))), ((int)(((byte)(229)))));
             this.dgvXlsData.Location = new System.Drawing.Point(3, 17);
@@ -326,6 +360,7 @@
             this.gr1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.gr1.BackColor = System.Drawing.Color.Transparent;
+            this.gr1.Controls.Add(this.groupBox2);
             this.gr1.Controls.Add(this.groupBox1);
             this.gr1.Controls.Add(this.combImportTable);
             this.gr1.Controls.Add(this.label1);
@@ -343,9 +378,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.chkTablecol);
             this.groupBox1.ForeColor = System.Drawing.Color.Red;
-            this.groupBox1.Location = new System.Drawing.Point(6, 71);
+            this.groupBox1.Location = new System.Drawing.Point(9, 73);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(200, 410);
+            this.groupBox1.Size = new System.Drawing.Size(200, 194);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "请选择字段唯一值";
@@ -357,7 +392,7 @@
             this.chkTablecol.FormattingEnabled = true;
             this.chkTablecol.Location = new System.Drawing.Point(3, 17);
             this.chkTablecol.Name = "chkTablecol";
-            this.chkTablecol.Size = new System.Drawing.Size(194, 390);
+            this.chkTablecol.Size = new System.Drawing.Size(194, 174);
             this.chkTablecol.TabIndex = 0;
             // 
             // combImportTable
@@ -385,36 +420,28 @@
             this.label1.TabIndex = 1;
             this.label1.Text = "数据库表：";
             // 
-            // toolStrip1
+            // groupBox2
             // 
-            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1171, 25);
-            this.toolStrip1.TabIndex = 4;
-            this.toolStrip1.Text = "toolStrip1";
+            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.Controls.Add(this.chkZero);
+            this.groupBox2.ForeColor = System.Drawing.Color.Red;
+            this.groupBox2.Location = new System.Drawing.Point(9, 283);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(200, 201);
+            this.groupBox2.TabIndex = 2;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "过滤 0 字符";
             // 
-            // combPages
+            // chkZero
             // 
-            this.combPages.DisplayMember = "Text";
-            this.combPages.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.combPages.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.combPages.FormattingEnabled = true;
-            this.combPages.ItemHeight = 15;
-            this.combPages.Location = new System.Drawing.Point(420, 43);
-            this.combPages.Name = "combPages";
-            this.combPages.Size = new System.Drawing.Size(97, 21);
-            this.combPages.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.combPages.TabIndex = 5;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.ForeColor = System.Drawing.Color.Red;
-            this.label5.Location = new System.Drawing.Point(339, 48);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(77, 12);
-            this.label5.TabIndex = 1;
-            this.label5.Text = "总页码字段：";
+            this.chkZero.CheckOnClick = true;
+            this.chkZero.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.chkZero.FormattingEnabled = true;
+            this.chkZero.Location = new System.Drawing.Point(3, 17);
+            this.chkZero.Name = "chkZero";
+            this.chkZero.Size = new System.Drawing.Size(194, 181);
+            this.chkZero.TabIndex = 0;
             // 
             // FrmImport
             // 
@@ -438,6 +465,7 @@
             this.gr1.ResumeLayout(false);
             this.gr1.PerformLayout();
             this.groupBox1.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -473,5 +501,7 @@
         private System.Windows.Forms.ToolStrip toolStrip1;
         private DevComponents.DotNetBar.Controls.ComboBoxEx combPages;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.CheckedListBox chkZero;
     }
 }
