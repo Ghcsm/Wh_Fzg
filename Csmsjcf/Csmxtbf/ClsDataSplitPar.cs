@@ -29,6 +29,7 @@ namespace Csmsjcf
 
         public static List<string> ClsExportTable = new List<string>();
         public static List<string> ClsExportCol = new List<string>();
+        public static List<string> ClsExportColLeg = new List<string>();
         public static List<string> ClsExportxlsid = new List<string>();
     }
 

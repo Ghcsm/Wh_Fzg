@@ -61,7 +61,17 @@ namespace Csmsjcf
                         rows = 1;
                     for (int t = 0; t < dt.Rows.Count; t++) {
                         for (int c = 0; c < dt.Columns.Count; c++) {
-                            wsheek.Range[rows + t, c + 1].Text = dt.Rows[t][c].ToString().Trim();
+                            string str= dt.Rows[t][c].ToString().Trim();
+                            if (c <=ClsDataSplitPar.ClsExportColLeg.Count)
+                            {
+                                string leg = ClsDataSplitPar.ClsExportColLeg[c];
+                                if (leg != "0")
+                                {
+                                    int L = Convert.ToInt32(leg);
+                                    str = str.PadLeft(L, '0');
+                                }
+                            }
+                            wsheek.Range[rows + t, c + 1].Text = str;
                         }
                     }
                 }

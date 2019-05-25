@@ -1068,7 +1068,7 @@ namespace DAL
 
         public static DataTable GetDataExporTableInfo(string archid, string table, string col)
         {
-            string strSql = "select " + col.Replace(';', ',');
+            string strSql = "select " + col;
             strSql += " from " + table + " where Archid=@archid";
             SqlParameter p1 = new SqlParameter("@archid", archid);
             DataTable dt = SQLHelper.ExcuteTable(strSql, p1);

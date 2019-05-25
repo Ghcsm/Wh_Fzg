@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Csmsjcf
 {
-  public static  class ClsInIPar
+    public static class ClsInIPar
     {
         #region sqlParameter
 
@@ -52,9 +52,9 @@ namespace Csmsjcf
             }
             ClsDataSplitPar.ClsFilezero = Convert.ToBoolean(dt.Rows[0][8].ToString());
             ClsDataSplitPar.ClsFileDlname = dt.Rows[0][9].ToString();
-            ClsDataSplitPar.ClsdirPageZero =Convert.ToInt32(dt.Rows[0][10].ToString());
+            ClsDataSplitPar.ClsdirPageZero = Convert.ToInt32(dt.Rows[0][10].ToString());
             ClsDataSplitPar.ClsdirMlpage = dt.Rows[0][11].ToString();
-           GetExportTable();
+            GetExportTable();
         }
 
         private static void GetExportTable()
@@ -62,6 +62,7 @@ namespace Csmsjcf
             ClsDataSplitPar.ClsExportTable.Clear();
             ClsDataSplitPar.ClsExportxlsid.Clear();
             ClsDataSplitPar.ClsExportCol.Clear();
+            ClsDataSplitPar.ClsExportColLeg.Clear();
             DataTable dt = T_Sysset.GetDataSplitExporTable();
             if (dt == null || dt.Rows.Count <= 0)
                 return;
@@ -71,7 +72,25 @@ namespace Csmsjcf
                 string xlsid = dr["BindId"].ToString();
                 ClsDataSplitPar.ClsExportTable.Add(table);
                 ClsDataSplitPar.ClsExportxlsid.Add(xlsid);
-                ClsDataSplitPar.ClsExportCol.Add(col);
+                string str = "";
+                string leg = "";
+                if (col.IndexOf(';') >= 0) {
+                    string[] strleg = col.Split(';');
+                    for (int i = 0; i < strleg.Length; i++) {
+                        string[] leg1 = strleg[i].Split(':');
+                        if (str.Trim().Length <= 0) {
+                            str += leg1[0];
+                            leg += leg1[1];
+                        }
+                        else {
+                            str += "," + leg1[0];
+                            leg += "," + leg1[1];
+                        }
+                    }
+                    ClsDataSplitPar.ClsExportCol.Add(str);
+                    ClsDataSplitPar.ClsExportColLeg.Add(leg);
+                }
+
             }
         }
         #endregion

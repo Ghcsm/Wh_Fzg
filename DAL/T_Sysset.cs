@@ -736,10 +736,10 @@ namespace DAL
         }
         public static void UpdateDataSplitExport(string table, string info, string xlsid)
         {
-            string strSql = "update M_GenSetDataSplitTable set ImportCol=@info, BindId=@xlsid  where InfoTable=@table";
+            string strSql = "update M_GenSetDataSplitTable set ImportCol=@info, BindId=@xlsid  where ImportTable=@table";
             SqlParameter p0 = new SqlParameter("@table", table);
             SqlParameter p1 = new SqlParameter("@info", info);
-            SqlParameter p2 = new SqlParameter("@name", xlsid);
+            SqlParameter p2 = new SqlParameter("@xlsid", xlsid);
             SQLHelper.ExecScalar(strSql, p0, p1, p2);
         }
 
