@@ -1528,7 +1528,7 @@ namespace CsmGenSet
                     MessageBox.Show("请查询表是否存在!");
                     return;
                 }
-                if (ClsDataSplit.DataSplitFileName.Length <= 0 ) {
+                if (ClsDataSplit.DataSplitFileName.Length <= 0) {
                     MessageBox.Show("请先生成文件名规则!");
                     return;
                 }
@@ -1579,6 +1579,8 @@ namespace CsmGenSet
                 DataTable dt = T_Sysset.GetDataSplit();
                 if (dt == null || dt.Rows.Count <= 0)
                     return;
+                lvDataSplit_Dircolname.Items.Clear();
+                ClsDataSplit.DataSplitDirsnls.Clear();
                 ClsDataSplit.DataSplitTable = dt.Rows[0][1].ToString();
                 ClsDataSplit.DataSplitDirsn = Convert.ToInt32(dt.Rows[0][2].ToString());
                 ClsDataSplit.DataSplitDirCol = dt.Rows[0][3].ToString();
@@ -1624,6 +1626,7 @@ namespace CsmGenSet
                         item.Text = z[0];
                         item.SubItems.Add(z[1]);
                         lvDataSplit_Dircolname.Items.Add(item);
+                        ClsDataSplit.DataSplitDirsnls.Add(s[i]);
                     }
                 }
                 labDataSplit_dir_zd.Text = "字段示例：" + str + "\\" + ClsDataSplit.DataSplitDirMl + "\\" + ClsDataSplit.DataSplitDirMlpages;
@@ -1716,7 +1719,8 @@ namespace CsmGenSet
             for (int i = 0; i < lvDataSplit_Dircolname.Items.Count; i++) {
                 if (lvDataSplit_Dircolname.Items[i].Selected) {
                     lvDataSplit_Dircolname.Items.RemoveAt(i);
-                    ClsDataSplit.DataSplitDirsnls.RemoveAt(i);
+                    if (i <= ClsDataSplit.DataSplitDirsnls.Count)
+                        ClsDataSplit.DataSplitDirsnls.RemoveAt(i);
                     i--;
                 }
             }
@@ -1785,7 +1789,6 @@ namespace CsmGenSet
                 chkDataSplit_ExportTable.Items.Clear();
                 combDataSplit_Export_table.Items.Clear();
                 combDataSplit_Export_Xlsid.Items.Clear();
-                ClsDataSplit.DataSplitDirsnls.Clear();
                 foreach (DataRow dr in dt.Rows) {
                     string table = dr["ImportTable"].ToString();
                     string col = dr["ImportCol"].ToString();
@@ -2940,6 +2943,7 @@ namespace CsmGenSet
         {
             Infoshow();
         }
+
     }
 
 }
