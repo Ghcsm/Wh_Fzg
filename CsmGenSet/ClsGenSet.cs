@@ -67,6 +67,8 @@ namespace CsmGenSet
         public static string DataSplitDirCol { get; set; } = "";
         public static string DataSplitDirMl {get; set; } = "";
         public static string DataSplitDirMlpages { get; set; } = "";
+        public static List<string> DataSplitDirsnls = new List<string>();
+
 
         public static string DataSplitFileTable { get; set; } = "";
         public static int DataSplitFilesn { get; set; } = 0;

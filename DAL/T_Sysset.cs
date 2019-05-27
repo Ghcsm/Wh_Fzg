@@ -698,10 +698,9 @@ namespace DAL
 
 
 
-        public static void UPdateDataSplitInfo(string dirtable, int dirsn, string dircol, string dirml, string filetable, int filesn, string filename, bool filebool, string filecol, string pageszero,string dirmlpage)
+        public static void UPdateDataSplitDirinfo(string dirtable, int dirsn, string dircol, string dirml, string pageszero,string dirmlpage)
         {
-            string strSql = "update M_GenSetDataSplit set DataTable=@dirtable, Dirsn=@dirsn,DirCol=@dircol,DirMl=@dirml,DirMlPages=@dirpages," +
-                            "FileTable=@filetable,Filesn=@filesn,FileName=@filename,FileBool=@filebool,FileNamecol=@filecol,DirPage=@pzero";
+            string strSql = "update M_GenSetDataSplit set DataTable=@dirtable, Dirsn=@dirsn,DirCol=@dircol,DirMl=@dirml,DirPage=@pzero,DirMlPages=@dirpages";
             SqlParameter[] par =
             {
                 new SqlParameter("@dirtable", dirtable),
@@ -709,12 +708,20 @@ namespace DAL
                 new SqlParameter("@dircol", dircol),
                 new SqlParameter("@dirml", dirml),
                 new SqlParameter("@dirpages", dirmlpage),
+                new SqlParameter("@pzero", pageszero)
+            };
+            SQLHelper.ExecScalar(strSql, par);
+        }
+        public static void UPdateDataSplitFileInfo( string filetable, int filesn, string filename, bool filebool, string filecol)
+        {
+            string strSql = "update M_GenSetDataSplit set FileTable=@filetable,Filesn=@filesn,FileName=@filename,FileBool=@filebool,FileNamecol=@filecol";
+            SqlParameter[] par =
+            {
                 new SqlParameter("@filetable", filetable),
                 new SqlParameter("@filesn", filesn.ToString()),
                 new SqlParameter("@filename", filename),
                 new SqlParameter("@filebool", filebool.ToString()),
-                new SqlParameter("@filecol", filecol.ToString()),
-                new SqlParameter("@pzero", pageszero)
+                new SqlParameter("@filecol", filecol.ToString())
             };
             SQLHelper.ExecScalar(strSql, par);
         }

@@ -14,6 +14,7 @@ namespace Csmsjcf
         public static string ClsdirTable { get; set; }
         public static int ClsdirDirsn { get; set; }
         public static string ClsdirCol  {get;set;}
+        public static List<string> Clsdircolleg = new List<string>();
         public static string ClsdirMl  {get;set;}
         public static string ClsdirMlpage { get; set; }
         public static int ClsdirPageZero { get; set; }

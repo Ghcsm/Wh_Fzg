@@ -1348,6 +1348,7 @@ namespace CsmGenSet
                 return;
             }
             ClsDataSplit.DataSplitExportColtmp.Clear();
+            chkDataSplit_ExportTable.Items.Clear();
             DataTable dt = T_Sysset.GetTableName(ClsDataSplit.DataSplitTable);
             if (dt != null && dt.Rows.Count > 0) {
                 chkDataSplit.DataSource = dt;
@@ -1355,20 +1356,23 @@ namespace CsmGenSet
             }
         }
 
-        private string Getzd()
+        private string Getzd(out string gz)
         {
             string str = "";
-            if (chkDataSplit.Items.Count <= 0 && chkDataSplit.SelectedItems.Count <= 0)
+            gz = "";
+            if (ClsDataSplit.DataSplitDirsnls.Count <= 0)
                 return str;
-            int id = 0;
-            for (int i = 0; i < chkDataSplit.Items.Count; i++) {
-                if (chkDataSplit.GetItemChecked(i)) {
-                    id += 1;
-                    string s = chkDataSplit.GetItemText(chkDataSplit.Items[i]);
-                    if (str.Trim().Length <= 0)
-                        str += s;
-                    else str += "\\" + s;
-                }
+            for (int i = 0; i < ClsDataSplit.DataSplitDirsnls.Count; i++) {
+                string s = ClsDataSplit.DataSplitDirsnls[i];
+                if (gz.Trim().Length <= 0)
+                    gz += s;
+                else
+                    gz += "\\" + s;
+                string[] c = s.Split(':');
+                if (str.Trim().Length <= 0)
+                    str += c[0];
+                else str += "\\" + c[0];
+
             }
             return str;
         }
@@ -1429,18 +1433,14 @@ namespace CsmGenSet
         private void Getgzzd()
         {
             string str = "";
-            if (rabDataSplitdir.Checked) {
+            string dir = "";
+            if (tabDataSplit_gz.IsSelected) {
                 ClsDataSplit.DataSplitDirMl = "";
                 ClsDataSplit.DataSplitDirCol = "";
                 ClsDataSplit.DataSplitDirMlpages = "";
-                if (!chkDataSplit_dir_zd.Checked && !chkDataSplit_dir_ml.Checked) {
-                    MessageBox.Show("请选择文件夹要生成的规则选择！");
-                    labDataSplit_dir_zd.Text = string.Format("字段示例：{0}", "");
-                    return;
-                }
                 if (chkDataSplit_dir_zd.Checked) {
-                    str = Getzd();
-                    ClsDataSplit.DataSplitDirCol = str;
+                    str = Getzd(out dir);
+                    ClsDataSplit.DataSplitDirCol = dir;
                 }
                 if (chkDataSplit_dir_ml.Checked) {
                     if (combDataSplit_dir_pages.Text.Trim().Length <= 0) {
@@ -1487,7 +1487,7 @@ namespace CsmGenSet
             }
         }
 
-        private void SaveDataSplitinfo()
+        private void SaveDataSplitdirname()
         {
 
             try {
@@ -1509,7 +1509,26 @@ namespace CsmGenSet
                     MessageBox.Show("请选择文件夹生成规则选项!");
                     return;
                 }
-                if (ClsDataSplit.DataSplitFileName.Length <= 0 || ClsDataSplit.DataSplitfilenamecol == null && ClsDataSplit.DataSplitfilenamecol.Trim().Length <= 0) {
+                T_Sysset.UPdateDataSplitDirinfo(ClsDataSplit.DataSplitTable, ClsDataSplit.DataSplitDirsn, ClsDataSplit.DataSplitDirCol,
+                    ClsDataSplit.DataSplitDirMl, txtDataSplit_pagezero.Text.Trim(), ClsDataSplit.DataSplitDirMlpages);
+                MessageBox.Show("设置完成");
+                GetdataSplit();
+            } catch (Exception e) {
+                MessageBox.Show(e.ToString());
+            } finally {
+                string s = "修改数据拆分信息:" + ClsDataSplit.DataSplitDirCol + ";" + ClsDataSplit.DataSplitDirMl + ";" + ClsDataSplit.DataSplitFileName;
+                Common.Writelog(0, s);
+            }
+        }
+        private void SaveDataSplitFilename()
+        {
+
+            try {
+                if (ClsDataSplit.DataSplitTable.Trim().Length <= 0) {
+                    MessageBox.Show("请查询表是否存在!");
+                    return;
+                }
+                if (ClsDataSplit.DataSplitFileName.Length <= 0 ) {
                     MessageBox.Show("请先生成文件名规则!");
                     return;
                 }
@@ -1517,16 +1536,14 @@ namespace CsmGenSet
                 if (chkDataSplit_dir_ml.Checked && chkDataSplit_dir_zd.Checked)
                     ClsDataSplit.DataSplitDirsn = 3;
 
-                T_Sysset.UPdateDataSplitInfo(ClsDataSplit.DataSplitTable, ClsDataSplit.DataSplitDirsn, ClsDataSplit.DataSplitDirCol,
-                    ClsDataSplit.DataSplitDirMl, ClsDataSplit.DataSplitFileTable, ClsDataSplit.DataSplitFilesn,
-                    ClsDataSplit.DataSplitFileName, zer, ClsDataSplit.DataSplitfilenamecol, txtDataSplit_pagezero.Text.Trim(),
-                    ClsDataSplit.DataSplitDirMlpages);
+                T_Sysset.UPdateDataSplitFileInfo(ClsDataSplit.DataSplitFileTable, ClsDataSplit.DataSplitFilesn,
+                    ClsDataSplit.DataSplitFileName, zer, ClsDataSplit.DataSplitfilenamecol);
                 MessageBox.Show("设置完成");
                 GetdataSplit();
             } catch (Exception e) {
                 MessageBox.Show(e.ToString());
             } finally {
-                string s = "修改数据拆分信息:" + ClsDataSplit.DataSplitDirCol + ";" + ClsDataSplit.DataSplitDirMl + ";" + ClsDataSplit.DataSplitFileName;
+                string s = "修改数据拆分信息:" + ClsDataSplit.DataSplitFileTable + ";" + ClsDataSplit.DataSplitFilesn + ";" + ClsDataSplit.DataSplitFileName;
                 Common.Writelog(0, s);
             }
         }
@@ -1593,7 +1610,23 @@ namespace CsmGenSet
                 else if (ClsDataSplit.DataSplitDirsn == 1)
                     chkDataSplit_dir_zd.Checked = true;
 
-                labDataSplit_dir_zd.Text = "字段示例：" + ClsDataSplit.DataSplitDirCol + "\\" + ClsDataSplit.DataSplitDirMl + "\\" + ClsDataSplit.DataSplitDirMlpages;
+                string str = ClsDataSplit.DataSplitDirCol;
+                if (str.IndexOf('\\') >= 0) {
+                    string[] s = str.Split('\\');
+                    str = "";
+                    for (int i = 0; i < s.Length; i++) {
+                        string[] z = s[i].Split(':');
+                        if (str.Trim().Length <= 0)
+                            str += z[0];
+                        else
+                            str += "\\" + z[0];
+                        ListViewItem item = new ListViewItem();
+                        item.Text = z[0];
+                        item.SubItems.Add(z[1]);
+                        lvDataSplit_Dircolname.Items.Add(item);
+                    }
+                }
+                labDataSplit_dir_zd.Text = "字段示例：" + str + "\\" + ClsDataSplit.DataSplitDirMl + "\\" + ClsDataSplit.DataSplitDirMlpages;
                 if (ClsDataSplit.DataSplitFilesn == 3) {
                     rabDataSplit_File_zd.Checked = true;
                     labDataSplit_Filesl.Text = ClsDataSplit.DataSplitFileName;
@@ -1604,10 +1637,10 @@ namespace CsmGenSet
                         rabDataSplit_File_dirname.Checked = true;
                     else
                         rabDataSplit_File_anjuan.Checked = true;
-                    string[] str = ClsDataSplit.DataSplitFileName.Split(';');
-                    txtDataSplit_File_cd.Text = str[0];
-                    txtDataSplit_File_qian.Text = str[1];
-                    txtDataSplit_File_hou.Text = str[2];
+                    string[] strtmp = ClsDataSplit.DataSplitFileName.Split(';');
+                    txtDataSplit_File_cd.Text = strtmp[0];
+                    txtDataSplit_File_qian.Text = strtmp[1];
+                    txtDataSplit_File_hou.Text = strtmp[2];
                     GetFileGz();
                 }
                 chkDataSplit_File_zero.Checked = ClsDataSplit.DataSplitzero;
@@ -1627,12 +1660,32 @@ namespace CsmGenSet
             for (int i = 0; i < chkDataSplit.Items.Count; i++) {
                 if (chkDataSplit.GetItemChecked(i)) {
                     string strid = chkDataSplit.GetItemText(chkDataSplit.Items[i]);
-                    if (ClsDataSplit.DataSplitExportColtmp.IndexOf(strid) < 0) {
-                        ClsDataSplit.DataSplitExportColtmp.Add(strid+":"+"0");
+                    if (ClsDataSplit.DataSplitExportColtmp.IndexOf(strid + ":" + "0") < 0) {
+                        ClsDataSplit.DataSplitExportColtmp.Add(strid + ":" + "0");
                         ListViewItem item = new ListViewItem();
                         item.Text = strid;
                         item.SubItems.Add("0");
                         chkDataSplit_ExportTable.Items.Add(item);
+
+                    }
+                }
+            }
+        }
+        private void AddDataSplitLvdirname()
+        {
+            if (chkDataSplit.Items.Count <= 0)
+                return;
+            if (chkDataSplit.SelectedItems.Count <= 0)
+                return;
+            for (int i = 0; i < chkDataSplit.Items.Count; i++) {
+                if (chkDataSplit.GetItemChecked(i)) {
+                    string strid = chkDataSplit.GetItemText(chkDataSplit.Items[i]);
+                    if (ClsDataSplit.DataSplitDirsnls.IndexOf(strid + ":" + "0") < 0) {
+                        ClsDataSplit.DataSplitDirsnls.Add(strid + ":" + "0");
+                        ListViewItem item = new ListViewItem();
+                        item.Text = strid;
+                        item.SubItems.Add("0");
+                        lvDataSplit_Dircolname.Items.Add(item);
 
                     }
                 }
@@ -1643,15 +1696,27 @@ namespace CsmGenSet
         {
             if (chkDataSplit_ExportTable.Items.Count <= 0)
                 return;
-            if (chkDataSplit_ExportTable.CheckedItems.Count <= 0)
+            if (chkDataSplit_ExportTable.SelectedItems.Count <= 0)
                 return;
             for (int i = 0; i < chkDataSplit_ExportTable.Items.Count; i++) {
-                if (chkDataSplit_ExportTable.Items[i].Checked)
-                {
-                    string str =chkDataSplit_ExportTable.Items[i].ToString();
+                if (chkDataSplit_ExportTable.Items[i].Selected) {
                     chkDataSplit_ExportTable.Items.RemoveAt(i);
-                    if (ClsDataSplit.DataSplitExportColtmp.IndexOf(str) >= 0)
-                        ClsDataSplit.DataSplitExportColtmp.Remove(str);
+                    ClsDataSplit.DataSplitExportColtmp.RemoveAt(i);
+                    i--;
+                }
+            }
+        }
+
+        private void DelDataSplitLvdirname()
+        {
+            if (lvDataSplit_Dircolname.Items.Count <= 0)
+                return;
+            if (lvDataSplit_Dircolname.SelectedItems.Count <= 0)
+                return;
+            for (int i = 0; i < lvDataSplit_Dircolname.Items.Count; i++) {
+                if (lvDataSplit_Dircolname.Items[i].Selected) {
+                    lvDataSplit_Dircolname.Items.RemoveAt(i);
+                    ClsDataSplit.DataSplitDirsnls.RemoveAt(i);
                     i--;
                 }
             }
@@ -1720,6 +1785,7 @@ namespace CsmGenSet
                 chkDataSplit_ExportTable.Items.Clear();
                 combDataSplit_Export_table.Items.Clear();
                 combDataSplit_Export_Xlsid.Items.Clear();
+                ClsDataSplit.DataSplitDirsnls.Clear();
                 foreach (DataRow dr in dt.Rows) {
                     string table = dr["ImportTable"].ToString();
                     string col = dr["ImportCol"].ToString();
@@ -1736,7 +1802,7 @@ namespace CsmGenSet
                     for (int i = 0; i < c.Length; i++) {
                         ClsDataSplit.DataSplitExportxlsid.Add(c[i].ToString());
                         string[] d = c[i].Split(':');
-                         ListViewItem item=new ListViewItem();
+                        ListViewItem item = new ListViewItem();
                         item.Text = d[0].ToString();
                         item.SubItems.Add(d[1].ToString());
                         chkDataSplit_ExportTable.Items.Add(item);
@@ -1793,6 +1859,31 @@ namespace CsmGenSet
             }
         }
 
+        private void butDataSplite_dirnameupdate_Click(object sender, EventArgs e)
+        {
+            if (txtDataSplit_dircolleg.Text.Trim().Length <= 0) {
+                MessageBox.Show("请输入字符串总长度!");
+                txtDataSplit_dircolleg.Focus();
+                return;
+            }
+            if (lvDataSplit_Dircolname.Items.Count > 0 && lvDataSplit_Dircolname.SelectedItems.Count > 0) {
+                lvDataSplit_Dircolname.SelectedItems[0].SubItems[1].Text = txtDataSplit_dircolleg.Text.Trim();
+
+                ClsDataSplit.DataSplitDirsnls.Clear();
+                for (int i = 0; i < lvDataSplit_Dircolname.Items.Count; i++) {
+                    string str = lvDataSplit_Dircolname.Items[i].Text + ":" +
+                                 lvDataSplit_Dircolname.Items[i].SubItems[1].Text;
+                    ClsDataSplit.DataSplitDirsnls.Add(str);
+                }
+            }
+        }
+
+        private void lvDataSplit_Dircolname_Click(object sender, EventArgs e)
+        {
+            if (lvDataSplit_Dircolname.Items.Count > 0 && lvDataSplit_Dircolname.SelectedItems.Count > 0)
+                txtDataSplit_dircolleg.Text = lvDataSplit_Dircolname.SelectedItems[0].SubItems[1].Text;
+        }
+
         private void chkDataSplit_ExportTable_Click(object sender, EventArgs e)
         {
             if (chkDataSplit_ExportTable.Items.Count > 0 && chkDataSplit_ExportTable.SelectedItems.Count > 0)
@@ -1800,23 +1891,41 @@ namespace CsmGenSet
         }
         private void butDataSplit_Export_strCount_Click(object sender, EventArgs e)
         {
-            if (txtDataSplit_Export_strLeg.Text.Trim().Length <= 0)
-            {
+            if (txtDataSplit_Export_strLeg.Text.Trim().Length <= 0) {
                 MessageBox.Show("请输入字符串总长度!");
+                txtDataSplit_Export_strLeg.Focus();
                 return;
             }
-            if (chkDataSplit_ExportTable.Items.Count > 0 && chkDataSplit_ExportTable.SelectedItems.Count > 0)
-            {
+            if (chkDataSplit_ExportTable.Items.Count > 0 && chkDataSplit_ExportTable.SelectedItems.Count > 0) {
                 chkDataSplit_ExportTable.SelectedItems[0].SubItems[1].Text = txtDataSplit_Export_strLeg.Text.Trim();
 
                 ClsDataSplit.DataSplitExportColtmp.Clear();
-                for (int i = 0; i < chkDataSplit_ExportTable.Items.Count; i++)
-                {
+                for (int i = 0; i < chkDataSplit_ExportTable.Items.Count; i++) {
                     string str = chkDataSplit_ExportTable.Items[i].Text + ":" +
                                  chkDataSplit_ExportTable.Items[i].SubItems[1].Text;
                     ClsDataSplit.DataSplitExportColtmp.Add(str);
                 }
             }
+        }
+
+        private void butDataSplit_FilenameGz_Click(object sender, EventArgs e)
+        {
+            Getgzzd();
+        }
+
+        private void butDataSplit_FilenameSave_Click(object sender, EventArgs e)
+        {
+            SaveDataSplitFilename();
+        }
+
+        private void butDataSplit_dircoladd_Click(object sender, EventArgs e)
+        {
+            AddDataSplitLvdirname();
+        }
+
+        private void butDataSplit_dircodel_Click(object sender, EventArgs e)
+        {
+            DelDataSplitLvdirname();
         }
 
         private void txtPagezero_KeyPress(object sender, KeyPressEventArgs e)
@@ -1839,14 +1948,16 @@ namespace CsmGenSet
             if (chkDataSplit_dir_ml.Checked) {
                 combDataSplit_dir_ml.Enabled = true;
                 combDataSplit_dir_pages.Enabled = true;
+                txtDataSplit_pagezero.Enabled = true;
                 return;
             }
             combDataSplit_dir_ml.Enabled = false;
             combDataSplit_dir_pages.Enabled = false;
+            txtDataSplit_pagezero.Enabled = false;
         }
         private void chkDataSplit_Click(object sender, EventArgs e)
         {
-            if (rabDataSplit_File_zd.Checked && rabDataSplitFile.Checked)
+            if (rabDataSplit_File_zd.Checked)
                 Clechk();
         }
         private void rabDataSplit_File_dirname_Click(object sender, EventArgs e)
@@ -1863,7 +1974,7 @@ namespace CsmGenSet
         }
         private void butDataSplitSave_Click(object sender, EventArgs e)
         {
-            SaveDataSplitinfo();
+            SaveDataSplitdirname();
         }
 
         private void butDataSplit_Import_add_Click(object sender, EventArgs e)
@@ -1984,7 +2095,7 @@ namespace CsmGenSet
                         str += ClsInfoCheck.InfoCheckColtmp[i];
                 }
                 if (ClsInfoCheck.InfoCheckTable.IndexOf(table) < 0) {
-                   if (ClsInfoCheck.InfocheckMsg.Contains(combInfoCheck_info.Text.Trim())) {
+                    if (ClsInfoCheck.InfocheckMsg.Contains(combInfoCheck_info.Text.Trim())) {
                         MessageBox.Show("此信息框已绑定请更改!");
                         return;
                     }
@@ -1998,7 +2109,7 @@ namespace CsmGenSet
                 Common.Writelog(0, s);
             } catch (Exception e) {
                 MessageBox.Show(e.ToString());
-            } 
+            }
         }
 
         private void GetInfoCheck()
@@ -2829,8 +2940,6 @@ namespace CsmGenSet
         {
             Infoshow();
         }
-
-      
     }
 
 }

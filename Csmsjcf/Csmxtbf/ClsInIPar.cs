@@ -27,14 +27,26 @@ namespace Csmsjcf
             ClsDataSplitPar.ClsFileDlname = "";
             ClsDataSplitPar.ClsdirPageZero = 0;
             ClsDataSplitPar.ClsFilezero = false;
+            ClsDataSplitPar.Clsdircolleg.Clear();
             DataTable dt = T_Sysset.GetDataSplit();
             if (dt == null || dt.Rows.Count <= 0)
                 return;
             ClsDataSplitPar.ClsdirTable = dt.Rows[0][1].ToString();
             ClsDataSplitPar.ClsdirDirsn = Convert.ToInt32(dt.Rows[0][2].ToString());
             ClsDataSplitPar.ClsdirCol = dt.Rows[0][3].ToString().Replace('\\', ',');
+            string str = dt.Rows[0][3].ToString();
+            if (str.IndexOf('\\') >= 0) {
+                string[] s = str.Split('\\');
+                str = "";
+                for (int i = 0; i < s.Length; i++) {
+                    if (str.Trim().Length <= 0)
+                        str += s[0];
+                    else
+                        str += "," + s[0];
+                    ClsDataSplitPar.Clsdircolleg.Add(s[1]);
+                }
+            }
             ClsDataSplitPar.ClsdirMl = dt.Rows[0][4].ToString();
-
             ClsDataSplitPar.ClsFileTable = dt.Rows[0][5].ToString();
             ClsDataSplitPar.ClsFilesn = Convert.ToInt32(dt.Rows[0][6].ToString());
             string file = dt.Rows[0][7].ToString();

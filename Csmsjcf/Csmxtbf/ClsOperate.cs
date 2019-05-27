@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
+using System.Linq;
 using HLjscom;
 
 namespace Csmsjcf
@@ -16,14 +17,14 @@ namespace Csmsjcf
             DataTable dt = null;
             if (ClsFrmInfoPar.ConverMode == 2)
                 Common.DataSplitUpdate(ClsFrmInfoPar.Houseid, boxsn);
-            return dt = Common.GetDataSplitBoxsn(ClsFrmInfoPar.Houseid, boxsn);
+            return dt = Common.GetDataSplitBoxsn(ClsFrmInfoPar.Houseid, boxsn, ClsFrmInfoPar.ExportType);
         }
         public static DataTable SelectSqlcol(string str)
         {
             DataTable dt = null;
             if (ClsFrmInfoPar.ConverMode == 2)
                 Common.DataSplitUpdatecol(ClsFrmInfoPar.Houseid, str);
-            return dt = Common.GetDataSplitBoxCol(ClsFrmInfoPar.Houseid, str);
+            return dt = Common.GetDataSplitBoxCol(ClsFrmInfoPar.Houseid, str, ClsFrmInfoPar.ExportType);
         }
 
         public static DataTable SelectSqlColFw(string str)
@@ -31,7 +32,7 @@ namespace Csmsjcf
             DataTable dt = null;
             if (ClsFrmInfoPar.ConverMode == 2)
                 Common.DataSplitUpdatecolFw(ClsFrmInfoPar.Houseid, str);
-            return dt = Common.GetDataSplitBoxColFw(ClsFrmInfoPar.Houseid, str);
+            return dt = Common.GetDataSplitBoxColFw(ClsFrmInfoPar.Houseid, str, ClsFrmInfoPar.ExportType);
         }
 
         public static DataTable SelectSql(string boxsn, string archno)
@@ -39,7 +40,7 @@ namespace Csmsjcf
             DataTable dt = null;
             if (ClsFrmInfoPar.ConverMode == 2)
                 Common.DataSplitUpdate(ClsFrmInfoPar.Houseid, boxsn, archno);
-            return dt = Common.GetDataSplitBoxsn(ClsFrmInfoPar.Houseid, boxsn, archno);
+            return dt = Common.GetDataSplitBoxsn(ClsFrmInfoPar.Houseid, boxsn, archno, ClsFrmInfoPar.ExportType);
         }
 
         //获取自定义table及字段 写入xls
@@ -49,9 +50,13 @@ namespace Csmsjcf
                 return "错误：后台未设置导出表";
             Workbook work = new Workbook();
             Worksheet wsheek = null;
+            List<string> lstmp = new List<string>();
             try {
                 work.LoadFromFile(xls);
                 for (int i = 0; i < ClsDataSplitPar.ClsExportTable.Count; i++) {
+                    lstmp.Clear();
+                    string[] s = ClsDataSplitPar.ClsExportColLeg[i].Split(',');
+                    lstmp = new List<string>(s);
                     DataTable dt = Common.GetDataExporTableInfo(archid, ClsDataSplitPar.ClsExportTable[i], ClsDataSplitPar.ClsExportCol[i]);
                     if (dt == null || dt.Rows.Count <= 0)
                         continue;
@@ -61,12 +66,10 @@ namespace Csmsjcf
                         rows = 1;
                     for (int t = 0; t < dt.Rows.Count; t++) {
                         for (int c = 0; c < dt.Columns.Count; c++) {
-                            string str= dt.Rows[t][c].ToString().Trim();
-                            if (c <=ClsDataSplitPar.ClsExportColLeg.Count)
-                            {
-                                string leg = ClsDataSplitPar.ClsExportColLeg[c];
-                                if (leg != "0")
-                                {
+                            string str = dt.Rows[t][c].ToString().Trim();
+                            if (c <= lstmp.Count) {
+                                string leg = lstmp[c];
+                                if (leg != "0") {
                                     int L = Convert.ToInt32(leg);
                                     str = str.PadLeft(L, '0');
                                 }
@@ -93,9 +96,18 @@ namespace Csmsjcf
             if (dt == null || dt.Rows.Count <= 0)
                 return "错误：未找到文件夹字段信息!";
             for (int i = 0; i < dt.Columns.Count; i++) {
-                if (i != dt.Columns.Count - 1)
-                    str += dt.Rows[0][i].ToString().Trim() + "\\";
-                else str += dt.Rows[0][i].ToString().Trim();
+                string s = dt.Rows[0][i].ToString().Trim();
+                if (i <= ClsDataSplitPar.Clsdircolleg.Count) {
+                    string l = ClsDataSplitPar.Clsdircolleg[i];
+                    if (l != "0") {
+                        int x = Convert.ToInt32(l);
+                        s = s.PadLeft(x, '0');
+                    }
+                }
+                if (str.Trim().Length <= 0)
+                    str += s;
+                else str += "\\" + s;
+
             }
             return str;
         }
@@ -132,9 +144,7 @@ namespace Csmsjcf
         {
             try {
                 string str = "";
-                if (file.Trim().Length <= 0)
-                    return "错误：文件名长度不正确";
-                file = DESEncrypt.DesEncrypt(file);
+                file = DESEncrypt.DesDecrypt(file);
                 if (ClsFrmInfoPar.Ftp == 2)
                     str = Path.Combine(imgpath, "ArchSave", file.Substring(0, 8), file);
                 else {
