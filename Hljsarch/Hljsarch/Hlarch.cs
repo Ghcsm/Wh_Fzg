@@ -1306,11 +1306,11 @@ namespace HLjscom
                         int zd = 0;
                         string Newfile = "";
                         if (cd > 0) {
-                            zd = cd - (i.ToString().Length) - qzd.Length - hzd.Length;
-                            Newfile = Path.Combine(mimg, qzd + num.ToString().PadLeft(zd, '0') + hzd + "." + fileformat);
+                            zd = cd- qzd.Trim().Length - hzd.Trim().Length;
+                            Newfile = Path.Combine(mimg, qzd.Trim() + num.ToString().PadLeft(zd, '0') + hzd.Trim() + "." + fileformat);
                         }
                         else {
-                            Newfile = Path.Combine(mimg, qzd + num.ToString() + hzd + "." + fileformat);
+                            Newfile = Path.Combine(mimg, qzd.Trim() + num.ToString() + hzd.Trim() + "." + fileformat);
                         }
 
                         if (id > 1) {
@@ -1381,11 +1381,11 @@ namespace HLjscom
                         int zd = 0;
                         string Newfile = "";
                         if (cd > 0) {
-                            zd = cd - (i.ToString().Length) - qzd.Length - hzd.Length;
-                            Newfile = Path.Combine(mimg, qzd + num.ToString().PadLeft(zd, '0') + hzd + "." + fileformat);
+                            zd = cd- qzd.Trim().Length - hzd.Trim().Length;
+                            Newfile = Path.Combine(mimg, qzd.Trim() + num.ToString().PadLeft(zd, '0') + hzd.Trim() + "." + fileformat);
                         }
                         else {
-                            Newfile = Path.Combine(mimg, qzd + num.ToString() + hzd + "." + fileformat);
+                            Newfile = Path.Combine(mimg, qzd.Trim() + num.ToString() + hzd.Trim() + "." + fileformat);
                         }
                         if (id > 1) {
                             try {

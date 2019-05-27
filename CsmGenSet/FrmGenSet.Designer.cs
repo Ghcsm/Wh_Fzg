@@ -89,8 +89,6 @@
             this.butDataSplit_FilenameGz = new DevComponents.DotNetBar.ButtonX();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.chkDataSplit_File_zero = new System.Windows.Forms.CheckBox();
-            this.txtDataSplit_File_hou = new System.Windows.Forms.TextBox();
-            this.txtDataSplit_File_qian = new System.Windows.Forms.TextBox();
             this.labDataSplit_Filesl = new System.Windows.Forms.Label();
             this.labDataSplit_Filetable = new System.Windows.Forms.Label();
             this.labDataSplit_Filename = new System.Windows.Forms.Label();
@@ -312,6 +310,8 @@
             this.comboItem4 = new DevComponents.Editors.ComboItem();
             this.comboItem3 = new DevComponents.Editors.ComboItem();
             this.colorDialog = new System.Windows.Forms.ColorDialog();
+            this.txtDataSplit_File_qian = new DevComponents.DotNetBar.Controls.TextBoxX();
+            this.txtDataSplit_File_hou = new DevComponents.DotNetBar.Controls.TextBoxX();
             ((System.ComponentModel.ISupportInitialize)(this.superTabControl1)).BeginInit();
             this.superTabControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.superTabControl2)).BeginInit();
@@ -441,8 +441,8 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabContr.CanReorderTabs = true;
-            this.tabContr.Controls.Add(this.tabControlPanel11);
             this.tabContr.Controls.Add(this.tabControlPanel6);
+            this.tabContr.Controls.Add(this.tabControlPanel11);
             this.tabContr.Controls.Add(this.tabControlPanel12);
             this.tabContr.Controls.Add(this.tabControlPanel2);
             this.tabContr.Controls.Add(this.tabConPrintSet);
@@ -790,8 +790,8 @@
             // 
             this.tabConDataSplit.BackColor = System.Drawing.Color.Transparent;
             this.tabConDataSplit.CanReorderTabs = true;
-            this.tabConDataSplit.Controls.Add(this.tabControlPanel7);
             this.tabConDataSplit.Controls.Add(this.tabControlPanel13);
+            this.tabConDataSplit.Controls.Add(this.tabControlPanel7);
             this.tabConDataSplit.Controls.Add(this.tabControlPanel8);
             this.tabConDataSplit.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabConDataSplit.Location = new System.Drawing.Point(3, 17);
@@ -1110,9 +1110,9 @@
             // groupBox5
             // 
             this.groupBox5.BackColor = System.Drawing.Color.Transparent;
-            this.groupBox5.Controls.Add(this.chkDataSplit_File_zero);
             this.groupBox5.Controls.Add(this.txtDataSplit_File_hou);
             this.groupBox5.Controls.Add(this.txtDataSplit_File_qian);
+            this.groupBox5.Controls.Add(this.chkDataSplit_File_zero);
             this.groupBox5.Controls.Add(this.labDataSplit_Filesl);
             this.groupBox5.Controls.Add(this.labDataSplit_Filetable);
             this.groupBox5.Controls.Add(this.labDataSplit_Filename);
@@ -1139,20 +1139,6 @@
             this.chkDataSplit_File_zero.TabIndex = 7;
             this.chkDataSplit_File_zero.Text = "位数不足补0";
             this.chkDataSplit_File_zero.UseVisualStyleBackColor = true;
-            // 
-            // txtDataSplit_File_hou
-            // 
-            this.txtDataSplit_File_hou.Location = new System.Drawing.Point(318, 104);
-            this.txtDataSplit_File_hou.Name = "txtDataSplit_File_hou";
-            this.txtDataSplit_File_hou.Size = new System.Drawing.Size(100, 21);
-            this.txtDataSplit_File_hou.TabIndex = 6;
-            // 
-            // txtDataSplit_File_qian
-            // 
-            this.txtDataSplit_File_qian.Location = new System.Drawing.Point(318, 67);
-            this.txtDataSplit_File_qian.Name = "txtDataSplit_File_qian";
-            this.txtDataSplit_File_qian.Size = new System.Drawing.Size(100, 21);
-            this.txtDataSplit_File_qian.TabIndex = 5;
             // 
             // labDataSplit_Filesl
             // 
@@ -3670,6 +3656,34 @@
             // 
             this.comboItem3.Text = "一录信息";
             // 
+            // txtDataSplit_File_qian
+            // 
+            // 
+            // 
+            // 
+            this.txtDataSplit_File_qian.Border.Class = "TextBoxBorder";
+            this.txtDataSplit_File_qian.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.txtDataSplit_File_qian.Location = new System.Drawing.Point(318, 69);
+            this.txtDataSplit_File_qian.Name = "txtDataSplit_File_qian";
+            this.txtDataSplit_File_qian.PreventEnterBeep = true;
+            this.txtDataSplit_File_qian.Size = new System.Drawing.Size(100, 21);
+            this.txtDataSplit_File_qian.TabIndex = 8;
+            this.txtDataSplit_File_qian.WatermarkText = "前面补a,b,x等";
+            // 
+            // txtDataSplit_File_hou
+            // 
+            // 
+            // 
+            // 
+            this.txtDataSplit_File_hou.Border.Class = "TextBoxBorder";
+            this.txtDataSplit_File_hou.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.txtDataSplit_File_hou.Location = new System.Drawing.Point(319, 102);
+            this.txtDataSplit_File_hou.Name = "txtDataSplit_File_hou";
+            this.txtDataSplit_File_hou.PreventEnterBeep = true;
+            this.txtDataSplit_File_hou.Size = new System.Drawing.Size(100, 21);
+            this.txtDataSplit_File_hou.TabIndex = 9;
+            this.txtDataSplit_File_hou.WatermarkText = "后面补a,b,x等";
+            // 
             // FrmGetSet
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -4033,8 +4047,6 @@
         private DevComponents.DotNetBar.TabControlPanel tabControlPanel13;
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.CheckBox chkDataSplit_File_zero;
-        private System.Windows.Forms.TextBox txtDataSplit_File_hou;
-        private System.Windows.Forms.TextBox txtDataSplit_File_qian;
         private System.Windows.Forms.Label labDataSplit_Filesl;
         private System.Windows.Forms.Label labDataSplit_Filetable;
         private System.Windows.Forms.Label labDataSplit_Filename;
@@ -4057,6 +4069,8 @@
         private DevComponents.DotNetBar.ButtonX butDataSplit_dircoladd;
         private DevComponents.DotNetBar.ButtonX butDataSplit_FilenameSave;
         private DevComponents.DotNetBar.ButtonX butDataSplit_FilenameGz;
+        private DevComponents.DotNetBar.Controls.TextBoxX txtDataSplit_File_hou;
+        private DevComponents.DotNetBar.Controls.TextBoxX txtDataSplit_File_qian;
     }
 }
 

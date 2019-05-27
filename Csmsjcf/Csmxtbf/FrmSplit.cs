@@ -322,7 +322,7 @@ namespace Csmsjcf
                         MessageBox.Show("文件名此规则必须在文件夹命名规则包含目录才可用!");
                         return false;
                     }
-                    if (ClsDataSplitPar.ClsdirMl.Trim().Length <= 0 || ClsDataSplitPar.ClsdirMlpage.Trim().Length <= 0) {
+                    if (ClsDataSplitPar.ClsdirMl.Trim().Length <= 0 && ClsDataSplitPar.ClsdirMlpage.Trim().Length <= 0) {
                         MessageBox.Show("未发现后台目录相关设置数据");
                         return false;
                     }
@@ -964,8 +964,11 @@ namespace Csmsjcf
                     ListBshowInfo(xc, boxsn, archno, "警告,错误线程退出");
                 } finally {
                     try {
-                        File.Delete(Downfile);
-                        Directory.Delete(Path.GetDirectoryName(Downfile));
+                        if (ClsFrmInfoPar.Ftp == 1)
+                        {
+                            File.Delete(Downfile);
+                            Directory.Delete(Path.GetDirectoryName(Downfile));
+                        }
                     } catch { }
                     ListBshowInfo(xc, boxsn, archno, "线程退出");
                 }
@@ -1170,7 +1173,7 @@ namespace Csmsjcf
                     if (strkey == "convpath")
                         txt_gr3_1_splitPath.Text = strval;
                     if (strkey == "ftppath")
-                        txt_gr3_1_splitPath.Text = strval;
+                        txt_gr3_1_imgPath.Text = strval;
                     if (strkey == "convxls")
                         txt_gr3_1_xlsPath.Text = strval;
                 }
@@ -1221,7 +1224,7 @@ namespace Csmsjcf
             }
             else
                 str = "";
-            but_gr3_1_ImgPath.Text = str;
+            txt_gr3_1_imgPath.Text = str;
             ClsFrmInfoPar.YimgPath = str;
         }
 
