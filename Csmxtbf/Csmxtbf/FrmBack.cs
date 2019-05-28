@@ -1,5 +1,6 @@
 ﻿using DAL;
 using HLFtp;
+using ICSharpCode.SharpZipLib.Zip;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -8,6 +9,7 @@ using System.Drawing;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ICSharpCode.SharpZipLib.GZip;
 
 namespace Csmxtbf
 {
@@ -166,6 +168,8 @@ namespace Csmxtbf
                 BackImg();
             } catch (Exception ex) {
                 Writelog(ex.ToString());
+            } finally {
+                groupPanel1.Enabled = true;
             }
         }
 
@@ -176,29 +180,43 @@ namespace Csmxtbf
             stopwatch.Start();
             labxx1.Text = "正在备份...";
             Application.DoEvents();
-            string n = DateTime.Now.ToString("yyyyMMddhhmm") + ".bak";
-            string f = Path.Combine(txtBackPath.Text.Trim(), n);
-            if (rButBak.Checked)
-            {
+            string f = Path.Combine(txtBackPath.Text.Trim(), DateTime.Now.ToString("yyyyMMddhhmm") + ".bak");
+            string z = Path.Combine(txtBackPath.Text.Trim(), DateTime.Now.ToString("yyyyMMddhhmm") + ".zip");
+            if (rButBak.Checked) {
                 if (File.Exists(f))
                     File.Delete(f);
             }
             T_Sysset.BackSql(f);
+            if (File.Exists(f))
+            {
+                using (ZipFile zip = ZipFile.Create(z)) {
+                    zip.BeginUpdate();
+                    zip.Add(f);
+                    zip.Password ="bg."+DateTime.Now.ToString("yyyyMMdd");
+                    zip.CommitUpdate();
+                }
+                
+            }
+            try {
+                if (File.Exists(z)) {
+                    File.Delete(f);
+                }
+            } catch { }
             stopwatch.Stop();
             labxx1.Text = "备份完成耗时：" + stopwatch.Elapsed.TotalSeconds;
-            labxx2.Text = "备份完整路径：" + f;
+            labxx2.Text = "备份完整路径：" + z;
         }
 
 
 
-        private void BackFile(string f, string b, string j)
+        private void BackFile(string arid, string f, string b, string j)
         {
             try {
+                f = DESEncrypt.DesDecrypt(f);
                 string dir = f.Substring(0, 8);
                 string Mdir = Path.Combine(txtBackPath.Text.Trim(), dir);
                 string Mfile = Path.Combine(Mdir, f);
-                if (File.Exists(Mfile))
-                {
+                if (File.Exists(Mfile)) {
                     if (rButBak.Checked)
                         File.Delete(Mfile);
                     else return;
@@ -226,6 +244,7 @@ namespace Csmxtbf
                     Writelog(s);
                     return;
                 }
+                Common.DataBackUpdate(arid);
 
             } catch (Exception e) {
                 string s = string.Format(e + "第{0}盒,第{1}卷", b, j);
@@ -238,7 +257,9 @@ namespace Csmxtbf
             Task.Run(() =>
             {
                 try {
-                    DataTable dt = Common.GetBoxsnSql(txtBox1.Text.Trim(), txtBox2.Text.Trim(), rButCy.Checked);
+                    if (!rButCy.Checked)
+                        Common.DataBackUpdate(txtBox1.Text.Trim(), txtBox2.Text.Trim());
+                    DataTable dt = Common.GetBoxsnSql(txtBox1.Text.Trim(), txtBox2.Text.Trim());
                     if (dt == null || dt.Rows.Count <= 0) {
                         string s = "未发现要备份数据！";
                         Writelog(s);
@@ -247,14 +268,19 @@ namespace Csmxtbf
                     string b = string.Empty;
                     string j = string.Empty;
                     string f = string.Empty;
-                    labxx1.Text = string.Format("共计 {0} 个文件", dt.Rows.Count);
-                    if (rButFtp.Checked)
-                        toolProBar.Visible = true;
-                    else
-                        toolProBar.Visible = false;
+                    string arid;
+                    this.BeginInvoke(new Action(() =>
+                    {
+                        labxx1.Text = string.Format("共计 {0} 个文件", dt.Rows.Count);
+                        if (rButFtp.Checked)
+                            toolProBar.Visible = true;
+                        else
+                            toolProBar.Visible = false;
+                    }));
 
                     for (int i = 0; i < dt.Rows.Count; i++) {
                         i = 0;
+                        arid = dt.Rows[0][0].ToString();
                         b = dt.Rows[0][1].ToString();
                         j = dt.Rows[0][2].ToString();
                         f = dt.Rows[0][3].ToString();
@@ -264,7 +290,7 @@ namespace Csmxtbf
                             dt.Rows.RemoveAt(0);
                             continue;
                         }
-                        BackFile(f, b, j);
+                        BackFile(arid, f, b, j);
                         dt.Rows.RemoveAt(0);
                     }
                     this.BeginInvoke(new Action(() =>
@@ -276,8 +302,12 @@ namespace Csmxtbf
                 } catch (Exception e) {
                     Writelog(e.ToString());
                 } finally {
-                    groupPanel1.Enabled = true;
-                    Striptool.Visible = false;
+                    this.BeginInvoke(new Action(() =>
+                    {
+                        groupPanel1.Enabled = true;
+                        Striptool.Visible = false;
+                    }));
+
                 }
             });
         }

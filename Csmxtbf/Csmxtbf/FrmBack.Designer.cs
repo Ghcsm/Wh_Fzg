@@ -337,6 +337,7 @@
             // rButBox
             // 
             this.rButBox.AutoSize = true;
+            this.rButBox.Checked = true;
             this.rButBox.Location = new System.Drawing.Point(19, 55);
             this.rButBox.Name = "rButBox";
             this.rButBox.Size = new System.Drawing.Size(77, 16);
@@ -352,7 +353,6 @@
             this.rButKf.Name = "rButKf";
             this.rButKf.Size = new System.Drawing.Size(71, 16);
             this.rButKf.TabIndex = 0;
-            this.rButKf.TabStop = true;
             this.rButKf.Text = "相关库房";
             this.rButKf.UseVisualStyleBackColor = true;
             // 
@@ -371,6 +371,7 @@
             // rButImg
             // 
             this.rButImg.AutoSize = true;
+            this.rButImg.Checked = true;
             this.rButImg.Location = new System.Drawing.Point(143, 24);
             this.rButImg.Name = "rButImg";
             this.rButImg.Size = new System.Drawing.Size(71, 16);

@@ -137,7 +137,7 @@ namespace DAL
                 if (id == 1)
                     strSql = "select id," + coltmp + " from " + table + " where archid=@archid ";
                 else
-                    strSql = "select id," + coltmp + " from " + table + " where archid=@archid  order by  CONVERT(INT," + pages+")";
+                    strSql = "select id," + coltmp + " from " + table + " where archid=@archid  order by  CONVERT(INT," + pages + ")";
                 SqlParameter p1 = new SqlParameter("@archid", arid);
                 DataTable dt = DAL.SQLHelper.ExcuteTable(strSql, p1);
                 return dt;
@@ -726,15 +726,11 @@ namespace DAL
 
         #region backup
 
-        public static DataTable GetBoxsnSql(string b, string b1, bool bk)
+        public static DataTable GetBoxsnSql(string b, string b1)
         {
             DataTable dt = null;
-            string strSql = "";
             try {
-                if (bk)
-                    strSql = "select rank() over(ORDER BY id)'序号',Boxsn '盒号',ArchNo '卷号',ImgFile '文件' from M_IMAGEFILE where boxsn>@b1 and  boxsn<=@b2 and CHECKED=1 and BACKUPED is null";
-                else
-                    strSql = "select rank() over(ORDER BY id)'序号',Boxsn '盒号',ArchNo '卷号',ImgFile '文件' from M_IMAGEFILE where boxsn>@b1 and  boxsn<=@b2 and CHECKED=1";
+                string strSql = "select rank() over(ORDER BY id)'序号',Boxsn '盒号',ArchNo '卷号',ImgFile '文件' from M_IMAGEFILE where boxsn>=@b1 and  boxsn<=@b2 and CHECKED=1 and BACKUPED is null";
                 SqlParameter p1 = new SqlParameter("@b1", b);
                 SqlParameter p2 = new SqlParameter("@b2", b1);
                 dt = SQLHelper.ExcuteTable(strSql, p1, p2);
@@ -742,6 +738,20 @@ namespace DAL
             } catch {
                 return dt;
             }
+        }
+
+        public static void DataBackUpdate(string arid)
+        {
+            string strSql = "update M_IMAGEFILE set BACKUPED=1 where id=@arid ";
+            SqlParameter p1 = new SqlParameter("arid", arid);
+            SQLHelper.ExecScalar(strSql, p1);
+        }
+        public static void DataBackUpdate(string box1,string box2 )
+        {
+            string strSql = "update M_IMAGEFILE set BACKUPED=null  where Boxsn>=@b1 and boxsn<=@b2 ";
+            SqlParameter p1 = new SqlParameter("@b1", box1);
+            SqlParameter p2 = new SqlParameter("@b2", box2);
+            SQLHelper.ExecScalar(strSql, p1,p2);
         }
 
         #endregion
@@ -1021,10 +1031,10 @@ namespace DAL
             SQLHelper.ExecScalar(strSql, p1, p2, p3);
         }
 
-        public static DataTable GetDataSplitBoxsn(int houseid, string boxsn,int lx)
+        public static DataTable GetDataSplitBoxsn(int houseid, string boxsn, int lx)
         {
             string strSql = "";
-            if (lx==3)
+            if (lx == 3)
                 strSql = "select top 100 ID,BOXSN,ARCHNO,PAGES,IMGFILE From M_IMAGEFILE where  HOUSEID=@houseid and CHECKED=1  and BOXSN=@boxsn order by ARCHNO";
             else
                 strSql = "select top 100 ID,BOXSN,ARCHNO,PAGES,IMGFILE From M_IMAGEFILE where  HOUSEID=@houseid and CHECKED=1 and SPLITERROR IS null and BOXSN=@boxsn order by ARCHNO";
@@ -1042,10 +1052,10 @@ namespace DAL
             return dt;
         }
 
-        public static DataTable GetDataSplitBoxCol(int houseid, string col,int lx)
+        public static DataTable GetDataSplitBoxCol(int houseid, string col, int lx)
         {
             string strSql = "";
-            if (lx==3)
+            if (lx == 3)
                 strSql = "select top 1 ID,BOXSN,ARCHNO,PAGES,IMGFILE From M_IMAGEFILE where  HOUSEID=@houseid and CHECKED=1  and ArchImportID=@arid order by ARCHNO";
             else
                 strSql = "select top 1 ID,BOXSN,ARCHNO,PAGES,IMGFILE From M_IMAGEFILE where  HOUSEID=@houseid and CHECKED=1 and SPLITERROR IS null and ArchImportID=@arid order by ARCHNO";
@@ -1055,10 +1065,10 @@ namespace DAL
             return dt;
         }
 
-        public static DataTable GetDataSplitBoxColFw(int houseid, string arid,int lx)
+        public static DataTable GetDataSplitBoxColFw(int houseid, string arid, int lx)
         {
             string strSql = "";
-            if (lx==3)
+            if (lx == 3)
                 strSql = "select ID,BOXSN,ARCHNO,PAGES,IMGFILE From M_IMAGEFILE where  HOUSEID=@houseid and CHECKED=1  and ArchImportID like @arid order by id";
             else
                 strSql = "select ID,BOXSN,ARCHNO,PAGES,IMGFILE From M_IMAGEFILE where  HOUSEID=@houseid and CHECKED=1 and SPLITERROR IS null and ArchImportID like @arid order by id";
@@ -1068,10 +1078,10 @@ namespace DAL
             return dt;
         }
 
-        public static DataTable GetDataSplitBoxsn(int houseid, string boxsn, string archno,int lx)
+        public static DataTable GetDataSplitBoxsn(int houseid, string boxsn, string archno, int lx)
         {
             string strSql = "";
-            if (lx==3)
+            if (lx == 3)
                 strSql = "select top 100 ID,BOXSN,ARCHNO,PAGES,IMGFILE From M_IMAGEFILE where  HOUSEID=@houseid and CHECKED=1  and BOXSN=@boxsn and ARCHNO=@archno order by ARCHNO";
             else
                 strSql = "select top 100 ID,BOXSN,ARCHNO,PAGES,IMGFILE From M_IMAGEFILE where  HOUSEID=@houseid and CHECKED=1 and SPLITERROR IS null and BOXSN=@boxsn and ARCHNO=@archno order by ARCHNO";
@@ -1132,7 +1142,7 @@ namespace DAL
             return dt;
         }
 
-        public static void SetArchXy(int ArchID,int bl)
+        public static void SetArchXy(int ArchID, int bl)
         {
             try {
                 string strSql = "PArchXy";

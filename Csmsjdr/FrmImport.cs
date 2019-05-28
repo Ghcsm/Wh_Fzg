@@ -217,6 +217,8 @@ namespace Csmsjdr
                             strpage = s.Trim();
                     }
                     try {
+                        if (xzd.Trim().Length<=0)
+                            continue;
                         string str = Common.ImportData(table, tzd, xzd, chk, lx, strwy, strpage);
                         if (str != "ok") {
                             str = "详细信息：错误行:" + id + " -->" + str;
