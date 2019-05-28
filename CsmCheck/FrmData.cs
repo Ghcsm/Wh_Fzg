@@ -12,34 +12,41 @@ namespace CsmCheck
             InitializeComponent();
         }
 
-        private void GetInfo(int archid)
+        private void GetInfo()
         {
             ClsTable.Ac = true;
             try {
                 if (ClsTable.LsTable.Count <= 0)
+                {
+                    MessageBox.Show("未在后台设置表信息!");
                     return;
+                }
                 DataGridView dg1 = null;
                 DataGridView dg2 = null;
                 ClsTable.lsTabletmp.Clear();
-                for (int i = 0; i < ClsTable.LsTable.Count; i++) {
-                    string tb = ClsTable.LsTable[i];
-                    string col = ClsTable.lsCol[i];
-                    string msgk = ClsTable.lsMsgk[i];
-                    if (msgk == "信息框1") {
-                        dg1 = dgvInfo1_one;
-                        dg2 = dgvInfo1_two;
-                    }
-                    else if (msgk == "信息框2") {
-                        dg1 = dgvInfo2_one;
-                        dg2 = dgvInfo2_two;
-                    }
-                    Thread.Sleep(300);
-                    ClsSetInfo.SetArchInfo(archid, tb, col, dg1, dg2);
-                    Thread.Sleep(100);
-                    ClsSetInfo.ArchStat(lbCheck);
-                    Thread.Sleep(100);
-                    ClsSetInfo.GetuserInfo(statools, toolsuser1, toolsusertime1, toolsuser2, toolsusertime2);
+                int x = ClsTable.LsTable.IndexOf(ClsTable.ArchType);
+                if (x < 0) {
+                    MessageBox.Show("未在后台设置此表信息!");
+                    return;
                 }
+                string tb = ClsTable.LsTable[x];
+                string col = ClsTable.lsCol[x];
+                string msgk = ClsTable.lsMsgk[x];
+                if (msgk == "信息框1") {
+                    dg1 = dgvInfo1_one;
+                    dg2 = dgvInfo1_two;
+                }
+                else if (msgk == "信息框2") {
+                    dg1 = dgvInfo2_one;
+                    dg2 = dgvInfo2_two;
+                }
+                Thread.Sleep(300);
+                ClsSetInfo.SetArchInfo(ClsTable.Archid, tb, col, dg1, dg2);
+                Thread.Sleep(100);
+                ClsSetInfo.ArchStat(lbCheck);
+                Thread.Sleep(100);
+                ClsSetInfo.GetuserInfo(statools, toolsuser1, toolsusertime1, toolsuser2, toolsusertime2);
+
             } catch (Exception e) {
                 MessageBox.Show(e.ToString());
             } finally {
@@ -106,7 +113,7 @@ namespace CsmCheck
                 MessageBox.Show("请先选择正确的数据行!");
                 return;
             }
-            string str = ClsTable.LsTable[0];
+            string str = ClsTable.ArchType;
             ClsSetInfo.UpdateInfo(str, 1, dgvInfo1_one, dgvInfo1_two);
         }
 
@@ -118,7 +125,7 @@ namespace CsmCheck
                 MessageBox.Show("请先选择正确的数据行!");
                 return;
             }
-            string str = ClsTable.LsTable[0];
+            string str = ClsTable.ArchType;
             ClsSetInfo.UpdateInfo(str, 2, dgvInfo1_one, dgvInfo1_two);
         }
 
@@ -130,7 +137,7 @@ namespace CsmCheck
                 MessageBox.Show("请先选择正确的数据行!");
                 return;
             }
-            string str = ClsTable.LsTable[1];
+            string str = ClsTable.ArchType;
             ClsSetInfo.UpdateInfo(str, 1, dgvInfo2_one, dgvInfo2_two);
         }
 
@@ -142,7 +149,7 @@ namespace CsmCheck
                 MessageBox.Show("请先选择正确的数据行!");
                 return;
             }
-            string str = ClsTable.LsTable[1];
+            string str = ClsTable.ArchType;
             ClsSetInfo.UpdateInfo(str, 2, dgvInfo2_one, dgvInfo2_two);
         }
 
@@ -150,15 +157,16 @@ namespace CsmCheck
         private void gArchSelect1_LineClickLoadInfo(object sender, EventArgs e)
         {
             ClsTable.Archid = gArchSelect1.Archid;
-            if (ClsTable.Archid <= 0)
+            ClsTable.ArchType = gArchSelect1.Archtype;
+            if (ClsTable.Archid <= 0 || ClsTable.ArchType.Trim().Length<=0)
                 return;
             dgvInfo1_one.DataSource = null;
             dgvInfo1_two.DataSource = null;
             dgvInfo2_one.DataSource = null;
             dgvInfo2_two.DataSource = null;
             if (ClsTable.Ac == false) {
-                Action<int> Act = GetInfo;
-                Act.BeginInvoke(ClsTable.Archid, null, null);
+                Action Act = GetInfo;
+                Act.BeginInvoke(null, null);
             }
         }
 
@@ -169,7 +177,7 @@ namespace CsmCheck
             if (dgvInfo1_one.Rows.Count > 0 || dgvInfo1_two.Rows.Count > 0) {
                 if (dgvInfo1_one.Rows.Count <= 0 || dgvInfo1_two.Rows.Count <= 0) {
 
-                    string str = "表：" + ClsTable.LsTable[0] + " 缺少一录或二录信息，请先补录";
+                    string str = "表：" + ClsTable.ArchType + " 缺少一录或二录信息，请先补录";
                     MessageBox.Show(str);
                     return;
                 }
@@ -179,7 +187,7 @@ namespace CsmCheck
             }
             if (dgvInfo2_one.Rows.Count > 0 || dgvInfo2_two.Rows.Count > 0) {
                 if (dgvInfo2_one.Rows.Count <= 0 || dgvInfo2_two.Rows.Count <= 0) {
-                    string str = "表：" + ClsTable.LsTable[1] + " 缺少一录或二录信息，请先补录";
+                    string str = "表：" + ClsTable.ArchType + " 缺少一录或二录信息，请先补录";
                     MessageBox.Show(str);
                     return;
                 }

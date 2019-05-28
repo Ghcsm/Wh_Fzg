@@ -2097,13 +2097,8 @@ namespace CsmGenSet
                     else
                         str += ClsInfoCheck.InfoCheckColtmp[i];
                 }
-                if (ClsInfoCheck.InfoCheckTable.IndexOf(table) < 0) {
-                    if (ClsInfoCheck.InfocheckMsg.Contains(combInfoCheck_info.Text.Trim())) {
-                        MessageBox.Show("此信息框已绑定请更改!");
-                        return;
-                    }
+                if (ClsInfoCheck.InfoCheckTable.IndexOf(table) < 0) 
                     T_Sysset.SaveGensetInfoCheck(table, str, combInfoCheck_info.Text.Trim().ToString());
-                }
                 else
                     T_Sysset.UpdateGensetInfoCheck(table, str, combInfoCheck_info.Text.Trim().ToString());
                 MessageBox.Show("保存成功!");

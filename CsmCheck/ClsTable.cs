@@ -12,6 +12,7 @@ namespace CsmCheck
         public static bool Ac { get; set; }
 
         public static int Archid { get; set; }
+        public static string ArchType { get; set; } = "";
       
         public static bool Archzt { get; set; }
 

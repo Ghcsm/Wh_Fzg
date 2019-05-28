@@ -200,13 +200,13 @@ namespace Csmsjdr
                     i = 0;
                     id += 1;
                     for (int a = 0; a < count; a++) {
-                        string s = dgvXlsData.Rows[i].Cells[a].Value.ToString().Trim();
+                        string s = dgvXlsData.Rows[i].Cells[a].Value.ToString();
                         if (zero.IndexOf(a.ToString()) >= 0)
                             s = s.TrimStart('0');
-                        if (xzd.Trim().Length<=0)
-                            xzd += s;
+                        if (a!=count-1)
+                            xzd += s+",";
                         else
-                            xzd += ","+s;
+                            xzd += s;
                         if (wyz.IndexOf(a.ToString()) >= 0) {
                             if (strwy.Trim().Length <= 0)
                                 strwy += s;
