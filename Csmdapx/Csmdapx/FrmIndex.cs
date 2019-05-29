@@ -517,6 +517,7 @@ namespace Csmdapx
                         }
                     }
                     ClsIndex.task = false;
+                    Cledata();
                     return false;
 
                 } catch (Exception e) {

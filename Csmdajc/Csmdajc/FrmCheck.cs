@@ -562,6 +562,7 @@ namespace Csmdajc
                             }
                         }
                     }
+                    Cledata();
                     return false;
 
                 } catch (Exception e) {
