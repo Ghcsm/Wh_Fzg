@@ -75,5 +75,10 @@ namespace Csmxxbl
                 return;
             }
         }
+
+        private void gArchSelect1_LineFocus(object sender, EventArgs e)
+        {
+            ucInfo.GetFocus();
+        }
     }
 }

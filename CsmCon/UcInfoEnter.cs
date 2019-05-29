@@ -154,12 +154,30 @@ namespace CsmCon
             }
         }
 
+        public void GetFocus()
+        {
+            if (tabControl.TabPages.Count <= 0)
+                return;
+            string name = tabControl.SelectedTab.Name;
+            Control pl = tabControl.SelectedTab.Controls.Find(name, true)[0];
+            foreach (Control t in pl.Controls)
+            {
+                if (t.Tag != null && t.Tag.ToString() == "1")
+                {
+                    t.Focus();
+                    return;
+                }
+            }
+        }
+
         public void SaveInfo(int archid, int enter)
         {
             try {
                 if (archid <= 0)
                     return;
                 Ts = 0;
+                if (tabControl.TabPages.Count <= 0)
+                    return;
                 string name = tabControl.SelectedTab.Name;
                 Control pl = tabControl.SelectedTab.Controls.Find(name, true)[0];
                 Dictionary<int, string> dic1 = new Dictionary<int, string>();

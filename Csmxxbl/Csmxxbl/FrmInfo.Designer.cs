@@ -29,11 +29,11 @@
         {
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.gr1 = new System.Windows.Forms.GroupBox();
+            this.gArchSelect1 = new CsmCon.gArchSelect();
             this.gr2 = new System.Windows.Forms.GroupBox();
             this.gr3 = new System.Windows.Forms.GroupBox();
             this.chkInfo = new System.Windows.Forms.CheckBox();
             this.butSave = new DevComponents.DotNetBar.ButtonX();
-            this.gArchSelect1 = new CsmCon.gArchSelect();
             this.gr1.SuspendLayout();
             this.gr3.SuspendLayout();
             this.SuspendLayout();
@@ -56,6 +56,26 @@
             this.gr1.Size = new System.Drawing.Size(409, 519);
             this.gr1.TabIndex = 1;
             this.gr1.TabStop = false;
+            // 
+            // gArchSelect1
+            // 
+            this.gArchSelect1.Archid = 0;
+            this.gArchSelect1.ArchImgFile = null;
+            this.gArchSelect1.ArchRegPages = 0;
+            this.gArchSelect1.Archstat = null;
+            this.gArchSelect1.Archtype = null;
+            this.gArchSelect1.Archxystat = null;
+            this.gArchSelect1.Boxsn = 0;
+            this.gArchSelect1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gArchSelect1.GotoPages = false;
+            this.gArchSelect1.LoadFileBoole = false;
+            this.gArchSelect1.Location = new System.Drawing.Point(3, 17);
+            this.gArchSelect1.Name = "gArchSelect1";
+            this.gArchSelect1.PagesEnd = false;
+            this.gArchSelect1.Size = new System.Drawing.Size(403, 499);
+            this.gArchSelect1.TabIndex = 0;
+            this.gArchSelect1.LineClickLoadInfo += new CsmCon.gArchSelect.ArchSelectHandle(this.gArchSelect1_LineClickLoadInfo);
+            this.gArchSelect1.LineFocus += new CsmCon.gArchSelect.ArchSelectHandleFocus(this.gArchSelect1_LineFocus);
             // 
             // gr2
             // 
@@ -104,23 +124,6 @@
             this.butSave.TabIndex = 0;
             this.butSave.Text = "保存";
             this.butSave.Click += new System.EventHandler(this.butSave_Click);
-            // 
-            // gArchSelect1
-            // 
-            this.gArchSelect1.Archid = 0;
-            this.gArchSelect1.ArchImgFile = null;
-            this.gArchSelect1.ArchRegPages = 0;
-            this.gArchSelect1.Archtype = null;
-            this.gArchSelect1.Boxsn = 0;
-            this.gArchSelect1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gArchSelect1.GotoPages = false;
-            this.gArchSelect1.LoadFileBoole = false;
-            this.gArchSelect1.Location = new System.Drawing.Point(3, 17);
-            this.gArchSelect1.Name = "gArchSelect1";
-            this.gArchSelect1.PagesEnd = false;
-            this.gArchSelect1.Size = new System.Drawing.Size(403, 499);
-            this.gArchSelect1.TabIndex = 0;
-            this.gArchSelect1.LineClickLoadInfo += new CsmCon.gArchSelect.ArchSelectHandle(this.gArchSelect1_LineClickLoadInfo);
             // 
             // FrmInfo
             // 

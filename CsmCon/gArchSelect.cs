@@ -120,8 +120,7 @@ namespace CsmCon
                     return;
                 Common.UpdatePages(txtPages.Text.Trim(), Archid);
                 ArchRegPages = pages;
-                if (LineFocus != null)
-                    LineFocus(sender, new EventArgs());
+                LineFocus?.Invoke(sender, new EventArgs());
             } catch {
                 MessageBox.Show("更新页码失败!");
             }
@@ -303,10 +302,10 @@ namespace CsmCon
                 Boxsn = Convert.ToInt32(boxs);
                 ArchPos = boxs + "-" + juan;
                 string pags = Common.Getpages(Archid);
-                if (pags.Length > 0) {
+                if (pags.Trim().Length > 0)
                     ArchRegPages = Convert.ToInt32(pags);
                     txtPages.Text = pags;
-                }
+               
                 ArchImgFile = LvData.SelectedItems[0].SubItems[3].Text;
                 if (LineClickLoadInfo != null)
                     LineClickLoadInfo(sender, new EventArgs());
