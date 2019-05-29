@@ -10,35 +10,35 @@ using System.Windows.Forms;
 
 namespace CsmCon
 {
-   
 
-    public static class ClsContenInfo
+
+    public class ClsContenInfo
     {
-        public static string ContenTable { get; set; } = "";
-        public static string ContenWith { get; set; } = "";
-        public static string ContenTxtwith { get; set; } = "";
-        public static string ContenLie { get; set; } = "";
-        public static string ContenTitle { get; set; } = "";
-        public static string ContenPages { get; set; } = "";
-        public static int PagesWz { get; set; } = 0;
-        public static int TitleWz { get; set; } = 0;
-        public static List<string> ContenCoList = new List<string>();
-        public static string ContenCol { get; set; } = "";
-        public static List<string> PageCount = new List<string>();
-        public static List<string> PageCount2 = new List<string>();
-       
-        public static List<string> LsModule = new List<string>();
-        public static List<string> LsModuleIndex = new List<string>();
+        public string ContenTable { get; set; } = "";
+        public string ContenWith { get; set; } = "";
+        public string ContenTxtwith { get; set; } = "";
+        public string ContenLie { get; set; } = "";
+        public string ContenTitle { get; set; } = "";
+        public string ContenPages { get; set; } = "";
+        public int PagesWz { get; set; } = 0;
+        public int TitleWz { get; set; } = 0;
+        public List<string> ContenCoList = new List<string>();
+        public string ContenCol { get; set; } = "";
+        public List<string> PageCount = new List<string>();
+        public List<string> PageCount2 = new List<string>();
 
-        public static bool loadcon { get; set; }
-        public static int txtcol { get; set; } = 0;
-        public static int txtrows { get; set; } = 1;
-        public static string Pagestmp { get; set; } = "";
-        public static string Archtype { get; set; } = "";
-        public static string Modulename { get; set; } = "";
+        public List<string> LsModule = new List<string>();
+        public List<string> LsModuleIndex = new List<string>();
+
+        public bool loadcon { get; set; }
+        public int txtcol { get; set; } = 0;
+        public int txtrows { get; set; } = 1;
+        public string Pagestmp { get; set; } = "";
+        public string Archtype { get; set; } = "";
+        public string Modulename { get; set; } = "";
     }
 
-  
+
 
     public static class ClsConten
     {
@@ -46,92 +46,93 @@ namespace CsmCon
         {
             //if (ClsContenInfo.ContenTable ==null && ClsContenInfo.ContenTable.Length<=0)
             //    return;
-            DataTable dt = T_Sysset.GetConten(ClsContenInfo.Modulename);
+            DataTable dt = T_Sysset.GetConten(UcContents.clsinfo.Modulename);
             if (dt == null || dt.Rows.Count <= 0)
                 return;
             DataRow dr = dt.Rows[0];
-            ClsContenInfo.ContenCoList.Clear();
-            ClsContenInfo.ContenTable = dr["ContenTable"].ToString();
-            ClsContenInfo.ContenLie = dr["ContenLie"].ToString();
-            ClsContenInfo.ContenWith = dr["ContenWith"].ToString();
-            ClsContenInfo.ContenTxtwith = dr["ContentxtWith"].ToString();
-            ClsContenInfo.ContenTitle = dr["ContenTitle"].ToString();
-            ClsContenInfo.ContenPages = dr["ContenPages"].ToString();
-            ClsContenInfo.ContenCol = dr["ContenCol"].ToString();
-            if (ClsContenInfo.ContenCol.Length > 0) {
-                string[] col = ClsContenInfo.ContenCol.Split(';');
+            UcContents.clsinfo.ContenCoList.Clear();
+            UcContents.clsinfo.ContenTable = dr["ContenTable"].ToString();
+            UcContents.clsinfo.ContenLie = dr["ContenLie"].ToString();
+            UcContents.clsinfo.ContenWith = dr["ContenWith"].ToString();
+            UcContents.clsinfo.ContenTxtwith = dr["ContentxtWith"].ToString();
+            UcContents.clsinfo.ContenTitle = dr["ContenTitle"].ToString();
+            UcContents.clsinfo.ContenPages = dr["ContenPages"].ToString();
+            UcContents.clsinfo.ContenCol = dr["ContenCol"].ToString();
+            if (UcContents.clsinfo.ContenCol.Length > 0) {
+                string[] col = UcContents.clsinfo.ContenCol.Split(';');
                 for (int i = 0; i < col.Length; i++) {
-                    ClsContenInfo.ContenCoList.Add(col[i]);
+                    UcContents.clsinfo.ContenCoList.Add(col[i]);
                 }
             }
-            ClsContenInfo.PagesWz = ClsContenInfo.ContenCoList.IndexOf(ClsContenInfo.ContenPages);
-            ClsContenInfo.TitleWz= ClsContenInfo.ContenCoList.IndexOf(ClsContenInfo.ContenTitle);
+            UcContents.clsinfo.PagesWz = UcContents.clsinfo.ContenCoList.IndexOf(UcContents.clsinfo.ContenPages);
+            UcContents.clsinfo.TitleWz = UcContents.clsinfo.ContenCoList.IndexOf(UcContents.clsinfo.ContenTitle);
         }
 
         public static void LoadModule(ListViewEx lsv)
         {
-            Task.Run(() =>
-            {
-                DataTable dt = Common.GetContentsModule();
-                if (dt != null && dt.Rows.Count > 0) {
-                    lsv.Items.Clear();
-                    int i = 1;
-                    foreach (DataRow dr in dt.Rows) {
-                        ListViewItem lvi = new ListViewItem();
-                        string code = dr["Code"].ToString();
-                        string title = dr["Title"].ToString();
-                        ClsContenInfo.LsModuleIndex.Add(code);
-                        ClsContenInfo.LsModule.Add(title);
-                        lvi.Text = code;
-                        lvi.SubItems.AddRange(new string[] { title, dr["ID"].ToString() });
-                        lsv.BeginInvoke(new Action(() => { lsv.Items.Add(lvi); }));
-                        i++;
-                    }
+            lsv.Items.Clear();
+            DataTable dt = Common.GetcontenModule();
+            if (dt != null && dt.Rows.Count > 0) {
+                foreach (DataRow dr in dt.Rows) {
+                    ListViewItem lvi = new ListViewItem();
+                    string type = dr["CoType"].ToString();
+                    string code = dr["Code"].ToString();
+                    string title = dr["Title"].ToString();
+                    UcContents.clsinfo.LsModuleIndex.Add(code);
+                    UcContents.clsinfo.LsModule.Add(title);
+                    lvi.Text = title;
+                    lvi.SubItems.AddRange(new string[] { code, type });
+                    lsv.BeginInvoke(new Action(() => { lsv.Items.Add(lvi); }));
                 }
-            });
+            }
+
         }
 
         public static void LoadContents(int archid, ListViewEx lsv, bool ch)
         {
             if (archid <= 0)
                 return;
-            if (ClsContenInfo.loadcon)
+            if (UcContents.clsinfo.loadcon)
                 return;
             Task.Run(() =>
             {
-                ClsContenInfo.loadcon = true;
-                lsv.Invoke(new Action(() =>
-                {
-                    lsv.Items.Clear();
-                }));
-                ClsContenInfo.PageCount.Clear();
-                DataTable dt = Common.LoadContents(ClsContenInfo.ContenTable, ClsContenInfo.ContenCol, ClsContenInfo.ContenPages, Convert.ToInt32(ch), archid);
-                if (dt == null || dt.Rows.Count <= 0)
-                    return;
-                int i = 1;
-                foreach (DataRow dr in dt.Rows) {
-                    ListViewItem lvi = new ListViewItem();
-                    lvi.Text = i.ToString();
-                    string id = dr["id"].ToString();
-                    lvi.SubItems.AddRange(new string[] { id });
-                    for (int t = 0; t < ClsContenInfo.ContenCoList.Count; t++) {
-                        string str = dr[ClsContenInfo.ContenCoList[t]].ToString();
-                        if (t==ClsContenInfo.PagesWz)
-                            ClsContenInfo.PageCount.Add(str);
-                        lvi.SubItems.AddRange(new string[] { str });
+                UcContents.clsinfo.loadcon = true;
+                try {
+
+
+                    lsv.Invoke(new Action(() => { lsv.Items.Clear(); }));
+                    UcContents.clsinfo.PageCount.Clear();
+                    DataTable dt = Common.LoadContents(UcContents.clsinfo.ContenTable, UcContents.clsinfo.ContenCol,
+                        UcContents.clsinfo.ContenPages, Convert.ToInt32(ch), archid);
+                    if (dt == null || dt.Rows.Count <= 0)
+                        return;
+                    int i = 1;
+                    foreach (DataRow dr in dt.Rows) {
+                        ListViewItem lvi = new ListViewItem();
+                        lvi.Text = i.ToString();
+                        string id = dr["id"].ToString();
+                        lvi.SubItems.AddRange(new string[] { id });
+                        for (int t = 0; t < UcContents.clsinfo.ContenCoList.Count; t++) {
+                            string str = dr[UcContents.clsinfo.ContenCoList[t]].ToString();
+                            if (t == UcContents.clsinfo.PagesWz)
+                                UcContents.clsinfo.PageCount.Add(str);
+                            lvi.SubItems.AddRange(new string[] { str });
+                        }
+
+                        lsv.Invoke(new Action(() => { lsv.Items.Add(lvi); }));
+                        i++;
                     }
+
                     lsv.Invoke(new Action(() =>
-                {
-                    lsv.Items.Add(lvi);
-                }));
-                    i++;
+                    {
+                        if (lsv.Items.Count > 0)
+                            lsv.Items[0].Selected = true;
+                    }));
+
+                } catch {
+                } finally {
+                    UcContents.clsinfo.loadcon = false;
                 }
-                lsv.Invoke(new Action(() =>
-                {
-                    if (lsv.Items.Count > 0)
-                        lsv.Items[0].Selected = true;
-                }));
-                ClsContenInfo.loadcon = false;
             });
         }
 
@@ -145,8 +146,8 @@ namespace CsmCon
                 {
                     lsv.Items.Clear();
                 }));
-                ClsContenInfo.PageCount2.Clear();
-                DataTable dt = Common.LoadContents(ClsContenInfo.ContenTable, ClsContenInfo.ContenCol, ClsContenInfo.ContenPages, 2, archid);
+                UcContents.clsinfo.PageCount2.Clear();
+                DataTable dt = Common.LoadContents(UcContents.clsinfo.ContenTable, UcContents.clsinfo.ContenCol, UcContents.clsinfo.ContenPages, 2, archid);
                 if (dt == null || dt.Rows.Count <= 0)
                     return;
                 int i = 1;
@@ -155,10 +156,10 @@ namespace CsmCon
                     lvi.Text = i.ToString();
                     string id = dr["id"].ToString();
                     lvi.SubItems.AddRange(new string[] { id });
-                    for (int t = 0; t < ClsContenInfo.ContenCoList.Count; t++) {
-                        string str = dr[ClsContenInfo.ContenCoList[t]].ToString();
-                        if (t == ClsContenInfo.PagesWz)
-                            ClsContenInfo.PageCount2.Add(str);
+                    for (int t = 0; t < UcContents.clsinfo.ContenCoList.Count; t++) {
+                        string str = dr[UcContents.clsinfo.ContenCoList[t]].ToString();
+                        if (t == UcContents.clsinfo.PagesWz)
+                            UcContents.clsinfo.PageCount2.Add(str);
                         lvi.SubItems.AddRange(new string[] { str });
                     }
                     lsv.Invoke(new Action(() =>
@@ -174,16 +175,16 @@ namespace CsmCon
         public static void GetControl(Panel pl)
         {
             GetContenInfo();
-            if (ClsContenInfo.ContenTable==null|| ClsContenInfo.ContenTable.Trim().Length <= 0)
+            if (UcContents.clsinfo.ContenTable == null || UcContents.clsinfo.ContenTable.Trim().Length <= 0)
                 return;
-            DataTable dt = Common.GetTableCol(ClsContenInfo.ContenTable);
+            DataTable dt = Common.GetTableCol(UcContents.clsinfo.ContenTable);
             if (dt == null || dt.Rows.Count <= 0)
                 return;
             int id = 0;
-            int colnum = Convert.ToInt32(ClsContenInfo.ContenLie);
-            int width = Convert.ToInt32(ClsContenInfo.ContenWith);
-            int txtwidth = Convert.ToInt32(ClsContenInfo.ContenTxtwith);
-            string[] oldname = ClsContenInfo.ContenCol.Split(';');
+            int colnum = Convert.ToInt32(UcContents.clsinfo.ContenLie);
+            int width = Convert.ToInt32(UcContents.clsinfo.ContenWith);
+            int txtwidth = Convert.ToInt32(UcContents.clsinfo.ContenTxtwith);
+            string[] oldname = UcContents.clsinfo.ContenCol.Split(';');
             for (int i = 0; i < oldname.Length; i++) {
                 string str = oldname[i];
                 foreach (DataRow dr in dt.Rows) {
@@ -201,11 +202,11 @@ namespace CsmCon
         {
             int xx = 0;
             int yy = 0;
-            if (ClsContenInfo.txtcol == 0)
+            if (UcContents.clsinfo.txtcol == 0)
                 xx = 5;
             else
-                xx = pl.Width / colnum * ClsContenInfo.txtcol;
-            ClsContenInfo.txtcol += 1;
+                xx = pl.Width / colnum * UcContents.clsinfo.txtcol;
+            UcContents.clsinfo.txtcol += 1;
             Label lb = new Label();
             lb.Name = name;
             if (name.IndexOf("1") >= 0 || name.IndexOf("8") >= 0) {
@@ -219,7 +220,7 @@ namespace CsmCon
             if (id <= colnum)
                 lb.Location = new Point(xx, 7);
             else
-                lb.Location = new Point(xx, ClsContenInfo.txtrows * 30 - 20);
+                lb.Location = new Point(xx, UcContents.clsinfo.txtrows * 30 - 20);
             pl.Controls.Add(lb);
             if (val.Trim().Length <= 0) {
                 TextBox txt = new TextBox();
@@ -232,7 +233,7 @@ namespace CsmCon
                 if (id <= colnum)
                     txt.Location = new Point(yy, 5);
                 else
-                    txt.Location = new Point(yy, ClsContenInfo.txtrows * 30 - 20);
+                    txt.Location = new Point(yy, UcContents.clsinfo.txtrows * 30 - 20);
                 txt.KeyPress += Txt_KeyPress; ;
                 pl.Controls.Add(txt);
             }
@@ -254,13 +255,13 @@ namespace CsmCon
                 if (id <= colnum)
                     cb.Location = new Point(yy, 5);
                 else
-                    cb.Location = new Point(yy, ClsContenInfo.txtrows * 30 - 20);
+                    cb.Location = new Point(yy, UcContents.clsinfo.txtrows * 30 - 20);
                 cb.KeyPress += Cb_KeyPress; ;
                 pl.Controls.Add(cb);
             }
-            if (ClsContenInfo.txtcol == colnum) {
-                ClsContenInfo.txtcol = 0;
-                ClsContenInfo.txtrows += 1;
+            if (UcContents.clsinfo.txtcol == colnum) {
+                UcContents.clsinfo.txtcol = 0;
+                UcContents.clsinfo.txtrows += 1;
             }
         }
 
@@ -277,7 +278,7 @@ namespace CsmCon
 
         public static void SetInfoTxt(Control p, string str)
         {
-            int id = ClsContenInfo.TitleWz;
+            int id = UcContents.clsinfo.TitleWz;
             foreach (Control ct in p.Controls) {
                 if (ct is TextBox || ct is ComboBox) {
                     if (ct.Tag.ToString() == id.ToString()) {
@@ -290,10 +291,10 @@ namespace CsmCon
         public static bool Gettxtzd(Control p)
         {
             bool tf = false;
-            ClsContenInfo.Pagestmp = "";
+            UcContents.clsinfo.Pagestmp = "";
             int id = 0;
-            int title = ClsContenInfo.TitleWz + 1;
-            int page = ClsContenInfo.PagesWz + 1;
+            int title = UcContents.clsinfo.TitleWz + 1;
+            int page = UcContents.clsinfo.PagesWz + 1;
             foreach (Control ct in p.Controls) {
                 if (ct is TextBox || ct is ComboBox) {
                     if (ct.Tag.ToString() == title.ToString()) {
@@ -304,7 +305,7 @@ namespace CsmCon
                     else if (ct.Tag.ToString() == page.ToString()) {
                         if (ct.Text.Trim().Length > 0) {
                             id += 1;
-                            ClsContenInfo.Pagestmp = ct.Text.Trim();
+                            UcContents.clsinfo.Pagestmp = ct.Text.Trim();
                         }
                     }
                 }

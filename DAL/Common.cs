@@ -53,6 +53,30 @@ namespace DAL
 
         #region  Contents
 
+        public static DataTable GetcontenModule()
+        {
+            string strSql = "select * from M_ContentsModule ";
+            DataTable dt = DAL.SQLHelper.ExcuteTable(strSql);
+            return dt;
+        }
+
+        public static void InserContenModule(string lx,string code,string title)
+        {
+            string strSql = " INSERT INTO M_ContentsModule (CoType,CODE,title,userid) VALUES(@CoType,@CODE, @Title, @UserID)";
+            SqlParameter p1 = new SqlParameter("@CoType", lx);
+            SqlParameter p2 = new SqlParameter("@CODE", code);
+            SqlParameter p3 = new SqlParameter("@Title", title);
+            SqlParameter p4 = new SqlParameter("@UserID", T_User.UserId);
+            SQLHelper.ExecScalar(strSql, p1, p2, p3,p4);
+        }
+
+        public static void DelContenModule(string id)
+        {
+            string strSql = "delete from M_ContentsModule where id=@id";
+            SqlParameter p1 = new SqlParameter("@id", id);
+            SQLHelper.ExecScalar(strSql,p1);
+        }
+
         public static bool GetConteninfobl()
         {
             string str = "select ContenInfoBl from M_GenSetConten";
@@ -62,18 +86,6 @@ namespace DAL
             bool bl = Convert.ToBoolean(obj);
             return bl;
         }
-
-        public static DataTable GetContentsModule()
-        {
-            try {
-                string strSql = "select * from M_ContentsModule order by code ";
-                DataTable dt = DAL.SQLHelper.ExcuteTable(strSql);
-                return dt;
-            } catch {
-                return null;
-            }
-        }
-
 
         public static int ContentsInster(string table, List<string> lscol, Dictionary<int, string> dirxx, int archid)
         {

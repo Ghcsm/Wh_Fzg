@@ -49,6 +49,7 @@
             this.colDoduleTitle = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colDoduleCode = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.gr2 = new System.Windows.Forms.GroupBox();
+            this.colDodulelx = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.gr0.SuspendLayout();
             this.gr1.SuspendLayout();
             this.gr2.SuspendLayout();
@@ -143,6 +144,7 @@
             this.butModule.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.butModule.TabIndex = 7;
             this.butModule.Text = "模版";
+            this.butModule.Click += new System.EventHandler(this.butModule_Click);
             // 
             // butDel
             // 
@@ -251,9 +253,11 @@
             this.LvModule.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.LvModule.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.colDoduleTitle,
-            this.colDoduleCode});
+            this.colDoduleCode,
+            this.colDodulelx});
             this.LvModule.DisabledBackColor = System.Drawing.Color.Empty;
             this.LvModule.GridLines = true;
+            this.LvModule.HideSelection = false;
             this.LvModule.Location = new System.Drawing.Point(207, 17);
             this.LvModule.Name = "LvModule";
             this.LvModule.Size = new System.Drawing.Size(171, 320);
@@ -284,6 +288,10 @@
             this.gr2.Size = new System.Drawing.Size(80, 343);
             this.gr2.TabIndex = 1;
             this.gr2.TabStop = false;
+            // 
+            // colDodulelx
+            // 
+            this.colDodulelx.Text = "类型";
             // 
             // UcContents
             // 
@@ -325,5 +333,6 @@
         private System.Windows.Forms.GroupBox gr2;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.ImageList imageList1;
+        private System.Windows.Forms.ColumnHeader colDodulelx;
     }
 }

@@ -94,6 +94,12 @@
     <Compile Include="UcConten.Designer.cs">
       <DependentUpon>UcConten.cs</DependentUpon>
     </Compile>
+    <Compile Include="UcContenModule.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UcContenModule.Designer.cs">
+      <DependentUpon>UcContenModule.cs</DependentUpon>
+    </Compile>
     <Compile Include="UcContents.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -121,6 +127,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UcConten.resx">
       <DependentUpon>UcConten.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UcContenModule.resx">
+      <DependentUpon>UcContenModule.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UcContents.resx">
       <DependentUpon>UcContents.cs</DependentUpon>

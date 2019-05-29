@@ -184,7 +184,7 @@ namespace CsmCon
 
         private bool istxt()
         {
-            ClsContenInfo.Archtype = "ArchType";
+            UcContents.clsinfo.Archtype = "ArchType";
             if (radioBoxsn.Checked) {
                 try {
                     int boxNo = int.Parse(this.txtBoxsn.Text.Trim());
@@ -201,7 +201,7 @@ namespace CsmCon
                     return false;
                 }
                 if (comboxClass.SelectedIndex == 1)
-                    ClsContenInfo.Archtype = "ArchConten";
+                    UcContents.clsinfo.Archtype = "ArchConten";
             }
             return true;
         }
@@ -226,7 +226,7 @@ namespace CsmCon
                     string archno = dr["ArchNo"].ToString();
                     string arid = dr["ID"].ToString();
                     string pages = dr["PAGES"].ToString();
-                    string type = dr[ClsContenInfo.Archtype].ToString();
+                    string type = dr[UcContents.clsinfo.Archtype].ToString();
                     string ImgFile = (dr["IMGFILE"].ToString().Trim().Length <= 0 ? "" : dr["IMGFILE"].ToString());
                     if (ImgFile.Trim().Length > 0) {
                         try {
