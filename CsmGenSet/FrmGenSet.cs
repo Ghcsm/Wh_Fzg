@@ -1644,6 +1644,20 @@ namespace CsmGenSet
                         ClsDataSplit.DataSplitDirsnls.Add(s[i]);
                     }
                 }
+                else if (str.IndexOf(':') >= 0)
+                {
+                    string[] z = str.Split(':');
+                    if (str.Trim().Length <= 0)
+                        str += z[0];
+                    else
+                        str += "\\" + z[0];
+                    ListViewItem item = new ListViewItem();
+                    item.Text = z[0];
+                    item.SubItems.Add(z[1]);
+                    lvDataSplit_Dircolname.Items.Add(item);
+                    ClsDataSplit.DataSplitDirsnls.Add(str);
+                    str = z[0];
+                }
                 labDataSplit_dir_zd.Text = "字段示例：" + str + "\\" + ClsDataSplit.DataSplitDirMl + "\\" + ClsDataSplit.DataSplitDirMlpages;
                 if (ClsDataSplit.DataSplitFilesn == 3) {
                     rabDataSplit_File_zd.Checked = true;
