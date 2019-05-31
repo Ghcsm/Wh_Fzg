@@ -1466,19 +1466,28 @@ namespace CsmGenSet
                 }
 
             }
-            else {
+            else
+            {
+                ClsDataSplit.DataSplitFilesn = 1;
                 ClsDataSplit.DataSplitfilenamecol = "";
                 ClsDataSplit.DataSplitFileName = "";
+                str = GetFileGz();
                 if (rabDataSplit_File_zd.Checked) {
                     ClsDataSplit.DataSplitFileTable = txtDataSplitTable.Text.Trim();
                     labDataSplit_Filetable.Text = string.Format("文件名规则Table为： {0}", txtDataSplitTable.Text.Trim());
                     ClsDataSplit.DataSplitfilenamecol = str;
+                    ClsDataSplit.DataSplitFilesn = 3;
                 }
                 else {
                     labDataSplit_Filetable.Text = "";
                     ClsDataSplit.DataSplitFileName = txtDataSplit_File_cd.Text.Trim() + ";" + txtDataSplit_File_qian.Text.Trim() + ";" + txtDataSplit_File_hou.Text.Trim();
+                    if (rabDataSplit_File_dirname.Checked)
+                        ClsDataSplit.DataSplitFilesn = 1;
+                    else
+                        ClsDataSplit.DataSplitFilesn = 2;
+
                 }
-                str = GetFileGz();
+
                 if (str.Trim().Length <= 0)
                     labDataSplit_Filesl.Text = "";
                 else
@@ -1528,8 +1537,14 @@ namespace CsmGenSet
                     MessageBox.Show("请查询表是否存在!");
                     return;
                 }
-                if (ClsDataSplit.DataSplitFileName.Length <= 0) {
-                    MessageBox.Show("请先生成文件名规则!");
+                if (rabDataSplit_File_zd.Checked) {
+                    if (ClsDataSplit.DataSplitfilenamecol.Trim().Length <= 0) {
+                        MessageBox.Show("请生成文件名字段规则!");
+                        return;
+                    }
+                }
+               else if (ClsDataSplit.DataSplitFileName.Length <= 0) {
+                    MessageBox.Show("请生成文件名规则!");
                     return;
                 }
                 bool zer = chkDataSplit_File_zero.Checked;
@@ -1632,7 +1647,7 @@ namespace CsmGenSet
                 labDataSplit_dir_zd.Text = "字段示例：" + str + "\\" + ClsDataSplit.DataSplitDirMl + "\\" + ClsDataSplit.DataSplitDirMlpages;
                 if (ClsDataSplit.DataSplitFilesn == 3) {
                     rabDataSplit_File_zd.Checked = true;
-                    labDataSplit_Filesl.Text = ClsDataSplit.DataSplitFileName;
+                    labDataSplit_Filesl.Text = ClsDataSplit.DataSplitfilenamecol;
                     labDataSplit_Filetable.Text = "文件名规则Table为：" + ClsDataSplit.DataSplitFileTable;
                 }
                 else {
@@ -1641,9 +1656,12 @@ namespace CsmGenSet
                     else
                         rabDataSplit_File_anjuan.Checked = true;
                     string[] strtmp = ClsDataSplit.DataSplitFileName.Split(';');
-                    txtDataSplit_File_cd.Text = strtmp[0];
-                    txtDataSplit_File_qian.Text = strtmp[1];
-                    txtDataSplit_File_hou.Text = strtmp[2];
+                    if (strtmp.Length > 2)
+                    {
+                        txtDataSplit_File_cd.Text = strtmp[0];
+                        txtDataSplit_File_qian.Text = strtmp[1];
+                        txtDataSplit_File_hou.Text = strtmp[2];
+                    }
                     GetFileGz();
                 }
                 chkDataSplit_File_zero.Checked = ClsDataSplit.DataSplitzero;
@@ -2097,7 +2115,7 @@ namespace CsmGenSet
                     else
                         str += ClsInfoCheck.InfoCheckColtmp[i];
                 }
-                if (ClsInfoCheck.InfoCheckTable.IndexOf(table) < 0) 
+                if (ClsInfoCheck.InfoCheckTable.IndexOf(table) < 0)
                     T_Sysset.SaveGensetInfoCheck(table, str, combInfoCheck_info.Text.Trim().ToString());
                 else
                     T_Sysset.UpdateGensetInfoCheck(table, str, combInfoCheck_info.Text.Trim().ToString());
@@ -2938,7 +2956,7 @@ namespace CsmGenSet
         {
             Infoshow();
         }
-
+      
     }
 
 }

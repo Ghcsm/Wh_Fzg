@@ -37,8 +37,7 @@ namespace Csmsjcf
             if (str.IndexOf('\\') >= 0) {
                 string[] s = str.Split('\\');
                 str = "";
-                for (int i = 0; i < s.Length; i++)
-                {
+                for (int i = 0; i < s.Length; i++) {
                     string[] z = s[i].Split(':');
                     if (str.Trim().Length <= 0)
                         str += z[0];
@@ -57,7 +56,11 @@ namespace Csmsjcf
             else {
                 if (file.IndexOf(';') >= 0) {
                     string[] f = file.Split(';');
-                    ClsDataSplitPar.ClsFileNmaecd = Convert.ToInt32(f[0]);
+                    string s = f[0];
+                    if (s.Trim().Length > 0)
+                        ClsDataSplitPar.ClsFileNmaecd = Convert.ToInt32(f[0]);
+                    else
+                        ClsDataSplitPar.ClsFileNmaecd = 0;
                     ClsDataSplitPar.ClsFileNameQian = f[1];
                     ClsDataSplitPar.ClsFileNameHou = f[2];
                 }

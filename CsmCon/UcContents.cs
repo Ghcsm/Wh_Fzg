@@ -25,14 +25,14 @@ namespace CsmCon
         public static int ArchCheckZt { get; set; } = 0;
         public static int ArchStat { get; set; } = 0;
         public static int Mtmpid { get; set; } = 0;
-        public static ClsContenInfo clsinfo;
+        ClsContenInfo info = new ClsContenInfo();
         private void Init()
         {
-            clsinfo = new ClsContenInfo();
             if (Modulename == null)
-                clsinfo.Modulename = "目录录入";
-            else clsinfo.Modulename = Modulename;
-            ClsConten.GetControl(panel1);
+                Modulename = "目录录入";
+          //  info = new ClsContenInfo();
+          
+            info.GetControl(panel1);
             this.chbModule.Checked = ModuleVisible;
             this.gr0.Enabled = ContentsEnabled;
             gr2.Enabled = ContentsEnabled;
@@ -40,8 +40,8 @@ namespace CsmCon
             this.gr0.Refresh();
             Lvnameadd();
             if (ModuleVisible)
-                ClsConten.LoadModule(LvModule);
-            ClsConten.LoadContents(ArchId, LvContents, chkTspages.Checked);
+                info.LoadModule(LvModule);
+            info.LoadContents(ArchId, LvContents, chkTspages.Checked);
 
         }
 
@@ -49,11 +49,11 @@ namespace CsmCon
         
         private void Lvnameadd()
         {
-            if (clsinfo.ContenCoList.Count <= 0)
+            if (info.ContenCoList.Count <= 0)
                 return;
-            for (int i = 0; i < clsinfo.ContenCoList.Count; i++) {
-                string str = clsinfo.ContenCoList[i];
-                if (i == clsinfo.TitleWz + 2)
+            for (int i = 0; i < info.ContenCoList.Count; i++) {
+                string str = info.ContenCoList[i];
+                if (i == info.TitleWz + 2)
                     LvContents.Columns[i].Width = 200;
                 else if (i > 1)
                     LvContents.Columns[i].Width = 100;
@@ -66,7 +66,7 @@ namespace CsmCon
             if (chbModule.Checked) {
                 this.LvContents.Width = this.gr1.Width - 176;
                 this.LvModule.Visible = true;
-                ClsConten.LoadModule(LvModule);
+                info.LoadModule(LvModule);
             }
             else {
                 this.LvContents.Width = this.gr1.Width - 10;
@@ -108,12 +108,12 @@ namespace CsmCon
                 MessageBox.Show("请重新选择案卷!");
                 return false;
             }
-            if (!ClsConten.Gettxtzd(panel1)) {
+            if (!info.Gettxtzd(panel1)) {
                 MessageBox.Show("标题及页码不能为空!");
                 return false;
             }
-            string pages = clsinfo.Pagestmp;
-            int p = clsinfo.PagesWz;
+            string pages = info.Pagestmp;
+            int p = info.PagesWz;
             string pagestmp = "";
             if (id) {
                 foreach (ListViewItem item in LvContents.Items) {
@@ -166,10 +166,10 @@ namespace CsmCon
                 }
             }
             dicxx = dic1.OrderBy(o => o.Key).ToDictionary(o => o.Key, p => p.Value);
-            int id = Common.ContentsEdit(clsinfo.ContenTable, clsinfo.ContenCoList, dicxx, Mtmpid.ToString(), ArchId);
+            int id = Common.ContentsEdit(info.ContenTable, info.ContenCoList, dicxx, Mtmpid.ToString(), ArchId);
             if (id > 0)
                 cleTxt();
-            ClsConten.LoadContents(ArchId, LvContents, chkTspages.Checked);
+            info.LoadContents(ArchId, LvContents, chkTspages.Checked);
             txtCode.Focus();
         }
         private void AddTitle()
@@ -185,10 +185,10 @@ namespace CsmCon
                 }
             }
             dicxx = dic1.OrderBy(o => o.Key).ToDictionary(o => o.Key, p => p.Value);
-            int id = Common.ContentsInster(clsinfo.ContenTable, clsinfo.ContenCoList, dicxx, ArchId);
+            int id = Common.ContentsInster(info.ContenTable, info.ContenCoList, dicxx, ArchId);
             if (id > 0)
                 cleTxt();
-            ClsConten.LoadContents(ArchId, LvContents, chkTspages.Checked);
+            info.LoadContents(ArchId, LvContents, chkTspages.Checked);
             txtCode.Focus();
         }
 
@@ -204,8 +204,8 @@ namespace CsmCon
                 MessageBox.Show("请先选择目录!");
                 return;
             }
-            Common.ContentsDel(clsinfo.ContenTable, Mtmpid, ArchId);
-            ClsConten.LoadContents(ArchId, LvContents, chkTspages.Checked);
+            Common.ContentsDel(info.ContenTable, Mtmpid, ArchId);
+            info.LoadContents(ArchId, LvContents, chkTspages.Checked);
         }
 
         private void butAdd_Click(object sender, EventArgs e)
@@ -226,13 +226,13 @@ namespace CsmCon
                 return;
             ArchId = arid;
             ArchMaxPage = maxpage;
-            ClsConten.LoadContents(ArchId, LvContents, chkTspages.Checked);
+            info.LoadContents(ArchId, LvContents, chkTspages.Checked);
         }
         public void LoadContents()
         {
             if (ArchId <= 0)
                 return;
-            ClsConten.LoadContents(ArchId, LvContents, chkTspages.Checked);
+            info.LoadContents(ArchId, LvContents, chkTspages.Checked);
         }
 
         private void txtCode_KeyDown(object sender, KeyEventArgs e)
@@ -240,10 +240,10 @@ namespace CsmCon
             if (e.KeyCode == Keys.Enter) {
                 if (this.txtCode.Text.Trim().Length <= 0)
                     return;
-                if (clsinfo.LsModuleIndex.Count > 0 && clsinfo.LsModule.Count > 0) {
+                if (info.LsModuleIndex.Count > 0 && info.LsModule.Count > 0) {
                     string sttCode = this.txtCode.Text.Trim();
-                    string str = clsinfo.LsModule[clsinfo.LsModuleIndex.IndexOf(sttCode)];
-                    ClsConten.SetInfoTxt(panel1, str);
+                    string str = info.LsModule[info.LsModuleIndex.IndexOf(sttCode)];
+                    info.SetInfoTxt(panel1, str);
                 }
             }
         }
@@ -251,7 +251,7 @@ namespace CsmCon
         private void chkTspages_CheckedChanged(object sender, EventArgs e)
         {
             if (chkTspages.Checked) {
-                ClsConten.LoadContents(ArchId, LvContents, chkTspages.Checked);
+                info.LoadContents(ArchId, LvContents, chkTspages.Checked);
             }
         }
 
@@ -275,8 +275,8 @@ namespace CsmCon
 
         private void Settxt(object sender, EventArgs e)
         {
-            int pid = clsinfo.PagesWz;
-            int tid = clsinfo.TitleWz;
+            int pid = info.PagesWz;
+            int tid = info.TitleWz;
             string page = "";
             string title = "";
             for (int i = 1; i < LvContents.Columns.Count; i++) {
@@ -285,7 +285,7 @@ namespace CsmCon
                 if (i == 1)
                     Mtmpid = Convert.ToInt32(str);
                 else {
-                    ClsConten.SetInfoTxt(panel1, (i - 1), str);
+                    info.SetInfoTxt(panel1, (i - 1), str);
                 }
                 if (i == pid + 2)
                     page = str;
@@ -309,7 +309,7 @@ namespace CsmCon
         public void OnChangContents(int page)
         {
             try {
-                int x = clsinfo.PageCount.IndexOf(page.ToString());
+                int x = info.PageCount.IndexOf(page.ToString());
                 if (x >= 0) {
                     LvContents.SelectedItems.Clear();
                     LvContents.Items[x].Selected = true;

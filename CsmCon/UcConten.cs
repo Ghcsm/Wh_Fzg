@@ -21,20 +21,21 @@ namespace CsmCon
         public delegate void CntSelectHandle(object sender, EventArgs e);
         public static int Archid { get; set; }
         public static int ArchPages { get; set; }
-
+        public static int Mtmpid { get; set; } = 0;
+        ClsContenInfo info = new ClsContenInfo();
         void Ini()
         {
-            ClsConten.GetContenInfo();
+            info.GetContenInfo();
             Lvnameadd();
         }
 
         private void Lvnameadd()
         {
-            if (UcContents.clsinfo.ContenCoList.Count <= 0)
+            if (info.ContenCoList.Count <= 0)
                 return;
-            for (int i = 0; i < UcContents.clsinfo.ContenCoList.Count; i++) {
-                string str = UcContents.clsinfo.ContenCoList[i];
-                if (i == UcContents.clsinfo.TitleWz + 2)
+            for (int i = 0; i < info.ContenCoList.Count; i++) {
+                string str = info.ContenCoList[i];
+                if (i == info.TitleWz + 2)
                     lvconten.Columns[i].Width = 200;
                 else if (i > 1)
                     lvconten.Columns[i].Width = 100;
@@ -45,7 +46,7 @@ namespace CsmCon
         public void LoadConten(int archid)
         {
             Archid = archid;
-            ClsConten.LoadContents(archid, lvconten);
+            info.LoadContents(archid, lvconten);
         }
 
         public void CloseConten()
@@ -61,8 +62,8 @@ namespace CsmCon
         private void lvconten_Click(object sender, EventArgs e)
         {
             int x = lvconten.SelectedItems[0].Index;
-            if (UcContents.clsinfo.PageCount2.Count > 0) {
-                ArchPages = Convert.ToInt32(UcContents.clsinfo.PageCount2[x]);
+            if (info.PageCount2.Count > 0) {
+                ArchPages = Convert.ToInt32(info.PageCount2[x]);
                 if (ArchPages > 0)
                     OneClickGotoPage?.Invoke(sender, e);
             }
