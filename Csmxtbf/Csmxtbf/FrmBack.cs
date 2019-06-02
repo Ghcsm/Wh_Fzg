@@ -163,14 +163,13 @@ namespace Csmxtbf
                     return;
                 if (rButSjk.Checked) {
                     Exportsjk();
+                    groupPanel1.Enabled = true;
                     return;
                 }
                 BackImg();
             } catch (Exception ex) {
                 Writelog(ex.ToString());
-            } finally {
-                groupPanel1.Enabled = true;
-            }
+            } 
         }
 
 
@@ -178,7 +177,9 @@ namespace Csmxtbf
         {
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
-            labxx1.Text = "正在备份...";
+            labxx1.Text = "正在备份数据库...";
+            labxx2.Text ="";
+            labxx3.Text ="";
             Application.DoEvents();
             string f = Path.Combine(txtBackPath.Text.Trim(), DateTime.Now.ToString("yyyyMMddhhmm") + ".bak");
             string z = Path.Combine(txtBackPath.Text.Trim(), DateTime.Now.ToString("yyyyMMddhhmm") + ".zip");
@@ -228,13 +229,14 @@ namespace Csmxtbf
                         Writelog(s);
                         return;
                     }
-                    if (!Directory.Exists(Mdir)) {
-                        Directory.CreateDirectory(Mdir);
-                    }
                     File.Copy(f1, Mfile);
                     return;
                 }
-                if (!ftp.CheckRemoteFile("ArchSave", f.Substring(0, 8), f)) {
+                if (!Directory.Exists(Mdir)) {
+                    Directory.CreateDirectory(Mdir);
+                }
+                string file=Path.Combine("ArchSave", f.Substring(0, 8), f);
+                if (!ftp.FtpCheckFile(file)) {
                     string s = string.Format("使用Ftp传输时查找文件失败！第{0}盒,第{1}卷", b, j);
                     Writelog(s);
                     return;
@@ -279,11 +281,10 @@ namespace Csmxtbf
                     }));
 
                     for (int i = 0; i < dt.Rows.Count; i++) {
-                        i = 0;
-                        arid = dt.Rows[0][0].ToString();
-                        b = dt.Rows[0][1].ToString();
-                        j = dt.Rows[0][2].ToString();
-                        f = dt.Rows[0][3].ToString();
+                        arid = dt.Rows[i][0].ToString();
+                        b = dt.Rows[i][1].ToString();
+                        j = dt.Rows[i][2].ToString();
+                        f = dt.Rows[i][3].ToString();
                         if (f == null || f.Trim().Length <= 0) {
                             string s = string.Format("数据库中文件名长度不正确,第{0}盒,第{1}卷;", b, j);
                             Writelog(s);
@@ -291,12 +292,17 @@ namespace Csmxtbf
                             continue;
                         }
                         BackFile(arid, f, b, j);
-                        dt.Rows.RemoveAt(0);
                     }
                     this.BeginInvoke(new Action(() =>
                     {
                         labxx2.Text = string.Format("正在备份第{0} 盒 ,第{1}卷", b, j);
                         labxx3.Text = string.Format("剩余 {0} 个文件", dt.Rows.Count);
+                        if (dt.Rows.Count <= 0)
+                        {
+                            labxx1.Text = "图像备份完成";
+                            labxx2.Text = "";
+                            labxx3.Text = "";
+                        }
                     }));
 
                 } catch (Exception e) {
