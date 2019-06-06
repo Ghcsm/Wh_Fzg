@@ -34,6 +34,7 @@ namespace CsmCon
                     return;
                 string table = ClsInfoEnter.InfoTable[i];
                 DataTable dt = Common.GetTableCol(table);
+                string strnull = "";
                 int colnum = Convert.ToInt32(ClsInfoEnter.InfoNum[i]);
                 int width = Convert.ToInt32(ClsInfoEnter.InfoLbWidth[i]);
                 int txtwidth = Convert.ToInt32(ClsInfoEnter.InfotxtWidth[i]);
@@ -43,13 +44,21 @@ namespace CsmCon
                     foreach (DataRow dr in dt.Rows) {
                         string namecol = dr["name"].ToString();
                         string value = dr["value"].ToString();
+                        string strnulltmp = dr["is_nullable"].ToString();
                         if (strcol == namecol) {
                             id += 1;
+                            if (strnulltmp == "False") {
+                                if (strnull.Trim().Length <= 0)
+                                    strnull += id;
+                                else
+                                    strnull += "," + id;
+                            }
                             CreateTxt(tabControl.TabPages[i], name, namecol, value, colnum, id, width, txtwidth);
+                            break;
                         }
                     }
                 }
-
+                ClsInfoEnter.InfoIsNull.Add(strnull);
             }
         }
 
@@ -60,7 +69,7 @@ namespace CsmCon
                 tab.Name = str;
                 tab.Text = str;
                 tab.BackColor = Color.Transparent;
-                tab.TabStop =false;
+                tab.TabStop = false;
                 Panel p = new Panel();
                 p.Name = str;
                 p.BackColor = SystemColors.GradientInactiveCaption;
@@ -88,9 +97,9 @@ namespace CsmCon
             txtcol += 1;
             Label lb = new Label();
             lb.Name = name;
-            if (name.IndexOf("1") >= 0 || name.IndexOf("8") >= 0) {
-                lb.ForeColor = Color.Red;
-            }
+            //if (name.IndexOf("1") >= 0 || name.IndexOf("8") >= 0) {
+            //    lb.ForeColor = Color.Red;
+            //}
             lb.Text = name + ": ";
             lb.Width = width;
             lb.SendToBack();
@@ -101,7 +110,7 @@ namespace CsmCon
             else
                 lb.Location = new Point(xx, txtrows * 30 - 20);
             pl.Controls.Add(lb);
-            if (val.Trim().Length <= 0) {
+            if (val.IndexOf(';') < 0) {
                 TextBox txt = new TextBox();
                 txt.Name = name;
                 // txt.Width = (pl.Width - lb.Width * colnum) / colnum - 10;
@@ -160,14 +169,35 @@ namespace CsmCon
                 return;
             string name = tabControl.SelectedTab.Name;
             Control pl = tabControl.SelectedTab.Controls.Find(name, true)[0];
-            foreach (Control t in pl.Controls)
-            {
-                if (t.Tag != null && t.Tag.ToString() == "1")
-                {
+            foreach (Control t in pl.Controls) {
+                if (t.Tag != null && t.Tag.ToString() == "1") {
                     t.Focus();
                     return;
                 }
             }
+        }
+
+        bool Istxtnull(int id, Control tab)
+        {
+            List<string> lstmp = new List<string>();
+            string str = ClsInfoEnter.InfoIsNull[id];
+            if (str.Trim().Length <= 0)
+                return false;
+            if (str.IndexOf(',') >= 0)
+                lstmp = str.Split(',').ToList();
+            else lstmp.Add(str);
+            foreach (Control p in tab.Controls) {
+                if (p.Tag != null) {
+                    if (lstmp.IndexOf(p.Tag.ToString()) >= 0) {
+                        if (p.Text.Trim().Length <= 0) {
+                            MessageBox.Show("信息不能为空");
+                            p.Focus();
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
         }
 
         public void SaveInfo(int archid, int enter)
@@ -180,12 +210,14 @@ namespace CsmCon
                     return;
                 string name = tabControl.SelectedTab.Name;
                 Control pl = tabControl.SelectedTab.Controls.Find(name, true)[0];
+                if (Istxtnull(tabControl.SelectedIndex, pl))
+                    return;
                 Dictionary<int, string> dic1 = new Dictionary<int, string>();
                 Dictionary<int, string> dicxx = new Dictionary<int, string>();
                 foreach (Control t in pl.Controls) {
-                    if (t.Tag != null && t.Tag.ToString() != "") {
+                    if (t.Tag != null && t.Tag.ToString().Trim().Length > 0) {
                         string str = t.Text.Trim();
-                        if (str != "") {
+                        if (str.Length > 0) {
                             Ts += 1;
                         }
                         dic1.Add(Convert.ToInt32(t.Tag), str);

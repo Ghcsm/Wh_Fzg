@@ -66,8 +66,7 @@ namespace Csmdapx
             try {
                 gArch.butLoad.Enabled = false;
                 if (ImgView.Image == null && ClsIndex.ArchPos == null ||
-                    ImgView.Image == null && ClsIndex.ArchPos.Trim().Length <= 0)
-                {
+                    ImgView.Image == null && ClsIndex.ArchPos.Trim().Length <= 0) {
 
                     if (ClsIndex.task)
                         return;
@@ -154,7 +153,7 @@ namespace Csmdapx
 
         private void toolStripSplit_Click(object sender, EventArgs e)
         {
-            
+
         }
 
         private void toolStripCenter_Click(object sender, EventArgs e)
@@ -222,12 +221,13 @@ namespace Csmdapx
                     int arid = ClsIndex.Archid;
                     string archpos = ClsIndex.ArchPos;
                     int pages = ClsIndex.MaxPage;
+                    int regpage = ClsIndex.RegPage;
                     Dictionary<int, string> pageabc = new Dictionary<int, string>(Himg._PageAbc);
                     Dictionary<int, int> pagenum = new Dictionary<int, int>(Himg._PageNumber);
                     Himg._PageAbc.Clear();
                     Himg._PageNumber.Clear();
+                    Task.Run(new Action(() => { FtpUpFinish(regpage,filetmp, arid, archpos, pages, pageabc, pagenum); }));
                     Cledata();
-                    Task.Run(new Action(() => { FtpUpFinish(filetmp, arid, archpos, pages, pageabc, pagenum); }));
                     txtPages.Text = "";
                     gArch.LvData.Focus();
                 }
@@ -597,21 +597,22 @@ namespace Csmdapx
             this.BeginInvoke(new Action(() =>
             {
                 ImgView.Image = null;
-            ClsIndex.Archid = 0;
-            ClsIndex.ArchPos = "";
-            ClsIndex.MaxPage = 0;
-            ClsIndex.CrrentPage = 0;
-            labPageCrrent.Text = "第     页";
-            labPageCount.Text = "共      页";
-            labScanUser.Text = "扫描:";
-            labIndexUser.Text = "排序:";
-            labCheckUser.Text = "质检:";
-            toolArchno.Text = "当前卷号:";
-            ClsIndex.task = false;
+                ClsIndex.Archid = 0;
+                ClsIndex.ArchPos = "";
+                ClsIndex.MaxPage = 0;
+                ClsIndex.CrrentPage = 0;
+                ClsIndex.RegPage = 0;
+                labPageCrrent.Text = "第     页";
+                labPageCount.Text = "共      页";
+                labScanUser.Text = "扫描:";
+                labIndexUser.Text = "排序:";
+                labCheckUser.Text = "质检:";
+                toolArchno.Text = "当前卷号:";
+                ClsIndex.task = false;
             }));
         }
 
-        private async void FtpUpFinish(string filetmp, int arid, string archpos, int pages, Dictionary<int, string> pageAbc, Dictionary<int, int> pagenumber)
+        private async void FtpUpFinish(int regpage, string filetmp, int arid, string archpos, int pages, Dictionary<int, string> pageAbc, Dictionary<int, int> pagenumber)
         {
             try {
                 if (File.Exists(filetmp)) {
@@ -625,7 +626,6 @@ namespace Csmdapx
                     //    PageIndexInfo += item.Value + ";";
                     //}
                     //PageIndexInfo = PageIndexInfo.Trim();
-                    Common.SetIndexCancel(arid, "");
                     string IndexFileName = Common.GetCurrentTime() + Common.TifExtension;
                     string RemoteDir = IndexFileName.Substring(0, 8);
                     if (T_ConFigure.FtpStyle == 1) {
@@ -634,15 +634,20 @@ namespace Csmdapx
                         string LocalIndexFile = Path.Combine(T_ConFigure.FtpTmpPath, T_ConFigure.TmpIndex,
                             IndexFileName);
                         Common.WiteUpTask(arid, archpos, IndexFileName, (int)T_ConFigure.ArchStat.排序完, pages, LocalIndexFile);
-                        Task task = new Task(() => { Himg._OrderSave(filetmp, LocalIndexFile, pageAbc, pagenumber); });
-                        task.Start();
-                        task.Wait();
+                        //Task task = new Task(() => { Himg._OrderSave(filetmp, LocalIndexFile, pageAbc, pagenumber); });
+                        //task.Start();
+                        //task.Wait();
+                        if (!Himg._OrderSave(regpage,filetmp, LocalIndexFile, pageAbc, pagenumber)) {
+                            Common.DelTask(arid);
+                            return;
+                        }
                         string sourcefile = Path.Combine(T_ConFigure.FtpTmp, T_ConFigure.TmpIndex, IndexFileName);
                         string goalfile = Path.Combine(T_ConFigure.FtpArchIndex, RemoteDir, IndexFileName);
                         string path = Path.Combine(T_ConFigure.FtpArchIndex, RemoteDir);
                         if (ftp.FtpMoveFile(sourcefile, goalfile, path)) {
+                            Common.SetIndexCancel(arid, "");
                             Common.DelTask(arid);
-                            Common.SetIndexFinish(arid,DESEncrypt.DesEncrypt(IndexFileName), (int)T_ConFigure.ArchStat.排序完);
+                            Common.SetIndexFinish(arid, DESEncrypt.DesEncrypt(IndexFileName), (int)T_ConFigure.ArchStat.排序完);
                             try {
                                 File.Delete(filetmp);
                                 Directory.Delete(Path.Combine(T_ConFigure.FtpTmpPath, T_ConFigure.TmpScan, archpos));
@@ -653,13 +658,18 @@ namespace Csmdapx
                     else {
                         string LocalIndexFile = Path.Combine(@T_ConFigure.LocalTempPath, IndexFileName);
                         Common.WiteUpTask(arid, archpos, IndexFileName, (int)T_ConFigure.ArchStat.排序完, pages, LocalIndexFile);
-                        Task task = new Task(() => { Himg._OrderSave(filetmp, LocalIndexFile, pageAbc, pagenumber); });
-                        task.Start();
-                        task.Wait();
+                        //Task task = new Task(() => { Himg._OrderSave(filetmp, LocalIndexFile, pageAbc, pagenumber); });
+                        //task.Start();
+                        //task.Wait();
+                        if (!Himg._OrderSave(regpage,filetmp, LocalIndexFile, pageAbc, pagenumber)) {
+                            Common.DelTask(arid);
+                            return;
+                        }
                         string newfile = Path.Combine(T_ConFigure.FtpArchIndex, RemoteDir, IndexFileName);
                         string newpath = Path.Combine(T_ConFigure.FtpArchIndex, RemoteDir);
                         bool x = await ftp.FtpUpFile(LocalIndexFile, newfile, newpath);
                         if (x) {
+                            Common.SetIndexCancel(arid, "");
                             Common.SetIndexFinish(arid, DESEncrypt.DesEncrypt(IndexFileName), (int)T_ConFigure.ArchStat.排序完);
                             Common.DelTask(arid);
                             try {

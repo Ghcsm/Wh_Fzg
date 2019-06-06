@@ -15,6 +15,8 @@ namespace DAL
         public static List<string>InfoNum=new List<string>();
         public static List<string> InfoLbWidth = new List<string>();
         public static List<string> InfotxtWidth = new List<string>();
+        public static List<string>InfoIsNull=new List<string>();
+        
     }
 
     public static class ClsQuerInfo

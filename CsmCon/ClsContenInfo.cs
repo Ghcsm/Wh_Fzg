@@ -186,6 +186,7 @@ namespace CsmCon
                     if (str == namecol) {
                         id += 1;
                         CreateTxt(pl, namecol, value, colnum, id, width, txtwidth);
+                        break;
                     }
                 }
             }

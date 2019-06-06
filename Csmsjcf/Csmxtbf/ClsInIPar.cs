@@ -45,7 +45,13 @@ namespace Csmsjcf
                         str += "," + z[0];
                     ClsDataSplitPar.Clsdircolleg.Add(z[1]);
                 }
+            }else if (str.IndexOf(':') >= 0)
+            {
+                string[] z = str.Split(':');
+                    str = z[0];
+                ClsDataSplitPar.Clsdircolleg.Add(z[1]);
             }
+
             ClsDataSplitPar.ClsdirCol = str;
             ClsDataSplitPar.ClsdirMl = dt.Rows[0][4].ToString();
             ClsDataSplitPar.ClsFileTable = dt.Rows[0][5].ToString();

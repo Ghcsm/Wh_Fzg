@@ -886,6 +886,7 @@ namespace DAL
             ClsInfoEnter.InfoTableName.Clear();
             ClsInfoEnter.InfoLbWidth.Clear();
             ClsInfoEnter.InfotxtWidth.Clear();
+            ClsInfoEnter.InfoIsNull.Clear();
             string strSql = "select * from M_GenSetInfo order by id";
             DataTable dt = SQLHelper.ExcuteTable(strSql);
             if (dt == null || dt.Rows.Count <= 0)
@@ -903,7 +904,7 @@ namespace DAL
         public static DataTable GetTableCol(string table)
         {
             string strSql =
-                "SELECT B.name ,C.value FROM sys.tables A INNER JOIN sys.columns B ON B.object_id = A.object_id LEFT JOIN sys.extended_properties C ON C.major_id = B.object_id AND C.minor_id = B.column_id WHERE A.name = @table";
+                "SELECT B.name ,C.value,B.is_nullable FROM sys.tables A INNER JOIN sys.columns B ON B.object_id = A.object_id LEFT JOIN sys.extended_properties C ON C.major_id = B.object_id AND C.minor_id = B.column_id WHERE A.name = @table";
             SqlParameter p1 = new SqlParameter("@table", table);
             DataTable dt = SQLHelper.ExcuteTable(strSql, p1);
             return dt;

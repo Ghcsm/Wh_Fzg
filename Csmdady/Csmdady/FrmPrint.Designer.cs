@@ -46,6 +46,11 @@
             this.tabItemInfoColXy = new DevComponents.DotNetBar.TabItem(this.components);
             this.gr1 = new System.Windows.Forms.GroupBox();
             this.tabContrSelect = new DevComponents.DotNetBar.TabControl();
+            this.tabControlSelectPanel1 = new DevComponents.DotNetBar.TabControlPanel();
+            this.rbboxOne = new System.Windows.Forms.RadioButton();
+            this.rbBoxAll = new System.Windows.Forms.RadioButton();
+            this.gArchSelect1 = new CsmCon.gArchSelect();
+            this.tabSelectbox = new DevComponents.DotNetBar.TabItem(this.components);
             this.tabControlPanel1 = new DevComponents.DotNetBar.TabControlPanel();
             this.lbInfo = new System.Windows.Forms.Label();
             this.butDelbox = new DevComponents.DotNetBar.ButtonX();
@@ -59,11 +64,6 @@
             this.c_box1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.c_box2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabItemboxRange = new DevComponents.DotNetBar.TabItem(this.components);
-            this.tabControlSelectPanel1 = new DevComponents.DotNetBar.TabControlPanel();
-            this.rbboxOne = new System.Windows.Forms.RadioButton();
-            this.rbBoxAll = new System.Windows.Forms.RadioButton();
-            this.tabSelectbox = new DevComponents.DotNetBar.TabItem(this.components);
-            this.gArchSelect1 = new CsmCon.gArchSelect();
             this.gr0.SuspendLayout();
             this.gr2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tabControlPrint)).BeginInit();
@@ -73,8 +73,8 @@
             this.gr1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tabContrSelect)).BeginInit();
             this.tabContrSelect.SuspendLayout();
-            this.tabControlPanel1.SuspendLayout();
             this.tabControlSelectPanel1.SuspendLayout();
+            this.tabControlPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStrip1
@@ -357,6 +357,81 @@
             this.tabContrSelect.Tabs.Add(this.tabItemboxRange);
             this.tabContrSelect.Text = "tabControl1";
             // 
+            // tabControlSelectPanel1
+            // 
+            this.tabControlSelectPanel1.Controls.Add(this.rbboxOne);
+            this.tabControlSelectPanel1.Controls.Add(this.rbBoxAll);
+            this.tabControlSelectPanel1.Controls.Add(this.gArchSelect1);
+            this.tabControlSelectPanel1.DisabledBackColor = System.Drawing.Color.Empty;
+            this.tabControlSelectPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControlSelectPanel1.Location = new System.Drawing.Point(0, 26);
+            this.tabControlSelectPanel1.Name = "tabControlSelectPanel1";
+            this.tabControlSelectPanel1.Padding = new System.Windows.Forms.Padding(1);
+            this.tabControlSelectPanel1.Size = new System.Drawing.Size(378, 478);
+            this.tabControlSelectPanel1.Style.BackColor1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(142)))), ((int)(((byte)(179)))), ((int)(((byte)(231)))));
+            this.tabControlSelectPanel1.Style.BackColor2.Color = System.Drawing.Color.FromArgb(((int)(((byte)(223)))), ((int)(((byte)(237)))), ((int)(((byte)(254)))));
+            this.tabControlSelectPanel1.Style.Border = DevComponents.DotNetBar.eBorderType.SingleLine;
+            this.tabControlSelectPanel1.Style.BorderColor.Color = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(97)))), ((int)(((byte)(156)))));
+            this.tabControlSelectPanel1.Style.BorderSide = ((DevComponents.DotNetBar.eBorderSide)(((DevComponents.DotNetBar.eBorderSide.Left | DevComponents.DotNetBar.eBorderSide.Right) 
+            | DevComponents.DotNetBar.eBorderSide.Bottom)));
+            this.tabControlSelectPanel1.Style.GradientAngle = 90;
+            this.tabControlSelectPanel1.TabIndex = 1;
+            this.tabControlSelectPanel1.TabItem = this.tabSelectbox;
+            // 
+            // rbboxOne
+            // 
+            this.rbboxOne.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.rbboxOne.AutoSize = true;
+            this.rbboxOne.BackColor = System.Drawing.Color.Transparent;
+            this.rbboxOne.Checked = true;
+            this.rbboxOne.Location = new System.Drawing.Point(146, 450);
+            this.rbboxOne.Name = "rbboxOne";
+            this.rbboxOne.Size = new System.Drawing.Size(71, 16);
+            this.rbboxOne.TabIndex = 2;
+            this.rbboxOne.TabStop = true;
+            this.rbboxOne.Text = "单卷档案";
+            this.rbboxOne.UseVisualStyleBackColor = false;
+            // 
+            // rbBoxAll
+            // 
+            this.rbBoxAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.rbBoxAll.AutoSize = true;
+            this.rbBoxAll.BackColor = System.Drawing.Color.Transparent;
+            this.rbBoxAll.Location = new System.Drawing.Point(40, 450);
+            this.rbBoxAll.Name = "rbBoxAll";
+            this.rbBoxAll.Size = new System.Drawing.Size(71, 16);
+            this.rbBoxAll.TabIndex = 1;
+            this.rbBoxAll.Text = "整盒档案";
+            this.rbBoxAll.UseVisualStyleBackColor = false;
+            // 
+            // gArchSelect1
+            // 
+            this.gArchSelect1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.gArchSelect1.Archid = 0;
+            this.gArchSelect1.ArchImgFile = null;
+            this.gArchSelect1.ArchRegPages = 0;
+            this.gArchSelect1.Archstat = null;
+            this.gArchSelect1.Archtype = null;
+            this.gArchSelect1.Archxystat = null;
+            this.gArchSelect1.BackColor = System.Drawing.Color.Transparent;
+            this.gArchSelect1.Boxsn = 0;
+            this.gArchSelect1.GotoPages = false;
+            this.gArchSelect1.LoadFileBoole = false;
+            this.gArchSelect1.Location = new System.Drawing.Point(8, 0);
+            this.gArchSelect1.Name = "gArchSelect1";
+            this.gArchSelect1.PagesEnd = true;
+            this.gArchSelect1.Size = new System.Drawing.Size(366, 435);
+            this.gArchSelect1.TabIndex = 0;
+            this.gArchSelect1.LineClickLoadInfo += new CsmCon.gArchSelect.ArchSelectHandle(this.gArchSelect1_LineClickLoadInfo);
+            // 
+            // tabSelectbox
+            // 
+            this.tabSelectbox.AttachedControl = this.tabControlSelectPanel1;
+            this.tabSelectbox.Name = "tabSelectbox";
+            this.tabSelectbox.Text = "案卷打印";
+            // 
             // tabControlPanel1
             // 
             this.tabControlPanel1.Controls.Add(this.lbInfo);
@@ -487,77 +562,6 @@
             this.tabItemboxRange.Name = "tabItemboxRange";
             this.tabItemboxRange.Text = "批量打印";
             // 
-            // tabControlSelectPanel1
-            // 
-            this.tabControlSelectPanel1.Controls.Add(this.rbboxOne);
-            this.tabControlSelectPanel1.Controls.Add(this.rbBoxAll);
-            this.tabControlSelectPanel1.Controls.Add(this.gArchSelect1);
-            this.tabControlSelectPanel1.DisabledBackColor = System.Drawing.Color.Empty;
-            this.tabControlSelectPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControlSelectPanel1.Location = new System.Drawing.Point(0, 26);
-            this.tabControlSelectPanel1.Name = "tabControlSelectPanel1";
-            this.tabControlSelectPanel1.Padding = new System.Windows.Forms.Padding(1);
-            this.tabControlSelectPanel1.Size = new System.Drawing.Size(378, 478);
-            this.tabControlSelectPanel1.Style.BackColor1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(142)))), ((int)(((byte)(179)))), ((int)(((byte)(231)))));
-            this.tabControlSelectPanel1.Style.BackColor2.Color = System.Drawing.Color.FromArgb(((int)(((byte)(223)))), ((int)(((byte)(237)))), ((int)(((byte)(254)))));
-            this.tabControlSelectPanel1.Style.Border = DevComponents.DotNetBar.eBorderType.SingleLine;
-            this.tabControlSelectPanel1.Style.BorderColor.Color = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(97)))), ((int)(((byte)(156)))));
-            this.tabControlSelectPanel1.Style.BorderSide = ((DevComponents.DotNetBar.eBorderSide)(((DevComponents.DotNetBar.eBorderSide.Left | DevComponents.DotNetBar.eBorderSide.Right) 
-            | DevComponents.DotNetBar.eBorderSide.Bottom)));
-            this.tabControlSelectPanel1.Style.GradientAngle = 90;
-            this.tabControlSelectPanel1.TabIndex = 1;
-            this.tabControlSelectPanel1.TabItem = this.tabSelectbox;
-            // 
-            // rbboxOne
-            // 
-            this.rbboxOne.AutoSize = true;
-            this.rbboxOne.BackColor = System.Drawing.Color.Transparent;
-            this.rbboxOne.Checked = true;
-            this.rbboxOne.Location = new System.Drawing.Point(146, 450);
-            this.rbboxOne.Name = "rbboxOne";
-            this.rbboxOne.Size = new System.Drawing.Size(71, 16);
-            this.rbboxOne.TabIndex = 2;
-            this.rbboxOne.TabStop = true;
-            this.rbboxOne.Text = "单卷档案";
-            this.rbboxOne.UseVisualStyleBackColor = false;
-            // 
-            // rbBoxAll
-            // 
-            this.rbBoxAll.AutoSize = true;
-            this.rbBoxAll.BackColor = System.Drawing.Color.Transparent;
-            this.rbBoxAll.Location = new System.Drawing.Point(40, 450);
-            this.rbBoxAll.Name = "rbBoxAll";
-            this.rbBoxAll.Size = new System.Drawing.Size(71, 16);
-            this.rbBoxAll.TabIndex = 1;
-            this.rbBoxAll.Text = "整盒档案";
-            this.rbBoxAll.UseVisualStyleBackColor = false;
-            // 
-            // tabSelectbox
-            // 
-            this.tabSelectbox.AttachedControl = this.tabControlSelectPanel1;
-            this.tabSelectbox.Name = "tabSelectbox";
-            this.tabSelectbox.Text = "案卷打印";
-            // 
-            // gArchSelect1
-            // 
-            this.gArchSelect1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.gArchSelect1.Archid = 0;
-            this.gArchSelect1.ArchImgFile = null;
-            this.gArchSelect1.ArchRegPages = 0;
-            this.gArchSelect1.Archtype = null;
-            this.gArchSelect1.BackColor = System.Drawing.Color.Transparent;
-            this.gArchSelect1.Boxsn = 0;
-            this.gArchSelect1.GotoPages = false;
-            this.gArchSelect1.LoadFileBoole = false;
-            this.gArchSelect1.Location = new System.Drawing.Point(8, 0);
-            this.gArchSelect1.Name = "gArchSelect1";
-            this.gArchSelect1.PagesEnd = true;
-            this.gArchSelect1.Size = new System.Drawing.Size(366, 435);
-            this.gArchSelect1.TabIndex = 0;
-            this.gArchSelect1.LineClickLoadInfo += new CsmCon.gArchSelect.ArchSelectHandle(this.gArchSelect1_LineClickLoadInfo);
-            // 
             // FrmPrint
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -580,10 +584,10 @@
             this.gr1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.tabContrSelect)).EndInit();
             this.tabContrSelect.ResumeLayout(false);
-            this.tabControlPanel1.ResumeLayout(false);
-            this.tabControlPanel1.PerformLayout();
             this.tabControlSelectPanel1.ResumeLayout(false);
             this.tabControlSelectPanel1.PerformLayout();
+            this.tabControlPanel1.ResumeLayout(false);
+            this.tabControlPanel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 

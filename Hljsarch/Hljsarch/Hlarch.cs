@@ -1306,7 +1306,7 @@ namespace HLjscom
                         int zd = 0;
                         string Newfile = "";
                         if (cd > 0) {
-                            zd = cd- qzd.Trim().Length - hzd.Trim().Length;
+                            zd = cd - qzd.Trim().Length - hzd.Trim().Length;
                             Newfile = Path.Combine(mimg, qzd.Trim() + num.ToString().PadLeft(zd, '0') + hzd.Trim() + "." + fileformat);
                         }
                         else {
@@ -1381,7 +1381,7 @@ namespace HLjscom
                         int zd = 0;
                         string Newfile = "";
                         if (cd > 0) {
-                            zd = cd- qzd.Trim().Length - hzd.Trim().Length;
+                            zd = cd - qzd.Trim().Length - hzd.Trim().Length;
                             Newfile = Path.Combine(mimg, qzd.Trim() + num.ToString().PadLeft(zd, '0') + hzd.Trim() + "." + fileformat);
                         }
                         else {
@@ -1605,7 +1605,7 @@ namespace HLjscom
             }
         }
         //排序
-        public bool _OrderSave(string oldfile, string _path, Dictionary<int, string> Pabc, Dictionary<int, int> Pnumber)
+        public bool _OrderSave(int regpage,string oldfile, string _path, Dictionary<int, string> Pabc, Dictionary<int, int> Pnumber)
         {
             try {
                 if (Pabc.Count >= 1) {
@@ -1621,7 +1621,7 @@ namespace HLjscom
                     }
                 }
                 if (Pnumber.Count >= 1) {
-                    for (int i = 1; i <= RegPage - _PageAbc.Count; i++) {
+                    for (int i = 1; i <= regpage - _PageAbc.Count; i++) {
                         int k = Pnumber.First(q => q.Value == i).Key;
                         if (Pnumber[k].Equals(i)) {
                             OrderSave(k, _PageAbc.Count + i, oldfile, _path);
@@ -1777,10 +1777,9 @@ namespace HLjscom
                 }
                 else {
                     int x = _CountPage();
-                    if (x >= 2)
-                    {
+                    if (x >= 2) {
                         _Codefile.DeletePage(Filename, CrrentPage);
-                        LoadPage(x-1);
+                        LoadPage(x - 1);
                         return;
                     }
                 }

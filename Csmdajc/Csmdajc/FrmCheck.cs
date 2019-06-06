@@ -4,6 +4,7 @@ using HLFtp;
 using HLjscom;
 using System;
 using System.Data;
+using System.Drawing;
 using System.IO;
 using System.Text;
 using System.Threading;
@@ -382,7 +383,10 @@ namespace Csmdajc
         private void Ispages()
         {
             if (Clscheck.RegPage != Clscheck.MaxPage)
+            {
                 toollbInfo.Text = "当前登记页码和图像页码不一致!";
+                toollbInfo.BackColor=Color.Red;
+            }
             else
                 toollbInfo.Text = "";
         }

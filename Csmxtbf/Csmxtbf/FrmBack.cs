@@ -169,7 +169,7 @@ namespace Csmxtbf
                 BackImg();
             } catch (Exception ex) {
                 Writelog(ex.ToString());
-            } 
+            }
         }
 
 
@@ -178,8 +178,8 @@ namespace Csmxtbf
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
             labxx1.Text = "正在备份数据库...";
-            labxx2.Text ="";
-            labxx3.Text ="";
+            labxx2.Text = "";
+            labxx3.Text = "";
             Application.DoEvents();
             string f = Path.Combine(txtBackPath.Text.Trim(), DateTime.Now.ToString("yyyyMMddhhmm") + ".bak");
             string z = Path.Combine(txtBackPath.Text.Trim(), DateTime.Now.ToString("yyyyMMddhhmm") + ".zip");
@@ -188,15 +188,14 @@ namespace Csmxtbf
                     File.Delete(f);
             }
             T_Sysset.BackSql(f);
-            if (File.Exists(f))
-            {
+            if (File.Exists(f)) {
                 using (ZipFile zip = ZipFile.Create(z)) {
                     zip.BeginUpdate();
                     zip.Add(f);
-                    zip.Password ="bg."+DateTime.Now.ToString("yyyyMMdd");
+                    zip.Password = "bg." + DateTime.Now.ToString("yyyyMMdd");
                     zip.CommitUpdate();
                 }
-                
+
             }
             try {
                 if (File.Exists(z)) {
@@ -235,7 +234,7 @@ namespace Csmxtbf
                 if (!Directory.Exists(Mdir)) {
                     Directory.CreateDirectory(Mdir);
                 }
-                string file=Path.Combine("ArchSave", f.Substring(0, 8), f);
+                string file = Path.Combine("ArchSave", f.Substring(0, 8), f);
                 if (!ftp.FtpCheckFile(file)) {
                     string s = string.Format("使用Ftp传输时查找文件失败！第{0}盒,第{1}卷", b, j);
                     Writelog(s);
@@ -292,18 +291,17 @@ namespace Csmxtbf
                             continue;
                         }
                         BackFile(arid, f, b, j);
-                    }
-                    this.BeginInvoke(new Action(() =>
-                    {
-                        labxx2.Text = string.Format("正在备份第{0} 盒 ,第{1}卷", b, j);
-                        labxx3.Text = string.Format("剩余 {0} 个文件", dt.Rows.Count);
-                        if (dt.Rows.Count <= 0)
+                        this.BeginInvoke(new Action(() =>
                         {
-                            labxx1.Text = "图像备份完成";
-                            labxx2.Text = "";
-                            labxx3.Text = "";
-                        }
-                    }));
+                            labxx2.Text = string.Format("正在备份第{0} 盒 ,第{1}卷", b, j);
+                            labxx3.Text = string.Format("剩余 {0} 个文件", dt.Rows.Count);
+                            if (i==dt.Rows.Count-1) {
+                                labxx1.Text = "图像备份完成";
+                                labxx2.Text = "";
+                                labxx3.Text = "";
+                            }
+                        }));
+                    }
 
                 } catch (Exception e) {
                     Writelog(e.ToString());
