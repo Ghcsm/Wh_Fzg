@@ -220,13 +220,12 @@ namespace Csmdapx
                     string filetmp = ClsIndex.ScanFilePath;
                     int arid = ClsIndex.Archid;
                     string archpos = ClsIndex.ArchPos;
-                    int pages = ClsIndex.MaxPage;
                     int regpage = ClsIndex.RegPage;
                     Dictionary<int, string> pageabc = new Dictionary<int, string>(Himg._PageAbc);
                     Dictionary<int, int> pagenum = new Dictionary<int, int>(Himg._PageNumber);
                     Himg._PageAbc.Clear();
                     Himg._PageNumber.Clear();
-                    Task.Run(new Action(() => { FtpUpFinish(regpage,filetmp, arid, archpos, pages, pageabc, pagenum); }));
+                    Task.Run(new Action(() => { FtpUpFinish(regpage,filetmp, arid, archpos, pageabc, pagenum); }));
                     Cledata();
                     txtPages.Text = "";
                     gArch.LvData.Focus();
@@ -243,9 +242,9 @@ namespace Csmdapx
             Dictionary<int, int> pagenum = new Dictionary<int, int>(Himg._PageNumber);
             Himg._PageAbc.Clear();
             Himg._PageNumber.Clear();
-            int pages = ClsIndex.MaxPage;
+            int pages = ClsIndex.RegPage;
             Cledata();
-            Task.Run(new Action(() => { FtpUpCanCel(filetmp, arid, archpos, pageabc, pagenum, ClsIndex.MaxPage); }));
+            Task.Run(new Action(() => { FtpUpCanCel(filetmp, arid, archpos, pageabc, pagenum, pages); }));
             txtPages.Text = "";
             gArch.LvData.Focus();
         }
@@ -614,7 +613,7 @@ namespace Csmdapx
             }));
         }
 
-        private async void FtpUpFinish(int regpage, string filetmp, int arid, string archpos, int pages, Dictionary<int, string> pageAbc, Dictionary<int, int> pagenumber)
+        private async void FtpUpFinish(int regpage, string filetmp, int arid, string archpos, Dictionary<int, string> pageAbc, Dictionary<int, int> pagenumber)
         {
             try {
                 if (File.Exists(filetmp)) {
@@ -636,7 +635,7 @@ namespace Csmdapx
                             Directory.CreateDirectory(Path.Combine(T_ConFigure.FtpTmpPath, T_ConFigure.TmpIndex));
                         string LocalIndexFile = Path.Combine(T_ConFigure.FtpTmpPath, T_ConFigure.TmpIndex,
                             IndexFileName);
-                        Common.WiteUpTask(arid, archpos, IndexFileName, (int)T_ConFigure.ArchStat.排序完, pages, filetmp);
+                        Common.WiteUpTask(arid, archpos, IndexFileName, (int)T_ConFigure.ArchStat.排序完, regpage, filetmp);
                         if (!Himg._OrderSave(regpage,filetmp, LocalIndexFile, pageAbc, pagenumber)) {
                             return;
                         }
@@ -656,7 +655,7 @@ namespace Csmdapx
                     }
                     else {
                         string LocalIndexFile = Path.Combine(@T_ConFigure.LocalTempPath, IndexFileName);
-                        Common.WiteUpTask(arid, archpos, IndexFileName, (int)T_ConFigure.ArchStat.排序完, pages, filetmp);
+                        Common.WiteUpTask(arid, archpos, IndexFileName, (int)T_ConFigure.ArchStat.排序完, regpage, filetmp);
                         if (!Himg._OrderSave(regpage,filetmp, LocalIndexFile, pageAbc, pagenumber)) {
                             return;
                         }
