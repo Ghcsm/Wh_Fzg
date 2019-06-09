@@ -358,7 +358,7 @@ namespace Csmdasm
         {
             try {
                 if (File.Exists(filetmp)) {
-                    Common.WiteUpTask(arid, archpos, T_ConFigure.ScanTempFile, (int)T_ConFigure.ArchStat.扫描中, maxpage, T_ConFigure.ScanTempFile);
+                    Common.WiteUpTask(arid, archpos, T_ConFigure.ScanTempFile, (int)T_ConFigure.ArchStat.扫描完, maxpage, filetmp);
                     if (T_ConFigure.FtpStyle == 1) {
                         string sourcefile = Path.Combine(T_ConFigure.FtpTmp, T_ConFigure.TmpScan, archpos, T_ConFigure.ScanTempFile);
                         string goalfile = Path.Combine(T_ConFigure.gArchScanPath, archpos, T_ConFigure.ScanTempFile);
@@ -373,6 +373,7 @@ namespace Csmdasm
                         }
                     }
                     else {
+                      
                         string newfile = Path.Combine(T_ConFigure.gArchScanPath, archpos, T_ConFigure.ScanTempFile);
                         string newpath = Path.Combine(T_ConFigure.gArchScanPath, archpos);
                         bool x = await ftp.FtpUpFile(filetmp, newfile, newpath);

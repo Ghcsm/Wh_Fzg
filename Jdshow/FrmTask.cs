@@ -6,6 +6,8 @@ using System.Windows.Forms;
 using HLFtp;
 using System.IO;
 using HLjscom;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace Jdshow
 {
@@ -103,9 +105,14 @@ namespace Jdshow
                     string archid = dgData.Rows[0].Cells[1].Value.ToString();
                     string archpos = dgData.Rows[0].Cells[2].Value.ToString();
                     string filename = dgData.Rows[0].Cells[3].Value.ToString();
-                    string filepath = dgData.Rows[0].Cells[4].Value.ToString();
-                    int stat = Convert.ToInt32(dgData.Rows[0].Cells[5].Value.ToString());
+                    string filepath = dgData.Rows[0].Cells[5].Value.ToString();
+                    int stat = Convert.ToInt32(dgData.Rows[0].Cells[4].Value.ToString());
                     string pages = dgData.Rows[0].Cells[6].Value.ToString();
+                    if (!File.Exists(filepath)) {
+                        MessageBox.Show("ID号:" + archid + ",盒号卷号：" + archpos + ",文件不存在!");
+                        dgData.Rows.RemoveAt(0);
+                        continue;
+                    }
                     Task task = new Task(() =>
                     {
                         StatTask(typemodule, archid, archpos, filename, filepath, stat, pages);
@@ -139,52 +146,88 @@ namespace Jdshow
 
         private void StatTask(string typemodule, string archid, string archpos, string filename, string filepath, int archstat, string pages)
         {
-            if (archstat == (int)T_ConFigure.ArchStat.扫描完) {
-                if (ftp.SaveRemoteFileUp(T_ConFigure.gArchScanPath, archpos, filename, T_ConFigure.ScanTempFile)) {
+            if (archstat <= (int)T_ConFigure.ArchStat.扫描完) {
+                if (ftp.SaveRemoteFileUp(T_ConFigure.gArchScanPath, archpos, filepath, filename)) {
                     Common.DelTask(Convert.ToInt32(archid));
                     Common.SetScanFinish(Convert.ToInt32(archid), Convert.ToInt32(pages), 1, archstat);
                     try {
-                        File.Delete(filename);
+                        File.Delete(filepath);
                         Directory.Delete(Path.Combine(T_ConFigure.LocalTempPath, archpos));
                     } catch {
                     }
                     return;
                 }
             }
-            else if (archstat == (int)T_ConFigure.ArchStat.排序完) {
-
+            else if (archstat <= (int)T_ConFigure.ArchStat.排序完) {
+                Dictionary<int, int> num = new Dictionary<int, int>();
+                Dictionary<int, string> abc = new Dictionary<int, string>();
+                ReadDict(Convert.ToInt32(archid), out num, abc);
                 string IndexFileName = Common.GetCurrentTime() + Common.TifExtension;
                 string RemoteDir = IndexFileName.Substring(0, 8);
                 string LocalIndexFile = Path.Combine(@T_ConFigure.LocalTempPath, IndexFileName);
-                Task task = new Task(() => { Himg._OrderSave(filepath, LocalIndexFile); });
-                task.Start();
-                task.Wait();
+                if (!Himg._OrderSave(Convert.ToInt32(pages), filepath, LocalIndexFile, abc, num)) {
+                    return;
+                }
                 if (ftp.SaveRemoteFileUp(T_ConFigure.FtpArchIndex, RemoteDir, LocalIndexFile, IndexFileName)) {
                     Common.SetIndexFinish(Convert.ToInt32(archid), DESEncrypt.DesEncrypt(IndexFileName), archstat);
                     Common.DelTask(Convert.ToInt32(archid));
-                    File.Delete(filepath);
-                    File.Delete(LocalIndexFile);
-                    Directory.Delete(Path.Combine(T_ConFigure.LocalTempPath, archpos));
-                    if (ftp.KillRemotFile(T_ConFigure.gArchScanPath, archpos, T_ConFigure.ScanTempFile)) {
-                        ftp.KillRemotDir(T_ConFigure.gArchScanPath, archpos);
-                    }
+                    try {
+                        File.Delete(filepath);
+                        File.Delete(LocalIndexFile);
+                        Directory.Delete(Path.Combine(T_ConFigure.LocalTempPath, archpos));
+                        string file = Path.Combine(T_ConFigure.gArchScanPath, archpos, T_ConFigure.ScanTempFile);
+                        if (ftp.FtpCheckFile(file)) {
+                            ftp.FtpDelFile(file);
+                        }
+                    } catch { }
                     return;
                 }
             }
             else if (archstat == (int)T_ConFigure.ArchStat.质检完) {
                 string RemoteDir = filename.Substring(0, 8);
-                if (ftp.SaveRemoteFileUp(T_ConFigure.FtpArchSave, RemoteDir, filename, filepath)) {
+                if (ftp.SaveRemoteFileUp(T_ConFigure.FtpArchSave, RemoteDir, filepath,filename )) {
                     Common.DelTask(Convert.ToInt32(archid));
                     Common.SetCheckFinish(Convert.ToInt32(archid), DESEncrypt.DesEncrypt(filename), 1, (int)T_ConFigure.ArchStat.质检完, "");
                     try {
                         File.Delete(filepath);
-                        Directory.Delete(RemoteDir);
+                        Directory.Delete(Path.GetDirectoryName(filepath));
                     } catch { }
 
                 }
 
             }
         }
+
+
+        public void ReadDict(int arid, out Dictionary<int, int> number, Dictionary<int, string> abc)
+        {
+            number = new Dictionary<int, int>();
+            abc = new Dictionary<int, string>();
+            DataTable dt = Common.ReadPageIndexInfo(arid);
+            if (dt != null && dt.Rows.Count > 0) {
+                DataRow dr = dt.Rows[0];
+                string PageIndexInfo = dr["PageIndexInfo"].ToString();
+                if (!string.IsNullOrEmpty(PageIndexInfo)) {
+                    string[] arrPage = PageIndexInfo.Split(';');
+                    if (arrPage.Length > 0) {
+                        for (int i = 0; i < arrPage.Length; i++) {
+                            string str = arrPage[i].Trim();
+                            if (str.Length <= 0)
+                                continue;
+                            if (!isExists(str))
+                                number.Add(i + 1, Convert.ToInt32(str));
+                            else
+                                abc.Add(i + 1, str);
+                        }
+                    }
+                }
+            }
+        }
+        private bool isExists(string str)
+        {
+            return Regex.Matches(str, "[a-zA-Z]").Count > 0;
+        }
+
 
         private void butUpdate_Click(object sender, EventArgs e)
         {

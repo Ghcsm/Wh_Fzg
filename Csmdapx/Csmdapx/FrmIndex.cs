@@ -434,7 +434,9 @@ namespace Csmdapx
                         string[] arrPage = PageIndexInfo.Split(';');
                         if (arrPage.Length > 0) {
                             for (int i = 0; i < arrPage.Length; i++) {
-                                string str = arrPage[i];
+                                string str = arrPage[i].Trim();
+                                if (str.Length<=0)
+                                    continue;
                                 if (!isExists(str))
                                     pagenumber.Add(i + 1, Convert.ToInt32(str));
                                 else
@@ -616,16 +618,17 @@ namespace Csmdapx
         {
             try {
                 if (File.Exists(filetmp)) {
-                    //Dictionary<int, string> _PageAbc = pageAbc;
-                    //Dictionary<int, int> _PageNumber = pagenumber;
-                    //string PageIndexInfo = "";
-                    //foreach (var item in _PageAbc) {
-                    //    PageIndexInfo += item.Value + ";";
-                    //}
-                    //foreach (var item in _PageNumber) {
-                    //    PageIndexInfo += item.Value + ";";
-                    //}
-                    //PageIndexInfo = PageIndexInfo.Trim();
+                    Dictionary<int, string> _PageAbc = pageAbc;
+                    Dictionary<int, int> _PageNumber = pagenumber;
+                    string PageIndexInfo = "";
+                    foreach (var item in _PageAbc) {
+                        PageIndexInfo += item.Value + ";";
+                    }
+                    foreach (var item in _PageNumber) {
+                        PageIndexInfo += item.Value + ";";
+                    }
+                    PageIndexInfo = PageIndexInfo.Trim();
+                    Common.SetIndexCancel(arid, PageIndexInfo);
                     string IndexFileName = Common.GetCurrentTime() + Common.TifExtension;
                     string RemoteDir = IndexFileName.Substring(0, 8);
                     if (T_ConFigure.FtpStyle == 1) {
@@ -633,12 +636,8 @@ namespace Csmdapx
                             Directory.CreateDirectory(Path.Combine(T_ConFigure.FtpTmpPath, T_ConFigure.TmpIndex));
                         string LocalIndexFile = Path.Combine(T_ConFigure.FtpTmpPath, T_ConFigure.TmpIndex,
                             IndexFileName);
-                        Common.WiteUpTask(arid, archpos, IndexFileName, (int)T_ConFigure.ArchStat.排序完, pages, LocalIndexFile);
-                        //Task task = new Task(() => { Himg._OrderSave(filetmp, LocalIndexFile, pageAbc, pagenumber); });
-                        //task.Start();
-                        //task.Wait();
+                        Common.WiteUpTask(arid, archpos, IndexFileName, (int)T_ConFigure.ArchStat.排序完, pages, filetmp);
                         if (!Himg._OrderSave(regpage,filetmp, LocalIndexFile, pageAbc, pagenumber)) {
-                            Common.DelTask(arid);
                             return;
                         }
                         string sourcefile = Path.Combine(T_ConFigure.FtpTmp, T_ConFigure.TmpIndex, IndexFileName);
@@ -657,12 +656,8 @@ namespace Csmdapx
                     }
                     else {
                         string LocalIndexFile = Path.Combine(@T_ConFigure.LocalTempPath, IndexFileName);
-                        Common.WiteUpTask(arid, archpos, IndexFileName, (int)T_ConFigure.ArchStat.排序完, pages, LocalIndexFile);
-                        //Task task = new Task(() => { Himg._OrderSave(filetmp, LocalIndexFile, pageAbc, pagenumber); });
-                        //task.Start();
-                        //task.Wait();
+                        Common.WiteUpTask(arid, archpos, IndexFileName, (int)T_ConFigure.ArchStat.排序完, pages, filetmp);
                         if (!Himg._OrderSave(regpage,filetmp, LocalIndexFile, pageAbc, pagenumber)) {
-                            Common.DelTask(arid);
                             return;
                         }
                         string newfile = Path.Combine(T_ConFigure.FtpArchIndex, RemoteDir, IndexFileName);

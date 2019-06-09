@@ -537,9 +537,9 @@ namespace DAL
             try {
                 string strSql = "";
                 if (T_User.LoginName != "Admin")
-                    strSql = "select TypeModule'模式',Archid'卷id',ArchPos'案卷号',FileName'文件名',ArchStat'流程',Userid'用户',IP,DateTime'时间',Filepath'路径' from M_UpTask where Userid=@userid";
+                    strSql = "select TypeModule'模式',Archid'卷id',ArchPos'案卷号',FileName'文件名',ArchStat'流程',Filepath'路径',pages '页码',Userid'用户',IP,DateTime'时间' from M_UpTask where Userid=@userid";
                 else
-                    strSql = "select TypeModule'模式',Archid'卷id',ArchPos'案卷号',FileName'文件名',ArchStat'流程',Userid'用户',IP,DateTime'时间',Filepath'路径' from M_UpTask";
+                    strSql = "select TypeModule'模式',Archid'卷id',ArchPos'案卷号',FileName'文件名',ArchStat'流程',Filepath'路径',pages '页码',Userid'用户',IP,DateTime'时间' from M_UpTask";
                 DataTable dt = SQLHelper.ExcuteTable(strSql);
                 return dt;
             } catch {

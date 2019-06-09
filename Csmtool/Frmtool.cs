@@ -82,7 +82,7 @@ namespace Csmtool
                 try {
                     ftp.FtpDelFile(file);
                 } catch (Exception e) {
-                    MessageBox.Show("清图像失败:" + e.ToString());
+                    MessageBox.Show("清空图像失败:" + e.ToString());
                 }
             }
             MessageBox.Show("操作完成!");

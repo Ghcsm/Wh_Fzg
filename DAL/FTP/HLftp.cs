@@ -227,7 +227,7 @@ namespace HLFtp
             }
             bool result;
             if (!File.Exists(LocalFile)) {
-                result = true;
+                result = false;
             }
             else {
                 FileInfo fileInfo = new FileInfo(LocalFile);
