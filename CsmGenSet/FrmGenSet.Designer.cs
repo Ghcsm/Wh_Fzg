@@ -441,14 +441,14 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabContr.CanReorderTabs = true;
-            this.tabContr.Controls.Add(this.tabControlPanel11);
-            this.tabContr.Controls.Add(this.tabControlPanel9);
-            this.tabContr.Controls.Add(this.tabControlPanel6);
             this.tabContr.Controls.Add(this.tabControlPanel12);
+            this.tabContr.Controls.Add(this.tabControlPanel6);
             this.tabContr.Controls.Add(this.tabControlPanel2);
             this.tabContr.Controls.Add(this.tabConPrintSet);
-            this.tabContr.Controls.Add(this.tabControlPanel10);
             this.tabContr.Controls.Add(this.tabControlPanel5);
+            this.tabContr.Controls.Add(this.tabControlPanel9);
+            this.tabContr.Controls.Add(this.tabControlPanel10);
+            this.tabContr.Controls.Add(this.tabControlPanel11);
             this.tabContr.Controls.Add(this.tabControlPanel4);
             this.tabContr.Controls.Add(this.tabControlPanel3);
             this.tabContr.Location = new System.Drawing.Point(0, 28);
@@ -655,6 +655,8 @@
             // 
             // groupBox12
             // 
+            this.groupBox12.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.groupBox12.BackColor = System.Drawing.Color.Transparent;
             this.groupBox12.Controls.Add(this.lvCreateTable);
             this.groupBox12.Location = new System.Drawing.Point(12, 105);
@@ -890,6 +892,8 @@
             // 
             // groupBox7
             // 
+            this.groupBox7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.groupBox7.BackColor = System.Drawing.Color.Transparent;
             this.groupBox7.Controls.Add(this.chkInfoCheckTableCol);
             this.groupBox7.Location = new System.Drawing.Point(364, 105);
@@ -1001,8 +1005,6 @@
             // 
             // groupBox4
             // 
-            this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
             this.groupBox4.BackColor = System.Drawing.Color.Transparent;
             this.groupBox4.Controls.Add(this.tabConDataSplit);
             this.groupBox4.Location = new System.Drawing.Point(225, 105);
@@ -1703,10 +1705,11 @@
             // chkDataSplit
             // 
             this.chkDataSplit.CheckOnClick = true;
+            this.chkDataSplit.Dock = System.Windows.Forms.DockStyle.Fill;
             this.chkDataSplit.FormattingEnabled = true;
             this.chkDataSplit.Location = new System.Drawing.Point(3, 17);
             this.chkDataSplit.Name = "chkDataSplit";
-            this.chkDataSplit.Size = new System.Drawing.Size(194, 340);
+            this.chkDataSplit.Size = new System.Drawing.Size(194, 343);
             this.chkDataSplit.TabIndex = 0;
             this.chkDataSplit.Click += new System.EventHandler(this.chkDataSplit_Click);
             // 
@@ -1856,6 +1859,8 @@
             // 
             // groupBox16
             // 
+            this.groupBox16.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.groupBox16.BackColor = System.Drawing.Color.Transparent;
             this.groupBox16.Controls.Add(this.chkBorrtablquer);
             this.groupBox16.Location = new System.Drawing.Point(408, 106);
@@ -1877,6 +1882,8 @@
             // 
             // groupBox15
             // 
+            this.groupBox15.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.groupBox15.BackColor = System.Drawing.Color.Transparent;
             this.groupBox15.Controls.Add(this.chkBorrTablecol);
             this.groupBox15.Location = new System.Drawing.Point(12, 105);
@@ -2006,6 +2013,8 @@
             // 
             // grconten3
             // 
+            this.grconten3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.grconten3.BackColor = System.Drawing.Color.Transparent;
             this.grconten3.Controls.Add(this.lbPrintContenSet);
             this.grconten3.Location = new System.Drawing.Point(176, 201);
@@ -2889,6 +2898,8 @@
             // 
             // groupBox10
             // 
+            this.groupBox10.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.groupBox10.BackColor = System.Drawing.Color.Transparent;
             this.groupBox10.Controls.Add(this.chkContenColShow);
             this.groupBox10.Location = new System.Drawing.Point(353, 105);
