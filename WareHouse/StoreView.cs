@@ -75,6 +75,7 @@ namespace WareHouse
             ClsStore.butjunax = 0;
             ClsStore.Archid = 0;
             ClsStore.ArchPos = "";
+            labHouseKf.Text = string.Format("当前选择：第{0}库房", ClsStore.Houseid);
             labHouseGui.Text = string.Format("当前选择：第{0}柜", ClsStore.Guisn);
             labHouseCeng.Text = string.Format("当前选择：第{0}层", ClsStore.SelectCengsn);
             labHouseLie.Text = string.Format("当前选择：第{0}列", ClsStore.SelectLiesn);
@@ -109,6 +110,7 @@ namespace WareHouse
             ClsStore.SelectJuansn = 0;
             ClsStore.Archid = 0;
             ClsStore.ArchPos = "";
+            labHouseGui.Text = string.Format("当前选择：第{0}柜", ClsStore.Guisn);
             labHouseCeng.Text = string.Format("当前选择：第{0}层", ClsStore.SelectCengsn);
             labHouseLie.Text = string.Format("当前选择：第{0}列", ClsStore.SelectLiesn);
             labHouseBox.Text = string.Format("当前选择：第{0}盒", ClsStore.SelectBoxsn);

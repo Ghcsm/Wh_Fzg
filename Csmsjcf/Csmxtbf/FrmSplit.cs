@@ -201,6 +201,13 @@ namespace Csmsjcf
                     }
                 }
 
+                if (rab_gr2_8_ziduAndmulu.Checked) {
+                    if (!chk_gr2_8_conten.Checked && !chk_gr2_8_pages.Checked) {
+                        MessageBox.Show("请选择文件名称中包含目录或页码的选项!");
+                        return false;
+                    }
+                }
+
                 if (ClsDataSplitPar.ClsdirDirsn == 0) {
                     MessageBox.Show("文件夹命名规则不正确或请后台设置!");
                     return false;
@@ -343,8 +350,7 @@ namespace Csmsjcf
                         return false;
                     }
 
-                    if (ClsDataSplitPar.ClsFileNamecol.Trim().Length <= 0)
-                    {
+                    if (ClsDataSplitPar.ClsFileNamecol.Trim().Length <= 0) {
                         MessageBox.Show("未发现字段相关信息，请后台设置!");
                         return false;
                     }
@@ -387,8 +393,14 @@ namespace Csmsjcf
                 ClsFrmInfoPar.DirNamesn = 1;
             else if (rab_gr2_8_mulu.Checked)
                 ClsFrmInfoPar.DirNamesn = 2;
-            else if (rab_gr2_8_ziduAndmulu.Checked)
+            else if (rab_gr2_8_ziduAndmulu.Checked) {
                 ClsFrmInfoPar.DirNamesn = 3;
+                if (chk_gr2_8_conten.Checked)
+                    ClsFrmInfoPar.DirNamesnconten = 1;
+                if (chk_gr2_8_pages.Checked)
+                    ClsFrmInfoPar.dirNamesnpages = 1;
+            }
+
             if (rab_gr2_4_dan.Checked)
                 ClsFrmInfoPar.FileFomat = 1;
             else if (rab_gr2_4_duo.Checked)
@@ -744,7 +756,7 @@ namespace Csmsjcf
                                 string ml = "";
                                 string pzer = "";
                                 int p = 0;
-                                if (ClsDataSplitPar.ClsdirMl.Trim().Length > 0) {
+                                if (ClsDataSplitPar.ClsdirMl.Trim().Length > 0 && ClsFrmInfoPar.DirNamesnconten==1) {
                                     ml = dirtTable.Rows[d][0].ToString().Trim();
                                     p = 1;
                                 }
@@ -757,10 +769,13 @@ namespace Csmsjcf
                                     p2 = Convert.ToInt32(pages);
                                 }
 
-                                if (ClsDataSplitPar.ClsdirPageZero == 0)
-                                    pzer = p1.ToString();
-                                else
-                                    pzer = p1.ToString().PadLeft(ClsDataSplitPar.ClsdirPageZero, '0');
+                                if (ClsFrmInfoPar.dirNamesnpages == 1)
+                                {
+                                    if (ClsDataSplitPar.ClsdirPageZero == 0)
+                                        pzer = p1.ToString();
+                                    else
+                                        pzer = p1.ToString().PadLeft(ClsDataSplitPar.ClsdirPageZero, '0');
+                                }
                                 //每卷为1 已测完成
                                 if (ClsFrmInfoPar.FileNamesn == 2) {
                                     //为多页时 已测完成
@@ -964,8 +979,7 @@ namespace Csmsjcf
                     ListBshowInfo(xc, boxsn, archno, "警告,错误线程退出");
                 } finally {
                     try {
-                        if (ClsFrmInfoPar.Ftp == 1)
-                        {
+                        if (ClsFrmInfoPar.Ftp == 1) {
                             File.Delete(Downfile);
                             Directory.Delete(Path.GetDirectoryName(Downfile));
                         }
@@ -1341,6 +1355,18 @@ namespace Csmsjcf
             if (rab_gr2_5_boxsn.Checked)
                 txt_gr2_5_juan.Enabled = false;
             else txt_gr2_5_juan.Enabled = true;
+        }
+
+        private void rab_gr2_8_ziduAndmulu_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rab_gr2_8_ziduAndmulu.Checked) {
+                chk_gr2_8_conten.Enabled = true;
+                chk_gr2_8_pages.Enabled = true;
+            }
+            else {
+                chk_gr2_8_conten.Enabled = false;
+                chk_gr2_8_pages.Enabled = false;
+            }
         }
         #endregion
 

@@ -42,6 +42,8 @@ namespace Csmsjcf
         public static int ExportType { get; set; }
         public static int OneJuan { get; set; }
         public static int DirNamesn { get; set; }
+        public static int DirNamesnconten { get; set; } = 0;
+        public static int dirNamesnpages { get; set; } = 0;
         public static int FileNamesn { get; set; }
         public static string OcrPath { get; set; }
         public static bool Ocrpdf { get; set; }

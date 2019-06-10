@@ -67,6 +67,7 @@
             this.PanleHouseBox = new DevComponents.DotNetBar.PanelEx();
             this.PanleHouseMj = new DevComponents.DotNetBar.Controls.GroupPanel();
             this.imgListmjj2 = new System.Windows.Forms.ImageList(this.components);
+            this.labHouseKf = new System.Windows.Forms.Label();
             this.statusStrip1.SuspendLayout();
             this.groupPanel1.SuspendLayout();
             this.gr2.SuspendLayout();
@@ -214,7 +215,7 @@
             // 
             this.butOpenFile.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.butOpenFile.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.butOpenFile.Location = new System.Drawing.Point(56, 400);
+            this.butOpenFile.Location = new System.Drawing.Point(56, 438);
             this.butOpenFile.Name = "butOpenFile";
             this.butOpenFile.Size = new System.Drawing.Size(85, 37);
             this.butOpenFile.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -229,10 +230,11 @@
             this.gr2.Controls.Add(this.labHouseBox);
             this.gr2.Controls.Add(this.labHouseLie);
             this.gr2.Controls.Add(this.labHouseCeng);
+            this.gr2.Controls.Add(this.labHouseKf);
             this.gr2.Controls.Add(this.labHouseGui);
             this.gr2.Location = new System.Drawing.Point(4, 80);
             this.gr2.Name = "gr2";
-            this.gr2.Size = new System.Drawing.Size(142, 145);
+            this.gr2.Size = new System.Drawing.Size(142, 169);
             this.gr2.TabIndex = 29;
             this.gr2.TabStop = false;
             this.gr2.Text = "信息";
@@ -240,7 +242,7 @@
             // labHouseJuan
             // 
             this.labHouseJuan.AutoSize = true;
-            this.labHouseJuan.Location = new System.Drawing.Point(17, 119);
+            this.labHouseJuan.Location = new System.Drawing.Point(17, 136);
             this.labHouseJuan.Name = "labHouseJuan";
             this.labHouseJuan.Size = new System.Drawing.Size(95, 12);
             this.labHouseJuan.TabIndex = 0;
@@ -249,7 +251,7 @@
             // labHouseBox
             // 
             this.labHouseBox.AutoSize = true;
-            this.labHouseBox.Location = new System.Drawing.Point(17, 96);
+            this.labHouseBox.Location = new System.Drawing.Point(17, 113);
             this.labHouseBox.Name = "labHouseBox";
             this.labHouseBox.Size = new System.Drawing.Size(95, 12);
             this.labHouseBox.TabIndex = 0;
@@ -258,7 +260,7 @@
             // labHouseLie
             // 
             this.labHouseLie.AutoSize = true;
-            this.labHouseLie.Location = new System.Drawing.Point(17, 73);
+            this.labHouseLie.Location = new System.Drawing.Point(17, 90);
             this.labHouseLie.Name = "labHouseLie";
             this.labHouseLie.Size = new System.Drawing.Size(95, 12);
             this.labHouseLie.TabIndex = 0;
@@ -267,7 +269,7 @@
             // labHouseCeng
             // 
             this.labHouseCeng.AutoSize = true;
-            this.labHouseCeng.Location = new System.Drawing.Point(17, 50);
+            this.labHouseCeng.Location = new System.Drawing.Point(17, 67);
             this.labHouseCeng.Name = "labHouseCeng";
             this.labHouseCeng.Size = new System.Drawing.Size(95, 12);
             this.labHouseCeng.TabIndex = 0;
@@ -276,7 +278,7 @@
             // labHouseGui
             // 
             this.labHouseGui.AutoSize = true;
-            this.labHouseGui.Location = new System.Drawing.Point(17, 27);
+            this.labHouseGui.Location = new System.Drawing.Point(17, 44);
             this.labHouseGui.Name = "labHouseGui";
             this.labHouseGui.Size = new System.Drawing.Size(95, 12);
             this.labHouseGui.TabIndex = 0;
@@ -293,7 +295,7 @@
             this.gr3.Controls.Add(this.butUp);
             this.gr3.Controls.Add(this.label1);
             this.gr3.Controls.Add(this.txtGroundNum);
-            this.gr3.Location = new System.Drawing.Point(4, 231);
+            this.gr3.Location = new System.Drawing.Point(4, 269);
             this.gr3.Name = "gr3";
             this.gr3.Size = new System.Drawing.Size(145, 148);
             this.gr3.TabIndex = 28;
@@ -521,6 +523,15 @@
             this.imgListmjj2.TransparentColor = System.Drawing.Color.Transparent;
             this.imgListmjj2.Images.SetKeyName(0, "1-1.jpg");
             // 
+            // labHouseKf
+            // 
+            this.labHouseKf.AutoSize = true;
+            this.labHouseKf.Location = new System.Drawing.Point(17, 21);
+            this.labHouseKf.Name = "labHouseKf";
+            this.labHouseKf.Size = new System.Drawing.Size(107, 12);
+            this.labHouseKf.TabIndex = 0;
+            this.labHouseKf.Text = "当前选择：第0库房";
+            // 
             // StoreView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -588,5 +599,6 @@
         private System.Windows.Forms.ToolStripStatusLabel toolFileName;
         private System.Windows.Forms.ToolStripStatusLabel toolFileId;
         private System.Windows.Forms.ImageList imgListmjj2;
+        private System.Windows.Forms.Label labHouseKf;
     }
 }

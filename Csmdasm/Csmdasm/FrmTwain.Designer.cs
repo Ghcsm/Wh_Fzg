@@ -789,21 +789,21 @@
             // 
             // toolSelectTwain
             // 
-            this.toolSelectTwain.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.toolSelectTwain.Font = new System.Drawing.Font("微软雅黑", 11F);
             this.toolSelectTwain.Image = global::Csmdasm.Properties.Resources._1;
             this.toolSelectTwain.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolSelectTwain.Name = "toolSelectTwain";
-            this.toolSelectTwain.Size = new System.Drawing.Size(71, 24);
+            this.toolSelectTwain.Size = new System.Drawing.Size(74, 24);
             this.toolSelectTwain.Text = "选择源";
             this.toolSelectTwain.Click += new System.EventHandler(this.toolSelectTwain_Click);
             // 
             // toolShowPar
             // 
-            this.toolShowPar.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.toolShowPar.Font = new System.Drawing.Font("微软雅黑", 11F);
             this.toolShowPar.Image = global::Csmdasm.Properties.Resources._11;
             this.toolShowPar.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolShowPar.Name = "toolShowPar";
-            this.toolShowPar.Size = new System.Drawing.Size(85, 24);
+            this.toolShowPar.Size = new System.Drawing.Size(89, 24);
             this.toolShowPar.Text = "显示参数";
             this.toolShowPar.Click += new System.EventHandler(this.toolShowPar_Click);
             // 
@@ -814,21 +814,21 @@
             // 
             // toolScan
             // 
-            this.toolScan.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.toolScan.Font = new System.Drawing.Font("微软雅黑", 11F);
             this.toolScan.Image = global::Csmdasm.Properties.Resources._3;
             this.toolScan.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolScan.Name = "toolScan";
-            this.toolScan.Size = new System.Drawing.Size(57, 24);
+            this.toolScan.Size = new System.Drawing.Size(59, 24);
             this.toolScan.Text = "扫描";
             this.toolScan.Click += new System.EventHandler(this.toolScan_Click);
             // 
             // toolInster
             // 
-            this.toolInster.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.toolInster.Font = new System.Drawing.Font("微软雅黑", 11F);
             this.toolInster.Image = global::Csmdasm.Properties.Resources._2;
             this.toolInster.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolInster.Name = "toolInster";
-            this.toolInster.Size = new System.Drawing.Size(57, 24);
+            this.toolInster.Size = new System.Drawing.Size(59, 24);
             this.toolInster.Text = "导入";
             this.toolInster.Click += new System.EventHandler(this.toolInster_Click);
             // 
@@ -839,41 +839,41 @@
             // 
             // toolPagesUp
             // 
-            this.toolPagesUp.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.toolPagesUp.Font = new System.Drawing.Font("微软雅黑", 11F);
             this.toolPagesUp.Image = global::Csmdasm.Properties.Resources._4;
             this.toolPagesUp.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolPagesUp.Name = "toolPagesUp";
-            this.toolPagesUp.Size = new System.Drawing.Size(57, 24);
+            this.toolPagesUp.Size = new System.Drawing.Size(59, 24);
             this.toolPagesUp.Text = "前翻";
             this.toolPagesUp.Click += new System.EventHandler(this.toolPagesUp_Click);
             // 
             // toolPagesDown
             // 
-            this.toolPagesDown.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.toolPagesDown.Font = new System.Drawing.Font("微软雅黑", 11F);
             this.toolPagesDown.Image = global::Csmdasm.Properties.Resources._5;
             this.toolPagesDown.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolPagesDown.Name = "toolPagesDown";
-            this.toolPagesDown.Size = new System.Drawing.Size(57, 24);
+            this.toolPagesDown.Size = new System.Drawing.Size(59, 24);
             this.toolPagesDown.Text = "后翻";
             this.toolPagesDown.Click += new System.EventHandler(this.toolPagesDown_Click);
             // 
             // toolImgBig
             // 
-            this.toolImgBig.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.toolImgBig.Font = new System.Drawing.Font("微软雅黑", 11F);
             this.toolImgBig.Image = global::Csmdasm.Properties.Resources._6;
             this.toolImgBig.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolImgBig.Name = "toolImgBig";
-            this.toolImgBig.Size = new System.Drawing.Size(57, 24);
+            this.toolImgBig.Size = new System.Drawing.Size(59, 24);
             this.toolImgBig.Text = "放大";
             this.toolImgBig.Click += new System.EventHandler(this.toolImgBig_Click);
             // 
             // toolImgSmall
             // 
-            this.toolImgSmall.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.toolImgSmall.Font = new System.Drawing.Font("微软雅黑", 11F);
             this.toolImgSmall.Image = global::Csmdasm.Properties.Resources._7;
             this.toolImgSmall.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolImgSmall.Name = "toolImgSmall";
-            this.toolImgSmall.Size = new System.Drawing.Size(57, 24);
+            this.toolImgSmall.Size = new System.Drawing.Size(59, 24);
             this.toolImgSmall.Text = "缩小";
             this.toolImgSmall.Click += new System.EventHandler(this.toolImgSmall_Click);
             // 
@@ -884,31 +884,31 @@
             // 
             // toolImgRoter
             // 
-            this.toolImgRoter.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.toolImgRoter.Font = new System.Drawing.Font("微软雅黑", 11F);
             this.toolImgRoter.Image = global::Csmdasm.Properties.Resources._8;
             this.toolImgRoter.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolImgRoter.Name = "toolImgRoter";
-            this.toolImgRoter.Size = new System.Drawing.Size(57, 24);
+            this.toolImgRoter.Size = new System.Drawing.Size(59, 24);
             this.toolImgRoter.Text = "旋转";
             this.toolImgRoter.Click += new System.EventHandler(this.toolImgRoter_Click);
             // 
             // toolGotoPages
             // 
-            this.toolGotoPages.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.toolGotoPages.Font = new System.Drawing.Font("微软雅黑", 11F);
             this.toolGotoPages.Image = ((System.Drawing.Image)(resources.GetObject("toolGotoPages.Image")));
             this.toolGotoPages.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolGotoPages.Name = "toolGotoPages";
-            this.toolGotoPages.Size = new System.Drawing.Size(57, 24);
+            this.toolGotoPages.Size = new System.Drawing.Size(59, 24);
             this.toolGotoPages.Text = "转跳";
             this.toolGotoPages.Click += new System.EventHandler(this.toolGotoPages_Click);
             // 
             // toolDelPages
             // 
-            this.toolDelPages.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.toolDelPages.Font = new System.Drawing.Font("微软雅黑", 11F);
             this.toolDelPages.Image = global::Csmdasm.Properties.Resources._9;
             this.toolDelPages.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolDelPages.Name = "toolDelPages";
-            this.toolDelPages.Size = new System.Drawing.Size(57, 24);
+            this.toolDelPages.Size = new System.Drawing.Size(59, 24);
             this.toolDelPages.Text = "删除";
             this.toolDelPages.Click += new System.EventHandler(this.toolDelPages_Click);
             // 
@@ -919,11 +919,11 @@
             // 
             // toolColse
             // 
-            this.toolColse.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.toolColse.Font = new System.Drawing.Font("微软雅黑", 11F);
             this.toolColse.Image = global::Csmdasm.Properties.Resources._10;
             this.toolColse.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolColse.Name = "toolColse";
-            this.toolColse.Size = new System.Drawing.Size(57, 24);
+            this.toolColse.Size = new System.Drawing.Size(59, 24);
             this.toolColse.Text = "退出";
             this.toolColse.Click += new System.EventHandler(this.toolColse_Click);
             // 

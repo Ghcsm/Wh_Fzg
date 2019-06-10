@@ -122,6 +122,8 @@
             this.fBdigImgPath = new System.Windows.Forms.FolderBrowserDialog();
             this.fontDialog = new System.Windows.Forms.FontDialog();
             this.colorDialog = new System.Windows.Forms.ColorDialog();
+            this.chk_gr2_8_conten = new System.Windows.Forms.CheckBox();
+            this.chk_gr2_8_pages = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.superTabControl1)).BeginInit();
             this.superTabControl1.SuspendLayout();
             this.superTabControlPanel1.SuspendLayout();
@@ -167,7 +169,7 @@
             this.superTabControl1.ReorderTabsEnabled = true;
             this.superTabControl1.SelectedTabFont = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold);
             this.superTabControl1.SelectedTabIndex = 0;
-            this.superTabControl1.Size = new System.Drawing.Size(882, 568);
+            this.superTabControl1.Size = new System.Drawing.Size(882, 629);
             this.superTabControl1.TabFont = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.superTabControl1.TabIndex = 0;
             this.superTabControl1.Tabs.AddRange(new DevComponents.DotNetBar.BaseItem[] {
@@ -181,7 +183,7 @@
             this.superTabControlPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.superTabControlPanel1.Location = new System.Drawing.Point(0, 28);
             this.superTabControlPanel1.Name = "superTabControlPanel1";
-            this.superTabControlPanel1.Size = new System.Drawing.Size(882, 540);
+            this.superTabControlPanel1.Size = new System.Drawing.Size(882, 601);
             this.superTabControlPanel1.TabIndex = 1;
             this.superTabControlPanel1.TabItem = this.TabSplit;
             // 
@@ -195,7 +197,7 @@
             this.gr1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gr1.Location = new System.Drawing.Point(0, 0);
             this.gr1.Name = "gr1";
-            this.gr1.Size = new System.Drawing.Size(882, 540);
+            this.gr1.Size = new System.Drawing.Size(882, 601);
             // 
             // 
             // 
@@ -236,7 +238,7 @@
             this.gr3.Controls.Add(this.gr3_1);
             this.gr3.Location = new System.Drawing.Point(489, 9);
             this.gr3.Name = "gr3";
-            this.gr3.Size = new System.Drawing.Size(378, 516);
+            this.gr3.Size = new System.Drawing.Size(378, 577);
             this.gr3.TabIndex = 1;
             this.gr3.TabStop = false;
             this.gr3.Text = "参数设置";
@@ -248,7 +250,7 @@
             this.gr3_3.Controls.Add(this.butLog);
             this.gr3_3.Controls.Add(this.butStart);
             this.gr3_3.Controls.Add(this.labinfo);
-            this.gr3_3.Location = new System.Drawing.Point(6, 414);
+            this.gr3_3.Location = new System.Drawing.Point(6, 475);
             this.gr3_3.Name = "gr3_3";
             this.gr3_3.Size = new System.Drawing.Size(363, 93);
             this.gr3_3.TabIndex = 2;
@@ -309,7 +311,7 @@
             this.gr3_2.Controls.Add(this.listB_gr3_2_log);
             this.gr3_2.Location = new System.Drawing.Point(10, 177);
             this.gr3_2.Name = "gr3_2";
-            this.gr3_2.Size = new System.Drawing.Size(362, 231);
+            this.gr3_2.Size = new System.Drawing.Size(362, 292);
             this.gr3_2.TabIndex = 1;
             this.gr3_2.TabStop = false;
             this.gr3_2.Text = "进度显示";
@@ -323,7 +325,7 @@
             this.listB_gr3_2_log.Location = new System.Drawing.Point(3, 17);
             this.listB_gr3_2_log.Name = "listB_gr3_2_log";
             this.listB_gr3_2_log.ScrollAlwaysVisible = true;
-            this.listB_gr3_2_log.Size = new System.Drawing.Size(356, 211);
+            this.listB_gr3_2_log.Size = new System.Drawing.Size(356, 272);
             this.listB_gr3_2_log.TabIndex = 0;
             // 
             // gr3_1
@@ -459,7 +461,7 @@
             this.gr2.Controls.Add(this.gr2_1);
             this.gr2.Location = new System.Drawing.Point(9, 9);
             this.gr2.Name = "gr2";
-            this.gr2.Size = new System.Drawing.Size(475, 516);
+            this.gr2.Size = new System.Drawing.Size(475, 577);
             this.gr2.TabIndex = 0;
             this.gr2.TabStop = false;
             this.gr2.Text = "参数设置";
@@ -471,7 +473,7 @@
             this.gr2_9.Controls.Add(this.rab_gr2_9_file_1);
             this.gr2_9.Location = new System.Drawing.Point(237, 425);
             this.gr2_9.Name = "gr2_9";
-            this.gr2_9.Size = new System.Drawing.Size(221, 82);
+            this.gr2_9.Size = new System.Drawing.Size(221, 146);
             this.gr2_9.TabIndex = 11;
             this.gr2_9.TabStop = false;
             this.gr2_9.Tag = "7";
@@ -480,7 +482,7 @@
             // rab_gr2_9_file_ziduan
             // 
             this.rab_gr2_9_file_ziduan.AutoSize = true;
-            this.rab_gr2_9_file_ziduan.Location = new System.Drawing.Point(10, 63);
+            this.rab_gr2_9_file_ziduan.Location = new System.Drawing.Point(10, 98);
             this.rab_gr2_9_file_ziduan.Name = "rab_gr2_9_file_ziduan";
             this.rab_gr2_9_file_ziduan.Size = new System.Drawing.Size(95, 16);
             this.rab_gr2_9_file_ziduan.TabIndex = 2;
@@ -490,7 +492,7 @@
             // rab_gr2_9_juan_1
             // 
             this.rab_gr2_9_juan_1.AutoSize = true;
-            this.rab_gr2_9_juan_1.Location = new System.Drawing.Point(10, 41);
+            this.rab_gr2_9_juan_1.Location = new System.Drawing.Point(10, 67);
             this.rab_gr2_9_juan_1.Name = "rab_gr2_9_juan_1";
             this.rab_gr2_9_juan_1.Size = new System.Drawing.Size(101, 16);
             this.rab_gr2_9_juan_1.TabIndex = 1;
@@ -502,7 +504,7 @@
             // 
             this.rab_gr2_9_file_1.AutoSize = true;
             this.rab_gr2_9_file_1.Checked = true;
-            this.rab_gr2_9_file_1.Location = new System.Drawing.Point(10, 19);
+            this.rab_gr2_9_file_1.Location = new System.Drawing.Point(10, 34);
             this.rab_gr2_9_file_1.Name = "rab_gr2_9_file_1";
             this.rab_gr2_9_file_1.Size = new System.Drawing.Size(125, 16);
             this.rab_gr2_9_file_1.TabIndex = 0;
@@ -513,12 +515,14 @@
             // 
             // gr2_8
             // 
+            this.gr2_8.Controls.Add(this.chk_gr2_8_pages);
+            this.gr2_8.Controls.Add(this.chk_gr2_8_conten);
             this.gr2_8.Controls.Add(this.rab_gr2_8_ziduAndmulu);
             this.gr2_8.Controls.Add(this.rab_gr2_8_mulu);
             this.gr2_8.Controls.Add(this.rab_gr2_8_ziduan);
             this.gr2_8.Location = new System.Drawing.Point(16, 425);
             this.gr2_8.Name = "gr2_8";
-            this.gr2_8.Size = new System.Drawing.Size(209, 82);
+            this.gr2_8.Size = new System.Drawing.Size(209, 146);
             this.gr2_8.TabIndex = 10;
             this.gr2_8.TabStop = false;
             this.gr2_8.Tag = "3";
@@ -529,11 +533,12 @@
             this.rab_gr2_8_ziduAndmulu.AutoSize = true;
             this.rab_gr2_8_ziduAndmulu.Location = new System.Drawing.Point(23, 60);
             this.rab_gr2_8_ziduAndmulu.Name = "rab_gr2_8_ziduAndmulu";
-            this.rab_gr2_8_ziduAndmulu.Size = new System.Drawing.Size(101, 16);
+            this.rab_gr2_8_ziduAndmulu.Size = new System.Drawing.Size(53, 16);
             this.rab_gr2_8_ziduAndmulu.TabIndex = 2;
             this.rab_gr2_8_ziduAndmulu.TabStop = true;
-            this.rab_gr2_8_ziduAndmulu.Text = "字段+案卷目录";
+            this.rab_gr2_8_ziduAndmulu.Text = "字段+";
             this.rab_gr2_8_ziduAndmulu.UseVisualStyleBackColor = true;
+            this.rab_gr2_8_ziduAndmulu.CheckedChanged += new System.EventHandler(this.rab_gr2_8_ziduAndmulu_CheckedChanged);
             // 
             // rab_gr2_8_mulu
             // 
@@ -1198,11 +1203,31 @@
             // 
             this.FdigXls.Filter = "Xls文件|*.xls;*xlsx";
             // 
+            // chk_gr2_8_conten
+            // 
+            this.chk_gr2_8_conten.AutoSize = true;
+            this.chk_gr2_8_conten.Location = new System.Drawing.Point(69, 83);
+            this.chk_gr2_8_conten.Name = "chk_gr2_8_conten";
+            this.chk_gr2_8_conten.Size = new System.Drawing.Size(72, 16);
+            this.chk_gr2_8_conten.TabIndex = 3;
+            this.chk_gr2_8_conten.Text = "案卷目录";
+            this.chk_gr2_8_conten.UseVisualStyleBackColor = true;
+            // 
+            // chk_gr2_8_pages
+            // 
+            this.chk_gr2_8_pages.AutoSize = true;
+            this.chk_gr2_8_pages.Location = new System.Drawing.Point(69, 111);
+            this.chk_gr2_8_pages.Name = "chk_gr2_8_pages";
+            this.chk_gr2_8_pages.Size = new System.Drawing.Size(48, 16);
+            this.chk_gr2_8_pages.TabIndex = 3;
+            this.chk_gr2_8_pages.Text = "页码";
+            this.chk_gr2_8_pages.UseVisualStyleBackColor = true;
+            // 
             // FrmSplit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(882, 593);
+            this.ClientSize = new System.Drawing.Size(882, 654);
             this.Controls.Add(this.superTabControl1);
             this.Controls.Add(this.toolStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -1342,5 +1367,7 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.RadioButton rab_gr2_5_boxsn;
         private System.Windows.Forms.RadioButton rab_gr2_5_col;
+        private System.Windows.Forms.CheckBox chk_gr2_8_pages;
+        private System.Windows.Forms.CheckBox chk_gr2_8_conten;
     }
 }
