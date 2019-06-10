@@ -333,6 +333,12 @@ namespace Csmsjcf
                         MessageBox.Show("未发现后台目录相关设置数据");
                         return false;
                     }
+
+                    if (com_gr2_9_file_gz.Text.Trim().Length <= 0) {
+                        MessageBox.Show("请选择文件名的生成规则!");
+                        com_gr2_9_file_gz.Focus();
+                        return false;
+                    }
                 }
                 if (rab_gr2_9_juan_1.Checked) {
                     if (ClsDataSplitPar.ClsdirMlpage.Trim().Length <= 0) {
@@ -377,6 +383,7 @@ namespace Csmsjcf
             ClsFrmInfoPar.OneJuan = 0;
             V_HouseSet v_house = combHouseid.SelectedItem as V_HouseSet;
             ClsFrmInfoPar.Houseid = v_house.HouseID;
+            ClsFrmInfoPar.Filenamegz = com_gr2_9_file_gz.SelectedIndex;
             if (rab_gr2_1_Zengliang.Checked)
                 ClsFrmInfoPar.ConverMode = 1;
             if (rab_gr2_1_Newzhuanhuan.Checked)
@@ -400,7 +407,6 @@ namespace Csmsjcf
                 if (chk_gr2_8_pages.Checked)
                     ClsFrmInfoPar.dirNamesnpages = 1;
             }
-
             if (rab_gr2_4_dan.Checked)
                 ClsFrmInfoPar.FileFomat = 1;
             else if (rab_gr2_4_duo.Checked)
@@ -756,7 +762,7 @@ namespace Csmsjcf
                                 string ml = "";
                                 string pzer = "";
                                 int p = 0;
-                                if (ClsDataSplitPar.ClsdirMl.Trim().Length > 0 && ClsFrmInfoPar.DirNamesnconten==1) {
+                                if (ClsDataSplitPar.ClsdirMl.Trim().Length > 0 && ClsFrmInfoPar.DirNamesnconten == 1) {
                                     ml = dirtTable.Rows[d][0].ToString().Trim();
                                     p = 1;
                                 }
@@ -769,8 +775,7 @@ namespace Csmsjcf
                                     p2 = Convert.ToInt32(pages);
                                 }
 
-                                if (ClsFrmInfoPar.dirNamesnpages == 1)
-                                {
+                                if (ClsFrmInfoPar.dirNamesnpages == 1) {
                                     if (ClsDataSplitPar.ClsdirPageZero == 0)
                                         pzer = p1.ToString();
                                     else
@@ -794,8 +799,11 @@ namespace Csmsjcf
                                                     Directory.CreateDirectory(doublepdf);
                                             }
                                         }
+                                        int pags = p2 - p1;
+                                        if (pags == 0)
+                                            pags = 1;
                                         filename = Path.Combine(dirnamenew,
-                                            p1.ToString() + "-" + p2.ToString() + "." + fs);
+                                            p1.ToString() + "-" + pags.ToString() + "." + fs);
                                         if (File.Exists(filename)) {
                                             if (ClsFrmInfoPar.ConverMode == 2)
                                                 File.Delete(filename);
@@ -873,7 +881,7 @@ namespace Csmsjcf
                                         }
                                     }
                                 }
-                                //每个文件夹为始1  已测完成
+                                //每个目录为  已测完成
                                 else if (ClsFrmInfoPar.FileNamesn == 1) {
                                     //为多页时  正则
                                     if (ClsFrmInfoPar.FileFomat == 2) {
@@ -890,8 +898,15 @@ namespace Csmsjcf
                                             int pags = p2 - p1;
                                             if (pags == 0)
                                                 pags = 1;
-                                            filename = Path.Combine(dirnamenew,
-                                                "1" + "-" + pags.ToString() + "." + fs);
+                                            if (ClsFrmInfoPar.Filenamegz == 0)
+                                                filename = Path.Combine(dirnamenew,
+                                                    "1" + "-" + pags.ToString() + "." + fs);
+                                            else if (ClsFrmInfoPar.Filenamegz == 1)
+                                                filename = Path.Combine(dirnamenew,
+                                                    p1.ToString() + "-" + pags.ToString() + "." + fs);
+                                            else if (ClsFrmInfoPar.Filenamegz == 2)
+                                                filename = Path.Combine(dirnamenew,
+                                                    p1.ToString() + "." + fs);
                                             if (File.Exists(filename)) {
                                                 if (ClsFrmInfoPar.ConverMode == 2)
                                                     File.Delete(filename);
@@ -941,7 +956,7 @@ namespace Csmsjcf
                                                 "正在进行" + fs + "数据转换页：" + p1.ToString() + "-" + p2.ToString());
                                             lsinfopdf = Himg._SplitImgls(Downfile, dirnamenew, p1, p2,
                                             ClsDataSplitPar.ClsFileNameQian, ClsDataSplitPar.ClsFileNameHou,
-                                            ClsDataSplitPar.ClsFileNmaecd, ClsFrmInfoPar.ConverMode, fs, 1);
+                                            ClsDataSplitPar.ClsFileNmaecd, ClsFrmInfoPar.ConverMode, fs, ClsFrmInfoPar.Filenamegz);
                                             if (!ClsOperate.Iserror(lsinfopdf, ClsFrmInfoPar.LogPath)) {
                                                 ListBshowInfo(xc, boxsn, archno, "警告,错误线程退出");
                                                 erro = 1;
@@ -1284,32 +1299,104 @@ namespace Csmsjcf
 
         private void rab_gr2_9_file_1_CheckedChanged(object sender, EventArgs e)
         {
-            if (rab_gr2_9_file_1.Checked)
+            com_gr2_9_file_gz.Enabled = true;
+            if (rab_gr2_9_file_1.Checked) {
                 ClsWritelog.Writeini("filename", "1");
+                if (rab_gr2_4_dan.Checked) {
+                    com_gr2_9_file_gz.Items.Add("1,2,3;4,5,6");
+                    com_gr2_9_file_gz.Items.Add("1,2,3;1,2,3");
+                }
+                else if (rab_gr2_4_duo.Checked) {
+                    com_gr2_9_file_gz.Items.Add("1-3;1-4");
+                    com_gr2_9_file_gz.Items.Add("1-3;4-6");
+                    com_gr2_9_file_gz.Items.Add("1,4,7");
+                }
+                return;
+            }
             else if (rab_gr2_9_juan_1.Checked)
                 ClsWritelog.Writeini("filename", "2");
             else if (rab_gr2_9_file_ziduan.Checked)
                 ClsWritelog.Writeini("filename", "3");
+            com_gr2_9_file_gz.Enabled = false;
         }
 
         private void rab_gr2_9_juan_1_CheckedChanged(object sender, EventArgs e)
         {
-            if (rab_gr2_9_file_1.Checked)
+            com_gr2_9_file_gz.Enabled = true;
+            if (rab_gr2_9_file_1.Checked) {
                 ClsWritelog.Writeini("filename", "1");
+                if (rab_gr2_4_dan.Checked) {
+                    com_gr2_9_file_gz.Items.Add("1,2,3;4,5,6");
+                    com_gr2_9_file_gz.Items.Add("1,2,3;1,2,3");
+                }
+                else if (rab_gr2_4_duo.Checked) {
+                    com_gr2_9_file_gz.Items.Add("1-3;1-4");
+                    com_gr2_9_file_gz.Items.Add("1-3;4-6");
+                    com_gr2_9_file_gz.Items.Add("1,4,7");
+                }
+                return;
+            }
             else if (rab_gr2_9_juan_1.Checked)
                 ClsWritelog.Writeini("filename", "2");
             else if (rab_gr2_9_file_ziduan.Checked)
                 ClsWritelog.Writeini("filename", "3");
+            com_gr2_9_file_gz.Enabled = false;
         }
 
         private void rab_gr2_4_dan_CheckedChanged(object sender, EventArgs e)
         {
-            if (rab_gr2_4_dan.Checked)
+            com_gr2_9_file_gz.Items.Clear();
+            com_gr2_9_file_gz.Enabled = true;
+            if (rab_gr2_4_dan.Checked) {
                 ClsWritelog.Writeini("convfile", "1");
-            else if (rab_gr2_4_duo.Checked)
+                if (rab_gr2_9_file_1.Checked) {
+                    com_gr2_9_file_gz.Items.Add("1,2,3;4,5,6");
+                    com_gr2_9_file_gz.Items.Add("1,2,3;1,2,3");
+                    return;
+                }
+
+            }
+            else if (rab_gr2_4_duo.Checked) {
                 ClsWritelog.Writeini("convfile", "2");
+                if (rab_gr2_9_file_1.Checked) {
+                    com_gr2_9_file_gz.Items.Add("1-3;1-4");
+                    com_gr2_9_file_gz.Items.Add("1-3;4-6");
+                    com_gr2_9_file_gz.Items.Add("1,4,7");
+                    return;
+                }
+
+            }
             else if (rab_gr2_4_duli.Checked)
                 ClsWritelog.Writeini("convfile", "3");
+            com_gr2_9_file_gz.Enabled = false;
+        }
+        private void rab_gr2_4_duo_CheckedChanged(object sender, EventArgs e)
+        {
+            com_gr2_9_file_gz.Items.Clear();
+            com_gr2_9_file_gz.Enabled = true;
+            if (rab_gr2_4_dan.Checked) {
+                ClsWritelog.Writeini("convfile", "1");
+                if (rab_gr2_9_file_1.Checked) {
+                    com_gr2_9_file_gz.Items.Add("1,2,3;4,5,6");
+                    com_gr2_9_file_gz.Items.Add("1,2,3;1,2,3");
+                    return;
+                }
+
+            }
+            else if (rab_gr2_4_duo.Checked) {
+                ClsWritelog.Writeini("convfile", "2");
+                if (rab_gr2_9_file_1.Checked) {
+                    com_gr2_9_file_gz.Items.Add("1-3;1-4");
+                    com_gr2_9_file_gz.Items.Add("1-3;4-6");
+                    com_gr2_9_file_gz.Items.Add("1,4,7");
+                    return;
+                }
+
+            }
+            else if (rab_gr2_4_duli.Checked)
+                ClsWritelog.Writeini("convfile", "3");
+            com_gr2_9_file_gz.Enabled = false;
+
         }
 
         private void rab_gr2_7_wenzi_CheckedChanged(object sender, EventArgs e)
@@ -1330,7 +1417,6 @@ namespace Csmsjcf
 
             else if (rab_gr2_7_wu.Checked)
                 ClsWritelog.Writeini("water", "0");
-
         }
 
         private void rab_gr3_1_ftp_CheckedChanged(object sender, EventArgs e)
@@ -1368,6 +1454,7 @@ namespace Csmsjcf
                 chk_gr2_8_pages.Enabled = false;
             }
         }
+
         #endregion
 
 

@@ -1445,12 +1445,13 @@ namespace DAL
         //    }
         //}
 
-        public static int GetCode(string Code)
+        public static int GetCode(string Code,int id)
         {
             try {
-                string strSql = "select top 100 id from M_IMAGEFILE where ARCNUM=@code";
+                string strSql = "select top 1 id from M_IMAGEFILE where ARCNUM=@code and Houseid=@id";
                 SqlParameter p1 = new SqlParameter("@code", Code);
-                int i = Convert.ToInt32(SQLHelper.ExecScalar(strSql, p1));
+                SqlParameter p2 = new SqlParameter("@id", id);
+                int i = Convert.ToInt32(SQLHelper.ExecScalar(strSql, p1,p2));
                 return i;
             } catch {
                 return 0;

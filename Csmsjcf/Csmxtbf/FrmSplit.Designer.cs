@@ -55,6 +55,8 @@
             this.rab_gr2_9_juan_1 = new System.Windows.Forms.RadioButton();
             this.rab_gr2_9_file_1 = new System.Windows.Forms.RadioButton();
             this.gr2_8 = new System.Windows.Forms.GroupBox();
+            this.chk_gr2_8_pages = new System.Windows.Forms.CheckBox();
+            this.chk_gr2_8_conten = new System.Windows.Forms.CheckBox();
             this.rab_gr2_8_ziduAndmulu = new System.Windows.Forms.RadioButton();
             this.rab_gr2_8_mulu = new System.Windows.Forms.RadioButton();
             this.rab_gr2_8_ziduan = new System.Windows.Forms.RadioButton();
@@ -122,8 +124,8 @@
             this.fBdigImgPath = new System.Windows.Forms.FolderBrowserDialog();
             this.fontDialog = new System.Windows.Forms.FontDialog();
             this.colorDialog = new System.Windows.Forms.ColorDialog();
-            this.chk_gr2_8_conten = new System.Windows.Forms.CheckBox();
-            this.chk_gr2_8_pages = new System.Windows.Forms.CheckBox();
+            this.com_gr2_9_file_gz = new DevComponents.DotNetBar.Controls.ComboBoxEx();
+            this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.superTabControl1)).BeginInit();
             this.superTabControl1.SuspendLayout();
             this.superTabControlPanel1.SuspendLayout();
@@ -468,6 +470,8 @@
             // 
             // gr2_9
             // 
+            this.gr2_9.Controls.Add(this.label3);
+            this.gr2_9.Controls.Add(this.com_gr2_9_file_gz);
             this.gr2_9.Controls.Add(this.rab_gr2_9_file_ziduan);
             this.gr2_9.Controls.Add(this.rab_gr2_9_juan_1);
             this.gr2_9.Controls.Add(this.rab_gr2_9_file_1);
@@ -482,7 +486,7 @@
             // rab_gr2_9_file_ziduan
             // 
             this.rab_gr2_9_file_ziduan.AutoSize = true;
-            this.rab_gr2_9_file_ziduan.Location = new System.Drawing.Point(10, 98);
+            this.rab_gr2_9_file_ziduan.Location = new System.Drawing.Point(13, 78);
             this.rab_gr2_9_file_ziduan.Name = "rab_gr2_9_file_ziduan";
             this.rab_gr2_9_file_ziduan.Size = new System.Drawing.Size(95, 16);
             this.rab_gr2_9_file_ziduan.TabIndex = 2;
@@ -492,11 +496,11 @@
             // rab_gr2_9_juan_1
             // 
             this.rab_gr2_9_juan_1.AutoSize = true;
-            this.rab_gr2_9_juan_1.Location = new System.Drawing.Point(10, 67);
+            this.rab_gr2_9_juan_1.Location = new System.Drawing.Point(13, 52);
             this.rab_gr2_9_juan_1.Name = "rab_gr2_9_juan_1";
-            this.rab_gr2_9_juan_1.Size = new System.Drawing.Size(101, 16);
+            this.rab_gr2_9_juan_1.Size = new System.Drawing.Size(71, 16);
             this.rab_gr2_9_juan_1.TabIndex = 1;
-            this.rab_gr2_9_juan_1.Text = "每卷起始页为1";
+            this.rab_gr2_9_juan_1.Text = "每卷起始";
             this.rab_gr2_9_juan_1.UseVisualStyleBackColor = true;
             this.rab_gr2_9_juan_1.CheckedChanged += new System.EventHandler(this.rab_gr2_9_juan_1_CheckedChanged);
             // 
@@ -504,12 +508,12 @@
             // 
             this.rab_gr2_9_file_1.AutoSize = true;
             this.rab_gr2_9_file_1.Checked = true;
-            this.rab_gr2_9_file_1.Location = new System.Drawing.Point(10, 34);
+            this.rab_gr2_9_file_1.Location = new System.Drawing.Point(13, 27);
             this.rab_gr2_9_file_1.Name = "rab_gr2_9_file_1";
-            this.rab_gr2_9_file_1.Size = new System.Drawing.Size(125, 16);
+            this.rab_gr2_9_file_1.Size = new System.Drawing.Size(107, 16);
             this.rab_gr2_9_file_1.TabIndex = 0;
             this.rab_gr2_9_file_1.TabStop = true;
-            this.rab_gr2_9_file_1.Text = "每个目录起始页为1";
+            this.rab_gr2_9_file_1.Text = "每个目录为起始";
             this.rab_gr2_9_file_1.UseVisualStyleBackColor = true;
             this.rab_gr2_9_file_1.CheckedChanged += new System.EventHandler(this.rab_gr2_9_file_1_CheckedChanged);
             // 
@@ -527,6 +531,26 @@
             this.gr2_8.TabStop = false;
             this.gr2_8.Tag = "3";
             this.gr2_8.Text = "文件夹命名规则-后台综合设置";
+            // 
+            // chk_gr2_8_pages
+            // 
+            this.chk_gr2_8_pages.AutoSize = true;
+            this.chk_gr2_8_pages.Location = new System.Drawing.Point(69, 111);
+            this.chk_gr2_8_pages.Name = "chk_gr2_8_pages";
+            this.chk_gr2_8_pages.Size = new System.Drawing.Size(48, 16);
+            this.chk_gr2_8_pages.TabIndex = 3;
+            this.chk_gr2_8_pages.Text = "页码";
+            this.chk_gr2_8_pages.UseVisualStyleBackColor = true;
+            // 
+            // chk_gr2_8_conten
+            // 
+            this.chk_gr2_8_conten.AutoSize = true;
+            this.chk_gr2_8_conten.Location = new System.Drawing.Point(69, 83);
+            this.chk_gr2_8_conten.Name = "chk_gr2_8_conten";
+            this.chk_gr2_8_conten.Size = new System.Drawing.Size(72, 16);
+            this.chk_gr2_8_conten.TabIndex = 3;
+            this.chk_gr2_8_conten.Text = "案卷目录";
+            this.chk_gr2_8_conten.UseVisualStyleBackColor = true;
             // 
             // rab_gr2_8_ziduAndmulu
             // 
@@ -977,6 +1001,7 @@
             this.rab_gr2_4_duo.TabIndex = 5;
             this.rab_gr2_4_duo.Text = "多页";
             this.rab_gr2_4_duo.UseVisualStyleBackColor = true;
+            this.rab_gr2_4_duo.CheckedChanged += new System.EventHandler(this.rab_gr2_4_duo_CheckedChanged);
             // 
             // chk_gr2_4_dou_pdf
             // 
@@ -1203,25 +1228,27 @@
             // 
             this.FdigXls.Filter = "Xls文件|*.xls;*xlsx";
             // 
-            // chk_gr2_8_conten
+            // com_gr2_9_file_gz
             // 
-            this.chk_gr2_8_conten.AutoSize = true;
-            this.chk_gr2_8_conten.Location = new System.Drawing.Point(69, 83);
-            this.chk_gr2_8_conten.Name = "chk_gr2_8_conten";
-            this.chk_gr2_8_conten.Size = new System.Drawing.Size(72, 16);
-            this.chk_gr2_8_conten.TabIndex = 3;
-            this.chk_gr2_8_conten.Text = "案卷目录";
-            this.chk_gr2_8_conten.UseVisualStyleBackColor = true;
+            this.com_gr2_9_file_gz.DisplayMember = "Text";
+            this.com_gr2_9_file_gz.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.com_gr2_9_file_gz.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.com_gr2_9_file_gz.FormattingEnabled = true;
+            this.com_gr2_9_file_gz.ItemHeight = 15;
+            this.com_gr2_9_file_gz.Location = new System.Drawing.Point(81, 116);
+            this.com_gr2_9_file_gz.Name = "com_gr2_9_file_gz";
+            this.com_gr2_9_file_gz.Size = new System.Drawing.Size(121, 21);
+            this.com_gr2_9_file_gz.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.com_gr2_9_file_gz.TabIndex = 3;
             // 
-            // chk_gr2_8_pages
+            // label3
             // 
-            this.chk_gr2_8_pages.AutoSize = true;
-            this.chk_gr2_8_pages.Location = new System.Drawing.Point(69, 111);
-            this.chk_gr2_8_pages.Name = "chk_gr2_8_pages";
-            this.chk_gr2_8_pages.Size = new System.Drawing.Size(48, 16);
-            this.chk_gr2_8_pages.TabIndex = 3;
-            this.chk_gr2_8_pages.Text = "页码";
-            this.chk_gr2_8_pages.UseVisualStyleBackColor = true;
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(15, 120);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(59, 12);
+            this.label3.TabIndex = 4;
+            this.label3.Text = "生成规则:";
             // 
             // FrmSplit
             // 
@@ -1369,5 +1396,7 @@
         private System.Windows.Forms.RadioButton rab_gr2_5_col;
         private System.Windows.Forms.CheckBox chk_gr2_8_pages;
         private System.Windows.Forms.CheckBox chk_gr2_8_conten;
+        private System.Windows.Forms.Label label3;
+        private DevComponents.DotNetBar.Controls.ComboBoxEx com_gr2_9_file_gz;
     }
 }

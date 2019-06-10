@@ -57,6 +57,7 @@ namespace Csmsjcf
         public static int Watertmd { get; set; }
         public static int Waterwz { get; set; }
         public static int FileFomat { get; set; }
+        public static int Filenamegz { get; set; } = 0;
         public static int Ftp { get; set; }
         public static string YimgPath { get; set; }
         public static string MimgPath { get; set; }

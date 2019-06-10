@@ -221,8 +221,7 @@ namespace WareHouse
             labHouseJuan.Text = string.Format("当前选择：第{0}卷", ClsStore.SelectJuansn);
             this.ToolsS_code.Text = string.Format("  案卷号：{0} ", GetJuanCode());
             ClsStore.ArchPos = ToolsS_code.Text.Substring(6);
-            ClsStore.Archid = Common.GetCode(ClsStore.ArchPos);
-
+            ClsStore.Archid = Common.GetCode(ClsStore.ArchPos,ClsStore.Houseid);
         }
 
 
