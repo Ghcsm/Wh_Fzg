@@ -472,7 +472,7 @@ namespace DAL
             p[1] = new SqlParameter("@ColNo", V_HouseSetCs.HouseCol);
             p[2] = new SqlParameter("@RowNo", V_HouseSetCs.HouseRow);
             p[3] = new SqlParameter("@BoxCount", V_HouseSetCs.Housebox);
-            p[4] = new SqlParameter("@HouseID", V_HouseSetCs.Id);
+            p[4] = new SqlParameter("@HouseID", V_HouseSetCs.Houseid);
             p[5] = new SqlParameter("@JuanSn", V_HouseSetCs.Housejuan);
             p[6] = new SqlParameter("@useid", T_User.UserId);
             SQLHelper.ExecuteNonQuery(strSql, CommandType.StoredProcedure, p);

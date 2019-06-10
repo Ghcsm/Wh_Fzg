@@ -756,74 +756,7 @@ namespace Csmdapx
             }
         }
 
-        //private void Keykuaij(object sender, KeyEventArgs e)
-        //{
-        //    Keys keyCode = e.KeyCode;
-        //    switch (keyCode) {
-        //        case Keys.Escape:
-        //            toolStripClose_Click(sender, e);
-        //            break;
-        //        case Keys.Enter:
-        //            toolStripDownPage_Click(sender, e);
-        //            break;
-        //        case Keys.Space:
-        //            toolStripDownPage_Click(sender, e);
-        //            break;
-        //        case Keys.Delete:
-        //            toolStripDel_Click(sender, e);
-        //            break;
-        //        case Keys.PageDown:
-        //            toolStripDownPage_Click(sender, e);
-        //            break;
-        //        case Keys.PageUp:
-        //            toolStripUppage_Click(sender, e);
-        //            break;
-        //        case Keys.W:
-        //            toolStripDel_Click(sender, e);
-        //            break;
-        //        case Keys.Q:
-        //            toolStripRecov_Click(sender, e);
-        //            break;
-        //        case Keys.E:
-        //            toolStripRoteImg_Click(sender, e);
-        //            break;
-        //        case Keys.D:
-        //            toolStripDeskew_Click(sender, e);
-        //            break;
-        //        case Keys.F:
-        //            toolStripCleSide_Click(sender, e);
-        //            break;
-        //        case Keys.C:
-        //            toolStripColorShall_Click(sender, e);
-        //            break;
-        //        case Keys.G:
-        //            toolStripInterSpeck_Click(sender, e);
-        //            break;
-        //        case Keys.T:
-        //            toolStripOutSpeck_Click(sender, e);
-        //            break;
-        //        case Keys.R:
-        //            toolStripCheckImg_Click(sender, e);
-        //            break;
-        //        case Keys.V:
-        //            toolStripCenter_Click(sender, e);
-        //            break;
-        //        case Keys.A:
-        //            toolStripBigPage_Click(sender, e);
-        //            break;
-        //        case Keys.S:
-        //            toolStripSamllPage_Click(sender, e);
-        //            break;
-        //        case Keys.Z:
-        //            Himg._RoteimgWt(ImgView, 0);
-        //            break;
-        //        case Keys.X:
-        //            Himg._RoteimgWt(ImgView, 1);
-        //            break;
-        //    }
-
-        //}
-
+    
 
         #endregion
 

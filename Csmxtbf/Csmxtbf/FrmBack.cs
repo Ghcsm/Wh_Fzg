@@ -291,7 +291,7 @@ namespace Csmxtbf
                             continue;
                         }
                         BackFile(arid, f, b, j);
-                        this.BeginInvoke(new Action(() =>
+                        this.Invoke(new Action(() =>
                         {
                             labxx2.Text = string.Format("正在备份第{0} 盒 ,第{1}卷", b, j);
                             labxx3.Text = string.Format("剩余 {0} 个文件", dt.Rows.Count);
@@ -310,6 +310,7 @@ namespace Csmxtbf
                     {
                         groupPanel1.Enabled = true;
                         Striptool.Visible = false;
+
                     }));
 
                 }

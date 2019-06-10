@@ -374,6 +374,7 @@ namespace Csmxtpz
         private void cboHouse_SelectedIndexChanged(object sender, EventArgs e)
         {
             try {
+                lsvCabinet.Items.Clear();
                 V_HouseSet v_house = cboHouse.SelectedItem as V_HouseSet;
                 Clsxtpz.myHouseID = v_house.HouseID;
                 txtJuan.Text = v_house.HouseBox.ToString();
