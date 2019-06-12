@@ -221,9 +221,41 @@ namespace WareHouse
             labHouseJuan.Text = string.Format("当前选择：第{0}卷", ClsStore.SelectJuansn);
             this.ToolsS_code.Text = string.Format("  案卷号：{0} ", GetJuanCode());
             ClsStore.ArchPos = ToolsS_code.Text.Substring(6);
-            ClsStore.Archid = Common.GetCode(ClsStore.ArchPos,ClsStore.Houseid);
+            ClsStore.Archid = Common.GetCode(ClsStore.ArchPos, ClsStore.Houseid);
+            toolFileName.Text = "";
+            toolFileId.Text =" ";
+            Getstat();
+
         }
 
+        void Getstat()
+        {
+            if (ClsStore.Archid <= 0)
+                return;
+            Task.Run(() =>
+            {
+                DataTable dt = Common.QuerboxsnInfo(ClsStore.Archid);
+                if (dt == null || dt.Rows.Count <= 0)
+                    return;
+                string ys = dt.Rows[0][3].ToString();
+                ClsStore.Imgyszt = ys;
+                this.BeginInvoke(new Action(() =>
+                {
+                    ToolsSlabYs.ForeColor = Color.Black;
+                    if (ys == "1") {
+                        ToolsSlabYs.Text = "验收状态：完成";
+                        ToolsSlabYs.ForeColor = Color.Red;
+                    }
+                    else if (ys == "2") {
+                        ToolsSlabYs.Text = "验收状态：否决";
+                        ToolsSlabYs.ForeColor = Color.Red;
+                    }
+                    else
+                        ToolsSlabYs.Text = "验收状态：未验收";
+                }));
+
+            });
+        }
 
         private void LoadFile()
         {
@@ -261,7 +293,6 @@ namespace WareHouse
                     if (ftp.DownLoadFile(Common.ArchSavePah, FileName.Substring(0, 8), localCheckFile, FileName)) {
                         StoreImg.ArchId = ClsStore.Archid;
                         StoreImg.FileName = localCheckFile;
-                        StoreImg.ImgPrint = ClsStore.Imgsys;
                         strImg = new StoreImg();
                         if (strImg == null || strImg.IsDisposed) {
                             strImg = new StoreImg();
@@ -554,7 +585,6 @@ namespace WareHouse
             ClsStore.Gdring = false;
             ClsStore.Imgsys = false;
             ClsStore.Imgys = false;
-
             string str = DESEncrypt.DesEncrypt("库房上架");
             if (T_User.UserOtherSys.IndexOf(str) >= 0)
                 ClsStore.Gdring = true;

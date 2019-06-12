@@ -353,7 +353,7 @@
             // txtPages2
             // 
             this.txtPages2.Name = "txtPages2";
-            this.txtPages2.Size = new System.Drawing.Size(80, 28);
+            this.txtPages2.Size = new System.Drawing.Size(80, 23);
             // 
             // toolStripSeparator3
             // 

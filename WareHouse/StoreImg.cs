@@ -27,17 +27,13 @@ namespace WareHouse
         public static bool ModuleVisible { get; set; }
         public static string FileName { get; set; }
 
-        public static bool ImgPrint { get; set; }
-
-
-
         private void Init()
         {
             ImgBrow.ArchId = ArchId;
             ImgBrow.FileName = FileName;
             ImgBrow.ContentsEnabled = false;
             ImgBrow.ModuleVisible = false;
-            ImgBrow.Print = ImgPrint;
+            ImgBrow.Print = ClsStore.Imgsys;
             ImgBrow.id = 0;
             imgBrow1 = new ImgBrow();
             imgBrow1.Spage += new ImgBrow.TransmitPar(ShowPage);
@@ -85,19 +81,12 @@ namespace WareHouse
 
         private void GetArchInfo()
         {
-            Task.Run(() =>
-            {
-                DataTable dt = Common.QuerboxsnInfo(ArchId);
-                if (dt == null || dt.Rows.Count <= 0)
-                    return;
-                string ys = dt.Rows[0][3].ToString();
-                if (ys == "1")
-                    this.BeginInvoke(new Action(() => { toolslabCheck.Text = "验收：完成"; }));
-                else if (ys == "2")
-                    this.BeginInvoke(new Action(() => { toolslabCheck.Text = "验收：否决"; }));
-                else
-                    this.BeginInvoke(new Action(() => { toolslabCheck.Text = "验收：未验收"; }));
-            });
+            if (ClsStore.Imgyszt == "1")
+                toolslabCheck.Text = "验收：完成";
+            else if (ClsStore.Imgyszt == "2")
+                toolslabCheck.Text = "验收：否决";
+            else
+                toolslabCheck.Text = "验收：未验收";
         }
 
         private void toolsPrivePages_Click(object sender, EventArgs e)
@@ -162,7 +151,7 @@ namespace WareHouse
 
         private bool isTxt()
         {
-            if (!ImgPrint) {
+            if (!ClsStore.Imgsys) {
                 MessageBox.Show("警告，您没有此项操作的权限!");
                 return false;
             }

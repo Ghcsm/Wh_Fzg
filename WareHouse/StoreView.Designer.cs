@@ -49,6 +49,7 @@
             this.labHouseBox = new System.Windows.Forms.Label();
             this.labHouseLie = new System.Windows.Forms.Label();
             this.labHouseCeng = new System.Windows.Forms.Label();
+            this.labHouseKf = new System.Windows.Forms.Label();
             this.labHouseGui = new System.Windows.Forms.Label();
             this.gr3 = new System.Windows.Forms.GroupBox();
             this.labGround = new System.Windows.Forms.Label();
@@ -67,7 +68,8 @@
             this.PanleHouseBox = new DevComponents.DotNetBar.PanelEx();
             this.PanleHouseMj = new DevComponents.DotNetBar.Controls.GroupPanel();
             this.imgListmjj2 = new System.Windows.Forms.ImageList(this.components);
-            this.labHouseKf = new System.Windows.Forms.Label();
+            this.ToolsSlabYs = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tools_kong = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStrip1.SuspendLayout();
             this.groupPanel1.SuspendLayout();
             this.gr2.SuspendLayout();
@@ -86,6 +88,7 @@
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ToolsS_txt,
+            this.ToolsSlabYs,
             this.ToolsSlab,
             this.toolsBoxsn,
             this.ToolsS_code,
@@ -93,6 +96,7 @@
             this.toolFileName,
             this.toolId,
             this.toolFileId,
+            this.tools_kong,
             this.Tools_jd});
             this.statusStrip1.Location = new System.Drawing.Point(0, 622);
             this.statusStrip1.Name = "statusStrip1";
@@ -149,8 +153,9 @@
             // 
             // Tools_jd
             // 
+            this.Tools_jd.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.Tools_jd.Name = "Tools_jd";
-            this.Tools_jd.Size = new System.Drawing.Size(470, 16);
+            this.Tools_jd.Size = new System.Drawing.Size(200, 16);
             this.Tools_jd.Visible = false;
             // 
             // imglist_box
@@ -274,6 +279,15 @@
             this.labHouseCeng.Size = new System.Drawing.Size(95, 12);
             this.labHouseCeng.TabIndex = 0;
             this.labHouseCeng.Text = "当前选择：第0层";
+            // 
+            // labHouseKf
+            // 
+            this.labHouseKf.AutoSize = true;
+            this.labHouseKf.Location = new System.Drawing.Point(17, 21);
+            this.labHouseKf.Name = "labHouseKf";
+            this.labHouseKf.Size = new System.Drawing.Size(107, 12);
+            this.labHouseKf.TabIndex = 0;
+            this.labHouseKf.Text = "当前选择：第0库房";
             // 
             // labHouseGui
             // 
@@ -523,14 +537,19 @@
             this.imgListmjj2.TransparentColor = System.Drawing.Color.Transparent;
             this.imgListmjj2.Images.SetKeyName(0, "1-1.jpg");
             // 
-            // labHouseKf
+            // ToolsSlabYs
             // 
-            this.labHouseKf.AutoSize = true;
-            this.labHouseKf.Location = new System.Drawing.Point(17, 21);
-            this.labHouseKf.Name = "labHouseKf";
-            this.labHouseKf.Size = new System.Drawing.Size(107, 12);
-            this.labHouseKf.TabIndex = 0;
-            this.labHouseKf.Text = "当前选择：第0库房";
+            this.ToolsSlabYs.BackColor = System.Drawing.SystemColors.Control;
+            this.ToolsSlabYs.ForeColor = System.Drawing.Color.Black;
+            this.ToolsSlabYs.Name = "ToolsSlabYs";
+            this.ToolsSlabYs.Size = new System.Drawing.Size(95, 17);
+            this.ToolsSlabYs.Text = "验收状态:未验收";
+            // 
+            // tools_kong
+            // 
+            this.tools_kong.Name = "tools_kong";
+            this.tools_kong.Size = new System.Drawing.Size(414, 17);
+            this.tools_kong.Spring = true;
             // 
             // StoreView
             // 
@@ -600,5 +619,7 @@
         private System.Windows.Forms.ToolStripStatusLabel toolFileId;
         private System.Windows.Forms.ImageList imgListmjj2;
         private System.Windows.Forms.Label labHouseKf;
+        private System.Windows.Forms.ToolStripStatusLabel ToolsSlabYs;
+        private System.Windows.Forms.ToolStripStatusLabel tools_kong;
     }
 }

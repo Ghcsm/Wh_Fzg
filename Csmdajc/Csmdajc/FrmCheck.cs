@@ -714,7 +714,7 @@ namespace Csmdajc
                 if (archzt == 1)
                     sourefile = Path.Combine(T_ConFigure.FtpArchIndex, Clscheck.FileNametmp.Substring(0, 8), Clscheck.FileNametmp);
                 else
-                    sourefile = Path.Combine(T_ConFigure.FtpArchIndex, Clscheck.FileNametmp.Substring(0, 8), Clscheck.FileNametmp);
+                    sourefile = Path.Combine(T_ConFigure.FtpArchSave, Clscheck.FileNametmp.Substring(0, 8), Clscheck.FileNametmp);
                 string goalfile = Path.Combine(T_ConFigure.gArchScanPath, archpos, T_ConFigure.ScanTempFile);
                 string path = Path.Combine(T_ConFigure.gArchScanPath, archpos);
                 if (ftp.FtpMoveFile(sourefile, goalfile, path)) {
@@ -727,8 +727,7 @@ namespace Csmdajc
                         File.Delete(filetmp);
                     } catch { }
                 }
-            } catch (Exception ex) {
-                MessageBox.Show(ex.ToString());
+            } catch  {
                 Common.Writelog(Clscheck.Archid, "质检退回失败!");
             }
         }

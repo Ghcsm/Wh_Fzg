@@ -316,7 +316,7 @@ namespace DAL
         public static void QuerSetCheckLog(int arid, int boxsn, int archno, int stat, string sour)
         {
             string strSql = "PInserQuerCheckLog";
-            SqlParameter[] p = new SqlParameter[6];
+            SqlParameter[] p = new SqlParameter[7];
             p[0] = new SqlParameter("@userid", T_User.UserId);
             p[1] = new SqlParameter("@archid", arid);
             p[2] = new SqlParameter("@boxsn", boxsn);

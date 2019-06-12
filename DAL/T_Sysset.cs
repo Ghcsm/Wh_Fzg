@@ -974,11 +974,23 @@ namespace DAL
 
         public static void UpdateBorrInfo(string table, string str, bool tag, string time)
         {
-            string strSql = "update M_GenSetBorr set Tablename=@table, Tabcolname=@info, Timecol=@time";
-            SqlParameter p0 = new SqlParameter("@table", table);
-            SqlParameter p1 = new SqlParameter("@info", str);
-            SqlParameter p2 = new SqlParameter("@time", time);
-            SQLHelper.ExecScalar(strSql, p0, p1, p2);
+            string strSql = "select count(*) from M_GenSetBorr";
+            int id =Convert.ToInt32(SQLHelper.ExecScalar(strSql));
+            if (id == 0 )
+            {
+                strSql = "INSERT INTO dbo.M_GenSetBorr (Tablename, Tabcolname, Timecol )VALUES  (@table,@info,@time)";
+                SqlParameter p0 = new SqlParameter("@table", table);
+                SqlParameter p1 = new SqlParameter("@info", str);
+                SqlParameter p2 = new SqlParameter("@time", time);
+                SQLHelper.ExecScalar(strSql, p0, p1, p2);
+            }
+            else {
+                strSql = "update M_GenSetBorr set Tablename=@table, Tabcolname=@info, Timecol=@time";
+                SqlParameter p0 = new SqlParameter("@table", table);
+                SqlParameter p1 = new SqlParameter("@info", str);
+                SqlParameter p2 = new SqlParameter("@time", time);
+                SQLHelper.ExecScalar(strSql, p0, p1, p2);
+            }
             if (!tag) {
                 strSql = "alter table " + table + " add BorrTag varchar(10)";
                 SQLHelper.ExecScalar(strSql);

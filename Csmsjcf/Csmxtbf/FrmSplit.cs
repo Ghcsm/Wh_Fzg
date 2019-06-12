@@ -206,6 +206,12 @@ namespace Csmsjcf
                         MessageBox.Show("请选择文件名称中包含目录或页码的选项!");
                         return false;
                     }
+                    else if (chk_gr2_8_conten.Checked) {
+                        if (ClsDataSplitPar.ClsdirMl.Trim().Length <= 0) {
+                            MessageBox.Show("未发现文件夹命名的目录字段!");
+                            return false;
+                        }
+                    }
                 }
 
                 if (ClsDataSplitPar.ClsdirDirsn == 0) {
@@ -523,7 +529,7 @@ namespace Csmsjcf
                 else
                     dtArchNo = ClsOperate.SelectSql(box, arno);
                 if (dtArchNo == null || dtArchNo.Rows.Count <= 0) {
-                    str = "错误：未找到已质检盒号信息或已拆分 -->盒号:" + box;
+                    str = "错误：未找到已质检盒号信息或已拆分完成 -->盒号:" + box;
                     lock (ClsFrmInfoPar.Filelock) {
                         ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
                         ListBshowInfo(xc, "0", "0", "警告,错误线程退出");
@@ -1149,6 +1155,7 @@ namespace Csmsjcf
                             rab_gr2_8_mulu.Checked = true;
                         else rab_gr2_8_ziduAndmulu.Checked = true;
                     }
+
                     if (strkey == "filename") {
                         if (strval == "1")
                             rab_gr2_9_file_1.Checked = true;
@@ -1156,6 +1163,7 @@ namespace Csmsjcf
                             rab_gr2_9_juan_1.Checked = true;
                         else rab_gr2_9_file_ziduan.Checked = true;
                     }
+
                     if (strkey == "convfile") {
                         if (strval == "1")
                             rab_gr2_4_dan.Checked = true;
@@ -1163,6 +1171,7 @@ namespace Csmsjcf
                             rab_gr2_4_duo.Checked = true;
                         else rab_gr2_4_duli.Checked = true;
                     }
+
                     if (strkey == "water") {
                         if (strval == "0")
                             rab_gr2_7_wu.Checked = true;
@@ -1170,11 +1179,13 @@ namespace Csmsjcf
                             rab_gr2_7_wenzi.Checked = true;
                         else rab_gr2_7_img.Checked = true;
                     }
+
                     if (strkey == "ftp") {
                         if (strval == "1")
                             rab_gr3_1_ftp.Checked = true;
                         else rab_gr3_1_imgPath.Checked = true;
                     }
+
                     if (strkey == "jpg")
                         chk_Gr2_4_jpg.Checked = true;
                     if (strkey == "pdf")
@@ -1206,7 +1217,28 @@ namespace Csmsjcf
                     if (strkey == "convxls")
                         txt_gr3_1_xlsPath.Text = strval;
                 }
-            } catch { }
+            } catch {
+            } finally {
+                com_gr2_9_file_gz.Items.Clear();
+                com_gr2_9_file_gz.Enabled = true;
+                if (rab_gr2_4_dan.Checked) {
+                    if (rab_gr2_9_file_1.Checked) {
+                        com_gr2_9_file_gz.Items.Add("1,2,3;4,5,6");
+                        com_gr2_9_file_gz.Items.Add("1,2,3;1,2,3");
+                    }
+
+                }
+                else if (rab_gr2_4_duo.Checked) {
+                    if (rab_gr2_9_file_1.Checked) {
+                        com_gr2_9_file_gz.Items.Add("1-3;1-4");
+                        com_gr2_9_file_gz.Items.Add("1-3;4-6");
+                        com_gr2_9_file_gz.Items.Add("1,4,7");
+                    }
+
+                }
+                else
+                    com_gr2_9_file_gz.Enabled = false;
+            }
         }
 
         private void butLog_Click(object sender, EventArgs e)
@@ -1300,6 +1332,7 @@ namespace Csmsjcf
         private void rab_gr2_9_file_1_CheckedChanged(object sender, EventArgs e)
         {
             com_gr2_9_file_gz.Enabled = true;
+            com_gr2_9_file_gz.Items.Clear();
             if (rab_gr2_9_file_1.Checked) {
                 ClsWritelog.Writeini("filename", "1");
                 if (rab_gr2_4_dan.Checked) {
@@ -1323,6 +1356,7 @@ namespace Csmsjcf
         private void rab_gr2_9_juan_1_CheckedChanged(object sender, EventArgs e)
         {
             com_gr2_9_file_gz.Enabled = true;
+            com_gr2_9_file_gz.Items.Clear();
             if (rab_gr2_9_file_1.Checked) {
                 ClsWritelog.Writeini("filename", "1");
                 if (rab_gr2_4_dan.Checked) {

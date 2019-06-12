@@ -36,6 +36,7 @@ namespace WareHouse
         public static bool Gdring { get; set; }
         public static bool Imgsys { get; set; }
         public static bool Imgys { get; set; }
+        public static string Imgyszt { get; set; } = "0";
 
     }
 }
