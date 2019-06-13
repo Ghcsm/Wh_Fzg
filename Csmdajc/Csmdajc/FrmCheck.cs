@@ -92,8 +92,7 @@ namespace Csmdajc
         {
             try {
                 if (ImgView.Image == null && Clscheck.ArchPos == null ||
-                    ImgView.Image == null && Clscheck.ArchPos.Trim().Length <= 0)
-                {
+                    ImgView.Image == null && Clscheck.ArchPos.Trim().Length <= 0) {
                     if (Clscheck.task)
                         return;
                     Clscheck.task = true;
@@ -237,18 +236,51 @@ namespace Csmdajc
 
         private void toolStripClose_Click(object sender, EventArgs e)
         {
-            Cledata();
             if (ImgView.Image == null)
                 return;
+            int arid = Clscheck.Archid;
+            string filename = Clscheck.FileNametmp;
+            string filepath = Clscheck.ScanFilePath;
+            Cledata();
             try {
-                if (File.Exists(Clscheck.ScanFilePath)) {
-                    string path = Clscheck.ScanFilePath.Substring(0, 8);
-                    File.Delete(Clscheck.ScanFilePath);
-                    Directory.Delete(path);
+                if (T_ConFigure.FtpStyle == 1)
+                    Imgclose(arid, filename);
+                else {
+                    if (File.Exists(filepath)) {
+                        File.Delete(filepath);
+                        Directory.Delete(Path.GetDirectoryName(filepath));
+                    }
                 }
             } catch {
             }
             gArch.LvData.Focus();
+        }
+
+        void Imgclose(int arid, string filename)
+        {
+            Task.Run(new Action(() =>
+            {
+                string goalfile = "";
+                string path = "";
+                string sourefile = Path.Combine(T_ConFigure.FtpTmp, T_ConFigure.TmpSave,
+                    filename.Substring(0, 8), filename);
+                if (archzt == 1) {
+                    goalfile = Path.Combine(T_ConFigure.FtpArchIndex, filename.Substring(0, 8),
+                        filename);
+                    path = Path.Combine(T_ConFigure.FtpArchIndex, filename.Substring(0, 8));
+                }
+                else {
+                    goalfile = Path.Combine(T_ConFigure.FtpArchSave, filename.Substring(0, 8),
+                        filename);
+                    path = Path.Combine(T_ConFigure.FtpArchSave, filename.Substring(0, 8));
+                }
+                if (ftp.FtpMoveFile(sourefile, goalfile, path)) {
+                    if (archzt == 1)
+                        Common.SetArchWorkState(arid, (int)T_ConFigure.ArchStat.排序完);
+                    else
+                        Common.SetArchWorkState(arid, (int)T_ConFigure.ArchStat.质检完);
+                }
+            }));
         }
 
         private void toolStripBigPage_Click(object sender, EventArgs e)
@@ -316,7 +348,7 @@ namespace Csmdajc
                 return;
             if (MessageBox.Show("您确定要返工本卷档案吗？", "提示", MessageBoxButtons.OKCancel,
                     MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.OK) {
-                string filetmp = Clscheck.ScanFilePath;
+                string filetmp = Clscheck.FileNametmp;
                 int archid = Clscheck.Archid;
                 string archpos = Clscheck.ArchPos;
                 Cledata();
@@ -382,10 +414,9 @@ namespace Csmdajc
         }
         private void Ispages()
         {
-            if (Clscheck.RegPage != Clscheck.MaxPage)
-            {
+            if (Clscheck.RegPage != Clscheck.MaxPage) {
                 toollbInfo.Text = "当前登记页码和图像页码不一致!";
-                toollbInfo.BackColor=Color.Red;
+                toollbInfo.BackColor = Color.Red;
             }
             else
                 toollbInfo.Text = "";
@@ -464,9 +495,12 @@ namespace Csmdajc
                 try {
                     archzt = stsa;
                     if (T_ConFigure.FtpStyle == 1) {
-                        string localPath = Path.Combine(T_ConFigure.FtpTmpPath, T_ConFigure.TmpIndex, Clscheck.FileNametmp.Substring(0, 8));
-                        string localScanFile = Path.Combine(T_ConFigure.FtpTmpPath, T_ConFigure.TmpIndex, Clscheck.FileNametmp.Substring(0, 8),
-                            Clscheck.FileNametmp);
+                        string sourefile = "";
+                        string goalfile = "";
+                        string path = "";
+                        string localPath = Path.Combine(T_ConFigure.FtpTmpPath, T_ConFigure.TmpSave, Clscheck.FileNametmp.Substring(0, 8));
+                        string localScanFile = Path.Combine(T_ConFigure.FtpTmpPath, T_ConFigure.TmpSave, Clscheck.FileNametmp.Substring(0, 8),
+                              Clscheck.FileNametmp);
                         Clscheck.ScanFilePath = localScanFile;
                         if (!Directory.Exists(localPath)) {
                             Directory.CreateDirectory(localPath);
@@ -474,10 +508,11 @@ namespace Csmdajc
                         if (File.Exists(localScanFile)) {
                             File.Delete(localScanFile);
                         }
-                        string sourefile = Path.Combine(T_ConFigure.FtpArchIndex, Clscheck.FileNametmp.Substring(0, 8), Clscheck.FileNametmp);
-                        string goalfile = Path.Combine(T_ConFigure.FtpTmp, T_ConFigure.TmpIndex, Clscheck.FileNametmp.Substring(0, 8), Clscheck.FileNametmp);
-                        string path = Path.Combine(T_ConFigure.FtpTmp, T_ConFigure.TmpIndex, Clscheck.FileNametmp.Substring(0, 8));
+                        sourefile = Path.Combine(T_ConFigure.FtpArchIndex, Clscheck.FileNametmp.Substring(0, 8), Clscheck.FileNametmp);
+                        goalfile = Path.Combine(T_ConFigure.FtpTmp, T_ConFigure.TmpSave, Clscheck.FileNametmp.Substring(0, 8), Clscheck.FileNametmp);
+                        path = Path.Combine(T_ConFigure.FtpTmp, T_ConFigure.TmpSave, Clscheck.FileNametmp.Substring(0, 8));
                         if (stsa == 1) {
+                            sourefile = Path.Combine(T_ConFigure.FtpArchIndex, Clscheck.FileNametmp.Substring(0, 8), Clscheck.FileNametmp);
                             if (ftp.FtpCheckFile(sourefile)) {
                                 if (ftp.FtpMoveFile(sourefile, goalfile, path)) {
                                     return true;
@@ -486,7 +521,6 @@ namespace Csmdajc
                         }
                         else if (stsa == 2) {
                             sourefile = Path.Combine(T_ConFigure.FtpArchSave, Clscheck.FileNametmp.Substring(0, 8), Clscheck.FileNametmp);
-                            goalfile = Path.Combine(T_ConFigure.FtpTmp, T_ConFigure.TmpIndex, Clscheck.FileNametmp.Substring(0, 8), Clscheck.FileNametmp);
                             if (ftp.FtpCheckFile(sourefile)) {
                                 if (ftp.FtpMoveFile(sourefile, goalfile, path)) {
                                     return true;
@@ -501,7 +535,6 @@ namespace Csmdajc
                                 }
                             }
                             sourefile = Path.Combine(T_ConFigure.FtpArchSave, Clscheck.FileNametmp.Substring(0, 8), Clscheck.FileNametmp);
-                            goalfile = Path.Combine(T_ConFigure.FtpTmp, T_ConFigure.TmpIndex, Clscheck.FileNametmp.Substring(0, 8), Clscheck.FileNametmp);
                             if (ftp.FtpCheckFile(sourefile)) {
                                 if (ftp.FtpMoveFile(sourefile, goalfile, path)) {
                                     archzt = 2;
@@ -638,7 +671,7 @@ namespace Csmdajc
         }
         private void Cledata()
         {
-            this.BeginInvoke(new Action(() =>
+            this.Invoke(new Action(() =>
             {
                 ImgView.Image = null;
                 Clscheck.Archid = 0;
@@ -648,6 +681,7 @@ namespace Csmdajc
                 toolArchno.Text = "当前卷号:";
                 labPageCrrent.Text = "第     页";
                 labPageCount.Text = "共      页";
+                Clscheck.ScanFilePath = "";
                 Clscheck.task = false;
             }));
 
@@ -659,9 +693,9 @@ namespace Csmdajc
                 if (File.Exists(filetmp)) {
                     Common.WiteUpTask(arid, "", filename, (int)T_ConFigure.ArchStat.质检完, pages, filetmp);
                     if (T_ConFigure.FtpStyle == 1) {
-                        string sourefile = Path.Combine(T_ConFigure.FtpTmp, T_ConFigure.TmpIndex, Clscheck.FileNametmp.Substring(0, 8), Clscheck.FileNametmp);
-                        string goalfile = Path.Combine(T_ConFigure.FtpArchSave, Clscheck.FileNametmp.Substring(0, 8), Clscheck.FileNametmp);
-                        string path = Path.Combine(T_ConFigure.FtpArchSave, Clscheck.FileNametmp.Substring(0, 8));
+                        string sourefile = Path.Combine(T_ConFigure.FtpTmp, T_ConFigure.TmpSave, filename.Substring(0, 8), filename);
+                        string goalfile = Path.Combine(T_ConFigure.FtpArchSave, filename.Substring(0, 8), filename);
+                        string path = Path.Combine(T_ConFigure.FtpArchSave, filename.Substring(0, 8));
                         if (ftp.FtpMoveFile(sourefile, goalfile, path)) {
                             Common.DelTask(arid);
                             Common.SetCheckFinish(arid, DESEncrypt.DesEncrypt(filename), 1, (int)T_ConFigure.ArchStat.质检完, "");
@@ -711,10 +745,14 @@ namespace Csmdajc
                 }
                 PageIndexInfo = PageIndexInfo.Trim();
                 string sourefile = "";
-                if (archzt == 1)
-                    sourefile = Path.Combine(T_ConFigure.FtpArchIndex, Clscheck.FileNametmp.Substring(0, 8), Clscheck.FileNametmp);
+                if (T_ConFigure.FtpStyle == 2) {
+                    if (archzt == 1)
+                        sourefile = Path.Combine(T_ConFigure.FtpArchIndex, filetmp.Substring(0, 8), filetmp);
+                    else
+                        sourefile = Path.Combine(T_ConFigure.FtpArchSave, filetmp.Substring(0, 8), filetmp);
+                }
                 else
-                    sourefile = Path.Combine(T_ConFigure.FtpArchSave, Clscheck.FileNametmp.Substring(0, 8), Clscheck.FileNametmp);
+                    sourefile = Path.Combine(T_ConFigure.FtpFwqPath,T_ConFigure.TmpSave, filetmp.Substring(0, 8), filetmp);
                 string goalfile = Path.Combine(T_ConFigure.gArchScanPath, archpos, T_ConFigure.ScanTempFile);
                 string path = Path.Combine(T_ConFigure.gArchScanPath, archpos);
                 if (ftp.FtpMoveFile(sourefile, goalfile, path)) {
@@ -727,7 +765,7 @@ namespace Csmdajc
                         File.Delete(filetmp);
                     } catch { }
                 }
-            } catch  {
+            } catch {
                 Common.Writelog(Clscheck.Archid, "质检退回失败!");
             }
         }

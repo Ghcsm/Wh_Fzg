@@ -98,7 +98,7 @@ namespace Csmborr
             file.Text = Filename;
         }
 
-        public static void SaveFile(ListView lv, string file)
+        public static bool SaveFile(ListView lv, string file)
         {
             Workbook work = new Workbook();
             Worksheet wsheek = null;
@@ -107,16 +107,28 @@ namespace Csmborr
             try {
                 wsheek = work.Worksheets[0];
                 int rows = wsheek.LastRow + 1;
+                if (rows == 0)
+                    rows = 1;
+                if (rows == 1) {
+                    for (int c = 0; c < lv.Columns.Count; c++) {
+                        wsheek.Range[rows, c + 1].Text = lv.Columns[c].Text;
+                    }
+                    rows = wsheek.LastRow + 1;
+                }
                 for (int i = 0; i < lv.Items.Count; i++) {
                     for (int c = 0; c < lv.Columns.Count; c++) {
                         wsheek.Range[rows + i, c + 1].Text = lv.Items[i].SubItems[c].Text;
                     }
                 }
+
                 work.SaveToFile(file, FileFormat.Version2007);
                 work.Dispose();
-            } catch { }
-
+            } catch (Exception ex) {
+                MessageBox.Show("导出失败:" + ex.ToString());
+                return false;
+            }
             MessageBox.Show("导出完成!");
+            return true;
         }
     }
 }

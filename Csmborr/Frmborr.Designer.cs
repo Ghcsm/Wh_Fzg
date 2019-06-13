@@ -38,6 +38,7 @@
             this.butborrQuer = new DevComponents.DotNetBar.ButtonX();
             this.txtborrgjz = new System.Windows.Forms.TextBox();
             this.comborrbczf = new DevComponents.DotNetBar.Controls.ComboBoxEx();
+            this.comboItem1 = new DevComponents.Editors.ComboItem();
             this.combdy = new DevComponents.Editors.ComboItem();
             this.combbh = new DevComponents.Editors.ComboItem();
             this.combbdy = new DevComponents.Editors.ComboItem();
@@ -63,7 +64,6 @@
             this.toolproess = new System.Windows.Forms.ToolStripProgressBar();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.saveFile = new System.Windows.Forms.SaveFileDialog();
-            this.comboItem1 = new DevComponents.Editors.ComboItem();
             this.gr1.SuspendLayout();
             this.gr2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.contMenu)).BeginInit();

@@ -229,9 +229,8 @@ namespace Csmborr
             try {
                 butborrQuer.Enabled = false;
                 butborrDc.Enabled = false;
-                BorrMethod.SaveFile(lvborrQuer, file);
-
-             
+                if (!BorrMethod.SaveFile(lvborrQuer, file))
+                    return;
                 string str = "导出数据:"+lvborrQuer.Items.Count+"字段:"+ comborrbcol.Text.Trim()+"-> 操作符:"+ comborrbczf.Text.Trim()+
                     "-> 关键字:"+txtborrgjz.Text.Trim()+" -> 时间："+dateborrtime1.Text+"-"+dateborrtime2.Text;
                 Common.WriteBorrLog("0", "0", 0, str);

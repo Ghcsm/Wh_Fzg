@@ -483,8 +483,8 @@ namespace Csmdapx
                 try {
                     Common.SetArchWorkState(ClsIndex.Archid, (int)T_ConFigure.ArchStat.排序中);
                     if (T_ConFigure.FtpStyle == 1) {
-                        string localPath = Path.Combine(T_ConFigure.FtpTmpPath, T_ConFigure.TmpScan, ClsIndex.ArchPos);
-                        string localScanFile = Path.Combine(T_ConFigure.FtpTmpPath, T_ConFigure.TmpScan, ClsIndex.ArchPos, T_ConFigure.ScanTempFile);
+                        string localPath = Path.Combine(T_ConFigure.FtpTmpPath, T_ConFigure.TmpIndex, ClsIndex.ArchPos);
+                        string localScanFile = Path.Combine(T_ConFigure.FtpTmpPath, T_ConFigure.TmpIndex, ClsIndex.ArchPos, T_ConFigure.ScanTempFile);
                         ClsIndex.ScanFilePath = localScanFile;
                         if (!Directory.Exists(localPath)) {
                             Directory.CreateDirectory(localPath);
@@ -494,8 +494,8 @@ namespace Csmdapx
                         }
                         if (ftp.FtpCheckFile(Path.Combine(T_ConFigure.gArchScanPath, ClsIndex.ArchPos, T_ConFigure.ScanTempFile))) {
                             string sourcefile = Path.Combine(T_ConFigure.gArchScanPath, ClsIndex.ArchPos, T_ConFigure.ScanTempFile);
-                            string goalfile = Path.Combine(T_ConFigure.FtpTmp, T_ConFigure.TmpScan, ClsIndex.ArchPos, T_ConFigure.ScanTempFile);
-                            string path = Path.Combine(T_ConFigure.FtpTmp, T_ConFigure.TmpScan, ClsIndex.ArchPos);
+                            string goalfile = Path.Combine(T_ConFigure.FtpTmp, T_ConFigure.TmpIndex, ClsIndex.ArchPos, T_ConFigure.ScanTempFile);
+                            string path = Path.Combine(T_ConFigure.FtpTmp, T_ConFigure.TmpIndex, ClsIndex.ArchPos);
                             if (ftp.FtpMoveFile(sourcefile, goalfile, path)) {
                                 return true;
                             }
@@ -712,13 +712,13 @@ namespace Csmdapx
                     PageIndexInfo = PageIndexInfo.Trim();
                     Common.SetIndexCancel(arid, PageIndexInfo);
                     if (T_ConFigure.FtpStyle == 1) {
-                        string sourcefile = Path.Combine(T_ConFigure.FtpTmp, T_ConFigure.TmpScan, ClsIndex.ArchPos, T_ConFigure.ScanTempFile);
+                        string sourcefile = Path.Combine(T_ConFigure.FtpTmp, T_ConFigure.TmpIndex, ClsIndex.ArchPos, T_ConFigure.ScanTempFile);
                         string goalfile = Path.Combine(T_ConFigure.gArchScanPath, ClsIndex.ArchPos, T_ConFigure.ScanTempFile);
                         string path = Path.Combine(T_ConFigure.gArchScanPath, ClsIndex.ArchPos);
                         if (ftp.FtpMoveFile(sourcefile, goalfile, path)) {
                             Common.DelTask(arid);
                             try {
-                                Directory.Delete(Path.Combine(T_ConFigure.FtpTmpPath, T_ConFigure.TmpScan, archpos));
+                                Directory.Delete(Path.Combine(T_ConFigure.FtpTmpPath, T_ConFigure.TmpIndex, archpos));
                             } catch { }
                             return;
                         }
