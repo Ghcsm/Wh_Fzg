@@ -111,10 +111,7 @@ namespace Csmdajc
             } catch (Exception exception) {
                 Cledata();
                 MessageBox.Show(exception.ToString());
-            } finally {
-                gArch.butLoad.Enabled = true;
-            }
-
+            } 
         }
 
         #region ClickEve
@@ -275,6 +272,7 @@ namespace Csmdajc
                     path = Path.Combine(T_ConFigure.FtpArchSave, filename.Substring(0, 8));
                 }
                 if (ftp.FtpMoveFile(sourefile, goalfile, path)) {
+                    Thread.Sleep(5000);
                     if (archzt == 1)
                         Common.SetArchWorkState(arid, (int)T_ConFigure.ArchStat.排序完);
                     else
@@ -514,31 +512,29 @@ namespace Csmdajc
                         if (stsa == 1) {
                             sourefile = Path.Combine(T_ConFigure.FtpArchIndex, Clscheck.FileNametmp.Substring(0, 8), Clscheck.FileNametmp);
                             if (ftp.FtpCheckFile(sourefile)) {
-                                if (ftp.FtpMoveFile(sourefile, goalfile, path)) {
-                                    return true;
-                                }
+                                if (ftp.FtpMoveFile(sourefile, goalfile, path))
+                                    return (FileMoveBool(localScanFile));
                             }
                         }
                         else if (stsa == 2) {
                             sourefile = Path.Combine(T_ConFigure.FtpArchSave, Clscheck.FileNametmp.Substring(0, 8), Clscheck.FileNametmp);
                             if (ftp.FtpCheckFile(sourefile)) {
-                                if (ftp.FtpMoveFile(sourefile, goalfile, path)) {
-                                    return true;
-                                }
+                                if (ftp.FtpMoveFile(sourefile, goalfile, path))
+                                    return (FileMoveBool(localScanFile));
                             }
                         }
                         else {
                             if (ftp.FtpCheckFile(sourefile)) {
                                 if (ftp.FtpMoveFile(sourefile, goalfile, path)) {
                                     archzt = 1;
-                                    return true;
+                                    return (FileMoveBool(localScanFile));
                                 }
                             }
                             sourefile = Path.Combine(T_ConFigure.FtpArchSave, Clscheck.FileNametmp.Substring(0, 8), Clscheck.FileNametmp);
                             if (ftp.FtpCheckFile(sourefile)) {
                                 if (ftp.FtpMoveFile(sourefile, goalfile, path)) {
                                     archzt = 2;
-                                    return true;
+                                    return (FileMoveBool(localScanFile));
                                 }
                             }
                         }
@@ -614,6 +610,21 @@ namespace Csmdajc
             });
         }
 
+        bool FileMoveBool(string files)
+        {
+            int id = 0;
+            while (true) {
+                if (File.Exists(files))
+                    return true;
+                else {
+                    Thread.Sleep(300);
+                    id += 1;
+                    if (id > 10)
+                        return false;
+                }
+            }
+        }
+
         private void Getuser()
         {
             Task.Run(new Action(() =>
@@ -683,6 +694,7 @@ namespace Csmdajc
                 labPageCount.Text = "共      页";
                 Clscheck.ScanFilePath = "";
                 Clscheck.task = false;
+                gArch.butLoad.Enabled = true;
             }));
 
         }
@@ -697,6 +709,7 @@ namespace Csmdajc
                         string goalfile = Path.Combine(T_ConFigure.FtpArchSave, filename.Substring(0, 8), filename);
                         string path = Path.Combine(T_ConFigure.FtpArchSave, filename.Substring(0, 8));
                         if (ftp.FtpMoveFile(sourefile, goalfile, path)) {
+                            Thread.Sleep(5000);
                             Common.DelTask(arid);
                             Common.SetCheckFinish(arid, DESEncrypt.DesEncrypt(filename), 1, (int)T_ConFigure.ArchStat.质检完, "");
                             return;

@@ -4,6 +4,7 @@ using System.Net;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Data;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DAL;
@@ -27,7 +28,7 @@ namespace HLFtp
         // private string FtpPath;
 
         private FtpWebRequest FtpWr;
-      
+
         public event HFTP.PChangedHandle PercentChane;
 
         public static void GetFtpInfo()
@@ -520,6 +521,18 @@ namespace HLFtp
             }
         }
 
+        public long Ftpsize(string file)
+        {
+            try {
+                using (FtpClient Ftp = new FtpClient(T_ConFigure.FtpIP, T_ConFigure.FtpPort, T_ConFigure.FtpUser, T_ConFigure.FtpPwd)) {
+                    return Ftp.GetFileSize(file);
+                }
+
+            } catch {
+                return 0;
+            }
+        }
+
         public Task<bool> FtpUpFile(string oldfile, string newfile, string path)
         {
             return Task.Run(() =>
@@ -550,9 +563,9 @@ namespace HLFtp
                         Progress<FtpProgress> progress = new Progress<FtpProgress>();
                         progress.ProgressChanged += (sender1, percent) =>
                         {
-                           
+
                         };
-                       
+
                         countsize = (int)Ftp.GetFileSize(sourfile);
                         return Ftp.DownloadFile(loadfile, sourfile, FtpLocalExists.Overwrite, FtpVerify.Delete, progress);
                     }
@@ -561,7 +574,7 @@ namespace HLFtp
                 }
             });
         }
-        
+
         public bool FtpCheckFile(string file)
         {
             try {

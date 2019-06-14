@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -20,7 +21,7 @@ namespace Csmdasm
         }
 
         #region InitCs
-       
+
         private gArchSelect gArch;
         Hljsimage Himg = new Hljsimage();
         HFTP ftp = new HFTP();
@@ -44,7 +45,7 @@ namespace Csmdasm
 
         private void Garch_LineLoadFile(object sender, EventArgs e)
         {
-            gArch.butLoad.Enabled = false;
+            
             try {
                 if (ImgView.Image == null && ClsTwain.ArchPos == null ||
                     ImgView.Image == null && ClsTwain.ArchPos.Trim().Length <= 0) {
@@ -61,9 +62,7 @@ namespace Csmdasm
             } catch (Exception ex) {
                 Cledata();
                 MessageBox.Show(ex.ToString());
-            } finally {
-                gArch.butLoad.Enabled = true;
-            }
+            } 
         }
 
         private void FrmTwain_Load(object sender, EventArgs e)
@@ -89,7 +88,8 @@ namespace Csmdasm
         {
             if (ClsTwain.task)
                 return;
-                ClsTwain.task = true;
+            ClsTwain.task = true;
+            gArch.butLoad.Enabled = false;
             if (Common.Gettask(ClsTwain.Archid) > 0) {
                 MessageBox.Show("正在任务中请稍后!");
                 Cledata();
@@ -110,6 +110,7 @@ namespace Csmdasm
             }
             bool loadfile = await LoadFile();
             Himg.Filename = ClsTwain.ScanFileTmp;
+            gArch.butLoad.Enabled = true;
             if (loadfile == true) {
                 int pages = 1;
                 if (!File.Exists(ClsTwain.ScanFileTmp)) {
@@ -120,14 +121,14 @@ namespace Csmdasm
                 Getuser();
                 GetQspage();
             }
+          
         }
 
         private Task<bool> LoadFile()
         {
             return Task.Run(() =>
             {
-                try
-                {
+                try {
                     ClsTwain.task = true;
                     Common.SetArchWorkState(ClsTwain.Archid, (int)T_ConFigure.ArchStat.扫描中);
                     if (T_ConFigure.FtpStyle == 1) {
@@ -146,7 +147,7 @@ namespace Csmdasm
                             string goalfile = Path.Combine(T_ConFigure.FtpTmp, T_ConFigure.TmpScan, ClsTwain.ArchPos, T_ConFigure.ScanTempFile);
                             string path = Path.Combine(T_ConFigure.FtpTmp, T_ConFigure.TmpScan, ClsTwain.ArchPos);
                             if (ftp.FtpMoveFile(sourcefile, goalfile, path))
-                                return true;
+                                return (FileMoveBool(localScanFile));
                         }
                     }
                     else {
@@ -177,6 +178,22 @@ namespace Csmdasm
                 }
             });
         }
+
+        bool FileMoveBool(string files)
+        {
+            int id = 0;
+            while (true) {
+                if (File.Exists(files))
+                    return true;
+                else {
+                    Thread.Sleep(300);
+                    id += 1;
+                    if (id > 10)
+                        return false;
+                }
+            }
+        }
+
 
         private void Getuser()
         {
@@ -242,10 +259,10 @@ namespace Csmdasm
                 }
                 for (int i = 1; i < ClsTwain.RegPage; i++) {
                     if (LisPage.IndexOf(i.ToString()) < 0) {
-                        if (Qspages.Trim().Length<=0)
+                        if (Qspages.Trim().Length <= 0)
                             Qspages += i.ToString();
                         else {
-                            Qspages +="," +i.ToString();
+                            Qspages += "," + i.ToString();
                         }
                     }
                 }
@@ -338,19 +355,19 @@ namespace Csmdasm
             this.BeginInvoke(new Action(() =>
             {
                 ImgView.Image = null;
-            ClsTwain.Archid = 0;
-            ClsTwain.ArchPos = "";
-            ClsTwain.MaxPage = 0;
-            ClsTwain.RegPage = 0;
-            Himg.SetpageZero();
-            labPagesCrrent.Text = "第     页";
-            labPagesCount.Text = "共      页";
-            labScanUser.Text = "扫描:";
-            labIndexUser.Text = "排序:";
-            labCheckUser.Text = "质检:";
-            labArchNo.Text = "当前卷号:";
-            labQsPages.Text = "当前卷缺少:";
-            ClsTwain.task = false;
+                ClsTwain.Archid = 0;
+                ClsTwain.ArchPos = "";
+                ClsTwain.MaxPage = 0;
+                ClsTwain.RegPage = 0;
+                Himg.SetpageZero();
+                labPagesCrrent.Text = "第     页";
+                labPagesCount.Text = "共      页";
+                labScanUser.Text = "扫描:";
+                labIndexUser.Text = "排序:";
+                labCheckUser.Text = "质检:";
+                labArchNo.Text = "当前卷号:";
+                labQsPages.Text = "当前卷缺少:";
+                ClsTwain.task = false;
             }));
         }
 
@@ -364,6 +381,7 @@ namespace Csmdasm
                         string goalfile = Path.Combine(T_ConFigure.gArchScanPath, archpos, T_ConFigure.ScanTempFile);
                         string path = Path.Combine(T_ConFigure.gArchScanPath, archpos);
                         if (ftp.FtpMoveFile(sourcefile, goalfile, path)) {
+                            Thread.Sleep(5000);
                             Common.DelTask(arid);
                             Common.SetScanFinish(arid, maxpage, 1, (int)T_ConFigure.ArchStat.扫描完);
                             try {
@@ -373,7 +391,7 @@ namespace Csmdasm
                         }
                     }
                     else {
-                      
+
                         string newfile = Path.Combine(T_ConFigure.gArchScanPath, archpos, T_ConFigure.ScanTempFile);
                         string newpath = Path.Combine(T_ConFigure.gArchScanPath, archpos);
                         bool x = await ftp.FtpUpFile(filetmp, newfile, newpath);
@@ -409,8 +427,7 @@ namespace Csmdasm
 
         private void FrmTwain_KeyDown(object sender, KeyEventArgs e)
         {
-            if (!gArch.GetFocus())
-            {
+            if (!gArch.GetFocus()) {
                 pub.KeyShortDown(e, ClsTwain.lsinival, ClsTwain.Lsinikeys, ClsTwain.lssqlOpernum, ClsTwain.lsSqlOper, out ClsTwain.keystr);
                 if (ClsTwain.keystr.Trim().Length > 0)
                     KeysDownEve(ClsTwain.keystr.Trim());
@@ -419,7 +436,7 @@ namespace Csmdasm
             if (e.KeyCode == Keys.Escape)
                 gArch.LvData.Focus();
         }
-       
+
         private void toolSelectTwain_Click(object sender, EventArgs e)
         {
             Himg._Twainscan(0);
@@ -485,18 +502,14 @@ namespace Csmdasm
         private void toolDelPages_Click(object sender, EventArgs e)
         {
             Himg._Delepage();
-            if (ImgView.Image == null)
-            {
-                try
-                {
+            if (ImgView.Image == null) {
+                try {
                     if (ftp.FtpCheckFile(Path.Combine(T_ConFigure.gArchScanPath, ClsTwain.ArchPos,
-                        T_ConFigure.ScanTempFile)))
-                    {
+                        T_ConFigure.ScanTempFile))) {
                         ftp.FtpDelFile(Path.Combine(T_ConFigure.gArchScanPath, ClsTwain.ArchPos,
                             T_ConFigure.ScanTempFile));
                     }
-                }
-                catch {}
+                } catch { }
             }
             ImgView.Focus();
         }
@@ -742,7 +755,7 @@ namespace Csmdasm
                 Writeini.GetAllKeyValues(this.Text, out ClsTwain.Lsinikeys, out ClsTwain.lsinival);
             });
         }
-       
+
         void KeysDownEve(string key)
         {
             bool bl = false;

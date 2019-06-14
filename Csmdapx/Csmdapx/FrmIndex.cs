@@ -8,6 +8,7 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -64,7 +65,7 @@ namespace Csmdapx
         private void Garch_LineLoadFile(object sender, EventArgs e)
         {
             try {
-                gArch.butLoad.Enabled = false;
+               
                 if (ImgView.Image == null && ClsIndex.ArchPos == null ||
                     ImgView.Image == null && ClsIndex.ArchPos.Trim().Length <= 0) {
 
@@ -76,20 +77,17 @@ namespace Csmdapx
                     ClsIndex.RegPage = gArch.ArchRegPages;
                     Himg.RegPage = ClsIndex.RegPage;
                     toolArchno.Text = string.Format("当前卷号:{0}", ClsIndex.ArchPos);
+                    gArch.butLoad.Enabled = false;
                     LoadArch();
                     txtPages.Focus();
                     return;
                 }
-
                 MessageBox.Show("请退出当前卷再进行操作！");
                 gArch.Focus();
             } catch (Exception ex) {
                 Cledata();
                 MessageBox.Show(ex.ToString());
-            } finally {
-                gArch.butLoad.Enabled = true;
             }
-
         }
         #region ClickEve
         private void ImgView_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -462,6 +460,7 @@ namespace Csmdapx
         private async void LoadImgShow(int pages)
         {
             bool loadfile = await LoadFile();
+            gArch.butLoad.Enabled = true;
             if (loadfile == true) {
                 if (!File.Exists(ClsIndex.ScanFilePath)) {
                     Cledata();
@@ -496,9 +495,8 @@ namespace Csmdapx
                             string sourcefile = Path.Combine(T_ConFigure.gArchScanPath, ClsIndex.ArchPos, T_ConFigure.ScanTempFile);
                             string goalfile = Path.Combine(T_ConFigure.FtpTmp, T_ConFigure.TmpIndex, ClsIndex.ArchPos, T_ConFigure.ScanTempFile);
                             string path = Path.Combine(T_ConFigure.FtpTmp, T_ConFigure.TmpIndex, ClsIndex.ArchPos);
-                            if (ftp.FtpMoveFile(sourcefile, goalfile, path)) {
-                                return true;
-                            }
+                            if (ftp.FtpMoveFile(sourcefile, goalfile, path))
+                                return (FileMoveBool(localScanFile));
                         }
                     }
                     else {
@@ -528,6 +526,21 @@ namespace Csmdapx
                     return false;
                 }
             });
+        }
+
+        bool FileMoveBool(string files)
+        {
+            int id = 0;
+            while (true) {
+                if (File.Exists(files))
+                    return true;
+                else {
+                    Thread.Sleep(300);
+                    id += 1;
+                    if (id > 100)
+                        return false;
+                }
+            }
         }
 
         private void Getuser()
@@ -610,6 +623,7 @@ namespace Csmdapx
                 labCheckUser.Text = "质检:";
                 toolArchno.Text = "当前卷号:";
                 ClsIndex.task = false;
+                gArch.butLoad.Enabled = true;
             }));
         }
 
@@ -643,6 +657,7 @@ namespace Csmdapx
                         string goalfile = Path.Combine(T_ConFigure.FtpArchIndex, RemoteDir, IndexFileName);
                         string path = Path.Combine(T_ConFigure.FtpArchIndex, RemoteDir);
                         if (ftp.FtpMoveFile(sourcefile, goalfile, path)) {
+                            Thread.Sleep(5000);
                             Common.SetIndexCancel(arid, "");
                             Common.DelTask(arid);
                             Common.SetIndexFinish(arid, DESEncrypt.DesEncrypt(IndexFileName), (int)T_ConFigure.ArchStat.排序完);
@@ -712,10 +727,11 @@ namespace Csmdapx
                     PageIndexInfo = PageIndexInfo.Trim();
                     Common.SetIndexCancel(arid, PageIndexInfo);
                     if (T_ConFigure.FtpStyle == 1) {
-                        string sourcefile = Path.Combine(T_ConFigure.FtpTmp, T_ConFigure.TmpIndex, ClsIndex.ArchPos, T_ConFigure.ScanTempFile);
-                        string goalfile = Path.Combine(T_ConFigure.gArchScanPath, ClsIndex.ArchPos, T_ConFigure.ScanTempFile);
-                        string path = Path.Combine(T_ConFigure.gArchScanPath, ClsIndex.ArchPos);
+                        string sourcefile = Path.Combine(T_ConFigure.FtpTmp, T_ConFigure.TmpIndex, archpos, T_ConFigure.ScanTempFile);
+                        string goalfile = Path.Combine(T_ConFigure.gArchScanPath, archpos, T_ConFigure.ScanTempFile);
+                        string path = Path.Combine(T_ConFigure.gArchScanPath, archpos);
                         if (ftp.FtpMoveFile(sourcefile, goalfile, path)) {
+                            Thread.Sleep(5000);
                             Common.DelTask(arid);
                             try {
                                 Directory.Delete(Path.Combine(T_ConFigure.FtpTmpPath, T_ConFigure.TmpIndex, archpos));

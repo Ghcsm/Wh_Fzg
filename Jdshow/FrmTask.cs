@@ -53,7 +53,7 @@ namespace Jdshow
 
         private void DelTask()
         {
-            int arid = Convert.ToInt32(dgData.Rows[0].Cells[1].Value);
+            int arid = Convert.ToInt32(dgData.SelectedRows[0].Cells[1].Value);
             if (arid <= 0)
                 return;
             Common.DelTask(arid);
@@ -132,7 +132,7 @@ namespace Jdshow
 
         private void Downjd(object sender, PChangeEventArgs e)
         {
-            this.toolStrip1.BeginInvoke(new Action(() =>
+            this.Invoke(new Action(() =>
             {
                 this.pbgUpdata.Visible = true;
                 this.pbgUpdata.Minimum = 0;

@@ -839,31 +839,40 @@ namespace HLjscom
         public void LoadPage(int x)
         {
 
-            try {
+            try
+            {
                 CodecsImageInfo info = _Codefile.GetInformation(Filename, true);
-                if (info.BitsPerPixel == 24) {
+                if (info.BitsPerPixel == 24)
+                {
                     _Codefile.Options.Load.Format = RasterImageFormat.TifxJpeg;
                 }
-                else {
+                else
+                {
                     _Codefile.Options.Load.Format = info.Format;
                 }
+
                 _Codefile.Options.Load.NoDiskMemory = true;
                 _Codefile.Options.Load.Compressed = true;
                 _Imageview.Image = _Codefile.Load(Filename, 0, CodecsLoadByteOrder.BgrOrGray, x, x);
                 _Imageview.Zoom(ControlSizeMode.FitAlways, 1, _Imageview.DefaultZoomOrigin);
-                if (info.TotalPages == 0) {
+                if (info.TotalPages == 0)
+                {
                     MessageBox.Show("文件页码为0，请重新加载档案！");
                     return;
                 }
-                else {
+                else
+                {
                     _Imageview.BeginUpdate();
                     _Imageview.Image.Page = 1;
                     _Imageview.EndUpdate();
                 }
+
                 CrrentPage = x;
                 CountPage = info.TotalPages;
                 Setpage(CrrentPage, CountPage);
-            } catch { }
+            }
+            catch 
+            {}
         }
 
         //保存图像
