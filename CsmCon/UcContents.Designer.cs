@@ -48,8 +48,8 @@
             this.LvModule = new DevComponents.DotNetBar.Controls.ListViewEx();
             this.colDoduleTitle = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colDoduleCode = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.gr2 = new System.Windows.Forms.GroupBox();
             this.colDodulelx = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.gr2 = new System.Windows.Forms.GroupBox();
             this.gr0.SuspendLayout();
             this.gr1.SuspendLayout();
             this.gr2.SuspendLayout();
@@ -256,6 +256,7 @@
             this.colDoduleCode,
             this.colDodulelx});
             this.LvModule.DisabledBackColor = System.Drawing.Color.Empty;
+            this.LvModule.FullRowSelect = true;
             this.LvModule.GridLines = true;
             this.LvModule.HideSelection = false;
             this.LvModule.Location = new System.Drawing.Point(207, 17);
@@ -265,6 +266,7 @@
             this.LvModule.TabStop = false;
             this.LvModule.UseCompatibleStateImageBehavior = false;
             this.LvModule.View = System.Windows.Forms.View.Details;
+            this.LvModule.DoubleClick += new System.EventHandler(this.LvModule_DoubleClick);
             // 
             // colDoduleTitle
             // 
@@ -274,6 +276,10 @@
             // colDoduleCode
             // 
             this.colDoduleCode.Text = "代码";
+            // 
+            // colDodulelx
+            // 
+            this.colDodulelx.Text = "类型";
             // 
             // gr2
             // 
@@ -288,10 +294,6 @@
             this.gr2.Size = new System.Drawing.Size(80, 343);
             this.gr2.TabIndex = 1;
             this.gr2.TabStop = false;
-            // 
-            // colDodulelx
-            // 
-            this.colDodulelx.Text = "类型";
             // 
             // UcContents
             // 

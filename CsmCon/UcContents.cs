@@ -25,13 +25,14 @@ namespace CsmCon
         public static int ArchCheckZt { get; set; } = 0;
         public static int ArchStat { get; set; } = 0;
         public static int Mtmpid { get; set; } = 0;
+        private int CrragePage = 0;
         ClsContenInfo info = new ClsContenInfo();
         private void Init()
         {
             if (Modulename == null)
                 Modulename = "目录录入";
-          //  info = new ClsContenInfo();
-          
+            //  info = new ClsContenInfo();
+
             info.GetControl(panel1);
             this.chbModule.Checked = ModuleVisible;
             this.gr0.Enabled = ContentsEnabled;
@@ -46,7 +47,7 @@ namespace CsmCon
         }
 
 
-        
+
         private void Lvnameadd()
         {
             if (info.ContenCoList.Count <= 0)
@@ -76,7 +77,7 @@ namespace CsmCon
 
         private void butModule_Click(object sender, EventArgs e)
         {
-            UcContenModule module=new UcContenModule();
+            UcContenModule module = new UcContenModule();
             module.ShowDialog();
         }
         #region 转跳
@@ -296,6 +297,14 @@ namespace CsmCon
                 OneClickGotoPage?.Invoke(sender, e, title, page);
 
         }
+
+        private void Settxt(string title)
+        {
+            int pid = info.PagesWz;
+            int tid = info.TitleWz;
+            info.SetInfoTxt(panel1, pid, CrragePage.ToString());
+            info.SetInfoTxt(panel1, tid, title);
+        }
         private void butDel_Click(object sender, EventArgs e)
         {
             if (ArchStat >= (int)T_ConFigure.ArchStat.质检完 && ArchCheckZt == 0) {
@@ -310,6 +319,7 @@ namespace CsmCon
         {
             try {
                 int x = info.PageCount.IndexOf(page.ToString());
+                CrragePage = x;
                 if (x >= 0) {
                     LvContents.SelectedItems.Clear();
                     LvContents.Items[x].Selected = true;
@@ -331,9 +341,24 @@ namespace CsmCon
                 LvContents_Click(null, null);
         }
 
+        void DoubleModuleAddConte()
+        {
+            if (CrragePage <= 0)
+                return;
+            string title = LvModule.SelectedItems[0].SubItems[0].Text;
+            Settxt(title);
+            AddTitle();
+        }
+
+        private void LvModule_DoubleClick(object sender, EventArgs e)
+        {
+            if (LvModule.SelectedItems.Count <= 0)
+                return;
+            DoubleModuleAddConte();
+        }
 
         #endregion
 
-       
+
     }
 }
