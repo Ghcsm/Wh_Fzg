@@ -383,7 +383,7 @@ namespace Csmdapx
         private void ShowPage()
         {
             string txt = Himg._Readpage();
-            if (txt == "-1") {
+            if (txt == "-9999") {
                 txt = "已删除";
                 txtPages.ReadOnly = true;
             }

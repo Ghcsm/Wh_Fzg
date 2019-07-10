@@ -2424,15 +2424,27 @@ namespace HLjscom
         #region pageorder
 
         //找重复页码
-        private Dictionary<int, int> addcfpage()
+        private Dictionary<int, string> addcfpage()
         {
-            Dictionary<int, int> tmp = new Dictionary<int, int>();
+            Dictionary<int, string> tmp = new Dictionary<int, string>();
             for (int i = 1; i <= _PageNumber.Count; i++) {
                 _PageNumber.GroupBy(item => item.Value)
                     .Where(item => item.Count() > 1 && item.Key == i && item.Key != -1)
                     .SelectMany(item => item)
               .ToList()
-               .ForEach(item => tmp.Add(item.Key, item.Value));
+               .ForEach(item => tmp.Add(item.Key, item.Value.ToString()));
+                if (tmp.Count >= 2) {
+                    return tmp;
+                }
+            }
+
+            if (_PageAbc.Count > 0)
+            {
+                _PageAbc.GroupBy(item => item.Value)
+                    .Where(item => item.Count() > 1 )
+                    .SelectMany(item => item)
+                    .ToList()
+                    .ForEach(item => tmp.Add(item.Key, item.Value.ToString()));
                 if (tmp.Count >= 2) {
                     return tmp;
                 }
@@ -2540,7 +2552,7 @@ namespace HLjscom
         {
             try {
                 if (page == "已删除")
-                    page = "-1";
+                    page = "-9999";
                 if (!isExists(page)) {
                     if (_PageAbc.ContainsKey(CrrentPage) == true) {
                         _PageAbc.Remove(CrrentPage);
@@ -2561,13 +2573,13 @@ namespace HLjscom
         private void Oderpage(int npage)
         {
             int oldpage = CrrentPage;
-            if (_PageNumber.ContainsKey(oldpage) == true) {
+            if (_PageNumber.ContainsKey(oldpage)) {
                 //修改页码
                 _PageNumber[oldpage] = npage;
 
             }
             //	数据不存在 添加
-            else if (_PageNumber.Count <= 0 || _PageNumber.ContainsKey(oldpage) == false) {
+            else if (_PageNumber.Count <= 0 || !_PageNumber.ContainsKey(oldpage)) {
                 _PageNumber.Add(oldpage, npage);
             }
             _SavePage();
