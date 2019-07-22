@@ -33,8 +33,9 @@ namespace CsmCon
                 string type = dr["CoType"].ToString();
                 string code = dr["CODE"].ToString();
                 string title = dr["TITLE"].ToString();
+                string titlelx = dr["TitleLx"].ToString();
                 lvi.Text = type;
-                lvi.SubItems.AddRange(new string[] { code, title, dr["ID"].ToString() });
+                lvi.SubItems.AddRange(new string[] { code, title, titlelx,dr["ID"].ToString() });
                 this.lvConten.Items.Add(lvi);
                 lscode.Add(type + code);
             }
@@ -139,6 +140,12 @@ namespace CsmCon
             if (e.KeyChar == 13)
                 butNew_Click(null, null);
             
+        }
+
+        private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+                SendKeys.Send("{Tab}");
         }
     }
 }

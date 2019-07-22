@@ -60,6 +60,11 @@ namespace CsmGenSet
         public static List<string>QuerInfoZd=new List<string>();
     }
 
+    public static class ClsInfoEnterSql
+    {
+        public static List<string> InfoEnter = new List<string>();
+    }
+
     public static class ClsDataSplit
     {
         public static string DataSplitTable { get; set; } = "";

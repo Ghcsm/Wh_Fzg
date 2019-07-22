@@ -456,7 +456,10 @@
             this.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.ClientSize = new System.Drawing.Size(717, 384);
             this.Controls.Add(this.groupPanel1);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "FrmBack";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "数据备份";
             this.Shown += new System.EventHandler(this.FrmBack_Shown);
             this.groupPanel1.ResumeLayout(false);

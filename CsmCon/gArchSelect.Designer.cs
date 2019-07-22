@@ -43,18 +43,20 @@
             this.c_xyzd = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ImgList = new System.Windows.Forms.ImageList(this.components);
             this.panelTop = new System.Windows.Forms.Panel();
+            this.combLx = new DevComponents.DotNetBar.Controls.ComboBoxEx();
+            this.comboItem3 = new DevComponents.Editors.ComboItem();
+            this.comboItem4 = new DevComponents.Editors.ComboItem();
+            this.comboItem5 = new DevComponents.Editors.ComboItem();
+            this.label2 = new System.Windows.Forms.Label();
             this.butOk = new DevComponents.DotNetBar.ButtonX();
             this.txtBoxsn = new System.Windows.Forms.TextBox();
             this.comboxClass = new DevComponents.DotNetBar.Controls.ComboBoxEx();
-            this.comboItem1 = new DevComponents.Editors.ComboItem();
-            this.comboItem2 = new DevComponents.Editors.ComboItem();
-            this.radioClass = new System.Windows.Forms.RadioButton();
-            this.radioBoxsn = new System.Windows.Forms.RadioButton();
             this.gr2 = new System.Windows.Forms.GroupBox();
             this.butLoad = new DevComponents.DotNetBar.ButtonX();
             this.butPageUpdate = new DevComponents.DotNetBar.ButtonX();
             this.label1 = new System.Windows.Forms.Label();
             this.txtPages = new System.Windows.Forms.TextBox();
+            this.c_archxq = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.gr1.SuspendLayout();
             this.panelTop.SuspendLayout();
             this.gr2.SuspendLayout();
@@ -94,7 +96,8 @@
             this.c_archid,
             this.c_type,
             this.c_stat,
-            this.c_xyzd});
+            this.c_xyzd,
+            this.c_archxq});
             this.LvData.DisabledBackColor = System.Drawing.Color.Empty;
             this.LvData.FullRowSelect = true;
             this.LvData.GridLines = true;
@@ -116,7 +119,7 @@
             // c_sn
             // 
             this.c_sn.Text = "序号";
-            this.c_sn.Width = 90;
+            this.c_sn.Width = 71;
             // 
             // c_boxsn
             // 
@@ -168,16 +171,55 @@
             // 
             // panelTop
             // 
+            this.panelTop.Controls.Add(this.combLx);
+            this.panelTop.Controls.Add(this.label2);
             this.panelTop.Controls.Add(this.butOk);
             this.panelTop.Controls.Add(this.txtBoxsn);
             this.panelTop.Controls.Add(this.comboxClass);
-            this.panelTop.Controls.Add(this.radioClass);
-            this.panelTop.Controls.Add(this.radioBoxsn);
             this.panelTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelTop.Location = new System.Drawing.Point(3, 17);
             this.panelTop.Name = "panelTop";
             this.panelTop.Size = new System.Drawing.Size(354, 40);
             this.panelTop.TabIndex = 0;
+            // 
+            // combLx
+            // 
+            this.combLx.DisplayMember = "Text";
+            this.combLx.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.combLx.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.combLx.FormattingEnabled = true;
+            this.combLx.ItemHeight = 15;
+            this.combLx.Items.AddRange(new object[] {
+            this.comboItem3,
+            this.comboItem4,
+            this.comboItem5});
+            this.combLx.Location = new System.Drawing.Point(43, 11);
+            this.combLx.Name = "combLx";
+            this.combLx.Size = new System.Drawing.Size(72, 21);
+            this.combLx.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.combLx.TabIndex = 6;
+            this.combLx.SelectedIndexChanged += new System.EventHandler(this.combLx_SelectedIndexChanged);
+            // 
+            // comboItem3
+            // 
+            this.comboItem3.Text = "盒号";
+            // 
+            // comboItem4
+            // 
+            this.comboItem4.Text = "类型";
+            // 
+            // comboItem5
+            // 
+            this.comboItem5.Text = "盒卷";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(8, 15);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(29, 12);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "类型";
             // 
             // butOk
             // 
@@ -198,9 +240,9 @@
             // 
             this.txtBoxsn.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtBoxsn.Location = new System.Drawing.Point(193, 11);
+            this.txtBoxsn.Location = new System.Drawing.Point(205, 11);
             this.txtBoxsn.Name = "txtBoxsn";
-            this.txtBoxsn.Size = new System.Drawing.Size(87, 21);
+            this.txtBoxsn.Size = new System.Drawing.Size(74, 21);
             this.txtBoxsn.TabIndex = 3;
             this.txtBoxsn.Tag = "4";
             this.txtBoxsn.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtBoxsn_KeyPress);
@@ -209,54 +251,15 @@
             // 
             this.comboxClass.DisplayMember = "Text";
             this.comboxClass.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.comboxClass.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboxClass.Enabled = false;
             this.comboxClass.FormattingEnabled = true;
             this.comboxClass.ItemHeight = 15;
-            this.comboxClass.Items.AddRange(new object[] {
-            this.comboItem1,
-            this.comboItem2});
-            this.comboxClass.Location = new System.Drawing.Point(111, 11);
+            this.comboxClass.Location = new System.Drawing.Point(121, 11);
             this.comboxClass.Name = "comboxClass";
             this.comboxClass.Size = new System.Drawing.Size(76, 21);
             this.comboxClass.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.comboxClass.TabIndex = 2;
             this.comboxClass.Tag = "3";
             this.comboxClass.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.comboxClass_KeyPress);
-            // 
-            // comboItem1
-            // 
-            this.comboItem1.Text = "案卷信息";
-            // 
-            // comboItem2
-            // 
-            this.comboItem2.Text = "目录信息";
-            // 
-            // radioClass
-            // 
-            this.radioClass.AutoSize = true;
-            this.radioClass.Location = new System.Drawing.Point(61, 13);
-            this.radioClass.Name = "radioClass";
-            this.radioClass.Size = new System.Drawing.Size(47, 16);
-            this.radioClass.TabIndex = 1;
-            this.radioClass.Tag = "2";
-            this.radioClass.Text = "类别";
-            this.radioClass.UseVisualStyleBackColor = true;
-            this.radioClass.Click += new System.EventHandler(this.radioClass_Click);
-            // 
-            // radioBoxsn
-            // 
-            this.radioBoxsn.AutoSize = true;
-            this.radioBoxsn.Checked = true;
-            this.radioBoxsn.Location = new System.Drawing.Point(12, 13);
-            this.radioBoxsn.Name = "radioBoxsn";
-            this.radioBoxsn.Size = new System.Drawing.Size(47, 16);
-            this.radioBoxsn.TabIndex = 0;
-            this.radioBoxsn.TabStop = true;
-            this.radioBoxsn.Tag = "1";
-            this.radioBoxsn.Text = "盒号";
-            this.radioBoxsn.UseVisualStyleBackColor = true;
-            this.radioBoxsn.Click += new System.EventHandler(this.radioBoxsn_Click);
             // 
             // gr2
             // 
@@ -314,6 +317,10 @@
             this.txtPages.TabIndex = 1;
             this.txtPages.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPages_KeyPress);
             // 
+            // c_archxq
+            // 
+            this.c_archxq.Text = "档案类型";
+            // 
             // gArchSelect
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -336,8 +343,6 @@
 
         private System.Windows.Forms.GroupBox gr1;
         private System.Windows.Forms.Panel panelTop;
-        private System.Windows.Forms.RadioButton radioBoxsn;
-        private System.Windows.Forms.RadioButton radioClass;
         private DevComponents.DotNetBar.Controls.ComboBoxEx comboxClass;
         private System.Windows.Forms.TextBox txtBoxsn;
         private DevComponents.DotNetBar.ButtonX butOk;
@@ -354,10 +359,14 @@
         private System.Windows.Forms.TextBox txtPages;
         public DevComponents.DotNetBar.ButtonX butLoad;
         private System.Windows.Forms.ColumnHeader c_type;
-        private DevComponents.Editors.ComboItem comboItem1;
-        private DevComponents.Editors.ComboItem comboItem2;
         private System.Windows.Forms.ColumnHeader c_stat;
         public DevComponents.DotNetBar.Controls.ListViewEx LvData;
         private System.Windows.Forms.ColumnHeader c_xyzd;
+        private DevComponents.DotNetBar.Controls.ComboBoxEx combLx;
+        private System.Windows.Forms.Label label2;
+        private DevComponents.Editors.ComboItem comboItem3;
+        private DevComponents.Editors.ComboItem comboItem4;
+        private DevComponents.Editors.ComboItem comboItem5;
+        private System.Windows.Forms.ColumnHeader c_archxq;
     }
 }

@@ -27,7 +27,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.gr0 = new DevComponents.DotNetBar.Controls.GroupPanel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.gr4 = new System.Windows.Forms.GroupBox();
@@ -36,6 +36,7 @@
             this.comboItem2 = new DevComponents.Editors.ComboItem();
             this.comboItem1 = new DevComponents.Editors.ComboItem();
             this.comboItem3 = new DevComponents.Editors.ComboItem();
+            this.comboItem4 = new DevComponents.Editors.ComboItem();
             this.butLog = new DevComponents.DotNetBar.ButtonX();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -52,21 +53,21 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.gr1 = new System.Windows.Forms.GroupBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.chkZero = new System.Windows.Forms.CheckedListBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.chkTablecol = new System.Windows.Forms.CheckedListBox();
             this.combImportTable = new DevComponents.DotNetBar.Controls.ComboBoxEx();
             this.label1 = new System.Windows.Forms.Label();
             this.opdXlsFile = new System.Windows.Forms.OpenFileDialog();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.chkZero = new System.Windows.Forms.CheckedListBox();
             this.gr0.SuspendLayout();
             this.gr4.SuspendLayout();
             this.gr3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvXlsData)).BeginInit();
             this.gr2.SuspendLayout();
             this.gr1.SuspendLayout();
-            this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // gr0
@@ -164,7 +165,8 @@
             this.combLx.Items.AddRange(new object[] {
             this.comboItem2,
             this.comboItem1,
-            this.comboItem3});
+            this.comboItem3,
+            this.comboItem4});
             this.combLx.Location = new System.Drawing.Point(200, 45);
             this.combLx.Name = "combLx";
             this.combLx.Size = new System.Drawing.Size(115, 21);
@@ -179,6 +181,10 @@
             // comboItem3
             // 
             this.comboItem3.Text = "目录信息";
+            // 
+            // comboItem4
+            // 
+            this.comboItem4.Text = "仅导入数据";
             // 
             // butLog
             // 
@@ -271,20 +277,21 @@
             this.dgvXlsData.AllowUserToAddRows = false;
             this.dgvXlsData.AllowUserToDeleteRows = false;
             this.dgvXlsData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvXlsData.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvXlsData.DefaultCellStyle = dataGridViewCellStyle1;
             this.dgvXlsData.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvXlsData.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(215)))), ((int)(((byte)(229)))));
             this.dgvXlsData.Location = new System.Drawing.Point(3, 17);
             this.dgvXlsData.Name = "dgvXlsData";
             this.dgvXlsData.ReadOnly = true;
             this.dgvXlsData.RowTemplate.Height = 23;
+            this.dgvXlsData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvXlsData.Size = new System.Drawing.Size(911, 319);
             this.dgvXlsData.TabIndex = 0;
             // 
@@ -371,6 +378,29 @@
             this.gr1.TabStop = false;
             this.gr1.Text = "选择目标表";
             // 
+            // groupBox2
+            // 
+            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.Controls.Add(this.chkZero);
+            this.groupBox2.ForeColor = System.Drawing.Color.Red;
+            this.groupBox2.Location = new System.Drawing.Point(9, 283);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(200, 201);
+            this.groupBox2.TabIndex = 2;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "过滤 0 字符";
+            // 
+            // chkZero
+            // 
+            this.chkZero.CheckOnClick = true;
+            this.chkZero.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.chkZero.FormattingEnabled = true;
+            this.chkZero.Location = new System.Drawing.Point(3, 17);
+            this.chkZero.Name = "chkZero";
+            this.chkZero.Size = new System.Drawing.Size(194, 181);
+            this.chkZero.TabIndex = 0;
+            // 
             // groupBox1
             // 
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -420,29 +450,6 @@
             this.label1.TabIndex = 1;
             this.label1.Text = "数据库表：";
             // 
-            // groupBox2
-            // 
-            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox2.Controls.Add(this.chkZero);
-            this.groupBox2.ForeColor = System.Drawing.Color.Red;
-            this.groupBox2.Location = new System.Drawing.Point(9, 283);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(200, 201);
-            this.groupBox2.TabIndex = 2;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "过滤 0 字符";
-            // 
-            // chkZero
-            // 
-            this.chkZero.CheckOnClick = true;
-            this.chkZero.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.chkZero.FormattingEnabled = true;
-            this.chkZero.Location = new System.Drawing.Point(3, 17);
-            this.chkZero.Name = "chkZero";
-            this.chkZero.Size = new System.Drawing.Size(194, 181);
-            this.chkZero.TabIndex = 0;
-            // 
             // FrmImport
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -464,8 +471,8 @@
             this.gr2.PerformLayout();
             this.gr1.ResumeLayout(false);
             this.gr1.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -503,5 +510,6 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.CheckedListBox chkZero;
+        private DevComponents.Editors.ComboItem comboItem4;
     }
 }

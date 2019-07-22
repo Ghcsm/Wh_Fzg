@@ -50,6 +50,7 @@
             this.colDoduleCode = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colDodulelx = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.gr2 = new System.Windows.Forms.GroupBox();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.gr0.SuspendLayout();
             this.gr1.SuspendLayout();
             this.gr2.SuspendLayout();
@@ -67,7 +68,7 @@
             this.gr0.Controls.Add(this.label1);
             this.gr0.Location = new System.Drawing.Point(3, 3);
             this.gr0.Name = "gr0";
-            this.gr0.Size = new System.Drawing.Size(470, 161);
+            this.gr0.Size = new System.Drawing.Size(470, 183);
             this.gr0.TabIndex = 0;
             this.gr0.TabStop = false;
             // 
@@ -91,12 +92,12 @@
             this.panel1.AutoScroll = true;
             this.panel1.Location = new System.Drawing.Point(6, 42);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(458, 113);
+            this.panel1.Size = new System.Drawing.Size(458, 135);
             this.panel1.TabIndex = 3;
             // 
             // txtCode
             // 
-            this.txtCode.Location = new System.Drawing.Point(101, 14);
+            this.txtCode.Location = new System.Drawing.Point(110, 15);
             this.txtCode.Name = "txtCode";
             this.txtCode.Size = new System.Drawing.Size(100, 21);
             this.txtCode.TabIndex = 2;
@@ -107,7 +108,7 @@
             // 
             this.txtId.Location = new System.Drawing.Point(52, 15);
             this.txtId.Name = "txtId";
-            this.txtId.Size = new System.Drawing.Size(43, 21);
+            this.txtId.Size = new System.Drawing.Size(52, 21);
             this.txtId.TabIndex = 1;
             this.txtId.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtId_KeyPress);
             // 
@@ -192,9 +193,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.gr1.Controls.Add(this.LvContents);
             this.gr1.Controls.Add(this.LvModule);
-            this.gr1.Location = new System.Drawing.Point(3, 170);
+            this.gr1.Location = new System.Drawing.Point(3, 192);
             this.gr1.Name = "gr1";
-            this.gr1.Size = new System.Drawing.Size(384, 343);
+            this.gr1.Size = new System.Drawing.Size(384, 321);
             this.gr1.TabIndex = 2;
             this.gr1.TabStop = false;
             // 
@@ -218,7 +219,7 @@
             this.LvContents.HideSelection = false;
             this.LvContents.Location = new System.Drawing.Point(5, 17);
             this.LvContents.Name = "LvContents";
-            this.LvContents.Size = new System.Drawing.Size(205, 320);
+            this.LvContents.Size = new System.Drawing.Size(205, 298);
             this.LvContents.SmallImageList = this.imageList1;
             this.LvContents.TabIndex = 5;
             this.LvContents.TabStop = false;
@@ -253,6 +254,7 @@
             this.LvModule.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.LvModule.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.colDoduleTitle,
+            this.columnHeader1,
             this.colDoduleCode,
             this.colDodulelx});
             this.LvModule.DisabledBackColor = System.Drawing.Color.Empty;
@@ -261,7 +263,7 @@
             this.LvModule.HideSelection = false;
             this.LvModule.Location = new System.Drawing.Point(207, 17);
             this.LvModule.Name = "LvModule";
-            this.LvModule.Size = new System.Drawing.Size(171, 320);
+            this.LvModule.Size = new System.Drawing.Size(171, 298);
             this.LvModule.TabIndex = 0;
             this.LvModule.TabStop = false;
             this.LvModule.UseCompatibleStateImageBehavior = false;
@@ -289,11 +291,16 @@
             this.gr2.Controls.Add(this.butEdit);
             this.gr2.Controls.Add(this.butModule);
             this.gr2.Controls.Add(this.butDel);
-            this.gr2.Location = new System.Drawing.Point(393, 170);
+            this.gr2.Location = new System.Drawing.Point(393, 192);
             this.gr2.Name = "gr2";
-            this.gr2.Size = new System.Drawing.Size(80, 343);
+            this.gr2.Size = new System.Drawing.Size(80, 321);
             this.gr2.TabIndex = 1;
             this.gr2.TabStop = false;
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "标题类型";
+            this.columnHeader1.Width = 80;
             // 
             // UcContents
             // 
@@ -336,5 +343,6 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.ColumnHeader colDodulelx;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
     }
 }

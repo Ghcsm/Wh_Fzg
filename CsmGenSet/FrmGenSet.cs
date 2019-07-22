@@ -892,6 +892,7 @@ namespace CsmGenSet
             }
             chkInfoZd.Items.Clear();
             ClsInfoAdd.InfoInfoZdtmp.Clear();
+            combInfoWycol.Items.Clear();
             DataTable dt = T_Sysset.GetTableName(ClsInfoAdd.InfoTable);
             if (dt != null && dt.Rows.Count > 0) {
                 chkInfoTable.DataSource = dt;
@@ -912,6 +913,7 @@ namespace CsmGenSet
                         continue;
                     if (ClsInfoAdd.InfoInfoZdtmp.IndexOf(strid) < 0) {
                         chkInfoZd.Items.Add(strid);
+                        combInfoWycol.Items.Add(strid);
                         ClsInfoAdd.InfoInfoZdtmp.Add(strid);
                     }
                 }
@@ -932,6 +934,8 @@ namespace CsmGenSet
                         ClsInfoAdd.InfoInfoZd.Remove(str);
                     if (ClsInfoAdd.InfoInfoZdtmp.IndexOf(str) >= 0)
                         ClsInfoAdd.InfoInfoZdtmp.Remove(str);
+                    if (combInfoWycol.Items.IndexOf(str)>=0)
+                        combInfoWycol.Items.Remove(str);
 
                     i--;
                 }
@@ -960,7 +964,9 @@ namespace CsmGenSet
         private void GetInfoSet()
         {
             CleInfo();
-            try {
+            try
+            {
+                string wycol = "";
                 if (ClsGenSet.PrintInfo != null && ClsGenSet.PrintInfo.Rows.Count > 0) {
                     DataTable dt = T_Sysset.GetInfoTable();
                     if (dt == null || dt.Rows.Count <= 0)
@@ -972,6 +978,7 @@ namespace CsmGenSet
                         string num = dr["InfoNum"].ToString();
                         string width = dr["InfoLabWidth"].ToString();
                         string txtwidth = dr["InfoTxtWidth"].ToString();
+                        wycol = dr["Wycol"].ToString();
                         if (t.Trim().Length <= 0)
                             return;
                         combInfoTable.Items.Add(t);
@@ -995,8 +1002,10 @@ namespace CsmGenSet
                         for (int i = 0; i < a.Length; i++) {
                             string b = a[i];
                             chkInfoZd.Items.Add(b);
+                            combInfoWycol.Items.Add(b);
                         }
                     }
+                    combInfoWycol.Text=wycol;
                 }
             } catch (Exception e) {
                 MessageBox.Show("信息补录表加载失败:" + e.ToString());
@@ -1054,7 +1063,7 @@ namespace CsmGenSet
                 if (combInfoTable.Text.Trim().Length <= 0) {
                     if (ClsInfoAdd.InfoTableLs.IndexOf(ClsInfoAdd.InfoTable) < 0)
                         T_Sysset.SaveGensetInfo(ClsInfoAdd.InfoTable, str, combInfoTableName.Text.Trim(),
-                            combInfoColNum.Text.Trim(), combInfoLabWith.Text.Trim(), combInfotxtWith.Text.Trim());
+                            combInfoColNum.Text.Trim(), combInfoLabWith.Text.Trim(), combInfotxtWith.Text.Trim(),combInfoWycol.Text.Trim());
                     else {
                         MessageBox.Show("此表已经如更新请选择表!");
                         return;
@@ -1062,7 +1071,7 @@ namespace CsmGenSet
                 }
                 else
                     T_Sysset.UpdateGensetInfo(combInfoTable.Text.Trim(), str, combInfoTableName.Text.Trim(),
-                        combInfoColNum.Text.Trim(), combInfoLabWith.Text.Trim(), combInfotxtWith.Text.Trim());
+                        combInfoColNum.Text.Trim(), combInfoLabWith.Text.Trim(), combInfotxtWith.Text.Trim(), combInfoWycol.Text.Trim());
                 MessageBox.Show("保存成功!");
                 GetInfoSet();
             } catch (Exception e) {
@@ -2745,14 +2754,18 @@ namespace CsmGenSet
                 chbCreateTablenull.Checked);
             if (ClsCreateTable.CreateTableLvsm.Trim().Length <= 0 && txtCreateTableColsm.Text.Trim().Length <= 0)
                 return;
-            else if (ClsCreateTable.CreateTableLvsm.Trim().Length <= 0 && txtCreateTableColsm.Text.Trim().Length > 0) {
+            if (ClsCreateTable.CreateTableLvsm.Trim()!=txtCreateTableColsm.Text.Trim()) {
+               
                 try {
-                    T_Sysset.CreateTableExplain(ClsCreateTable.CreateTable, ClsCreateTable.CreateTableLvcol, txtCreateTableColsm.Text.Trim());
+                    if (ClsCreateTable.CreateTableLvsm.Trim().Length<= 0)
+                        T_Sysset.CreateTableExplain(ClsCreateTable.CreateTable, ClsCreateTable.CreateTableLvcol, txtCreateTableColsm.Text.Trim());
+                    else
+                        T_Sysset.CreateTableUpdateExplain(ClsCreateTable.CreateTable, ClsCreateTable.CreateTableLvcol, txtCreateTableColsm.Text.Trim());
                 } catch {
                     T_Sysset.CreateTableUpdateExplain(ClsCreateTable.CreateTable, ClsCreateTable.CreateTableLvcol, txtCreateTableColsm.Text.Trim());
                 }
             }
-            else if (ClsCreateTable.CreateTableLvsm.Trim().Length > 0 && txtCreateTableColsm.Text.Trim().Length <= 0)
+            if (ClsCreateTable.CreateTableLvsm.Trim().Length > 0 && txtCreateTableColsm.Text.Trim().Length <= 0)
                 T_Sysset.CreateTableDelExplain(ClsCreateTable.CreateTable, ClsCreateTable.CreateTableLvcol);
 
             butCreateTableis_Click(null, null);
@@ -2953,12 +2966,154 @@ namespace CsmGenSet
         }
         #endregion
 
+        #region infoEnterSql
+
+
+        private void IsInfoEnterQuerTable()
+        {
+            if (txtInfoEnterSqltable.Text.Trim().Length <= 0) {
+                MessageBox.Show("请输入信息补录调用表名称!");
+                txtQuerTable.Focus();
+                return;
+            }
+            string table = T_Sysset.isTable(txtInfoEnterSqltable.Text.Trim());
+            ClsInfoEnterSql.InfoEnter.Clear();
+            if (table.Length <= 0) {
+                MessageBox.Show("表不存！");
+                txtInfoEnterSqltable.Focus();
+                return;
+            }
+            chkInfoEnterSqlcol.Items.Clear();
+            chkInfoEnterSqlcolshow.Items.Clear();
+            DataTable dt = T_Sysset.GetTableName(txtInfoEnterSqltable.Text.Trim());
+            if (dt != null && dt.Rows.Count > 0) {
+                chkInfoEnterSqlcol.DataSource = dt;
+                chkInfoEnterSqlcol.DisplayMember = "Name";
+            }
+        }
+
+        private void InfoEnterQuerzd()
+        {
+            if (chkInfoEnterSqlcol.Items.Count <= 0)
+                return;
+            if (chkInfoEnterSqlcol.CheckedItems.Count <= 0)
+                return;
+            for (int i = 0; i < chkInfoEnterSqlcol.Items.Count; i++) {
+                if (chkInfoEnterSqlcol.GetItemChecked(i)) {
+                    string strid = chkInfoEnterSqlcol.GetItemText(chkInfoEnterSqlcol.Items[i]);
+                    if (strid.ToLower() == "id" || strid.ToLower() == "archid" || strid.ToLower() == "entertag")
+                        continue;
+                    if (ClsInfoEnterSql.InfoEnter.IndexOf(strid) < 0) {
+                        chkInfoEnterSqlcolshow.Items.Add(strid);
+                        ClsInfoEnterSql.InfoEnter.Add(strid);
+                    }
+                }
+            }
+        }
+
+        private void DelInfoEnterQuerInfo()
+        {
+            if (chkInfoEnterSqlcolshow.Items.Count <= 0)
+                return;
+            if (chkInfoEnterSqlcolshow.CheckedItems.Count <= 0)
+                return;
+            for (int i = 0; i < chkInfoEnterSqlcolshow.Items.Count; i++) {
+                if (chkInfoEnterSqlcolshow.GetItemChecked(i)) {
+                    string str = chkInfoEnterSqlcolshow.GetItemText(chkInfoEnterSqlcolshow.Items[i]);
+                    chkInfoEnterSqlcolshow.Items.RemoveAt(i);
+                    if (ClsInfoEnterSql.InfoEnter.IndexOf(str) >= 0)
+                        ClsInfoEnterSql.InfoEnter.Remove(str);
+                    i--;
+                }
+            }
+        }
+
+        private void SaveInfoentersql()
+        {
+            string str = "";
+            if (txtInfoEnterSqltable.Text.Length <= 0) {
+                MessageBox.Show("请设置表名称!");
+                return;
+            }
+            if (chkInfoEnterSqlcolshow.Items.Count <= 0) {
+                MessageBox.Show("请先添加需查询的字段!");
+                return;
+            }
+            try {
+                for (int i = 0; i < ClsInfoEnterSql.InfoEnter.Count; i++) {
+                    if (i != ClsInfoEnterSql.InfoEnter.Count - 1)
+                        str += ClsInfoEnterSql.InfoEnter[i] + ";";
+                    else
+                        str += ClsInfoEnterSql.InfoEnter[i];
+                }
+                T_Sysset.UpdateInfoEnterSql(txtInfoEnterSqltable.Text, str);
+                MessageBox.Show("保存成功!");
+                GetnInfoentersql();
+            } catch (Exception e) {
+                MessageBox.Show(e.ToString());
+            } finally {
+                string s = "修改信息补录调用信息数据表:" + txtInfoEnterSqltable.Text.Trim() + "->" + str;
+                Common.Writelog(0, s);
+            }
+        }
+
+
+        private void GetnInfoentersql()
+        {
+            try {
+                chkInfoEnterSqlcolshow.Items.Clear();
+                ClsInfoEnterSql.InfoEnter.Clear();
+                DataTable dt = T_Sysset.GetInfoenterSql();
+                if (dt == null || dt.Rows.Count <= 0)
+                    return;
+                DataRow dr = dt.Rows[0];
+                string table = dr["InfoTable"].ToString();
+                string str = dr["InfoCol"].ToString();
+                txtInfoEnterSqltable.Text = table;
+                if (str.Length > 0) {
+                    string[] a = str.Split(';');
+                    for (int i = 0; i < a.Length; i++) {
+                        string b = a[i];
+                        if (b.Trim().Length > 0) {
+                            ClsInfoEnterSql.InfoEnter.Add(b);
+                            chkInfoEnterSqlcolshow.Items.Add(b);
+                        }
+                    }
+                }
+
+            } catch (Exception e) {
+                MessageBox.Show("查询表加载失败:" + e.ToString());
+            }
+        }
+        private void butInfoEnterSqlIs_Click(object sender, EventArgs e)
+        {
+            IsInfoEnterQuerTable();
+        }
+
+        private void butInfoEnterSqladd_Click(object sender, EventArgs e)
+        {
+            InfoEnterQuerzd();
+        }
+
+        private void butInfoEnterSqldel_Click(object sender, EventArgs e)
+        {
+            DelInfoEnterQuerInfo();
+        }
+
+        private void butInfoEnterSqlsave_Click(object sender, EventArgs e)
+        {
+            SaveInfoentersql();
+        }
+
+        #endregion
+
         private void Infoshow()
         {
             GetGenSetPrint();
             GetnPrintConten();
             GetImportSet();
             GetInfoSet();
+            GetnInfoentersql();
             GetnQuerInfo();
             GetdataSplit();
             GetInfoCheck();
@@ -2970,7 +3125,8 @@ namespace CsmGenSet
         {
             Infoshow();
         }
-      
+
+       
     }
 
 }

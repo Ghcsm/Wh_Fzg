@@ -134,6 +134,8 @@ namespace WareHouse
                     Size = new Size((GroupW - 15) / 15, GroupH - 2)
                 };
                 ClsStore.but_boxsn[i].Location = new Point((i - 1) * (ClsStore.but_boxsn[i].Width + 1), 0);
+                if (imglist_box.Images.Count <= 0)
+                    return;
                 if (num == ClsStore.Juansn)
                     ClsStore.but_boxsn[i].BackgroundImage = imglist_box.Images[0];
                 else if (num == 0)
@@ -223,7 +225,7 @@ namespace WareHouse
             ClsStore.ArchPos = ToolsS_code.Text.Substring(6);
             ClsStore.Archid = Common.GetCode(ClsStore.ArchPos, ClsStore.Houseid);
             toolFileName.Text = "";
-            toolFileId.Text =" ";
+            toolFileId.Text = " ";
             Getstat();
 
         }
@@ -319,6 +321,9 @@ namespace WareHouse
         {
             ftp.PercentChane += new HLFtp.HFTP.PChangedHandle(Downjd);
             Getsys();
+            if (T_User.UserId == 1)
+                butSetzt.Enabled = true;
+
         }
 
 
@@ -596,5 +601,27 @@ namespace WareHouse
                 ClsStore.Imgys = true;
         }
 
+
+        #region 档案状态
+        private void butSetzt_Click(object sender, EventArgs e)
+        {
+            if (txtbox1.Text.Trim().Length <= 0 || txtbox2.Text.Trim().Length <= 0 || combzt.Text.Trim().Length <= 0) {
+                MessageBox.Show("请先输入盒号范围及选择档案状态!");
+                return;
+            }
+            try {
+                int b1 = int.Parse(txtbox1.Text.Trim());
+                int b2 = int.Parse(txtbox2.Text.Trim());
+                if (b1>b2) {
+                    MessageBox.Show("盒号范围不正确!");
+                    return;
+                }
+            } catch {
+            }
+            Common.SetArchxqStat(txtbox1.Text.Trim(),txtbox2.Text.Trim(),combzt.Text.Trim());
+            MessageBox.Show("完成!");
+        }
+
+        #endregion
     }
 }

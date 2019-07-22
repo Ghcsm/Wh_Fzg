@@ -4,11 +4,15 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
+using System.Drawing.Printing;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ZXing;
 
 namespace Csmdady
 {
@@ -29,8 +33,6 @@ namespace Csmdady
             GetPrintParmXy();
             GetContenInfo();
         }
-
-
 
         #region CretaTxt
 
@@ -469,8 +471,7 @@ namespace Csmdady
                              WriteLog(str);
                              return false;
                          }
-                         for (int id = 1; id < dt.Rows.Count; id++)
-                         {
+                         for (int id = 1; id < dt.Rows.Count; id++) {
                              int arid = Convert.ToInt32(dt.Rows[id][0].ToString());
                              if (GetPrintinfoSql(arid)) {
                                  Thread.Sleep(200);
@@ -628,7 +629,7 @@ namespace Csmdady
              {
                  if (tabSelectbox.IsSelected) {
                      if (rbboxOne.Checked)
-                       return  GetArchContenWriteXlsPrint(ClsPrintInfo.Archid);
+                         return GetArchContenWriteXlsPrint(ClsPrintInfo.Archid);
                      else {
                          if (ClsPrintInfo.Boxsn <= 0) {
                              MessageBox.Show("盒号获取失败!");
@@ -640,9 +641,8 @@ namespace Csmdady
                              WriteLog(str);
                              return false;
                          }
-                         for (int id = 1; id <= dt.Rows.Count; id++)
-                         {
-                             int arid =Convert.ToInt32(dt.Rows[id][0].ToString());
+                         for (int id = 1; id <= dt.Rows.Count; id++) {
+                             int arid = Convert.ToInt32(dt.Rows[id][0].ToString());
                              GetArchContenWriteXlsPrint(arid);
                              Thread.Sleep(200);
                              ClsPrintInfoDocument.printDocument.Print();
@@ -769,9 +769,130 @@ namespace Csmdady
 
         #endregion
 
+        #region print EWm
+
+        private string GetTmgz(string boxsn, string lx)
+        {
+            lx = lx.PadLeft(4, '0');
+            boxsn = boxsn.PadLeft(6, '0');
+            string c = "";
+            if (V_HouseSetCs.HouseName == "不动产产权")
+                c = "C";
+            else if (V_HouseSetCs.HouseName == "不动产抵押")
+                c = "Y";
+            else if (V_HouseSetCs.HouseName == "不动产查封")
+                c = "F";
+            string str = "DL-" + lx + "-"+ c+ boxsn;
+            return str;
+        }
+        public static Bitmap Createwm(string asset, int x, int y)
+        {
+            Bitmap result = null;
+            try {
+                BarcodeWriter barCodeWriter = new BarcodeWriter();
+                barCodeWriter.Format = BarcodeFormat.QR_CODE;
+                barCodeWriter.Options.Hints.Add(EncodeHintType.CHARACTER_SET, "UTF-8");
+                barCodeWriter.Options.Hints.Add(EncodeHintType.ERROR_CORRECTION, ZXing.QrCode.Internal.ErrorCorrectionLevel.H);
+                barCodeWriter.Options.Height = y;
+                barCodeWriter.Options.Width = x;
+                barCodeWriter.Options.Margin = 0;
+                ZXing.Common.BitMatrix bm = barCodeWriter.Encode(asset);
+                result = barCodeWriter.Write(bm);
+                return result;
+            } catch {
+                return null;
+            }
+        }
+
+        public static Image GetPrintPicture(Bitmap image, int picWidth, int picHeight, string str)
+        {
+            Bitmap printPicture = new Bitmap(picWidth, picHeight);
+            string filePath = "c:\\temp\\tewm.e";
+            Font font = new Font("Airal", 7f);
+            Font font1 = new Font("Airal", 9f);
+            Graphics gs = Graphics.FromImage(printPicture);
+            Metafile mf = new Metafile(filePath, gs.GetHdc());
+            Graphics g = Graphics.FromImage(mf);
+            HatchBrush hb = new HatchBrush(HatchStyle.Shingle, Color.Black, Color.White);
+            Brush brush = new SolidBrush(Color.Black);
+
+            string str1 = str;
+            Rectangle destRect = new Rectangle(50, 0, image.Width + 4, image.Height + 4);
+            g.DrawImage(image, destRect, 0, 0, image.Width, image.Height, GraphicsUnit.Pixel);
+
+            g.DrawString(str, font1, brush, 50, 35);
+
+            g.RotateTransform(-90.0F);
+            str1 = str.Substring(0, 3).ToString();
+            g.DrawString(str1, font, brush, -30, 85);
+
+            str1 = str.Substring(3, 3).ToString();
+            g.DrawString(str1, font, brush, -30, 98);
+
+            str1 = str.Substring(6, 3).ToString();
+            g.DrawString(str1, font, brush, -30, 111);
+
+            str1 = str.Substring(9, 3).ToString();
+            g.DrawString(str1, font, brush, -30, 124);
+
+            str1 = str.Substring(12, 3).ToString();
+            g.DrawString(str1, font, brush, -30, 140);
+
+            g.RotateTransform(90.0F);
+            destRect = new Rectangle(150, 0, image.Width + 20, image.Height + 20);
+            g.DrawImage(image, destRect, 0, 0, image.Width, image.Height, GraphicsUnit.Pixel);
+
+            g.DrawString(" ", font, brush, 0, 0);
+            g.DrawString(" ", font, brush, 300, 30);
+
+            g.Dispose();
+            gs.Dispose();
+            mf.Dispose();
+            return printPicture;
+        }
+
+        private void Printewm(string txt)
+        {
+            Image img = Createwm(txt, 30, 30);
+            Bitmap bmp = (Bitmap)img;
+            img = GetPrintPicture(bmp, 400, 60, txt);
+            PrintDocument printDoc = new PrintDocument();
+            printDoc.PrintController = new StandardPrintController();
+            printDoc.PrintPage += new PrintPageEventHandler(pd_PrintPage);
+            printDoc.Print();
+        }
+
+        private void pd_PrintPage(object sender, PrintPageEventArgs e)
+        {
+            string emf = "c:\\temp\\tewm.e";
+            Metafile metaFile = new Metafile(emf);
+            e.Graphics.DrawImage(metaFile, 0, 0, new RectangleF(0, 0, metaFile.Width, metaFile.Height), GraphicsUnit.Point);
+            metaFile.Dispose();
+        }
+
+        private void PrintEwm()
+        {
+            butBoxRangeAdd.Enabled = false;
+            butDelbox.Enabled = false;
+            if (tabSelectbox.IsSelected) {
+                if (rbboxOne.Checked)
+                {
+                    string boxsn = gArchSelect1.Boxsn.ToString();
+                    string lx = gArchSelect1.ArchXqzt;
+                    Printewm(GetTmgz(boxsn, lx));
+                }
+
+            }
+        }
+
         private void butPrintTm_Click(object sender, EventArgs e)
         {
-           
+            if (ClsPrintInfo.Archid <= 0)
+                return;
+            PrintEwm();
         }
+
+
+        #endregion
     }
 }

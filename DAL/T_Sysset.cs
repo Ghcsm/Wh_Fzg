@@ -13,7 +13,7 @@ namespace DAL
     {
 
         #region userLogion
-     
+
         public static DataTable GetUser()
         {
             DataTable dt = null;
@@ -387,11 +387,14 @@ namespace DAL
             else
                 return false;
         }
-        public static int SelectHouseNameid()
+        public static int SelectHouseNameid(string name)
         {
             string strSql = "select id from M_HouseName where HouseName=@HouseName ";
-            SqlParameter p1 = new SqlParameter("@HouseName", V_HouseName.HouseSetName);
-            int id = Convert.ToInt32(SQLHelper.ExecScalar(strSql, p1).ToString());
+            SqlParameter p1 = new SqlParameter("@HouseName", name);
+            object obj = SQLHelper.ExecScalar(strSql, p1);
+            if (obj == null)
+                return 0;
+            int id = Convert.ToInt32(obj.ToString());
             return id;
         }
 
@@ -595,6 +598,13 @@ namespace DAL
             return dt;
         }
 
+        public static DataTable GetInfoenterSql()
+        {
+            string strSql = "select * from M_GetSetLsInfo ";
+            DataTable dt = SQLHelper.ExcuteTable(strSql);
+            return dt;
+        }
+
         public static void UpdateGensetPrintConten(string table, string info)
         {
             string strSql = "update M_genset set PrintContenTable=@table, PrintContenInfo=@info";
@@ -650,9 +660,9 @@ namespace DAL
             return dt;
         }
 
-        public static void SaveGensetInfo(string table, string info, string name, string num, string width, string txtwidth)
+        public static void SaveGensetInfo(string table, string info, string name, string num, string width, string txtwidth, string wycol)
         {
-            string strSql = "insert into  M_GenSetInfo  (InfoTable,InfoAddzd,InfoName,InfoNum,InfoLabWidth,InfoTxtWidth) values(@table,@info,@name,@num,@width,@txtwidth)";
+            string strSql = "insert into  M_GenSetInfo(InfoTable,InfoAddzd,InfoName,InfoNum,InfoLabWidth,InfoTxtWidth,Wycol) values(@table,@info,@name,@num,@width,@txtwidth,@wycol)";
             SqlParameter[] par =
             {
                 new SqlParameter("@table", table),
@@ -660,13 +670,14 @@ namespace DAL
                 new SqlParameter("@name", name),
                 new SqlParameter("@num", num),
                 new SqlParameter("@width", width),
-                new SqlParameter("@txtwidth", txtwidth)
+                new SqlParameter("@txtwidth", txtwidth),
+                new SqlParameter("@wycol", wycol)
             };
             SQLHelper.ExecScalar(strSql, par);
         }
-        public static void UpdateGensetInfo(string table, string info, string name, string num, string width, string txtwith)
+        public static void UpdateGensetInfo(string table, string info, string name, string num, string width, string txtwith, string wycol)
         {
-            string strSql = "update M_GenSetInfo set InfoAddzd=@info, InfoName=@name, InfoNum=@num,InfoLabWidth=@width,InfoTxtWidth=@txtwith  where InfoTable=@table";
+            string strSql = "update M_GenSetInfo set InfoAddzd=@info, InfoName=@name, InfoNum=@num,InfoLabWidth=@width,InfoTxtWidth=@txtwith, wycol=@wycol where InfoTable=@table";
             SqlParameter[] par =
             {
                 new SqlParameter("@table", table),
@@ -674,7 +685,8 @@ namespace DAL
                 new SqlParameter("@name", name),
                 new SqlParameter("@num", num),
                 new SqlParameter("@width", width),
-                new SqlParameter("@txtwith", txtwith)
+                new SqlParameter("@txtwith", txtwith),
+                new SqlParameter("@wycol", wycol)
             };
             SQLHelper.ExecScalar(strSql, par);
         }
@@ -697,8 +709,30 @@ namespace DAL
         }
 
 
+        public static void UpdateInfoEnterSql(string table, string str)
+        {
+            string strSql = "select count(*) from M_GetSetLsInfo";
+            object ojb = SQLHelper.ExecScalar(strSql);
+            if (ojb != null) {
+                int id = Convert.ToInt32(ojb);
+                if (id > 0) {
+                    strSql = "update M_GetSetLsInfo set InfoTable=@table, InfoCol=@info";
+                    SqlParameter p0 = new SqlParameter("@table", table);
+                    SqlParameter p1 = new SqlParameter("@info", str);
+                    SQLHelper.ExecScalar(strSql, p0, p1);
+                    return;
+                }
+            }
+            strSql = "insert into M_GetSetLsInfo (InfoTable,InfoCol) values(@table,@info)";
+            SqlParameter p2 = new SqlParameter("@table", table);
+            SqlParameter p3 = new SqlParameter("@info", str);
+            SQLHelper.ExecScalar(strSql, p2, p3);
 
-        public static void UPdateDataSplitDirinfo(string dirtable, int dirsn, string dircol, string dirml, string pageszero,string dirmlpage)
+        }
+
+
+
+        public static void UPdateDataSplitDirinfo(string dirtable, int dirsn, string dircol, string dirml, string pageszero, string dirmlpage)
         {
             string strSql = "update M_GenSetDataSplit set DataTable=@dirtable, Dirsn=@dirsn,DirCol=@dircol,DirMl=@dirml,DirPage=@pzero,DirMlPages=@dirpages";
             SqlParameter[] par =
@@ -712,7 +746,7 @@ namespace DAL
             };
             SQLHelper.ExecScalar(strSql, par);
         }
-        public static void UPdateDataSplitFileInfo( string filetable, int filesn, string filename, bool filebool, string filecol)
+        public static void UPdateDataSplitFileInfo(string filetable, int filesn, string filename, bool filebool, string filecol)
         {
             string strSql = "update M_GenSetDataSplit set FileTable=@filetable,Filesn=@filesn,FileName=@filename,FileBool=@filebool,FileNamecol=@filecol";
             SqlParameter[] par =
@@ -804,7 +838,7 @@ namespace DAL
         }
 
         public static void UpdateConten(string table, string str, string lie, string with,
-            string txtwith, string title, string pages, string module,bool bl)
+            string txtwith, string title, string pages, string module, bool bl)
         {
             string strSql = "update M_GenSetConten set ContenTable=@table," +
                             " ContenCol=@info ,ContenLie=@lie,ContenWith=@with,ContentxtWith=@txtwith," +
@@ -825,7 +859,7 @@ namespace DAL
         }
 
         public static void InsterConten(string table, string str, string lie, string with,
-            string txtwith, string title, string pages, string module,bool bl)
+            string txtwith, string title, string pages, string module, bool bl)
         {
             string strSql =
                 "insert into  M_GenSetConten (ContenTable,ContenCol,ContenLie,ContenWith," +
@@ -849,9 +883,8 @@ namespace DAL
         {
             string strSql = "select * from M_GenSetConten where ContenModule=@table";
             SqlParameter p0 = new SqlParameter("@table", moduel);
-            DataTable dt = SQLHelper.ExcuteTable(strSql,p0);
-            if (dt == null || dt.Rows.Count <= 0)
-            {
+            DataTable dt = SQLHelper.ExcuteTable(strSql, p0);
+            if (dt == null || dt.Rows.Count <= 0) {
                 strSql = "select * from M_GenSetConten";
                 dt = SQLHelper.ExcuteTable(strSql);
             }
@@ -868,7 +901,7 @@ namespace DAL
         {
             string strSql = "delete from M_GenSetConten where ContenModule=@table";
             SqlParameter p0 = new SqlParameter("@table", str);
-            SQLHelper.ExecScalar(strSql,p0);
+            SQLHelper.ExecScalar(strSql, p0);
         }
         public static void DelTableCol(string table, string col)
         {
@@ -975,9 +1008,8 @@ namespace DAL
         public static void UpdateBorrInfo(string table, string str, bool tag, string time)
         {
             string strSql = "select count(*) from M_GenSetBorr";
-            int id =Convert.ToInt32(SQLHelper.ExecScalar(strSql));
-            if (id == 0 )
-            {
+            int id = Convert.ToInt32(SQLHelper.ExecScalar(strSql));
+            if (id == 0) {
                 strSql = "INSERT INTO dbo.M_GenSetBorr (Tablename, Tabcolname, Timecol )VALUES  (@table,@info,@time)";
                 SqlParameter p0 = new SqlParameter("@table", table);
                 SqlParameter p1 = new SqlParameter("@info", str);

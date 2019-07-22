@@ -32,7 +32,8 @@ namespace Bgkj
         {
             this.Text = T_ConFigure.SfName;
             this.labUser.Text = string.Format("    当前用户： {0}    ", T_User.LoginName);
-            string str = DESEncrypt.DesDecrypt(T_ConFigure.SfCoName);
+            //DESEncrypt.DesDecrypt(T_ConFigure.SfCoName);
+            string str = T_ConFigure.SfCoName;
             if (str.Trim().Length<=0)
                 Application.Exit();
             this.labCo.Text = " " + str;

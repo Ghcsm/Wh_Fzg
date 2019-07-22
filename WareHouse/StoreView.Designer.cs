@@ -33,6 +33,7 @@
             this.imglist_mjj = new System.Windows.Forms.ImageList(this.components);
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.ToolsS_txt = new System.Windows.Forms.ToolStripStatusLabel();
+            this.ToolsSlabYs = new System.Windows.Forms.ToolStripStatusLabel();
             this.ToolsSlab = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolsBoxsn = new System.Windows.Forms.ToolStripStatusLabel();
             this.ToolsS_code = new System.Windows.Forms.ToolStripStatusLabel();
@@ -40,9 +41,17 @@
             this.toolFileName = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolId = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolFileId = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tools_kong = new System.Windows.Forms.ToolStripStatusLabel();
             this.Tools_jd = new System.Windows.Forms.ToolStripProgressBar();
             this.imglist_box = new System.Windows.Forms.ImageList(this.components);
             this.groupPanel1 = new DevComponents.DotNetBar.Controls.GroupPanel();
+            this.butSetzt = new DevComponents.DotNetBar.ButtonX();
+            this.combzt = new System.Windows.Forms.ComboBox();
+            this.txtbox2 = new System.Windows.Forms.TextBox();
+            this.txtbox1 = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.butOpenFile = new DevComponents.DotNetBar.ButtonX();
             this.gr2 = new System.Windows.Forms.GroupBox();
             this.labHouseJuan = new System.Windows.Forms.Label();
@@ -68,8 +77,6 @@
             this.PanleHouseBox = new DevComponents.DotNetBar.PanelEx();
             this.PanleHouseMj = new DevComponents.DotNetBar.Controls.GroupPanel();
             this.imgListmjj2 = new System.Windows.Forms.ImageList(this.components);
-            this.ToolsSlabYs = new System.Windows.Forms.ToolStripStatusLabel();
-            this.tools_kong = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStrip1.SuspendLayout();
             this.groupPanel1.SuspendLayout();
             this.gr2.SuspendLayout();
@@ -112,6 +119,14 @@
             this.ToolsS_txt.Size = new System.Drawing.Size(16, 17);
             this.ToolsS_txt.Text = "  ";
             // 
+            // ToolsSlabYs
+            // 
+            this.ToolsSlabYs.BackColor = System.Drawing.SystemColors.Control;
+            this.ToolsSlabYs.ForeColor = System.Drawing.Color.Black;
+            this.ToolsSlabYs.Name = "ToolsSlabYs";
+            this.ToolsSlabYs.Size = new System.Drawing.Size(95, 17);
+            this.ToolsSlabYs.Text = "验收状态:未验收";
+            // 
             // ToolsSlab
             // 
             this.ToolsSlab.Name = "ToolsSlab";
@@ -151,6 +166,12 @@
             this.toolFileId.Name = "toolFileId";
             this.toolFileId.Size = new System.Drawing.Size(0, 17);
             // 
+            // tools_kong
+            // 
+            this.tools_kong.Name = "tools_kong";
+            this.tools_kong.Size = new System.Drawing.Size(647, 17);
+            this.tools_kong.Spring = true;
+            // 
             // Tools_jd
             // 
             this.Tools_jd.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
@@ -174,6 +195,13 @@
             // 
             this.groupPanel1.CanvasColor = System.Drawing.SystemColors.Control;
             this.groupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007;
+            this.groupPanel1.Controls.Add(this.butSetzt);
+            this.groupPanel1.Controls.Add(this.combzt);
+            this.groupPanel1.Controls.Add(this.txtbox2);
+            this.groupPanel1.Controls.Add(this.txtbox1);
+            this.groupPanel1.Controls.Add(this.label4);
+            this.groupPanel1.Controls.Add(this.label3);
+            this.groupPanel1.Controls.Add(this.label2);
             this.groupPanel1.Controls.Add(this.butOpenFile);
             this.groupPanel1.Controls.Add(this.gr2);
             this.groupPanel1.Controls.Add(this.gr3);
@@ -216,11 +244,77 @@
             this.groupPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.groupPanel1.TabIndex = 23;
             // 
+            // butSetzt
+            // 
+            this.butSetzt.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.butSetzt.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.butSetzt.Enabled = false;
+            this.butSetzt.Location = new System.Drawing.Point(57, 588);
+            this.butSetzt.Name = "butSetzt";
+            this.butSetzt.Size = new System.Drawing.Size(75, 31);
+            this.butSetzt.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.butSetzt.TabIndex = 35;
+            this.butSetzt.Text = "设置状态";
+            this.butSetzt.Tooltip = "只更新未质检档案";
+            this.butSetzt.Click += new System.EventHandler(this.butSetzt_Click);
+            // 
+            // combzt
+            // 
+            this.combzt.FormattingEnabled = true;
+            this.combzt.Location = new System.Drawing.Point(79, 558);
+            this.combzt.Name = "combzt";
+            this.combzt.Size = new System.Drawing.Size(55, 20);
+            this.combzt.TabIndex = 34;
+            // 
+            // txtbox2
+            // 
+            this.txtbox2.Location = new System.Drawing.Point(79, 528);
+            this.txtbox2.Name = "txtbox2";
+            this.txtbox2.Size = new System.Drawing.Size(56, 21);
+            this.txtbox2.TabIndex = 33;
+            // 
+            // txtbox1
+            // 
+            this.txtbox1.Location = new System.Drawing.Point(79, 499);
+            this.txtbox1.Name = "txtbox1";
+            this.txtbox1.Size = new System.Drawing.Size(56, 21);
+            this.txtbox1.TabIndex = 32;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.BackColor = System.Drawing.Color.Transparent;
+            this.label4.Location = new System.Drawing.Point(12, 561);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(59, 12);
+            this.label4.TabIndex = 31;
+            this.label4.Text = "小区代码:";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.BackColor = System.Drawing.Color.Transparent;
+            this.label3.Location = new System.Drawing.Point(13, 533);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(59, 12);
+            this.label3.TabIndex = 31;
+            this.label3.Text = "终止盒号:";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.BackColor = System.Drawing.Color.Transparent;
+            this.label2.Location = new System.Drawing.Point(13, 504);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(59, 12);
+            this.label2.TabIndex = 31;
+            this.label2.Text = "起始盒号:";
+            // 
             // butOpenFile
             // 
             this.butOpenFile.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.butOpenFile.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.butOpenFile.Location = new System.Drawing.Point(56, 438);
+            this.butOpenFile.Location = new System.Drawing.Point(56, 441);
             this.butOpenFile.Name = "butOpenFile";
             this.butOpenFile.Size = new System.Drawing.Size(85, 37);
             this.butOpenFile.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -537,20 +631,6 @@
             this.imgListmjj2.TransparentColor = System.Drawing.Color.Transparent;
             this.imgListmjj2.Images.SetKeyName(0, "1-1.jpg");
             // 
-            // ToolsSlabYs
-            // 
-            this.ToolsSlabYs.BackColor = System.Drawing.SystemColors.Control;
-            this.ToolsSlabYs.ForeColor = System.Drawing.Color.Black;
-            this.ToolsSlabYs.Name = "ToolsSlabYs";
-            this.ToolsSlabYs.Size = new System.Drawing.Size(95, 17);
-            this.ToolsSlabYs.Text = "验收状态:未验收";
-            // 
-            // tools_kong
-            // 
-            this.tools_kong.Name = "tools_kong";
-            this.tools_kong.Size = new System.Drawing.Size(414, 17);
-            this.tools_kong.Spring = true;
-            // 
             // StoreView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -621,5 +701,12 @@
         private System.Windows.Forms.Label labHouseKf;
         private System.Windows.Forms.ToolStripStatusLabel ToolsSlabYs;
         private System.Windows.Forms.ToolStripStatusLabel tools_kong;
+        private System.Windows.Forms.TextBox txtbox2;
+        private System.Windows.Forms.TextBox txtbox1;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label2;
+        private DevComponents.DotNetBar.ButtonX butSetzt;
+        private System.Windows.Forms.ComboBox combzt;
+        private System.Windows.Forms.Label label4;
     }
 }

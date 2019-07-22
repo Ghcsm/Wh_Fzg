@@ -500,8 +500,6 @@ namespace Csmsjcf
 
         #endregion
 
-
-
         #region init
         private void ListBshowInfo(int xc, string boxsn, string archno, string str)
         {
@@ -1104,28 +1102,6 @@ namespace Csmsjcf
 
         #endregion
 
-        private void butStart_Click(object sender, EventArgs e)
-        {
-            if (!IsTxtInfo())
-                return;
-            TxtEnd(false);
-            if (ClsFrmInfoPar.OneJuan == 1) {
-                Action Act = Stattask;
-                Act.BeginInvoke(null, null);
-                return;
-            }
-            else {
-                if (!ClsOperate.AddTask()) {
-                    TxtEnd(true);
-                    return;
-                }
-                Action Act = StartTaskxc;
-                Act.BeginInvoke(null, null);
-            }
-
-        }
-
-
         #region FrmInfoPar
 
         private void FrmSplit_Shown(object sender, EventArgs e)
@@ -1490,6 +1466,28 @@ namespace Csmsjcf
         }
 
         #endregion
+
+        private void butStart_Click(object sender, EventArgs e)
+        {
+            if (!IsTxtInfo())
+                return;
+            TxtEnd(false);
+            if (ClsFrmInfoPar.OneJuan == 1) {
+                Action Act = Stattask;
+                Act.BeginInvoke(null, null);
+                return;
+            }
+            else {
+                if (!ClsOperate.AddTask()) {
+                    TxtEnd(true);
+                    return;
+                }
+                Action Act = StartTaskxc;
+                Act.BeginInvoke(null, null);
+            }
+
+        }
+
 
 
     }

@@ -54,6 +54,9 @@
   <PropertyGroup>
     <StartupObject />
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>bg.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Csmborr">
       <HintPath>..\Csmborr\bin\x86\Debug\Csmborr.dll</HintPath>
@@ -100,6 +103,9 @@
     <Reference Include="Csmmldj, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Csmmldj\Csmmldj\bin\x86\Debug\Csmmldj.dll</HintPath>
+    </Reference>
+    <Reference Include="CsmOcr">
+      <HintPath>..\CsmOcr\bin\x86\Debug\CsmOcr.dll</HintPath>
     </Reference>
     <Reference Include="Csmocrx">
       <HintPath>..\Csmocrx\Csmocrx\bin\x86\Debug\Csmocrx.dll</HintPath>
@@ -223,6 +229,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\11.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bg.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

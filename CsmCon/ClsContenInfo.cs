@@ -72,10 +72,11 @@ namespace CsmCon
                     string type = dr["CoType"].ToString();
                     string code = dr["Code"].ToString();
                     string title = dr["Title"].ToString();
+                    string titlelx = dr["TitleLx"].ToString();
                     LsModuleIndex.Add(code);
                     LsModule.Add(title);
                     lvi.Text = title;
-                    lvi.SubItems.AddRange(new string[] { code, type });
+                    lvi.SubItems.AddRange(new string[] { titlelx, code, type });
                     lsv.BeginInvoke(new Action(() => { lsv.Items.Add(lvi); }));
                 }
             }

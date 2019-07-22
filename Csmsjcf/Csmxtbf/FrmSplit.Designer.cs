@@ -51,6 +51,8 @@
             this.label8 = new System.Windows.Forms.Label();
             this.gr2 = new System.Windows.Forms.GroupBox();
             this.gr2_9 = new System.Windows.Forms.GroupBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.com_gr2_9_file_gz = new DevComponents.DotNetBar.Controls.ComboBoxEx();
             this.rab_gr2_9_file_ziduan = new System.Windows.Forms.RadioButton();
             this.rab_gr2_9_juan_1 = new System.Windows.Forms.RadioButton();
             this.rab_gr2_9_file_1 = new System.Windows.Forms.RadioButton();
@@ -124,8 +126,6 @@
             this.fBdigImgPath = new System.Windows.Forms.FolderBrowserDialog();
             this.fontDialog = new System.Windows.Forms.FontDialog();
             this.colorDialog = new System.Windows.Forms.ColorDialog();
-            this.com_gr2_9_file_gz = new DevComponents.DotNetBar.Controls.ComboBoxEx();
-            this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.superTabControl1)).BeginInit();
             this.superTabControl1.SuspendLayout();
             this.superTabControlPanel1.SuspendLayout();
@@ -163,8 +163,8 @@
             this.superTabControl1.ControlBox.SubItems.AddRange(new DevComponents.DotNetBar.BaseItem[] {
             this.superTabControl1.ControlBox.MenuBox,
             this.superTabControl1.ControlBox.CloseBox});
-            this.superTabControl1.Controls.Add(this.superTabControlPanel1);
             this.superTabControl1.Controls.Add(this.superTabControlPanel2);
+            this.superTabControl1.Controls.Add(this.superTabControlPanel1);
             this.superTabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.superTabControl1.Location = new System.Drawing.Point(0, 25);
             this.superTabControl1.Name = "superTabControl1";
@@ -461,7 +461,7 @@
             this.gr2.Controls.Add(this.combHouseid);
             this.gr2.Controls.Add(this.label1);
             this.gr2.Controls.Add(this.gr2_1);
-            this.gr2.Location = new System.Drawing.Point(9, 9);
+            this.gr2.Location = new System.Drawing.Point(9, 7);
             this.gr2.Name = "gr2";
             this.gr2.Size = new System.Drawing.Size(475, 577);
             this.gr2.TabIndex = 0;
@@ -482,6 +482,28 @@
             this.gr2_9.TabStop = false;
             this.gr2_9.Tag = "7";
             this.gr2_9.Text = "文件命名规则-后台综合设置";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(15, 120);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(59, 12);
+            this.label3.TabIndex = 4;
+            this.label3.Text = "生成规则:";
+            // 
+            // com_gr2_9_file_gz
+            // 
+            this.com_gr2_9_file_gz.DisplayMember = "Text";
+            this.com_gr2_9_file_gz.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.com_gr2_9_file_gz.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.com_gr2_9_file_gz.FormattingEnabled = true;
+            this.com_gr2_9_file_gz.ItemHeight = 15;
+            this.com_gr2_9_file_gz.Location = new System.Drawing.Point(81, 116);
+            this.com_gr2_9_file_gz.Name = "com_gr2_9_file_gz";
+            this.com_gr2_9_file_gz.Size = new System.Drawing.Size(121, 21);
+            this.com_gr2_9_file_gz.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.com_gr2_9_file_gz.TabIndex = 3;
             // 
             // rab_gr2_9_file_ziduan
             // 
@@ -697,7 +719,7 @@
             this.txt_gr2_7_wenzi.Name = "txt_gr2_7_wenzi";
             this.txt_gr2_7_wenzi.Size = new System.Drawing.Size(117, 21);
             this.txt_gr2_7_wenzi.TabIndex = 2;
-            this.txt_gr2_7_wenzi.Text = "必高科技";
+            this.txt_gr2_7_wenzi.Text = "水印水印";
             // 
             // rab_gr2_7_img
             // 
@@ -1205,7 +1227,7 @@
             this.superTabControlPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.superTabControlPanel2.Location = new System.Drawing.Point(0, 28);
             this.superTabControlPanel2.Name = "superTabControlPanel2";
-            this.superTabControlPanel2.Size = new System.Drawing.Size(825, 540);
+            this.superTabControlPanel2.Size = new System.Drawing.Size(882, 601);
             this.superTabControlPanel2.TabIndex = 0;
             this.superTabControlPanel2.TabItem = this.TabDatedb;
             // 
@@ -1227,28 +1249,6 @@
             // FdigXls
             // 
             this.FdigXls.Filter = "Xls文件|*.xls;*xlsx";
-            // 
-            // com_gr2_9_file_gz
-            // 
-            this.com_gr2_9_file_gz.DisplayMember = "Text";
-            this.com_gr2_9_file_gz.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.com_gr2_9_file_gz.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.com_gr2_9_file_gz.FormattingEnabled = true;
-            this.com_gr2_9_file_gz.ItemHeight = 15;
-            this.com_gr2_9_file_gz.Location = new System.Drawing.Point(81, 116);
-            this.com_gr2_9_file_gz.Name = "com_gr2_9_file_gz";
-            this.com_gr2_9_file_gz.Size = new System.Drawing.Size(121, 21);
-            this.com_gr2_9_file_gz.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.com_gr2_9_file_gz.TabIndex = 3;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(15, 120);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(59, 12);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "生成规则:";
             // 
             // FrmSplit
             // 

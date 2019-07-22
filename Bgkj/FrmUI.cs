@@ -25,17 +25,34 @@ namespace Bgkj
                 this.txtUser.Focus();
                 return;
             }
-            Setusersys();
+            if (!Setusersys())
+            {
+                txtUser.Focus();
+                return;
+            }
             FrmMain fmMain = new FrmMain();
             this.Hide();
             fmMain.ShowDialog();
         }
 
-        private void Setusersys()
+        private bool Setusersys()
         {
-            try {
+            try
+            {
+                int id = -1;
                 T_User.LoginName = this.txtUser.Text.Trim();
-                T_User.UserId = ClsSetInfopar.lUserid[ClsSetInfopar.lUserName.IndexOf(T_User.LoginName)];
+                try {
+                    id = ClsSetInfopar.lUserName.IndexOf(T_User.LoginName);
+                    if (id < 0) {
+                        MessageBox.Show("用户不存在!");
+                        return false;
+                    }
+                } catch (Exception ex) {
+                    MessageBox.Show(ex.ToString());
+                    return false;
+
+                }
+                T_User.UserId = ClsSetInfopar.lUserid[id];
                 string str = ClsSetInfopar.lUserSys[ClsSetInfopar.lUserName.IndexOf(T_User.LoginName)];
                 string[] sys = DESEncrypt.DesDecrypt(str).Split(';');
                 for (int i = 0; i < sys.Length; i++) {
@@ -59,9 +76,10 @@ namespace Bgkj
                 ClsSetInfopar.lUserSys.Clear();
                 ClsSetInfopar.lUserOtherSys.Clear();
                 ClsSetInfopar.lUsermenu.Clear();
-
+                return true;
             } catch (Exception e) {
                 MessageBox.Show("权限读取失败:" + e.ToString());
+                return false;
             }
         }
 
@@ -81,14 +99,13 @@ namespace Bgkj
             Task.Run(() =>
             {
                 DataTable dt = T_Sysset.GetUser();
-                if (dt == null || dt.Rows.Count <= 0)
-                {
+                if (dt == null || dt.Rows.Count <= 0) {
                     this.BeginInvoke(new Action(() =>
                     {
                         lbinfo.Visible = true;
                         lbinfo.Refresh();
                     }));
-                   
+
                     return;
                 }
                 foreach (DataRow dr in dt.Rows) {
@@ -110,7 +127,7 @@ namespace Bgkj
 
                 txtUser.BeginInvoke(new Action(() => { txtUser.Focus(); }));
             });
-            
+
         }
 
         private void txtUser_KeyPress(object sender, KeyPressEventArgs e)

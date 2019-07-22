@@ -1,5 +1,8 @@
 ﻿using CsmCon;
+using DAL;
 using System;
+using System.Collections.Generic;
+using System.Data;
 using System.Windows.Forms;
 
 namespace Csmxxbl
@@ -14,6 +17,7 @@ namespace Csmxxbl
         private UcInfoEnter ucInfo;
         private int entertag = 1;
         private bool chkbool = false;
+        List<string> Lsinfo = new List<string>();
         private void FrmInfo_Shown(object sender, EventArgs e)
         {
             ucInfo = new UcInfoEnter();
@@ -26,13 +30,31 @@ namespace Csmxxbl
             } catch {
                 chkbool = false;
             }
+            GetinfoSql();
+        }
+
+        private void GetinfoSql()
+        {
+            Lsinfo.Clear();
+            DataTable dt = T_Sysset.GetInfoenterSql();
+            if (dt == null || dt.Rows.Count <= 0)
+                return;
+            string str = dt.Rows[0][2].ToString();
+            if (str.Trim().Length <= 0)
+                return;
+            string[] str1 = str.Split(';');
+            for (int i = 0; i < str1.Length; i++) {
+                str = str1[i];
+                if (str.Trim().Length <= 0)
+                    continue;
+                Lsinfo.Add(str);
+            }
         }
 
         private void butSave_Click(object sender, EventArgs e)
         {
-            int xyid =Convert.ToInt32(gArchSelect1.Archxystat);
-            if (xyid >=1 )
-            {
+            int xyid = Convert.ToInt32(gArchSelect1.Archxystat);
+            if (xyid >= 1) {
                 MessageBox.Show("数据已校验完成无法进行修改!");
                 return;
             }
@@ -48,6 +70,7 @@ namespace Csmxxbl
             string type = gArchSelect1.Archtype;
             if (arid <= 0)
                 return;
+            ucInfo.Archid = arid;
             ucInfo.LoadInfo(arid, entertag, type);
         }
 
@@ -79,6 +102,26 @@ namespace Csmxxbl
         private void gArchSelect1_LineFocus(object sender, EventArgs e)
         {
             ucInfo.GetFocus();
+        }
+
+        private void gArchSelect1_LineGetInfo(object sender, EventArgs e)
+        {
+            int arid = gArchSelect1.Archid;
+            string type = gArchSelect1.Archtype;
+            if (arid <= 0)
+                return;
+            if (Lsinfo.Count <= 0) {
+                MessageBox.Show("请先配置后台数据!");
+                return;
+            }
+            FrminfoSql frmsql = new FrminfoSql();
+            frmsql.lsinfo = Lsinfo;
+            frmsql.ShowDialog();
+            List<string> info = new List<string>();
+            List<string> col = new List<string>();
+            info = frmsql.lscolinfo;
+            col = frmsql.lscol;
+            ucInfo.LoadInfo(info,col);
         }
     }
 }

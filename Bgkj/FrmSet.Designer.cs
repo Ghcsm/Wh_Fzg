@@ -29,16 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmSet));
             this.tabControl1 = new DevComponents.DotNetBar.TabControl();
-            this.tabControlPanel4 = new DevComponents.DotNetBar.TabControlPanel();
-            this.txtMenuxh = new System.Windows.Forms.TextBox();
-            this.butMenuDel = new DevComponents.DotNetBar.ButtonX();
-            this.butMenuSave = new DevComponents.DotNetBar.ButtonX();
-            this.txtMenuname = new System.Windows.Forms.TextBox();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.chkMenuName = new System.Windows.Forms.CheckedListBox();
-            this.tabMenuSet = new DevComponents.DotNetBar.TabItem(this.components);
             this.tabControlPanel1 = new DevComponents.DotNetBar.TabControlPanel();
             this.gr1 = new System.Windows.Forms.GroupBox();
             this.txtModuleFileName = new System.Windows.Forms.TextBox();
@@ -55,6 +47,15 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.tabModule = new DevComponents.DotNetBar.TabItem(this.components);
+            this.tabControlPanel4 = new DevComponents.DotNetBar.TabControlPanel();
+            this.txtMenuxh = new System.Windows.Forms.TextBox();
+            this.butMenuDel = new DevComponents.DotNetBar.ButtonX();
+            this.butMenuSave = new DevComponents.DotNetBar.ButtonX();
+            this.txtMenuname = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.chkMenuName = new System.Windows.Forms.CheckedListBox();
+            this.tabMenuSet = new DevComponents.DotNetBar.TabItem(this.components);
             this.tabControlPanel3 = new DevComponents.DotNetBar.TabControlPanel();
             this.butModulesysDelStop = new DevComponents.DotNetBar.ButtonX();
             this.butModulesysdel = new DevComponents.DotNetBar.ButtonX();
@@ -75,10 +76,10 @@
             this.tabPer = new DevComponents.DotNetBar.TabItem(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.tabControl1)).BeginInit();
             this.tabControl1.SuspendLayout();
-            this.tabControlPanel4.SuspendLayout();
             this.tabControlPanel1.SuspendLayout();
             this.gr1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pict)).BeginInit();
+            this.tabControlPanel4.SuspendLayout();
             this.tabControlPanel3.SuspendLayout();
             this.tabControlPanel2.SuspendLayout();
             this.SuspendLayout();
@@ -87,9 +88,9 @@
             // 
             this.tabControl1.CanReorderTabs = true;
             this.tabControl1.Controls.Add(this.tabControlPanel1);
+            this.tabControl1.Controls.Add(this.tabControlPanel2);
             this.tabControl1.Controls.Add(this.tabControlPanel4);
             this.tabControl1.Controls.Add(this.tabControlPanel3);
-            this.tabControl1.Controls.Add(this.tabControlPanel2);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
@@ -102,106 +103,6 @@
             this.tabControl1.Tabs.Add(this.tabPer);
             this.tabControl1.Tabs.Add(this.tabModuleSet);
             this.tabControl1.Tabs.Add(this.tabMenuSet);
-            // 
-            // tabControlPanel4
-            // 
-            this.tabControlPanel4.Controls.Add(this.txtMenuxh);
-            this.tabControlPanel4.Controls.Add(this.butMenuDel);
-            this.tabControlPanel4.Controls.Add(this.butMenuSave);
-            this.tabControlPanel4.Controls.Add(this.txtMenuname);
-            this.tabControlPanel4.Controls.Add(this.label10);
-            this.tabControlPanel4.Controls.Add(this.label9);
-            this.tabControlPanel4.Controls.Add(this.chkMenuName);
-            this.tabControlPanel4.DisabledBackColor = System.Drawing.Color.Empty;
-            this.tabControlPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControlPanel4.Location = new System.Drawing.Point(0, 26);
-            this.tabControlPanel4.Name = "tabControlPanel4";
-            this.tabControlPanel4.Padding = new System.Windows.Forms.Padding(1);
-            this.tabControlPanel4.Size = new System.Drawing.Size(413, 255);
-            this.tabControlPanel4.Style.BackColor1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(142)))), ((int)(((byte)(179)))), ((int)(((byte)(231)))));
-            this.tabControlPanel4.Style.BackColor2.Color = System.Drawing.Color.FromArgb(((int)(((byte)(223)))), ((int)(((byte)(237)))), ((int)(((byte)(254)))));
-            this.tabControlPanel4.Style.Border = DevComponents.DotNetBar.eBorderType.SingleLine;
-            this.tabControlPanel4.Style.BorderColor.Color = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(97)))), ((int)(((byte)(156)))));
-            this.tabControlPanel4.Style.BorderSide = ((DevComponents.DotNetBar.eBorderSide)(((DevComponents.DotNetBar.eBorderSide.Left | DevComponents.DotNetBar.eBorderSide.Right) 
-            | DevComponents.DotNetBar.eBorderSide.Bottom)));
-            this.tabControlPanel4.Style.GradientAngle = 90;
-            this.tabControlPanel4.TabIndex = 19;
-            this.tabControlPanel4.TabItem = this.tabMenuSet;
-            // 
-            // txtMenuxh
-            // 
-            this.txtMenuxh.Location = new System.Drawing.Point(194, 121);
-            this.txtMenuxh.Name = "txtMenuxh";
-            this.txtMenuxh.Size = new System.Drawing.Size(71, 21);
-            this.txtMenuxh.TabIndex = 5;
-            // 
-            // butMenuDel
-            // 
-            this.butMenuDel.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.butMenuDel.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.butMenuDel.Location = new System.Drawing.Point(282, 187);
-            this.butMenuDel.Name = "butMenuDel";
-            this.butMenuDel.Size = new System.Drawing.Size(75, 39);
-            this.butMenuDel.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.butMenuDel.TabIndex = 4;
-            this.butMenuDel.Text = "删除";
-            this.butMenuDel.Click += new System.EventHandler(this.butMenuDel_Click);
-            // 
-            // butMenuSave
-            // 
-            this.butMenuSave.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.butMenuSave.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.butMenuSave.Location = new System.Drawing.Point(176, 187);
-            this.butMenuSave.Name = "butMenuSave";
-            this.butMenuSave.Size = new System.Drawing.Size(75, 39);
-            this.butMenuSave.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.butMenuSave.TabIndex = 3;
-            this.butMenuSave.Text = "保存";
-            this.butMenuSave.Click += new System.EventHandler(this.butMenuSave_Click);
-            // 
-            // txtMenuname
-            // 
-            this.txtMenuname.Location = new System.Drawing.Point(194, 61);
-            this.txtMenuname.Name = "txtMenuname";
-            this.txtMenuname.Size = new System.Drawing.Size(163, 21);
-            this.txtMenuname.TabIndex = 2;
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.BackColor = System.Drawing.Color.Transparent;
-            this.label10.Location = new System.Drawing.Point(174, 96);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(47, 12);
-            this.label10.TabIndex = 1;
-            this.label10.Text = "顺序号:";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.BackColor = System.Drawing.Color.Transparent;
-            this.label9.Location = new System.Drawing.Point(174, 35);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(59, 12);
-            this.label9.TabIndex = 1;
-            this.label9.Text = "菜单名称:";
-            // 
-            // chkMenuName
-            // 
-            this.chkMenuName.CheckOnClick = true;
-            this.chkMenuName.FormattingEnabled = true;
-            this.chkMenuName.Location = new System.Drawing.Point(36, 14);
-            this.chkMenuName.Name = "chkMenuName";
-            this.chkMenuName.Size = new System.Drawing.Size(120, 228);
-            this.chkMenuName.TabIndex = 0;
-            this.chkMenuName.Click += new System.EventHandler(this.chkMenuName_Click);
-            this.chkMenuName.SelectedIndexChanged += new System.EventHandler(this.chkMenuName_SelectedIndexChanged);
-            // 
-            // tabMenuSet
-            // 
-            this.tabMenuSet.AttachedControl = this.tabControlPanel4;
-            this.tabMenuSet.Name = "tabMenuSet";
-            this.tabMenuSet.Text = "主菜单设置";
             // 
             // tabControlPanel1
             // 
@@ -400,6 +301,106 @@
             this.tabModule.AttachedControl = this.tabControlPanel1;
             this.tabModule.Name = "tabModule";
             this.tabModule.Text = "模块设置";
+            // 
+            // tabControlPanel4
+            // 
+            this.tabControlPanel4.Controls.Add(this.txtMenuxh);
+            this.tabControlPanel4.Controls.Add(this.butMenuDel);
+            this.tabControlPanel4.Controls.Add(this.butMenuSave);
+            this.tabControlPanel4.Controls.Add(this.txtMenuname);
+            this.tabControlPanel4.Controls.Add(this.label10);
+            this.tabControlPanel4.Controls.Add(this.label9);
+            this.tabControlPanel4.Controls.Add(this.chkMenuName);
+            this.tabControlPanel4.DisabledBackColor = System.Drawing.Color.Empty;
+            this.tabControlPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControlPanel4.Location = new System.Drawing.Point(0, 26);
+            this.tabControlPanel4.Name = "tabControlPanel4";
+            this.tabControlPanel4.Padding = new System.Windows.Forms.Padding(1);
+            this.tabControlPanel4.Size = new System.Drawing.Size(413, 255);
+            this.tabControlPanel4.Style.BackColor1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(142)))), ((int)(((byte)(179)))), ((int)(((byte)(231)))));
+            this.tabControlPanel4.Style.BackColor2.Color = System.Drawing.Color.FromArgb(((int)(((byte)(223)))), ((int)(((byte)(237)))), ((int)(((byte)(254)))));
+            this.tabControlPanel4.Style.Border = DevComponents.DotNetBar.eBorderType.SingleLine;
+            this.tabControlPanel4.Style.BorderColor.Color = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(97)))), ((int)(((byte)(156)))));
+            this.tabControlPanel4.Style.BorderSide = ((DevComponents.DotNetBar.eBorderSide)(((DevComponents.DotNetBar.eBorderSide.Left | DevComponents.DotNetBar.eBorderSide.Right) 
+            | DevComponents.DotNetBar.eBorderSide.Bottom)));
+            this.tabControlPanel4.Style.GradientAngle = 90;
+            this.tabControlPanel4.TabIndex = 19;
+            this.tabControlPanel4.TabItem = this.tabMenuSet;
+            // 
+            // txtMenuxh
+            // 
+            this.txtMenuxh.Location = new System.Drawing.Point(194, 121);
+            this.txtMenuxh.Name = "txtMenuxh";
+            this.txtMenuxh.Size = new System.Drawing.Size(71, 21);
+            this.txtMenuxh.TabIndex = 5;
+            // 
+            // butMenuDel
+            // 
+            this.butMenuDel.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.butMenuDel.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.butMenuDel.Location = new System.Drawing.Point(282, 187);
+            this.butMenuDel.Name = "butMenuDel";
+            this.butMenuDel.Size = new System.Drawing.Size(75, 39);
+            this.butMenuDel.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.butMenuDel.TabIndex = 4;
+            this.butMenuDel.Text = "删除";
+            this.butMenuDel.Click += new System.EventHandler(this.butMenuDel_Click);
+            // 
+            // butMenuSave
+            // 
+            this.butMenuSave.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.butMenuSave.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.butMenuSave.Location = new System.Drawing.Point(176, 187);
+            this.butMenuSave.Name = "butMenuSave";
+            this.butMenuSave.Size = new System.Drawing.Size(75, 39);
+            this.butMenuSave.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.butMenuSave.TabIndex = 3;
+            this.butMenuSave.Text = "保存";
+            this.butMenuSave.Click += new System.EventHandler(this.butMenuSave_Click);
+            // 
+            // txtMenuname
+            // 
+            this.txtMenuname.Location = new System.Drawing.Point(194, 61);
+            this.txtMenuname.Name = "txtMenuname";
+            this.txtMenuname.Size = new System.Drawing.Size(163, 21);
+            this.txtMenuname.TabIndex = 2;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.BackColor = System.Drawing.Color.Transparent;
+            this.label10.Location = new System.Drawing.Point(174, 96);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(47, 12);
+            this.label10.TabIndex = 1;
+            this.label10.Text = "顺序号:";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.BackColor = System.Drawing.Color.Transparent;
+            this.label9.Location = new System.Drawing.Point(174, 35);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(59, 12);
+            this.label9.TabIndex = 1;
+            this.label9.Text = "菜单名称:";
+            // 
+            // chkMenuName
+            // 
+            this.chkMenuName.CheckOnClick = true;
+            this.chkMenuName.FormattingEnabled = true;
+            this.chkMenuName.Location = new System.Drawing.Point(36, 14);
+            this.chkMenuName.Name = "chkMenuName";
+            this.chkMenuName.Size = new System.Drawing.Size(120, 228);
+            this.chkMenuName.TabIndex = 0;
+            this.chkMenuName.Click += new System.EventHandler(this.chkMenuName_Click);
+            this.chkMenuName.SelectedIndexChanged += new System.EventHandler(this.chkMenuName_SelectedIndexChanged);
+            // 
+            // tabMenuSet
+            // 
+            this.tabMenuSet.AttachedControl = this.tabControlPanel4;
+            this.tabMenuSet.Name = "tabMenuSet";
+            this.tabMenuSet.Text = "主菜单设置";
             // 
             // tabControlPanel3
             // 
@@ -628,6 +629,7 @@
             this.ClientSize = new System.Drawing.Size(413, 281);
             this.Controls.Add(this.tabControl1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.IsMdiContainer = true;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -638,12 +640,12 @@
             this.Shown += new System.EventHandler(this.FrmSet_Shown);
             ((System.ComponentModel.ISupportInitialize)(this.tabControl1)).EndInit();
             this.tabControl1.ResumeLayout(false);
-            this.tabControlPanel4.ResumeLayout(false);
-            this.tabControlPanel4.PerformLayout();
             this.tabControlPanel1.ResumeLayout(false);
             this.gr1.ResumeLayout(false);
             this.gr1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pict)).EndInit();
+            this.tabControlPanel4.ResumeLayout(false);
+            this.tabControlPanel4.PerformLayout();
             this.tabControlPanel3.ResumeLayout(false);
             this.tabControlPanel2.ResumeLayout(false);
             this.tabControlPanel2.PerformLayout();

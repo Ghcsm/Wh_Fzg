@@ -41,6 +41,9 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.label4 = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.groupPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -48,6 +51,7 @@
             // 
             this.groupPanel1.CanvasColor = System.Drawing.SystemColors.Control;
             this.groupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007;
+            this.groupPanel1.Controls.Add(this.textBox1);
             this.groupPanel1.Controls.Add(this.lvConten);
             this.groupPanel1.Controls.Add(this.butDel);
             this.groupPanel1.Controls.Add(this.butNew);
@@ -56,6 +60,7 @@
             this.groupPanel1.Controls.Add(this.txtLb);
             this.groupPanel1.Controls.Add(this.label3);
             this.groupPanel1.Controls.Add(this.label2);
+            this.groupPanel1.Controls.Add(this.label4);
             this.groupPanel1.Controls.Add(this.label1);
             this.groupPanel1.DisabledBackColor = System.Drawing.Color.Empty;
             this.groupPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -98,14 +103,15 @@
             this.columnHeader3,
             this.columnHeader1,
             this.columnHeader2,
+            this.columnHeader4,
             this.m_id});
             this.lvConten.FullRowSelect = true;
             this.lvConten.GridLines = true;
             this.lvConten.HideSelection = false;
-            this.lvConten.Location = new System.Drawing.Point(6, 69);
+            this.lvConten.Location = new System.Drawing.Point(6, 105);
             this.lvConten.Name = "lvConten";
-            this.lvConten.Size = new System.Drawing.Size(731, 365);
-            this.lvConten.TabIndex = 5;
+            this.lvConten.Size = new System.Drawing.Size(731, 329);
+            this.lvConten.TabIndex = 7;
             this.lvConten.UseCompatibleStateImageBehavior = false;
             this.lvConten.View = System.Windows.Forms.View.Details;
             this.lvConten.Click += new System.EventHandler(this.lvConten_Click);
@@ -123,10 +129,11 @@
             // columnHeader2
             // 
             this.columnHeader2.Text = "标题";
-            this.columnHeader2.Width = 600;
+            this.columnHeader2.Width = 300;
             // 
             // m_id
             // 
+            this.m_id.DisplayIndex = 3;
             this.m_id.Text = "id";
             this.m_id.Width = 0;
             // 
@@ -134,7 +141,7 @@
             // 
             this.butDel.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.butDel.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.butDel.Location = new System.Drawing.Point(657, 27);
+            this.butDel.Location = new System.Drawing.Point(478, 64);
             this.butDel.Name = "butDel";
             this.butDel.Size = new System.Drawing.Size(64, 23);
             this.butDel.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -146,11 +153,11 @@
             // 
             this.butNew.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.butNew.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.butNew.Location = new System.Drawing.Point(576, 27);
+            this.butNew.Location = new System.Drawing.Point(363, 64);
             this.butNew.Name = "butNew";
             this.butNew.Size = new System.Drawing.Size(64, 23);
             this.butNew.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.butNew.TabIndex = 4;
+            this.butNew.TabIndex = 5;
             this.butNew.Text = "新增";
             this.butNew.Click += new System.EventHandler(this.butNew_Click);
             this.butNew.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.butNew_KeyPress);
@@ -159,7 +166,7 @@
             // 
             this.txtTitle.Location = new System.Drawing.Point(245, 29);
             this.txtTitle.Name = "txtTitle";
-            this.txtTitle.Size = new System.Drawing.Size(315, 21);
+            this.txtTitle.Size = new System.Drawing.Size(465, 21);
             this.txtTitle.TabIndex = 3;
             this.txtTitle.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtTitle_KeyPress);
             // 
@@ -209,6 +216,30 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "类别:";
             // 
+            // columnHeader4
+            // 
+            this.columnHeader4.DisplayIndex = 4;
+            this.columnHeader4.Text = "所属类型";
+            this.columnHeader4.Width = 200;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.BackColor = System.Drawing.Color.Transparent;
+            this.label4.Location = new System.Drawing.Point(21, 69);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(59, 12);
+            this.label4.TabIndex = 0;
+            this.label4.Text = "所属类型:";
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(88, 63);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(241, 21);
+            this.textBox1.TabIndex = 4;
+            this.textBox1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox1_KeyPress);
+            // 
             // UcContenModule
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -244,5 +275,8 @@
         private System.Windows.Forms.ColumnHeader columnHeader2;
         private System.Windows.Forms.ColumnHeader columnHeader3;
         private System.Windows.Forms.ColumnHeader m_id;
+        private System.Windows.Forms.ColumnHeader columnHeader4;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }

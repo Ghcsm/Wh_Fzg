@@ -184,11 +184,12 @@
             this.ClientSize = new System.Drawing.Size(867, 450);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.gr);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FrmImgshow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "FrmImgshow";
+            this.Text = "借阅查看";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmImgshow_FormClosing);
             this.Load += new System.EventHandler(this.FrmImgshow_Load);
             this.toolStrip1.ResumeLayout(false);

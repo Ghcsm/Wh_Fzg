@@ -60,21 +60,22 @@ namespace DAL
             return dt;
         }
 
-        public static void InserContenModule(string lx,string code,string title)
+        public static void InserContenModule(string lx, string code, string title)
         {
-            string strSql = " INSERT INTO M_ContentsModule (CoType,CODE,title,userid) VALUES(@CoType,@CODE, @Title, @UserID)";
+            string strSql = " INSERT INTO M_ContentsModule (CoType,CODE,title,TitleLx,userid) VALUES(@CoType,@CODE, @Title,@titlelx, @UserID)";
             SqlParameter p1 = new SqlParameter("@CoType", lx);
             SqlParameter p2 = new SqlParameter("@CODE", code);
             SqlParameter p3 = new SqlParameter("@Title", title);
             SqlParameter p4 = new SqlParameter("@UserID", T_User.UserId);
-            SQLHelper.ExecScalar(strSql, p1, p2, p3,p4);
+            SqlParameter p5 = new SqlParameter("@titlelx", title);
+            SQLHelper.ExecScalar(strSql, p1, p2, p3, p4, p5);
         }
 
         public static void DelContenModule(string id)
         {
             string strSql = "delete from M_ContentsModule where id=@id";
             SqlParameter p1 = new SqlParameter("@id", id);
-            SQLHelper.ExecScalar(strSql,p1);
+            SQLHelper.ExecScalar(strSql, p1);
         }
 
         public static bool GetConteninfobl()
@@ -197,6 +198,15 @@ namespace DAL
             p[0] = new SqlParameter("@ArchID", arid);
             p[1] = new SqlParameter("@UserID", T_User.UserId);
             SQLHelper.ExecuteNonQuery(strSql, CommandType.StoredProcedure, p);
+        }
+
+        public static void SetArchxqStat(string b1, string b2, string zt)
+        {
+            string strSq = "update M_IMAGEFILE set ArchXqStat=@zt where Boxsn>=@b1 and Boxsn<=@b2 and CHECKED IS null or LEN(CHECKED)<1";
+            SqlParameter p1 = new SqlParameter("@b1", b1);
+            SqlParameter p2 = new SqlParameter("@b2", b2);
+            SqlParameter p3 = new SqlParameter("@zt", zt);
+            SQLHelper.ExecScalar(strSq, p1, p2, p3);
         }
 
         public static DataTable GetOthersys()
@@ -391,6 +401,22 @@ namespace DAL
             }
         }
 
+        public static DataTable QueryBoxsnArchno(string boxsn, string archno)
+        {
+            try {
+                string strSql = "select top 1 * from V_ImgFile where houseid=@houseid and Boxsn=@boxsn and ArchNo=@archno ";
+                SqlParameter p1 = new SqlParameter("@boxsn", boxsn);
+                SqlParameter p2 = new SqlParameter("@archno", archno);
+                SqlParameter p3 = new SqlParameter("@houseid", V_HouseSetCs.Houseid);
+                DataTable dt = SQLHelper.ExcuteTable(strSql, p1, p2, p3);
+                return dt;
+            } catch (Exception e) {
+                MessageBox.Show("获取数据失败" + e.ToString());
+                return null;
+
+            }
+        }
+
 
         public static void UpdatePages(string pages, int archid)
         {
@@ -408,6 +434,19 @@ namespace DAL
             string strSql = "SELECT top 1 PAGES FROM M_IMAGEFILE WHERE ID=@arid";
             SqlParameter p1 = new SqlParameter("@arid", arid);
             return SQLHelper.ExecScalar(strSql, p1).ToString();
+        }
+
+        public static bool GetArchXqzt(string arid)
+        {
+            string strSql = "select ArchXqStat from M_IMAGEFILE where id=@arid";
+            SqlParameter p1 = new SqlParameter("@arid", arid);
+            object obj = SQLHelper.ExecScalar(strSql, p1);
+            if (obj == null)
+                return false;
+            string str = obj.ToString();
+            if (str.Trim().Length <= 0)
+                return false;
+            return true;
         }
 
 
@@ -758,12 +797,12 @@ namespace DAL
             SqlParameter p1 = new SqlParameter("arid", arid);
             SQLHelper.ExecScalar(strSql, p1);
         }
-        public static void DataBackUpdate(string box1,string box2 )
+        public static void DataBackUpdate(string box1, string box2)
         {
             string strSql = "update M_IMAGEFILE set BACKUPED=null  where Boxsn>=@b1 and boxsn<=@b2 ";
             SqlParameter p1 = new SqlParameter("@b1", box1);
             SqlParameter p2 = new SqlParameter("@b2", box2);
-            SQLHelper.ExecScalar(strSql, p1,p2);
+            SQLHelper.ExecScalar(strSql, p1, p2);
         }
 
         #endregion
@@ -887,6 +926,7 @@ namespace DAL
             ClsInfoEnter.InfoLbWidth.Clear();
             ClsInfoEnter.InfotxtWidth.Clear();
             ClsInfoEnter.InfoIsNull.Clear();
+            ClsInfoEnter.InfoWycol.Clear();
             string strSql = "select * from M_GenSetInfo order by id";
             DataTable dt = SQLHelper.ExcuteTable(strSql);
             if (dt == null || dt.Rows.Count <= 0)
@@ -898,6 +938,7 @@ namespace DAL
                 ClsInfoEnter.InfoTableName.Add(dr["InfoName"].ToString());
                 ClsInfoEnter.InfoLbWidth.Add(dr["InfoLabWidth"].ToString());
                 ClsInfoEnter.InfotxtWidth.Add(dr["InfoTxtWidth"].ToString());
+                ClsInfoEnter.InfoWycol.Add(dr["Wycol"].ToString());
             }
         }
 
@@ -910,13 +951,21 @@ namespace DAL
             return dt;
         }
 
-        public static int SaveInfo(int t, int archid, Dictionary<int, string> dirxx, int enter, int ts)
+        public static int SaveInfo(int t, int archid, Dictionary<int, string> dirxx, int enter, int ts, string wycolstr)
         {
             try {
                 string coltmp = "";
                 string zdtmp = "";
+                string wycol = "";
                 string table = ClsInfoEnter.InfoTable[t];
-                string strSql = "select count(*) from " + table + " where Archid=@arid and EnterTag=@Etag";
+                if (ClsInfoEnter.InfoWycol.Count > 0) {
+                    wycol = ClsInfoEnter.InfoWycol[t];
+                }
+                string strSql = "";
+                if (wycol.Trim().Length <= 0)
+                    strSql = "select count(*) from " + table + " where Archid=@arid and EnterTag=@Etag";
+                else
+                    strSql = "select count(*) from " + table + " where Archid=@arid and EnterTag=@Etag and " + wycol + "=" + wycolstr;
                 SqlParameter p1 = new SqlParameter("@table", table);
                 SqlParameter p2 = new SqlParameter("@arid", archid);
                 SqlParameter p3 = new SqlParameter("@Etag", enter);
@@ -943,7 +992,10 @@ namespace DAL
                             coltmp += str[i] + "='" + dirxx[i + 1].ToString() + "',";
                         }
                         else {
-                            coltmp += str[i] + "='" + dirxx[i + 1].ToString() + "' where Archid=" + archid + " and EnterTag=" + enter;
+                            if (wycol.Trim().Length <= 0)
+                                coltmp += str[i] + "='" + dirxx[i + 1].ToString() + "' where Archid=" + archid + " and EnterTag=" + enter;
+                            else
+                                coltmp += str[i] + "='" + dirxx[i + 1].ToString() + "' where Archid=" + archid + " and EnterTag=" + enter + " and " + wycol + "=" + wycolstr;
                         }
                     }
                     strSql += coltmp;
@@ -979,13 +1031,14 @@ namespace DAL
             SQLHelper.ExecuteNonQuery(strSql, CommandType.StoredProcedure, p);
         }
 
-        public static DataTable GetInfoTable(int t, int archid, int enter)
+        public static DataTable GetInfoTable(int t, int archid, int enter, string strinfo)
         {
             string strSql = "PInfoSetload";
-            SqlParameter[] p = new SqlParameter[3];
+            SqlParameter[] p = new SqlParameter[4];
             p[0] = new SqlParameter("@archid", archid);
             p[1] = new SqlParameter("@Etag", enter);
             p[2] = new SqlParameter("@tabletmp", ClsInfoEnter.InfoTable[t]);
+            p[3] = new SqlParameter("@infowy", strinfo);
             DataTable dt = SQLHelper.GetDataTable(strSql, CommandType.StoredProcedure, p);
             return dt;
         }
@@ -1002,6 +1055,18 @@ namespace DAL
             ClsQuerInfo.QuerTable = dr["QuerTable"].ToString();
             string[] str = dr["QuerInfoZd"].ToString().Split(';');
             ClsQuerInfo.QuerTableList = new List<System.String>(str);
+        }
+
+
+        public static DataTable GetLsData(string col, string tj, string str)
+        {
+            string strSql = "PQueryInfoEnter";
+            SqlParameter[] p = new SqlParameter[3];
+            p[0] = new SqlParameter("@Field", col);
+            p[1] = new SqlParameter("@operation", tj);
+            p[2] = new SqlParameter("@FieldValue", str);
+            DataTable dt = SQLHelper.GetDataTable(strSql, CommandType.StoredProcedure, p);
+            return dt;
         }
 
         #endregion
@@ -1429,6 +1494,42 @@ namespace DAL
 
         #endregion
 
+        #region contenOcr
+
+        public static void ContenAddocr(string arid, string title, string lx, string page, string ywid)
+        {
+            try {
+                string strSql = "PAutoConten";
+                SqlParameter[] p = new SqlParameter[5];
+                p[0] = new SqlParameter("@archid", arid);
+                p[1] = new SqlParameter("@col", title);
+                p[2] = new SqlParameter("@lx", lx);
+                p[3] = new SqlParameter("@pages", page);
+                p[4] = new SqlParameter("@ywid", ywid);
+                SQLHelper.ExcuteProc(strSql, p);
+            } catch (Exception ex) {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
+        public static DataTable GetOcrTask()
+        {
+            string strSql = "SELECT ID, IMGFILE'文件',Boxsn'盒号',Archno'卷号',ArchOcr'识别状态' FROM dbo.M_IMAGEFILE WHERE HouseId=@houseid and CHECKED is null and INDEXED = 1 AND ArchOcr IS null";
+            SqlParameter p1 = new SqlParameter("@houseid", V_HouseSetCs.Houseid);
+            DataTable dt = SQLHelper.ExcuteTable(strSql, p1);
+            return dt;
+        }
+
+        public static DataTable GetOcrTaskAll()
+        {
+            string strSql = "SELECT ID, IMGFILE'文件',Boxsn'盒号',Archno'卷号',ArchOcr'识别状态' FROM dbo.M_IMAGEFILE WHERE HouseId=@houseid and CHECKED is null and INDEXED = 1 ";
+            SqlParameter p1 = new SqlParameter("@houseid", V_HouseSetCs.Houseid);
+            DataTable dt = SQLHelper.ExcuteTable(strSql, p1);
+            return dt;
+        }
+
+        #endregion
+
         #region MyRegion
 
 
@@ -1445,13 +1546,13 @@ namespace DAL
         //    }
         //}
 
-        public static int GetCode(string Code,int id)
+        public static int GetCode(string Code, int id)
         {
             try {
                 string strSql = "select top 1 id from M_IMAGEFILE where ARCNUM=@code and Houseid=@id";
                 SqlParameter p1 = new SqlParameter("@code", Code);
                 SqlParameter p2 = new SqlParameter("@id", id);
-                int i = Convert.ToInt32(SQLHelper.ExecScalar(strSql, p1,p2));
+                int i = Convert.ToInt32(SQLHelper.ExecScalar(strSql, p1, p2));
                 return i;
             } catch {
                 return 0;

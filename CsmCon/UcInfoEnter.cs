@@ -5,7 +5,6 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using DevComponents.DotNetBar;
 
 namespace CsmCon
 {
@@ -19,46 +18,56 @@ namespace CsmCon
         private int txtcol = 0;
         private int txtrows = 1;
         private int Ts = 0;
+        private string TsTag = "-1";
+        public int Archid;
+        private int Enterinfo;
+        private string Atype = "";
+        private string infostr = "-1";
+        private List<string> lsblstr = new List<string>();
         public void GetInfoCol()
         {
             Common.GetInfoEnterSet();
             if (ClsInfoEnter.InfoTable.Count <= 0)
                 return;
             int id = 0;
+            string wycol = "";
+            lsblstr.Clear();
             for (int i = 0; i < ClsInfoEnter.InfoTable.Count; i++) {
                 id = 0;
                 txtcol = 0;
                 txtrows = 1;
                 string name = ClsInfoEnter.InfoTableName[i];
+                if (ClsInfoEnter.InfoWycol.Count > 0)
+                    wycol = ClsInfoEnter.InfoWycol[i];
                 if (!CreateTab(name))
                     return;
                 string table = ClsInfoEnter.InfoTable[i];
                 DataTable dt = Common.GetTableCol(table);
-                string strnull = "";
+                int Important = 0;
                 int colnum = Convert.ToInt32(ClsInfoEnter.InfoNum[i]);
                 int width = Convert.ToInt32(ClsInfoEnter.InfoLbWidth[i]);
                 int txtwidth = Convert.ToInt32(ClsInfoEnter.InfotxtWidth[i]);
                 string[] oldname = ClsInfoEnter.InfoCol[i].Split(';');
                 for (int j = 0; j < oldname.Length; j++) {
                     string strcol = oldname[j];
+                    Important = 0;
                     foreach (DataRow dr in dt.Rows) {
                         string namecol = dr["name"].ToString();
                         string value = dr["value"].ToString();
-                        string strnulltmp = dr["is_nullable"].ToString();
                         if (strcol == namecol) {
                             id += 1;
-                            if (strnulltmp == "False") {
-                                if (strnull.Trim().Length <= 0)
-                                    strnull += id;
-                                else
-                                    strnull += "," + id;
+                            if (strcol == wycol)
+                                TsTag = id.ToString();
+                            if (value.Contains("*")) {
+                                lsblstr.Add(id.ToString());
+                                value = value.Replace("*", "");
+                                Important = 1;
                             }
-                            CreateTxt(tabControl.TabPages[i], name, namecol, value, colnum, id, width, txtwidth);
+                            CreateTxt(tabControl.TabPages[i], name, namecol, value, colnum, id, width, txtwidth, Important);
                             break;
                         }
                     }
                 }
-                ClsInfoEnter.InfoIsNull.Add(strnull);
             }
         }
 
@@ -85,7 +94,7 @@ namespace CsmCon
 
         }
 
-        private void CreateTxt(TabPage tp, string tname, string name, string val, int colnum, int id, int width, int txtwith)
+        private void CreateTxt(TabPage tp, string tname, string name, string val, int colnum, int id, int width, int txtwith, int Important)
         {
             Control pl = tp.Controls.Find(tname, true)[0];
             int xx = 0;
@@ -97,9 +106,8 @@ namespace CsmCon
             txtcol += 1;
             Label lb = new Label();
             lb.Name = name;
-            //if (name.IndexOf("1") >= 0 || name.IndexOf("8") >= 0) {
-            //    lb.ForeColor = Color.Red;
-            //}
+            if (Important > 0)
+                lb.ForeColor = Color.Red;
             lb.Text = name + ": ";
             lb.Width = width;
             lb.SendToBack();
@@ -144,12 +152,24 @@ namespace CsmCon
                     cb.Location = new Point(yy, 5);
                 else
                     cb.Location = new Point(yy, txtrows * 30 - 20);
-                cb.KeyPress += Cb_KeyPress; ;
+                cb.KeyPress += Cb_KeyPress;
+                if (TsTag == id.ToString())
+                    cb.SelectedIndexChanged += Cb_SelectedIndexChanged;
                 pl.Controls.Add(cb);
             }
             if (txtcol == colnum) {
                 txtcol = 0;
                 txtrows += 1;
+            }
+        }
+
+        private void Cb_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ComboBox comb = (ComboBox)sender;
+            if (comb.Tag.ToString() == TsTag && TsTag != "-1") {
+                infostr = comb.Text.Trim();
+                LoadInfo(Archid, Enterinfo, Atype);
+                infostr = "0";
             }
         }
 
@@ -179,18 +199,13 @@ namespace CsmCon
 
         bool Istxtnull(int id, Control tab)
         {
-            List<string> lstmp = new List<string>();
-            string str = ClsInfoEnter.InfoIsNull[id];
-            if (str.Trim().Length <= 0)
+            if (lsblstr.Count <= 0)
                 return false;
-            if (str.IndexOf(',') >= 0)
-                lstmp = str.Split(',').ToList();
-            else lstmp.Add(str);
             foreach (Control p in tab.Controls) {
                 if (p.Tag != null) {
-                    if (lstmp.IndexOf(p.Tag.ToString()) >= 0) {
+                    if (lsblstr.IndexOf(p.Tag.ToString()) >= 0) {
                         if (p.Text.Trim().Length <= 0) {
-                            MessageBox.Show("信息不能为空");
+                            MessageBox.Show(p.Name + "信息不能为空");
                             p.Focus();
                             return true;
                         }
@@ -212,6 +227,7 @@ namespace CsmCon
                 Control pl = tabControl.SelectedTab.Controls.Find(name, true)[0];
                 if (Istxtnull(tabControl.SelectedIndex, pl))
                     return;
+                string wycolstr = "";
                 Dictionary<int, string> dic1 = new Dictionary<int, string>();
                 Dictionary<int, string> dicxx = new Dictionary<int, string>();
                 foreach (Control t in pl.Controls) {
@@ -220,11 +236,13 @@ namespace CsmCon
                         if (str.Length > 0) {
                             Ts += 1;
                         }
+                        if (t.Tag.ToString() != "-1" && t.Tag.ToString() == TsTag)
+                            wycolstr = str;
                         dic1.Add(Convert.ToInt32(t.Tag), str);
                     }
                 }
                 dicxx = dic1.OrderBy(o => o.Key).ToDictionary(o => o.Key, p => p.Value);
-                int id = Common.SaveInfo(tabControl.SelectedIndex, archid, dicxx, enter, Ts);
+                int id = Common.SaveInfo(tabControl.SelectedIndex, archid, dicxx, enter, Ts, wycolstr);
                 if (id > 0) {
                     Txtcle();
                     MessageBox.Show("保存成功!");
@@ -236,6 +254,18 @@ namespace CsmCon
             }
 
         }
+
+        private void SetInfoTxt(Control p, string col, string str)
+        {
+            foreach (Control ct in p.Controls) {
+                if (ct is TextBox || ct is ComboBox) {
+                    if (ct.Name == col) {
+                        ct.Text = str;
+                    }
+                }
+            }
+        }
+
 
         private void SetInfoTxt(Control p, int id, string str)
         {
@@ -254,12 +284,17 @@ namespace CsmCon
                 Txtcle();
                 if (archid <= 0 || atype.Trim().Length <= 0)
                     return;
+                Archid = archid;
+                Enterinfo = enter;
+                Atype = atype;
                 int t = ClsInfoEnter.InfoTable.IndexOf(atype);
                 if (t == -1) {
                     MessageBox.Show("前台设置表名称范围中未包含:" + atype);
                     return;
                 }
-                DataTable dt = Common.GetInfoTable(t, archid, enter);
+                if (infostr.Trim() == "-1")
+                    infostr = "0";
+                DataTable dt = Common.GetInfoTable(t, archid, enter, infostr);
                 if (dt == null || dt.Rows.Count <= 0)
                     return;
                 string name = tabControl.TabPages[t].Name;
@@ -280,6 +315,23 @@ namespace CsmCon
                 MessageBox.Show("加载信息失败:" + e.ToString());
             }
         }
+
+        public void LoadInfo(List<string> lsinfo, List<string> lscol)
+        {
+            Txtcle();
+            if (lsinfo.Count <= 0 || lscol.Count <= 0)
+                return;
+            int t = tabControl.SelectedIndex;
+            string name = tabControl.TabPages[t].Name;
+            Control pl = tabControl.TabPages[t].Controls.Find(name, true)[0];
+            for (int i = 0; i < lscol.Count; i++) {
+                string col = lscol[i];
+                string str = lsinfo[i];
+                SetInfoTxt(pl, col, str);
+            }
+        }
+
+
 
         private void Cb_KeyPress(object sender, KeyPressEventArgs e)
         {

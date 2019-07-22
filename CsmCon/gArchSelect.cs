@@ -35,8 +35,10 @@ namespace CsmCon
         public int ArchRegPages { get; set; }
         public string Archstat { get; set; }
         public string Archxystat { get; set; }
+        public string ArchPos { get; set; }
+        public string ArchNo { get; set; }
+        public string ArchXqzt {get;set;}
 
-        public string ArchPos;
 
         #endregion
 
@@ -90,6 +92,10 @@ namespace CsmCon
                 return;
             if (ArchRegPages <= 0) {
                 MessageBox.Show("页码不正确");
+                return;
+            }
+            if (ArchXqzt==null || ArchXqzt.Trim().Length<=0) {
+                MessageBox.Show("该卷档案类型设置不正确!");
                 return;
             }
             if (LineLoadFile != null)
@@ -164,7 +170,7 @@ namespace CsmCon
         {
             ClsIni.Archbox = txtBoxsn.Text.Trim();
             ClsIni.ArchNo = comboxClass.Text.Trim();
-            ClsIni.Rabchk = radioBoxsn.Checked.ToString();
+            ClsIni.Rabchk = combLx.SelectedIndex.ToString();
             new ClsWriteini().WriteInt();
         }
 
@@ -185,7 +191,7 @@ namespace CsmCon
         private bool istxt()
         {
             Archtype = "ArchType";
-            if (radioBoxsn.Checked) {
+            if (combLx.SelectedIndex == 0) {
                 try {
                     int boxNo = int.Parse(this.txtBoxsn.Text.Trim());
                 } catch (Exception) {
@@ -194,7 +200,7 @@ namespace CsmCon
                     return false;
                 }
             }
-            else {
+            else if (combLx.SelectedIndex == 1) {
                 if (comboxClass.Text.Trim().Length <= 0 || txtBoxsn.Text.Trim().Length <= 0) {
                     MessageBox.Show("档案类型选择错误或盒号为空!");
                     this.comboxClass.SelectAll();
@@ -203,6 +209,16 @@ namespace CsmCon
                 if (comboxClass.SelectedIndex == 1)
                     Archtype = "ArchConten";
             }
+            else if (combLx.SelectedIndex == 2) {
+                try {
+                    int boxNo = int.Parse(txtBoxsn.Text.Trim());
+                    boxNo = int.Parse(comboxClass.Text.Trim());
+                } catch (Exception) {
+                    MessageBox.Show("号码输入错误");
+                    this.txtBoxsn.Focus();
+                    return false;
+                }
+            }
             return true;
         }
 
@@ -210,12 +226,14 @@ namespace CsmCon
         {
             if (!istxt())
                 return;
-            DataTable dt;
+            DataTable dt = null;
             LvData.Items.Clear();
-            if (radioBoxsn.Checked)
+            if (combLx.SelectedIndex == 0)
                 dt = Common.QueryBoxsn(txtBoxsn.Text.Trim());
-            else
+            else if (combLx.SelectedIndex == 1)
                 dt = Common.QueryBoxsnid(txtBoxsn.Text.Trim());
+            else if (combLx.SelectedIndex == 2)
+                dt = Common.QueryBoxsnArchno(comboxClass.Text.Trim(), txtBoxsn.Text.Trim());
             if (dt != null && dt.Rows.Count > 0) {
                 int i = 1;
                 int stat = 0;
@@ -235,16 +253,16 @@ namespace CsmCon
                             ImgFile = "解密失败!";
                         }
                     }
-
                     stat = Convert.ToInt32(dr["ArchState"].ToString().Trim().Length <= 0 ? "0" : dr["ArchState"].ToString());
                     string xystat = dr["CheckXyState"].ToString().Trim().Length <= 0 ? "0" : dr["CheckXyState"].ToString();
+                    string archlx = (dr["ArchXqStat"].ToString().Trim().Length <= 0 ? "" : dr["ArchXqStat"].ToString());
                     if (stat >= 3 && stat < 5)
                         lvi.ImageIndex = 0;
                     else if (stat >= 5 && stat < 7)
                         lvi.ImageIndex = 1;
                     else if (stat == 7)
                         lvi.ImageIndex = 2;
-                    lvi.SubItems.AddRange(new string[] { boxsn, archno, ImgFile, pages, arid, type, stat.ToString(), xystat.ToString() });
+                    lvi.SubItems.AddRange(new string[] { boxsn, archno, ImgFile, pages, arid, type, stat.ToString(), xystat.ToString(), archlx });
                     this.LvData.Items.Add(lvi);
                     i++;
                 }
@@ -263,14 +281,18 @@ namespace CsmCon
                     ClsIni.Rabchk = (new ClsWriteini().ContentValue(ClsIni.strFile, "Rabchk"));
                     this.BeginInvoke(new Action(() =>
                     {
+                        comboxClass.Items.Clear();
+                        comboxClass.Text = "";
                         txtBoxsn.Text = ClsIni.Archbox;
-                        if (ClsIni.Rabchk.ToLower() == "true")
-                            radioBoxsn.Checked = true;
-                        else {
-                            comboxClass.Enabled = true;
-                            radioClass.Checked = true;
-                            comboxClass.Text = ClsIni.ArchNo;
+                        if (ClsIni.Rabchk.Trim().Length > 0) {
+                            try {
+                                int id = Convert.ToInt32(ClsIni.Rabchk.Trim());
+                                combLx.SelectedIndex = id;
+                                if (id == 1)
+                                    comboxClass.Enabled = true;
+                            } catch { }
                         }
+
                     }));
 
                 }
@@ -288,6 +310,7 @@ namespace CsmCon
                 butPageUpdate.Visible = false;
                 txtPages.Enabled = false;
             }
+            combLx.SelectedIndex = 0;
         }
 
         private void LvData_Click(object sender, EventArgs e)
@@ -296,16 +319,17 @@ namespace CsmCon
                 Archid = Convert.ToInt32(LvData.SelectedItems[0].SubItems[5].Text);
                 Archtype = LvData.SelectedItems[0].SubItems[6].Text;
                 string boxs = LvData.SelectedItems[0].SubItems[1].Text;
-                string juan = LvData.SelectedItems[0].SubItems[2].Text;
+                ArchNo = LvData.SelectedItems[0].SubItems[2].Text;
                 Archstat = LvData.SelectedItems[0].SubItems[7].Text;
                 Archxystat = LvData.SelectedItems[0].SubItems[8].Text;
+                ArchXqzt = LvData.SelectedItems[0].SubItems[9].Text;
                 Boxsn = Convert.ToInt32(boxs);
-                ArchPos = boxs + "-" + juan;
+                ArchPos = boxs + "-" + ArchNo;
                 string pags = Common.Getpages(Archid);
                 if (pags.Trim().Length > 0)
                     ArchRegPages = Convert.ToInt32(pags);
-                    txtPages.Text = pags;
-               
+                txtPages.Text = pags;
+
                 ArchImgFile = LvData.SelectedItems[0].SubItems[3].Text;
                 if (LineClickLoadInfo != null)
                     LineClickLoadInfo(sender, new EventArgs());
@@ -328,8 +352,22 @@ namespace CsmCon
             }
         }
 
+        private void combLx_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            comboxClass.Items.Clear();
+            comboxClass.Text = "";
+            comboxClass.Enabled = true;
+            if (combLx.SelectedIndex == 0)
+                comboxClass.Enabled = false;
+            if (combLx.SelectedIndex == 1) {
+                comboxClass.Items.Add("案卷信息");
+                comboxClass.Items.Add("目录信息");
+                comboxClass.SelectedIndex = 0;
+            }
+        }
+
         #endregion
 
-     
+
     }
 }

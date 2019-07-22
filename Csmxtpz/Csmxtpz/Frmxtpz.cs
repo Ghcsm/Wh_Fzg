@@ -108,7 +108,7 @@ namespace Csmxtpz
             if (Clsxtpz.selectHouseID == 0)
                 return;
             V_HouseName.HouseSetName = txtHoseName.Text.Trim();
-            if (T_Sysset.SelectHouseNameid() != Clsxtpz.selectHouseID) {
+            if (T_Sysset.SelectHouseNameid(txtHoseName.Text.Trim()) != Clsxtpz.selectHouseID) {
                 MessageBox.Show("库房名称已存在！");
                 this.txtHoseName.Focus();
                 return;
@@ -488,8 +488,8 @@ namespace Csmxtpz
             if (e.KeyChar == 13)
                 btnSave.Focus();
         }
-        #endregion
 
-        
+        #endregion
+       
     }
 }

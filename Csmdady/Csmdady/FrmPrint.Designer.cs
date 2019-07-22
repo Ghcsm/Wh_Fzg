@@ -32,7 +32,6 @@
             this.gr0 = new DevComponents.DotNetBar.Controls.GroupPanel();
             this.butPrintTm = new DevComponents.DotNetBar.ButtonX();
             this.butLog = new DevComponents.DotNetBar.ButtonX();
-            this.labStat = new System.Windows.Forms.Label();
             this.butPrintConten = new DevComponents.DotNetBar.ButtonX();
             this.butPrintInfo = new DevComponents.DotNetBar.ButtonX();
             this.gr2 = new System.Windows.Forms.GroupBox();
@@ -64,6 +63,7 @@
             this.c_box1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.c_box2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabItemboxRange = new DevComponents.DotNetBar.TabItem(this.components);
+            this.labStat = new System.Windows.Forms.Label();
             this.gr0.SuspendLayout();
             this.gr2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tabControlPrint)).BeginInit();
@@ -91,11 +91,11 @@
             this.gr0.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007;
             this.gr0.Controls.Add(this.butPrintTm);
             this.gr0.Controls.Add(this.butLog);
-            this.gr0.Controls.Add(this.labStat);
             this.gr0.Controls.Add(this.butPrintConten);
             this.gr0.Controls.Add(this.butPrintInfo);
             this.gr0.Controls.Add(this.gr2);
             this.gr0.Controls.Add(this.gr1);
+            this.gr0.Controls.Add(this.labStat);
             this.gr0.DisabledBackColor = System.Drawing.Color.Empty;
             this.gr0.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gr0.Location = new System.Drawing.Point(0, 25);
@@ -134,9 +134,9 @@
             // butPrintTm
             // 
             this.butPrintTm.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.butPrintTm.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.butPrintTm.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.butPrintTm.Enabled = false;
-            this.butPrintTm.Location = new System.Drawing.Point(709, 477);
+            this.butPrintTm.Location = new System.Drawing.Point(709, 484);
             this.butPrintTm.Name = "butPrintTm";
             this.butPrintTm.Size = new System.Drawing.Size(75, 45);
             this.butPrintTm.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -147,8 +147,9 @@
             // butLog
             // 
             this.butLog.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.butLog.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.butLog.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.butLog.Location = new System.Drawing.Point(843, 479);
+            this.butLog.Location = new System.Drawing.Point(843, 486);
             this.butLog.Name = "butLog";
             this.butLog.Size = new System.Drawing.Size(66, 45);
             this.butLog.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -156,22 +157,12 @@
             this.butLog.Text = "日志";
             this.butLog.Click += new System.EventHandler(this.butLog_Click);
             // 
-            // labStat
-            // 
-            this.labStat.BackColor = System.Drawing.Color.Transparent;
-            this.labStat.ForeColor = System.Drawing.Color.Red;
-            this.labStat.Location = new System.Drawing.Point(397, 492);
-            this.labStat.Name = "labStat";
-            this.labStat.Size = new System.Drawing.Size(100, 23);
-            this.labStat.TabIndex = 4;
-            this.labStat.Text = "未质检无法打印";
-            this.labStat.Visible = false;
-            // 
             // butPrintConten
             // 
             this.butPrintConten.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.butPrintConten.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.butPrintConten.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.butPrintConten.Location = new System.Drawing.Point(602, 477);
+            this.butPrintConten.Location = new System.Drawing.Point(602, 484);
             this.butPrintConten.Name = "butPrintConten";
             this.butPrintConten.Size = new System.Drawing.Size(75, 45);
             this.butPrintConten.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -182,8 +173,9 @@
             // butPrintInfo
             // 
             this.butPrintInfo.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.butPrintInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.butPrintInfo.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.butPrintInfo.Location = new System.Drawing.Point(503, 477);
+            this.butPrintInfo.Location = new System.Drawing.Point(503, 484);
             this.butPrintInfo.Name = "butPrintInfo";
             this.butPrintInfo.Size = new System.Drawing.Size(75, 45);
             this.butPrintInfo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -411,9 +403,12 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.gArchSelect1.Archid = 0;
             this.gArchSelect1.ArchImgFile = null;
+            this.gArchSelect1.ArchNo = null;
+            this.gArchSelect1.ArchPos = null;
             this.gArchSelect1.ArchRegPages = 0;
             this.gArchSelect1.Archstat = null;
             this.gArchSelect1.Archtype = null;
+            this.gArchSelect1.ArchXqzt = null;
             this.gArchSelect1.Archxystat = null;
             this.gArchSelect1.BackColor = System.Drawing.Color.Transparent;
             this.gArchSelect1.Boxsn = 0;
@@ -470,6 +465,7 @@
             // butDelbox
             // 
             this.butDelbox.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.butDelbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.butDelbox.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.butDelbox.Location = new System.Drawing.Point(25, 431);
             this.butDelbox.Name = "butDelbox";
@@ -527,6 +523,8 @@
             // 
             // lvboxRange
             // 
+            this.lvboxRange.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.lvboxRange.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.c_id,
             this.c_box1,
@@ -561,6 +559,17 @@
             this.tabItemboxRange.AttachedControl = this.tabControlPanel1;
             this.tabItemboxRange.Name = "tabItemboxRange";
             this.tabItemboxRange.Text = "批量打印";
+            // 
+            // labStat
+            // 
+            this.labStat.BackColor = System.Drawing.Color.Transparent;
+            this.labStat.ForeColor = System.Drawing.Color.Red;
+            this.labStat.Location = new System.Drawing.Point(397, 460);
+            this.labStat.Name = "labStat";
+            this.labStat.Size = new System.Drawing.Size(142, 23);
+            this.labStat.TabIndex = 4;
+            this.labStat.Text = "未质检无法打印录入信息";
+            this.labStat.Visible = false;
             // 
             // FrmPrint
             // 

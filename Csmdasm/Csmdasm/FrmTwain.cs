@@ -285,8 +285,8 @@ namespace Csmdasm
         {
             try {
                 ClsWriteIni.Getscan();
-                if (IniInfo.PageDodule.Length > 0)
-                    chkDoublePages.Checked = Convert.ToBoolean(IniInfo.PageDodule);
+                //if (IniInfo.PageDodule.Length > 0)
+                //    chkDoublePages.Checked = Convert.ToBoolean(IniInfo.PageDodule);
                 if (IniInfo.PageSize.Length > 0)
                     comPagesSize.SelectedIndex = Convert.ToInt32(IniInfo.PageSize);
                 else
@@ -299,7 +299,6 @@ namespace Csmdasm
                 }
                 else
                     rdVerPages.Checked = true;
-
                 if (IniInfo.PageColor.Length > 0) {
                     if (IniInfo.PageColor == "黑白")
                         rdColorWithe.Checked = true;

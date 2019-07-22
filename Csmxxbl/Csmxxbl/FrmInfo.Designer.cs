@@ -76,6 +76,7 @@
             this.gArchSelect1.TabIndex = 0;
             this.gArchSelect1.LineClickLoadInfo += new CsmCon.gArchSelect.ArchSelectHandle(this.gArchSelect1_LineClickLoadInfo);
             this.gArchSelect1.LineFocus += new CsmCon.gArchSelect.ArchSelectHandleFocus(this.gArchSelect1_LineFocus);
+            this.gArchSelect1.LineGetInfo += new CsmCon.gArchSelect.ArchSelectHandleGetInfo(this.gArchSelect1_LineGetInfo);
             // 
             // gr2
             // 

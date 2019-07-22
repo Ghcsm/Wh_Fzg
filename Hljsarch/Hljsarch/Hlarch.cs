@@ -839,15 +839,12 @@ namespace HLjscom
         public void LoadPage(int x)
         {
 
-            try
-            {
+            try {
                 CodecsImageInfo info = _Codefile.GetInformation(Filename, true);
-                if (info.BitsPerPixel == 24)
-                {
+                if (info.BitsPerPixel == 24) {
                     _Codefile.Options.Load.Format = RasterImageFormat.TifxJpeg;
                 }
-                else
-                {
+                else {
                     _Codefile.Options.Load.Format = info.Format;
                 }
 
@@ -855,13 +852,11 @@ namespace HLjscom
                 _Codefile.Options.Load.Compressed = true;
                 _Imageview.Image = _Codefile.Load(Filename, 0, CodecsLoadByteOrder.BgrOrGray, x, x);
                 _Imageview.Zoom(ControlSizeMode.FitAlways, 1, _Imageview.DefaultZoomOrigin);
-                if (info.TotalPages == 0)
-                {
+                if (info.TotalPages == 0) {
                     MessageBox.Show("文件页码为0，请重新加载档案！");
                     return;
                 }
-                else
-                {
+                else {
                     _Imageview.BeginUpdate();
                     _Imageview.Image.Page = 1;
                     _Imageview.EndUpdate();
@@ -870,9 +865,7 @@ namespace HLjscom
                 CrrentPage = x;
                 CountPage = info.TotalPages;
                 Setpage(CrrentPage, CountPage);
-            }
-            catch 
-            {}
+            } catch { }
         }
 
         //保存图像
@@ -1614,7 +1607,7 @@ namespace HLjscom
             }
         }
         //排序
-        public bool _OrderSave(int regpage,string oldfile, string _path, Dictionary<int, string> Pabc, Dictionary<int, int> Pnumber)
+        public bool _OrderSave(int regpage, string oldfile, string _path, Dictionary<int, string> Pabc, Dictionary<int, int> Pnumber)
         {
             try {
                 if (Pabc.Count >= 1) {
@@ -2031,7 +2024,7 @@ namespace HLjscom
                     }
                     string Ocrpath = "";
                     if (x == 0) {
-                        Ocrpath = Path.Combine(@"c:\\temp", "OcrProfessional");
+                        Ocrpath = Path.Combine(@"c:\\temp", "OcrPro");
                         ocrEngine = OcrEngineManager.CreateEngine(OcrEngineType.Professional, false);
                         ocrEngine.Startup(null, null, pathtmp, Ocrpath);
                     }
@@ -2182,6 +2175,62 @@ namespace HLjscom
                 return txt;
             } catch {
                 return "";
+            }
+        }
+        public void _OcrRecttxt(string file, out List<string> str, out List<string> pages, int id)
+        {
+            str = new List<string>();
+            pages = new List<string>();
+            try {
+                //IOcrEngine ocrEng = null;
+                //string pathtmp = "c:\\temp\\otmp";
+                //  string Ocrpath = "";
+
+                //if (!Directory.Exists(pathtmp)) {
+                //    Directory.CreateDirectory(pathtmp);
+                //}
+                ////if (id == 1) {
+                //    Ocrpath = Path.Combine(@"c:\temp", "OcrPro");
+                //    ocrEng = OcrEngineManager.CreateEngine(OcrEngineType.Professional, false);
+                //    ocrEng.Startup(null, null, pathtmp, Ocrpath);
+                ////}
+                ////else if (id == 2) {
+                ////    Ocrpath = Path.Combine(path, "OcrAdv");
+                ////    ocrEng = OcrEngineManager.CreateEngine(OcrEngineType.Advantage, false);
+                ////    ocrEng.Startup(null, null, pathtmp, Ocrpath);
+                ////}
+                //ocrEng.LanguageManager.EnableLanguages(new string[] { "zh-Hans" });
+                _StartOcr(id);
+                RasterImage _imagepx;
+                RasterCodecs _Codef = new RasterCodecs();
+                CodecsImageInfo info = _Codefile.GetInformation(file, true);
+                for (int i = 1; i < info.TotalPages; i++) {
+                    try {
+                        _imagepx = _Codef.Load(file, info.BitsPerPixel, CodecsLoadByteOrder.BgrOrGrayOrRomm, i, i);
+                        ocrPage = ocrEngine.CreatePage(_imagepx, OcrImageSharingMode.None);
+                        if (ocrPage == null) {
+                            continue;
+                        }
+
+                        ocrPage.Zones.Clear();
+                        LeadRect rcw = new LeadRect(0, 0, _imagepx.Width - 8, 800);
+                        OcrZone zone = new OcrZone();
+                        zone.Bounds = LogicalRectangle.FromRectangle(rcw);
+                        zone.ZoneType = OcrZoneType.Text;
+                        zone.CharacterFilters = OcrZoneCharacterFilters.None;
+                        ocrPage.Zones.Add(zone);
+                        ocrPage.Recognize(null);
+                        string txt = ocrPage.GetText(0);
+                        str.Add(txt);
+                        pages.Add(i.ToString());
+                    } catch {
+                        continue;
+                    }
+
+                }
+            } catch {
+            } finally {
+                _CloseOcr();
             }
         }
 
@@ -2438,10 +2487,9 @@ namespace HLjscom
                 }
             }
 
-            if (_PageAbc.Count > 0)
-            {
+            if (_PageAbc.Count > 0) {
                 _PageAbc.GroupBy(item => item.Value)
-                    .Where(item => item.Count() > 1 )
+                    .Where(item => item.Count() > 1)
                     .SelectMany(item => item)
                     .ToList()
                     .ForEach(item => tmp.Add(item.Key, item.Value.ToString()));
@@ -2488,7 +2536,7 @@ namespace HLjscom
             if (_Imageview.Image == null || Filename.Trim().Length <= 0)
                 return false;
             if (_PageNumber.Count > 0) {
-                Dictionary<int, int> tmp = addcfpage();
+                Dictionary<int, string> tmp = addcfpage();
                 if (dianjicount >= tmp.Count) {
                     dianjicount = 0;
                 }
