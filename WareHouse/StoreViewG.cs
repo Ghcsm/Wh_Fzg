@@ -163,7 +163,7 @@ namespace WareHouse
                 {
                     ShowInTaskbar = true
                 };
-                st.Show();
+                st.ShowDialog();
             }
             catch (Exception ex)
             {

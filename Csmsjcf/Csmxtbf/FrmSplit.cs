@@ -29,6 +29,7 @@ namespace Csmsjcf
             comb_gr2_2_task.Items.Clear();
             comb_gr2_7_weizhi.Items.Clear();
             combHouseid.Items.Clear();
+            combKf.Items.Clear();
             for (int i = 1; i <= 10; i++) {
                 comb_gr2_2_task.Items.Add(i.ToString());
             }
@@ -58,6 +59,9 @@ namespace Csmsjcf
             combHouseid.Items.AddRange(HouseEc.ToArray());
             combHouseid.SelectedItem = HouseEc;
             combHouseid.SelectedIndex = 0;
+            combKf.Items.AddRange(HouseEc.ToArray());
+            combKf.SelectedItem = HouseEc;
+            combKf.SelectedIndex = 0;
             ClsFrmInfoPar.LogPath = Application.StartupPath;
         }
 
@@ -1485,10 +1489,63 @@ namespace Csmsjcf
                 Action Act = StartTaskxc;
                 Act.BeginInvoke(null, null);
             }
-
         }
 
 
+        #region 东丽
 
+        private void butTfSelect_Click(object sender, EventArgs e)
+        {
+            txtTfPath.Text = "";
+            if (fBdigImgPath.ShowDialog() == DialogResult.OK) {
+                txtTfPath.Text = fBdigImgPath.SelectedPath;
+                return;
+            }
+        }
+
+        bool isdltxt()
+        {
+            if (combKf.Text.Trim().Length <= 0) {
+                MessageBox.Show("库房不能为空!");
+                combKf.Focus();
+                return false;
+            }
+            if (txtB1.Text.Trim().Length <= 0 || txtB2.Text.Trim().Length <= 0) {
+                MessageBox.Show("盒号范围不能为空!");
+                txtB1.Focus();
+                return false;
+            }
+            else {
+                int p1;
+                int p2;
+                bool b1 = int.TryParse(txtB1.Text.Trim(), out p1);
+                bool b2 = int.TryParse(txtB2.Text.Trim(), out p2);
+                if (!b1 || !b2)
+                    return false;
+                if (p1 < p2) {
+                    MessageBox.Show("盒号范围不正确!");
+                    txtB1.Focus();
+                    return false;
+                }
+            }
+            if (!chkjpg.Checked && !chkxls.Checked && !chkxml.Checked) {
+                MessageBox.Show("请选择生成类型!");
+                return false;
+            }
+            if (radTfPath.Checked) {
+                if (txtTfPath.Text.Trim().Length <= 0) {
+                    MessageBox.Show("本地图像路径不能为空!");
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        private void butDlStart_Click(object sender, EventArgs e)
+        {
+            if (isdltxt())
+                return;
+        }
+        #endregion
     }
 }

@@ -285,8 +285,8 @@ namespace Csmdasm
         {
             try {
                 ClsWriteIni.Getscan();
-                //if (IniInfo.PageDodule.Length > 0)
-                //    chkDoublePages.Checked = Convert.ToBoolean(IniInfo.PageDodule);
+                if (IniInfo.PageDodule.Length > 0)
+                    chkDoublePages.Checked = Convert.ToBoolean(IniInfo.PageDodule);
                 if (IniInfo.PageSize.Length > 0)
                     comPagesSize.SelectedIndex = Convert.ToInt32(IniInfo.PageSize);
                 else
@@ -367,6 +367,7 @@ namespace Csmdasm
                 labArchNo.Text = "当前卷号:";
                 labQsPages.Text = "当前卷缺少:";
                 ClsTwain.task = false;
+                gArch.butLoad.Enabled = true;
             }));
         }
 
@@ -390,7 +391,6 @@ namespace Csmdasm
                         }
                     }
                     else {
-
                         string newfile = Path.Combine(T_ConFigure.gArchScanPath, archpos, T_ConFigure.ScanTempFile);
                         string newpath = Path.Combine(T_ConFigure.gArchScanPath, archpos);
                         bool x = await ftp.FtpUpFile(filetmp, newfile, newpath);
@@ -643,7 +643,7 @@ namespace Csmdasm
         {
             ClsTwain.Scanbool = true;
             Himg.Scanms = comBoxScanMode.SelectedIndex;
-            Himg._Duplexpage(chkDoublePages.Checked);
+          //  Himg._Duplexpage(chkDoublePages.Checked);
             if (comPagesSize.SelectedIndex == 1) {
                 if (rdVerPages.Checked) {
                     Himg._SetimgFx(1, 0);
@@ -676,63 +676,7 @@ namespace Csmdasm
             Himg._Setdpi(Convert.ToInt32(comBoxDpi.Text.Trim()));
             Himg._Twainscan(1);
         }
-
-        //private void Keykuaij(object sender, KeyEventArgs e)
-        //{
-        //    Keys keyCode = e.KeyCode;
-        //    switch (keyCode) {
-        //        case Keys.Escape:
-        //            toolColse_Click(sender, e);
-        //            break;
-        //        case Keys.Enter:
-        //            toolScan_Click(sender, e);
-        //            break;
-        //        case Keys.Delete:
-        //            toolDelPages_Click(sender, e);
-        //            break;
-        //        case Keys.PageDown:
-        //            toolPagesDown_Click(sender, e);
-        //            break;
-        //        case Keys.PageUp:
-        //            toolPagesUp_Click(sender, e);
-        //            break;
-        //        case Keys.Home:
-        //            Himg._Gotopage(1);
-        //            break;
-        //        case Keys.End:
-        //            Himg._Gotopage(ClsTwain.MaxPage);
-        //            break;
-        //        case Keys.NumPad9:
-        //            rdFeedAuto.Checked = true;
-        //            break;
-        //        case Keys.NumPad6:
-        //            rdFeedFlat.Checked = true;
-        //            break;
-        //        case Keys.NumPad0:
-        //            if (chkDoublePages.Checked == false) {
-        //                chkDoublePages.Checked = true;
-        //            }
-        //            else
-        //                chkDoublePages.Checked = false;
-        //            break;
-        //        case Keys.NumPad1:
-        //            toolColse_Click(sender, e);
-        //            break;
-        //        case Keys.NumPad3:
-        //            comPagesSize.SelectedIndex = 2;
-        //            break;
-        //        case Keys.NumPad4:
-        //            comPagesSize.SelectedIndex = 1;
-        //            break;
-        //        case Keys.Space:
-        //            toolScan_Click(sender, e);
-        //            break;
-        //        case Keys.NumPad5:
-        //            comPagesSize.SelectedIndex = 0;
-        //            break;
-        //    }
-        //    ImgView.Focus();
-        //}
+    
 
         void Getsqlkey()
         {

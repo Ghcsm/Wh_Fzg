@@ -528,6 +528,16 @@ namespace DAL
             SQLHelper.ExecuteNonQuery(strSql, CommandType.StoredProcedure, p);
         }
 
+        public static void SetPages(int p, int arid)
+        {
+            try {
+                string strSql = "update 信息表 set Pages=@p where Archid=@arid";
+                SqlParameter p1 = new SqlParameter("@p", p);
+                SqlParameter p2 = new SqlParameter("@arid", arid);
+                SQLHelper.ExecScalar(strSql, p1, p2);
+            } catch { }
+        }
+
         public static DataTable ReadPageIndexInfo(int ArchID)
         {
             try {
@@ -579,7 +589,8 @@ namespace DAL
                     strSql = "select TypeModule'模式',Archid'卷id',ArchPos'案卷号',FileName'文件名',ArchStat'流程',Filepath'路径',pages '页码',Userid'用户',IP,DateTime'时间' from M_UpTask where Userid=@userid";
                 else
                     strSql = "select TypeModule'模式',Archid'卷id',ArchPos'案卷号',FileName'文件名',ArchStat'流程',Filepath'路径',pages '页码',Userid'用户',IP,DateTime'时间' from M_UpTask";
-                DataTable dt = SQLHelper.ExcuteTable(strSql);
+                SqlParameter p1 = new SqlParameter("@userid", T_User.UserId);
+                DataTable dt = SQLHelper.ExcuteTable(strSql,p1);
                 return dt;
             } catch {
                 return null;
@@ -925,7 +936,6 @@ namespace DAL
             ClsInfoEnter.InfoTableName.Clear();
             ClsInfoEnter.InfoLbWidth.Clear();
             ClsInfoEnter.InfotxtWidth.Clear();
-            ClsInfoEnter.InfoIsNull.Clear();
             ClsInfoEnter.InfoWycol.Clear();
             string strSql = "select * from M_GenSetInfo order by id";
             DataTable dt = SQLHelper.ExcuteTable(strSql);

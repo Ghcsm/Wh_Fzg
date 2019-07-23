@@ -53,7 +53,8 @@ namespace Jdshow
 
         private void DelTask()
         {
-            int arid = Convert.ToInt32(dgData.SelectedRows[0].Cells[1].Value);
+            int id = dgData.CurrentRow.Index;
+            int arid = Convert.ToInt32(dgData.SelectedRows[id].Cells[1].Value);
             if (arid <= 0)
                 return;
             Common.DelTask(arid);
@@ -109,7 +110,8 @@ namespace Jdshow
                     int stat = Convert.ToInt32(dgData.Rows[0].Cells[4].Value.ToString());
                     string pages = dgData.Rows[0].Cells[6].Value.ToString();
                     if (!File.Exists(filepath)) {
-                        MessageBox.Show("ID号:" + archid + ",盒号卷号：" + archpos + ",文件不存在!");
+                        // MessageBox.Show("ID号:" + archid + ",盒号卷号：" + archpos + ",文件不存在!");
+                        Common.DelTask(Convert.ToInt32(archid));
                         dgData.Rows.RemoveAt(0);
                         continue;
                     }
@@ -118,7 +120,6 @@ namespace Jdshow
                         StatTask(typemodule, archid, archpos, filename, filepath, stat, pages);
                     });
                     task.Start();
-                    task.Wait();
                     dgData.Rows.RemoveAt(0);
                     i = 0;
                 }
@@ -161,11 +162,12 @@ namespace Jdshow
             else if (archstat <= (int)T_ConFigure.ArchStat.排序完) {
                 Dictionary<int, int> num = new Dictionary<int, int>();
                 Dictionary<int, string> abc = new Dictionary<int, string>();
-                ReadDict(Convert.ToInt32(archid), out num, abc);
+                Dictionary<int, string> fuhao = new Dictionary<int, string>();
+                ReadDict(Convert.ToInt32(archid), out num, out abc, out fuhao);
                 string IndexFileName = Common.GetCurrentTime() + Common.TifExtension;
                 string RemoteDir = IndexFileName.Substring(0, 8);
                 string LocalIndexFile = Path.Combine(@T_ConFigure.LocalTempPath, IndexFileName);
-                if (!Himg._OrderSave(Convert.ToInt32(pages), filepath, LocalIndexFile, abc, num)) {
+                if (!Himg._OrderSave(Convert.ToInt32(pages), filepath, LocalIndexFile, abc, num, fuhao)) {
                     return;
                 }
                 if (ftp.SaveRemoteFileUp(T_ConFigure.FtpArchIndex, RemoteDir, LocalIndexFile, IndexFileName)) {
@@ -185,7 +187,7 @@ namespace Jdshow
             }
             else if (archstat == (int)T_ConFigure.ArchStat.质检完) {
                 string RemoteDir = filename.Substring(0, 8);
-                if (ftp.SaveRemoteFileUp(T_ConFigure.FtpArchSave, RemoteDir, filepath,filename )) {
+                if (ftp.SaveRemoteFileUp(T_ConFigure.FtpArchSave, RemoteDir, filepath, filename)) {
                     Common.DelTask(Convert.ToInt32(archid));
                     Common.SetCheckFinish(Convert.ToInt32(archid), DESEncrypt.DesEncrypt(filename), 1, (int)T_ConFigure.ArchStat.质检完, "");
                     try {
@@ -199,10 +201,11 @@ namespace Jdshow
         }
 
 
-        public void ReadDict(int arid, out Dictionary<int, int> number, Dictionary<int, string> abc)
+        public void ReadDict(int arid, out Dictionary<int, int> number,out Dictionary<int, string> abc,out Dictionary<int, string> fuhao)
         {
             number = new Dictionary<int, int>();
             abc = new Dictionary<int, string>();
+            fuhao = new Dictionary<int, string>();
             DataTable dt = Common.ReadPageIndexInfo(arid);
             if (dt != null && dt.Rows.Count > 0) {
                 DataRow dr = dt.Rows[0];
@@ -214,8 +217,10 @@ namespace Jdshow
                             string str = arrPage[i].Trim();
                             if (str.Length <= 0)
                                 continue;
-                            if (!isExists(str))
+                            if (!isExists(str) || str == "-9999")
                                 number.Add(i + 1, Convert.ToInt32(str));
+                            else if (str.IndexOf("-") >= 0)
+                                fuhao.Add(i + 1, str);
                             else
                                 abc.Add(i + 1, str);
                         }

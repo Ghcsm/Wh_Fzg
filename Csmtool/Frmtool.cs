@@ -591,6 +591,46 @@ namespace Csmtool
                 Toolskeys.Lsinikey.Clear();
                 Toolskeys.LsiniCz.Clear();
                 Writeini.GetAllKeyValues(combKeyZdymodlx.Text.Trim(), out Toolskeys.LsiniCz, out Toolskeys.Lsinikey);
+                if (Toolskeys.Lsinikey.Count > 0 && Toolskeys.LsiniCz.Count>0)
+                {
+                    LbKey.Items.Clear();
+                    for (int i = 0; i < Toolskeys.LsiniCz.Count; i++)
+                    {
+                        string str = Toolskeys.LsiniCz[i].ToString().Replace("V", "");
+                        int x = Toolskeys.LskeyOpernum.IndexOf(str);
+                        if (x <0)
+                            continue;
+                        string s = Toolskeys.LskeyOper[x];
+                        string c = Toolskeys.Lsinikey[i];
+                        string[] KeyV = c.Split(new char[] { '-' });
+                        if (KeyV[0].Trim().ToString() == "1") {
+                            c = "Ctrl+";
+                        }
+                        else if (KeyV[0].Trim().ToString() == "2") {
+                            c = "Alt+";
+                        }
+                        else if (KeyV[0].Trim().ToString() == "3") {
+                            c = "Shift+";
+                        }
+                        else {
+                            c = "";
+                        }
+                        int nk = Convert.ToInt32(KeyV[1].Trim());
+                        str = ((char)nk).ToString();
+                        if (nk == 13)
+                            str = "回车";
+                        else if (nk == 32)
+                            str = "空格";
+                        else if (nk == 27)
+                            str = "Ese";
+                        else if (nk == 46)
+                            str = "Del";
+                        string strs = s + ":" + c+str;
+                        LbKey.Items.Add(strs);
+
+                    }
+                }
+
 
             } catch {
                 MessageBox.Show("读取快捷键失败!");

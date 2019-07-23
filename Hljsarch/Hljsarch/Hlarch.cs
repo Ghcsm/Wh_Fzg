@@ -47,6 +47,9 @@ namespace HLjscom
         public Dictionary<int, int> _PageNumber = new Dictionary<int, int>();
         //字母可用 
         public Dictionary<int, string> _PageAbc = new Dictionary<int, string>();
+
+        public Dictionary<int, string> _PageFuhao = new Dictionary<int, string>();
+
         Ltoolsapi.Ltoolsapi api = null;
         //注册页码
         public int RegPage;
@@ -1546,6 +1549,7 @@ namespace HLjscom
         //排序
         public void _OrderSave(string _path)
         {
+            int pagecoun = 0;
             try {
 
                 if (_PageAbc.Count >= 1) {
@@ -1554,18 +1558,34 @@ namespace HLjscom
                     for (int abc = 1; abc <= _PageAbc.Count; abc++) {
                         string zimu = (Convert.ToChar(oldpage)).ToString();
                         var abckeys = _PageAbc.Where(q => q.Value == zimu).Select(q => q.Key);
-
                         foreach (var a in abckeys) {
-                            OrderSave(a, abc, _path);
+                            pagecoun += 1;
+                            OrderSave(a, pagecoun, _path);
                         }
                         oldpage = zimu_a + abc;
                     }
                 }
                 if (_PageNumber.Count >= 1) {
-                    for (int i = 1; i <= RegPage - _PageAbc.Count; i++) {
+                    int fuhao = _PageFuhao.Count;
+                    for (int i = 1; i <= RegPage - _PageAbc.Count - fuhao; i++) {
                         int k = _PageNumber.First(q => q.Value == i).Key;
                         if (_PageNumber[k].Equals(i)) {
-                            OrderSave(k, _PageAbc.Count + i, _path);
+                            pagecoun += 1;
+                            OrderSave(k, pagecoun, _path);
+                            if (_PageFuhao.Count > 0) {
+                                for (int t = 0; t < fuhao; t++) {
+                                    string str = i + "-" + (t + 1);
+                                    int oldpage = 0;
+                                    try {
+                                        oldpage = _PageFuhao.First(q => q.Value == str).Key;
+                                    } catch { }
+                                    if (oldpage > 0) {
+                                        pagecoun += 1;
+                                        OrderSave(oldpage, pagecoun, _path);
+                                        _PageFuhao.Remove(oldpage);
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -1596,7 +1616,9 @@ namespace HLjscom
                     for (int i = 1; i <= RegPage - _PageAbc.Count; i++) {
                         int k = _PageNumber.First(q => q.Value == i).Key;
                         if (_PageNumber[k].Equals(i)) {
+
                             OrderSave(k, _PageAbc.Count + i, oldfile, _path);
+
                         }
                     }
                 }
@@ -1607,8 +1629,9 @@ namespace HLjscom
             }
         }
         //排序
-        public bool _OrderSave(int regpage, string oldfile, string _path, Dictionary<int, string> Pabc, Dictionary<int, int> Pnumber)
+        public bool _OrderSave(int regpage, string oldfile, string _path, Dictionary<int, string> Pabc, Dictionary<int, int> Pnumber,Dictionary<int,string>fuhao)
         {
+            int pagecoun = 0;
             try {
                 if (Pabc.Count >= 1) {
                     int zimu_a = (int)Convert.ToByte('a');
@@ -1617,22 +1640,40 @@ namespace HLjscom
                         string zimu = (Convert.ToChar(oldpage)).ToString();
                         var abckeys = Pabc.Where(q => q.Value == zimu).Select(q => q.Key);
                         foreach (var a in abckeys) {
-                            OrderSave(a, abc, oldfile, _path);
+                            pagecoun += 1;
+                            OrderSave(a, pagecoun, _path);
                         }
                         oldpage = zimu_a + abc;
                     }
                 }
                 if (Pnumber.Count >= 1) {
-                    for (int i = 1; i <= regpage - _PageAbc.Count; i++) {
+                    int fh = fuhao.Count;
+                    for (int i = 1; i <= regpage - Pabc.Count- fh; i++) {
                         int k = Pnumber.First(q => q.Value == i).Key;
-                        if (Pnumber[k].Equals(i)) {
-                            OrderSave(k, _PageAbc.Count + i, oldfile, _path);
+                        if (Pnumber[k].Equals(i))
+                        {
+                            pagecoun += 1;
+                            OrderSave(k, pagecoun, oldfile, _path);
+                            if (fuhao.Count > 0) {
+                                for (int t = 0; t < fh; t++) {
+                                    string str = i + "-" + (t + 1);
+                                    int oldpage = 0;
+                                    try {
+                                        oldpage = fuhao.First(q => q.Value == str).Key;
+                                    } catch { }
+                                    if (oldpage > 0) {
+                                        pagecoun += 1;
+                                        OrderSave(oldpage, pagecoun, _path);
+                                        fuhao.Remove(oldpage);
+                                    }
+                                }
+                            }
                         }
                     }
                 }
                 return true;
 
-            } catch {
+            } catch{
                 return false;
             }
         }
@@ -2497,6 +2538,16 @@ namespace HLjscom
                     return tmp;
                 }
             }
+            if (_PageFuhao.Count > 0) {
+                _PageFuhao.GroupBy(item => item.Value)
+                    .Where(item => item.Count() > 1)
+                    .SelectMany(item => item)
+                    .ToList()
+                    .ForEach(item => tmp.Add(item.Key, item.Value));
+                if (tmp.Count >= 2) {
+                    return tmp;
+                }
+            }
             return tmp;
         }
 
@@ -2504,8 +2555,8 @@ namespace HLjscom
         private List<int> addpageqs()
         {
             List<int> tmp = new List<int>();
-            for (int i = 1; i <= RegPage - _PageAbc.Count; i++) {
-                if (_PageNumber.ContainsValue(i) == false) {
+            for (int i = 1; i <= RegPage - _PageAbc.Count - _PageFuhao.Count; i++) {
+                if (!_PageNumber.ContainsValue(i)) {
                     tmp.Add(i);
                 }
             }
@@ -2520,7 +2571,7 @@ namespace HLjscom
         {
             List<int> tmp = new List<int>();
             foreach (var item in _PageNumber.Values) {
-                if (item > RegPage - _PageAbc.Count) {
+                if (item > RegPage - _PageAbc.Count - _PageFuhao.Count) {
                     tmp.Add(item);
                 }
             }
@@ -2536,16 +2587,18 @@ namespace HLjscom
             if (_Imageview.Image == null || Filename.Trim().Length <= 0)
                 return false;
             if (_PageNumber.Count > 0) {
-                Dictionary<int, string> tmp = addcfpage();
-                if (dianjicount >= tmp.Count) {
-                    dianjicount = 0;
-                }
-                if (tmp.Count - 1 >= dianjicount) {
-                    MessageBox.Show(string.Format("第{0}页重复", tmp.Values.First()));
-                    int page = Convert.ToInt32(tmp.ElementAt(dianjicount).Key);
-                    _Gotopage(page);
-                    dianjicount++;
-                    return false;
+                if (addcfpage() != null) {
+                    Dictionary<int, string> tmp = addcfpage();
+                    if (dianjicount >= tmp.Count) {
+                        dianjicount = 0;
+                    }
+                    if (tmp.Count - 1 >= dianjicount) {
+                        MessageBox.Show(string.Format("第{0}页重复", tmp.Values.First()));
+                        int page = Convert.ToInt32(tmp.ElementAt(dianjicount).Key);
+                        _Gotopage(page);
+                        dianjicount++;
+                        return false;
+                    }
                 }
                 List<int> lstmp = addpageqs().ToList();
                 if (lstmp.Count > 0) {
@@ -2578,21 +2631,27 @@ namespace HLjscom
         private void OderAbc(string npage)
         {
             int oldpage = CrrentPage;
-            if (_PageAbc.ContainsKey(oldpage) == true) {
+            if (_PageAbc.ContainsKey(oldpage))
                 //修改页码
                 _PageAbc[oldpage] = npage;
-
-            }
             //	数据不存在 添加
-            else if (_PageAbc.Count <= 0 || _PageAbc.ContainsKey(oldpage) == false) {
+            else if (_PageAbc.Count <= 0 || !_PageAbc.ContainsKey(oldpage)) {
                 _PageAbc.Add(oldpage, npage);
             }
-            _SavePage();
+            //_SavePage();
         }
 
         private bool isExists(string str)
         {
             return Regex.Matches(str, "[a-zA-Z]").Count > 0;
+        }
+
+        private void OderFh(string page)
+        {
+            if (_PageFuhao.ContainsKey(CrrentPage))
+                _PageFuhao[CrrentPage] = page;
+            else if (_PageFuhao.Count <= 0 || !_PageFuhao.ContainsKey(CrrentPage))
+                _PageFuhao.Add(CrrentPage, page);
         }
 
         //判断数字或英文页码
@@ -2601,18 +2660,35 @@ namespace HLjscom
             try {
                 if (page == "已删除")
                     page = "-9999";
-                if (!isExists(page)) {
-                    if (_PageAbc.ContainsKey(CrrentPage) == true) {
+                if (page == "-9999") {
+                    if (_PageAbc.ContainsKey(CrrentPage))
                         _PageAbc.Remove(CrrentPage);
-                    }
+                    if (_PageFuhao.ContainsKey(CrrentPage))
+                        _PageFuhao.Remove(CrrentPage);
                     Oderpage(int.Parse(page));
                 }
-                else {
-                    if (_PageNumber.ContainsKey(CrrentPage) == true) {
+                else if (!isExists(page) && page.IndexOf("-") < 0) {
+                    if (_PageAbc.ContainsKey(CrrentPage))
+                        _PageAbc.Remove(CrrentPage);
+                    if (_PageFuhao.ContainsKey(CrrentPage))
+                        _PageFuhao.Remove(CrrentPage);
+                    Oderpage(int.Parse(page));
+                }
+                else if (page.IndexOf("-") <= 0) {
+                    if (_PageNumber.ContainsKey(CrrentPage))
                         _PageNumber.Remove(CrrentPage);
-                    }
+                    if (_PageFuhao.ContainsKey(CrrentPage))
+                        _PageFuhao.Remove(CrrentPage);
                     OderAbc(page);
                 }
+                else {
+                    if (_PageNumber.ContainsKey(CrrentPage))
+                        _PageNumber.Remove(CrrentPage);
+                    if (_PageAbc.ContainsKey(CrrentPage))
+                        _PageAbc.Remove(CrrentPage);
+                    OderFh(page);
+                }
+                _SavePage();
             } catch (Exception ex) {
                 MessageBox.Show(ex.ToString());
             }
@@ -2621,16 +2697,13 @@ namespace HLjscom
         private void Oderpage(int npage)
         {
             int oldpage = CrrentPage;
-            if (_PageNumber.ContainsKey(oldpage)) {
+            if (_PageNumber.ContainsKey(oldpage))
                 //修改页码
                 _PageNumber[oldpage] = npage;
-
-            }
             //	数据不存在 添加
             else if (_PageNumber.Count <= 0 || !_PageNumber.ContainsKey(oldpage)) {
                 _PageNumber.Add(oldpage, npage);
             }
-            _SavePage();
         }
 
         //读取已保存页码
@@ -2640,8 +2713,12 @@ namespace HLjscom
                 if (_Imageview.Image == null)
                     return "";
                 if (!_PageNumber.ContainsKey(CrrentPage)) {
-                    if (!_PageAbc.ContainsKey(CrrentPage))
-                        return "";
+                    if (!_PageAbc.ContainsKey(CrrentPage)) {
+                        if (!_PageFuhao.ContainsKey(CrrentPage))
+                            return "";
+                        else
+                            return _PageFuhao[CrrentPage].ToString();
+                    }
                     else
                         return _PageAbc[CrrentPage].ToString();
                 }

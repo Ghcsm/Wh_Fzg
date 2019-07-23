@@ -31,6 +31,8 @@
             this.TabControl = new DevComponents.DotNetBar.SuperTabControl();
             this.superTabControlPanel1 = new DevComponents.DotNetBar.SuperTabControlPanel();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.groupBox9 = new System.Windows.Forms.GroupBox();
+            this.LbKey = new System.Windows.Forms.ListBox();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
             this.combKeyzdyTkey = new DevComponents.DotNetBar.Controls.ComboBoxEx();
             this.comboItem4 = new DevComponents.Editors.ComboItem();
@@ -108,6 +110,7 @@
             this.TabControl.SuspendLayout();
             this.superTabControlPanel1.SuspendLayout();
             this.groupBox7.SuspendLayout();
+            this.groupBox9.SuspendLayout();
             this.groupBox8.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.groupBox6.SuspendLayout();
@@ -149,8 +152,8 @@
             this.TabControl.ControlBox.SubItems.AddRange(new DevComponents.DotNetBar.BaseItem[] {
             this.TabControl.ControlBox.MenuBox,
             this.TabControl.ControlBox.CloseBox});
-            this.TabControl.Controls.Add(this.TabcontrolArchStat);
             this.TabControl.Controls.Add(this.superTabControlPanel1);
+            this.TabControl.Controls.Add(this.TabcontrolArchStat);
             this.TabControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TabControl.Location = new System.Drawing.Point(3, 17);
             this.TabControl.Name = "TabControl";
@@ -178,7 +181,10 @@
             // 
             // groupBox7
             // 
+            this.groupBox7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.groupBox7.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox7.Controls.Add(this.groupBox9);
             this.groupBox7.Controls.Add(this.groupBox8);
             this.groupBox7.Location = new System.Drawing.Point(311, 13);
             this.groupBox7.Name = "groupBox7";
@@ -186,6 +192,29 @@
             this.groupBox7.TabIndex = 1;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "定义快捷键";
+            // 
+            // groupBox9
+            // 
+            this.groupBox9.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.groupBox9.Controls.Add(this.LbKey);
+            this.groupBox9.Location = new System.Drawing.Point(6, 309);
+            this.groupBox9.Name = "groupBox9";
+            this.groupBox9.Size = new System.Drawing.Size(524, 191);
+            this.groupBox9.TabIndex = 1;
+            this.groupBox9.TabStop = false;
+            this.groupBox9.Text = "已注册快捷键";
+            // 
+            // LbKey
+            // 
+            this.LbKey.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.LbKey.FormattingEnabled = true;
+            this.LbKey.ItemHeight = 12;
+            this.LbKey.Location = new System.Drawing.Point(3, 17);
+            this.LbKey.Name = "LbKey";
+            this.LbKey.Size = new System.Drawing.Size(518, 171);
+            this.LbKey.TabIndex = 0;
             // 
             // groupBox8
             // 
@@ -968,6 +997,7 @@
             this.TabControl.ResumeLayout(false);
             this.superTabControlPanel1.ResumeLayout(false);
             this.groupBox7.ResumeLayout(false);
+            this.groupBox9.ResumeLayout(false);
             this.groupBox8.ResumeLayout(false);
             this.groupBox8.PerformLayout();
             this.groupBox5.ResumeLayout(false);
@@ -1067,6 +1097,8 @@
         private DevComponents.Editors.ComboItem comboItem6;
         private DevComponents.Editors.ComboItem comboItem7;
         private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.GroupBox groupBox9;
+        private System.Windows.Forms.ListBox LbKey;
     }
 }
 

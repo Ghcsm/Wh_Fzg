@@ -758,7 +758,7 @@ namespace Csmdajc
                 }
                 PageIndexInfo = PageIndexInfo.Trim();
                 string sourefile = "";
-                if (T_ConFigure.FtpStyle == 2) {
+                if (T_ConFigure.FtpStyle ==0) {
                     if (archzt == 1)
                         sourefile = Path.Combine(T_ConFigure.FtpArchIndex, filetmp.Substring(0, 8), filetmp);
                     else
@@ -773,7 +773,7 @@ namespace Csmdajc
                     Common.Writelog(Clscheck.Archid, "质检退!");
                     Common.SetCheckFinish(arid, "", 2, (int)T_ConFigure.ArchStat.扫描完, PageIndexInfo);
                 }
-                if (T_ConFigure.FtpStyle != 1) {
+                if (T_ConFigure.FtpStyle == 1) {
                     try {
                         File.Delete(filetmp);
                     } catch { }

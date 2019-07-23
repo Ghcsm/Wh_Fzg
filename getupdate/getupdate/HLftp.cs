@@ -35,13 +35,13 @@ namespace getupdate
         {
             try
             {
-                string strSql = "select * from T_FtpInfo ";
+                string strSql = "select * from M_FtpInfo ";
                 DataTable dt = SQLHelper.ExcuteTable(strSql);               
                 DataRow dr = dt.Rows[0];
                 FtpIp = dr["IP"].ToString();
                 FtpPort = Convert.ToInt16(dr["Port"]);
                 FtpUser = dr["UserName"].ToString();
-                FtpPwd = dr["PWD"].ToString();
+                FtpPwd = Des.DesDecrypt1(dr["PWD"].ToString());
                 FtpPath = dr["ArchSave"].ToString();
                 Frmgetup.ftppath = dr["UpdatePath"].ToString();
                 Frmgetup.id = 1;
