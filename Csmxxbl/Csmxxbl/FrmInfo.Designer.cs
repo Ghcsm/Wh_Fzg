@@ -61,9 +61,12 @@
             // 
             this.gArchSelect1.Archid = 0;
             this.gArchSelect1.ArchImgFile = null;
+            this.gArchSelect1.ArchNo = null;
+            this.gArchSelect1.ArchPos = null;
             this.gArchSelect1.ArchRegPages = 0;
             this.gArchSelect1.Archstat = null;
             this.gArchSelect1.Archtype = null;
+            this.gArchSelect1.ArchXqzt = null;
             this.gArchSelect1.Archxystat = null;
             this.gArchSelect1.Boxsn = 0;
             this.gArchSelect1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -136,6 +139,7 @@
             this.Controls.Add(this.gr2);
             this.Controls.Add(this.gr1);
             this.Controls.Add(this.toolStrip1);
+            this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "FrmInfo";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

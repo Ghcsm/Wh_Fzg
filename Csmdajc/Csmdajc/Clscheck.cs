@@ -21,5 +21,8 @@ namespace Csmdajc
 
         public static string keystr = "";
         public static bool task { get; set; }
+
+        public static bool infobl { get; set; }=false;
+
     }
 }

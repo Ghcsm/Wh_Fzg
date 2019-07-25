@@ -359,6 +359,7 @@
             this.ClientSize = new System.Drawing.Size(872, 447);
             this.Controls.Add(this.grpan);
             this.Controls.Add(this.toolStrip1);
+            this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "FrmUser";
             this.Text = "FrmUser";

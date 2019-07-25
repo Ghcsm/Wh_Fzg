@@ -188,8 +188,8 @@
             this.superTabControl1.ControlBox.SubItems.AddRange(new DevComponents.DotNetBar.BaseItem[] {
             this.superTabControl1.ControlBox.MenuBox,
             this.superTabControl1.ControlBox.CloseBox});
-            this.superTabControl1.Controls.Add(this.superTabControlPanel2);
             this.superTabControl1.Controls.Add(this.superTabControlPanel1);
+            this.superTabControl1.Controls.Add(this.superTabControlPanel2);
             this.superTabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.superTabControl1.Location = new System.Drawing.Point(0, 25);
             this.superTabControl1.Name = "superTabControl1";
@@ -1510,6 +1510,7 @@
             this.ClientSize = new System.Drawing.Size(882, 654);
             this.Controls.Add(this.superTabControl1);
             this.Controls.Add(this.toolStrip1);
+            this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "FrmSplit";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

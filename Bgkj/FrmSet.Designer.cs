@@ -47,6 +47,17 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.tabModule = new DevComponents.DotNetBar.TabItem(this.components);
+            this.tabControlPanel2 = new DevComponents.DotNetBar.TabControlPanel();
+            this.chkUpdateTime = new System.Windows.Forms.CheckBox();
+            this.txtId = new System.Windows.Forms.TextBox();
+            this.butCle = new DevComponents.DotNetBar.ButtonX();
+            this.butOk = new DevComponents.DotNetBar.ButtonX();
+            this.txtTime = new DevComponents.DotNetBar.Controls.TextBoxX();
+            this.txtSn = new DevComponents.DotNetBar.Controls.TextBoxX();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.tabPer = new DevComponents.DotNetBar.TabItem(this.components);
             this.tabControlPanel4 = new DevComponents.DotNetBar.TabControlPanel();
             this.txtMenuxh = new System.Windows.Forms.TextBox();
             this.butMenuDel = new DevComponents.DotNetBar.ButtonX();
@@ -63,25 +74,14 @@
             this.chkMouduleColSet = new System.Windows.Forms.CheckedListBox();
             this.chkMouduleCol = new System.Windows.Forms.CheckedListBox();
             this.tabModuleSet = new DevComponents.DotNetBar.TabItem(this.components);
-            this.tabControlPanel2 = new DevComponents.DotNetBar.TabControlPanel();
-            this.chkUpdateTime = new System.Windows.Forms.CheckBox();
-            this.txtId = new System.Windows.Forms.TextBox();
-            this.butCle = new DevComponents.DotNetBar.ButtonX();
-            this.butOk = new DevComponents.DotNetBar.ButtonX();
-            this.txtTime = new DevComponents.DotNetBar.Controls.TextBoxX();
-            this.txtSn = new DevComponents.DotNetBar.Controls.TextBoxX();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.tabPer = new DevComponents.DotNetBar.TabItem(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.tabControl1)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabControlPanel1.SuspendLayout();
             this.gr1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pict)).BeginInit();
+            this.tabControlPanel2.SuspendLayout();
             this.tabControlPanel4.SuspendLayout();
             this.tabControlPanel3.SuspendLayout();
-            this.tabControlPanel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -302,6 +302,142 @@
             this.tabModule.Name = "tabModule";
             this.tabModule.Text = "模块设置";
             // 
+            // tabControlPanel2
+            // 
+            this.tabControlPanel2.Controls.Add(this.chkUpdateTime);
+            this.tabControlPanel2.Controls.Add(this.txtId);
+            this.tabControlPanel2.Controls.Add(this.butCle);
+            this.tabControlPanel2.Controls.Add(this.butOk);
+            this.tabControlPanel2.Controls.Add(this.txtTime);
+            this.tabControlPanel2.Controls.Add(this.txtSn);
+            this.tabControlPanel2.Controls.Add(this.label6);
+            this.tabControlPanel2.Controls.Add(this.label8);
+            this.tabControlPanel2.Controls.Add(this.label5);
+            this.tabControlPanel2.DisabledBackColor = System.Drawing.Color.Empty;
+            this.tabControlPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControlPanel2.Location = new System.Drawing.Point(0, 26);
+            this.tabControlPanel2.Name = "tabControlPanel2";
+            this.tabControlPanel2.Padding = new System.Windows.Forms.Padding(1);
+            this.tabControlPanel2.Size = new System.Drawing.Size(413, 255);
+            this.tabControlPanel2.Style.BackColor1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(142)))), ((int)(((byte)(179)))), ((int)(((byte)(231)))));
+            this.tabControlPanel2.Style.BackColor2.Color = System.Drawing.Color.FromArgb(((int)(((byte)(223)))), ((int)(((byte)(237)))), ((int)(((byte)(254)))));
+            this.tabControlPanel2.Style.Border = DevComponents.DotNetBar.eBorderType.SingleLine;
+            this.tabControlPanel2.Style.BorderColor.Color = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(97)))), ((int)(((byte)(156)))));
+            this.tabControlPanel2.Style.BorderSide = ((DevComponents.DotNetBar.eBorderSide)(((DevComponents.DotNetBar.eBorderSide.Left | DevComponents.DotNetBar.eBorderSide.Right) 
+            | DevComponents.DotNetBar.eBorderSide.Bottom)));
+            this.tabControlPanel2.Style.GradientAngle = 90;
+            this.tabControlPanel2.TabIndex = 5;
+            this.tabControlPanel2.TabItem = this.tabPer;
+            // 
+            // chkUpdateTime
+            // 
+            this.chkUpdateTime.AutoSize = true;
+            this.chkUpdateTime.BackColor = System.Drawing.Color.Transparent;
+            this.chkUpdateTime.Enabled = false;
+            this.chkUpdateTime.Location = new System.Drawing.Point(60, 156);
+            this.chkUpdateTime.Name = "chkUpdateTime";
+            this.chkUpdateTime.Size = new System.Drawing.Size(156, 16);
+            this.chkUpdateTime.TabIndex = 6;
+            this.chkUpdateTime.Text = "更新所有计算机授权时间";
+            this.chkUpdateTime.UseVisualStyleBackColor = false;
+            // 
+            // txtId
+            // 
+            this.txtId.Location = new System.Drawing.Point(60, 24);
+            this.txtId.Name = "txtId";
+            this.txtId.Size = new System.Drawing.Size(286, 21);
+            this.txtId.TabIndex = 1;
+            this.txtId.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtId_KeyPress);
+            this.txtId.Leave += new System.EventHandler(this.txtId_Leave);
+            // 
+            // butCle
+            // 
+            this.butCle.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.butCle.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.butCle.Location = new System.Drawing.Point(219, 196);
+            this.butCle.Name = "butCle";
+            this.butCle.Size = new System.Drawing.Size(86, 46);
+            this.butCle.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.butCle.TabIndex = 5;
+            this.butCle.Text = "取消";
+            this.butCle.Click += new System.EventHandler(this.butCle_Click);
+            // 
+            // butOk
+            // 
+            this.butOk.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.butOk.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.butOk.Location = new System.Drawing.Point(80, 196);
+            this.butOk.Name = "butOk";
+            this.butOk.Size = new System.Drawing.Size(86, 46);
+            this.butOk.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.butOk.TabIndex = 4;
+            this.butOk.Text = "设置";
+            this.butOk.Click += new System.EventHandler(this.butOk_Click);
+            // 
+            // txtTime
+            // 
+            // 
+            // 
+            // 
+            this.txtTime.Border.Class = "TextBoxBorder";
+            this.txtTime.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.txtTime.Location = new System.Drawing.Point(60, 115);
+            this.txtTime.Name = "txtTime";
+            this.txtTime.PreventEnterBeep = true;
+            this.txtTime.Size = new System.Drawing.Size(286, 21);
+            this.txtTime.TabIndex = 3;
+            this.txtTime.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtTime_KeyPress);
+            // 
+            // txtSn
+            // 
+            // 
+            // 
+            // 
+            this.txtSn.Border.Class = "TextBoxBorder";
+            this.txtSn.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.txtSn.Location = new System.Drawing.Point(60, 70);
+            this.txtSn.Name = "txtSn";
+            this.txtSn.PreventEnterBeep = true;
+            this.txtSn.Size = new System.Drawing.Size(286, 21);
+            this.txtSn.TabIndex = 2;
+            this.txtSn.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtSn_KeyPress);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.BackColor = System.Drawing.Color.Transparent;
+            this.label6.Location = new System.Drawing.Point(18, 120);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(41, 12);
+            this.label6.TabIndex = 0;
+            this.label6.Text = "期限：";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.BackColor = System.Drawing.Color.Transparent;
+            this.label8.Location = new System.Drawing.Point(18, 28);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(41, 12);
+            this.label8.TabIndex = 0;
+            this.label8.Text = "ID码：";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.BackColor = System.Drawing.Color.Transparent;
+            this.label5.Location = new System.Drawing.Point(16, 74);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(41, 12);
+            this.label5.TabIndex = 0;
+            this.label5.Text = "SN码：";
+            // 
+            // tabPer
+            // 
+            this.tabPer.AttachedControl = this.tabControlPanel2;
+            this.tabPer.Name = "tabPer";
+            this.tabPer.Text = "计算机授权";
+            // 
             // tabControlPanel4
             // 
             this.tabControlPanel4.Controls.Add(this.txtMenuxh);
@@ -486,148 +622,13 @@
             this.tabModuleSet.Name = "tabModuleSet";
             this.tabModuleSet.Text = "模块授权设置";
             // 
-            // tabControlPanel2
-            // 
-            this.tabControlPanel2.Controls.Add(this.chkUpdateTime);
-            this.tabControlPanel2.Controls.Add(this.txtId);
-            this.tabControlPanel2.Controls.Add(this.butCle);
-            this.tabControlPanel2.Controls.Add(this.butOk);
-            this.tabControlPanel2.Controls.Add(this.txtTime);
-            this.tabControlPanel2.Controls.Add(this.txtSn);
-            this.tabControlPanel2.Controls.Add(this.label6);
-            this.tabControlPanel2.Controls.Add(this.label8);
-            this.tabControlPanel2.Controls.Add(this.label5);
-            this.tabControlPanel2.DisabledBackColor = System.Drawing.Color.Empty;
-            this.tabControlPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControlPanel2.Location = new System.Drawing.Point(0, 26);
-            this.tabControlPanel2.Name = "tabControlPanel2";
-            this.tabControlPanel2.Padding = new System.Windows.Forms.Padding(1);
-            this.tabControlPanel2.Size = new System.Drawing.Size(413, 255);
-            this.tabControlPanel2.Style.BackColor1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(142)))), ((int)(((byte)(179)))), ((int)(((byte)(231)))));
-            this.tabControlPanel2.Style.BackColor2.Color = System.Drawing.Color.FromArgb(((int)(((byte)(223)))), ((int)(((byte)(237)))), ((int)(((byte)(254)))));
-            this.tabControlPanel2.Style.Border = DevComponents.DotNetBar.eBorderType.SingleLine;
-            this.tabControlPanel2.Style.BorderColor.Color = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(97)))), ((int)(((byte)(156)))));
-            this.tabControlPanel2.Style.BorderSide = ((DevComponents.DotNetBar.eBorderSide)(((DevComponents.DotNetBar.eBorderSide.Left | DevComponents.DotNetBar.eBorderSide.Right) 
-            | DevComponents.DotNetBar.eBorderSide.Bottom)));
-            this.tabControlPanel2.Style.GradientAngle = 90;
-            this.tabControlPanel2.TabIndex = 5;
-            this.tabControlPanel2.TabItem = this.tabPer;
-            // 
-            // chkUpdateTime
-            // 
-            this.chkUpdateTime.AutoSize = true;
-            this.chkUpdateTime.BackColor = System.Drawing.Color.Transparent;
-            this.chkUpdateTime.Enabled = false;
-            this.chkUpdateTime.Location = new System.Drawing.Point(60, 156);
-            this.chkUpdateTime.Name = "chkUpdateTime";
-            this.chkUpdateTime.Size = new System.Drawing.Size(156, 16);
-            this.chkUpdateTime.TabIndex = 6;
-            this.chkUpdateTime.Text = "更新所有计算机授权时间";
-            this.chkUpdateTime.UseVisualStyleBackColor = false;
-            // 
-            // txtId
-            // 
-            this.txtId.Location = new System.Drawing.Point(60, 24);
-            this.txtId.Name = "txtId";
-            this.txtId.Size = new System.Drawing.Size(286, 21);
-            this.txtId.TabIndex = 1;
-            this.txtId.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtId_KeyPress);
-            this.txtId.Leave += new System.EventHandler(this.txtId_Leave);
-            // 
-            // butCle
-            // 
-            this.butCle.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.butCle.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.butCle.Location = new System.Drawing.Point(219, 196);
-            this.butCle.Name = "butCle";
-            this.butCle.Size = new System.Drawing.Size(86, 46);
-            this.butCle.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.butCle.TabIndex = 5;
-            this.butCle.Text = "取消";
-            this.butCle.Click += new System.EventHandler(this.butCle_Click);
-            // 
-            // butOk
-            // 
-            this.butOk.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.butOk.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.butOk.Location = new System.Drawing.Point(80, 196);
-            this.butOk.Name = "butOk";
-            this.butOk.Size = new System.Drawing.Size(86, 46);
-            this.butOk.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.butOk.TabIndex = 4;
-            this.butOk.Text = "设置";
-            this.butOk.Click += new System.EventHandler(this.butOk_Click);
-            // 
-            // txtTime
-            // 
-            // 
-            // 
-            // 
-            this.txtTime.Border.Class = "TextBoxBorder";
-            this.txtTime.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.txtTime.Location = new System.Drawing.Point(60, 115);
-            this.txtTime.Name = "txtTime";
-            this.txtTime.PreventEnterBeep = true;
-            this.txtTime.Size = new System.Drawing.Size(286, 21);
-            this.txtTime.TabIndex = 3;
-            this.txtTime.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtTime_KeyPress);
-            // 
-            // txtSn
-            // 
-            // 
-            // 
-            // 
-            this.txtSn.Border.Class = "TextBoxBorder";
-            this.txtSn.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.txtSn.Location = new System.Drawing.Point(60, 70);
-            this.txtSn.Name = "txtSn";
-            this.txtSn.PreventEnterBeep = true;
-            this.txtSn.Size = new System.Drawing.Size(286, 21);
-            this.txtSn.TabIndex = 2;
-            this.txtSn.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtSn_KeyPress);
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.BackColor = System.Drawing.Color.Transparent;
-            this.label6.Location = new System.Drawing.Point(18, 120);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(41, 12);
-            this.label6.TabIndex = 0;
-            this.label6.Text = "期限：";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.BackColor = System.Drawing.Color.Transparent;
-            this.label8.Location = new System.Drawing.Point(18, 28);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(41, 12);
-            this.label8.TabIndex = 0;
-            this.label8.Text = "ID码：";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.BackColor = System.Drawing.Color.Transparent;
-            this.label5.Location = new System.Drawing.Point(16, 74);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(41, 12);
-            this.label5.TabIndex = 0;
-            this.label5.Text = "SN码：";
-            // 
-            // tabPer
-            // 
-            this.tabPer.AttachedControl = this.tabControlPanel2;
-            this.tabPer.Name = "tabPer";
-            this.tabPer.Text = "计算机授权";
-            // 
             // FrmSet
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(413, 281);
             this.Controls.Add(this.tabControl1);
+            this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.IsMdiContainer = true;
@@ -644,11 +645,11 @@
             this.gr1.ResumeLayout(false);
             this.gr1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pict)).EndInit();
+            this.tabControlPanel2.ResumeLayout(false);
+            this.tabControlPanel2.PerformLayout();
             this.tabControlPanel4.ResumeLayout(false);
             this.tabControlPanel4.PerformLayout();
             this.tabControlPanel3.ResumeLayout(false);
-            this.tabControlPanel2.ResumeLayout(false);
-            this.tabControlPanel2.PerformLayout();
             this.ResumeLayout(false);
 
         }

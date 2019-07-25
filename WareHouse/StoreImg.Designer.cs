@@ -278,6 +278,7 @@
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.gr1);
             this.Controls.Add(this.toolStrip1);
+            this.DoubleBuffered = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "StoreImg";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

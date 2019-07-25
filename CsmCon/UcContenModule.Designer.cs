@@ -27,11 +27,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UcContenModule));
             this.groupPanel1 = new DevComponents.DotNetBar.Controls.GroupPanel();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.lvConten = new System.Windows.Forms.ListView();
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.m_id = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.butDel = new DevComponents.DotNetBar.ButtonX();
             this.butNew = new DevComponents.DotNetBar.ButtonX();
@@ -40,10 +43,8 @@
             this.txtLb = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.label4 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.groupPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -97,6 +98,14 @@
             this.groupPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.groupPanel1.TabIndex = 0;
             // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(88, 63);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(241, 21);
+            this.textBox1.TabIndex = 4;
+            this.textBox1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox1_KeyPress);
+            // 
             // lvConten
             // 
             this.lvConten.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
@@ -130,6 +139,12 @@
             // 
             this.columnHeader2.Text = "标题";
             this.columnHeader2.Width = 300;
+            // 
+            // columnHeader4
+            // 
+            this.columnHeader4.DisplayIndex = 4;
+            this.columnHeader4.Text = "所属类型";
+            this.columnHeader4.Width = 200;
             // 
             // m_id
             // 
@@ -206,22 +221,6 @@
             this.label2.TabIndex = 0;
             this.label2.Text = "代码:";
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.Color.Transparent;
-            this.label1.Location = new System.Drawing.Point(19, 32);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 12);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "类别:";
-            // 
-            // columnHeader4
-            // 
-            this.columnHeader4.DisplayIndex = 4;
-            this.columnHeader4.Text = "所属类型";
-            this.columnHeader4.Width = 200;
-            // 
             // label4
             // 
             this.label4.AutoSize = true;
@@ -232,13 +231,15 @@
             this.label4.TabIndex = 0;
             this.label4.Text = "所属类型:";
             // 
-            // textBox1
+            // label1
             // 
-            this.textBox1.Location = new System.Drawing.Point(88, 63);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(241, 21);
-            this.textBox1.TabIndex = 4;
-            this.textBox1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox1_KeyPress);
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.Transparent;
+            this.label1.Location = new System.Drawing.Point(19, 32);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(35, 12);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "类别:";
             // 
             // UcContenModule
             // 
@@ -247,6 +248,7 @@
             this.ClientSize = new System.Drawing.Size(749, 444);
             this.Controls.Add(this.groupPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "UcContenModule";

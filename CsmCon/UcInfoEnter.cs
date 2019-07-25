@@ -75,6 +75,7 @@ namespace CsmCon
         {
             try {
                 TabPage tab = new TabPage();
+                tab.AutoSize = true;
                 tab.Name = str;
                 tab.Text = str;
                 tab.BackColor = Color.Transparent;

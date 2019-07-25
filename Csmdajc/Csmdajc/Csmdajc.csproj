@@ -173,6 +173,9 @@
     <EmbeddedResource Include="FrmCheck.resx">
       <DependentUpon>FrmCheck.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FrmCheck.zu-ZA.resx">
+      <DependentUpon>FrmCheck.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Frmwt.resx">
       <DependentUpon>Frmwt.cs</DependentUpon>
     </EmbeddedResource>

@@ -459,6 +459,7 @@
             this.Controls.Add(this.dockSite6);
             this.Controls.Add(this.dockSite7);
             this.Controls.Add(this.dockSite8);
+            this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FrmMain";

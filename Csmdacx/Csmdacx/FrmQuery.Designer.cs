@@ -28,9 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmQuery));
-            this.dotManger = new DevComponents.DotNetBar.DotNetBarManager(this.components);
+            this.dotManger = new DevComponents.DotNetBar.DotNetBarManager();
             this.dockSite4 = new DevComponents.DotNetBar.DockSite();
             this.dockSite9 = new DevComponents.DotNetBar.DockSite();
             this.bar3 = new DevComponents.DotNetBar.Bar();
@@ -847,6 +846,7 @@
             this.Controls.Add(this.dockSite6);
             this.Controls.Add(this.dockSite7);
             this.Controls.Add(this.dockSite8);
+            this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "FrmQuery";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

@@ -41,6 +41,7 @@
             this.c_type = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.c_stat = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.c_xyzd = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.c_archxq = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ImgList = new System.Windows.Forms.ImageList(this.components);
             this.panelTop = new System.Windows.Forms.Panel();
             this.combLx = new DevComponents.DotNetBar.Controls.ComboBoxEx();
@@ -56,7 +57,6 @@
             this.butPageUpdate = new DevComponents.DotNetBar.ButtonX();
             this.label1 = new System.Windows.Forms.Label();
             this.txtPages = new System.Windows.Forms.TextBox();
-            this.c_archxq = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.gr1.SuspendLayout();
             this.panelTop.SuspendLayout();
             this.gr2.SuspendLayout();
@@ -160,6 +160,10 @@
             // 
             this.c_xyzd.Text = "xy";
             this.c_xyzd.Width = 0;
+            // 
+            // c_archxq
+            // 
+            this.c_archxq.Text = "档案类型";
             // 
             // ImgList
             // 
@@ -317,16 +321,13 @@
             this.txtPages.TabIndex = 1;
             this.txtPages.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPages_KeyPress);
             // 
-            // c_archxq
-            // 
-            this.c_archxq.Text = "档案类型";
-            // 
             // gArchSelect
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.gr1);
             this.Controls.Add(this.gr2);
+            this.DoubleBuffered = true;
             this.Name = "gArchSelect";
             this.Size = new System.Drawing.Size(366, 462);
             this.Load += new System.EventHandler(this.gArchSelect_Load);

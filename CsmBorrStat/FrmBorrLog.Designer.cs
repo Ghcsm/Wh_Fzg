@@ -27,6 +27,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmBorrLog));
             this.gr = new System.Windows.Forms.GroupBox();
             this.chktime = new System.Windows.Forms.CheckBox();
             this.ButBorrDc = new DevComponents.DotNetBar.ButtonX();
@@ -36,6 +37,8 @@
             this.txtgjz = new System.Windows.Forms.TextBox();
             this.combCol = new DevComponents.DotNetBar.Controls.ComboBoxEx();
             this.combTable = new DevComponents.DotNetBar.Controls.ComboBoxEx();
+            this.comboItem1 = new DevComponents.Editors.ComboItem();
+            this.comboItem2 = new DevComponents.Editors.ComboItem();
             this.label5 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -44,8 +47,6 @@
             this.gr1 = new System.Windows.Forms.GroupBox();
             this.lvQuer = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.comboItem1 = new DevComponents.Editors.ComboItem();
-            this.comboItem2 = new DevComponents.Editors.ComboItem();
             this.saveFiledig = new System.Windows.Forms.SaveFileDialog();
             this.gr.SuspendLayout();
             this.gr1.SuspendLayout();
@@ -158,6 +159,14 @@
             this.combTable.TabIndex = 2;
             this.combTable.SelectedIndexChanged += new System.EventHandler(this.combTable_SelectedIndexChanged);
             // 
+            // comboItem1
+            // 
+            this.comboItem1.Text = "借阅记录";
+            // 
+            // comboItem2
+            // 
+            this.comboItem2.Text = "操作日志";
+            // 
             // label5
             // 
             this.label5.AutoSize = true;
@@ -233,14 +242,6 @@
             // 
             this.columnHeader1.Text = "序号";
             // 
-            // comboItem1
-            // 
-            this.comboItem1.Text = "借阅记录";
-            // 
-            // comboItem2
-            // 
-            this.comboItem2.Text = "操作日志";
-            // 
             // saveFiledig
             // 
             this.saveFiledig.Filter = "xls文件|*.xls";
@@ -254,7 +255,9 @@
             this.Controls.Add(this.gr1);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.gr);
+            this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FrmBorrLog";

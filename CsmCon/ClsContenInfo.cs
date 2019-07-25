@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -14,6 +15,7 @@ namespace CsmCon
 
     public class ClsContenInfo
     {
+      
         public string ContenTable { get; set; } = "";
         public string ContenWith { get; set; } = "";
         public string ContenTxtwith { get; set; } = "";
@@ -29,12 +31,16 @@ namespace CsmCon
 
         public List<string> LsModule = new List<string>();
         public List<string> LsModuleIndex = new List<string>();
+        public List<string> lsModulelx = new List<string>();
 
         public bool loadcon { get; set; }
         public int txtcol { get; set; } = 0;
         public int txtrows { get; set; } = 1;
         public string Pagestmp { get; set; } = "";
         public string Archtype { get; set; } = "";
+
+        private Panel ptxt;
+        AutoCompleteStringCollection source = new AutoCompleteStringCollection();
 
         public void GetContenInfo()
         {
@@ -60,6 +66,7 @@ namespace CsmCon
             }
             PagesWz = ContenCoList.IndexOf(ContenPages);
             TitleWz = ContenCoList.IndexOf(ContenTitle);
+            LoadModulels();
         }
 
         public void LoadModule(ListViewEx lsv)
@@ -73,11 +80,33 @@ namespace CsmCon
                     string code = dr["Code"].ToString();
                     string title = dr["Title"].ToString();
                     string titlelx = dr["TitleLx"].ToString();
+                    lvi.Text = code;
+                    lvi.SubItems.AddRange(new string[] { title, titlelx, type });
+                    lsv.BeginInvoke(new Action(() => { lsv.Items.Add(lvi); }));
+                }
+            }
+
+        }
+
+        public void LoadModulels()
+        {
+            LsModule.Clear();
+            lsModulelx.Clear();
+            LsModuleIndex.Clear();
+            DataTable dt = Common.GetcontenModule();
+            if (dt != null && dt.Rows.Count > 0) {
+                foreach (DataRow dr in dt.Rows) {
+                    ListViewItem lvi = new ListViewItem();
+                    string type = dr["CoType"].ToString();
+                    string code = dr["Code"].ToString();
+                    string title = dr["Title"].ToString();
+                    string titlelx = dr["TitleLx"].ToString();
                     LsModuleIndex.Add(code);
                     LsModule.Add(title);
-                    lvi.Text = title;
-                    lvi.SubItems.AddRange(new string[] { titlelx, code, type });
-                    lsv.BeginInvoke(new Action(() => { lsv.Items.Add(lvi); }));
+                    lsModulelx.Add(titlelx);
+                  //  byte[] bytes = Encoding.Default.GetBytes(title);
+                  //  string s = Encoding.GetEncoding("gb2312").GetString(bytes);
+                    source.Add(title);
                 }
             }
 
@@ -116,12 +145,11 @@ namespace CsmCon
                         lsv.Invoke(new Action(() => { lsv.Items.Add(lvi); }));
                         i++;
                     }
-
-                    lsv.Invoke(new Action(() =>
-                    {
-                        if (lsv.Items.Count > 0)
-                            lsv.Items[0].Selected = true;
-                    }));
+                    //lsv.Invoke(new Action(() =>
+                    //{
+                    //    if (lsv.Items.Count > 0)
+                    //        lsv.Items[lsv.Items.Count-1].Selected = true;
+                    //}));
 
                 } catch {
                 } finally {
@@ -168,6 +196,7 @@ namespace CsmCon
 
         public void GetControl(Panel pl)
         {
+            ptxt = pl;
             GetContenInfo();
             if (ContenTable == null || ContenTable.Trim().Length <= 0)
                 return;
@@ -224,12 +253,20 @@ namespace CsmCon
                 txt.Width = txtwidth;
                 txt.TabIndex = id;
                 txt.Tag = id;
+                if (txt.Tag.ToString() == (TitleWz+1).ToString())
+                {
+                    //东丽区自动匹配
+                    txt.AutoCompleteCustomSource = source;
+                    txt.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+                    txt.AutoCompleteSource = AutoCompleteSource.CustomSource;
+                    txt.Leave += Txt_Leave;
+                }
                 txt.BringToFront();
                 if (id <= colnum)
                     txt.Location = new Point(yy, 5);
                 else
                     txt.Location = new Point(yy, txtrows * 30 - 20);
-                txt.KeyPress += Txt_KeyPress; ;
+                txt.KeyPress += Txt_KeyPress; 
                 pl.Controls.Add(txt);
             }
             else {
@@ -260,6 +297,8 @@ namespace CsmCon
             }
         }
 
+       
+
         public void SetInfoTxt(Control p, int id, string str)
         {
             foreach (Control ct in p.Controls) {
@@ -273,7 +312,7 @@ namespace CsmCon
 
         public void SetInfoTxt(Control p, string str)
         {
-            int id = TitleWz;
+            int id = TitleWz+1;
             foreach (Control ct in p.Controls) {
                 if (ct is TextBox || ct is ComboBox) {
                     if (ct.Tag.ToString() == id.ToString()) {
@@ -305,7 +344,6 @@ namespace CsmCon
                     }
                 }
             }
-
             if (id > 1)
                 return true;
             else
@@ -323,6 +361,21 @@ namespace CsmCon
         {
             if (e.KeyChar == 13)
                 SendKeys.Send("{Tab}");
+           
         }
+        private void Txt_Leave(object sender, EventArgs e)
+        {
+            TextBox txt = (TextBox)sender;
+            //东丽区自动配置，输入标题时 目录种类显示
+            if (txt.Tag.ToString() == (PagesWz).ToString()) {
+                int id = LsModule.IndexOf(txt.Text.Trim());
+                string str = "";
+                if (id >= 0) {
+                    str = lsModulelx[id].ToString();
+                    UcContents.Setxtxtls(ptxt, PagesWz, str);
+                }
+            }
+        }
+
     }
 }

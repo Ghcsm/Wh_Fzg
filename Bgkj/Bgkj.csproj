@@ -107,9 +107,6 @@
     <Reference Include="CsmOcr">
       <HintPath>..\CsmOcr\bin\x86\Debug\CsmOcr.dll</HintPath>
     </Reference>
-    <Reference Include="Csmocrx">
-      <HintPath>..\Csmocrx\Csmocrx\bin\x86\Debug\Csmocrx.dll</HintPath>
-    </Reference>
     <Reference Include="Csmrzgl">
       <HintPath>..\Csmrzgl\Csmrzgl\bin\x86\Debug\Csmrzgl.dll</HintPath>
     </Reference>

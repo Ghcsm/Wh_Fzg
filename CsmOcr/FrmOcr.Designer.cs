@@ -299,6 +299,7 @@
             this.ClientSize = new System.Drawing.Size(1147, 640);
             this.Controls.Add(this.groupPanel1);
             this.Controls.Add(this.toolStrip1);
+            this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "FrmOcr";
             this.Text = "Form1";

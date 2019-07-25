@@ -27,6 +27,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UcInfoEnter));
             this.tabControl = new System.Windows.Forms.TabControl();
             this.gr = new System.Windows.Forms.GroupBox();
             this.gr.SuspendLayout();
@@ -34,32 +35,26 @@
             // 
             // tabControl
             // 
-            this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl.Location = new System.Drawing.Point(3, 17);
+            resources.ApplyResources(this.tabControl, "tabControl");
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(817, 481);
-            this.tabControl.TabIndex = 0;
             // 
             // gr
             // 
             this.gr.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.gr.Controls.Add(this.tabControl);
-            this.gr.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gr.Location = new System.Drawing.Point(0, 0);
+            resources.ApplyResources(this.gr, "gr");
             this.gr.Name = "gr";
-            this.gr.Size = new System.Drawing.Size(823, 501);
-            this.gr.TabIndex = 0;
             this.gr.TabStop = false;
             // 
             // UcInfoEnter
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.Controls.Add(this.gr);
+            this.DoubleBuffered = true;
             this.Name = "UcInfoEnter";
-            this.Size = new System.Drawing.Size(823, 501);
             this.gr.ResumeLayout(false);
             this.ResumeLayout(false);
 

@@ -106,7 +106,7 @@ namespace CsmBorrStat
                 int rows = wsheek.LastRow + 1;
                 for (int i = 0; i < lvQuer.Items.Count; i++) {
                     for (int c = 0; c < lvQuer.Columns.Count; c++) {
-                        wsheek.Range[rows + i, c + 1].Text = lv.Items[i].SubItems[c].Text;
+                        wsheek.Range[rows + i, c + 1].Text =lvQuer.Items[i].SubItems[c].Text;
                     }
                 }
                 work.SaveToFile(file, FileFormat.Version2007);

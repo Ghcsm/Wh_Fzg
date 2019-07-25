@@ -337,6 +337,7 @@
             this.Controls.Add(this.dockSite6);
             this.Controls.Add(this.dockSite7);
             this.Controls.Add(this.dockSite8);
+            this.DoubleBuffered = true;
             this.Name = "ImgBrow";
             this.Size = new System.Drawing.Size(1208, 558);
             this.dockSite9.ResumeLayout(false);

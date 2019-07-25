@@ -41,18 +41,23 @@
             this.butEdit = new DevComponents.DotNetBar.ButtonX();
             this.butAdd = new DevComponents.DotNetBar.ButtonX();
             this.gr1 = new System.Windows.Forms.GroupBox();
+            this.splitCont = new System.Windows.Forms.SplitContainer();
             this.LvContents = new DevComponents.DotNetBar.Controls.ListViewEx();
             this.colContentsSn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colContentsTitle = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.LvModule = new DevComponents.DotNetBar.Controls.ListViewEx();
-            this.colDoduleTitle = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colDoduleCode = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colDoduleTitle = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colDodulelx = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.gr2 = new System.Windows.Forms.GroupBox();
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.gr0.SuspendLayout();
             this.gr1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitCont)).BeginInit();
+            this.splitCont.Panel1.SuspendLayout();
+            this.splitCont.Panel2.SuspendLayout();
+            this.splitCont.SuspendLayout();
             this.gr2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -68,7 +73,7 @@
             this.gr0.Controls.Add(this.label1);
             this.gr0.Location = new System.Drawing.Point(3, 3);
             this.gr0.Name = "gr0";
-            this.gr0.Size = new System.Drawing.Size(470, 183);
+            this.gr0.Size = new System.Drawing.Size(535, 183);
             this.gr0.TabIndex = 0;
             this.gr0.TabStop = false;
             // 
@@ -92,7 +97,7 @@
             this.panel1.AutoScroll = true;
             this.panel1.Location = new System.Drawing.Point(6, 42);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(458, 135);
+            this.panel1.Size = new System.Drawing.Size(523, 135);
             this.panel1.TabIndex = 3;
             // 
             // txtCode
@@ -191,19 +196,32 @@
             this.gr1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.gr1.Controls.Add(this.LvContents);
-            this.gr1.Controls.Add(this.LvModule);
+            this.gr1.Controls.Add(this.splitCont);
             this.gr1.Location = new System.Drawing.Point(3, 192);
             this.gr1.Name = "gr1";
-            this.gr1.Size = new System.Drawing.Size(384, 321);
+            this.gr1.Size = new System.Drawing.Size(449, 321);
             this.gr1.TabIndex = 2;
             this.gr1.TabStop = false;
             // 
+            // splitCont
+            // 
+            this.splitCont.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitCont.Location = new System.Drawing.Point(3, 17);
+            this.splitCont.Name = "splitCont";
+            // 
+            // splitCont.Panel1
+            // 
+            this.splitCont.Panel1.Controls.Add(this.LvContents);
+            // 
+            // splitCont.Panel2
+            // 
+            this.splitCont.Panel2.Controls.Add(this.LvModule);
+            this.splitCont.Size = new System.Drawing.Size(443, 301);
+            this.splitCont.SplitterDistance = 231;
+            this.splitCont.TabIndex = 0;
+            // 
             // LvContents
             // 
-            this.LvContents.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             // 
             // 
             // 
@@ -213,13 +231,14 @@
             this.colContentsSn,
             this.colContentsTitle});
             this.LvContents.DisabledBackColor = System.Drawing.Color.Empty;
+            this.LvContents.Dock = System.Windows.Forms.DockStyle.Fill;
             this.LvContents.Font = new System.Drawing.Font("宋体", 12F);
             this.LvContents.FullRowSelect = true;
             this.LvContents.GridLines = true;
             this.LvContents.HideSelection = false;
-            this.LvContents.Location = new System.Drawing.Point(5, 17);
+            this.LvContents.Location = new System.Drawing.Point(0, 0);
             this.LvContents.Name = "LvContents";
-            this.LvContents.Size = new System.Drawing.Size(205, 298);
+            this.LvContents.Size = new System.Drawing.Size(231, 301);
             this.LvContents.SmallImageList = this.imageList1;
             this.LvContents.TabIndex = 5;
             this.LvContents.TabStop = false;
@@ -245,39 +264,43 @@
             // 
             // LvModule
             // 
-            this.LvModule.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             // 
             // 
             // 
             this.LvModule.Border.Class = "ListViewBorder";
             this.LvModule.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.LvModule.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.colDoduleCode,
             this.colDoduleTitle,
             this.columnHeader1,
-            this.colDoduleCode,
             this.colDodulelx});
             this.LvModule.DisabledBackColor = System.Drawing.Color.Empty;
+            this.LvModule.Dock = System.Windows.Forms.DockStyle.Fill;
             this.LvModule.FullRowSelect = true;
             this.LvModule.GridLines = true;
             this.LvModule.HideSelection = false;
-            this.LvModule.Location = new System.Drawing.Point(207, 17);
+            this.LvModule.Location = new System.Drawing.Point(0, 0);
             this.LvModule.Name = "LvModule";
-            this.LvModule.Size = new System.Drawing.Size(171, 298);
+            this.LvModule.Size = new System.Drawing.Size(208, 301);
             this.LvModule.TabIndex = 0;
             this.LvModule.TabStop = false;
             this.LvModule.UseCompatibleStateImageBehavior = false;
             this.LvModule.View = System.Windows.Forms.View.Details;
             this.LvModule.DoubleClick += new System.EventHandler(this.LvModule_DoubleClick);
             // 
+            // colDoduleCode
+            // 
+            this.colDoduleCode.Text = "代码";
+            // 
             // colDoduleTitle
             // 
             this.colDoduleTitle.Text = "标题";
             this.colDoduleTitle.Width = 150;
             // 
-            // colDoduleCode
+            // columnHeader1
             // 
-            this.colDoduleCode.Text = "代码";
+            this.columnHeader1.Text = "标题类型";
+            this.columnHeader1.Width = 80;
             // 
             // colDodulelx
             // 
@@ -291,30 +314,30 @@
             this.gr2.Controls.Add(this.butEdit);
             this.gr2.Controls.Add(this.butModule);
             this.gr2.Controls.Add(this.butDel);
-            this.gr2.Location = new System.Drawing.Point(393, 192);
+            this.gr2.Location = new System.Drawing.Point(458, 192);
             this.gr2.Name = "gr2";
             this.gr2.Size = new System.Drawing.Size(80, 321);
             this.gr2.TabIndex = 1;
             this.gr2.TabStop = false;
-            // 
-            // columnHeader1
-            // 
-            this.columnHeader1.Text = "标题类型";
-            this.columnHeader1.Width = 80;
             // 
             // UcContents
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.gr2);
-            this.Controls.Add(this.gr1);
             this.Controls.Add(this.gr0);
+            this.Controls.Add(this.gr1);
+            this.DoubleBuffered = true;
             this.Name = "UcContents";
-            this.Size = new System.Drawing.Size(476, 516);
+            this.Size = new System.Drawing.Size(541, 516);
             this.Load += new System.EventHandler(this.UcContents_Load);
             this.gr0.ResumeLayout(false);
             this.gr0.PerformLayout();
             this.gr1.ResumeLayout(false);
+            this.splitCont.Panel1.ResumeLayout(false);
+            this.splitCont.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitCont)).EndInit();
+            this.splitCont.ResumeLayout(false);
             this.gr2.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -325,7 +348,6 @@
         private System.Windows.Forms.GroupBox gr0;
         private System.Windows.Forms.GroupBox gr1;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox txtCode;
         private System.Windows.Forms.CheckBox chbModule;
         private DevComponents.DotNetBar.ButtonX butModule;
         private DevComponents.DotNetBar.ButtonX butDel;
@@ -344,5 +366,7 @@
         private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.ColumnHeader colDodulelx;
         private System.Windows.Forms.ColumnHeader columnHeader1;
+        private System.Windows.Forms.SplitContainer splitCont;
+        public System.Windows.Forms.TextBox txtCode;
     }
 }

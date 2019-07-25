@@ -27,7 +27,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.gr0 = new DevComponents.DotNetBar.Controls.GroupPanel();
             this.butPrintTm = new DevComponents.DotNetBar.ButtonX();
@@ -38,18 +37,18 @@
             this.tabControlPrint = new DevComponents.DotNetBar.TabControl();
             this.tabControlPanel2 = new DevComponents.DotNetBar.TabControlPanel();
             this.panePrintInfoShow = new DevComponents.DotNetBar.PanelEx();
-            this.tabItemInfoColShow = new DevComponents.DotNetBar.TabItem(this.components);
+            this.tabItemInfoColShow = new DevComponents.DotNetBar.TabItem();
             this.tabControlPanel3 = new DevComponents.DotNetBar.TabControlPanel();
             this.panelPrintXY = new DevComponents.DotNetBar.PanelEx();
             this.butPrintXyinfo = new DevComponents.DotNetBar.ButtonX();
-            this.tabItemInfoColXy = new DevComponents.DotNetBar.TabItem(this.components);
+            this.tabItemInfoColXy = new DevComponents.DotNetBar.TabItem();
             this.gr1 = new System.Windows.Forms.GroupBox();
             this.tabContrSelect = new DevComponents.DotNetBar.TabControl();
             this.tabControlSelectPanel1 = new DevComponents.DotNetBar.TabControlPanel();
             this.rbboxOne = new System.Windows.Forms.RadioButton();
             this.rbBoxAll = new System.Windows.Forms.RadioButton();
             this.gArchSelect1 = new CsmCon.gArchSelect();
-            this.tabSelectbox = new DevComponents.DotNetBar.TabItem(this.components);
+            this.tabSelectbox = new DevComponents.DotNetBar.TabItem();
             this.tabControlPanel1 = new DevComponents.DotNetBar.TabControlPanel();
             this.lbInfo = new System.Windows.Forms.Label();
             this.butDelbox = new DevComponents.DotNetBar.ButtonX();
@@ -62,7 +61,7 @@
             this.c_id = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.c_box1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.c_box2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.tabItemboxRange = new DevComponents.DotNetBar.TabItem(this.components);
+            this.tabItemboxRange = new DevComponents.DotNetBar.TabItem();
             this.labStat = new System.Windows.Forms.Label();
             this.gr0.SuspendLayout();
             this.gr2.SuspendLayout();
@@ -578,6 +577,7 @@
             this.ClientSize = new System.Drawing.Size(929, 567);
             this.Controls.Add(this.gr0);
             this.Controls.Add(this.toolStrip1);
+            this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "FrmPrint";
             this.Text = "FrmPrint";

@@ -455,6 +455,15 @@ namespace DAL
 
         #region ScanIndexCheckModule
 
+        public static bool GetConteninfoblchk()
+        {
+            string str = "select InfoCheck from M_GenSetInfo";
+            object obj = SQLHelper.ExecScalar(str);
+            if (obj == null || obj.ToString().Trim().Length<=0)
+                return false;
+            bool bl = Convert.ToBoolean(obj);
+            return bl;
+        }
 
         public static DataTable GetSqlkey(string str)
         {
@@ -498,8 +507,8 @@ namespace DAL
             p[1] = new SqlParameter("@FileName", file);
             p[2] = new SqlParameter("@Archid", arid);
             p[3] = new SqlParameter("@ArchState", zt);
-            p[4] = new SqlParameter("@PageIndexInfo", "");
-            p[5] = new SqlParameter("@stat", 1);
+            p[4] = new SqlParameter("@stat", 1);
+            p[5] = new SqlParameter("@PageIndexInfo", "");
             SQLHelper.ExecuteNonQuery(strSql, CommandType.StoredProcedure, p);
         }
         public static void SetCheckFinish(int arid, string file, int check, int stat, string info)
@@ -585,7 +594,7 @@ namespace DAL
         {
             try {
                 string strSql = "";
-                if (T_User.LoginName != "Admin")
+                if (T_User.UserId != 1)
                     strSql = "select TypeModule'模式',Archid'卷id',ArchPos'案卷号',FileName'文件名',ArchStat'流程',Filepath'路径',pages '页码',Userid'用户',IP,DateTime'时间' from M_UpTask where Userid=@userid";
                 else
                     strSql = "select TypeModule'模式',Archid'卷id',ArchPos'案卷号',FileName'文件名',ArchStat'流程',Filepath'路径',pages '页码',Userid'用户',IP,DateTime'时间' from M_UpTask";
@@ -595,7 +604,6 @@ namespace DAL
             } catch {
                 return null;
             }
-
         }
 
 
@@ -646,7 +654,7 @@ namespace DAL
 
         }
 
-        #endregion
+        #endregion.
 
         #region Printparm
 
@@ -1429,10 +1437,10 @@ namespace DAL
             }
         }
 
-        public static int CleaState(int ArchID)
+        public static int CleaPagesinfo(int ArchID)
         {
             try {
-                string strSql = "update M_IMAGEFILE set ArchState=0 where ID=@id";
+                string strSql = "update M_IMAGEFILE set PageIndexInfo='' where ID=@id";
                 SqlParameter p1 = new SqlParameter("@id", ArchID);
                 int i = Convert.ToInt32(SQLHelper.ExecScalar(strSql, p1));
                 return i;

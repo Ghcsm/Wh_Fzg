@@ -660,9 +660,9 @@ namespace DAL
             return dt;
         }
 
-        public static void SaveGensetInfo(string table, string info, string name, string num, string width, string txtwidth, string wycol)
+        public static void SaveGensetInfo(string table, string info, string name, string num, string width, string txtwidth, string wycol,bool bl)
         {
-            string strSql = "insert into  M_GenSetInfo(InfoTable,InfoAddzd,InfoName,InfoNum,InfoLabWidth,InfoTxtWidth,Wycol) values(@table,@info,@name,@num,@width,@txtwidth,@wycol)";
+            string strSql = "insert into  M_GenSetInfo(InfoTable,InfoAddzd,InfoName,InfoNum,InfoLabWidth,InfoTxtWidth,Wycol,InfoCheck) values(@table,@info,@name,@num,@width,@txtwidth,@wycol,@bl)";
             SqlParameter[] par =
             {
                 new SqlParameter("@table", table),
@@ -671,13 +671,14 @@ namespace DAL
                 new SqlParameter("@num", num),
                 new SqlParameter("@width", width),
                 new SqlParameter("@txtwidth", txtwidth),
-                new SqlParameter("@wycol", wycol)
+                new SqlParameter("@wycol", wycol),
+                new SqlParameter("@bl", bl)
             };
             SQLHelper.ExecScalar(strSql, par);
         }
-        public static void UpdateGensetInfo(string table, string info, string name, string num, string width, string txtwith, string wycol)
+        public static void UpdateGensetInfo(string table, string info, string name, string num, string width, string txtwith, string wycol,bool bl)
         {
-            string strSql = "update M_GenSetInfo set InfoAddzd=@info, InfoName=@name, InfoNum=@num,InfoLabWidth=@width,InfoTxtWidth=@txtwith, wycol=@wycol where InfoTable=@table";
+            string strSql = "update M_GenSetInfo set InfoAddzd=@info, InfoName=@name, InfoNum=@num,InfoLabWidth=@width,InfoTxtWidth=@txtwith, wycol=@wycol where InfoTable=@table,InfoCheck=@bl";
             SqlParameter[] par =
             {
                 new SqlParameter("@table", table),
@@ -686,7 +687,8 @@ namespace DAL
                 new SqlParameter("@num", num),
                 new SqlParameter("@width", width),
                 new SqlParameter("@txtwith", txtwith),
-                new SqlParameter("@wycol", wycol)
+                new SqlParameter("@wycol", wycol),
+                new SqlParameter("@bl", bl)
             };
             SQLHelper.ExecScalar(strSql, par);
         }

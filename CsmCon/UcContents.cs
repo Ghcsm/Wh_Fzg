@@ -45,9 +45,6 @@ namespace CsmCon
             info.LoadContents(ArchId, LvContents, chkTspages.Checked);
 
         }
-
-
-
         private void Lvnameadd()
         {
             if (info.ContenCoList.Count <= 0)
@@ -67,11 +64,13 @@ namespace CsmCon
             if (chbModule.Checked) {
                 this.LvContents.Width = this.gr1.Width - 176;
                 this.LvModule.Visible = true;
+                splitCont.Panel2Collapsed = false;
                 info.LoadModule(LvModule);
             }
             else {
                 this.LvContents.Width = this.gr1.Width - 10;
                 this.LvModule.Visible = false;
+                splitCont.Panel2Collapsed = true;
             }
         }
 
@@ -153,7 +152,6 @@ namespace CsmCon
             }
         }
 
-
         private void ContentsEdit()
         {
             if (!istxt((false)))
@@ -216,9 +214,8 @@ namespace CsmCon
                 return;
             }
             AddTitle();
-            if (this.LvModule.Items.Count > 0)
-                this.LvModule.Items[this.LvModule.Items.Count - 1].EnsureVisible();
-
+            //if (this.LvModule.Items.Count > 0)
+            //    this.LvModule.Items[this.LvModule.Items.Count - 1].EnsureVisible();
         }
 
         public void LoadContents(int arid, int maxpage)
@@ -243,7 +240,12 @@ namespace CsmCon
                     return;
                 if (info.LsModuleIndex.Count > 0 && info.LsModule.Count > 0) {
                     string sttCode = this.txtCode.Text.Trim();
-                    string str = info.LsModule[info.LsModuleIndex.IndexOf(sttCode)];
+                   // int id = info.LsModuleIndex.IndexOf(sttCode);
+                    int id;
+                    bool bl = int.TryParse(sttCode, out id);
+                    if (!bl)
+                        return;
+                    string str = info.LsModule[id];
                     info.SetInfoTxt(panel1, str);
                 }
             }
@@ -305,6 +307,18 @@ namespace CsmCon
             info.SetInfoTxt(panel1, pid, CrragePage.ToString());
             info.SetInfoTxt(panel1, tid, title);
         }
+
+        public static void Setxtxtls(Panel p,int id, string str)
+        {
+            foreach (Control ct in p.Controls) {
+                if (ct is TextBox || ct is ComboBox) {
+                    if (ct.Tag.ToString() == (id+2).ToString()) {
+                        ct.Text = str;
+                    }
+                }
+            }
+        }
+
         private void butDel_Click(object sender, EventArgs e)
         {
             if (ArchStat >= (int)T_ConFigure.ArchStat.质检完 && ArchCheckZt == 0) {
@@ -324,6 +338,8 @@ namespace CsmCon
                     LvContents.SelectedItems.Clear();
                     LvContents.Items[x].Selected = true;
                 }
+                else if (page > 0)
+                    info.SetInfoTxt(panel1, info.PagesWz + 1, page.ToString());
             } catch { }
         }
 

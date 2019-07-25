@@ -105,6 +105,7 @@
             this.dockSite7 = new DevComponents.DotNetBar.DockSite();
             this.dockSite3 = new DevComponents.DotNetBar.DockSite();
             this.odgInsterFile = new System.Windows.Forms.OpenFileDialog();
+            this.toolStripSplitTag = new System.Windows.Forms.ToolStripButton();
             this.dockSite9.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bar2)).BeginInit();
             this.bar2.SuspendLayout();
@@ -645,6 +646,7 @@
             this.toolStripFiltr,
             this.toolStripSplit,
             this.toolProess,
+            this.toolStripSplitTag,
             this.toolStripSeparator5,
             this.toolArchno});
             this.toolstripmain1.Location = new System.Drawing.Point(0, 0);
@@ -912,6 +914,17 @@
             this.dockSite3.TabIndex = 3;
             this.dockSite3.TabStop = false;
             // 
+            // toolStripSplitTag
+            // 
+            this.toolStripSplitTag.Font = new System.Drawing.Font("微软雅黑", 11F);
+            this.toolStripSplitTag.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.toolStripSplitTag.Image = ((System.Drawing.Image)(resources.GetObject("toolStripSplitTag.Image")));
+            this.toolStripSplitTag.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripSplitTag.Name = "toolStripSplitTag";
+            this.toolStripSplitTag.Size = new System.Drawing.Size(59, 24);
+            this.toolStripSplitTag.Text = "标记";
+            this.toolStripSplitTag.Click += new System.EventHandler(this.toolStripSplitTag_Click);
+            // 
             // FrmIndex
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -927,6 +940,7 @@
             this.Controls.Add(this.dockSite6);
             this.Controls.Add(this.dockSite7);
             this.Controls.Add(this.dockSite8);
+            this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.KeyPreview = true;
             this.Name = "FrmIndex";
@@ -1037,5 +1051,6 @@
         private System.Windows.Forms.ToolStripStatusLabel toollabchecktime;
         private System.Windows.Forms.ToolStripStatusLabel toollabenter;
         private System.Windows.Forms.ToolStripStatusLabel toollabentertime;
+        private System.Windows.Forms.ToolStripButton toolStripSplitTag;
     }
 }

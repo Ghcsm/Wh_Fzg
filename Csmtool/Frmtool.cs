@@ -102,8 +102,11 @@ namespace Csmtool
                 Common.ClearInfoWrok(arch, 2);
             else if (rabcleCheck.Checked)
                 Common.ClearInfoWrok(arch, 3);
+            if (radclePage.Checked)
+                Common.CleaPagesinfo(arch);
             MessageBox.Show("操作完成");
         }
+
 
         private void butStart_Click(object sender, EventArgs e)
         {
@@ -132,7 +135,10 @@ namespace Csmtool
             }
             if (rabcleScan.Checked)
                 CleScanstat(arid, boxsn, archno);
-            else Cleinfo(arid, 0);
+            else if (radclePage.Checked)
+                Cleinfo(arid, 0);
+            else
+                Cleinfo(arid, 0);
 
         }
 
@@ -503,7 +509,7 @@ namespace Csmtool
             if ((e.KeyValue >= 33 && e.KeyValue <= 40) ||
                 (e.KeyValue >= 65 && e.KeyValue <= 90) ||   //a-z/A-Z
                 (e.KeyValue >= 112 && e.KeyValue <= 123) ||
-                e.KeyValue>=96 && e.KeyValue==101 )   //F1-F12
+                e.KeyValue>=96 && e.KeyValue==111 )   //F1-F12
             {
                 keyValue.Append(e.KeyCode);
             }
@@ -627,7 +633,6 @@ namespace Csmtool
                             str = "Del";
                         string strs = s + ":" + c+str;
                         LbKey.Items.Add(strs);
-
                     }
                 }
 

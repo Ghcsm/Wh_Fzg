@@ -9,6 +9,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -52,7 +53,7 @@ namespace CsmOcr
 
         private void Downjd(object sender, PChangeEventArgs e)
         {
-            this.toolStrip1.BeginInvoke(new Action(() =>
+            this.toolStrip1.Invoke(new Action(() =>
             {
                 this.toolProess.Visible = true;
                 this.toolProess.Minimum = 0;
@@ -64,28 +65,6 @@ namespace CsmOcr
             }));
         }
 
-        private async void LoadFile(string file)
-        {
-            if (Common.Gettask(Archid) > 0) {
-                return;
-            }
-            int stat = Common.GetArchWorkState(Archid);
-            if (stat < (int)T_ConFigure.ArchStat.排序完) {
-                return;
-            }
-            if (stat == (int)T_ConFigure.ArchStat.质检中) {
-                return;
-            }
-            bool b = await LoadFileImg(file);
-            if (b) {
-                if (!File.Exists(FileNametmp)) {
-                    return;
-                }
-            }
-            else
-                return;
-            OcrTask(file);
-        }
 
         private int Getywid(string str)
         {
@@ -114,60 +93,57 @@ namespace CsmOcr
             return str;
         }
 
-        private Task<bool> LoadFileImg(string filetmp)
+        private bool LoadFileImg(string filetmp)
         {
-            return Task.Run(() =>
-            {
-                try {
-                    if (T_ConFigure.FtpStyle == 1) {
-                        string sourefile = "";
-                        string goalfile = "";
-                        string path = "";
-                        string localPath = Path.Combine(T_ConFigure.FtpTmpPath, T_ConFigure.TmpSave, filetmp.Substring(0, 8));
-                        string localScanFile = Path.Combine(T_ConFigure.FtpTmpPath, T_ConFigure.TmpSave, filetmp.Substring(0, 8),
-                              FileNametmp);
-                        FileNametmp = localScanFile;
-                        if (!Directory.Exists(localPath)) {
-                            Directory.CreateDirectory(localPath);
-                        }
-                        if (File.Exists(localScanFile)) {
-                            File.Delete(localScanFile);
-                        }
-                        sourefile = Path.Combine(T_ConFigure.FtpArchIndex, filetmp.Substring(0, 8), filetmp);
-                        goalfile = Path.Combine(T_ConFigure.FtpTmp, T_ConFigure.TmpSave, filetmp.Substring(0, 8), filetmp);
-                        path = Path.Combine(T_ConFigure.FtpTmp, T_ConFigure.TmpSave, filetmp.Substring(0, 8));
-                        sourefile = Path.Combine(T_ConFigure.FtpArchIndex, filetmp.Substring(0, 8), filetmp);
-                        if (ftp.FtpCheckFile(sourefile)) {
-                            if (ftp.FtpMoveFile(sourefile, goalfile, path))
-                                return (FileMoveBool(localScanFile));
-                        }
+            try {
+                if (T_ConFigure.FtpStyle == 1) {
+                    string sourefile = "";
+                    string goalfile = "";
+                    string path = "";
+                    string localPath = Path.Combine(T_ConFigure.FtpTmpPath, T_ConFigure.TmpSave, filetmp.Substring(0, 8));
+                    string localScanFile = Path.Combine(T_ConFigure.FtpTmpPath, T_ConFigure.TmpSave, filetmp.Substring(0, 8),
+                          FileNametmp);
+                    FileNametmp = localScanFile;
+                    if (!Directory.Exists(localPath)) {
+                        Directory.CreateDirectory(localPath);
                     }
-                    else {
-                        string localPath = Path.Combine(T_ConFigure.LocalTempPath, filetmp.Substring(0, 8));
-                        string localScanFile = Path.Combine(T_ConFigure.LocalTempPath, filetmp.Substring(0, 8),
-                            filetmp);
-                        FileNametmp = localScanFile;
-                        if (!Directory.Exists(localPath)) {
-                            Directory.CreateDirectory(localPath);
-                        }
-                        if (File.Exists(localScanFile)) {
-                            File.Delete(localScanFile);
-                        }
-                        if (ftp.FtpCheckFile(Path.Combine(T_ConFigure.FtpArchIndex, filetmp.Substring(0, 8), filetmp))) {
-                            if (ftp.DownLoadFile(T_ConFigure.FtpArchIndex, filetmp.Substring(0, 8),
-                                localScanFile,
-                                filetmp)) {
-                                return true;
-                            }
-                            return false;
-                        }
+                    if (File.Exists(localScanFile)) {
+                        File.Delete(localScanFile);
                     }
-                    return false;
-
-                } catch {
-                    return false;
+                    sourefile = Path.Combine(T_ConFigure.FtpArchIndex, filetmp.Substring(0, 8), filetmp);
+                    goalfile = Path.Combine(T_ConFigure.FtpTmp, T_ConFigure.TmpSave, filetmp.Substring(0, 8), filetmp);
+                    path = Path.Combine(T_ConFigure.FtpTmp, T_ConFigure.TmpSave, filetmp.Substring(0, 8));
+                    sourefile = Path.Combine(T_ConFigure.FtpArchIndex, filetmp.Substring(0, 8), filetmp);
+                    if (ftp.FtpCheckFile(sourefile)) {
+                        if (ftp.FtpMoveFile(sourefile, goalfile, path))
+                            return (FileMoveBool(localScanFile));
+                    }
                 }
-            });
+                else {
+                    string localPath = Path.Combine(T_ConFigure.LocalTempPath, filetmp.Substring(0, 8));
+                    string localScanFile = Path.Combine(T_ConFigure.LocalTempPath, filetmp.Substring(0, 8),
+                        filetmp);
+                    FileNametmp = localScanFile;
+                    if (!Directory.Exists(localPath)) {
+                        Directory.CreateDirectory(localPath);
+                    }
+                    if (File.Exists(localScanFile)) {
+                        File.Delete(localScanFile);
+                    }
+                    if (ftp.FtpCheckFile(Path.Combine(T_ConFigure.FtpArchIndex, filetmp.Substring(0, 8), filetmp))) {
+                        if (ftp.DownLoadFile(T_ConFigure.FtpArchIndex, filetmp.Substring(0, 8),
+                            localScanFile,
+                            filetmp)) {
+                            return true;
+                        }
+                        return false;
+                    }
+                }
+                return false;
+
+            } catch {
+                return false;
+            }
         }
         bool FileMoveBool(string files)
         {
@@ -225,6 +201,16 @@ namespace CsmOcr
             toolslabTaskCount.Text = string.Format("共计{0}条", datGrivew.RowCount.ToString());
         }
 
+        private void rabWzx_Click(object sender, EventArgs e)
+        {
+            LoadTaskW();
+        }
+
+        private void rabAllTabk_Click(object sender, EventArgs e)
+        {
+            LoadTaskWAll();
+        }
+
         private void FrmOcr_Shown(object sender, EventArgs e)
         {
             Himg = new Hljsimage();
@@ -234,12 +220,16 @@ namespace CsmOcr
 
         private void butStart_Click(object sender, EventArgs e)
         {
-            StatTask();
-            toolsTaskzx.Visible = false;
+            butStart.Enabled = false;
+            int ocr = combOcr.SelectedIndex;
+            Action Act = StatTask;
+            Act.BeginInvoke(null, null);
         }
 
         void StatTask()
         {
+            Task t = null;
+          
             if (rabZdTabk.Checked) {
                 Archid = gArch.Archid;
                 if (Archid <= 0) {
@@ -251,9 +241,19 @@ namespace CsmOcr
                     MessageBox.Show("文件名称长度错误!");
                     return;
                 }
-                LoadFile(filetmp);
+                if (Common.Gettask(Archid) > 0) {
+                    MessageBox.Show("此卷图像任务中请稍候!");
+                    return;
+                }
+                int stat = Common.GetArchWorkState(Archid);
+                if (stat >= (int)T_ConFigure.ArchStat.质检中) {
+                    MessageBox.Show("此卷档案正在质检中或已质检完成！");
+                    return;
+                }
+                toolsTaskzx.Text = "正在执行:";
+                t = Task.Run(new Action(() => { OcrTask(filetmp, ocr); }));
             }
-            if (rabWzx.Checked || rabAllTabk.Checked) {
+            else if (rabWzx.Checked || rabAllTabk.Checked) {
                 if (datGrivew.RowCount <= 0) {
                     MessageBox.Show("任务池中未发现任务");
                     return;
@@ -265,20 +265,24 @@ namespace CsmOcr
                         MessageBox.Show("文件名不正确!");
                         return;
                     }
-                    OcrTask(file);
-                    return;
+                    toolsTaskzx.Text = "正在执行:";
+                    t = Task.Run(new Action(() => { OcrTask(file, ocr); }));
                 }
-                toolsTaskzx.Visible = true;
-                for (int i = 0; i < datGrivew.RowCount; i++) {
-                    string file = GettaskFilename(i);
-                    if (file.Trim().Length <= 0) {
-                        continue;
+                else {
+                    toolsTaskzx.Visible = true;
+                    for (int i = 0; i < datGrivew.RowCount; i++) {
+                        string file = GettaskFilename(i);
+                        if (file.Trim().Length <= 0) {
+                            continue;
+                        }
+                        toolsTaskzx.Text = "正在执行:" + i.ToString();
+                        t = Task.Run(new Action(() => { OcrTask(file, ocr); }));
                     }
-                    toolsTaskzx.Text = "正在执行:" + i.ToString();
-                    Application.DoEvents();
-                    OcrTask(file);
                 }
             }
+            Task.WaitAll(t);
+            toolsTaskzx.Visible = false;
+            butStart.Enabled = true;
         }
 
         string GettaskFilename(int id)
@@ -299,15 +303,14 @@ namespace CsmOcr
 
         }
 
-        async void OcrTask(string file)
+        void OcrTask(string file, int ocr)
         {
-            bool b = await LoadFileImg(file);
-            if (!b)
+            if (!LoadFileImg(file))
                 return;
             lsocrconte.Clear();
             List<string> str = new List<string>();
             List<string> pages = new List<string>();
-            Himg._OcrRecttxt(FileNametmp, out str, out pages, Convert.ToInt32(combOcr.SelectedIndex));
+            Himg._OcrRecttxt(FileNametmp, out str, out pages, ocr);
             if (str.Count <= 0)
                 return;
             for (int i = 0; i < str.Count; i++) {
@@ -324,17 +327,12 @@ namespace CsmOcr
                     }
                 }
             }
+            try {
+                if (File.Exists(FileNametmp))
+                    File.Delete(FileNametmp);
 
-        }
-
-        private void rabWzx_Click(object sender, EventArgs e)
-        {
-            LoadTaskW();
-        }
-
-        private void rabAllTabk_Click(object sender, EventArgs e)
-        {
-            LoadTaskWAll();
+            } catch {
+            }
         }
     }
 }

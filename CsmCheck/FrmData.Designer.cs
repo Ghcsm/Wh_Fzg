@@ -27,9 +27,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.dottBarManager = new DevComponents.DotNetBar.DotNetBarManager(this.components);
+            this.dottBarManager = new DevComponents.DotNetBar.DotNetBarManager();
             this.dockSite4 = new DevComponents.DotNetBar.DockSite();
             this.dockSite9 = new DevComponents.DotNetBar.DockSite();
             this.bar2 = new DevComponents.DotNetBar.Bar();
@@ -49,6 +48,7 @@
             this.gr2Info2Twoinfo = new System.Windows.Forms.GroupBox();
             this.dgvInfo2_two = new System.Windows.Forms.DataGridView();
             this.gr3 = new System.Windows.Forms.GroupBox();
+            this.butFg = new DevComponents.DotNetBar.ButtonX();
             this.butCheck = new DevComponents.DotNetBar.ButtonX();
             this.lbCheck = new System.Windows.Forms.Label();
             this.dockContMang = new DevComponents.DotNetBar.DockContainerItem();
@@ -69,7 +69,6 @@
             this.toolsusertime1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolsuser2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolsusertime2 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.butFg = new DevComponents.DotNetBar.ButtonX();
             this.dockSite9.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bar2)).BeginInit();
             this.bar2.SuspendLayout();
@@ -408,6 +407,18 @@
             this.gr3.TabIndex = 5;
             this.gr3.TabStop = false;
             // 
+            // butFg
+            // 
+            this.butFg.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.butFg.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.butFg.Location = new System.Drawing.Point(299, 11);
+            this.butFg.Name = "butFg";
+            this.butFg.Size = new System.Drawing.Size(75, 32);
+            this.butFg.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.butFg.TabIndex = 2;
+            this.butFg.Text = "返工";
+            this.butFg.Click += new System.EventHandler(this.butFg_Click);
+            // 
             // butCheck
             // 
             this.butCheck.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
@@ -511,9 +522,13 @@
             // 
             this.gArchSelect1.Archid = 0;
             this.gArchSelect1.ArchImgFile = null;
+            this.gArchSelect1.ArchNo = null;
+            this.gArchSelect1.ArchPos = null;
             this.gArchSelect1.ArchRegPages = 0;
             this.gArchSelect1.Archstat = null;
             this.gArchSelect1.Archtype = null;
+            this.gArchSelect1.ArchXqzt = null;
+            this.gArchSelect1.Archxystat = null;
             this.gArchSelect1.BackColor = System.Drawing.Color.Transparent;
             this.gArchSelect1.Boxsn = 0;
             this.gArchSelect1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -635,18 +650,6 @@
             this.toolsusertime2.Size = new System.Drawing.Size(68, 17);
             this.toolsusertime2.Text = "二录时间：";
             // 
-            // butFg
-            // 
-            this.butFg.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.butFg.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.butFg.Location = new System.Drawing.Point(299, 11);
-            this.butFg.Name = "butFg";
-            this.butFg.Size = new System.Drawing.Size(75, 32);
-            this.butFg.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.butFg.TabIndex = 2;
-            this.butFg.Text = "返工";
-            this.butFg.Click += new System.EventHandler(this.butFg_Click);
-            // 
             // FrmData
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -664,6 +667,7 @@
             this.Controls.Add(this.dockSite6);
             this.Controls.Add(this.dockSite7);
             this.Controls.Add(this.dockSite8);
+            this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "FrmData";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

@@ -28,9 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StoreView));
-            this.imglist_mjj = new System.Windows.Forms.ImageList(this.components);
+            this.imglist_mjj = new System.Windows.Forms.ImageList();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.ToolsS_txt = new System.Windows.Forms.ToolStripStatusLabel();
             this.ToolsSlabYs = new System.Windows.Forms.ToolStripStatusLabel();
@@ -43,7 +42,7 @@
             this.toolFileId = new System.Windows.Forms.ToolStripStatusLabel();
             this.tools_kong = new System.Windows.Forms.ToolStripStatusLabel();
             this.Tools_jd = new System.Windows.Forms.ToolStripProgressBar();
-            this.imglist_box = new System.Windows.Forms.ImageList(this.components);
+            this.imglist_box = new System.Windows.Forms.ImageList();
             this.groupPanel1 = new DevComponents.DotNetBar.Controls.GroupPanel();
             this.butSetzt = new DevComponents.DotNetBar.ButtonX();
             this.combzt = new System.Windows.Forms.ComboBox();
@@ -76,7 +75,7 @@
             this.PanleHouseJuan = new DevComponents.DotNetBar.PanelEx();
             this.PanleHouseBox = new DevComponents.DotNetBar.PanelEx();
             this.PanleHouseMj = new DevComponents.DotNetBar.Controls.GroupPanel();
-            this.imgListmjj2 = new System.Windows.Forms.ImageList(this.components);
+            this.imgListmjj2 = new System.Windows.Forms.ImageList();
             this.statusStrip1.SuspendLayout();
             this.groupPanel1.SuspendLayout();
             this.gr2.SuspendLayout();
@@ -638,6 +637,7 @@
             this.ClientSize = new System.Drawing.Size(1105, 644);
             this.Controls.Add(this.groupPanel1);
             this.Controls.Add(this.statusStrip1);
+            this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;

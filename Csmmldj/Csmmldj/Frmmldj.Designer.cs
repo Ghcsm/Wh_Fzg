@@ -34,12 +34,12 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.gr1 = new System.Windows.Forms.GroupBox();
             this.splitCont = new DevComponents.DotNetBar.Controls.CollapsibleSplitContainer();
-            this.gArchSelect1 = new CsmCon.gArchSelect();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
             this.butSaveInfo = new DevComponents.DotNetBar.ButtonX();
             this.grinfo = new System.Windows.Forms.GroupBox();
             this.gr2 = new System.Windows.Forms.GroupBox();
+            this.gArchSelect1 = new CsmCon.gArchSelect();
             this.gr1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitCont)).BeginInit();
             this.splitCont.Panel1.SuspendLayout();
@@ -92,25 +92,6 @@
             this.splitCont.SplitterDistance = 301;
             this.splitCont.SplitterWidth = 20;
             this.splitCont.TabIndex = 0;
-            // 
-            // gArchSelect1
-            // 
-            this.gArchSelect1.Archid = 0;
-            this.gArchSelect1.ArchImgFile = null;
-            this.gArchSelect1.ArchRegPages = 0;
-            this.gArchSelect1.Archstat = null;
-            this.gArchSelect1.Archtype = null;
-            this.gArchSelect1.Archxystat = null;
-            this.gArchSelect1.Boxsn = 0;
-            this.gArchSelect1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gArchSelect1.GotoPages = false;
-            this.gArchSelect1.LoadFileBoole = false;
-            this.gArchSelect1.Location = new System.Drawing.Point(0, 0);
-            this.gArchSelect1.Name = "gArchSelect1";
-            this.gArchSelect1.PagesEnd = false;
-            this.gArchSelect1.Size = new System.Drawing.Size(394, 301);
-            this.gArchSelect1.TabIndex = 0;
-            this.gArchSelect1.LineClickLoadInfo += new CsmCon.gArchSelect.ArchSelectHandle(this.gArchSelect1_LineClickLoadInfo);
             // 
             // groupBox1
             // 
@@ -167,6 +148,28 @@
             this.gr2.TabIndex = 2;
             this.gr2.TabStop = false;
             // 
+            // gArchSelect1
+            // 
+            this.gArchSelect1.Archid = 0;
+            this.gArchSelect1.ArchImgFile = null;
+            this.gArchSelect1.ArchNo = null;
+            this.gArchSelect1.ArchPos = null;
+            this.gArchSelect1.ArchRegPages = 0;
+            this.gArchSelect1.Archstat = null;
+            this.gArchSelect1.Archtype = null;
+            this.gArchSelect1.ArchXqzt = null;
+            this.gArchSelect1.Archxystat = null;
+            this.gArchSelect1.Boxsn = 0;
+            this.gArchSelect1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gArchSelect1.GotoPages = false;
+            this.gArchSelect1.LoadFileBoole = false;
+            this.gArchSelect1.Location = new System.Drawing.Point(0, 0);
+            this.gArchSelect1.Name = "gArchSelect1";
+            this.gArchSelect1.PagesEnd = false;
+            this.gArchSelect1.Size = new System.Drawing.Size(394, 301);
+            this.gArchSelect1.TabIndex = 0;
+            this.gArchSelect1.LineClickLoadInfo += new CsmCon.gArchSelect.ArchSelectHandle(this.gArchSelect1_LineClickLoadInfo);
+            // 
             // Frmmldj
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -175,6 +178,7 @@
             this.Controls.Add(this.gr2);
             this.Controls.Add(this.gr1);
             this.Controls.Add(this.toolStrip1);
+            this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Frmmldj";

@@ -25,6 +25,7 @@ namespace Csmdajc
         HFTP ftp = new HFTP();
         gArchSelect gArch;
         UcContents ucContents1;
+        UcInfoEnter ucInfo;
         private int archzt = 0;
         private Pubcls pub;
         private void Init()
@@ -48,10 +49,24 @@ namespace Csmdajc
                     ucContents1.Dock = DockStyle.Fill;
                 }
                 ucContents1.OneClickGotoPage += UcContents1_OneClickGotoPage;
-                gr2.Controls.Add(ucContents1);
+                gr1_1.Controls.Add(ucContents1);
+                Clscheck.infobl = Common.GetConteninfoblchk();
+                if (Clscheck.infobl) {
+                    splitCont.Panel2Collapsed = false;
+                    Infoshow();
+                }
+                else
+                    splitCont.Panel2Collapsed = true;
             } catch (Exception ex) {
                 MessageBox.Show("窗体控件初始化失败:" + ex.ToString());
             }
+        }
+        void Infoshow()
+        {
+            ucInfo = new UcInfoEnter();
+            ucInfo.Dock = DockStyle.Fill;
+            gr1_2.Controls.Add(ucInfo);
+            ucInfo.GetInfoCol();
         }
 
 
@@ -337,6 +352,8 @@ namespace Csmdajc
             if (Clscheck.keystr.Trim().Length > 0)
                 KeysDownEve(Clscheck.keystr.Trim());
             Keys keyCode = e.KeyCode;
+            if (e.KeyCode == Keys.ShiftKey)
+                ucContents1.txtCode.Focus();
             if (e.KeyCode == Keys.Escape)
                 gArch.LvData.Focus();
         }
@@ -750,13 +767,13 @@ namespace Csmdajc
         {
             try {
                 Common.Writelog(Clscheck.Archid, "质检返工!");
-                string PageIndexInfo = "";
-                for (int i = 1; i <= Clscheck.MaxPage; i++) {
-                    if (PageIndexInfo.Trim().Length <= 0)
-                        PageIndexInfo += i.ToString();
-                    else PageIndexInfo += ";" + i.ToString();
-                }
-                PageIndexInfo = PageIndexInfo.Trim();
+                //string PageIndexInfo = "";
+                //for (int i = 1; i <= Clscheck.MaxPage; i++) {
+                //    if (PageIndexInfo.Trim().Length <= 0)
+                //        PageIndexInfo += i.ToString();
+                //    else PageIndexInfo += ";" + i.ToString();
+                //}
+                //PageIndexInfo = PageIndexInfo.Trim();
                 string sourefile = "";
                 if (T_ConFigure.FtpStyle ==0) {
                     if (archzt == 1)
@@ -771,7 +788,7 @@ namespace Csmdajc
                 if (ftp.FtpMoveFile(sourefile, goalfile, path)) {
                     Common.SetArchWorkState(arid, (int)T_ConFigure.ArchStat.扫描完);
                     Common.Writelog(Clscheck.Archid, "质检退!");
-                    Common.SetCheckFinish(arid, "", 2, (int)T_ConFigure.ArchStat.扫描完, PageIndexInfo);
+                    Common.SetCheckFinish(arid, "", 2, (int)T_ConFigure.ArchStat.扫描完, "");
                 }
                 if (T_ConFigure.FtpStyle == 1) {
                     try {

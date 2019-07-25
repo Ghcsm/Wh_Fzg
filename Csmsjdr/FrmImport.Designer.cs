@@ -456,6 +456,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1177, 541);
             this.Controls.Add(this.gr0);
+            this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "FrmImport";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

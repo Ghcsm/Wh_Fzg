@@ -214,15 +214,17 @@ namespace Jdshow
                     string[] arrPage = PageIndexInfo.Split(';');
                     if (arrPage.Length > 0) {
                         for (int i = 0; i < arrPage.Length; i++) {
-                            string str = arrPage[i].Trim();
+                            string[] str = arrPage[i].Trim().Split(':');
                             if (str.Length <= 0)
                                 continue;
-                            if (!isExists(str) || str == "-9999")
-                                number.Add(i + 1, Convert.ToInt32(str));
-                            else if (str.IndexOf("-") >= 0)
-                                fuhao.Add(i + 1, str);
+                            if (str[1].ToString() == "-9999")
+                                number.Add(Convert.ToInt32(str[0]), Convert.ToInt32(str[1]));
+                            else if (!isExists(str[1].ToString()) && str[1].IndexOf("-") < 0)
+                                number.Add(Convert.ToInt32(str[0]), Convert.ToInt32(str[1]));
+                            else if (str[1].IndexOf("-") >= 0)
+                                fuhao.Add(Convert.ToInt32(str[0]), str[1].ToString());
                             else
-                                abc.Add(i + 1, str);
+                                abc.Add(Convert.ToInt32(str[0]), str[1].ToString());
                         }
                     }
                 }

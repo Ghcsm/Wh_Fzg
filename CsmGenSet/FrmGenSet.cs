@@ -967,6 +967,7 @@ namespace CsmGenSet
             try
             {
                 string wycol = "";
+                string bl = "";
                 if (ClsGenSet.PrintInfo != null && ClsGenSet.PrintInfo.Rows.Count > 0) {
                     DataTable dt = T_Sysset.GetInfoTable();
                     if (dt == null || dt.Rows.Count <= 0)
@@ -978,6 +979,7 @@ namespace CsmGenSet
                         string num = dr["InfoNum"].ToString();
                         string width = dr["InfoLabWidth"].ToString();
                         string txtwidth = dr["InfoTxtWidth"].ToString();
+                         bl = dr["InfoCheck"].ToString();
                         wycol = dr["Wycol"].ToString();
                         if (t.Trim().Length <= 0)
                             return;
@@ -1006,6 +1008,10 @@ namespace CsmGenSet
                         }
                     }
                     combInfoWycol.Text=wycol;
+                    if (bl.Trim().Length <= 0)
+                        chkInfoblcheck.Checked = false;
+                    else
+                        chkInfoblcheck.Checked = Convert.ToBoolean(bl);
                 }
             } catch (Exception e) {
                 MessageBox.Show("信息补录表加载失败:" + e.ToString());
@@ -1060,10 +1066,11 @@ namespace CsmGenSet
                         str += ClsInfoAdd.InfoInfoZdtmp[i];
                 }
 
+                bool info = chkInfoblcheck.Checked;
                 if (combInfoTable.Text.Trim().Length <= 0) {
                     if (ClsInfoAdd.InfoTableLs.IndexOf(ClsInfoAdd.InfoTable) < 0)
                         T_Sysset.SaveGensetInfo(ClsInfoAdd.InfoTable, str, combInfoTableName.Text.Trim(),
-                            combInfoColNum.Text.Trim(), combInfoLabWith.Text.Trim(), combInfotxtWith.Text.Trim(),combInfoWycol.Text.Trim());
+                            combInfoColNum.Text.Trim(), combInfoLabWith.Text.Trim(), combInfotxtWith.Text.Trim(),combInfoWycol.Text.Trim(), info);
                     else {
                         MessageBox.Show("此表已经如更新请选择表!");
                         return;
@@ -1071,7 +1078,7 @@ namespace CsmGenSet
                 }
                 else
                     T_Sysset.UpdateGensetInfo(combInfoTable.Text.Trim(), str, combInfoTableName.Text.Trim(),
-                        combInfoColNum.Text.Trim(), combInfoLabWith.Text.Trim(), combInfotxtWith.Text.Trim(), combInfoWycol.Text.Trim());
+                        combInfoColNum.Text.Trim(), combInfoLabWith.Text.Trim(), combInfotxtWith.Text.Trim(), combInfoWycol.Text.Trim(), info);
                 MessageBox.Show("保存成功!");
                 GetInfoSet();
             } catch (Exception e) {
@@ -1822,7 +1829,7 @@ namespace CsmGenSet
         {
             try {
                 DataTable dt = T_Sysset.GetDataSplitExporTable();
-                if (dt == null || dt.Rows.Count < 0)
+                if (dt == null || dt.Rows.Count <= 0)
                     return;
                 ClsDataSplit.DataSplitExportTable.Clear();
                 ClsDataSplit.DataSplitExportCol.Clear();

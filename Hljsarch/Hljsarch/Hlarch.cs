@@ -83,7 +83,7 @@ namespace HLjscom
         IOcrPage ocrPage = null;
         //设置扫描模式，追加替换
         public int Scanms = 0;
-
+        public int TagPage = 0;
 
 
         #endregion
@@ -1551,7 +1551,6 @@ namespace HLjscom
         {
             int pagecoun = 0;
             try {
-
                 if (_PageAbc.Count >= 1) {
                     int zimu_a = (int)Convert.ToByte('a');
                     int oldpage = 97;
@@ -1629,7 +1628,7 @@ namespace HLjscom
             }
         }
         //排序
-        public bool _OrderSave(int regpage, string oldfile, string _path, Dictionary<int, string> Pabc, Dictionary<int, int> Pnumber,Dictionary<int,string>fuhao)
+        public bool _OrderSave(int regpage, string oldfile, string _path, Dictionary<int, string> Pabc, Dictionary<int, int> Pnumber, Dictionary<int, string> fuhao)
         {
             int pagecoun = 0;
             try {
@@ -1646,34 +1645,63 @@ namespace HLjscom
                         oldpage = zimu_a + abc;
                     }
                 }
-                if (Pnumber.Count >= 1) {
-                    int fh = fuhao.Count;
-                    for (int i = 1; i <= regpage - Pabc.Count- fh; i++) {
-                        int k = Pnumber.First(q => q.Value == i).Key;
-                        if (Pnumber[k].Equals(i))
-                        {
-                            pagecoun += 1;
-                            OrderSave(k, pagecoun, oldfile, _path);
-                            if (fuhao.Count > 0) {
-                                for (int t = 0; t < fh; t++) {
-                                    string str = i + "-" + (t + 1);
-                                    int oldpage = 0;
-                                    try {
-                                        oldpage = fuhao.First(q => q.Value == str).Key;
-                                    } catch { }
-                                    if (oldpage > 0) {
-                                        pagecoun += 1;
-                                        OrderSave(oldpage, pagecoun, _path);
-                                        fuhao.Remove(oldpage);
+                if (TagPage == 0) {
+                    if (Pnumber.Count >= 1) {
+                        int fh = fuhao.Count;
+                        for (int i = 1; i <= regpage - Pabc.Count - fh; i++) {
+                            int k = Pnumber.First(q => q.Value == i).Key;
+                            if (Pnumber[k].Equals(i)) {
+                                pagecoun += 1;
+                                OrderSave(k, pagecoun, oldfile, _path);
+                                if (fuhao.Count > 0) {
+                                    for (int t = 0; t < fh; t++) {
+                                        string str = i + "-" + (t + 1);
+                                        int oldpage = 0;
+                                        try {
+                                            oldpage = fuhao.First(q => q.Value == str).Key;
+                                        } catch { }
+                                        if (oldpage > 0) {
+                                            pagecoun += 1;
+                                            OrderSave(oldpage, pagecoun, oldfile,_path);
+                                            fuhao.Remove(oldpage);
+                                        }
                                     }
                                 }
                             }
                         }
                     }
+                    return true;
                 }
-                return true;
+                else {
+                    if (Pnumber.Count >= 1) {
+                        int fh = fuhao.Count;
+                        for (int i = TagPage; i <= regpage - Pabc.Count - fh + TagPage - 1; i++) {
+                            int k = Pnumber.First(q => q.Value == i).Key;
+                            if (Pnumber[k].Equals(i)) {
+                                pagecoun += 1;
+                                OrderSave(k, pagecoun, oldfile, _path);
+                                if (fuhao.Count > 0) {
+                                    for (int t = 0; t < fh; t++) {
+                                        string str = i + "-" + (t + 1);
+                                        int oldpage = 0;
+                                        try {
+                                            oldpage = fuhao.First(q => q.Value == str).Key;
+                                        } catch { }
+                                        if (oldpage > 0) {
+                                            pagecoun += 1;
+                                            OrderSave(oldpage,pagecoun, oldfile, _path);
+                                            fuhao.Remove(oldpage);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    return true;
+                }
 
-            } catch{
+
+            } catch {
                 return false;
             }
         }
@@ -2070,7 +2098,7 @@ namespace HLjscom
                         ocrEngine.Startup(null, null, pathtmp, Ocrpath);
                     }
                     else if (x == 1) {
-                        Ocrpath = Path.Combine(@"c:\\temp", "OcrAdvantage");
+                        Ocrpath = Path.Combine(@"c:\\temp", "OcrAdv");
                         ocrEngine = OcrEngineManager.CreateEngine(OcrEngineType.Advantage, false);
                         ocrEngine.Startup(null, null, pathtmp, Ocrpath);
                     }
@@ -2517,35 +2545,72 @@ namespace HLjscom
         private Dictionary<int, string> addcfpage()
         {
             Dictionary<int, string> tmp = new Dictionary<int, string>();
-            for (int i = 1; i <= _PageNumber.Count; i++) {
-                _PageNumber.GroupBy(item => item.Value)
-                    .Where(item => item.Count() > 1 && item.Key == i && item.Key != -1)
-                    .SelectMany(item => item)
-              .ToList()
-               .ForEach(item => tmp.Add(item.Key, item.Value.ToString()));
-                if (tmp.Count >= 2) {
-                    return tmp;
-                }
-            }
+            if (TagPage == 0) {
 
-            if (_PageAbc.Count > 0) {
-                _PageAbc.GroupBy(item => item.Value)
-                    .Where(item => item.Count() > 1)
-                    .SelectMany(item => item)
-                    .ToList()
-                    .ForEach(item => tmp.Add(item.Key, item.Value.ToString()));
-                if (tmp.Count >= 2) {
-                    return tmp;
+                for (int i = 1; i <= _PageNumber.Count; i++) {
+                    _PageNumber.GroupBy(item => item.Value)
+                        .Where(item => item.Count() > 1 && item.Key == i && item.Key != -1)
+                        .SelectMany(item => item)
+                  .ToList()
+                   .ForEach(item => tmp.Add(item.Key, item.Value.ToString()));
+                    if (tmp.Count >= 2) {
+                        return tmp;
+                    }
                 }
+
+                if (_PageAbc.Count > 0) {
+                    _PageAbc.GroupBy(item => item.Value)
+                        .Where(item => item.Count() > 1)
+                        .SelectMany(item => item)
+                        .ToList()
+                        .ForEach(item => tmp.Add(item.Key, item.Value.ToString()));
+                    if (tmp.Count >= 2) {
+                        return tmp;
+                    }
+                }
+                if (_PageFuhao.Count > 0) {
+                    _PageFuhao.GroupBy(item => item.Value)
+                        .Where(item => item.Count() > 1)
+                        .SelectMany(item => item)
+                        .ToList()
+                        .ForEach(item => tmp.Add(item.Key, item.Value));
+                    if (tmp.Count >= 2) {
+                        return tmp;
+                    }
+                }
+
             }
-            if (_PageFuhao.Count > 0) {
-                _PageFuhao.GroupBy(item => item.Value)
-                    .Where(item => item.Count() > 1)
-                    .SelectMany(item => item)
-                    .ToList()
-                    .ForEach(item => tmp.Add(item.Key, item.Value));
-                if (tmp.Count >= 2) {
-                    return tmp;
+            else {
+                for (int i = TagPage; i <= _PageNumber.Count + TagPage - 1; i++) {
+                    _PageNumber.GroupBy(item => item.Value)
+                        .Where(item => item.Count() > 1 && item.Key == i && item.Key != -1)
+                        .SelectMany(item => item)
+                        .ToList()
+                        .ForEach(item => tmp.Add(item.Key, item.Value.ToString()));
+                    if (tmp.Count >= 2) {
+                        return tmp;
+                    }
+                }
+
+                if (_PageAbc.Count > 0) {
+                    _PageAbc.GroupBy(item => item.Value)
+                        .Where(item => item.Count() > 1)
+                        .SelectMany(item => item)
+                        .ToList()
+                        .ForEach(item => tmp.Add(item.Key, item.Value.ToString()));
+                    if (tmp.Count >= 2) {
+                        return tmp;
+                    }
+                }
+                if (_PageFuhao.Count > 0) {
+                    _PageFuhao.GroupBy(item => item.Value)
+                        .Where(item => item.Count() > 1)
+                        .SelectMany(item => item)
+                        .ToList()
+                        .ForEach(item => tmp.Add(item.Key, item.Value));
+                    if (tmp.Count >= 2) {
+                        return tmp;
+                    }
                 }
             }
             return tmp;
@@ -2555,14 +2620,25 @@ namespace HLjscom
         private List<int> addpageqs()
         {
             List<int> tmp = new List<int>();
-            for (int i = 1; i <= RegPage - _PageAbc.Count - _PageFuhao.Count; i++) {
-                if (!_PageNumber.ContainsValue(i)) {
-                    tmp.Add(i);
+            if (TagPage == 0) {
+                for (int i = 1; i <= RegPage - _PageAbc.Count - _PageFuhao.Count; i++) {
+                    if (!_PageNumber.ContainsValue(i)) {
+                        tmp.Add(i);
+                    }
+                }
+
+            }
+            else {
+                for (int i = TagPage; i <= RegPage - _PageAbc.Count - _PageFuhao.Count + TagPage - 1; i++) {
+                    if (!_PageNumber.ContainsValue(i)) {
+                        tmp.Add(i);
+                    }
                 }
             }
             if (dianjicount >= tmp.Count) {
                 dianjicount = 0;
             }
+
             return tmp;
         }
 
@@ -2570,9 +2646,18 @@ namespace HLjscom
         private List<int> addpagedy()
         {
             List<int> tmp = new List<int>();
-            foreach (var item in _PageNumber.Values) {
-                if (item > RegPage - _PageAbc.Count - _PageFuhao.Count) {
-                    tmp.Add(item);
+            if (TagPage == 0) {
+                foreach (var item in _PageNumber.Values) {
+                    if (item > RegPage - _PageAbc.Count - _PageFuhao.Count) {
+                        tmp.Add(item);
+                    }
+                }
+            }
+            else {
+                foreach (var item in _PageNumber.Values) {
+                    if (item > RegPage - _PageAbc.Count - _PageFuhao.Count + TagPage) {
+                        tmp.Add(item);
+                    }
                 }
             }
             if (dianjicount >= tmp.Count) {

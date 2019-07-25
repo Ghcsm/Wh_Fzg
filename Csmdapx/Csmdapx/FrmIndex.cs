@@ -5,6 +5,7 @@ using HLjscom;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -37,8 +38,6 @@ namespace Csmdapx
                 gr1.Controls.Add(gArch);
             } catch { }
         }
-
-
 
         private void FrmIndex_Load(object sender, EventArgs e)
         {
@@ -332,6 +331,24 @@ namespace Csmdapx
             else
                 Himg._Rectang(true);
         }
+        private void toolStripSplitTag_Click(object sender, EventArgs e)
+        {
+
+            if (Himg.TagPage >= 0) {
+                Himg.TagPage = 0;
+                toolStripSplitTag.ForeColor = Color.Black;
+                return;
+            }
+            int p;
+            bool bl = int.TryParse(txtPages.Text.Trim(), out p);
+            if (!bl) {
+                MessageBox.Show("页码不正常无法标记!");
+                return;
+            }
+            Himg.TagPage = p;
+            toolStripSplitTag.ForeColor = Color.Red;
+
+        }
 
         #endregion
 
@@ -455,29 +472,51 @@ namespace Csmdapx
                         string[] arrPage = PageIndexInfo.Split(';');
                         if (arrPage.Length > 0) {
                             for (int i = 0; i < arrPage.Length; i++) {
-                                string str = arrPage[i].Trim();
+                                string[] str = arrPage[i].Trim().Split(':');
                                 if (str.Length <= 0)
                                     continue;
-                                if (!isExists(str) || str == "-9999")
-                                    pagenumber.Add(i + 1, Convert.ToInt32(str));
-                                else if (str.IndexOf("-") >= 0)
-                                    fuhao.Add(i + 1, str);
+                                if (str[1].ToString() == "-9999")
+                                    pagenumber.Add(Convert.ToInt32(str[0]), Convert.ToInt32(str[1]));
+                                else if (!isExists(str[1].ToString()) && str[1].IndexOf("-") < 0)
+                                    pagenumber.Add(Convert.ToInt32(str[0]), Convert.ToInt32(str[1]));
+                                else if (str[1].IndexOf("-") >= 0)
+                                    fuhao.Add(Convert.ToInt32(str[0]), str[1].ToString());
                                 else
-                                    pageabc.Add(i + 1, str);
+                                    pageabc.Add(Convert.ToInt32(str[0]), str[1].ToString());
                             }
                         }
                     }
                     Himg._PageNumber = pagenumber;
                     Himg._PageAbc = pageabc;
                     Himg._PageFuhao = fuhao;
-                    maxpage = pagenumber.Keys.Max();
+                    int n, a, f;
+                    if (pagenumber.Count <= 0)
+                        n = 0;
+                    else
+                        n = pagenumber.Keys.Max();
+                    if (pageabc.Count <= 0)
+                        a = 0;
+                    else
+                        a = pageabc.Keys.Max();
+                    if (fuhao.Count <= 0)
+                        f = 0;
+                    else
+                        f = fuhao.Keys.Max();
+                    int[] array = { n, a, f };
+                    if (array.Length <= 0)
+                        maxpage = 1;
+                    else
+                        maxpage = array.Max();
+                    if (maxpage == 0)
+                        maxpage = 1;
                 }
                 else {
                     txtPages.Text = "1";
                     maxpage = 1;
                 }
-            } catch {
+            } catch (Exception ex) {
                 maxpage = 1;
+                MessageBox.Show("排序页码读取错误：" + ex.ToString());
             } finally {
                 LoadImgShow(maxpage);
             }
@@ -660,13 +699,22 @@ namespace Csmdapx
                 if (File.Exists(filetmp)) {
                     string PageIndexInfo = "";
                     foreach (var item in pageAbc) {
-                        PageIndexInfo += item.Value + ";";
+                        if (PageIndexInfo.Trim().Length <= 0)
+                            PageIndexInfo += item.Key + ":" + item.Value;
+                        else
+                            PageIndexInfo += ";" + item.Key + ":" + item.Value;
                     }
                     foreach (var item in pagenumber) {
-                        PageIndexInfo += item.Value + ";";
+                        if (PageIndexInfo.Trim().Length <= 0)
+                            PageIndexInfo += item.Key + ":" + item.Value;
+                        else
+                            PageIndexInfo += ";" + item.Key + ":" + item.Value;
                     }
                     foreach (var item in fuhao) {
-                        PageIndexInfo += item.Value + ";";
+                        if (PageIndexInfo.Trim().Length <= 0)
+                            PageIndexInfo += item.Key + ":" + item.Value;
+                        else
+                            PageIndexInfo += ";" + item.Key + ":" + item.Value;
                     }
                     PageIndexInfo = PageIndexInfo.Trim();
                     Common.SetIndexCancel(arid, PageIndexInfo);
@@ -686,7 +734,7 @@ namespace Csmdapx
                         string path = Path.Combine(T_ConFigure.FtpArchIndex, RemoteDir);
                         if (ftp.FtpMoveFile(sourcefile, goalfile, path)) {
                             Thread.Sleep(5000);
-                            Common.SetIndexCancel(arid, "");
+                            //Common.SetIndexCancel(arid, "");
                             Common.DelTask(arid);
                             Common.SetIndexFinish(arid, DESEncrypt.DesEncrypt(IndexFileName), (int)T_ConFigure.ArchStat.排序完);
                             try {
@@ -706,7 +754,7 @@ namespace Csmdapx
                         string newpath = Path.Combine(T_ConFigure.FtpArchIndex, RemoteDir);
                         bool x = await ftp.FtpUpFile(LocalIndexFile, newfile, newpath);
                         if (x) {
-                            Common.SetIndexCancel(arid, "");
+                            //Common.SetIndexCancel(arid, "");
                             Common.SetIndexFinish(arid, DESEncrypt.DesEncrypt(IndexFileName), (int)T_ConFigure.ArchStat.排序完);
                             Common.DelTask(arid);
                             try {
@@ -740,21 +788,21 @@ namespace Csmdapx
                     string PageIndexInfo = "";
                     foreach (var item in pageAbc) {
                         if (PageIndexInfo.Trim().Length <= 0)
-                            PageIndexInfo += item.Value;
+                            PageIndexInfo += item.Key + ":" + item.Value;
                         else
-                            PageIndexInfo += ";" + item.Value;
+                            PageIndexInfo += ";" + item.Key + ":" + item.Value;
                     }
                     foreach (var item in pagenumber) {
                         if (PageIndexInfo.Trim().Length <= 0)
-                            PageIndexInfo += item.Value;
+                            PageIndexInfo += item.Key + ":" + item.Value;
                         else
-                            PageIndexInfo += ";" + item.Value;
+                            PageIndexInfo += ";" + item.Key + ":" + item.Value;
                     }
                     foreach (var item in fuhao) {
                         if (PageIndexInfo.Trim().Length <= 0)
-                            PageIndexInfo += item.Value;
+                            PageIndexInfo += item.Key + ":" + item.Value;
                         else
-                            PageIndexInfo += ";" + item.Value;
+                            PageIndexInfo += ";" + item.Key + ":" + item.Value;
                     }
                     PageIndexInfo = PageIndexInfo.Trim();
                     Common.SetIndexCancel(arid, PageIndexInfo);
@@ -807,11 +855,10 @@ namespace Csmdapx
 
         bool Pdzd(string str, KeyPressEventArgs e)
         {
-            if (!Char.IsDigit(e.KeyChar) && e.KeyChar != (char)13 && e.KeyChar != (char)8 && e.KeyChar!=(char)45) {
-                if (txtPages.SelectedText != "")
-                {
+            if (!Char.IsDigit(e.KeyChar) && e.KeyChar != (char)13 && e.KeyChar != (char)8 && e.KeyChar != (char)45) {
+                if (txtPages.SelectedText != "") {
                     int p;
-                    bool bl = int.TryParse(str,out p);
+                    bool bl = int.TryParse(str, out p);
                     if (!bl)
                         str = "";
                 }
@@ -822,6 +869,7 @@ namespace Csmdapx
                 return false;
             return true;
         }
+
 
 
 

@@ -184,6 +184,7 @@
             this.ClientSize = new System.Drawing.Size(867, 450);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.gr);
+            this.DoubleBuffered = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;

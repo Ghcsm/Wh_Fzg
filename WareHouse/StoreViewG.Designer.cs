@@ -28,12 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StoreViewG));
             this.Gr_gui = new DevComponents.DotNetBar.Controls.GroupPanel();
             this.pan_gui = new DevComponents.DotNetBar.PanelEx();
-            this.imageList_gui = new System.Windows.Forms.ImageList(this.components);
-            this.imageList_page = new System.Windows.Forms.ImageList(this.components);
+            this.imageList_gui = new System.Windows.Forms.ImageList();
+            this.imageList_page = new System.Windows.Forms.ImageList();
             this.Gr_gui.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -121,6 +120,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(915, 553);
             this.Controls.Add(this.Gr_gui);
+            this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "StoreViewG";
