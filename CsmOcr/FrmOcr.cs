@@ -27,8 +27,6 @@ namespace CsmOcr
 
         private gArchSelect gArch;
         HFTP ftp = new HFTP();
-        int Archid;
-        string FileNametmp = "";
         private Hljsimage Himg;
         private List<string> lsConten = new List<string>();
         private List<string> lsContenlx = new List<string>();
@@ -93,8 +91,9 @@ namespace CsmOcr
             return str;
         }
 
-        private bool LoadFileImg(string filetmp)
+        private bool LoadFileImg(string filetmp, out string loadfile)
         {
+            loadfile = "";
             try {
                 if (T_ConFigure.FtpStyle == 1) {
                     string sourefile = "";
@@ -102,8 +101,8 @@ namespace CsmOcr
                     string path = "";
                     string localPath = Path.Combine(T_ConFigure.FtpTmpPath, T_ConFigure.TmpSave, filetmp.Substring(0, 8));
                     string localScanFile = Path.Combine(T_ConFigure.FtpTmpPath, T_ConFigure.TmpSave, filetmp.Substring(0, 8),
-                          FileNametmp);
-                    FileNametmp = localScanFile;
+                        filetmp);
+                    loadfile = localScanFile;
                     if (!Directory.Exists(localPath)) {
                         Directory.CreateDirectory(localPath);
                     }
@@ -123,7 +122,7 @@ namespace CsmOcr
                     string localPath = Path.Combine(T_ConFigure.LocalTempPath, filetmp.Substring(0, 8));
                     string localScanFile = Path.Combine(T_ConFigure.LocalTempPath, filetmp.Substring(0, 8),
                         filetmp);
-                    FileNametmp = localScanFile;
+                    loadfile = localScanFile;
                     if (!Directory.Exists(localPath)) {
                         Directory.CreateDirectory(localPath);
                     }
@@ -182,22 +181,28 @@ namespace CsmOcr
         void LoadTaskW()
         {
             datGrivew.DataSource = null;
+            ClsOcr.dt = null;
             toolslabTaskCount.Text = "共计:0条";
             DataTable dt = Common.GetOcrTask();
             if (dt == null || dt.Rows.Count <= 0)
                 return;
             datGrivew.DataSource = dt;
+            datGrivew.CurrentCell = null;
+            ClsOcr.dt = dt;
             toolslabTaskCount.Text = string.Format("共计{0}条", datGrivew.RowCount.ToString());
         }
 
         void LoadTaskWAll()
         {
             datGrivew.DataSource = null;
+            ClsOcr.dt = null;
             toolslabTaskCount.Text = "共计:0条";
             DataTable dt = Common.GetOcrTaskAll();
             if (dt == null || dt.Rows.Count <= 0)
                 return;
             datGrivew.DataSource = dt;
+            datGrivew.CurrentCell = null;
+            ClsOcr.dt = dt;
             toolslabTaskCount.Text = string.Format("共计{0}条", datGrivew.RowCount.ToString());
         }
 
@@ -220,69 +225,115 @@ namespace CsmOcr
 
         private void butStart_Click(object sender, EventArgs e)
         {
-            butStart.Enabled = false;
-            int ocr = combOcr.SelectedIndex;
+            endtxt(false);
+            if (!Istxt())
+                return;
             Action Act = StatTask;
             Act.BeginInvoke(null, null);
+        }
+
+
+        bool Istxt()
+        {
+            if (rabZdTabk.Checked) {
+                ClsOcr.Archid = gArch.Archid;
+                ClsOcr.Boxsn = gArch.Boxsn.ToString();
+                ClsOcr.Archno = gArch.ArchNo;
+                if (ClsOcr.Archid <= 0) {
+                    MessageBox.Show("请选择档案!");
+                    return false;
+                }
+                ClsOcr.ArchFile = gArch.ArchImgFile;
+                if (ClsOcr.ArchFile.Trim().Length <= 0) {
+                    MessageBox.Show("文件名称长度错误!");
+                    return false;
+                }
+                if (Common.Gettask(ClsOcr.Archid) > 0) {
+                    MessageBox.Show("此卷图像任务中请稍候!");
+                    return false;
+                }
+                int stat = Common.GetArchWorkState(ClsOcr.Archid);
+                if (stat >= (int)T_ConFigure.ArchStat.质检中) {
+                    MessageBox.Show("此卷档案正在质检中或已质检完成！");
+                    return false;
+                }
+                ClsOcr.Taskzt = 1;
+            }
+            else {
+                if (datGrivew.RowCount <= 0) {
+                    MessageBox.Show("任务池中未发现任务");
+                    return false;
+                }
+                if (datGrivew.SelectedRows.Count >= 0)
+                    ClsOcr.SelectTask = datGrivew.CurrentRow.Index;
+                if (rabWzx.Checked)
+                    ClsOcr.Taskzt = 2;
+                if (rabAllTabk.Checked)
+                    ClsOcr.Taskzt = 3;
+            }
+            ClsOcr.ocr = combOcr.SelectedIndex;
+            return true;
+        }
+
+        void endtxt(bool bl)
+        {
+            this.BeginInvoke(new Action(() =>
+            {
+                if (!bl) {
+                    rabZdTabk.Enabled = false;
+                    rabWzx.Enabled = false;
+                    rabAllTabk.Enabled = false;
+                    combOcr.Enabled = false;
+                    butStart.Enabled = false;
+                    toolsTaskzx.Visible = true;
+                    toolProess.Visible = true;
+                    return;
+                }
+
+                rabZdTabk.Enabled = true;
+                rabWzx.Enabled = true;
+                rabAllTabk.Enabled = true;
+                combOcr.Enabled = true;
+                butStart.Enabled = true;
+                toolsTaskzx.Visible = false;
+                toolProess.Visible = false;
+            }));
         }
 
         void StatTask()
         {
             Task t = null;
-          
-            if (rabZdTabk.Checked) {
-                Archid = gArch.Archid;
-                if (Archid <= 0) {
-                    MessageBox.Show("请选择档案!");
-                    return;
-                }
-                string filetmp = gArch.ArchImgFile;
-                if (filetmp.Trim().Length <= 0) {
-                    MessageBox.Show("文件名称长度错误!");
-                    return;
-                }
-                if (Common.Gettask(Archid) > 0) {
-                    MessageBox.Show("此卷图像任务中请稍候!");
-                    return;
-                }
-                int stat = Common.GetArchWorkState(Archid);
-                if (stat >= (int)T_ConFigure.ArchStat.质检中) {
-                    MessageBox.Show("此卷档案正在质检中或已质检完成！");
-                    return;
-                }
-                toolsTaskzx.Text = "正在执行:";
-                t = Task.Run(new Action(() => { OcrTask(filetmp, ocr); }));
+            this.Invoke(new Action(() => { toolsTaskzx.Text = "正在执行任务"; }));
+            if (ClsOcr.Taskzt == 1) {
+                t = Task.Run(new Action(() => { OcrTask(); }));
             }
-            else if (rabWzx.Checked || rabAllTabk.Checked) {
-                if (datGrivew.RowCount <= 0) {
-                    MessageBox.Show("任务池中未发现任务");
-                    return;
-                }
-                if (datGrivew.SelectedRows.Count > 0) {
-                    int id = datGrivew.CurrentRow.Index;
-                    string file = GettaskFilename(id);
-                    if (file.Trim().Length <= 0) {
-                        MessageBox.Show("文件名不正确!");
-                        return;
-                    }
-                    toolsTaskzx.Text = "正在执行:";
-                    t = Task.Run(new Action(() => { OcrTask(file, ocr); }));
+            else if (ClsOcr.Taskzt > 1) {
+
+                if (ClsOcr.SelectTask >= 0) {
+                    ClsOcr.ArchFile = ClsOcr.dt.Rows[ClsOcr.SelectTask][1].ToString();
+                    ClsOcr.Archid = Convert.ToInt32(ClsOcr.dt.Rows[ClsOcr.SelectTask][0].ToString());
+                    ClsOcr.Boxsn = ClsOcr.dt.Rows[ClsOcr.SelectTask][2].ToString();
+                    ClsOcr.Archno =ClsOcr.dt.Rows[ClsOcr.SelectTask][3].ToString();
+                    t = Task.Run(new Action(() => { OcrTask(); }));
                 }
                 else {
-                    toolsTaskzx.Visible = true;
-                    for (int i = 0; i < datGrivew.RowCount; i++) {
-                        string file = GettaskFilename(i);
-                        if (file.Trim().Length <= 0) {
-                            continue;
+                    for (int i = 0; i < ClsOcr.dt.Rows.Count; i++) {
+                        if (ClsOcr.Stop == 1) {
+                            ClsOcr.Stop = 0;
+                            return;
                         }
-                        toolsTaskzx.Text = "正在执行:" + i.ToString();
-                        t = Task.Run(new Action(() => { OcrTask(file, ocr); }));
+                        this.Invoke(new Action(() => { toolsTaskzx.Text = string.Format("正在执行第{0} 任务", i.ToString()); }));
+                        ClsOcr.ArchFile = ClsOcr.dt.Rows[ClsOcr.SelectTask][1].ToString();
+                        ClsOcr.Archid = Convert.ToInt32(ClsOcr.dt.Rows[ClsOcr.SelectTask][0].ToString());
+                        ClsOcr.Boxsn = ClsOcr.dt.Rows[ClsOcr.SelectTask][2].ToString();
+                        ClsOcr.Archno = ClsOcr.dt.Rows[ClsOcr.SelectTask][3].ToString();
+                        GetLog("正在执行"+i.ToString());
+                        t = Task.Run(new Action(() => { OcrTask(); }));
                     }
                 }
             }
             Task.WaitAll(t);
-            toolsTaskzx.Visible = false;
-            butStart.Enabled = true;
+            endtxt(true);
         }
 
         string GettaskFilename(int id)
@@ -303,35 +354,71 @@ namespace CsmOcr
 
         }
 
-        void OcrTask(string file, int ocr)
+        void OcrTask()
         {
-            if (!LoadFileImg(file))
-                return;
-            lsocrconte.Clear();
-            List<string> str = new List<string>();
-            List<string> pages = new List<string>();
-            Himg._OcrRecttxt(FileNametmp, out str, out pages, ocr);
-            if (str.Count <= 0)
-                return;
-            for (int i = 0; i < str.Count; i++) {
-                string strtmp = str[i];
-                strtmp = RegexCh(strtmp);
-                for (int t = 0; t < lsConten.Count; t++) {
-                    string s = lsConten[t];
-                    if (strtmp.Contains(s)) {
-                        lsocrconte.Add(s);
-                        string lx = lsContenlx[t];
-                        string ywid = Getywid(s).ToString();
-                        Addconten(Archid.ToString(), s, lx, i.ToString(), ywid);
-                        break;
+            try
+            {
+                string loadfile = "";
+                GetLog("正在下载文件");
+                if (!LoadFileImg(ClsOcr.ArchFile, out loadfile))
+                    return;
+                if (loadfile.Trim().Length <= 0)
+                    return;
+                lsocrconte.Clear();
+                List<string> str = new List<string>();
+                List<string> pages = new List<string>();
+                GetLog("正在识别文件");
+                Himg._OcrRecttxt(loadfile, out str, out pages, ClsOcr.ocr);
+                if (str.Count <= 0)
+                    return;
+                for (int i = 0; i < str.Count; i++) {
+                    string strtmp = str[i];
+                    strtmp = RegexCh(strtmp);
+                    for (int t = 0; t < lsConten.Count; t++) {
+                        string s = lsConten[t];
+                        if (strtmp.Contains(s)) {
+                            lsocrconte.Add(s);
+                            string lx = lsContenlx[t];
+                            string ywid = Getywid(s).ToString();
+                            Addconten(ClsOcr.Archid.ToString(), s, lx, i.ToString(), ywid);
+                            break;
+                        }
                     }
                 }
-            }
-            try {
-                if (File.Exists(FileNametmp))
-                    File.Delete(FileNametmp);
+                try {
+                    if (File.Exists(loadfile))
+                        File.Delete(loadfile);
 
-            } catch {
+                } catch {
+                }
+                GetLog("识别完成!");
+            }
+            catch (Exception e)
+            {
+                GetLog("识别错误:"+e.ToString());
+            }
+        }
+
+        void GetLog(string str)
+        {
+            this.BeginInvoke(new Action(() =>
+            {
+                string s = "盒号:" + ClsOcr.Boxsn.ToString() + " 卷号:" + ClsOcr.Archno.ToString() + " 文件名:" + ClsOcr.ArchFile + "-->信息：" + str; 
+                lsbLog.Items.Add(s);
+            }));
+        }
+
+        private void buttonX2_Click(object sender, EventArgs e)
+        {
+            ClsOcr.Stop = 1;
+        }
+
+        private void datGrivew_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (datGrivew.RowCount > 0)
+            {
+                if (e.Button == MouseButtons.Right)
+                    datGrivew.CurrentCell = null;
             }
         }
     }

@@ -678,7 +678,7 @@ namespace DAL
         }
         public static void UpdateGensetInfo(string table, string info, string name, string num, string width, string txtwith, string wycol,bool bl)
         {
-            string strSql = "update M_GenSetInfo set InfoAddzd=@info, InfoName=@name, InfoNum=@num,InfoLabWidth=@width,InfoTxtWidth=@txtwith, wycol=@wycol where InfoTable=@table,InfoCheck=@bl";
+            string strSql = "update M_GenSetInfo set InfoAddzd=@info, InfoName=@name, InfoNum=@num,InfoLabWidth=@width,InfoTxtWidth=@txtwith, wycol=@wycol,InfoCheck=@bl where InfoTable=@table";
             SqlParameter[] par =
             {
                 new SqlParameter("@table", table),

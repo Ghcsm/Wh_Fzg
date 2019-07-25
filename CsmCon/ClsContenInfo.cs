@@ -302,10 +302,26 @@ namespace CsmCon
         public void SetInfoTxt(Control p, int id, string str)
         {
             foreach (Control ct in p.Controls) {
-                if (ct is TextBox || ct is ComboBox) {
-                    if (ct.Tag.ToString() == id.ToString()) {
+                if (ct is TextBox || ct is ComboBox)
+                {
+                    if (ct.Tag.ToString() == id.ToString())
+                    {
                         ct.Text = str;
                     }
+                }
+            }
+        }
+        public void SetInfoTxtcls(Control p, int id, string str)
+        {
+            foreach (Control ct in p.Controls) {
+                if (ct is TextBox || ct is ComboBox)
+                {
+                    if (ct.Tag.ToString() == id.ToString())
+                    {
+                        ct.Text = str;
+                    }
+                    else
+                        ct.Text = "";
                 }
             }
         }

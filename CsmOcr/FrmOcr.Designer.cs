@@ -46,10 +46,13 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.datGrivew = new DevComponents.DotNetBar.Controls.DataGridViewX();
             this.gr1 = new System.Windows.Forms.GroupBox();
+            this.gr3 = new System.Windows.Forms.GroupBox();
+            this.lsbLog = new System.Windows.Forms.ListBox();
             this.groupPanel1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.datGrivew)).BeginInit();
+            this.gr3.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStrip1
@@ -64,6 +67,7 @@
             // 
             this.groupPanel1.CanvasColor = System.Drawing.SystemColors.Control;
             this.groupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007;
+            this.groupPanel1.Controls.Add(this.gr3);
             this.groupPanel1.Controls.Add(this.combOcr);
             this.groupPanel1.Controls.Add(this.label1);
             this.groupPanel1.Controls.Add(this.rabAllTabk);
@@ -170,6 +174,7 @@
             this.buttonX2.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.buttonX2.TabIndex = 11;
             this.buttonX2.Text = "停止";
+            this.buttonX2.Click += new System.EventHandler(this.buttonX2_Click);
             // 
             // butStart
             // 
@@ -253,7 +258,7 @@
             this.groupBox2.Controls.Add(this.datGrivew);
             this.groupBox2.Location = new System.Drawing.Point(405, 4);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(727, 510);
+            this.groupBox2.Size = new System.Drawing.Size(480, 510);
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "任务池";
@@ -277,8 +282,9 @@
             this.datGrivew.Name = "datGrivew";
             this.datGrivew.ReadOnly = true;
             this.datGrivew.RowTemplate.Height = 23;
-            this.datGrivew.Size = new System.Drawing.Size(721, 490);
+            this.datGrivew.Size = new System.Drawing.Size(474, 490);
             this.datGrivew.TabIndex = 0;
+            this.datGrivew.MouseDown += new System.Windows.Forms.MouseEventHandler(this.datGrivew_MouseDown);
             // 
             // gr1
             // 
@@ -290,6 +296,29 @@
             this.gr1.Size = new System.Drawing.Size(396, 574);
             this.gr1.TabIndex = 1;
             this.gr1.TabStop = false;
+            // 
+            // gr3
+            // 
+            this.gr3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.gr3.BackColor = System.Drawing.Color.Transparent;
+            this.gr3.Controls.Add(this.lsbLog);
+            this.gr3.Location = new System.Drawing.Point(891, 7);
+            this.gr3.Name = "gr3";
+            this.gr3.Size = new System.Drawing.Size(241, 504);
+            this.gr3.TabIndex = 15;
+            this.gr3.TabStop = false;
+            this.gr3.Text = "日志";
+            // 
+            // lsbLog
+            // 
+            this.lsbLog.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lsbLog.FormattingEnabled = true;
+            this.lsbLog.ItemHeight = 12;
+            this.lsbLog.Location = new System.Drawing.Point(3, 17);
+            this.lsbLog.Name = "lsbLog";
+            this.lsbLog.Size = new System.Drawing.Size(235, 484);
+            this.lsbLog.TabIndex = 0;
             // 
             // FrmOcr
             // 
@@ -311,6 +340,7 @@
             this.statusStrip1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.datGrivew)).EndInit();
+            this.gr3.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -336,6 +366,8 @@
         private DevComponents.DotNetBar.Controls.DataGridViewX datGrivew;
         private System.Windows.Forms.ToolStripStatusLabel toolslabTaskCount;
         private System.Windows.Forms.ToolStripStatusLabel toolsTaskzx;
+        private System.Windows.Forms.GroupBox gr3;
+        private System.Windows.Forms.ListBox lsbLog;
     }
 }
 

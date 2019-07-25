@@ -284,7 +284,6 @@ namespace CsmCon
             string title = "";
             for (int i = 1; i < LvContents.Columns.Count; i++) {
                 string str = LvContents.SelectedItems[0].SubItems[i].Text;
-
                 if (i == 1)
                     Mtmpid = Convert.ToInt32(str);
                 else {
@@ -339,7 +338,7 @@ namespace CsmCon
                     LvContents.Items[x].Selected = true;
                 }
                 else if (page > 0)
-                    info.SetInfoTxt(panel1, info.PagesWz + 1, page.ToString());
+                    info.SetInfoTxtcls(panel1, info.PagesWz + 1, page.ToString());
             } catch { }
         }
 
