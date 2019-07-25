@@ -4,11 +4,15 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using HLjscom;
 using DataRow = System.Data.DataRow;
+using System.Xml;
+using System.Drawing;
+using Spire.Xls;
 
 namespace Csmsjcf
 {
@@ -20,7 +24,7 @@ namespace Csmsjcf
         }
 
         public static Hljsimage Himg;
-
+        HLFtp.HFTP ftp = new HLFtp.HFTP();
         #region baseInfo
 
         private void CombAddinfo()
@@ -1497,8 +1501,20 @@ namespace Csmsjcf
         private void butTfSelect_Click(object sender, EventArgs e)
         {
             txtTfPath.Text = "";
+            ClsDL.FilePath = "";
             if (fBdigImgPath.ShowDialog() == DialogResult.OK) {
                 txtTfPath.Text = fBdigImgPath.SelectedPath;
+                ClsDL.FilePath = fBdigImgPath.SelectedPath;
+                return;
+            }
+        }
+        private void butCreatPth_Click(object sender, EventArgs e)
+        {
+            txtCreatePath.Text = "";
+            ClsDL.NewPath = "";
+            if (fBdigImgPath.ShowDialog() == DialogResult.OK) {
+                txtCreatePath.Text = fBdigImgPath.SelectedPath;
+                ClsDL.NewPath = fBdigImgPath.SelectedPath;
                 return;
             }
         }
@@ -1510,6 +1526,14 @@ namespace Csmsjcf
                 combKf.Focus();
                 return false;
             }
+            else
+                ClsDL.Houseid = V_HouseSetCs.Houseid;
+
+            if (radZlcy.Checked)
+                ClsDL.Zlcy = 1;
+            else
+                ClsDL.Zlcy = 2;
+
             if (txtB1.Text.Trim().Length <= 0 || txtB2.Text.Trim().Length <= 0) {
                 MessageBox.Show("盒号范围不能为空!");
                 txtB1.Focus();
@@ -1520,32 +1544,742 @@ namespace Csmsjcf
                 int p2;
                 bool b1 = int.TryParse(txtB1.Text.Trim(), out p1);
                 bool b2 = int.TryParse(txtB2.Text.Trim(), out p2);
-                if (!b1 || !b2)
+                if (!b1 || !b2) {
+                    MessageBox.Show("盒号不正确!");
+                    txtB1.Focus();
                     return false;
-                if (p1 < p2) {
+                }
+                if (p1 > p2) {
                     MessageBox.Show("盒号范围不正确!");
                     txtB1.Focus();
                     return false;
                 }
             }
-            if (!chkjpg.Checked && !chkxls.Checked && !chkxml.Checked) {
+            if (!chkjpg.Checked && !chkxlsxml.Checked) {
                 MessageBox.Show("请选择生成类型!");
                 return false;
             }
-            if (radTfPath.Checked) {
+            if (chkjpg.Checked)
+                ClsDL.jpgxml = 1;
+            else
+                ClsDL.jpgxml = 0;
+            if (chkxlsxml.Checked)
+                ClsDL.xls = 1;
+            else
+                ClsDL.xls = 0;
+            if (radFtp.Checked)
+                ClsDL.Ftp = 1;
+            else if (radTfPath.Checked) {
                 if (txtTfPath.Text.Trim().Length <= 0) {
                     MessageBox.Show("本地图像路径不能为空!");
                     return false;
                 }
+                ClsDL.Ftp = 2;
             }
+            if (txtCreatePath.Text.Trim().Length <= 0) {
+                MessageBox.Show("生成路径不能为空!");
+                txtCreatePath.Focus();
+                return false;
+            }
+            ClsDL.lsh = 0;
+            if (chkboxsn.Checked) {
+                if (txtlsh.Text.Trim().Length <= 0) {
+                    MessageBox.Show("流水号不能为空!");
+                    txtlsh.Focus();
+                    return false;
+                }
+                else {
+                    int lsh;
+                    bool bl = int.TryParse(txtlsh.Text.Trim(), out lsh);
+                    if (!bl) {
+                        MessageBox.Show("流水号不正确!");
+                        return false;
+                    }
+                    ClsDL.lsh = lsh;
+                }
+            }
+            else
+                ClsDL.lsh = 0;
             return true;
         }
+
+        void Endtxt(bool bl)
+        {
+            this.Invoke(new Action(() =>
+            {
+                if (!bl) {
+                    grdl1.Enabled = false;
+                    grdl2.Enabled = false;
+                    grdl3.Enabled = false;
+                    butDlStart.Enabled = false;
+                    return;
+                }
+                grdl1.Enabled = true;
+                grdl2.Enabled = true;
+                grdl3.Enabled = true;
+                butDlStart.Enabled = true;
+            }));
+        }
+
 
         private void butDlStart_Click(object sender, EventArgs e)
         {
             if (isdltxt())
                 return;
+            Endtxt(false);
+            Action Act = Getboxsn;
+            Act.BeginInvoke(null, null);
+        }
+
+        private bool Getfile(out string xxDownFile)
+        {
+            if (ClsDL.Ftp == 2) {
+                xxDownFile = Path.Combine(ClsDL.FtpPath, ClsDL.ArchFile.Substring(0, 8), ClsDL.ArchFile);
+                if (!File.Exists(xxDownFile)) {
+                    return false;
+                }
+                return true;
+            }
+            else {
+                string pathtmp = Path.Combine(Common.LocalTempPath, ClsDL.ArchFile.Substring(0, 8));
+                xxDownFile = Path.Combine(Common.LocalTempPath, ClsDL.ArchFile.Substring(0, 8), ClsDL.ArchFile);
+                if (!Directory.Exists(pathtmp)) {
+                    Directory.CreateDirectory(pathtmp);
+                }
+                if (File.Exists(xxDownFile)) {
+                    File.Delete(xxDownFile);
+                }
+                if (ftp.CheckRemoteFile(Common.ArchSavePah, ClsDL.ArchFile.Substring(0, 8), ClsDL.ArchFile)) {
+                    if (ftp.DownLoadFile(Common.ArchSavePah, ClsDL.ArchFile.Substring(0, 8), xxDownFile, ClsDL.ArchFile)) {
+                        return true;
+                    }
+                    return false;
+                }
+                return false;
+            }
+        }
+        private string Getbase64(string file)
+        {
+            try {
+                Bitmap bmp = new Bitmap(file);
+                MemoryStream ms = new MemoryStream();
+                bmp.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+                byte[] arr = new byte[ms.Length];
+                ms.Position = 0;
+                ms.Read(arr, 0, (int)ms.Length);
+                ms.Close();
+                return Convert.ToBase64String(arr);
+            } catch {
+                return null;
+            }
+        }
+        private bool WriteFwtj(string file, string archid, string ariveid, string tm)
+        {
+            try {
+                if (!File.Exists(file)) {
+                    string strfile = Path.Combine(Application.StartupPath, "Fwtj.xlsx");
+                    File.Copy(strfile, file);
+                }
+                DataTable dt = Common.Getinfosx(archid);
+                if (dt == null || dt.Rows.Count <= 0) {
+                    string str = "未找到录入信息,id号" + archid + " 二维码:" + tm;
+                    ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
+                    return false;
+                }
+                Workbook work = new Workbook();
+                Worksheet wsheek = null;
+                work.LoadFromFile(file);
+                wsheek = work.Worksheets[0];
+                int rows = wsheek.LastRow + 1;
+                for (int i = 0; i < dt.Rows.Count; i++) {
+
+                    if (i == 0) {
+                        wsheek.Range[rows + i, 1].Text = ariveid;
+                        wsheek.Range[rows + i, 3].Text = tm;
+                    }
+                    for (int t = 0; t < dt.Columns.Count - 1; t++) {
+
+                        string str = dt.Rows[i][t].ToString();
+                        if (i == 0 && t == 0)
+                            wsheek.Range[rows + i, 2].Text = str;
+                        else if (i == 0 && t == 1)
+                            wsheek.Range[rows + i, 4].Text = str;
+                        else if (t == 4)
+                            wsheek.Range[rows + i, t + 4].Text = "东丽区";
+                        else if (t >= 2)
+                            wsheek.Range[rows + i, t + 4].Text = str;
+
+                    }
+                }
+                int count = wsheek.LastRow;
+                CellRange range = wsheek.Range["A" + rows + ":R" + count];
+                range.BorderInside(LineStyleType.Thin, ExcelColors.Black);
+                range.BorderAround(LineStyleType.Thin, ExcelColors.Black);
+                work.SaveToFile(file, FileFormat.Version2007);
+                work.Dispose();
+                return true;
+            } catch {
+                return false;
+            }
+
+        }
+
+        private bool WriteMltj(string file, string archid, string ariveid, string tm, string pagecount)
+        {
+            try {
+                if (!File.Exists(file)) {
+                    string strfile = Path.Combine(Application.StartupPath, "jnmltj.xlsx");
+                    File.Copy(strfile, file);
+                }
+                DataTable dt = Common.Getmlinfo2(archid);
+                if (dt == null || dt.Rows.Count <= 0) {
+                    string str = "未找到目录信息,id号" + archid + " 二维码:";
+                    ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
+                    return false;
+                }
+                Workbook work = new Workbook();
+                Worksheet wsheek = null;
+                work.LoadFromFile(file);
+                wsheek = work.Worksheets[0];
+                int rows = wsheek.LastRow + 1;
+                for (int i = 0; i < dt.Rows.Count; i++) {
+                    if (i == 0) {
+                        wsheek.Range[rows + i, 1].Text = ariveid;
+                        wsheek.Range[rows + i, 2].Text = tm;
+                        continue;
+                    }
+                    for (int t = 0; t < dt.Columns.Count; t++) {
+                        string str = dt.Rows[i][t].ToString();
+                        if (t < 3)
+                            wsheek.Range[rows + i - 1, t + 3].Text = str;
+                        else if (t == 3) {
+                            int p = 0;
+                            try {
+                                int p1 = Convert.ToInt32(dt.Rows[i + 1][2].ToString());
+                                p = p1 - 1;
+                            } catch {
+                                p = Convert.ToInt32(pagecount);
+
+                            }
+                            wsheek.Range[rows + i - 1, 6].Text = p.ToString();
+                            wsheek.Range[rows + i - 1, 7].Text = str;
+                        }
+                    }
+                }
+                int count = wsheek.LastRow;
+                wsheek.Range["A" + rows + ":A" + count].Style.HorizontalAlignment = HorizontalAlignType.Center;
+                wsheek.Range["A" + rows + ":A" + count].Merge();
+                wsheek.Range["B" + rows + ":B" + count].Merge();
+                CellRange range = wsheek.Range["A" + rows + ":G" + count];
+                range.BorderInside(LineStyleType.Thin, ExcelColors.Black);
+                range.BorderAround(LineStyleType.Thin, ExcelColors.Black);
+                work.SaveToFile(file, FileFormat.Version2007);
+                work.Dispose();
+                return true;
+            } catch {
+                return false;
+            }
+        }
+
+        private bool WriteTxtj(string file, string tm, string pagecount,List<string>A0,List<string>A1,List<string>A2,List<string>A3,List<string> A4)
+        {
+            try {
+                if (!File.Exists(file)) {
+                    string strfile = Path.Combine(Application.StartupPath, "txtj.xlsx");
+                    File.Copy(strfile, file);
+                }
+                Workbook work = new Workbook();
+                Worksheet wsheek = null;
+                work.LoadFromFile(file);
+                wsheek = work.Worksheets[0];
+                int rows = wsheek.LastRow + 1;
+                wsheek.Range[rows, 1].Text = tm;
+                wsheek.Range[rows, 2].Text = pagecount;
+                wsheek.Range[rows, 3].Text = A0.Count.ToString();
+                if (A0.Count > 0) {
+                    string str = "";
+                    for (int i = 0; i < A0.Count; i++) {
+                        string s = A0[i];
+                        if (str.Trim().Length <= 0)
+                            str += s.PadLeft(3, '0') + ".jpg";
+                        else
+                            str += ";" + s.PadLeft(3, '0') + ".jpg";
+                    }
+                    wsheek.Range[rows, 4].Text = str;
+                }
+                wsheek.Range[rows, 5].Text = A1.Count.ToString();
+                if (A1.Count > 0) {
+                    string str = "";
+                    for (int i = 0; i < A1.Count; i++) {
+                        string s = A1[i];
+                        if (str.Trim().Length <= 0)
+                            str += s.PadLeft(3, '0') + ".jpg";
+                        else
+                            str += ";" + s.PadLeft(3, '0') + ".jpg";
+                    }
+                    wsheek.Range[rows, 6].Text = str;
+                }
+                wsheek.Range[rows, 7].Text = A2.Count.ToString();
+                if (A2.Count > 0) {
+                    string str = "";
+                    for (int i = 0; i < A2.Count; i++) {
+                        string s = A2[i];
+                        if (str.Trim().Length <= 0)
+                            str += s.PadLeft(3, '0') + ".jpg";
+                        else
+                            str += ";" + s.PadLeft(3, '0') + ".jpg";
+                    }
+                    wsheek.Range[rows, 8].Text = str;
+                }
+                wsheek.Range[rows, 9].Text = A3.Count.ToString();
+                if (A3.Count > 0) {
+                    string str = "";
+                    for (int i = 0; i < A3.Count; i++) {
+                        string s = A3[i];
+                        if (str.Trim().Length <= 0)
+                            str += s.PadLeft(3, '0') + ".jpg";
+                        else
+                            str += ";" + s.PadLeft(3, '0') + ".jpg";
+                    }
+                    wsheek.Range[rows, 10].Text = str;
+                }
+                wsheek.Range[rows, 11].Text = A4.Count.ToString();
+                CellRange range = wsheek.Range["A" + rows + ":K" + rows];
+                range.BorderInside(LineStyleType.Thin, ExcelColors.Black);
+                range.BorderAround(LineStyleType.Thin, ExcelColors.Black);
+                work.SaveToFile(file, FileFormat.Version2007);
+                work.Dispose();
+                return true;
+            } catch {
+                return false;
+            }
+        }
+        private bool WriteTxtj(string file, string tm, string XFileName, string pagecount)
+        {
+            try {
+                if (!File.Exists(file)) {
+                    string strfile = Path.Combine(Application.StartupPath, "txtj.xlsx");
+                    File.Copy(strfile, file);
+                }
+                List<string> A0 = new List<string>();
+                List<string> A1 = new List<string>();
+                List<string> A2 = new List<string>();
+                List<string> A3 = new List<string>();
+                List<string> A4 = new List<string>();
+                Himg.Filename = XFileName;
+                Himg.GetImgSize(out A0, out A1, out A2, out A3, out A4);
+                try {
+                    if (ClsDL.Ftp==2) {
+                        if (File.Exists(XFileName)) {
+                            File.Delete(XFileName);
+                        }
+                    }
+                } catch { }
+                Workbook work = new Workbook();
+                Worksheet wsheek = null;
+                work.LoadFromFile(file);
+                wsheek = work.Worksheets[0];
+                int rows = wsheek.LastRow + 1;
+                wsheek.Range[rows, 1].Text = tm;
+                wsheek.Range[rows, 2].Text = pagecount;
+                wsheek.Range[rows, 3].Text = A0.Count.ToString();
+                if (A0.Count > 0) {
+                    string str = "";
+                    for (int i = 0; i < A0.Count; i++) {
+                        string s = A0[i];
+                        if (str.Trim().Length <= 0)
+                            str += s.PadLeft(3, '0') + ".jpg";
+                        else
+                            str += ";" + s.PadLeft(3, '0') + ".jpg";
+                    }
+                    wsheek.Range[rows, 4].Text = str;
+                }
+                wsheek.Range[rows, 5].Text = A1.Count.ToString();
+                if (A1.Count > 0) {
+                    string str = "";
+                    for (int i = 0; i < A1.Count; i++) {
+                        string s = A1[i];
+                        if (str.Trim().Length <= 0)
+                            str += s.PadLeft(3, '0') + ".jpg";
+                        else
+                            str += ";" + s.PadLeft(3, '0') + ".jpg";
+                    }
+                    wsheek.Range[rows, 6].Text = str;
+                }
+                wsheek.Range[rows, 7].Text = A2.Count.ToString();
+                if (A2.Count > 0) {
+                    string str = "";
+                    for (int i = 0; i < A2.Count; i++) {
+                        string s = A2[i];
+                        if (str.Trim().Length <= 0)
+                            str += s.PadLeft(3, '0') + ".jpg";
+                        else
+                            str += ";" + s.PadLeft(3, '0') + ".jpg";
+                    }
+                    wsheek.Range[rows, 8].Text = str;
+                }
+                wsheek.Range[rows, 9].Text = A3.Count.ToString();
+                if (A3.Count > 0) {
+                    string str = "";
+                    for (int i = 0; i < A3.Count; i++) {
+                        string s = A3[i];
+                        if (str.Trim().Length <= 0)
+                            str += s.PadLeft(3, '0') + ".jpg";
+                        else
+                            str += ";" + s.PadLeft(3, '0') + ".jpg";
+                    }
+                    wsheek.Range[rows, 10].Text = str;
+                }
+                wsheek.Range[rows, 11].Text = A4.Count.ToString();
+                CellRange range = wsheek.Range["A" + rows + ":K" + rows];
+                range.BorderInside(LineStyleType.Thin, ExcelColors.Black);
+                range.BorderAround(LineStyleType.Thin, ExcelColors.Black);
+                work.SaveToFile(file, FileFormat.Version2007);
+                work.Dispose();
+                return true;
+            } catch {
+                return false;
+            }
+        }
+
+        XmlDocument xmldoc;
+        XmlElement xmlelem;
+        private bool Wirtexml(string archid, string ewm, string file, string pagecount, List<string> lsjpg, string ariveid)
+        {
+            xmldoc = new XmlDocument();
+            //加入XML的声明段落,<?xml version="1.0" encoding="gb2312"?>
+            XmlDeclaration xmldecl;
+            xmldecl = xmldoc.CreateXmlDeclaration("1.0", "utf-8", null);
+            xmldoc.AppendChild(xmldecl);
+
+            //加入一个根元素
+            xmlelem = xmldoc.CreateElement("", "Message", "");
+            xmldoc.AppendChild(xmlelem);
+
+            XmlNode root = xmldoc.SelectSingleNode("Message");//查找<Employees>
+            XmlElement xe1 = xmldoc.CreateElement("Head");
+
+            DataTable dt = Common.getinfo(archid);
+            if (dt == null || dt.Rows.Count <= 0) {
+                string str = "录入信息获取失败 id号：" + archid + " 二维码信息：" + ewm;
+                ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
+                return false;
+            }
+            string archtype = dt.Rows[0][2].ToString();
+            string page = dt.Rows[0][17].ToString();
+
+            XmlElement xesub1 = xmldoc.CreateElement("ArchiveID");
+            xesub1.InnerText = ariveid;
+            xe1.AppendChild(xesub1);
+
+            xesub1 = xmldoc.CreateElement("ArchiveType");
+            xesub1.InnerText = archtype;
+            xe1.AppendChild(xesub1);
+
+            xesub1 = xmldoc.CreateElement("ArchiveNumber");
+            xesub1.InnerText = ewm;
+            xe1.AppendChild(xesub1);
+
+            xesub1 = xmldoc.CreateElement("PageCount");
+            xesub1.InnerText = page;
+            xe1.AppendChild(xesub1);
+
+            xesub1 = xmldoc.CreateElement("ArchiveLocation");
+            xesub1.InnerText = "";
+            xe1.AppendChild(xesub1);
+
+            root.AppendChild(xe1);//添加到<Employees>节点中
+
+            root = xmldoc.SelectSingleNode("Message");//查找<Employees>
+            xe1 = xmldoc.CreateElement("Data");
+            root.AppendChild(xe1);//添加到<Employees>节点中
+            //循环几手信息
+            for (int i = 0; i < dt.Rows.Count; i++) {
+
+                string xh = (i + 1).ToString();
+                string bzid = dt.Rows[i][16].ToString();
+                string djlx = dt.Rows[i][15].ToString();
+                string qu = "东丽区";
+                string zl = dt.Rows[i][5].ToString();
+                string bdcsj = dt.Rows[i][3].ToString();
+                string zdsn = dt.Rows[i][8].ToString();
+                string dh = dt.Rows[i][6].ToString();
+                string bdcdyh = dt.Rows[i][9].ToString();
+                string qlr = dt.Rows[i][4].ToString();
+                string dyqlr = dt.Rows[i][10].ToString();
+                string bdczh = dt.Rows[i][7].ToString();
+                string spsj = dt.Rows[i][11].ToString();
+                XmlElement xesub2 = xmldoc.CreateElement("BDC_BUSINESS");
+                xesub2.SetAttribute("XH", xh);
+                xesub2.SetAttribute("BZID", bzid);
+                xesub2.SetAttribute("DJLX", djlx);
+                xesub2.SetAttribute("QX", qu);
+                xesub2.SetAttribute("ZL", zl);
+                xesub2.SetAttribute("BDCSJH", bdcsj);
+                xesub2.SetAttribute("ZDZHHM", zdsn);
+                xesub2.SetAttribute("DH", dh);
+                xesub2.SetAttribute("BDCDYH", bdcdyh);
+                xesub2.SetAttribute("QLRMC", qlr);
+                xesub2.SetAttribute("DYQRMC", dyqlr);
+                xesub2.SetAttribute("BDCQZH", bdczh);
+                xesub2.SetAttribute("SPSJ", spsj);
+                xesub2.SetAttribute("ZT", "");
+                xe1.AppendChild(xesub2);
+            }
+            //循环目录
+            int mlpage = 1;
+            List<string> lsywid = new List<string>();
+            dt = Common.Getmlinfo(archid);
+            if (dt == null || dt.Rows.Count <= 0) {
+                string str = "目录信息获取失败 id号：" + archid + " 二维码信息：" + ewm;
+                ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
+                return false;
+            }
+            for (int i = 0; i < dt.Rows.Count; i++) {
+
+                string xh = i.ToString();
+                string title = dt.Rows[i][1].ToString();
+                string mllx = dt.Rows[i][3].ToString();
+                string qsy = dt.Rows[i][5].ToString();
+                string ywid = dt.Rows[i][4].ToString();
+                string ys = "";
+                int p1 = 0;
+                try {
+                    p1 = Convert.ToInt32(qsy);
+                    string p2 = dt.Rows[i + 1][5].ToString();
+                    ys = (Convert.ToInt32(p2) - p1).ToString();
+                } catch (Exception) {
+                    ys = (Convert.ToInt32(pagecount) - p1).ToString();
+                }
+                if (title == "目录") {
+                    mlpage = Convert.ToInt32(ys);
+                    continue;
+                }
+                lsywid.Add(ys);
+                XmlElement xesub2 = xmldoc.CreateElement("CATALOGUE");
+                xesub2.SetAttribute("XH", xh);
+                xesub2.SetAttribute("CATAID", xh);
+                xesub2.SetAttribute("MLZL", mllx);
+                xesub2.SetAttribute("MLMC", title);
+                xesub2.SetAttribute("MLQSY", qsy);
+                xesub2.SetAttribute("YS", ys);
+                xesub2.SetAttribute("FJ", "");
+                xesub2.SetAttribute("BZID", ywid);
+                xe1.AppendChild(xesub2);
+
+            }
+            //循环写入图片信息
+            int id = 0;  //总顺序号
+            int ys1 = 0;  //每个目录下页数
+            int ywid1 = 1; //每个目录的id
+            int tmpjl = 0;  //记录当前循环是否大于目前页数;
+            for (int i = 0; i < lsjpg.Count; i++) {
+                if (i < mlpage)
+                    continue;
+                id += 1;
+                if (ys1 == 0) {
+                    if (lsywid.Count > 0)
+                        ys1 = Convert.ToInt32(lsywid[0]);
+                    lsywid.RemoveAt(0);
+                }
+                if (tmpjl < ys1)
+                    tmpjl += 1;
+                else {
+                    if (lsywid.Count > 0) {
+                        ys1 = Convert.ToInt32(lsywid[0]);
+                        lsywid.RemoveAt(0);
+                        tmpjl = 1;
+                        ywid1 += 1;
+                    }
+                }
+                string jpg = lsjpg[i];
+                string xh = id.ToString();
+                string filenmae = Path.GetFileName(jpg);
+                string kzm = ".jpg";
+                string cataid = ywid1.ToString();
+                string info = Getbase64(jpg);
+                if (info.Trim().Length <= 0) {
+                    string str = "jpg转base64失败 id号：" + archid + " 二维码信息：" + ewm;
+                    ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
+                    return false;
+                }
+
+                XmlElement xesub2 = xmldoc.CreateElement("CATALOGUE_ATTACHMENT");
+                xesub2.SetAttribute("XH", xh);
+                xesub2.SetAttribute("ATTACHMENTID", xh);
+                xesub2.SetAttribute("CATAID", cataid);
+                xesub2.SetAttribute("WJMC", filenmae);
+                xesub2.SetAttribute("WJLX", kzm);
+                xesub2.SetAttribute("WJNY", info);
+                xe1.AppendChild(xesub2);
+            }
+            xmldoc.Save(file);
+            return true;
+        }
+
+
+        void Getboxsn()
+        {
+            try
+            {
+                if (ClsDL.Zlcy == 2)
+                {
+                    Common.DataSplitUpdateboxsn(ClsDL.Houseid, ClsDL.Boxsn, ClsDL.Boxsn2);
+                }
+                ClsDL.dtboxsn = Common.DataSplitGetdata(ClsDL.Houseid, ClsDL.Boxsn, ClsDL.Boxsn2);
+                if (ClsDL.dtboxsn == null || ClsDL.dtboxsn.Rows.Count <= 0)
+                    return;
+                this.BeginInvoke(new Action(() => { lab_dl_juan.Text = "共计:" + ClsDL.dtboxsn.Rows.Count.ToString(); }));
+                for (int i = 0; i < ClsDL.dtboxsn.Rows.Count; i++)
+                {
+                    try
+                    {
+                        ClsDL.Archid = ClsDL.dtboxsn.Rows[i][0].ToString();
+                        string boxsn = ClsDL.dtboxsn.Rows[i][1].ToString();
+                        ClsDL.BoxsnTag = boxsn;
+                        string page = ClsDL.dtboxsn.Rows[i][2].ToString();
+                        string file = ClsDL.dtboxsn.Rows[i][3].ToString();
+                        string qu = ClsDL.dtboxsn.Rows[i][4].ToString();
+                        string lx = ClsDL.dtboxsn.Rows[i][5].ToString();
+                        ClsDL.ArchFile = DESEncrypt.DesDecrypt(file);
+                        if (ClsDL.ArchFile.Trim().Length <= 0)
+                        {
+                            string str = "盒号:" + boxsn + "文件名称解密失败!";
+                            ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
+                            continue;
+                        }
+
+                        string loadfile = "";
+                        if (!Getfile(out loadfile))
+                        {
+                            string str = "盒号:" + boxsn + "获取图像文件失败";
+                            ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
+                            continue;
+                        }
+
+                        ClsDL.ewmname = "DL-" + qu + "-" + lx + boxsn.PadLeft(6, '0');
+                        string time = DateTime.Now.ToString("yyMMdd").ToString().Trim();
+                        if (ClsDL.lsh > 0)
+                            ClsDL.xmlname = "120110" + time + (ClsDL.lsh + i).ToString().PadLeft(6, '0');
+                        else
+                            ClsDL.xmlname = "120110" + time + (i + 1).ToString().PadLeft(6, '0');
+                        if (ClsDL.xls == 1 && ClsDL.jpgxml == 1)
+                        {
+                            string jpgdir = Path.Combine(ClsDL.NewPath, "jpg", ClsDL.ewmname);
+                            string xmldir = Path.Combine(ClsDL.NewPath, "xml");
+                            if (!Directory.Exists(jpgdir))
+                                Directory.CreateDirectory(jpgdir);
+                            if (!Directory.Exists(xmldir))
+                                Directory.CreateDirectory(xmldir);
+                            Himg.Filename = loadfile;
+                            List<string> lsjpg = new List<string>();
+                            List<string> A0 = new List<string>();
+                            List<string> A1 = new List<string>();
+                            List<string> A2 = new List<string>();
+                            List<string> A3 = new List<string>();
+                            List<string> A4 = new List<string>();
+                            if (!Himg._SplitImg(jpgdir, ClsDL.Zlcy, out lsjpg, out A0, out A1, out A2, out A3, out A4))
+                            {
+                                string str = "盒号:" + boxsn + "转换jpg图像文件失败!";
+                                ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
+                                continue;
+                            }
+                            else
+                            {
+                                string xmlfile = Path.Combine(xmldir, ClsDL.xmlname + ".xml");
+                                if (!Wirtexml(ClsDL.Archid, ClsDL.ewmname, ClsDL.xmlname, page, lsjpg, xmlfile))
+                                {
+                                    string str = "盒号:" + boxsn + "生成xml失败!";
+                                    ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
+                                    continue;
+                                }
+                                else
+                                {
+                                    string ScPathXls = Path.Combine(ClsDL.NewPath,
+                                        ClsDL.Boxsn + "-" + ClsDL.Boxsn + "房屋统计.xlsx");
+                                    string scpathxlsml = Path.Combine(ClsDL.NewPath,
+                                        ClsDL.Boxsn + "-" + ClsDL.Boxsn + "卷内目录统计.xlsx");
+                                    string scpathxlstj = Path.Combine(ClsDL.NewPath,
+                                        ClsDL.Boxsn + "-" + ClsDL.Boxsn + "图像统计.xlsx");
+                                    WriteFwtj(ScPathXls, ClsDL.Archid, ClsDL.xmlname, ClsDL.ewmname);
+                                    WriteMltj(scpathxlsml, ClsDL.Archid, ClsDL.xmlname, ClsDL.ewmname, page);
+                                    WriteTxtj(scpathxlstj, ClsDL.ewmname, page, A0, A1, A2, A3, A4);
+                                }
+
+                                Common.DataSplitUpdate(ClsDL.Archid);
+                            }
+                        }
+                        else if (ClsDL.jpgxml == 1)
+                        {
+                            string jpgdir = Path.Combine(ClsDL.NewPath, "jpg", ClsDL.ewmname);
+                            string xmldir = Path.Combine(ClsDL.NewPath, "xml");
+                            if (!Directory.Exists(jpgdir))
+                                Directory.CreateDirectory(jpgdir);
+                            if (!Directory.Exists(xmldir))
+                                Directory.CreateDirectory(xmldir);
+                            Himg.Filename = loadfile;
+                            List<string> lsjpg = new List<string>();
+                            List<string> A0 = new List<string>();
+                            List<string> A1 = new List<string>();
+                            List<string> A2 = new List<string>();
+                            List<string> A3 = new List<string>();
+                            List<string> A4 = new List<string>();
+                            if (!Himg._SplitImg(jpgdir, ClsDL.Zlcy, out lsjpg))
+                            {
+                                string str = "盒号:" + boxsn + "转换jpg图像文件失败!";
+                                ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
+                                continue;
+                            }
+                            else
+                            {
+                                string xmlfile = Path.Combine(xmldir, ClsDL.xmlname + ".xml");
+                                if (!Wirtexml(ClsDL.Archid, ClsDL.ewmname, ClsDL.xmlname, page, lsjpg, xmlfile))
+                                {
+                                    string str = "盒号:" + boxsn + "生成xml失败!";
+                                    ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
+                                    continue;
+                                }
+
+                                Common.DataSplitUpdate(ClsDL.Archid);
+                            }
+                        }
+                        else if (ClsDL.xls == 1)
+                        {
+                            string ScPathXls = Path.Combine(ClsDL.NewPath,
+                                ClsDL.Boxsn + "-" + ClsDL.Boxsn + "房屋统计.xlsx");
+                            string scpathxlsml = Path.Combine(ClsDL.NewPath,
+                                ClsDL.Boxsn + "-" + ClsDL.Boxsn + "卷内目录统计.xlsx");
+                            string scpathxlstj = Path.Combine(ClsDL.NewPath,
+                                ClsDL.Boxsn + "-" + ClsDL.Boxsn + "图像统计.xlsx");
+                            WriteFwtj(ScPathXls, ClsDL.Archid, ClsDL.xmlname, ClsDL.ewmname);
+                            WriteMltj(scpathxlsml, ClsDL.Archid, ClsDL.xmlname, ClsDL.ewmname, page);
+                            WriteTxtj(scpathxlstj, ClsDL.ewmname, loadfile, page);
+                        }
+
+
+                    }
+                    catch (Exception e)
+                    {
+                        string str = "盒号:" + ClsDL.BoxsnTag + "意外问题" + e.ToString();
+                        ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
+                        continue;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                string str = "盒号:" + ClsDL.BoxsnTag + "意外问题" + e.ToString();
+                ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
+            }
+            finally
+            {
+                Endtxt(true);
+            }
+            
+
         }
         #endregion
+
+
     }
 }

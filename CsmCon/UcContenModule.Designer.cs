@@ -29,7 +29,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UcContenModule));
             this.groupPanel1 = new DevComponents.DotNetBar.Controls.GroupPanel();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtlx = new System.Windows.Forms.TextBox();
             this.lvConten = new System.Windows.Forms.ListView();
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -52,7 +52,7 @@
             // 
             this.groupPanel1.CanvasColor = System.Drawing.SystemColors.Control;
             this.groupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007;
-            this.groupPanel1.Controls.Add(this.textBox1);
+            this.groupPanel1.Controls.Add(this.txtlx);
             this.groupPanel1.Controls.Add(this.lvConten);
             this.groupPanel1.Controls.Add(this.butDel);
             this.groupPanel1.Controls.Add(this.butNew);
@@ -98,13 +98,13 @@
             this.groupPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.groupPanel1.TabIndex = 0;
             // 
-            // textBox1
+            // txtlx
             // 
-            this.textBox1.Location = new System.Drawing.Point(88, 63);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(241, 21);
-            this.textBox1.TabIndex = 4;
-            this.textBox1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox1_KeyPress);
+            this.txtlx.Location = new System.Drawing.Point(88, 63);
+            this.txtlx.Name = "txtlx";
+            this.txtlx.Size = new System.Drawing.Size(241, 21);
+            this.txtlx.TabIndex = 4;
+            this.txtlx.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox1_KeyPress);
             // 
             // lvConten
             // 
@@ -279,6 +279,6 @@
         private System.Windows.Forms.ColumnHeader m_id;
         private System.Windows.Forms.ColumnHeader columnHeader4;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtlx;
     }
 }

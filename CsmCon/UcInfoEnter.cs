@@ -256,6 +256,37 @@ namespace CsmCon
 
         }
 
+        public void DelInfo(int archid, int enter)
+        {
+            try {
+                if (tabControl.TabPages.Count <= 0)
+                    return;
+                string name = tabControl.SelectedTab.Name;
+                Control pl = tabControl.SelectedTab.Controls.Find(name, true)[0];
+                if (Istxtnull(tabControl.SelectedIndex, pl))
+                    return;
+                string wycolstr = "";
+                foreach (Control t in pl.Controls) {
+                    if (t.Tag != null && t.Tag.ToString().Trim().Length > 0) {
+                        string str = t.Text.Trim();
+                        if (t.Tag.ToString() != "-1" && t.Tag.ToString() == TsTag)
+                            wycolstr = str;
+
+                    }
+                }
+                if (wycolstr.Trim().Length <= 0)
+                {
+                    MessageBox.Show("手续信息不能为空!");
+                    return;
+                }
+                Common.DelInfoEnter(archid, enter.ToString(), wycolstr);
+                MessageBox.Show("保存成功!");
+            } catch (Exception e) {
+                MessageBox.Show("保存失败!" + e.ToString());
+            }
+
+        }
+
         private void SetInfoTxt(Control p, string col, string str)
         {
             foreach (Control ct in p.Controls) {

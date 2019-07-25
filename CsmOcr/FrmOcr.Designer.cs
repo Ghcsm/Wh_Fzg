@@ -30,6 +30,8 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.groupPanel1 = new DevComponents.DotNetBar.Controls.GroupPanel();
+            this.gr3 = new System.Windows.Forms.GroupBox();
+            this.lsbLog = new System.Windows.Forms.ListBox();
             this.combOcr = new DevComponents.DotNetBar.Controls.ComboBoxEx();
             this.comboItem1 = new DevComponents.Editors.ComboItem();
             this.comboItem2 = new DevComponents.Editors.ComboItem();
@@ -46,13 +48,11 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.datGrivew = new DevComponents.DotNetBar.Controls.DataGridViewX();
             this.gr1 = new System.Windows.Forms.GroupBox();
-            this.gr3 = new System.Windows.Forms.GroupBox();
-            this.lsbLog = new System.Windows.Forms.ListBox();
             this.groupPanel1.SuspendLayout();
+            this.gr3.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.datGrivew)).BeginInit();
-            this.gr3.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStrip1
@@ -112,6 +112,29 @@
             // 
             this.groupPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.groupPanel1.TabIndex = 1;
+            // 
+            // gr3
+            // 
+            this.gr3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.gr3.BackColor = System.Drawing.Color.Transparent;
+            this.gr3.Controls.Add(this.lsbLog);
+            this.gr3.Location = new System.Drawing.Point(891, 7);
+            this.gr3.Name = "gr3";
+            this.gr3.Size = new System.Drawing.Size(241, 504);
+            this.gr3.TabIndex = 15;
+            this.gr3.TabStop = false;
+            this.gr3.Text = "日志";
+            // 
+            // lsbLog
+            // 
+            this.lsbLog.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lsbLog.FormattingEnabled = true;
+            this.lsbLog.ItemHeight = 12;
+            this.lsbLog.Location = new System.Drawing.Point(3, 17);
+            this.lsbLog.Name = "lsbLog";
+            this.lsbLog.Size = new System.Drawing.Size(235, 484);
+            this.lsbLog.TabIndex = 0;
             // 
             // combOcr
             // 
@@ -297,29 +320,6 @@
             this.gr1.TabIndex = 1;
             this.gr1.TabStop = false;
             // 
-            // gr3
-            // 
-            this.gr3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.gr3.BackColor = System.Drawing.Color.Transparent;
-            this.gr3.Controls.Add(this.lsbLog);
-            this.gr3.Location = new System.Drawing.Point(891, 7);
-            this.gr3.Name = "gr3";
-            this.gr3.Size = new System.Drawing.Size(241, 504);
-            this.gr3.TabIndex = 15;
-            this.gr3.TabStop = false;
-            this.gr3.Text = "日志";
-            // 
-            // lsbLog
-            // 
-            this.lsbLog.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lsbLog.FormattingEnabled = true;
-            this.lsbLog.ItemHeight = 12;
-            this.lsbLog.Location = new System.Drawing.Point(3, 17);
-            this.lsbLog.Name = "lsbLog";
-            this.lsbLog.Size = new System.Drawing.Size(235, 484);
-            this.lsbLog.TabIndex = 0;
-            // 
             // FrmOcr
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -336,11 +336,11 @@
             this.Shown += new System.EventHandler(this.FrmOcr_Shown);
             this.groupPanel1.ResumeLayout(false);
             this.groupPanel1.PerformLayout();
+            this.gr3.ResumeLayout(false);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.datGrivew)).EndInit();
-            this.gr3.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 

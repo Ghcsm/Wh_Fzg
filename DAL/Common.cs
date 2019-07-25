@@ -60,14 +60,14 @@ namespace DAL
             return dt;
         }
 
-        public static void InserContenModule(string lx, string code, string title)
+        public static void InserContenModule(string lx, string code, string title,string anlx)
         {
             string strSql = " INSERT INTO M_ContentsModule (CoType,CODE,title,TitleLx,userid) VALUES(@CoType,@CODE, @Title,@titlelx, @UserID)";
             SqlParameter p1 = new SqlParameter("@CoType", lx);
             SqlParameter p2 = new SqlParameter("@CODE", code);
             SqlParameter p3 = new SqlParameter("@Title", title);
             SqlParameter p4 = new SqlParameter("@UserID", T_User.UserId);
-            SqlParameter p5 = new SqlParameter("@titlelx", title);
+            SqlParameter p5 = new SqlParameter("@titlelx", anlx);
             SQLHelper.ExecScalar(strSql, p1, p2, p3, p4, p5);
         }
 
@@ -200,13 +200,14 @@ namespace DAL
             SQLHelper.ExecuteNonQuery(strSql, CommandType.StoredProcedure, p);
         }
 
-        public static void SetArchxqStat(string b1, string b2, string zt)
+        public static void SetArchxqStat(string b1, string b2, string zt,string lx)
         {
-            string strSq = "update M_IMAGEFILE set ArchXqStat=@zt where Boxsn>=@b1 and Boxsn<=@b2 and CHECKED IS null or LEN(CHECKED)<1";
+            string strSq = "update M_IMAGEFILE set ArchXqStat=@zt,ArchLx=@lx where Boxsn>=@b1 and Boxsn<=@b2  and CHECKED IS null or LEN(CHECKED)<1";
             SqlParameter p1 = new SqlParameter("@b1", b1);
             SqlParameter p2 = new SqlParameter("@b2", b2);
             SqlParameter p3 = new SqlParameter("@zt", zt);
-            SQLHelper.ExecScalar(strSq, p1, p2, p3);
+            SqlParameter p4 = new SqlParameter("@lx", lx);
+            SQLHelper.ExecScalar(strSq, p1, p2, p3,p4);
         }
 
         public static DataTable GetOthersys()
@@ -457,11 +458,14 @@ namespace DAL
 
         public static bool GetConteninfoblchk()
         {
+            bool bl = false;
             string str = "select InfoCheck from M_GenSetInfo";
             object obj = SQLHelper.ExecScalar(str);
-            if (obj == null || obj.ToString().Trim().Length<=0)
+            if (obj == null || obj.ToString().Trim().Length <= 0)
                 return false;
-            bool bl = Convert.ToBoolean(obj);
+            if (obj.ToString() == "1")
+                bl = true;
+            else bl = false;
             return bl;
         }
 
@@ -550,7 +554,7 @@ namespace DAL
         public static DataTable ReadPageIndexInfo(int ArchID)
         {
             try {
-                string strSql = "select top 1 PageIndexInfo from M_imagefile where  id=@ArchID";
+                string strSql = "select top 1 PageIndexInfo,pages from M_imagefile where  id=@ArchID";
                 SqlParameter p1 = new SqlParameter("@ArchID", ArchID);
                 DataTable dt = DAL.SQLHelper.ExcuteTable(strSql, p1);
                 return dt;
@@ -598,8 +602,8 @@ namespace DAL
                     strSql = "select TypeModule'模式',Archid'卷id',ArchPos'案卷号',FileName'文件名',ArchStat'流程',Filepath'路径',pages '页码',Userid'用户',IP,DateTime'时间' from M_UpTask where Userid=@userid";
                 else
                     strSql = "select TypeModule'模式',Archid'卷id',ArchPos'案卷号',FileName'文件名',ArchStat'流程',Filepath'路径',pages '页码',Userid'用户',IP,DateTime'时间' from M_UpTask";
-                SqlParameter p1 = new SqlParameter("@userid", T_User.UserId);
-                DataTable dt = SQLHelper.ExcuteTable(strSql,p1);
+                SqlParameter p1 = new SqlParameter("@userid", T_User.LoginName);
+                DataTable dt = SQLHelper.ExcuteTable(strSql, p1);
                 return dt;
             } catch {
                 return null;
@@ -1028,6 +1032,15 @@ namespace DAL
             }
         }
 
+        public  static void DelInfoEnter(int archid,string enter, string wycolstr)
+        {
+            string strSql = "delete from M_IMAGEFILE where Archid=@arid and Entertag=@tag and 档案手续=@sx";
+            SqlParameter p1 = new SqlParameter("@arid", archid);
+            SqlParameter p2 = new SqlParameter("@tag", enter);
+            SqlParameter p3 = new SqlParameter("@sx", wycolstr);
+            SQLHelper.ExecScalar(strSql, p1, p2,p3);
+        }
+
         private static void SetInfoEnterTable(int archid, string type)
         {
             string strSql = "update M_IMAGEFILE set ArchType=@type where id=@arid";
@@ -1090,6 +1103,25 @@ namespace DAL
         #endregion
 
         #region DataSplit
+
+        public static DataTable DataSplitGetdata(int houseid, string box1, string box2)
+        {
+            string strSql = "select id,BOXSN,PAGES,IMGFILE,ArchXqStat,ArchLx from  M_IMAGEFILE where  SPLITERROR=null and  boxsn>=@box1 and boxsn<=@box2 and HOUSEID=@houseid and CHECKED=1";
+            SqlParameter p1 = new SqlParameter("@box1", box1);
+            SqlParameter p2 = new SqlParameter("@box2", box2);
+            SqlParameter p3 = new SqlParameter("@houseid", houseid);
+            DataTable dt = SQLHelper.ExcuteTable(strSql, p1, p2, p3);
+            return dt;
+        }
+
+        public static void DataSplitUpdateboxsn(int houseid, string boxsn,string boxsn2)
+        {
+            string strSql = "update M_IMAGEFILE set SPLITERROR=null where boxsn>=@boxsn and boxsn<=@boxsn2 and HOUSEID=@houseid";
+            SqlParameter p1 = new SqlParameter("@boxsn", boxsn);
+            SqlParameter p2 = new SqlParameter("@boxsn2", boxsn2);
+            SqlParameter p3 = new SqlParameter("@houseid", houseid);
+            SQLHelper.ExecScalar(strSql, p1, p2,p3);
+        }
 
         public static void DataSplitUpdate(int houseid, string boxsn)
         {
@@ -1545,6 +1577,51 @@ namespace DAL
             DataTable dt = SQLHelper.ExcuteTable(strSql, p1);
             return dt;
         }
+
+        public static void UpdateOcrTask(string archid)
+        {
+            string strSql = "update M_IMAGEFILE set ArchOcr=1 where id=@arid";
+            SqlParameter p1 = new SqlParameter("@arid", archid);
+            SQLHelper.ExcuteProc(strSql, p1);
+
+        }
+
+        #endregion
+
+        #region 东丽区
+
+
+        public static DataTable getinfo(string arid)
+        {
+            string strSql = "select * from 信息表 where Archid=@arid";
+            SqlParameter p1 = new SqlParameter("@arid", arid);
+            DataTable dt = SQLHelper.ExcuteTable(strSql, p1);
+            return dt;
+        }
+
+        public static DataTable Getmlinfo(string archid)
+        {
+            string strSql = "select * from 目录表 where archid=@archid order by frompage";
+            SqlParameter p1 = new SqlParameter("@archid", archid);
+            DataTable dt = SQLHelper.ExcuteTable(strSql, p1);
+            return dt;
+        }
+        public static DataTable Getinfosx(string archid)
+        {
+            string strSql = "select * from V_info where Archid=@arid";
+            SqlParameter p1 = new SqlParameter("@arid", archid);
+            DataTable dt = SQLHelper.ExcuteTable(strSql, p1);
+            return dt;
+        }
+        public static DataTable Getmlinfo2(string archid)
+        {
+            string strSql = "select * from V_getmlinfo where archid=@archid order by frompage";
+            SqlParameter p1 = new SqlParameter("@archid", archid);
+            DataTable dt = SQLHelper.ExcuteTable(strSql, p1);
+            return dt;
+        }
+
+
 
         #endregion
 

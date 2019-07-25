@@ -34,6 +34,7 @@
             this.gr3 = new System.Windows.Forms.GroupBox();
             this.chkInfo = new System.Windows.Forms.CheckBox();
             this.butSave = new DevComponents.DotNetBar.ButtonX();
+            this.butDel = new DevComponents.DotNetBar.ButtonX();
             this.gr1.SuspendLayout();
             this.gr3.SuspendLayout();
             this.SuspendLayout();
@@ -97,6 +98,7 @@
             // 
             this.gr3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.gr3.Controls.Add(this.butDel);
             this.gr3.Controls.Add(this.chkInfo);
             this.gr3.Controls.Add(this.butSave);
             this.gr3.Location = new System.Drawing.Point(415, 484);
@@ -108,7 +110,7 @@
             // chkInfo
             // 
             this.chkInfo.AutoSize = true;
-            this.chkInfo.Location = new System.Drawing.Point(195, 29);
+            this.chkInfo.Location = new System.Drawing.Point(308, 28);
             this.chkInfo.Name = "chkInfo";
             this.chkInfo.Size = new System.Drawing.Size(72, 16);
             this.chkInfo.TabIndex = 1;
@@ -128,6 +130,18 @@
             this.butSave.TabIndex = 0;
             this.butSave.Text = "保存";
             this.butSave.Click += new System.EventHandler(this.butSave_Click);
+            // 
+            // butDel
+            // 
+            this.butDel.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.butDel.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.butDel.Location = new System.Drawing.Point(149, 20);
+            this.butDel.Name = "butDel";
+            this.butDel.Size = new System.Drawing.Size(72, 33);
+            this.butDel.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.butDel.TabIndex = 2;
+            this.butDel.Text = "删除";
+            this.butDel.Click += new System.EventHandler(this.butDel_Click);
             // 
             // FrmInfo
             // 
@@ -162,5 +176,6 @@
         private System.Windows.Forms.GroupBox gr3;
         private DevComponents.DotNetBar.ButtonX butSave;
         private System.Windows.Forms.CheckBox chkInfo;
+        private DevComponents.DotNetBar.ButtonX butDel;
     }
 }

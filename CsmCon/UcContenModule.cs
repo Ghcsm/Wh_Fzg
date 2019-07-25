@@ -43,7 +43,7 @@ namespace CsmCon
 
         void Addconten()
         {
-            if (txtLb.Text.Trim().Length != 2) {
+            if (txtLb.Text.Trim().Length <=0) {
                 MessageBox.Show("类别长度为2位!");
                 txtLb.Focus();
                 return;
@@ -58,13 +58,19 @@ namespace CsmCon
                 txtTitle.Focus();
                 return;
             }
+            if (txtlx.Text.Trim().Length <= 0)
+            {
+                MessageBox.Show("所属类型不能空!");
+                txtlx.Focus();
+                return;
+            }
             if (lscode.IndexOf(txtLb.Text.Trim() + txtNum.Text.Trim()) >= 0) {
                 MessageBox.Show("此类型的代码已存在!");
                 txtNum.Focus();
                 return;
             }
             try {
-                Common.InserContenModule(txtLb.Text.Trim(), txtNum.Text.Trim(), txtTitle.Text.Trim());
+                Common.InserContenModule(txtLb.Text.Trim(), txtNum.Text.Trim(), txtTitle.Text.Trim(),txtlx.Text.Trim());
                 LoadModule();
                 txtTitle.Text = "";
             } catch (Exception e) {
@@ -110,7 +116,8 @@ namespace CsmCon
             txtLb.Text = lvConten.SelectedItems[0].SubItems[0].Text;
             txtNum.Text = lvConten.SelectedItems[0].SubItems[1].Text;
             txtTitle.Text = lvConten.SelectedItems[0].SubItems[2].Text;
-            id = lvConten.SelectedItems[0].SubItems[3].Text;
+            txtlx.Text = lvConten.SelectedItems[0].SubItems[3].Text;
+            id = lvConten.SelectedItems[0].SubItems[4].Text;
         }
 
         private void txtLb_KeyPress(object sender, KeyPressEventArgs e)

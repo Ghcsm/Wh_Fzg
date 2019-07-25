@@ -7,6 +7,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -91,6 +92,7 @@ namespace Csmdajc
                 Writeini.Fileini = Path.Combine(Application.StartupPath, "Csmkeyval.ini");
                 Getsqlkey();
                 pub = new Pubcls();
+                Startocr();
             } catch (Exception ex) {
                 MessageBox.Show("初始化失败请重新加载" + ex.ToString());
                 Himg.Dispose();
@@ -126,10 +128,36 @@ namespace Csmdajc
             } catch (Exception exception) {
                 Cledata();
                 MessageBox.Show(exception.ToString());
-            } 
+            }
+        }
+
+        void Startocr()
+        {
+            if (!Himg._StartOcr(0)) {
+                MessageBox.Show("Ocr识别模块启动失败!");
+                return;
+            }
         }
 
         #region ClickEve
+
+        private void toolStripOcr_Click(object sender, EventArgs e)
+        {
+            Clipboard.Clear();         
+            string txt = Himg._OcrRecttxt();
+            if (txt.Length > 0) {
+                Clipboard.SetText(RegexCh(txt));
+            }
+        }
+        private string RegexCh(string s)
+        {
+            string str = "";
+            Regex reg = new Regex("[\u4e00-\u9fa5]");
+            foreach (Match v in reg.Matches(s)) {
+                str += v.ToString().Replace("一", "");
+            }
+            return str;
+        }
 
         private void ImgView_MouseDown(object sender, MouseEventArgs e)
         {
@@ -775,14 +803,14 @@ namespace Csmdajc
                 //}
                 //PageIndexInfo = PageIndexInfo.Trim();
                 string sourefile = "";
-                if (T_ConFigure.FtpStyle ==0) {
+                if (T_ConFigure.FtpStyle == 0) {
                     if (archzt == 1)
                         sourefile = Path.Combine(T_ConFigure.FtpArchIndex, filetmp.Substring(0, 8), filetmp);
                     else
                         sourefile = Path.Combine(T_ConFigure.FtpArchSave, filetmp.Substring(0, 8), filetmp);
                 }
                 else
-                    sourefile = Path.Combine(T_ConFigure.FtpFwqPath,T_ConFigure.TmpSave, filetmp.Substring(0, 8), filetmp);
+                    sourefile = Path.Combine(T_ConFigure.FtpFwqPath, T_ConFigure.TmpSave, filetmp.Substring(0, 8), filetmp);
                 string goalfile = Path.Combine(T_ConFigure.gArchScanPath, archpos, T_ConFigure.ScanTempFile);
                 string path = Path.Combine(T_ConFigure.gArchScanPath, archpos);
                 if (ftp.FtpMoveFile(sourefile, goalfile, path)) {
@@ -799,6 +827,7 @@ namespace Csmdajc
                 Common.Writelog(Clscheck.Archid, "质检退回失败!");
             }
         }
+
 
         #endregion
 

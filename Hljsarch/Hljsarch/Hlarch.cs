@@ -1111,7 +1111,165 @@ namespace HLjscom
             rimg = RasterImageConverter.ConvertFromImage(bitmap, ConvertFromImageOptions.None);
             return rimg;
         }
+        public void GetImgSize(out List<string> a0, out List<string> a1, out List<string> a2, out List<string> a3,
+            out List<string> a4)
+        {
+            a0 = new List<string>();
+            a1 = new List<string>();
+            a2 = new List<string>();
+            a3 = new List<string>();
+            a4 = new List<string>();
+            RasterImage _imagepx;
+            RasterCodecs _Codef = new RasterCodecs();
+            CodecsImageInfo info = _Codefile.GetInformation(Filename, true);
+            for (int i = 1; i <= info.TotalPages; i++) {
+                _imagepx = _Codef.Load(Filename, 0, CodecsLoadByteOrder.BgrOrGrayOrRomm, i, i);
+                int num = _imagepx.ImageWidth;
+                int num2 = _imagepx.ImageHeight;
+                int num3 = num;
+                if (num > num2) {
+                    num = num2;
+                    num2 = num3;
+                }
+                double w = (double)(num / 300) * 25.4;
+                double h = (double)(num2 / 300) * 25.4;
+                if (h >= 200 && h < 297) {
+                    a4.Add(i.ToString());
+                }
+                else if (h >= 297 && h < 420) {
+                    a3.Add(i.ToString());
+                }
+                else if (h >= 420 && h < 592) {
+                    a2.Add(i.ToString());
+                }
+                else if (h >= 592 && h < 840) {
+                    a1.Add(i.ToString());
+                }
+                else {
+                    a0.Add(i.ToString());
+                }
+            }
+            _Codef.Dispose();
+        }
 
+        public bool _SplitImg(string pathfile, int zlcf, out List<string> lsjpg)
+        {
+            try {
+                lsjpg = new List<string>();
+                RasterImage _imagepx;
+                RasterCodecs _Codef = new RasterCodecs();
+                CodecsImageInfo info = _Codefile.GetInformation(Filename, true);
+                for (int i = 1; i <= info.TotalPages; i++) {
+                    _imagepx = _Codef.Load(Filename, 0, CodecsLoadByteOrder.BgrOrGrayOrRomm, i, i);
+                    int bit = _imagepx.BitsPerPixel;
+                    string file = Path.Combine(pathfile, i.ToString().PadLeft(3, '0') + ".jpg");
+                    lsjpg.Add(file);
+                    if (File.Exists(file)) {
+                        if (zlcf == 1) {
+                            try {
+                                File.Delete(file);
+                            } catch { }
+                        }
+                        else
+                            continue;
+                    }
+                    if (bit != 1) {
+                        if (bit != 8) {
+                            _Codef.Options.Jpeg.Save.QualityFactor = Factor;
+                            _Codef.Save(_imagepx, file, RasterImageFormat.TifJpeg, bit, 1, 1, i, CodecsSavePageMode.Append);
+                        }
+                        else {
+                            _Codef.Options.Jpeg.Save.QualityFactor = Factor;
+                            _Codef.Save(_imagepx, file, RasterImageFormat.TifJpeg, 8, 1, 1, i, CodecsSavePageMode.Append);
+                        }
+                    }
+                    else {
+                        _Codef.Save(_imagepx, file, RasterImageFormat.CcittGroup4, 1, 1, 1, -1, CodecsSavePageMode.Append);
+                    }
+                }
+                _Codef.Dispose();
+                return true;
+            } catch {
+                lsjpg = null;
+                return false;
+            }
+        }
+        public bool _SplitImg(string pathfile, int zlcf, out List<string> lsjpg, out List<string> a0, out List<string> a1, out List<string> a2, out List<string> a3, out List<string> a4)
+        {
+            try {
+                lsjpg = new List<string>();
+                a0 = new List<string>();
+                a1 = new List<string>();
+                a2 = new List<string>();
+                a3 = new List<string>();
+                a4 = new List<string>();
+                RasterImage _imagepx;
+                RasterCodecs _Codef = new RasterCodecs();
+                CodecsImageInfo info = _Codefile.GetInformation(Filename, true);
+                for (int i = 1; i <= info.TotalPages; i++) {
+                    _imagepx = _Codef.Load(Filename, 0, CodecsLoadByteOrder.BgrOrGrayOrRomm, i, i);
+                    int bit = _imagepx.BitsPerPixel;
+                    string file = Path.Combine(pathfile, i.ToString().PadLeft(3, '0') + ".jpg");
+                    lsjpg.Add(file);
+                    int num = _imagepx.ImageWidth;
+                    int num2 = _imagepx.ImageHeight;
+                    int num3 = num;
+                    if (num > num2) {
+                        num = num2;
+                        num2 = num3;
+                    }
+                    double w = (double)(num / 300) * 25.4;
+                    double h = (double)(num2 / 300) * 25.4;
+                    if (h >= 200 && h < 297) {
+                        a4.Add(i.ToString());
+                    }
+                    else if (h >= 297 && h < 420) {
+                        a3.Add(i.ToString());
+                    }
+                    else if (h >= 420 && h < 592) {
+                        a2.Add(i.ToString());
+                    }
+                    else if (h >= 592 && h < 840) {
+                        a1.Add(i.ToString());
+                    }
+                    else {
+                        a0.Add(i.ToString());
+                    }
+                    if (File.Exists(file)) {
+                        if (zlcf == 1) {
+                            try {
+                                File.Delete(file);
+                            } catch { }
+                        }
+                        else
+                            continue;
+                    }
+                    if (bit != 1) {
+                        if (bit != 8) {
+                            _Codef.Options.Jpeg.Save.QualityFactor = Factor;
+                            _Codef.Save(_imagepx, file, RasterImageFormat.TifJpeg, bit, 1, 1, i, CodecsSavePageMode.Append);
+                        }
+                        else {
+                            _Codef.Options.Jpeg.Save.QualityFactor = Factor;
+                            _Codef.Save(_imagepx, file, RasterImageFormat.TifJpeg, 8, 1, 1, i, CodecsSavePageMode.Append);
+                        }
+                    }
+                    else {
+                        _Codef.Save(_imagepx, file, RasterImageFormat.CcittGroup4, 1, 1, 1, -1, CodecsSavePageMode.Append);
+                    }
+                }
+                _Codef.Dispose();
+                return true;
+            } catch {
+                lsjpg = null;
+                a0 = null;
+                a1 = null;
+                a2 = null;
+                a3 = null;
+                a4 = null;
+                return false;
+            }
+        }
         /// <param name="yfile">源图像</param>
         /// <param name="mfile">新图像</param>
         /// <param name="p1">页码1</param>
@@ -1662,7 +1820,7 @@ namespace HLjscom
                                         } catch { }
                                         if (oldpage > 0) {
                                             pagecoun += 1;
-                                            OrderSave(oldpage, pagecoun, oldfile,_path);
+                                            OrderSave(oldpage, pagecoun, oldfile, _path);
                                             fuhao.Remove(oldpage);
                                         }
                                     }
@@ -1689,7 +1847,7 @@ namespace HLjscom
                                         } catch { }
                                         if (oldpage > 0) {
                                             pagecoun += 1;
-                                            OrderSave(oldpage,pagecoun, oldfile, _path);
+                                            OrderSave(oldpage, pagecoun, oldfile, _path);
                                             fuhao.Remove(oldpage);
                                         }
                                     }

@@ -313,7 +313,7 @@ namespace CsmOcr
                     ClsOcr.ArchFile = ClsOcr.dt.Rows[ClsOcr.SelectTask][1].ToString();
                     ClsOcr.Archid = Convert.ToInt32(ClsOcr.dt.Rows[ClsOcr.SelectTask][0].ToString());
                     ClsOcr.Boxsn = ClsOcr.dt.Rows[ClsOcr.SelectTask][2].ToString();
-                    ClsOcr.Archno =ClsOcr.dt.Rows[ClsOcr.SelectTask][3].ToString();
+                    ClsOcr.Archno = ClsOcr.dt.Rows[ClsOcr.SelectTask][3].ToString();
                     t = Task.Run(new Action(() => { OcrTask(); }));
                 }
                 else {
@@ -327,7 +327,7 @@ namespace CsmOcr
                         ClsOcr.Archid = Convert.ToInt32(ClsOcr.dt.Rows[ClsOcr.SelectTask][0].ToString());
                         ClsOcr.Boxsn = ClsOcr.dt.Rows[ClsOcr.SelectTask][2].ToString();
                         ClsOcr.Archno = ClsOcr.dt.Rows[ClsOcr.SelectTask][3].ToString();
-                        GetLog("正在执行"+i.ToString());
+                        GetLog("正在执行" + i.ToString());
                         t = Task.Run(new Action(() => { OcrTask(); }));
                     }
                 }
@@ -356,8 +356,7 @@ namespace CsmOcr
 
         void OcrTask()
         {
-            try
-            {
+            try {
                 string loadfile = "";
                 GetLog("正在下载文件");
                 if (!LoadFileImg(ClsOcr.ArchFile, out loadfile))
@@ -391,11 +390,11 @@ namespace CsmOcr
 
                 } catch {
                 }
+                Common.UpdateOcrTask(ClsOcr.Archid.ToString());
                 GetLog("识别完成!");
-            }
-            catch (Exception e)
-            {
-                GetLog("识别错误:"+e.ToString());
+
+            } catch (Exception e) {
+                GetLog("识别错误:" + e.ToString());
             }
         }
 
@@ -403,10 +402,11 @@ namespace CsmOcr
         {
             this.BeginInvoke(new Action(() =>
             {
-                string s = "盒号:" + ClsOcr.Boxsn.ToString() + " 卷号:" + ClsOcr.Archno.ToString() + " 文件名:" + ClsOcr.ArchFile + "-->信息：" + str; 
+                string s = "盒号:" + ClsOcr.Boxsn.ToString() + " 卷号:" + ClsOcr.Archno.ToString() + " 文件名:" + ClsOcr.ArchFile + "-->信息：" + str;
                 lsbLog.Items.Add(s);
             }));
         }
+        
 
         private void buttonX2_Click(object sender, EventArgs e)
         {
@@ -415,8 +415,7 @@ namespace CsmOcr
 
         private void datGrivew_MouseDown(object sender, MouseEventArgs e)
         {
-            if (datGrivew.RowCount > 0)
-            {
+            if (datGrivew.RowCount > 0) {
                 if (e.Button == MouseButtons.Right)
                     datGrivew.CurrentCell = null;
             }

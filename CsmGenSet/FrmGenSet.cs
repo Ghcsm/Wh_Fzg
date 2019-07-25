@@ -934,7 +934,7 @@ namespace CsmGenSet
                         ClsInfoAdd.InfoInfoZd.Remove(str);
                     if (ClsInfoAdd.InfoInfoZdtmp.IndexOf(str) >= 0)
                         ClsInfoAdd.InfoInfoZdtmp.Remove(str);
-                    if (combInfoWycol.Items.IndexOf(str)>=0)
+                    if (combInfoWycol.Items.IndexOf(str) >= 0)
                         combInfoWycol.Items.Remove(str);
 
                     i--;
@@ -964,8 +964,7 @@ namespace CsmGenSet
         private void GetInfoSet()
         {
             CleInfo();
-            try
-            {
+            try {
                 string wycol = "";
                 string bl = "";
                 if (ClsGenSet.PrintInfo != null && ClsGenSet.PrintInfo.Rows.Count > 0) {
@@ -979,7 +978,7 @@ namespace CsmGenSet
                         string num = dr["InfoNum"].ToString();
                         string width = dr["InfoLabWidth"].ToString();
                         string txtwidth = dr["InfoTxtWidth"].ToString();
-                         bl = dr["InfoCheck"].ToString();
+                        bl = dr["InfoCheck"].ToString();
                         wycol = dr["Wycol"].ToString();
                         if (t.Trim().Length <= 0)
                             return;
@@ -1007,11 +1006,15 @@ namespace CsmGenSet
                             combInfoWycol.Items.Add(b);
                         }
                     }
-                    combInfoWycol.Text=wycol;
+                    combInfoWycol.Text = wycol;
                     if (bl.Trim().Length <= 0)
                         chkInfoblcheck.Checked = false;
-                    else
-                        chkInfoblcheck.Checked = Convert.ToBoolean(bl);
+                    else {
+                        if (bl == "1")
+                            chkInfoblcheck.Checked = true;
+                        else
+                            chkInfoblcheck.Checked = false;
+                    }
                 }
             } catch (Exception e) {
                 MessageBox.Show("信息补录表加载失败:" + e.ToString());
@@ -1070,7 +1073,7 @@ namespace CsmGenSet
                 if (combInfoTable.Text.Trim().Length <= 0) {
                     if (ClsInfoAdd.InfoTableLs.IndexOf(ClsInfoAdd.InfoTable) < 0)
                         T_Sysset.SaveGensetInfo(ClsInfoAdd.InfoTable, str, combInfoTableName.Text.Trim(),
-                            combInfoColNum.Text.Trim(), combInfoLabWith.Text.Trim(), combInfotxtWith.Text.Trim(),combInfoWycol.Text.Trim(), info);
+                            combInfoColNum.Text.Trim(), combInfoLabWith.Text.Trim(), combInfotxtWith.Text.Trim(), combInfoWycol.Text.Trim(), info);
                     else {
                         MessageBox.Show("此表已经如更新请选择表!");
                         return;
@@ -1482,8 +1485,7 @@ namespace CsmGenSet
                 }
 
             }
-            else
-            {
+            else {
                 ClsDataSplit.DataSplitFilesn = 1;
                 ClsDataSplit.DataSplitfilenamecol = "";
                 ClsDataSplit.DataSplitFileName = "";
@@ -1559,7 +1561,7 @@ namespace CsmGenSet
                         return;
                     }
                 }
-               else if (ClsDataSplit.DataSplitFileName.Length <= 0) {
+                else if (ClsDataSplit.DataSplitFileName.Length <= 0) {
                     MessageBox.Show("请生成文件名规则!");
                     return;
                 }
@@ -1660,8 +1662,7 @@ namespace CsmGenSet
                         ClsDataSplit.DataSplitDirsnls.Add(s[i]);
                     }
                 }
-                else if (str.IndexOf(':') >= 0)
-                {
+                else if (str.IndexOf(':') >= 0) {
                     string[] z = str.Split(':');
                     if (str.Trim().Length <= 0)
                         str += z[0];
@@ -1686,8 +1687,7 @@ namespace CsmGenSet
                     else
                         rabDataSplit_File_anjuan.Checked = true;
                     string[] strtmp = ClsDataSplit.DataSplitFileName.Split(';');
-                    if (strtmp.Length > 2)
-                    {
+                    if (strtmp.Length > 2) {
                         txtDataSplit_File_cd.Text = strtmp[0];
                         txtDataSplit_File_qian.Text = strtmp[1];
                         txtDataSplit_File_hou.Text = strtmp[2];
@@ -2761,10 +2761,10 @@ namespace CsmGenSet
                 chbCreateTablenull.Checked);
             if (ClsCreateTable.CreateTableLvsm.Trim().Length <= 0 && txtCreateTableColsm.Text.Trim().Length <= 0)
                 return;
-            if (ClsCreateTable.CreateTableLvsm.Trim()!=txtCreateTableColsm.Text.Trim()) {
-               
+            if (ClsCreateTable.CreateTableLvsm.Trim() != txtCreateTableColsm.Text.Trim()) {
+
                 try {
-                    if (ClsCreateTable.CreateTableLvsm.Trim().Length<= 0)
+                    if (ClsCreateTable.CreateTableLvsm.Trim().Length <= 0)
                         T_Sysset.CreateTableExplain(ClsCreateTable.CreateTable, ClsCreateTable.CreateTableLvcol, txtCreateTableColsm.Text.Trim());
                     else
                         T_Sysset.CreateTableUpdateExplain(ClsCreateTable.CreateTable, ClsCreateTable.CreateTableLvcol, txtCreateTableColsm.Text.Trim());
@@ -3133,7 +3133,7 @@ namespace CsmGenSet
             Infoshow();
         }
 
-       
+
     }
 
 }

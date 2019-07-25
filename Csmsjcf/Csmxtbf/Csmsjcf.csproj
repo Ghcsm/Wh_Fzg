@@ -124,6 +124,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClsDataSplitPar.cs" />
+    <Compile Include="ClsDL.cs" />
     <Compile Include="ClsInIPar.cs" />
     <Compile Include="ClsOperate.cs" />
     <Compile Include="ClsSplitini.cs" />

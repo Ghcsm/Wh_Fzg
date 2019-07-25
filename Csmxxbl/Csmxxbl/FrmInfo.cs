@@ -61,6 +61,11 @@ namespace Csmxxbl
             int arid = gArchSelect1.Archid;
             if (arid <= 0)
                 return;
+            int stat = Common.GetArchWorkState(arid);
+            if (stat >= (int)T_ConFigure.ArchStat.质检完) {
+                MessageBox.Show("此卷已质检完成,不能再修改信息！");
+                return;
+            }
             ucInfo.SaveInfo(arid, entertag);
         }
 
@@ -122,6 +127,24 @@ namespace Csmxxbl
             info = frmsql.lscolinfo;
             col = frmsql.lscol;
             ucInfo.LoadInfo(info,col);
+        }
+
+        private void butDel_Click(object sender, EventArgs e)
+        {
+            int xyid = Convert.ToInt32(gArchSelect1.Archxystat);
+            if (xyid >= 1) {
+                MessageBox.Show("数据已校验完成无法进行修改!");
+                return;
+            }
+            int arid = gArchSelect1.Archid;
+            if (arid <= 0)
+                return;
+            int stat = Common.GetArchWorkState(arid);
+            if (stat >= (int)T_ConFigure.ArchStat.质检完) {
+                MessageBox.Show("此卷已质检完成,不能再删除信息！");
+                return;
+            }
+            ucInfo.DelInfo(arid, entertag);
         }
     }
 }

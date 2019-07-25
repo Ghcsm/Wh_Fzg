@@ -45,7 +45,7 @@ namespace Csmdasm
 
         private void Garch_LineLoadFile(object sender, EventArgs e)
         {
-            
+
             try {
                 if (ImgView.Image == null && ClsTwain.ArchPos == null ||
                     ImgView.Image == null && ClsTwain.ArchPos.Trim().Length <= 0) {
@@ -62,7 +62,7 @@ namespace Csmdasm
             } catch (Exception ex) {
                 Cledata();
                 MessageBox.Show(ex.ToString());
-            } 
+            }
         }
 
         private void FrmTwain_Load(object sender, EventArgs e)
@@ -121,7 +121,7 @@ namespace Csmdasm
                 Getuser();
                 GetQspage();
             }
-          
+
         }
 
         private Task<bool> LoadFile()
@@ -432,6 +432,10 @@ namespace Csmdasm
                     KeysDownEve(ClsTwain.keystr.Trim());
             }
             Keys keyCode = e.KeyCode;
+            if (e.KeyCode == Keys.NumPad3)
+                comPagesSize.SelectedIndex = 2;
+            else if (e.KeyCode == Keys.NumPad4)
+                comPagesSize.SelectedIndex = 1;
             if (e.KeyCode == Keys.Escape)
                 gArch.LvData.Focus();
         }
@@ -643,7 +647,7 @@ namespace Csmdasm
         {
             ClsTwain.Scanbool = true;
             Himg.Scanms = comBoxScanMode.SelectedIndex;
-          //  Himg._Duplexpage(chkDoublePages.Checked);
+            //  Himg._Duplexpage(chkDoublePages.Checked);
             if (comPagesSize.SelectedIndex == 1) {
                 if (rdVerPages.Checked) {
                     Himg._SetimgFx(1, 0);
@@ -676,7 +680,7 @@ namespace Csmdasm
             Himg._Setdpi(Convert.ToInt32(comBoxDpi.Text.Trim()));
             Himg._Twainscan(1);
         }
-    
+
 
         void Getsqlkey()
         {

@@ -29,15 +29,18 @@
         {
             this.superTabControl1 = new DevComponents.DotNetBar.SuperTabControl();
             this.superTabControlPanel2 = new DevComponents.DotNetBar.SuperTabControlPanel();
+            this.chkboxsn = new System.Windows.Forms.CheckBox();
+            this.txtlsh = new DevComponents.DotNetBar.Controls.TextBoxX();
+            this.butDlLog = new System.Windows.Forms.Button();
             this.butDlStart = new System.Windows.Forms.Button();
             this.lab_dl_zx = new System.Windows.Forms.Label();
             this.lab_dl_juan = new System.Windows.Forms.Label();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.grdl3 = new System.Windows.Forms.GroupBox();
             this.butTfSelect = new System.Windows.Forms.Button();
             this.txtTfPath = new System.Windows.Forms.TextBox();
             this.radTfPath = new System.Windows.Forms.RadioButton();
             this.radFtp = new System.Windows.Forms.RadioButton();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.grdl1 = new System.Windows.Forms.GroupBox();
             this.radCxzh = new System.Windows.Forms.RadioButton();
             this.radZlcy = new System.Windows.Forms.RadioButton();
             this.label16 = new System.Windows.Forms.Label();
@@ -46,9 +49,8 @@
             this.label15 = new System.Windows.Forms.Label();
             this.combKf = new System.Windows.Forms.ComboBox();
             this.label14 = new System.Windows.Forms.Label();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.chkxls = new System.Windows.Forms.CheckBox();
-            this.chkxml = new System.Windows.Forms.CheckBox();
+            this.grdl2 = new System.Windows.Forms.GroupBox();
+            this.chkxlsxml = new System.Windows.Forms.CheckBox();
             this.chkjpg = new System.Windows.Forms.CheckBox();
             this.TabDatedb = new DevComponents.DotNetBar.SuperTabItem();
             this.superTabControlPanel1 = new DevComponents.DotNetBar.SuperTabControlPanel();
@@ -147,12 +149,16 @@
             this.fBdigImgPath = new System.Windows.Forms.FolderBrowserDialog();
             this.fontDialog = new System.Windows.Forms.FontDialog();
             this.colorDialog = new System.Windows.Forms.ColorDialog();
+            this.gr5 = new System.Windows.Forms.GroupBox();
+            this.label17 = new System.Windows.Forms.Label();
+            this.txtCreatePath = new System.Windows.Forms.TextBox();
+            this.butCreatPth = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.superTabControl1)).BeginInit();
             this.superTabControl1.SuspendLayout();
             this.superTabControlPanel2.SuspendLayout();
-            this.groupBox3.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            this.groupBox1.SuspendLayout();
+            this.grdl3.SuspendLayout();
+            this.grdl1.SuspendLayout();
+            this.grdl2.SuspendLayout();
             this.superTabControlPanel1.SuspendLayout();
             this.gr1.SuspendLayout();
             this.gr3.SuspendLayout();
@@ -169,6 +175,7 @@
             this.gr2_2.SuspendLayout();
             this.gr2_3.SuspendLayout();
             this.gr2_1.SuspendLayout();
+            this.gr5.SuspendLayout();
             this.SuspendLayout();
             // 
             // superTabControl1
@@ -188,8 +195,8 @@
             this.superTabControl1.ControlBox.SubItems.AddRange(new DevComponents.DotNetBar.BaseItem[] {
             this.superTabControl1.ControlBox.MenuBox,
             this.superTabControl1.ControlBox.CloseBox});
-            this.superTabControl1.Controls.Add(this.superTabControlPanel1);
             this.superTabControl1.Controls.Add(this.superTabControlPanel2);
+            this.superTabControl1.Controls.Add(this.superTabControlPanel1);
             this.superTabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.superTabControl1.Location = new System.Drawing.Point(0, 25);
             this.superTabControl1.Name = "superTabControl1";
@@ -206,18 +213,56 @@
             // 
             // superTabControlPanel2
             // 
+            this.superTabControlPanel2.Controls.Add(this.gr5);
+            this.superTabControlPanel2.Controls.Add(this.chkboxsn);
+            this.superTabControlPanel2.Controls.Add(this.txtlsh);
+            this.superTabControlPanel2.Controls.Add(this.butDlLog);
             this.superTabControlPanel2.Controls.Add(this.butDlStart);
             this.superTabControlPanel2.Controls.Add(this.lab_dl_zx);
             this.superTabControlPanel2.Controls.Add(this.lab_dl_juan);
-            this.superTabControlPanel2.Controls.Add(this.groupBox3);
-            this.superTabControlPanel2.Controls.Add(this.groupBox2);
-            this.superTabControlPanel2.Controls.Add(this.groupBox1);
+            this.superTabControlPanel2.Controls.Add(this.grdl3);
+            this.superTabControlPanel2.Controls.Add(this.grdl1);
+            this.superTabControlPanel2.Controls.Add(this.grdl2);
             this.superTabControlPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.superTabControlPanel2.Location = new System.Drawing.Point(0, 28);
             this.superTabControlPanel2.Name = "superTabControlPanel2";
             this.superTabControlPanel2.Size = new System.Drawing.Size(882, 601);
             this.superTabControlPanel2.TabIndex = 0;
             this.superTabControlPanel2.TabItem = this.TabDatedb;
+            // 
+            // chkboxsn
+            // 
+            this.chkboxsn.AutoSize = true;
+            this.chkboxsn.BackColor = System.Drawing.Color.Transparent;
+            this.chkboxsn.Location = new System.Drawing.Point(28, 465);
+            this.chkboxsn.Name = "chkboxsn";
+            this.chkboxsn.Size = new System.Drawing.Size(102, 16);
+            this.chkboxsn.TabIndex = 9;
+            this.chkboxsn.Text = "流水号: 例：1";
+            this.chkboxsn.UseVisualStyleBackColor = false;
+            // 
+            // txtlsh
+            // 
+            // 
+            // 
+            // 
+            this.txtlsh.Border.Class = "TextBoxBorder";
+            this.txtlsh.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.txtlsh.Location = new System.Drawing.Point(22, 493);
+            this.txtlsh.Name = "txtlsh";
+            this.txtlsh.PreventEnterBeep = true;
+            this.txtlsh.Size = new System.Drawing.Size(301, 21);
+            this.txtlsh.TabIndex = 8;
+            this.txtlsh.WatermarkText = "注:多台电脑同时转换时应注意号码重复的问题";
+            // 
+            // butDlLog
+            // 
+            this.butDlLog.Location = new System.Drawing.Point(608, 311);
+            this.butDlLog.Name = "butDlLog";
+            this.butDlLog.Size = new System.Drawing.Size(121, 49);
+            this.butDlLog.TabIndex = 6;
+            this.butDlLog.Text = "日志";
+            this.butDlLog.UseVisualStyleBackColor = true;
             // 
             // butDlStart
             // 
@@ -233,35 +278,35 @@
             // 
             this.lab_dl_zx.AutoSize = true;
             this.lab_dl_zx.BackColor = System.Drawing.Color.Transparent;
-            this.lab_dl_zx.Location = new System.Drawing.Point(399, 116);
+            this.lab_dl_zx.Location = new System.Drawing.Point(399, 198);
             this.lab_dl_zx.Name = "lab_dl_zx";
-            this.lab_dl_zx.Size = new System.Drawing.Size(71, 12);
+            this.lab_dl_zx.Size = new System.Drawing.Size(83, 12);
             this.lab_dl_zx.TabIndex = 4;
-            this.lab_dl_zx.Text = "正在执行0卷";
+            this.lab_dl_zx.Text = "正在执行第0卷";
             // 
             // lab_dl_juan
             // 
             this.lab_dl_juan.AutoSize = true;
             this.lab_dl_juan.BackColor = System.Drawing.Color.Transparent;
-            this.lab_dl_juan.Location = new System.Drawing.Point(399, 67);
+            this.lab_dl_juan.Location = new System.Drawing.Point(399, 149);
             this.lab_dl_juan.Name = "lab_dl_juan";
             this.lab_dl_juan.Size = new System.Drawing.Size(47, 12);
             this.lab_dl_juan.TabIndex = 4;
             this.lab_dl_juan.Text = "共计0卷";
             // 
-            // groupBox3
+            // grdl3
             // 
-            this.groupBox3.BackColor = System.Drawing.Color.Transparent;
-            this.groupBox3.Controls.Add(this.butTfSelect);
-            this.groupBox3.Controls.Add(this.txtTfPath);
-            this.groupBox3.Controls.Add(this.radTfPath);
-            this.groupBox3.Controls.Add(this.radFtp);
-            this.groupBox3.Location = new System.Drawing.Point(13, 302);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(310, 140);
-            this.groupBox3.TabIndex = 3;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "传输方式";
+            this.grdl3.BackColor = System.Drawing.Color.Transparent;
+            this.grdl3.Controls.Add(this.butTfSelect);
+            this.grdl3.Controls.Add(this.txtTfPath);
+            this.grdl3.Controls.Add(this.radTfPath);
+            this.grdl3.Controls.Add(this.radFtp);
+            this.grdl3.Location = new System.Drawing.Point(13, 302);
+            this.grdl3.Name = "grdl3";
+            this.grdl3.Size = new System.Drawing.Size(310, 140);
+            this.grdl3.TabIndex = 3;
+            this.grdl3.TabStop = false;
+            this.grdl3.Text = "传输方式";
             // 
             // butTfSelect
             // 
@@ -303,23 +348,23 @@
             this.radFtp.Text = "Ftp传输下载";
             this.radFtp.UseVisualStyleBackColor = true;
             // 
-            // groupBox2
+            // grdl1
             // 
-            this.groupBox2.BackColor = System.Drawing.Color.Transparent;
-            this.groupBox2.Controls.Add(this.radCxzh);
-            this.groupBox2.Controls.Add(this.radZlcy);
-            this.groupBox2.Controls.Add(this.label16);
-            this.groupBox2.Controls.Add(this.txtB2);
-            this.groupBox2.Controls.Add(this.txtB1);
-            this.groupBox2.Controls.Add(this.label15);
-            this.groupBox2.Controls.Add(this.combKf);
-            this.groupBox2.Controls.Add(this.label14);
-            this.groupBox2.Location = new System.Drawing.Point(13, 23);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(310, 157);
-            this.groupBox2.TabIndex = 2;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "基本配置";
+            this.grdl1.BackColor = System.Drawing.Color.Transparent;
+            this.grdl1.Controls.Add(this.radCxzh);
+            this.grdl1.Controls.Add(this.radZlcy);
+            this.grdl1.Controls.Add(this.label16);
+            this.grdl1.Controls.Add(this.txtB2);
+            this.grdl1.Controls.Add(this.txtB1);
+            this.grdl1.Controls.Add(this.label15);
+            this.grdl1.Controls.Add(this.combKf);
+            this.grdl1.Controls.Add(this.label14);
+            this.grdl1.Location = new System.Drawing.Point(13, 23);
+            this.grdl1.Name = "grdl1";
+            this.grdl1.Size = new System.Drawing.Size(310, 157);
+            this.grdl1.TabIndex = 2;
+            this.grdl1.TabStop = false;
+            this.grdl1.Text = "基本配置";
             // 
             // radCxzh
             // 
@@ -394,40 +439,27 @@
             this.label14.TabIndex = 0;
             this.label14.Text = "选择库房";
             // 
-            // groupBox1
+            // grdl2
             // 
-            this.groupBox1.BackColor = System.Drawing.Color.Transparent;
-            this.groupBox1.Controls.Add(this.chkxls);
-            this.groupBox1.Controls.Add(this.chkxml);
-            this.groupBox1.Controls.Add(this.chkjpg);
-            this.groupBox1.Location = new System.Drawing.Point(13, 198);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(311, 81);
-            this.groupBox1.TabIndex = 1;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "生成结果";
+            this.grdl2.BackColor = System.Drawing.Color.Transparent;
+            this.grdl2.Controls.Add(this.chkxlsxml);
+            this.grdl2.Controls.Add(this.chkjpg);
+            this.grdl2.Location = new System.Drawing.Point(13, 198);
+            this.grdl2.Name = "grdl2";
+            this.grdl2.Size = new System.Drawing.Size(311, 81);
+            this.grdl2.TabIndex = 1;
+            this.grdl2.TabStop = false;
+            this.grdl2.Text = "生成结果";
             // 
-            // chkxls
+            // chkxlsxml
             // 
-            this.chkxls.AutoSize = true;
-            this.chkxls.Location = new System.Drawing.Point(191, 32);
-            this.chkxls.Name = "chkxls";
-            this.chkxls.Size = new System.Drawing.Size(66, 16);
-            this.chkxls.TabIndex = 2;
-            this.chkxls.Text = "生成xls";
-            this.chkxls.UseVisualStyleBackColor = true;
-            // 
-            // chkxml
-            // 
-            this.chkxml.AutoSize = true;
-            this.chkxml.Checked = true;
-            this.chkxml.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkxml.Location = new System.Drawing.Point(102, 32);
-            this.chkxml.Name = "chkxml";
-            this.chkxml.Size = new System.Drawing.Size(66, 16);
-            this.chkxml.TabIndex = 1;
-            this.chkxml.Text = "生成xml";
-            this.chkxml.UseVisualStyleBackColor = true;
+            this.chkxlsxml.AutoSize = true;
+            this.chkxlsxml.Location = new System.Drawing.Point(156, 32);
+            this.chkxlsxml.Name = "chkxlsxml";
+            this.chkxlsxml.Size = new System.Drawing.Size(66, 16);
+            this.chkxlsxml.TabIndex = 2;
+            this.chkxlsxml.Text = "生成xls";
+            this.chkxlsxml.UseVisualStyleBackColor = true;
             // 
             // chkjpg
             // 
@@ -436,9 +468,9 @@
             this.chkjpg.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkjpg.Location = new System.Drawing.Point(20, 32);
             this.chkjpg.Name = "chkjpg";
-            this.chkjpg.Size = new System.Drawing.Size(66, 16);
+            this.chkjpg.Size = new System.Drawing.Size(96, 16);
             this.chkjpg.TabIndex = 0;
-            this.chkjpg.Text = "生成jpg";
+            this.chkjpg.Text = "生成jpg和xml";
             this.chkjpg.UseVisualStyleBackColor = true;
             // 
             // TabDatedb
@@ -1503,6 +1535,46 @@
             // 
             this.FdigXls.Filter = "Xls文件|*.xls;*xlsx";
             // 
+            // gr5
+            // 
+            this.gr5.BackColor = System.Drawing.Color.Transparent;
+            this.gr5.Controls.Add(this.butCreatPth);
+            this.gr5.Controls.Add(this.txtCreatePath);
+            this.gr5.Controls.Add(this.label17);
+            this.gr5.Location = new System.Drawing.Point(360, 23);
+            this.gr5.Name = "gr5";
+            this.gr5.Size = new System.Drawing.Size(484, 83);
+            this.gr5.TabIndex = 10;
+            this.gr5.TabStop = false;
+            this.gr5.Text = "生成路径:";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(28, 44);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(59, 12);
+            this.label17.TabIndex = 0;
+            this.label17.Text = "生成路径;";
+            // 
+            // txtCreatePath
+            // 
+            this.txtCreatePath.Location = new System.Drawing.Point(93, 41);
+            this.txtCreatePath.Name = "txtCreatePath";
+            this.txtCreatePath.ReadOnly = true;
+            this.txtCreatePath.Size = new System.Drawing.Size(257, 21);
+            this.txtCreatePath.TabIndex = 1;
+            // 
+            // butCreatPth
+            // 
+            this.butCreatPth.Location = new System.Drawing.Point(356, 41);
+            this.butCreatPth.Name = "butCreatPth";
+            this.butCreatPth.Size = new System.Drawing.Size(75, 23);
+            this.butCreatPth.TabIndex = 2;
+            this.butCreatPth.Text = "选择";
+            this.butCreatPth.UseVisualStyleBackColor = true;
+            this.butCreatPth.Click += new System.EventHandler(this.butCreatPth_Click);
+            // 
             // FrmSplit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -1520,12 +1592,12 @@
             this.superTabControl1.ResumeLayout(false);
             this.superTabControlPanel2.ResumeLayout(false);
             this.superTabControlPanel2.PerformLayout();
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.grdl3.ResumeLayout(false);
+            this.grdl3.PerformLayout();
+            this.grdl1.ResumeLayout(false);
+            this.grdl1.PerformLayout();
+            this.grdl2.ResumeLayout(false);
+            this.grdl2.PerformLayout();
             this.superTabControlPanel1.ResumeLayout(false);
             this.gr1.ResumeLayout(false);
             this.gr3.ResumeLayout(false);
@@ -1554,6 +1626,8 @@
             this.gr2_3.PerformLayout();
             this.gr2_1.ResumeLayout(false);
             this.gr2_1.PerformLayout();
+            this.gr5.ResumeLayout(false);
+            this.gr5.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1660,18 +1734,17 @@
         private System.Windows.Forms.CheckBox chk_gr2_8_conten;
         private System.Windows.Forms.Label label3;
         private DevComponents.DotNetBar.Controls.ComboBoxEx com_gr2_9_file_gz;
-        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.GroupBox grdl1;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.TextBox txtB2;
         private System.Windows.Forms.TextBox txtB1;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.ComboBox combKf;
         private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.CheckBox chkxls;
-        private System.Windows.Forms.CheckBox chkxml;
+        private System.Windows.Forms.GroupBox grdl2;
+        private System.Windows.Forms.CheckBox chkxlsxml;
         private System.Windows.Forms.CheckBox chkjpg;
-        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.GroupBox grdl3;
         private System.Windows.Forms.RadioButton radFtp;
         private System.Windows.Forms.RadioButton radTfPath;
         private System.Windows.Forms.Button butTfSelect;
@@ -1681,5 +1754,12 @@
         private System.Windows.Forms.Button butDlStart;
         private System.Windows.Forms.RadioButton radCxzh;
         private System.Windows.Forms.RadioButton radZlcy;
+        private System.Windows.Forms.Button butDlLog;
+        private DevComponents.DotNetBar.Controls.TextBoxX txtlsh;
+        private System.Windows.Forms.CheckBox chkboxsn;
+        private System.Windows.Forms.GroupBox gr5;
+        private System.Windows.Forms.Button butCreatPth;
+        private System.Windows.Forms.TextBox txtCreatePath;
+        private System.Windows.Forms.Label label17;
     }
 }

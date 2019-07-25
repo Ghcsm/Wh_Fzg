@@ -334,7 +334,7 @@ namespace Csmdapx
         private void toolStripSplitTag_Click(object sender, EventArgs e)
         {
 
-            if (Himg.TagPage >= 0) {
+            if (Himg.TagPage >0) {
                 Himg.TagPage = 0;
                 toolStripSplitTag.ForeColor = Color.Black;
                 return;
@@ -468,6 +468,7 @@ namespace Csmdapx
                 if (dt != null && dt.Rows.Count > 0) {
                     DataRow dr = dt.Rows[0];
                     string PageIndexInfo = dr["PageIndexInfo"].ToString();
+                    int page =Convert.ToInt32(dr["pages"].ToString());
                     if (!string.IsNullOrEmpty(PageIndexInfo)) {
                         string[] arrPage = PageIndexInfo.Split(';');
                         if (arrPage.Length > 0) {
@@ -475,14 +476,17 @@ namespace Csmdapx
                                 string[] str = arrPage[i].Trim().Split(':');
                                 if (str.Length <= 0)
                                     continue;
+                                int p = Convert.ToInt32(str[0]);
+                                if (p>page)
+                                    continue;
                                 if (str[1].ToString() == "-9999")
-                                    pagenumber.Add(Convert.ToInt32(str[0]), Convert.ToInt32(str[1]));
+                                    pagenumber.Add(p, Convert.ToInt32(str[1]));
                                 else if (!isExists(str[1].ToString()) && str[1].IndexOf("-") < 0)
-                                    pagenumber.Add(Convert.ToInt32(str[0]), Convert.ToInt32(str[1]));
+                                    pagenumber.Add(p, Convert.ToInt32(str[1]));
                                 else if (str[1].IndexOf("-") >= 0)
-                                    fuhao.Add(Convert.ToInt32(str[0]), str[1].ToString());
+                                    fuhao.Add(p, str[1].ToString());
                                 else
-                                    pageabc.Add(Convert.ToInt32(str[0]), str[1].ToString());
+                                    pageabc.Add(p, str[1].ToString());
                             }
                         }
                     }

@@ -28,8 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StoreView));
-            this.imglist_mjj = new System.Windows.Forms.ImageList();
+            this.imglist_mjj = new System.Windows.Forms.ImageList(this.components);
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.ToolsS_txt = new System.Windows.Forms.ToolStripStatusLabel();
             this.ToolsSlabYs = new System.Windows.Forms.ToolStripStatusLabel();
@@ -42,12 +43,14 @@
             this.toolFileId = new System.Windows.Forms.ToolStripStatusLabel();
             this.tools_kong = new System.Windows.Forms.ToolStripStatusLabel();
             this.Tools_jd = new System.Windows.Forms.ToolStripProgressBar();
-            this.imglist_box = new System.Windows.Forms.ImageList();
+            this.imglist_box = new System.Windows.Forms.ImageList(this.components);
             this.groupPanel1 = new DevComponents.DotNetBar.Controls.GroupPanel();
+            this.txtXqdm = new System.Windows.Forms.TextBox();
             this.butSetzt = new DevComponents.DotNetBar.ButtonX();
             this.combzt = new System.Windows.Forms.ComboBox();
             this.txtbox2 = new System.Windows.Forms.TextBox();
             this.txtbox1 = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -75,7 +78,7 @@
             this.PanleHouseJuan = new DevComponents.DotNetBar.PanelEx();
             this.PanleHouseBox = new DevComponents.DotNetBar.PanelEx();
             this.PanleHouseMj = new DevComponents.DotNetBar.Controls.GroupPanel();
-            this.imgListmjj2 = new System.Windows.Forms.ImageList();
+            this.imgListmjj2 = new System.Windows.Forms.ImageList(this.components);
             this.statusStrip1.SuspendLayout();
             this.groupPanel1.SuspendLayout();
             this.gr2.SuspendLayout();
@@ -104,9 +107,9 @@
             this.toolFileId,
             this.tools_kong,
             this.Tools_jd});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 622);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 650);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1105, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1132, 22);
             this.statusStrip1.TabIndex = 2;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -168,7 +171,7 @@
             // tools_kong
             // 
             this.tools_kong.Name = "tools_kong";
-            this.tools_kong.Size = new System.Drawing.Size(647, 17);
+            this.tools_kong.Size = new System.Drawing.Size(674, 17);
             this.tools_kong.Spring = true;
             // 
             // Tools_jd
@@ -194,10 +197,12 @@
             // 
             this.groupPanel1.CanvasColor = System.Drawing.SystemColors.Control;
             this.groupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007;
+            this.groupPanel1.Controls.Add(this.txtXqdm);
             this.groupPanel1.Controls.Add(this.butSetzt);
             this.groupPanel1.Controls.Add(this.combzt);
             this.groupPanel1.Controls.Add(this.txtbox2);
             this.groupPanel1.Controls.Add(this.txtbox1);
+            this.groupPanel1.Controls.Add(this.label5);
             this.groupPanel1.Controls.Add(this.label4);
             this.groupPanel1.Controls.Add(this.label3);
             this.groupPanel1.Controls.Add(this.label2);
@@ -212,7 +217,7 @@
             this.groupPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupPanel1.Location = new System.Drawing.Point(0, 0);
             this.groupPanel1.Name = "groupPanel1";
-            this.groupPanel1.Size = new System.Drawing.Size(1105, 622);
+            this.groupPanel1.Size = new System.Drawing.Size(1132, 650);
             // 
             // 
             // 
@@ -243,12 +248,19 @@
             this.groupPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.groupPanel1.TabIndex = 23;
             // 
+            // txtXqdm
+            // 
+            this.txtXqdm.Location = new System.Drawing.Point(79, 569);
+            this.txtXqdm.Name = "txtXqdm";
+            this.txtXqdm.Size = new System.Drawing.Size(56, 21);
+            this.txtXqdm.TabIndex = 36;
+            // 
             // butSetzt
             // 
             this.butSetzt.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.butSetzt.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.butSetzt.Enabled = false;
-            this.butSetzt.Location = new System.Drawing.Point(57, 588);
+            this.butSetzt.Location = new System.Drawing.Point(56, 608);
             this.butSetzt.Name = "butSetzt";
             this.butSetzt.Size = new System.Drawing.Size(75, 31);
             this.butSetzt.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -260,40 +272,54 @@
             // combzt
             // 
             this.combzt.FormattingEnabled = true;
-            this.combzt.Location = new System.Drawing.Point(79, 558);
+            this.combzt.Items.AddRange(new object[] {
+            "C",
+            "Y",
+            "F"});
+            this.combzt.Location = new System.Drawing.Point(79, 537);
             this.combzt.Name = "combzt";
             this.combzt.Size = new System.Drawing.Size(55, 20);
             this.combzt.TabIndex = 34;
             // 
             // txtbox2
             // 
-            this.txtbox2.Location = new System.Drawing.Point(79, 528);
+            this.txtbox2.Location = new System.Drawing.Point(79, 507);
             this.txtbox2.Name = "txtbox2";
             this.txtbox2.Size = new System.Drawing.Size(56, 21);
             this.txtbox2.TabIndex = 33;
             // 
             // txtbox1
             // 
-            this.txtbox1.Location = new System.Drawing.Point(79, 499);
+            this.txtbox1.Location = new System.Drawing.Point(79, 478);
             this.txtbox1.Name = "txtbox1";
             this.txtbox1.Size = new System.Drawing.Size(56, 21);
             this.txtbox1.TabIndex = 32;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.BackColor = System.Drawing.Color.Transparent;
+            this.label5.Location = new System.Drawing.Point(14, 572);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(59, 12);
+            this.label5.TabIndex = 31;
+            this.label5.Text = "小区代码:";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
             this.label4.BackColor = System.Drawing.Color.Transparent;
-            this.label4.Location = new System.Drawing.Point(12, 561);
+            this.label4.Location = new System.Drawing.Point(14, 540);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(59, 12);
             this.label4.TabIndex = 31;
-            this.label4.Text = "小区代码:";
+            this.label4.Text = "档案类型:";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.BackColor = System.Drawing.Color.Transparent;
-            this.label3.Location = new System.Drawing.Point(13, 533);
+            this.label3.Location = new System.Drawing.Point(14, 512);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(59, 12);
             this.label3.TabIndex = 31;
@@ -303,7 +329,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.BackColor = System.Drawing.Color.Transparent;
-            this.label2.Location = new System.Drawing.Point(13, 504);
+            this.label2.Location = new System.Drawing.Point(14, 483);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(59, 12);
             this.label2.TabIndex = 31;
@@ -313,7 +339,7 @@
             // 
             this.butOpenFile.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.butOpenFile.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.butOpenFile.Location = new System.Drawing.Point(56, 441);
+            this.butOpenFile.Location = new System.Drawing.Point(56, 430);
             this.butOpenFile.Name = "butOpenFile";
             this.butOpenFile.Size = new System.Drawing.Size(85, 37);
             this.butOpenFile.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -538,7 +564,7 @@
             this.gr1.Controls.Add(this.PanleHouseMj);
             this.gr1.Location = new System.Drawing.Point(153, 0);
             this.gr1.Name = "gr1";
-            this.gr1.Size = new System.Drawing.Size(949, 615);
+            this.gr1.Size = new System.Drawing.Size(976, 643);
             this.gr1.TabIndex = 24;
             this.gr1.TabStop = false;
             // 
@@ -550,9 +576,9 @@
             this.PanleHouseJuan.CanvasColor = System.Drawing.SystemColors.Control;
             this.PanleHouseJuan.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.PanleHouseJuan.DisabledBackColor = System.Drawing.Color.Empty;
-            this.PanleHouseJuan.Location = new System.Drawing.Point(5, 496);
+            this.PanleHouseJuan.Location = new System.Drawing.Point(5, 524);
             this.PanleHouseJuan.Name = "PanleHouseJuan";
-            this.PanleHouseJuan.Size = new System.Drawing.Size(943, 115);
+            this.PanleHouseJuan.Size = new System.Drawing.Size(970, 115);
             this.PanleHouseJuan.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.PanleHouseJuan.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground;
             this.PanleHouseJuan.Style.BackColor2.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2;
@@ -570,9 +596,9 @@
             this.PanleHouseBox.CanvasColor = System.Drawing.SystemColors.Control;
             this.PanleHouseBox.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.PanleHouseBox.DisabledBackColor = System.Drawing.Color.Empty;
-            this.PanleHouseBox.Location = new System.Drawing.Point(5, 388);
+            this.PanleHouseBox.Location = new System.Drawing.Point(5, 416);
             this.PanleHouseBox.Name = "PanleHouseBox";
-            this.PanleHouseBox.Size = new System.Drawing.Size(943, 105);
+            this.PanleHouseBox.Size = new System.Drawing.Size(970, 105);
             this.PanleHouseBox.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.PanleHouseBox.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground;
             this.PanleHouseBox.Style.BackColor2.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2;
@@ -593,7 +619,7 @@
             this.PanleHouseMj.Location = new System.Drawing.Point(5, 13);
             this.PanleHouseMj.Margin = new System.Windows.Forms.Padding(9);
             this.PanleHouseMj.Name = "PanleHouseMj";
-            this.PanleHouseMj.Size = new System.Drawing.Size(943, 372);
+            this.PanleHouseMj.Size = new System.Drawing.Size(970, 400);
             // 
             // 
             // 
@@ -634,7 +660,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1105, 644);
+            this.ClientSize = new System.Drawing.Size(1132, 672);
             this.Controls.Add(this.groupPanel1);
             this.Controls.Add(this.statusStrip1);
             this.DoubleBuffered = true;
@@ -708,5 +734,7 @@
         private DevComponents.DotNetBar.ButtonX butSetzt;
         private System.Windows.Forms.ComboBox combzt;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox txtXqdm;
+        private System.Windows.Forms.Label label5;
     }
 }

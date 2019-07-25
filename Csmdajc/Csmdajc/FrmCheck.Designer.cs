@@ -30,12 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmCheck));
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.doNetManger1 = new DevComponents.DotNetBar.DotNetBarManager(this.components);
-            this.dockSite4 = new DevComponents.DotNetBar.DockSite();
-            this.dockSite9 = new DevComponents.DotNetBar.DockSite();
-            this.bar2 = new DevComponents.DotNetBar.Bar();
-            this.panelDock2 = new DevComponents.DotNetBar.PanelDockContainer();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.gr2 = new System.Windows.Forms.GroupBox();
             this.splitCont = new DevComponents.DotNetBar.Controls.CollapsibleSplitContainer();
@@ -56,6 +50,12 @@
             this.labConten = new System.Windows.Forms.Label();
             this.labPageCount = new System.Windows.Forms.Label();
             this.labPageCrrent = new System.Windows.Forms.Label();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.doNetManger1 = new DevComponents.DotNetBar.DotNetBarManager(this.components);
+            this.dockSite4 = new DevComponents.DotNetBar.DockSite();
+            this.dockSite9 = new DevComponents.DotNetBar.DockSite();
+            this.bar2 = new DevComponents.DotNetBar.Bar();
+            this.panelDock2 = new DevComponents.DotNetBar.PanelDockContainer();
             this.toolstripmain2 = new System.Windows.Forms.ToolStrip();
             this.toolStripCenter = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -102,10 +102,7 @@
             this.dockSite7 = new DevComponents.DotNetBar.DockSite();
             this.dockSite3 = new DevComponents.DotNetBar.DockSite();
             this.odgInsterFile = new System.Windows.Forms.OpenFileDialog();
-            this.dockSite9.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.bar2)).BeginInit();
-            this.bar2.SuspendLayout();
-            this.panelDock2.SuspendLayout();
+            this.toolStripOcr = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -118,6 +115,10 @@
             this.statUser.SuspendLayout();
             this.gr3.SuspendLayout();
             this.gr4.SuspendLayout();
+            this.dockSite9.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bar2)).BeginInit();
+            this.bar2.SuspendLayout();
+            this.panelDock2.SuspendLayout();
             this.toolstripmain2.SuspendLayout();
             this.toolstripmain1.SuspendLayout();
             this.dockSite1.SuspendLayout();
@@ -125,6 +126,150 @@
             this.bar1.SuspendLayout();
             this.panelDock1.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // splitContainer1
+            // 
+            this.splitContainer1.BackColor = System.Drawing.Color.Transparent;
+            resources.ApplyResources(this.splitContainer1, "splitContainer1");
+            this.splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.gr2);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.statUser);
+            this.splitContainer1.Panel2.Controls.Add(this.gr3);
+            // 
+            // gr2
+            // 
+            this.gr2.Controls.Add(this.splitCont);
+            resources.ApplyResources(this.gr2, "gr2");
+            this.gr2.Name = "gr2";
+            this.gr2.TabStop = false;
+            // 
+            // splitCont
+            // 
+            resources.ApplyResources(this.splitCont, "splitCont");
+            this.splitCont.Name = "splitCont";
+            // 
+            // splitCont.Panel1
+            // 
+            this.splitCont.Panel1.Controls.Add(this.gr1_1);
+            // 
+            // splitCont.Panel2
+            // 
+            this.splitCont.Panel2.Controls.Add(this.gr1_2);
+            // 
+            // gr1_1
+            // 
+            resources.ApplyResources(this.gr1_1, "gr1_1");
+            this.gr1_1.Name = "gr1_1";
+            this.gr1_1.TabStop = false;
+            // 
+            // gr1_2
+            // 
+            resources.ApplyResources(this.gr1_2, "gr1_2");
+            this.gr1_2.Name = "gr1_2";
+            this.gr1_2.TabStop = false;
+            // 
+            // statUser
+            // 
+            this.statUser.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toollabscan,
+            this.toollabscantime,
+            this.toollabindex,
+            this.toollabindextime,
+            this.toollabcheck,
+            this.toollabchecktime,
+            this.toollabenter,
+            this.toollabentertime});
+            resources.ApplyResources(this.statUser, "statUser");
+            this.statUser.Name = "statUser";
+            // 
+            // toollabscan
+            // 
+            this.toollabscan.Name = "toollabscan";
+            resources.ApplyResources(this.toollabscan, "toollabscan");
+            // 
+            // toollabscantime
+            // 
+            this.toollabscantime.Name = "toollabscantime";
+            resources.ApplyResources(this.toollabscantime, "toollabscantime");
+            // 
+            // toollabindex
+            // 
+            this.toollabindex.Name = "toollabindex";
+            resources.ApplyResources(this.toollabindex, "toollabindex");
+            // 
+            // toollabindextime
+            // 
+            this.toollabindextime.Name = "toollabindextime";
+            resources.ApplyResources(this.toollabindextime, "toollabindextime");
+            // 
+            // toollabcheck
+            // 
+            this.toollabcheck.Name = "toollabcheck";
+            resources.ApplyResources(this.toollabcheck, "toollabcheck");
+            // 
+            // toollabchecktime
+            // 
+            this.toollabchecktime.Name = "toollabchecktime";
+            resources.ApplyResources(this.toollabchecktime, "toollabchecktime");
+            // 
+            // toollabenter
+            // 
+            this.toollabenter.Name = "toollabenter";
+            resources.ApplyResources(this.toollabenter, "toollabenter");
+            // 
+            // toollabentertime
+            // 
+            this.toollabentertime.Name = "toollabentertime";
+            resources.ApplyResources(this.toollabentertime, "toollabentertime");
+            // 
+            // gr3
+            // 
+            resources.ApplyResources(this.gr3, "gr3");
+            this.gr3.Controls.Add(this.ImgView);
+            this.gr3.Controls.Add(this.gr4);
+            this.gr3.Name = "gr3";
+            this.gr3.TabStop = false;
+            // 
+            // ImgView
+            // 
+            resources.ApplyResources(this.ImgView, "ImgView");
+            this.ImgView.IsSyncSource = true;
+            this.ImgView.IsSyncTarget = true;
+            this.ImgView.ItemPadding = new System.Windows.Forms.Padding(1);
+            this.ImgView.Name = "ImgView";
+            this.ImgView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ImgView_MouseDoubleClick);
+            this.ImgView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ImgView_MouseDown);
+            // 
+            // gr4
+            // 
+            this.gr4.Controls.Add(this.labConten);
+            this.gr4.Controls.Add(this.labPageCount);
+            this.gr4.Controls.Add(this.labPageCrrent);
+            resources.ApplyResources(this.gr4, "gr4");
+            this.gr4.Name = "gr4";
+            this.gr4.TabStop = false;
+            // 
+            // labConten
+            // 
+            resources.ApplyResources(this.labConten, "labConten");
+            this.labConten.ForeColor = System.Drawing.Color.Red;
+            this.labConten.Name = "labConten";
+            // 
+            // labPageCount
+            // 
+            resources.ApplyResources(this.labPageCount, "labPageCount");
+            this.labPageCount.Name = "labPageCount";
+            // 
+            // labPageCrrent
+            // 
+            resources.ApplyResources(this.labPageCrrent, "labPageCrrent");
+            this.labPageCrrent.Name = "labPageCrrent";
             // 
             // toolStrip1
             // 
@@ -148,17 +293,17 @@
             // 
             // dockSite4
             // 
-            resources.ApplyResources(this.dockSite4, "dockSite4");
             this.dockSite4.AccessibleRole = System.Windows.Forms.AccessibleRole.Window;
+            resources.ApplyResources(this.dockSite4, "dockSite4");
             this.dockSite4.DocumentDockContainer = new DevComponents.DotNetBar.DocumentDockContainer();
             this.dockSite4.Name = "dockSite4";
             this.dockSite4.TabStop = false;
             // 
             // dockSite9
             // 
-            resources.ApplyResources(this.dockSite9, "dockSite9");
             this.dockSite9.AccessibleRole = System.Windows.Forms.AccessibleRole.Window;
             this.dockSite9.Controls.Add(this.bar2);
+            resources.ApplyResources(this.dockSite9, "dockSite9");
             this.dockSite9.DocumentDockContainer = new DevComponents.DotNetBar.DocumentDockContainer(new DevComponents.DotNetBar.DocumentBaseContainer[] {
             ((DevComponents.DotNetBar.DocumentBaseContainer)(new DevComponents.DotNetBar.DocumentBarContainer(this.bar2, 991, 683)))}, DevComponents.DotNetBar.eOrientation.Horizontal);
             this.dockSite9.Name = "dockSite9";
@@ -195,11 +340,11 @@
             // 
             // panelDock2
             // 
-            resources.ApplyResources(this.panelDock2, "panelDock2");
             this.panelDock2.Controls.Add(this.splitContainer1);
             this.panelDock2.Controls.Add(this.toolstripmain2);
             this.panelDock2.Controls.Add(this.toolstripmain1);
             this.panelDock2.DisabledBackColor = System.Drawing.Color.Empty;
+            resources.ApplyResources(this.panelDock2, "panelDock2");
             this.panelDock2.Name = "panelDock2";
             this.panelDock2.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.panelDock2.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground;
@@ -207,157 +352,8 @@
             this.panelDock2.Style.ForeColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.ItemText;
             this.panelDock2.Style.GradientAngle = 90;
             // 
-            // splitContainer1
-            // 
-            resources.ApplyResources(this.splitContainer1, "splitContainer1");
-            this.splitContainer1.BackColor = System.Drawing.Color.Transparent;
-            this.splitContainer1.Name = "splitContainer1";
-            // 
-            // splitContainer1.Panel1
-            // 
-            resources.ApplyResources(this.splitContainer1.Panel1, "splitContainer1.Panel1");
-            this.splitContainer1.Panel1.Controls.Add(this.gr2);
-            // 
-            // splitContainer1.Panel2
-            // 
-            resources.ApplyResources(this.splitContainer1.Panel2, "splitContainer1.Panel2");
-            this.splitContainer1.Panel2.Controls.Add(this.statUser);
-            this.splitContainer1.Panel2.Controls.Add(this.gr3);
-            // 
-            // gr2
-            // 
-            resources.ApplyResources(this.gr2, "gr2");
-            this.gr2.Controls.Add(this.splitCont);
-            this.gr2.Name = "gr2";
-            this.gr2.TabStop = false;
-            // 
-            // splitCont
-            // 
-            resources.ApplyResources(this.splitCont, "splitCont");
-            this.splitCont.Name = "splitCont";
-            // 
-            // splitCont.Panel1
-            // 
-            resources.ApplyResources(this.splitCont.Panel1, "splitCont.Panel1");
-            this.splitCont.Panel1.Controls.Add(this.gr1_1);
-            // 
-            // splitCont.Panel2
-            // 
-            resources.ApplyResources(this.splitCont.Panel2, "splitCont.Panel2");
-            this.splitCont.Panel2.Controls.Add(this.gr1_2);
-            // 
-            // gr1_1
-            // 
-            resources.ApplyResources(this.gr1_1, "gr1_1");
-            this.gr1_1.Name = "gr1_1";
-            this.gr1_1.TabStop = false;
-            // 
-            // gr1_2
-            // 
-            resources.ApplyResources(this.gr1_2, "gr1_2");
-            this.gr1_2.Name = "gr1_2";
-            this.gr1_2.TabStop = false;
-            // 
-            // statUser
-            // 
-            resources.ApplyResources(this.statUser, "statUser");
-            this.statUser.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toollabscan,
-            this.toollabscantime,
-            this.toollabindex,
-            this.toollabindextime,
-            this.toollabcheck,
-            this.toollabchecktime,
-            this.toollabenter,
-            this.toollabentertime});
-            this.statUser.Name = "statUser";
-            // 
-            // toollabscan
-            // 
-            resources.ApplyResources(this.toollabscan, "toollabscan");
-            this.toollabscan.Name = "toollabscan";
-            // 
-            // toollabscantime
-            // 
-            resources.ApplyResources(this.toollabscantime, "toollabscantime");
-            this.toollabscantime.Name = "toollabscantime";
-            // 
-            // toollabindex
-            // 
-            resources.ApplyResources(this.toollabindex, "toollabindex");
-            this.toollabindex.Name = "toollabindex";
-            // 
-            // toollabindextime
-            // 
-            resources.ApplyResources(this.toollabindextime, "toollabindextime");
-            this.toollabindextime.Name = "toollabindextime";
-            // 
-            // toollabcheck
-            // 
-            resources.ApplyResources(this.toollabcheck, "toollabcheck");
-            this.toollabcheck.Name = "toollabcheck";
-            // 
-            // toollabchecktime
-            // 
-            resources.ApplyResources(this.toollabchecktime, "toollabchecktime");
-            this.toollabchecktime.Name = "toollabchecktime";
-            // 
-            // toollabenter
-            // 
-            resources.ApplyResources(this.toollabenter, "toollabenter");
-            this.toollabenter.Name = "toollabenter";
-            // 
-            // toollabentertime
-            // 
-            resources.ApplyResources(this.toollabentertime, "toollabentertime");
-            this.toollabentertime.Name = "toollabentertime";
-            // 
-            // gr3
-            // 
-            resources.ApplyResources(this.gr3, "gr3");
-            this.gr3.Controls.Add(this.ImgView);
-            this.gr3.Controls.Add(this.gr4);
-            this.gr3.Name = "gr3";
-            this.gr3.TabStop = false;
-            // 
-            // ImgView
-            // 
-            resources.ApplyResources(this.ImgView, "ImgView");
-            this.ImgView.IsSyncSource = true;
-            this.ImgView.IsSyncTarget = true;
-            this.ImgView.ItemPadding = new System.Windows.Forms.Padding(1);
-            this.ImgView.Name = "ImgView";
-            this.ImgView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ImgView_MouseDoubleClick);
-            this.ImgView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ImgView_MouseDown);
-            // 
-            // gr4
-            // 
-            resources.ApplyResources(this.gr4, "gr4");
-            this.gr4.Controls.Add(this.labConten);
-            this.gr4.Controls.Add(this.labPageCount);
-            this.gr4.Controls.Add(this.labPageCrrent);
-            this.gr4.Name = "gr4";
-            this.gr4.TabStop = false;
-            // 
-            // labConten
-            // 
-            resources.ApplyResources(this.labConten, "labConten");
-            this.labConten.ForeColor = System.Drawing.Color.Red;
-            this.labConten.Name = "labConten";
-            // 
-            // labPageCount
-            // 
-            resources.ApplyResources(this.labPageCount, "labPageCount");
-            this.labPageCount.Name = "labPageCount";
-            // 
-            // labPageCrrent
-            // 
-            resources.ApplyResources(this.labPageCrrent, "labPageCrrent");
-            this.labPageCrrent.Name = "labPageCrrent";
-            // 
             // toolstripmain2
             // 
-            resources.ApplyResources(this.toolstripmain2, "toolstripmain2");
             this.toolstripmain2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripCenter,
             this.toolStripSeparator1,
@@ -377,6 +373,7 @@
             this.toolStripOutSpeck,
             this.toolStripSave,
             this.toolStripClose});
+            resources.ApplyResources(this.toolstripmain2, "toolstripmain2");
             this.toolstripmain2.Name = "toolstripmain2";
             // 
             // toolStripCenter
@@ -387,8 +384,8 @@
             // 
             // toolStripSeparator1
             // 
-            resources.ApplyResources(this.toolStripSeparator1, "toolStripSeparator1");
             this.toolStripSeparator1.Name = "toolStripSeparator1";
+            resources.ApplyResources(this.toolStripSeparator1, "toolStripSeparator1");
             // 
             // toolStripUppage
             // 
@@ -428,8 +425,8 @@
             // 
             // toolStripSeparator2
             // 
-            resources.ApplyResources(this.toolStripSeparator2, "toolStripSeparator2");
             this.toolStripSeparator2.Name = "toolStripSeparator2";
+            resources.ApplyResources(this.toolStripSeparator2, "toolStripSeparator2");
             // 
             // toolStripCleSide
             // 
@@ -445,8 +442,8 @@
             // 
             // toolStripSeparator3
             // 
-            resources.ApplyResources(this.toolStripSeparator3, "toolStripSeparator3");
             this.toolStripSeparator3.Name = "toolStripSeparator3";
+            resources.ApplyResources(this.toolStripSeparator3, "toolStripSeparator3");
             // 
             // toolStripColorDeep
             // 
@@ -487,7 +484,6 @@
             // 
             // toolstripmain1
             // 
-            resources.ApplyResources(this.toolstripmain1, "toolstripmain1");
             this.toolstripmain1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripRepair,
             this.toolStripRevImg,
@@ -499,9 +495,11 @@
             this.toolStripAutoSide,
             this.toolStripFiltr,
             this.toolProess,
+            this.toolStripOcr,
             this.toolStripSeparator5,
             this.toolArchno,
             this.toollbInfo});
+            resources.ApplyResources(this.toolstripmain1, "toolstripmain1");
             this.toolstripmain1.Name = "toolstripmain1";
             // 
             // toolStripRepair
@@ -537,8 +535,8 @@
             // 
             // toolStripSeparator4
             // 
-            resources.ApplyResources(this.toolStripSeparator4, "toolStripSeparator4");
             this.toolStripSeparator4.Name = "toolStripSeparator4";
+            resources.ApplyResources(this.toolStripSeparator4, "toolStripSeparator4");
             // 
             // toolStripGotoPage
             // 
@@ -561,37 +559,37 @@
             // 
             // toolProess
             // 
-            resources.ApplyResources(this.toolProess, "toolProess");
             this.toolProess.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.toolProess.Name = "toolProess";
+            resources.ApplyResources(this.toolProess, "toolProess");
             // 
             // toolStripSeparator5
             // 
-            resources.ApplyResources(this.toolStripSeparator5, "toolStripSeparator5");
             this.toolStripSeparator5.Name = "toolStripSeparator5";
+            resources.ApplyResources(this.toolStripSeparator5, "toolStripSeparator5");
             // 
             // toolArchno
             // 
-            resources.ApplyResources(this.toolArchno, "toolArchno");
             this.toolArchno.ForeColor = System.Drawing.Color.Red;
             this.toolArchno.Name = "toolArchno";
+            resources.ApplyResources(this.toolArchno, "toolArchno");
             // 
             // toollbInfo
             // 
-            resources.ApplyResources(this.toollbInfo, "toollbInfo");
             this.toollbInfo.Name = "toollbInfo";
+            resources.ApplyResources(this.toollbInfo, "toollbInfo");
             // 
             // dockCont2
             // 
-            resources.ApplyResources(this.dockCont2, "dockCont2");
             this.dockCont2.Control = this.panelDock2;
             this.dockCont2.Name = "dockCont2";
+            resources.ApplyResources(this.dockCont2, "dockCont2");
             // 
             // dockSite1
             // 
-            resources.ApplyResources(this.dockSite1, "dockSite1");
             this.dockSite1.AccessibleRole = System.Windows.Forms.AccessibleRole.Window;
             this.dockSite1.Controls.Add(this.bar1);
+            resources.ApplyResources(this.dockSite1, "dockSite1");
             this.dockSite1.DocumentDockContainer = new DevComponents.DotNetBar.DocumentDockContainer(new DevComponents.DotNetBar.DocumentBaseContainer[] {
             ((DevComponents.DotNetBar.DocumentBaseContainer)(new DevComponents.DotNetBar.DocumentBarContainer(this.bar1, 392, 683)))}, DevComponents.DotNetBar.eOrientation.Horizontal);
             this.dockSite1.Name = "dockSite1";
@@ -626,9 +624,9 @@
             // 
             // panelDock1
             // 
-            resources.ApplyResources(this.panelDock1, "panelDock1");
             this.panelDock1.Controls.Add(this.gr1);
             this.panelDock1.DisabledBackColor = System.Drawing.Color.Empty;
+            resources.ApplyResources(this.panelDock1, "panelDock1");
             this.panelDock1.Name = "panelDock1";
             this.panelDock1.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.panelDock1.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground;
@@ -638,64 +636,66 @@
             // 
             // gr1
             // 
-            resources.ApplyResources(this.gr1, "gr1");
             this.gr1.BackColor = System.Drawing.Color.Transparent;
+            resources.ApplyResources(this.gr1, "gr1");
             this.gr1.Name = "gr1";
             this.gr1.TabStop = false;
             // 
             // dockCont1
             // 
-            resources.ApplyResources(this.dockCont1, "dockCont1");
             this.dockCont1.Control = this.panelDock1;
             this.dockCont1.Name = "dockCont1";
+            resources.ApplyResources(this.dockCont1, "dockCont1");
             // 
             // dockSite2
             // 
-            resources.ApplyResources(this.dockSite2, "dockSite2");
             this.dockSite2.AccessibleRole = System.Windows.Forms.AccessibleRole.Window;
+            resources.ApplyResources(this.dockSite2, "dockSite2");
             this.dockSite2.DocumentDockContainer = new DevComponents.DotNetBar.DocumentDockContainer();
             this.dockSite2.Name = "dockSite2";
             this.dockSite2.TabStop = false;
             // 
             // dockSite8
             // 
-            resources.ApplyResources(this.dockSite8, "dockSite8");
             this.dockSite8.AccessibleRole = System.Windows.Forms.AccessibleRole.Window;
+            resources.ApplyResources(this.dockSite8, "dockSite8");
             this.dockSite8.Name = "dockSite8";
             this.dockSite8.TabStop = false;
             // 
             // dockSite5
             // 
-            resources.ApplyResources(this.dockSite5, "dockSite5");
             this.dockSite5.AccessibleRole = System.Windows.Forms.AccessibleRole.Window;
+            resources.ApplyResources(this.dockSite5, "dockSite5");
             this.dockSite5.Name = "dockSite5";
             this.dockSite5.TabStop = false;
             // 
             // dockSite6
             // 
-            resources.ApplyResources(this.dockSite6, "dockSite6");
             this.dockSite6.AccessibleRole = System.Windows.Forms.AccessibleRole.Window;
+            resources.ApplyResources(this.dockSite6, "dockSite6");
             this.dockSite6.Name = "dockSite6";
             this.dockSite6.TabStop = false;
             // 
             // dockSite7
             // 
-            resources.ApplyResources(this.dockSite7, "dockSite7");
             this.dockSite7.AccessibleRole = System.Windows.Forms.AccessibleRole.Window;
+            resources.ApplyResources(this.dockSite7, "dockSite7");
             this.dockSite7.Name = "dockSite7";
             this.dockSite7.TabStop = false;
             // 
             // dockSite3
             // 
-            resources.ApplyResources(this.dockSite3, "dockSite3");
             this.dockSite3.AccessibleRole = System.Windows.Forms.AccessibleRole.Window;
+            resources.ApplyResources(this.dockSite3, "dockSite3");
             this.dockSite3.DocumentDockContainer = new DevComponents.DotNetBar.DocumentDockContainer();
             this.dockSite3.Name = "dockSite3";
             this.dockSite3.TabStop = false;
             // 
-            // odgInsterFile
+            // toolStripOcr
             // 
-            resources.ApplyResources(this.odgInsterFile, "odgInsterFile");
+            resources.ApplyResources(this.toolStripOcr, "toolStripOcr");
+            this.toolStripOcr.Name = "toolStripOcr";
+            this.toolStripOcr.Click += new System.EventHandler(this.toolStripOcr_Click);
             // 
             // FrmCheck
             // 
@@ -718,11 +718,6 @@
             this.Load += new System.EventHandler(this.FrmIndex_Load);
             this.Shown += new System.EventHandler(this.FrmIndex_Shown);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FrmIndex_KeyDown);
-            this.dockSite9.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.bar2)).EndInit();
-            this.bar2.ResumeLayout(false);
-            this.panelDock2.ResumeLayout(false);
-            this.panelDock2.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             this.splitContainer1.Panel2.PerformLayout();
@@ -738,6 +733,11 @@
             this.gr3.ResumeLayout(false);
             this.gr4.ResumeLayout(false);
             this.gr4.PerformLayout();
+            this.dockSite9.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.bar2)).EndInit();
+            this.bar2.ResumeLayout(false);
+            this.panelDock2.ResumeLayout(false);
+            this.panelDock2.PerformLayout();
             this.toolstripmain2.ResumeLayout(false);
             this.toolstripmain2.PerformLayout();
             this.toolstripmain1.ResumeLayout(false);
@@ -825,5 +825,6 @@
         private DevComponents.DotNetBar.Controls.CollapsibleSplitContainer splitCont;
         private System.Windows.Forms.GroupBox gr1_1;
         private System.Windows.Forms.GroupBox gr1_2;
+        private System.Windows.Forms.ToolStripButton toolStripOcr;
     }
 }
