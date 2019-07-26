@@ -49,6 +49,7 @@
             this.gr4 = new System.Windows.Forms.GroupBox();
             this.labConten = new System.Windows.Forms.Label();
             this.labPageCount = new System.Windows.Forms.Label();
+            this.labpage = new System.Windows.Forms.Label();
             this.labPageCrrent = new System.Windows.Forms.Label();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.doNetManger1 = new DevComponents.DotNetBar.DotNetBarManager(this.components);
@@ -86,6 +87,7 @@
             this.toolStripAutoSide = new System.Windows.Forms.ToolStripButton();
             this.toolStripFiltr = new System.Windows.Forms.ToolStripButton();
             this.toolProess = new System.Windows.Forms.ToolStripProgressBar();
+            this.toolStripOcr = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.toolArchno = new System.Windows.Forms.ToolStripLabel();
             this.toollbInfo = new System.Windows.Forms.ToolStripLabel();
@@ -102,7 +104,6 @@
             this.dockSite7 = new DevComponents.DotNetBar.DockSite();
             this.dockSite3 = new DevComponents.DotNetBar.DockSite();
             this.odgInsterFile = new System.Windows.Forms.OpenFileDialog();
-            this.toolStripOcr = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -250,6 +251,7 @@
             // 
             this.gr4.Controls.Add(this.labConten);
             this.gr4.Controls.Add(this.labPageCount);
+            this.gr4.Controls.Add(this.labpage);
             this.gr4.Controls.Add(this.labPageCrrent);
             resources.ApplyResources(this.gr4, "gr4");
             this.gr4.Name = "gr4";
@@ -265,6 +267,12 @@
             // 
             resources.ApplyResources(this.labPageCount, "labPageCount");
             this.labPageCount.Name = "labPageCount";
+            // 
+            // labpage
+            // 
+            resources.ApplyResources(this.labpage, "labpage");
+            this.labpage.ForeColor = System.Drawing.Color.Red;
+            this.labpage.Name = "labpage";
             // 
             // labPageCrrent
             // 
@@ -563,6 +571,12 @@
             this.toolProess.Name = "toolProess";
             resources.ApplyResources(this.toolProess, "toolProess");
             // 
+            // toolStripOcr
+            // 
+            resources.ApplyResources(this.toolStripOcr, "toolStripOcr");
+            this.toolStripOcr.Name = "toolStripOcr";
+            this.toolStripOcr.Click += new System.EventHandler(this.toolStripOcr_Click);
+            // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
@@ -690,12 +704,6 @@
             this.dockSite3.DocumentDockContainer = new DevComponents.DotNetBar.DocumentDockContainer();
             this.dockSite3.Name = "dockSite3";
             this.dockSite3.TabStop = false;
-            // 
-            // toolStripOcr
-            // 
-            resources.ApplyResources(this.toolStripOcr, "toolStripOcr");
-            this.toolStripOcr.Name = "toolStripOcr";
-            this.toolStripOcr.Click += new System.EventHandler(this.toolStripOcr_Click);
             // 
             // FrmCheck
             // 
@@ -826,5 +834,6 @@
         private System.Windows.Forms.GroupBox gr1_1;
         private System.Windows.Forms.GroupBox gr1_2;
         private System.Windows.Forms.ToolStripButton toolStripOcr;
+        private System.Windows.Forms.Label labpage;
     }
 }

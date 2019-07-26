@@ -217,6 +217,7 @@ namespace Csmdapx
                     int arid = ClsIndex.Archid;
                     string archpos = ClsIndex.ArchPos;
                     int regpage = ClsIndex.RegPage;
+                    int tagpage = Himg.TagPage;
                     Dictionary<int, string> pageabc = new Dictionary<int, string>(Himg._PageAbc);
                     Dictionary<int, int> pagenum = new Dictionary<int, int>(Himg._PageNumber);
                     Dictionary<int, string> fuhao = new Dictionary<int, string>(Himg._PageFuhao);
@@ -224,7 +225,8 @@ namespace Csmdapx
                     Himg._PageNumber.Clear();
                     //天津东丽专用，以后删除
                     Setpages(regpage, pageabc.Count, arid);
-                    Task.Run(new Action(() => { FtpUpFinish(regpage, filetmp, arid, archpos, pageabc, pagenum, fuhao); }));
+                    Task.Run(() => { FtpUpFinish(tagpage, regpage, filetmp, arid, archpos, pageabc, pagenum, fuhao); });
+                    //  Task.Run(new Action(() => { FtpUpFinish(tagpage,regpage, filetmp, arid, archpos, pageabc, pagenum, fuhao); }));
                     Cledata();
                     txtPages.Text = "";
                     gArch.LvData.Focus();
@@ -251,9 +253,11 @@ namespace Csmdapx
             Dictionary<int, string> fuhao = new Dictionary<int, string>(Himg._PageFuhao);
             Himg._PageAbc.Clear();
             Himg._PageNumber.Clear();
+            int tag = Himg.TagPage;
             int pages = ClsIndex.RegPage;
             Cledata();
-            Task.Run(new Action(() => { FtpUpCanCel(filetmp, arid, archpos, pageabc, pagenum, pages, fuhao); }));
+            Task.Run(() => { FtpUpCanCel(filetmp, arid, archpos, pageabc, pagenum, pages, fuhao, tag); });
+            // Task.Run(new Action(() => { FtpUpCanCel(filetmp, arid, archpos, pageabc, pagenum, pages, fuhao); }));
             txtPages.Text = "";
             gArch.LvData.Focus();
         }
@@ -334,7 +338,7 @@ namespace Csmdapx
         private void toolStripSplitTag_Click(object sender, EventArgs e)
         {
 
-            if (Himg.TagPage >0) {
+            if (Himg.TagPage > 0) {
                 Himg.TagPage = 0;
                 toolStripSplitTag.ForeColor = Color.Black;
                 return;
@@ -468,7 +472,7 @@ namespace Csmdapx
                 if (dt != null && dt.Rows.Count > 0) {
                     DataRow dr = dt.Rows[0];
                     string PageIndexInfo = dr["PageIndexInfo"].ToString();
-                    int page =Convert.ToInt32(dr["pages"].ToString());
+                    int page = Convert.ToInt32(dr["pages"].ToString());
                     if (!string.IsNullOrEmpty(PageIndexInfo)) {
                         string[] arrPage = PageIndexInfo.Split(';');
                         if (arrPage.Length > 0) {
@@ -477,7 +481,7 @@ namespace Csmdapx
                                 if (str.Length <= 0)
                                     continue;
                                 int p = Convert.ToInt32(str[0]);
-                                if (p>page)
+                                if (p > page)
                                     continue;
                                 if (str[1].ToString() == "-9999")
                                     pagenumber.Add(p, Convert.ToInt32(str[1]));
@@ -694,31 +698,62 @@ namespace Csmdapx
                 toolArchno.Text = "当前卷号:";
                 ClsIndex.task = false;
                 gArch.butLoad.Enabled = true;
+                Himg.TagPage = 0;
+                toolStripSplitTag.ForeColor = Color.Black;
             }));
         }
 
-        private async void FtpUpFinish(int regpage, string filetmp, int arid, string archpos, Dictionary<int, string> pageAbc, Dictionary<int, int> pagenumber, Dictionary<int, string> fuhao)
+        private async void FtpUpFinish(int tagpage, int regpage, string filetmp, int arid, string archpos, Dictionary<int, string> pageAbc, Dictionary<int, int> pagenumber, Dictionary<int, string> fuhao)
         {
             try {
                 if (File.Exists(filetmp)) {
                     string PageIndexInfo = "";
+                    string PageIndexInfoOk = "";
                     foreach (var item in pageAbc) {
                         if (PageIndexInfo.Trim().Length <= 0)
                             PageIndexInfo += item.Key + ":" + item.Value;
                         else
                             PageIndexInfo += ";" + item.Key + ":" + item.Value;
+
+                        string vale = item.Value;
+                        if (vale == "-9999")
+                            continue;
+                        if (PageIndexInfoOk.Trim().Length <= 0)
+                            PageIndexInfoOk += item.Key + ":" + item.Value;
+                        else
+                            PageIndexInfoOk += ";" + item.Key + ":" + item.Value;
+
+
                     }
                     foreach (var item in pagenumber) {
                         if (PageIndexInfo.Trim().Length <= 0)
                             PageIndexInfo += item.Key + ":" + item.Value;
                         else
                             PageIndexInfo += ";" + item.Key + ":" + item.Value;
+
+                        string vale = item.Value.ToString();
+                        if (vale == "-9999")
+                            continue;
+                        if (PageIndexInfoOk.Trim().Length <= 0)
+                            PageIndexInfoOk += item.Key + ":" + item.Value;
+                        else
+                            PageIndexInfoOk += ";" + item.Key + ":" + item.Value;
+
                     }
                     foreach (var item in fuhao) {
                         if (PageIndexInfo.Trim().Length <= 0)
                             PageIndexInfo += item.Key + ":" + item.Value;
                         else
                             PageIndexInfo += ";" + item.Key + ":" + item.Value;
+
+                        string vale = item.Value;
+                        if (vale == "-9999")
+                            continue;
+                        if (PageIndexInfoOk.Trim().Length <= 0)
+                            PageIndexInfoOk += item.Key + ":" + item.Value;
+                        else
+                            PageIndexInfoOk += ";" + item.Key + ":" + item.Value;
+
                     }
                     PageIndexInfo = PageIndexInfo.Trim();
                     Common.SetIndexCancel(arid, PageIndexInfo);
@@ -729,8 +764,8 @@ namespace Csmdapx
                             Directory.CreateDirectory(Path.Combine(T_ConFigure.FtpTmpPath, T_ConFigure.TmpIndex));
                         string LocalIndexFile = Path.Combine(T_ConFigure.FtpTmpPath, T_ConFigure.TmpIndex,
                             IndexFileName);
-                        Common.WiteUpTask(arid, archpos, IndexFileName, (int)T_ConFigure.ArchStat.排序完, regpage, filetmp);
-                        if (!Himg._OrderSave(regpage, filetmp, LocalIndexFile, pageAbc, pagenumber, fuhao)) {
+                        Common.WiteUpTask(arid, archpos, IndexFileName, (int)T_ConFigure.ArchStat.排序完, regpage, filetmp, tagpage.ToString());
+                        if (!Himg._OrderSave(tagpage, regpage, filetmp, LocalIndexFile, pageAbc, pagenumber, fuhao)) {
                             return;
                         }
                         string sourcefile = Path.Combine(T_ConFigure.FtpTmp, T_ConFigure.TmpIndex, IndexFileName);
@@ -740,7 +775,7 @@ namespace Csmdapx
                             Thread.Sleep(5000);
                             //Common.SetIndexCancel(arid, "");
                             Common.DelTask(arid);
-                            Common.SetIndexFinish(arid, DESEncrypt.DesEncrypt(IndexFileName), (int)T_ConFigure.ArchStat.排序完);
+                            Common.SetIndexFinish(arid, DESEncrypt.DesEncrypt(IndexFileName), (int)T_ConFigure.ArchStat.排序完, PageIndexInfoOk);
                             try {
                                 File.Delete(filetmp);
                                 Directory.Delete(Path.Combine(T_ConFigure.FtpTmpPath, T_ConFigure.TmpScan, archpos));
@@ -750,8 +785,8 @@ namespace Csmdapx
                     }
                     else {
                         string LocalIndexFile = Path.Combine(@T_ConFigure.LocalTempPath, IndexFileName);
-                        Common.WiteUpTask(arid, archpos, IndexFileName, (int)T_ConFigure.ArchStat.排序完, regpage, filetmp);
-                        if (!Himg._OrderSave(regpage, filetmp, LocalIndexFile, pageAbc, pagenumber, fuhao)) {
+                        Common.WiteUpTask(arid, archpos, IndexFileName, (int)T_ConFigure.ArchStat.排序完, regpage, filetmp, tagpage.ToString());
+                        if (!Himg._OrderSave(tagpage, regpage, filetmp, LocalIndexFile, pageAbc, pagenumber, fuhao)) {
                             return;
                         }
                         string newfile = Path.Combine(T_ConFigure.FtpArchIndex, RemoteDir, IndexFileName);
@@ -759,7 +794,7 @@ namespace Csmdapx
                         bool x = await ftp.FtpUpFile(LocalIndexFile, newfile, newpath);
                         if (x) {
                             //Common.SetIndexCancel(arid, "");
-                            Common.SetIndexFinish(arid, DESEncrypt.DesEncrypt(IndexFileName), (int)T_ConFigure.ArchStat.排序完);
+                            Common.SetIndexFinish(arid, DESEncrypt.DesEncrypt(IndexFileName), (int)T_ConFigure.ArchStat.排序完, PageIndexInfoOk);
                             Common.DelTask(arid);
                             try {
                                 File.Delete(filetmp);
@@ -784,11 +819,11 @@ namespace Csmdapx
             }
         }
 
-        private async void FtpUpCanCel(string filetmp, int arid, string archpos, Dictionary<int, string> pageAbc, Dictionary<int, int> pagenumber, int pages, Dictionary<int, string> fuhao)
+        private async void FtpUpCanCel(string filetmp, int arid, string archpos, Dictionary<int, string> pageAbc, Dictionary<int, int> pagenumber, int pages, Dictionary<int, string> fuhao, int tag)
         {
             try {
                 if (File.Exists(filetmp)) {
-                    Common.WiteUpTask(arid, archpos, T_ConFigure.ScanTempFile, (int)T_ConFigure.ArchStat.扫描完, pages, filetmp);
+                    Common.WiteUpTask(arid, archpos, T_ConFigure.ScanTempFile, (int)T_ConFigure.ArchStat.扫描完, pages, filetmp, tag.ToString());
                     string PageIndexInfo = "";
                     foreach (var item in pageAbc) {
                         if (PageIndexInfo.Trim().Length <= 0)

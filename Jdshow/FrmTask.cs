@@ -109,6 +109,7 @@ namespace Jdshow
                     string filepath = dgData.Rows[0].Cells[5].Value.ToString();
                     int stat = Convert.ToInt32(dgData.Rows[0].Cells[4].Value.ToString());
                     string pages = dgData.Rows[0].Cells[6].Value.ToString();
+                    int tagpage= Convert.ToInt32(dgData.Rows[0].Cells[7].Value.ToString());
                     if (!File.Exists(filepath)) {
                         // MessageBox.Show("ID号:" + archid + ",盒号卷号：" + archpos + ",文件不存在!");
                         Common.DelTask(Convert.ToInt32(archid));
@@ -117,7 +118,7 @@ namespace Jdshow
                     }
                     Task task = new Task(() =>
                     {
-                        StatTask(typemodule, archid, archpos, filename, filepath, stat, pages);
+                        StatTask(typemodule, archid, archpos, filename, filepath, stat, pages, tagpage);
                     });
                     task.Start();
                     dgData.Rows.RemoveAt(0);
@@ -145,7 +146,7 @@ namespace Jdshow
             }));
         }
 
-        private void StatTask(string typemodule, string archid, string archpos, string filename, string filepath, int archstat, string pages)
+        private void StatTask(string typemodule, string archid, string archpos, string filename, string filepath, int archstat, string pages,int tagpage)
         {
             if (archstat <= (int)T_ConFigure.ArchStat.扫描完) {
                 if (ftp.SaveRemoteFileUp(T_ConFigure.gArchScanPath, archpos, filepath, filename)) {
@@ -159,19 +160,21 @@ namespace Jdshow
                     return;
                 }
             }
-            else if (archstat <= (int)T_ConFigure.ArchStat.排序完) {
+            else if (archstat <= (int)T_ConFigure.ArchStat.排序完)
+            {
+                string pageinfo = "";
                 Dictionary<int, int> num = new Dictionary<int, int>();
                 Dictionary<int, string> abc = new Dictionary<int, string>();
                 Dictionary<int, string> fuhao = new Dictionary<int, string>();
-                ReadDict(Convert.ToInt32(archid), out num, out abc, out fuhao);
+                ReadDict(Convert.ToInt32(archid), out num, out abc, out fuhao,out pageinfo);
                 string IndexFileName = Common.GetCurrentTime() + Common.TifExtension;
                 string RemoteDir = IndexFileName.Substring(0, 8);
                 string LocalIndexFile = Path.Combine(@T_ConFigure.LocalTempPath, IndexFileName);
-                if (!Himg._OrderSave(Convert.ToInt32(pages), filepath, LocalIndexFile, abc, num, fuhao)) {
+                if (!Himg._OrderSave(tagpage,Convert.ToInt32(pages), filepath, LocalIndexFile, abc, num, fuhao)) {
                     return;
                 }
                 if (ftp.SaveRemoteFileUp(T_ConFigure.FtpArchIndex, RemoteDir, LocalIndexFile, IndexFileName)) {
-                    Common.SetIndexFinish(Convert.ToInt32(archid), DESEncrypt.DesEncrypt(IndexFileName), archstat);
+                    Common.SetIndexFinish(Convert.ToInt32(archid), DESEncrypt.DesEncrypt(IndexFileName), archstat, pageinfo);
                     Common.DelTask(Convert.ToInt32(archid));
                     try {
                         File.Delete(filepath);
@@ -189,7 +192,7 @@ namespace Jdshow
                 string RemoteDir = filename.Substring(0, 8);
                 if (ftp.SaveRemoteFileUp(T_ConFigure.FtpArchSave, RemoteDir, filepath, filename)) {
                     Common.DelTask(Convert.ToInt32(archid));
-                    Common.SetCheckFinish(Convert.ToInt32(archid), DESEncrypt.DesEncrypt(filename), 1, (int)T_ConFigure.ArchStat.质检完, "");
+                    Common.SetCheckFinish(Convert.ToInt32(archid), DESEncrypt.DesEncrypt(filename), 1, (int)T_ConFigure.ArchStat.质检完);
                     try {
                         File.Delete(filepath);
                         Directory.Delete(Path.GetDirectoryName(filepath));
@@ -201,8 +204,9 @@ namespace Jdshow
         }
 
 
-        public void ReadDict(int arid, out Dictionary<int, int> number,out Dictionary<int, string> abc,out Dictionary<int, string> fuhao)
+        public void ReadDict(int arid, out Dictionary<int, int> number,out Dictionary<int, string> abc,out Dictionary<int, string> fuhao,out string pageinfo)
         {
+            pageinfo = "";
             number = new Dictionary<int, int>();
             abc = new Dictionary<int, string>();
             fuhao = new Dictionary<int, string>();
@@ -225,6 +229,14 @@ namespace Jdshow
                                 fuhao.Add(Convert.ToInt32(str[0]), str[1].ToString());
                             else
                                 abc.Add(Convert.ToInt32(str[0]), str[1].ToString());
+
+                            if (str[1].ToString()=="-9999")
+                                continue;
+                            if (pageinfo.Trim().Length<=0)
+                                pageinfo += str[0].ToString() + ":" + str[1].ToString();
+                            else
+                                pageinfo += ";" + str[0].ToString() + ":" + str[1].ToString();
+
                         }
                     }
                 }

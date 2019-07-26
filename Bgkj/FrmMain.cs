@@ -34,7 +34,7 @@ namespace Bgkj
             this.labUser.Text = string.Format("    当前用户： {0}    ", T_User.LoginName);
             //DESEncrypt.DesDecrypt(T_ConFigure.SfCoName);
             string str = T_ConFigure.SfCoName;
-            if (str.Trim().Length<=0)
+            if (str.Trim().Length <= 0)
                 Application.Exit();
             this.labCo.Text = " " + str;
             T_ConFigure.Bgsoft = false;
@@ -162,8 +162,7 @@ namespace Bgkj
                 if (T_ConFigure.Mosn != null && T_ConFigure.Motm != null) {
                     if (T_ConFigure.Mosn.Length < 36 && T_ConFigure.Mosn.Length > 28 &&
                         T_ConFigure.Motm.Length < 65 && T_ConFigure.Motm.Length > 45) {
-                        if (!cid.GetId(T_ConFigure.Mosn, T_ConFigure.Motm))
-                        {
+                        if (!cid.GetId(T_ConFigure.Mosn, T_ConFigure.Motm)) {
                             ClsIsinfo.Istime();
                             return;
                         }
@@ -195,7 +194,7 @@ namespace Bgkj
                 this.labDate.BackColor = Color.Red;
             }
         }
-       
+
 
         private void CreateForms(string name, string strnamespace, string FilePath)
         {
@@ -270,6 +269,10 @@ namespace Bgkj
                 Frmgy gy = new Frmgy();
                 ClsSetInfopar.imList = imgListManger;
                 gy.ShowDialog();
+                return;
+            }
+            else if (T_User.UserId != 1 && Fname.Contains("FrmModuleSet")) {
+                MessageBox.Show("此模块只有管理员可以操作!");
                 return;
             }
             string path = "";

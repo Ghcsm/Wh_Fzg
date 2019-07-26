@@ -29,6 +29,10 @@
         {
             this.superTabControl1 = new DevComponents.DotNetBar.SuperTabControl();
             this.superTabControlPanel2 = new DevComponents.DotNetBar.SuperTabControlPanel();
+            this.gr5 = new System.Windows.Forms.GroupBox();
+            this.butCreatPth = new System.Windows.Forms.Button();
+            this.txtCreatePath = new System.Windows.Forms.TextBox();
+            this.label17 = new System.Windows.Forms.Label();
             this.chkboxsn = new System.Windows.Forms.CheckBox();
             this.txtlsh = new DevComponents.DotNetBar.Controls.TextBoxX();
             this.butDlLog = new System.Windows.Forms.Button();
@@ -149,13 +153,10 @@
             this.fBdigImgPath = new System.Windows.Forms.FolderBrowserDialog();
             this.fontDialog = new System.Windows.Forms.FontDialog();
             this.colorDialog = new System.Windows.Forms.ColorDialog();
-            this.gr5 = new System.Windows.Forms.GroupBox();
-            this.label17 = new System.Windows.Forms.Label();
-            this.txtCreatePath = new System.Windows.Forms.TextBox();
-            this.butCreatPth = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.superTabControl1)).BeginInit();
             this.superTabControl1.SuspendLayout();
             this.superTabControlPanel2.SuspendLayout();
+            this.gr5.SuspendLayout();
             this.grdl3.SuspendLayout();
             this.grdl1.SuspendLayout();
             this.grdl2.SuspendLayout();
@@ -175,7 +176,6 @@
             this.gr2_2.SuspendLayout();
             this.gr2_3.SuspendLayout();
             this.gr2_1.SuspendLayout();
-            this.gr5.SuspendLayout();
             this.SuspendLayout();
             // 
             // superTabControl1
@@ -230,6 +230,46 @@
             this.superTabControlPanel2.TabIndex = 0;
             this.superTabControlPanel2.TabItem = this.TabDatedb;
             // 
+            // gr5
+            // 
+            this.gr5.BackColor = System.Drawing.Color.Transparent;
+            this.gr5.Controls.Add(this.butCreatPth);
+            this.gr5.Controls.Add(this.txtCreatePath);
+            this.gr5.Controls.Add(this.label17);
+            this.gr5.Location = new System.Drawing.Point(360, 23);
+            this.gr5.Name = "gr5";
+            this.gr5.Size = new System.Drawing.Size(484, 83);
+            this.gr5.TabIndex = 10;
+            this.gr5.TabStop = false;
+            this.gr5.Text = "生成路径:";
+            // 
+            // butCreatPth
+            // 
+            this.butCreatPth.Location = new System.Drawing.Point(356, 41);
+            this.butCreatPth.Name = "butCreatPth";
+            this.butCreatPth.Size = new System.Drawing.Size(75, 23);
+            this.butCreatPth.TabIndex = 2;
+            this.butCreatPth.Text = "选择";
+            this.butCreatPth.UseVisualStyleBackColor = true;
+            this.butCreatPth.Click += new System.EventHandler(this.butCreatPth_Click);
+            // 
+            // txtCreatePath
+            // 
+            this.txtCreatePath.Location = new System.Drawing.Point(93, 41);
+            this.txtCreatePath.Name = "txtCreatePath";
+            this.txtCreatePath.ReadOnly = true;
+            this.txtCreatePath.Size = new System.Drawing.Size(257, 21);
+            this.txtCreatePath.TabIndex = 1;
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(28, 44);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(59, 12);
+            this.label17.TabIndex = 0;
+            this.label17.Text = "生成路径;";
+            // 
             // chkboxsn
             // 
             this.chkboxsn.AutoSize = true;
@@ -263,6 +303,7 @@
             this.butDlLog.TabIndex = 6;
             this.butDlLog.Text = "日志";
             this.butDlLog.UseVisualStyleBackColor = true;
+            this.butDlLog.Click += new System.EventHandler(this.butDlLog_Click);
             // 
             // butDlStart
             // 
@@ -1535,46 +1576,6 @@
             // 
             this.FdigXls.Filter = "Xls文件|*.xls;*xlsx";
             // 
-            // gr5
-            // 
-            this.gr5.BackColor = System.Drawing.Color.Transparent;
-            this.gr5.Controls.Add(this.butCreatPth);
-            this.gr5.Controls.Add(this.txtCreatePath);
-            this.gr5.Controls.Add(this.label17);
-            this.gr5.Location = new System.Drawing.Point(360, 23);
-            this.gr5.Name = "gr5";
-            this.gr5.Size = new System.Drawing.Size(484, 83);
-            this.gr5.TabIndex = 10;
-            this.gr5.TabStop = false;
-            this.gr5.Text = "生成路径:";
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(28, 44);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(59, 12);
-            this.label17.TabIndex = 0;
-            this.label17.Text = "生成路径;";
-            // 
-            // txtCreatePath
-            // 
-            this.txtCreatePath.Location = new System.Drawing.Point(93, 41);
-            this.txtCreatePath.Name = "txtCreatePath";
-            this.txtCreatePath.ReadOnly = true;
-            this.txtCreatePath.Size = new System.Drawing.Size(257, 21);
-            this.txtCreatePath.TabIndex = 1;
-            // 
-            // butCreatPth
-            // 
-            this.butCreatPth.Location = new System.Drawing.Point(356, 41);
-            this.butCreatPth.Name = "butCreatPth";
-            this.butCreatPth.Size = new System.Drawing.Size(75, 23);
-            this.butCreatPth.TabIndex = 2;
-            this.butCreatPth.Text = "选择";
-            this.butCreatPth.UseVisualStyleBackColor = true;
-            this.butCreatPth.Click += new System.EventHandler(this.butCreatPth_Click);
-            // 
             // FrmSplit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -1592,6 +1593,8 @@
             this.superTabControl1.ResumeLayout(false);
             this.superTabControlPanel2.ResumeLayout(false);
             this.superTabControlPanel2.PerformLayout();
+            this.gr5.ResumeLayout(false);
+            this.gr5.PerformLayout();
             this.grdl3.ResumeLayout(false);
             this.grdl3.PerformLayout();
             this.grdl1.ResumeLayout(false);
@@ -1626,8 +1629,6 @@
             this.gr2_3.PerformLayout();
             this.gr2_1.ResumeLayout(false);
             this.gr2_1.PerformLayout();
-            this.gr5.ResumeLayout(false);
-            this.gr5.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 

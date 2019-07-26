@@ -3,6 +3,7 @@ using DAL;
 using HLFtp;
 using HLjscom;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.IO;
@@ -143,7 +144,7 @@ namespace Csmdajc
 
         private void toolStripOcr_Click(object sender, EventArgs e)
         {
-            Clipboard.Clear();         
+            Clipboard.Clear();
             string txt = Himg._OcrRecttxt();
             if (txt.Length > 0) {
                 Clipboard.SetText(RegexCh(txt));
@@ -226,6 +227,7 @@ namespace Csmdajc
         {
             if (ImgView.Image != null && Clscheck.CrrentPage > 1) {
                 Thread.Sleep(100);
+                ShowPage();
                 Himg._Pagenext(0);
                 ucContents1.OnChangContents(Clscheck.CrrentPage);
             }
@@ -233,7 +235,9 @@ namespace Csmdajc
 
         private void toolStripDownPage_Click(object sender, EventArgs e)
         {
+          
             NextPage();
+            ShowPage();
         }
         private void NextPage()
         {
@@ -252,6 +256,7 @@ namespace Csmdajc
             } catch (Exception ex) {
                 MessageBox.Show(ex.ToString());
             }
+           
         }
 
         private void toolStripSave_Click(object sender, EventArgs e)
@@ -268,8 +273,9 @@ namespace Csmdajc
                 string filename = Clscheck.FileNametmp;
                 int arid = Clscheck.Archid;
                 int pages = Clscheck.MaxPage;
+                int tag = Himg.TagPage;
                 Cledata();
-                Task.Run(new Action(() => { FtpUpFinish(filepath, arid, filename, pages); }));
+                Task.Run(new Action(() => { FtpUpFinish(filepath, arid, filename, pages, tag); }));
                 gArch.LvData.Focus();
             }
         }
@@ -470,6 +476,48 @@ namespace Csmdajc
             ucContents1.LoadContents(Clscheck.Archid, Clscheck.RegPage);
         }
 
+
+        public void ReadDict()
+        {
+            try {
+                Dictionary<int, int> pagenumber = new Dictionary<int, int>();
+                Dictionary<int, string> pageabc = new Dictionary<int, string>();
+                Dictionary<int, string> fuhao = new Dictionary<int, string>();
+                DataTable dt = Common.ReadPageIndexInfo(Clscheck.Archid);
+                if (dt != null && dt.Rows.Count > 0) {
+                    DataRow dr = dt.Rows[0];
+                    string PageIndexInfo = dr["PageIndexInfo"].ToString();
+                    int page = Convert.ToInt32(dr["pages"].ToString());
+                    if (!string.IsNullOrEmpty(PageIndexInfo)) {
+                        string[] arrPage = PageIndexInfo.Split(';');
+                        if (arrPage.Length > 0) {
+                            for (int i = 0; i < arrPage.Length; i++) {
+                                string[] str = arrPage[i].Trim().Split(':');
+                                if (str.Length <= 0)
+                                    continue;
+                                int p = Convert.ToInt32(str[0]);
+                                if (p > page)
+                                    continue;
+                                if (!isExists(str[1].ToString()) && str[1].IndexOf("-") < 0)
+                                    pagenumber.Add(p, Convert.ToInt32(str[1]));
+                                else if (str[1].IndexOf("-") >= 0)
+                                    fuhao.Add(p, str[1].ToString());
+                                else
+                                    pageabc.Add(p, str[1].ToString());
+                            }
+                        }
+                    }
+                    Himg._PageNumber = pagenumber;
+                    Himg._PageAbc = pageabc;
+                    Himg._PageFuhao = fuhao;
+                }
+            } catch { }
+        }
+
+        private bool isExists(string str)
+        {
+            return Regex.Matches(str, "[a-zA-Z]").Count > 0;
+        }
         private void GetPages(int page, int counpage)
         {
             Clscheck.MaxPage = counpage;
@@ -477,6 +525,16 @@ namespace Csmdajc
             labPageCrrent.Text = string.Format("第  {0}   页", page);
             labPageCount.Text = string.Format("共  {0}   页", counpage);
         }
+
+        private void ShowPage()
+        {
+            try {
+                string txt = Himg._Readpage();
+                labpage.Text = string.Format("第 {0} 页", txt);
+            } catch { }
+
+        }
+
 
         private void LoadArch()
         {
@@ -518,6 +576,7 @@ namespace Csmdajc
                     }
                     Himg.Filename = Clscheck.ScanFilePath;
                     Himg.LoadPage(pages);
+                    ReadDict();
                     LoadContents();
                     Getuser();
                     Ispages();
@@ -744,11 +803,11 @@ namespace Csmdajc
 
         }
 
-        private async void FtpUpFinish(string filetmp, int arid, string filename, int pages)
+        private async void FtpUpFinish(string filetmp, int arid, string filename, int pages, int tag)
         {
             try {
                 if (File.Exists(filetmp)) {
-                    Common.WiteUpTask(arid, "", filename, (int)T_ConFigure.ArchStat.质检完, pages, filetmp);
+                    Common.WiteUpTask(arid, "", filename, (int)T_ConFigure.ArchStat.质检完, pages, filetmp, tag.ToString());
                     if (T_ConFigure.FtpStyle == 1) {
                         string sourefile = Path.Combine(T_ConFigure.FtpTmp, T_ConFigure.TmpSave, filename.Substring(0, 8), filename);
                         string goalfile = Path.Combine(T_ConFigure.FtpArchSave, filename.Substring(0, 8), filename);
@@ -756,7 +815,7 @@ namespace Csmdajc
                         if (ftp.FtpMoveFile(sourefile, goalfile, path)) {
                             Thread.Sleep(5000);
                             Common.DelTask(arid);
-                            Common.SetCheckFinish(arid, DESEncrypt.DesEncrypt(filename), 1, (int)T_ConFigure.ArchStat.质检完, "");
+                            Common.SetCheckFinish(arid, DESEncrypt.DesEncrypt(filename), 1, (int)T_ConFigure.ArchStat.质检完);
                             return;
                         }
                     }
@@ -768,7 +827,7 @@ namespace Csmdajc
                         bool x = await ftp.FtpUpFile(filetmp, newfile, newpath);
                         if (x) {
                             Common.DelTask(arid);
-                            Common.SetCheckFinish(arid, DESEncrypt.DesEncrypt(filename), 1, (int)T_ConFigure.ArchStat.质检完, "");
+                            Common.SetCheckFinish(arid, DESEncrypt.DesEncrypt(filename), 1, (int)T_ConFigure.ArchStat.质检完);
                             try {
                                 File.Delete(filetmp);
                                 Directory.Delete(localPath);
@@ -795,13 +854,6 @@ namespace Csmdajc
         {
             try {
                 Common.Writelog(Clscheck.Archid, "质检返工!");
-                //string PageIndexInfo = "";
-                //for (int i = 1; i <= Clscheck.MaxPage; i++) {
-                //    if (PageIndexInfo.Trim().Length <= 0)
-                //        PageIndexInfo += i.ToString();
-                //    else PageIndexInfo += ";" + i.ToString();
-                //}
-                //PageIndexInfo = PageIndexInfo.Trim();
                 string sourefile = "";
                 if (T_ConFigure.FtpStyle == 0) {
                     if (archzt == 1)
@@ -816,7 +868,7 @@ namespace Csmdajc
                 if (ftp.FtpMoveFile(sourefile, goalfile, path)) {
                     Common.SetArchWorkState(arid, (int)T_ConFigure.ArchStat.扫描完);
                     Common.Writelog(Clscheck.Archid, "质检退!");
-                    Common.SetCheckFinish(arid, "", 2, (int)T_ConFigure.ArchStat.扫描完, "");
+                    Common.SetCheckFinish(arid, "", 2, (int)T_ConFigure.ArchStat.扫描完);
                 }
                 if (T_ConFigure.FtpStyle == 1) {
                     try {

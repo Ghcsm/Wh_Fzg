@@ -1554,6 +1554,9 @@ namespace Csmsjcf
                     txtB1.Focus();
                     return false;
                 }
+
+                ClsDL.Boxsn = p1.ToString();
+                ClsDL.Boxsn2 = p2.ToString();
             }
             if (!chkjpg.Checked && !chkxlsxml.Checked) {
                 MessageBox.Show("请选择生成类型!");
@@ -1624,7 +1627,7 @@ namespace Csmsjcf
 
         private void butDlStart_Click(object sender, EventArgs e)
         {
-            if (isdltxt())
+            if (!isdltxt())
                 return;
             Endtxt(false);
             Action Act = Getboxsn;
@@ -1781,7 +1784,7 @@ namespace Csmsjcf
             }
         }
 
-        private bool WriteTxtj(string file, string tm, string pagecount,List<string>A0,List<string>A1,List<string>A2,List<string>A3,List<string> A4)
+        private bool WriteTxtj(string file, string tm, string pagecount, List<string> A0, List<string> A1, List<string> A2, List<string> A3, List<string> A4)
         {
             try {
                 if (!File.Exists(file)) {
@@ -1869,7 +1872,7 @@ namespace Csmsjcf
                 Himg.Filename = XFileName;
                 Himg.GetImgSize(out A0, out A1, out A2, out A3, out A4);
                 try {
-                    if (ClsDL.Ftp==2) {
+                    if (ClsDL.Ftp == 2) {
                         if (File.Exists(XFileName)) {
                             File.Delete(XFileName);
                         }
@@ -1946,194 +1949,195 @@ namespace Csmsjcf
         XmlElement xmlelem;
         private bool Wirtexml(string archid, string ewm, string file, string pagecount, List<string> lsjpg, string ariveid)
         {
-            xmldoc = new XmlDocument();
-            //加入XML的声明段落,<?xml version="1.0" encoding="gb2312"?>
-            XmlDeclaration xmldecl;
-            xmldecl = xmldoc.CreateXmlDeclaration("1.0", "utf-8", null);
-            xmldoc.AppendChild(xmldecl);
+            try {
+                xmldoc = new XmlDocument();
+                //加入XML的声明段落,<?xml version="1.0" encoding="gb2312"?>
+                XmlDeclaration xmldecl;
+                xmldecl = xmldoc.CreateXmlDeclaration("1.0", "utf-8", null);
+                xmldoc.AppendChild(xmldecl);
 
-            //加入一个根元素
-            xmlelem = xmldoc.CreateElement("", "Message", "");
-            xmldoc.AppendChild(xmlelem);
+                //加入一个根元素
+                xmlelem = xmldoc.CreateElement("", "Message", "");
+                xmldoc.AppendChild(xmlelem);
 
-            XmlNode root = xmldoc.SelectSingleNode("Message");//查找<Employees>
-            XmlElement xe1 = xmldoc.CreateElement("Head");
+                XmlNode root = xmldoc.SelectSingleNode("Message");//查找<Employees>
+                XmlElement xe1 = xmldoc.CreateElement("Head");
 
-            DataTable dt = Common.getinfo(archid);
-            if (dt == null || dt.Rows.Count <= 0) {
-                string str = "录入信息获取失败 id号：" + archid + " 二维码信息：" + ewm;
-                ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
-                return false;
-            }
-            string archtype = dt.Rows[0][2].ToString();
-            string page = dt.Rows[0][17].ToString();
-
-            XmlElement xesub1 = xmldoc.CreateElement("ArchiveID");
-            xesub1.InnerText = ariveid;
-            xe1.AppendChild(xesub1);
-
-            xesub1 = xmldoc.CreateElement("ArchiveType");
-            xesub1.InnerText = archtype;
-            xe1.AppendChild(xesub1);
-
-            xesub1 = xmldoc.CreateElement("ArchiveNumber");
-            xesub1.InnerText = ewm;
-            xe1.AppendChild(xesub1);
-
-            xesub1 = xmldoc.CreateElement("PageCount");
-            xesub1.InnerText = page;
-            xe1.AppendChild(xesub1);
-
-            xesub1 = xmldoc.CreateElement("ArchiveLocation");
-            xesub1.InnerText = "";
-            xe1.AppendChild(xesub1);
-
-            root.AppendChild(xe1);//添加到<Employees>节点中
-
-            root = xmldoc.SelectSingleNode("Message");//查找<Employees>
-            xe1 = xmldoc.CreateElement("Data");
-            root.AppendChild(xe1);//添加到<Employees>节点中
-            //循环几手信息
-            for (int i = 0; i < dt.Rows.Count; i++) {
-
-                string xh = (i + 1).ToString();
-                string bzid = dt.Rows[i][16].ToString();
-                string djlx = dt.Rows[i][15].ToString();
-                string qu = "东丽区";
-                string zl = dt.Rows[i][5].ToString();
-                string bdcsj = dt.Rows[i][3].ToString();
-                string zdsn = dt.Rows[i][8].ToString();
-                string dh = dt.Rows[i][6].ToString();
-                string bdcdyh = dt.Rows[i][9].ToString();
-                string qlr = dt.Rows[i][4].ToString();
-                string dyqlr = dt.Rows[i][10].ToString();
-                string bdczh = dt.Rows[i][7].ToString();
-                string spsj = dt.Rows[i][11].ToString();
-                XmlElement xesub2 = xmldoc.CreateElement("BDC_BUSINESS");
-                xesub2.SetAttribute("XH", xh);
-                xesub2.SetAttribute("BZID", bzid);
-                xesub2.SetAttribute("DJLX", djlx);
-                xesub2.SetAttribute("QX", qu);
-                xesub2.SetAttribute("ZL", zl);
-                xesub2.SetAttribute("BDCSJH", bdcsj);
-                xesub2.SetAttribute("ZDZHHM", zdsn);
-                xesub2.SetAttribute("DH", dh);
-                xesub2.SetAttribute("BDCDYH", bdcdyh);
-                xesub2.SetAttribute("QLRMC", qlr);
-                xesub2.SetAttribute("DYQRMC", dyqlr);
-                xesub2.SetAttribute("BDCQZH", bdczh);
-                xesub2.SetAttribute("SPSJ", spsj);
-                xesub2.SetAttribute("ZT", "");
-                xe1.AppendChild(xesub2);
-            }
-            //循环目录
-            int mlpage = 1;
-            List<string> lsywid = new List<string>();
-            dt = Common.Getmlinfo(archid);
-            if (dt == null || dt.Rows.Count <= 0) {
-                string str = "目录信息获取失败 id号：" + archid + " 二维码信息：" + ewm;
-                ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
-                return false;
-            }
-            for (int i = 0; i < dt.Rows.Count; i++) {
-
-                string xh = i.ToString();
-                string title = dt.Rows[i][1].ToString();
-                string mllx = dt.Rows[i][3].ToString();
-                string qsy = dt.Rows[i][5].ToString();
-                string ywid = dt.Rows[i][4].ToString();
-                string ys = "";
-                int p1 = 0;
-                try {
-                    p1 = Convert.ToInt32(qsy);
-                    string p2 = dt.Rows[i + 1][5].ToString();
-                    ys = (Convert.ToInt32(p2) - p1).ToString();
-                } catch (Exception) {
-                    ys = (Convert.ToInt32(pagecount) - p1).ToString();
-                }
-                if (title == "目录") {
-                    mlpage = Convert.ToInt32(ys);
-                    continue;
-                }
-                lsywid.Add(ys);
-                XmlElement xesub2 = xmldoc.CreateElement("CATALOGUE");
-                xesub2.SetAttribute("XH", xh);
-                xesub2.SetAttribute("CATAID", xh);
-                xesub2.SetAttribute("MLZL", mllx);
-                xesub2.SetAttribute("MLMC", title);
-                xesub2.SetAttribute("MLQSY", qsy);
-                xesub2.SetAttribute("YS", ys);
-                xesub2.SetAttribute("FJ", "");
-                xesub2.SetAttribute("BZID", ywid);
-                xe1.AppendChild(xesub2);
-
-            }
-            //循环写入图片信息
-            int id = 0;  //总顺序号
-            int ys1 = 0;  //每个目录下页数
-            int ywid1 = 1; //每个目录的id
-            int tmpjl = 0;  //记录当前循环是否大于目前页数;
-            for (int i = 0; i < lsjpg.Count; i++) {
-                if (i < mlpage)
-                    continue;
-                id += 1;
-                if (ys1 == 0) {
-                    if (lsywid.Count > 0)
-                        ys1 = Convert.ToInt32(lsywid[0]);
-                    lsywid.RemoveAt(0);
-                }
-                if (tmpjl < ys1)
-                    tmpjl += 1;
-                else {
-                    if (lsywid.Count > 0) {
-                        ys1 = Convert.ToInt32(lsywid[0]);
-                        lsywid.RemoveAt(0);
-                        tmpjl = 1;
-                        ywid1 += 1;
-                    }
-                }
-                string jpg = lsjpg[i];
-                string xh = id.ToString();
-                string filenmae = Path.GetFileName(jpg);
-                string kzm = ".jpg";
-                string cataid = ywid1.ToString();
-                string info = Getbase64(jpg);
-                if (info.Trim().Length <= 0) {
-                    string str = "jpg转base64失败 id号：" + archid + " 二维码信息：" + ewm;
+                DataTable dt = Common.getinfo(archid);
+                if (dt == null || dt.Rows.Count <= 0) {
+                    string str = "录入信息获取失败 id号：" + archid + " 二维码信息：" + ewm;
                     ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
                     return false;
                 }
+                string archtype = dt.Rows[0][1].ToString();
+                string page = dt.Rows[0][12].ToString();
 
-                XmlElement xesub2 = xmldoc.CreateElement("CATALOGUE_ATTACHMENT");
-                xesub2.SetAttribute("XH", xh);
-                xesub2.SetAttribute("ATTACHMENTID", xh);
-                xesub2.SetAttribute("CATAID", cataid);
-                xesub2.SetAttribute("WJMC", filenmae);
-                xesub2.SetAttribute("WJLX", kzm);
-                xesub2.SetAttribute("WJNY", info);
-                xe1.AppendChild(xesub2);
+                XmlElement xesub1 = xmldoc.CreateElement("ArchiveID");
+                xesub1.InnerText = file;
+                xe1.AppendChild(xesub1);
+
+                xesub1 = xmldoc.CreateElement("ArchiveType");
+                xesub1.InnerText = archtype;
+                xe1.AppendChild(xesub1);
+
+                xesub1 = xmldoc.CreateElement("ArchiveNumber");
+                xesub1.InnerText = ewm;
+                xe1.AppendChild(xesub1);
+
+                xesub1 = xmldoc.CreateElement("PageCount");
+                xesub1.InnerText = page;
+                xe1.AppendChild(xesub1);
+
+                xesub1 = xmldoc.CreateElement("ArchiveLocation");
+                xesub1.InnerText = "";
+                xe1.AppendChild(xesub1);
+
+                root.AppendChild(xe1);//添加到<Employees>节点中
+
+                root = xmldoc.SelectSingleNode("Message");//查找<Employees>
+                xe1 = xmldoc.CreateElement("Data");
+                root.AppendChild(xe1);//添加到<Employees>节点中
+                                      //循环几手信息
+                for (int i = 0; i < dt.Rows.Count; i++) {
+
+                    string xh = (i + 1).ToString();
+                    string bzid = xh;
+                    string djlx = dt.Rows[i][15].ToString();
+                    string qu = "东丽区";
+                    string zl = dt.Rows[i][5].ToString();
+                    string bdcsj = dt.Rows[i][3].ToString();
+                    string zdsn = dt.Rows[i][8].ToString();
+                    string dh = dt.Rows[i][6].ToString();
+                    string bdcdyh = dt.Rows[i][9].ToString();
+                    string qlr = dt.Rows[i][4].ToString();
+                    string dyqlr = dt.Rows[i][10].ToString();
+                    string bdczh = dt.Rows[i][7].ToString();
+                    string spsj = dt.Rows[i][11].ToString();
+                    XmlElement xesub2 = xmldoc.CreateElement("BDC_BUSINESS");
+                    xesub2.SetAttribute("XH", xh);
+                    xesub2.SetAttribute("BZID", bzid);
+                    xesub2.SetAttribute("DJLX", djlx);
+                    xesub2.SetAttribute("QX", qu);
+                    xesub2.SetAttribute("ZL", zl);
+                    xesub2.SetAttribute("BDCSJH", bdcsj);
+                    xesub2.SetAttribute("ZDZHHM", zdsn);
+                    xesub2.SetAttribute("DH", dh);
+                    xesub2.SetAttribute("BDCDYH", bdcdyh);
+                    xesub2.SetAttribute("QLRMC", qlr);
+                    xesub2.SetAttribute("DYQRMC", dyqlr);
+                    xesub2.SetAttribute("BDCQZH", bdczh);
+                    xesub2.SetAttribute("SPSJ", spsj);
+                    xesub2.SetAttribute("ZT", "");
+                    xe1.AppendChild(xesub2);
+                }
+                //循环目录
+                int mlpage = 1;
+                List<string> lsywid = new List<string>();
+                dt = Common.Getmlinfo(archid);
+                if (dt == null || dt.Rows.Count <= 0) {
+                    string str = "目录信息获取失败 id号：" + archid + " 二维码信息：" + ewm;
+                    ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
+                    return false;
+                }
+                for (int i = 0; i < dt.Rows.Count; i++) {
+
+                    string xh = i.ToString();
+                    string title = dt.Rows[i][1].ToString();
+                    string mllx = dt.Rows[i][2].ToString();
+                    string qsy = dt.Rows[i][4].ToString();
+                    string ywid = dt.Rows[i][3].ToString();
+                    string ys = "";
+                    int p1 = 0;
+                    try {
+                        p1 = Convert.ToInt32(qsy);
+                        string p2 = dt.Rows[i + 1][4].ToString();
+                        ys = (Convert.ToInt32(p2) - p1).ToString();
+                    } catch (Exception) {
+                        ys = (Convert.ToInt32(pagecount) - p1).ToString();
+                    }
+                    if (title == "目录") {
+                        mlpage = Convert.ToInt32(ys);
+                        continue;
+                    }
+                    lsywid.Add(ys);
+                    XmlElement xesub2 = xmldoc.CreateElement("CATALOGUE");
+                    xesub2.SetAttribute("XH", xh);
+                    xesub2.SetAttribute("CATAID", xh);
+                    xesub2.SetAttribute("MLZL", mllx);
+                    xesub2.SetAttribute("MLMC", title);
+                    xesub2.SetAttribute("MLQSY", qsy);
+                    xesub2.SetAttribute("YS", ys);
+                    xesub2.SetAttribute("FJ", "");
+                    xesub2.SetAttribute("BZID", ywid);
+                    xe1.AppendChild(xesub2);
+
+                }
+                //循环写入图片信息
+                int id = 0;  //总顺序号
+                int ys1 = 0;  //每个目录下页数
+                int ywid1 = 1; //每个目录的id
+                int tmpjl = 0;  //记录当前循环是否大于目前页数;
+                for (int i = 0; i < lsjpg.Count; i++) {
+                    if (i < mlpage)
+                        continue;
+                    id += 1;
+                    if (ys1 == 0) {
+                        if (lsywid.Count > 0)
+                            ys1 = Convert.ToInt32(lsywid[0]);
+                        lsywid.RemoveAt(0);
+                    }
+                    if (tmpjl < ys1)
+                        tmpjl += 1;
+                    else {
+                        if (lsywid.Count > 0) {
+                            ys1 = Convert.ToInt32(lsywid[0]);
+                            lsywid.RemoveAt(0);
+                            tmpjl = 1;
+                            ywid1 += 1;
+                        }
+                    }
+                    string jpg = lsjpg[i];
+                    string xh = id.ToString();
+                    string filenmae = Path.GetFileName(jpg);
+                    string kzm = ".jpg";
+                    string cataid = ywid1.ToString();
+                    string info = Getbase64(jpg);
+                    if (info.Trim().Length <= 0) {
+                        string str = "jpg转base64失败 id号：" + archid + " 二维码信息：" + ewm;
+                        ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
+                        return false;
+                    }
+
+                    XmlElement xesub2 = xmldoc.CreateElement("CATALOGUE_ATTACHMENT");
+                    xesub2.SetAttribute("XH", xh);
+                    xesub2.SetAttribute("ATTACHMENTID", xh);
+                    xesub2.SetAttribute("CATAID", cataid);
+                    xesub2.SetAttribute("WJMC", filenmae);
+                    xesub2.SetAttribute("WJLX", kzm);
+                    xesub2.SetAttribute("WJNY", info);
+                    xe1.AppendChild(xesub2);
+                }
+                xmldoc.Save(ariveid);
+            } catch {
+                return false;
             }
-            xmldoc.Save(file);
+
             return true;
         }
 
 
         void Getboxsn()
         {
-            try
-            {
-                if (ClsDL.Zlcy == 2)
-                {
+            try {
+                if (ClsDL.Zlcy == 2) {
                     Common.DataSplitUpdateboxsn(ClsDL.Houseid, ClsDL.Boxsn, ClsDL.Boxsn2);
                 }
                 ClsDL.dtboxsn = Common.DataSplitGetdata(ClsDL.Houseid, ClsDL.Boxsn, ClsDL.Boxsn2);
                 if (ClsDL.dtboxsn == null || ClsDL.dtboxsn.Rows.Count <= 0)
                     return;
                 this.BeginInvoke(new Action(() => { lab_dl_juan.Text = "共计:" + ClsDL.dtboxsn.Rows.Count.ToString(); }));
-                for (int i = 0; i < ClsDL.dtboxsn.Rows.Count; i++)
-                {
-                    try
-                    {
+                for (int i = 0; i < ClsDL.dtboxsn.Rows.Count; i++) {
+                    try {
                         ClsDL.Archid = ClsDL.dtboxsn.Rows[i][0].ToString();
                         string boxsn = ClsDL.dtboxsn.Rows[i][1].ToString();
                         ClsDL.BoxsnTag = boxsn;
@@ -2142,16 +2146,14 @@ namespace Csmsjcf
                         string qu = ClsDL.dtboxsn.Rows[i][4].ToString();
                         string lx = ClsDL.dtboxsn.Rows[i][5].ToString();
                         ClsDL.ArchFile = DESEncrypt.DesDecrypt(file);
-                        if (ClsDL.ArchFile.Trim().Length <= 0)
-                        {
+                        if (ClsDL.ArchFile.Trim().Length <= 0) {
                             string str = "盒号:" + boxsn + "文件名称解密失败!";
                             ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
                             continue;
                         }
 
                         string loadfile = "";
-                        if (!Getfile(out loadfile))
-                        {
+                        if (!Getfile(out loadfile)) {
                             string str = "盒号:" + boxsn + "获取图像文件失败";
                             ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
                             continue;
@@ -2163,8 +2165,7 @@ namespace Csmsjcf
                             ClsDL.xmlname = "120110" + time + (ClsDL.lsh + i).ToString().PadLeft(6, '0');
                         else
                             ClsDL.xmlname = "120110" + time + (i + 1).ToString().PadLeft(6, '0');
-                        if (ClsDL.xls == 1 && ClsDL.jpgxml == 1)
-                        {
+                        if (ClsDL.xls == 1 && ClsDL.jpgxml == 1) {
                             string jpgdir = Path.Combine(ClsDL.NewPath, "jpg", ClsDL.ewmname);
                             string xmldir = Path.Combine(ClsDL.NewPath, "xml");
                             if (!Directory.Exists(jpgdir))
@@ -2178,23 +2179,19 @@ namespace Csmsjcf
                             List<string> A2 = new List<string>();
                             List<string> A3 = new List<string>();
                             List<string> A4 = new List<string>();
-                            if (!Himg._SplitImg(jpgdir, ClsDL.Zlcy, out lsjpg, out A0, out A1, out A2, out A3, out A4))
-                            {
+                            if (!Himg._SplitImg(jpgdir, ClsDL.Zlcy, out lsjpg, out A0, out A1, out A2, out A3, out A4)) {
                                 string str = "盒号:" + boxsn + "转换jpg图像文件失败!";
                                 ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
                                 continue;
                             }
-                            else
-                            {
+                            else {
                                 string xmlfile = Path.Combine(xmldir, ClsDL.xmlname + ".xml");
-                                if (!Wirtexml(ClsDL.Archid, ClsDL.ewmname, ClsDL.xmlname, page, lsjpg, xmlfile))
-                                {
+                                if (!Wirtexml(ClsDL.Archid, ClsDL.ewmname, ClsDL.xmlname, page, lsjpg, xmlfile)) {
                                     string str = "盒号:" + boxsn + "生成xml失败!";
                                     ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
                                     continue;
                                 }
-                                else
-                                {
+                                else {
                                     string ScPathXls = Path.Combine(ClsDL.NewPath,
                                         ClsDL.Boxsn + "-" + ClsDL.Boxsn + "房屋统计.xlsx");
                                     string scpathxlsml = Path.Combine(ClsDL.NewPath,
@@ -2209,8 +2206,7 @@ namespace Csmsjcf
                                 Common.DataSplitUpdate(ClsDL.Archid);
                             }
                         }
-                        else if (ClsDL.jpgxml == 1)
-                        {
+                        else if (ClsDL.jpgxml == 1) {
                             string jpgdir = Path.Combine(ClsDL.NewPath, "jpg", ClsDL.ewmname);
                             string xmldir = Path.Combine(ClsDL.NewPath, "xml");
                             if (!Directory.Exists(jpgdir))
@@ -2224,17 +2220,14 @@ namespace Csmsjcf
                             List<string> A2 = new List<string>();
                             List<string> A3 = new List<string>();
                             List<string> A4 = new List<string>();
-                            if (!Himg._SplitImg(jpgdir, ClsDL.Zlcy, out lsjpg))
-                            {
+                            if (!Himg._SplitImg(jpgdir, ClsDL.Zlcy, out lsjpg)) {
                                 string str = "盒号:" + boxsn + "转换jpg图像文件失败!";
                                 ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
                                 continue;
                             }
-                            else
-                            {
+                            else {
                                 string xmlfile = Path.Combine(xmldir, ClsDL.xmlname + ".xml");
-                                if (!Wirtexml(ClsDL.Archid, ClsDL.ewmname, ClsDL.xmlname, page, lsjpg, xmlfile))
-                                {
+                                if (!Wirtexml(ClsDL.Archid, ClsDL.ewmname, ClsDL.xmlname, page, lsjpg, xmlfile)) {
                                     string str = "盒号:" + boxsn + "生成xml失败!";
                                     ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
                                     continue;
@@ -2243,8 +2236,7 @@ namespace Csmsjcf
                                 Common.DataSplitUpdate(ClsDL.Archid);
                             }
                         }
-                        else if (ClsDL.xls == 1)
-                        {
+                        else if (ClsDL.xls == 1) {
                             string ScPathXls = Path.Combine(ClsDL.NewPath,
                                 ClsDL.Boxsn + "-" + ClsDL.Boxsn + "房屋统计.xlsx");
                             string scpathxlsml = Path.Combine(ClsDL.NewPath,
@@ -2257,27 +2249,30 @@ namespace Csmsjcf
                         }
 
 
-                    }
-                    catch (Exception e)
-                    {
+                    } catch (Exception e) {
                         string str = "盒号:" + ClsDL.BoxsnTag + "意外问题" + e.ToString();
                         ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
                         continue;
                     }
                 }
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 string str = "盒号:" + ClsDL.BoxsnTag + "意外问题" + e.ToString();
                 ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
-            }
-            finally
-            {
+            } finally {
                 Endtxt(true);
             }
-            
+
 
         }
+        private void butDlLog_Click(object sender, EventArgs e)
+        {
+            string file = Path.Combine(ClsFrmInfoPar.LogPath, "log.txt");
+            if (File.Exists(file)) {
+                System.Diagnostics.Process p = System.Diagnostics.Process.Start(file);
+            }
+            else MessageBox.Show("日志文件不存在!");
+        }
+
         #endregion
 
 

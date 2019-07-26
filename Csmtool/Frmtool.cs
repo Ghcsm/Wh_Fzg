@@ -91,9 +91,11 @@ namespace Csmtool
         void Cleinfo(int arch, int id)
         {
             if (id == 1) {
+                Common.ClearScanWrok(arch);
                 Common.ClearInfoWrok(arch, 1);
                 Common.ClearInfoWrok(arch, 2);
                 Common.ClearInfoWrok(arch, 3);
+                Common.CleaPagesinfo(arch);
                 return;
             }
             if (rabcleInfobl.Checked)

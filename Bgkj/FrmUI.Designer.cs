@@ -75,7 +75,7 @@
             // panleLogo
             // 
             this.panleLogo.BackColor = System.Drawing.Color.Transparent;
-            this.panleLogo.BackgroundImage = global::Bgkj.Properties.Resources._11;
+            this.panleLogo.BackgroundImage = global::Bgkj.Properties.Resources.hw;
             this.panleLogo.Location = new System.Drawing.Point(75, 54);
             this.panleLogo.Name = "panleLogo";
             this.panleLogo.Size = new System.Drawing.Size(401, 59);

@@ -1165,7 +1165,7 @@ namespace HLjscom
                     string file = Path.Combine(pathfile, i.ToString().PadLeft(3, '0') + ".jpg");
                     lsjpg.Add(file);
                     if (File.Exists(file)) {
-                        if (zlcf == 1) {
+                        if (zlcf == 2) {
                             try {
                                 File.Delete(file);
                             } catch { }
@@ -1236,7 +1236,7 @@ namespace HLjscom
                         a0.Add(i.ToString());
                     }
                     if (File.Exists(file)) {
-                        if (zlcf == 1) {
+                        if (zlcf ==2) {
                             try {
                                 File.Delete(file);
                             } catch { }
@@ -1786,7 +1786,7 @@ namespace HLjscom
             }
         }
         //排序
-        public bool _OrderSave(int regpage, string oldfile, string _path, Dictionary<int, string> Pabc, Dictionary<int, int> Pnumber, Dictionary<int, string> fuhao)
+        public bool _OrderSave(int tagpage,int regpage, string oldfile, string _path, Dictionary<int, string> Pabc, Dictionary<int, int> Pnumber, Dictionary<int, string> fuhao)
         {
             int pagecoun = 0;
             try {
@@ -1803,7 +1803,7 @@ namespace HLjscom
                         oldpage = zimu_a + abc;
                     }
                 }
-                if (TagPage == 0) {
+                if (tagpage == 0) {
                     if (Pnumber.Count >= 1) {
                         int fh = fuhao.Count;
                         for (int i = 1; i <= regpage - Pabc.Count - fh; i++) {
@@ -1833,7 +1833,7 @@ namespace HLjscom
                 else {
                     if (Pnumber.Count >= 1) {
                         int fh = fuhao.Count;
-                        for (int i = TagPage; i <= regpage - Pabc.Count - fh + TagPage - 1; i++) {
+                        for (int i = tagpage; i <= regpage - Pabc.Count - fh + tagpage - 1; i++) {
                             int k = Pnumber.First(q => q.Value == i).Key;
                             if (Pnumber[k].Equals(i)) {
                                 pagecoun += 1;

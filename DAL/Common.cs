@@ -503,7 +503,7 @@ namespace DAL
             SQLHelper.ExecuteNonQuery(strSql, CommandType.StoredProcedure, p);
         }
 
-        public static void SetIndexFinish(int arid, string file, int zt)
+        public static void SetIndexFinish(int arid, string file, int zt,string pageinfo)
         {
             string strSql = "PUpdateIndexInfo";
             SqlParameter[] p = new SqlParameter[6];
@@ -512,19 +512,18 @@ namespace DAL
             p[2] = new SqlParameter("@Archid", arid);
             p[3] = new SqlParameter("@ArchState", zt);
             p[4] = new SqlParameter("@stat", 1);
-            p[5] = new SqlParameter("@PageIndexInfo", "");
+            p[5] = new SqlParameter("@PageIndexInfo", pageinfo);
             SQLHelper.ExecuteNonQuery(strSql, CommandType.StoredProcedure, p);
         }
-        public static void SetCheckFinish(int arid, string file, int check, int stat, string info)
+        public static void SetCheckFinish(int arid, string file, int check, int stat)
         {
             string strSql = "PUpdateCheckInfo";
-            SqlParameter[] p = new SqlParameter[6];
+            SqlParameter[] p = new SqlParameter[5];
             p[0] = new SqlParameter("@UserID", T_User.UserId);
             p[1] = new SqlParameter("@FileName", file);
             p[2] = new SqlParameter("@Archid", arid);
             p[3] = new SqlParameter("@ArchState", stat);
-            p[4] = new SqlParameter("@PageIndexInfo", info);
-            p[5] = new SqlParameter("@check", check);
+            p[4] = new SqlParameter("@check", check);
             SQLHelper.ExecuteNonQuery(strSql, CommandType.StoredProcedure, p);
         }
 
@@ -563,10 +562,10 @@ namespace DAL
             }
         }
 
-        public static void WiteUpTask(int arid, string archpos, string filename, int archstat, int page, string fileapth)
+        public static void WiteUpTask(int arid, string archpos, string filename, int archstat, int page, string fileapth,string tagpage)
         {
             string strSql = "PUpTask";
-            SqlParameter[] p = new SqlParameter[9];
+            SqlParameter[] p = new SqlParameter[10];
             p[0] = new SqlParameter("@TypeModule", T_ConFigure.FtpStyle);
             p[1] = new SqlParameter("@Archid", arid);
             p[2] = new SqlParameter("@ArchPos", archpos);
@@ -576,6 +575,7 @@ namespace DAL
             p[6] = new SqlParameter("@IP", T_ConFigure.IPAddress);
             p[7] = new SqlParameter("@pages", page);
             p[8] = new SqlParameter("@filepath", fileapth);
+            p[9] = new SqlParameter("@TagPage", tagpage);
             SQLHelper.ExecuteNonQuery(strSql, CommandType.StoredProcedure, p);
         }
 
@@ -1106,7 +1106,7 @@ namespace DAL
 
         public static DataTable DataSplitGetdata(int houseid, string box1, string box2)
         {
-            string strSql = "select id,BOXSN,PAGES,IMGFILE,ArchXqStat,ArchLx from  M_IMAGEFILE where  SPLITERROR=null and  boxsn>=@box1 and boxsn<=@box2 and HOUSEID=@houseid and CHECKED=1";
+            string strSql = "select id,BOXSN,PAGES,IMGFILE,ArchXqStat,ArchLx from  M_IMAGEFILE where  SPLITERROR is null and  boxsn>=@box1 and boxsn<=@box2 and HOUSEID=@houseid and CHECKED=1";
             SqlParameter p1 = new SqlParameter("@box1", box1);
             SqlParameter p2 = new SqlParameter("@box2", box2);
             SqlParameter p3 = new SqlParameter("@houseid", houseid);
@@ -1601,7 +1601,7 @@ namespace DAL
 
         public static DataTable Getmlinfo(string archid)
         {
-            string strSql = "select * from 目录表 where archid=@archid order by frompage";
+            string strSql = "select * from 目录表 where archid=@archid order by CONVERT(INT, 起始页码)";
             SqlParameter p1 = new SqlParameter("@archid", archid);
             DataTable dt = SQLHelper.ExcuteTable(strSql, p1);
             return dt;
