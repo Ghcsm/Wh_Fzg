@@ -375,15 +375,15 @@ namespace Csmdasm
         {
             try {
                 if (File.Exists(filetmp)) {
-                    Common.WiteUpTask(arid, archpos, T_ConFigure.ScanTempFile, (int)T_ConFigure.ArchStat.扫描完, maxpage, filetmp);
+                    Common.WiteUpTask(arid, archpos, T_ConFigure.ScanTempFile, (int)T_ConFigure.ArchStat.扫描完, maxpage, filetmp,"0");
                     if (T_ConFigure.FtpStyle == 1) {
                         string sourcefile = Path.Combine(T_ConFigure.FtpTmp, T_ConFigure.TmpScan, archpos, T_ConFigure.ScanTempFile);
                         string goalfile = Path.Combine(T_ConFigure.gArchScanPath, archpos, T_ConFigure.ScanTempFile);
                         string path = Path.Combine(T_ConFigure.gArchScanPath, archpos);
                         if (ftp.FtpMoveFile(sourcefile, goalfile, path)) {
                             Thread.Sleep(5000);
-                            Common.DelTask(arid);
                             Common.SetScanFinish(arid, maxpage, 1, (int)T_ConFigure.ArchStat.扫描完);
+                            Common.DelTask(arid);
                             try {
                                 Directory.Delete(Path.Combine(T_ConFigure.FtpTmpPath, T_ConFigure.TmpScan, archpos));
                             } catch { }
@@ -395,8 +395,8 @@ namespace Csmdasm
                         string newpath = Path.Combine(T_ConFigure.gArchScanPath, archpos);
                         bool x = await ftp.FtpUpFile(filetmp, newfile, newpath);
                         if (x) {
-                            Common.DelTask(arid);
                             Common.SetScanFinish(arid, maxpage, 1, (int)T_ConFigure.ArchStat.扫描完);
+                            Common.DelTask(arid);
                             try {
                                 File.Delete(filetmp);
                                 Directory.Delete(Path.Combine(T_ConFigure.LocalTempPath, archpos));
@@ -406,6 +406,8 @@ namespace Csmdasm
 
                     }
                 }
+                else
+                    Common.Writelog(arid, "扫描退出时未找到文件!");
                 Common.SetScanFinish(arid, maxpage, 0, (int)T_ConFigure.ArchStat.无);
             } catch {
                 Common.SetScanFinish(arid, maxpage, 0, (int)T_ConFigure.ArchStat.无);

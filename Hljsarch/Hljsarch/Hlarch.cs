@@ -1964,9 +1964,9 @@ namespace HLjscom
                     if (Scanms == 0)
                         _Codefile.Save(scanimg, Filename, RasterImageFormat.CcittGroup4, 1, 1, 1, _CurrectPage, CodecsSavePageMode.Append);
                     if (Scanms == 1)
-                        _Codefile.Save(scanimg, Filename, RasterImageFormat.TifJpeg, 8, 1, 1, _CurrectPage, CodecsSavePageMode.Append);
+                        _Codefile.Save(scanimg, Filename, RasterImageFormat.CcittGroup4, 8, 1, 1, _CurrectPage, CodecsSavePageMode.Append);
                     if (Scanms == 2)
-                        _Codefile.Save(scanimg, Filename, RasterImageFormat.TifJpeg, 8, 1, 1, _CurrectPage, CodecsSavePageMode.Append);
+                        _Codefile.Save(scanimg, Filename, RasterImageFormat.CcittGroup4, 8, 1, 1, _CurrectPage, CodecsSavePageMode.Append);
 
                 }
 

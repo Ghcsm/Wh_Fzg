@@ -38,20 +38,20 @@ namespace HLFtp
                 DataTable dt = DAL.SQLHelper.ExcuteTable(strSql);
                 if (dt.Rows.Count > 0) {
                     DataRow dr = dt.Rows[0];
-                    DAL.T_ConFigure.FtpIP = dr["IP"].ToString();
-                    DAL.T_ConFigure.FtpPort = Convert.ToInt16(dr["Port"]);
-                    DAL.T_ConFigure.FtpUser = dr["UserName"].ToString();
-                    DAL.T_ConFigure.FtpPwd = DESEncrypt.DesDecrypt(dr["PWD"].ToString());
-                    DAL.T_ConFigure.FtpArchScan = dr["ArchScan"].ToString();
-                    DAL.T_ConFigure.FtpArchIndex = dr["ArchIndex"].ToString();
-                    DAL.T_ConFigure.FtpArchSave = dr["ArchSave"].ToString();
-                    DAL.T_ConFigure.FtpArchUpdate = dr["UpdatePath"].ToString();
-                    DAL.T_ConFigure.FtpTmp = dr["FtpTmp"].ToString();
-                    DAL.T_ConFigure.FtpTmpPath = dr["FtpTmpPath"].ToString();
-                    DAL.T_ConFigure.FtpBakimgFwq = Convert.ToInt32(dr["FtpBakimgFwq"].ToString());
-                    DAL.T_ConFigure.FtpBakimgBd = Convert.ToInt32(dr["FtpBakimgBd"].ToString());
-                    DAL.T_ConFigure.FtpStyle = Convert.ToInt32(dr["FtpStyle"].ToString());
-                    DAL.T_ConFigure.FtpFwqPath = dr["FtpFwqPath"].ToString();
+                    T_ConFigure.FtpIP = dr["IP"].ToString();
+                    T_ConFigure.FtpPort = Convert.ToInt16(dr["Port"]);
+                    T_ConFigure.FtpUser = dr["UserName"].ToString();
+                    T_ConFigure.FtpPwd = DESEncrypt.DesDecrypt(dr["PWD"].ToString());
+                    T_ConFigure.FtpArchScan = dr["ArchScan"].ToString();
+                    T_ConFigure.FtpArchIndex = dr["ArchIndex"].ToString();
+                    T_ConFigure.FtpArchSave = dr["ArchSave"].ToString();
+                    T_ConFigure.FtpArchUpdate = dr["UpdatePath"].ToString();
+                    T_ConFigure.FtpTmp = dr["FtpTmp"].ToString();
+                    T_ConFigure.FtpTmpPath = dr["FtpTmpPath"].ToString();
+                    T_ConFigure.FtpBakimgFwq = Convert.ToInt32(dr["FtpBakimgFwq"].ToString());
+                    T_ConFigure.FtpBakimgBd = Convert.ToInt32(dr["FtpBakimgBd"].ToString());
+                    T_ConFigure.FtpStyle = Convert.ToInt32(dr["FtpStyle"].ToString());
+                    T_ConFigure.FtpFwqPath = dr["FtpFwqPath"].ToString();
                 }
             } catch { }
 
@@ -541,8 +541,8 @@ namespace HLFtp
                      using (FtpClient Ftp = new FtpClient(T_ConFigure.FtpIP, T_ConFigure.FtpPort, T_ConFigure.FtpUser, T_ConFigure.FtpPwd)) {
                          if (!Ftp.DirectoryExists(path))
                              Ftp.CreateDirectory(path);
-                         if (FtpCheckFile(newfile))
-                             FtpDelFile(newfile);
+                         if (Ftp.FileExists(newfile))
+                             Ftp.DeleteFile(newfile);
                          return Ftp.UploadFile(oldfile, newfile);
                      }
 

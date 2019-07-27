@@ -60,7 +60,7 @@ namespace DAL
             return dt;
         }
 
-        public static void InserContenModule(string lx, string code, string title,string anlx)
+        public static void InserContenModule(string lx, string code, string title, string anlx)
         {
             string strSql = " INSERT INTO M_ContentsModule (CoType,CODE,title,TitleLx,userid) VALUES(@CoType,@CODE, @Title,@titlelx, @UserID)";
             SqlParameter p1 = new SqlParameter("@CoType", lx);
@@ -200,14 +200,14 @@ namespace DAL
             SQLHelper.ExecuteNonQuery(strSql, CommandType.StoredProcedure, p);
         }
 
-        public static void SetArchxqStat(string b1, string b2, string zt,string lx)
+        public static void SetArchxqStat(string b1, string b2, string zt, string lx)
         {
-            string strSq = "update M_IMAGEFILE set ArchXqStat=@zt,ArchLx=@lx where Boxsn>=@b1 and Boxsn<=@b2  and CHECKED IS null or LEN(CHECKED)<1";
+            string strSq = "update M_IMAGEFILE set ArchXqStat=@zt,ArchLx=@lx where Boxsn>=@b1 and Boxsn<=@b2 and CHECKED IS null or  LEN(CHECKED)<1";
             SqlParameter p1 = new SqlParameter("@b1", b1);
             SqlParameter p2 = new SqlParameter("@b2", b2);
-            SqlParameter p3 = new SqlParameter("@zt", zt);
-            SqlParameter p4 = new SqlParameter("@lx", lx);
-            SQLHelper.ExecScalar(strSq, p1, p2, p3,p4);
+            SqlParameter p3 = new SqlParameter("@zt", lx);
+            SqlParameter p4 = new SqlParameter("@lx", zt);
+            SQLHelper.ExecScalar(strSq, p1, p2, p3, p4);
         }
 
         public static DataTable GetOthersys()
@@ -503,7 +503,7 @@ namespace DAL
             SQLHelper.ExecuteNonQuery(strSql, CommandType.StoredProcedure, p);
         }
 
-        public static void SetIndexFinish(int arid, string file, int zt,string pageinfo)
+        public static void SetIndexFinish(int arid, string file, int zt, string pageinfo)
         {
             string strSql = "PUpdateIndexInfo";
             SqlParameter[] p = new SqlParameter[6];
@@ -526,6 +526,28 @@ namespace DAL
             p[4] = new SqlParameter("@check", check);
             SQLHelper.ExecuteNonQuery(strSql, CommandType.StoredProcedure, p);
         }
+
+        public static int GetEnterinfo(int arid)
+        {
+            string strSql = "SELECT COUNT(*)  FROM 信息表 WHERE Archid =@arid";
+            SqlParameter p1 = new SqlParameter("@arid", arid);
+            object obj = SQLHelper.ExecScalar(strSql, p1);
+            if (obj == null)
+                return 0;
+            int id = Convert.ToInt32(obj);
+            return id;
+        }
+
+        public static int Getconteninfo(int arid)
+        {
+            string strSql = "SELECT DISTINCT(业务ID) FROM dbo.目录表 WHERE Archid=@arid";
+            SqlParameter p1 = new SqlParameter("@arid", arid);
+            DataTable dt = SQLHelper.ExcuteTable(strSql, p1);
+            if (dt == null || dt.Rows.Count <= 0)
+                return 0;
+            return dt.Rows.Count;
+        }
+
 
         public static void SetIndexCancel(int arid, string pageindex)
         {
@@ -562,7 +584,7 @@ namespace DAL
             }
         }
 
-        public static void WiteUpTask(int arid, string archpos, string filename, int archstat, int page, string fileapth,string tagpage)
+        public static void WiteUpTask(int arid, string archpos, string filename, int archstat, int page, string fileapth, string tagpage)
         {
             string strSql = "PUpTask";
             SqlParameter[] p = new SqlParameter[10];
@@ -1023,7 +1045,7 @@ namespace DAL
                     strSql += coltmp;
                 }
                 SQLHelper.ExecScalar(strSql);
-                WirteWork(archid, ts, enter, table);
+                WirteWork(archid, ts, enter, table, wycolstr);
                 SetInfoEnterTable(archid, table);
                 return 1;
             } catch (Exception ex) {
@@ -1032,13 +1054,17 @@ namespace DAL
             }
         }
 
-        public  static void DelInfoEnter(int archid,string enter, string wycolstr)
+        public static void DelInfoEnter(int archid, string enter, string wycolstr, string table)
         {
-            string strSql = "delete from M_IMAGEFILE where Archid=@arid and Entertag=@tag and 档案手续=@sx";
-            SqlParameter p1 = new SqlParameter("@arid", archid);
-            SqlParameter p2 = new SqlParameter("@tag", enter);
-            SqlParameter p3 = new SqlParameter("@sx", wycolstr);
-            SQLHelper.ExecScalar(strSql, p1, p2,p3);
+            string strSql = "PDeleteWork";
+            SqlParameter[] p = new SqlParameter[6];
+            p[0] = new SqlParameter("@UserID", T_User.UserId);
+            p[1] = new SqlParameter("@Archid", archid);
+            p[2] = new SqlParameter("@enter", enter.ToString());
+            p[3] = new SqlParameter("@ipadd", T_ConFigure.IPAddress);
+            p[4] = new SqlParameter("@tablename", table);
+            p[5] = new SqlParameter("@sx", wycolstr);
+            SQLHelper.ExecuteNonQuery(strSql, CommandType.StoredProcedure, p);
         }
 
         private static void SetInfoEnterTable(int archid, string type)
@@ -1049,16 +1075,17 @@ namespace DAL
             SQLHelper.ExecScalar(strSql, p1, p2);
         }
 
-        private static void WirteWork(int archid, int ts, int enter, string table)
+        private static void WirteWork(int archid, int ts, int enter, string table, string sx)
         {
             string strSql = "PWiteWork";
-            SqlParameter[] p = new SqlParameter[6];
+            SqlParameter[] p = new SqlParameter[7];
             p[0] = new SqlParameter("@UserID", T_User.UserId);
             p[1] = new SqlParameter("@Archid", archid);
             p[2] = new SqlParameter("@enter", enter.ToString());
             p[3] = new SqlParameter("@ipadd", T_ConFigure.IPAddress);
             p[4] = new SqlParameter("@Ts", ts);
             p[5] = new SqlParameter("@tablename", table);
+            p[6] = new SqlParameter("@sx", sx);
             SQLHelper.ExecuteNonQuery(strSql, CommandType.StoredProcedure, p);
         }
 
@@ -1114,13 +1141,13 @@ namespace DAL
             return dt;
         }
 
-        public static void DataSplitUpdateboxsn(int houseid, string boxsn,string boxsn2)
+        public static void DataSplitUpdateboxsn(int houseid, string boxsn, string boxsn2)
         {
             string strSql = "update M_IMAGEFILE set SPLITERROR=null where boxsn>=@boxsn and boxsn<=@boxsn2 and HOUSEID=@houseid";
             SqlParameter p1 = new SqlParameter("@boxsn", boxsn);
             SqlParameter p2 = new SqlParameter("@boxsn2", boxsn2);
             SqlParameter p3 = new SqlParameter("@houseid", houseid);
-            SQLHelper.ExecScalar(strSql, p1, p2,p3);
+            SQLHelper.ExecScalar(strSql, p1, p2, p3);
         }
 
         public static void DataSplitUpdate(int houseid, string boxsn)

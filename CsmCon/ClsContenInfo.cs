@@ -15,7 +15,7 @@ namespace CsmCon
 
     public class ClsContenInfo
     {
-      
+
         public string ContenTable { get; set; } = "";
         public string ContenWith { get; set; } = "";
         public string ContenTxtwith { get; set; } = "";
@@ -104,8 +104,8 @@ namespace CsmCon
                     LsModuleIndex.Add(code);
                     LsModule.Add(title);
                     lsModulelx.Add(titlelx);
-                  //  byte[] bytes = Encoding.Default.GetBytes(title);
-                  //  string s = Encoding.GetEncoding("gb2312").GetString(bytes);
+                    //  byte[] bytes = Encoding.Default.GetBytes(title);
+                    //  string s = Encoding.GetEncoding("gb2312").GetString(bytes);
                     source.Add(title);
                 }
             }
@@ -145,17 +145,53 @@ namespace CsmCon
                         lsv.Invoke(new Action(() => { lsv.Items.Add(lvi); }));
                         i++;
                     }
-                    //lsv.Invoke(new Action(() =>
-                    //{
-                    //    if (lsv.Items.Count > 0)
-                    //        lsv.Items[lsv.Items.Count-1].Selected = true;
-                    //}));
+                    lsv.Invoke(new Action(() =>
+                    {
+                        if (lsv.Items.Count > 0) {
+                            lsv.Items[0].Selected = true;
+                        }
+                    }));
 
                 } catch {
                 } finally {
                     loadcon = false;
                 }
             });
+        }
+        public void LoadContentsadd(int archid, ListViewEx lsv, bool ch)
+        {
+            if (archid <= 0)
+                return;
+            if (loadcon)
+                return;
+            loadcon = true;
+            try {
+                lsv.Items.Clear();
+                PageCount.Clear();
+                DataTable dt = Common.LoadContents(ContenTable, ContenCol,
+                    ContenPages, Convert.ToInt32(ch), archid);
+                if (dt == null || dt.Rows.Count <= 0)
+                    return;
+                int i = 1;
+                foreach (DataRow dr in dt.Rows) {
+                    ListViewItem lvi = new ListViewItem();
+                    lvi.Text = i.ToString();
+                    string id = dr["id"].ToString();
+                    lvi.SubItems.AddRange(new string[] { id });
+                    for (int t = 0; t < ContenCoList.Count; t++) {
+                        string str = dr[ContenCoList[t]].ToString();
+                        if (t == PagesWz)
+                            PageCount.Add(str);
+                        lvi.SubItems.AddRange(new string[] { str });
+                    }
+
+                    lsv.Invoke(new Action(() => { lsv.Items.Add(lvi); }));
+                    i++;
+                }
+            } catch {
+            } finally {
+                loadcon = false;
+            }
         }
 
         public void LoadContents(int archid, ListView lsv)
@@ -253,8 +289,7 @@ namespace CsmCon
                 txt.Width = txtwidth;
                 txt.TabIndex = id;
                 txt.Tag = id;
-                if (txt.Tag.ToString() == (TitleWz+1).ToString())
-                {
+                if (txt.Tag.ToString() == (TitleWz + 1).ToString()) {
                     //东丽区自动匹配
                     txt.AutoCompleteCustomSource = source;
                     txt.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
@@ -266,7 +301,7 @@ namespace CsmCon
                     txt.Location = new Point(yy, 5);
                 else
                     txt.Location = new Point(yy, txtrows * 30 - 20);
-                txt.KeyPress += Txt_KeyPress; 
+                txt.KeyPress += Txt_KeyPress;
                 pl.Controls.Add(txt);
             }
             else {
@@ -297,15 +332,13 @@ namespace CsmCon
             }
         }
 
-       
+
 
         public void SetInfoTxt(Control p, int id, string str)
         {
             foreach (Control ct in p.Controls) {
-                if (ct is TextBox || ct is ComboBox)
-                {
-                    if (ct.Tag.ToString() == id.ToString())
-                    {
+                if (ct is TextBox || ct is ComboBox) {
+                    if (ct.Tag.ToString() == id.ToString()) {
                         ct.Text = str;
                     }
                 }
@@ -314,10 +347,8 @@ namespace CsmCon
         public void SetInfoTxtcls(Control p, int id, string str)
         {
             foreach (Control ct in p.Controls) {
-                if (ct is TextBox || ct is ComboBox)
-                {
-                    if (ct.Tag.ToString() == id.ToString())
-                    {
+                if (ct is TextBox || ct is ComboBox) {
+                    if (ct.Tag.ToString() == id.ToString()) {
                         ct.Text = str;
                     }
                     else
@@ -328,7 +359,7 @@ namespace CsmCon
 
         public void SetInfoTxt(Control p, string str)
         {
-            int id = TitleWz+1;
+            int id = TitleWz + 1;
             foreach (Control ct in p.Controls) {
                 if (ct is TextBox || ct is ComboBox) {
                     if (ct.Tag.ToString() == id.ToString()) {
@@ -365,6 +396,22 @@ namespace CsmCon
             else
                 return tf;
         }
+        public bool istxt(Control p)
+        {
+            bool tf = true;
+            foreach (Control ct in p.Controls) {
+                if (ct is TextBox || ct is ComboBox) {
+                    if (ct.Tag!=null ) {
+                        if (ct.Text.Trim().Length <=0)
+                        {
+                            tf = false;
+                            ct.Focus();
+                        }
+                    }
+                }
+            }
+            return tf;
+        }
 
 
         private void Cb_KeyPress(object sender, KeyPressEventArgs e)
@@ -377,7 +424,7 @@ namespace CsmCon
         {
             if (e.KeyChar == 13)
                 SendKeys.Send("{Tab}");
-           
+
         }
         private void Txt_Leave(object sender, EventArgs e)
         {

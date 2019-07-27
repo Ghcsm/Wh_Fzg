@@ -167,7 +167,8 @@ namespace Jdshow
                 Dictionary<int, string> abc = new Dictionary<int, string>();
                 Dictionary<int, string> fuhao = new Dictionary<int, string>();
                 ReadDict(Convert.ToInt32(archid), out num, out abc, out fuhao,out pageinfo);
-                string IndexFileName = Common.GetCurrentTime() + Common.TifExtension;
+                string time = DateTime.Now.ToString("yyyyMMddHHmmssfff");
+                string IndexFileName = time + Common.TifExtension;
                 string RemoteDir = IndexFileName.Substring(0, 8);
                 string LocalIndexFile = Path.Combine(@T_ConFigure.LocalTempPath, IndexFileName);
                 if (!Himg._OrderSave(tagpage,Convert.ToInt32(pages), filepath, LocalIndexFile, abc, num, fuhao)) {

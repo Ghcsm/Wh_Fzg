@@ -328,6 +328,8 @@ namespace CsmCon
                 string pags = Common.Getpages(Archid);
                 if (pags.Trim().Length > 0)
                     ArchRegPages = Convert.ToInt32(pags);
+                else
+                    ArchRegPages = 0;
                 txtPages.Text = pags;
 
                 ArchImgFile = LvData.SelectedItems[0].SubItems[3].Text;

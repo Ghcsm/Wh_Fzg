@@ -261,6 +261,7 @@ namespace CsmCon
             try {
                 if (tabControl.TabPages.Count <= 0)
                     return;
+                string table = ClsInfoEnter.InfoTable[tabControl.SelectedIndex];
                 string name = tabControl.SelectedTab.Name;
                 Control pl = tabControl.SelectedTab.Controls.Find(name, true)[0];
                 if (Istxtnull(tabControl.SelectedIndex, pl))
@@ -279,10 +280,11 @@ namespace CsmCon
                     MessageBox.Show("手续信息不能为空!");
                     return;
                 }
-                Common.DelInfoEnter(archid, enter.ToString(), wycolstr);
-                MessageBox.Show("保存成功!");
+                Common.DelInfoEnter(archid, enter.ToString(), wycolstr, table);
+                MessageBox.Show("删除成功!");
+                Txtcle();
             } catch (Exception e) {
-                MessageBox.Show("保存失败!" + e.ToString());
+                MessageBox.Show("删除失败!" + e.ToString());
             }
 
         }

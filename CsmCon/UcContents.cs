@@ -108,8 +108,8 @@ namespace CsmCon
                 MessageBox.Show("请重新选择案卷!");
                 return false;
             }
-            if (!info.Gettxtzd(panel1)) {
-                MessageBox.Show("标题及页码不能为空!");
+            if (!info.istxt(panel1)) {
+                MessageBox.Show("标题及页码等项不能为空!");
                 return false;
             }
             string pages = info.Pagestmp;
@@ -140,15 +140,19 @@ namespace CsmCon
                     }
                 }
             }
-
             return true;
         }
 
+        //东丽区 不清空业务id
         private void cleTxt()
         {
             foreach (Control c in panel1.Controls) {
                 if (c is TextBox || c is ComboBox)
-                    c.Text = "";
+                    if (c.Tag != null) {
+                        if (c.Tag.ToString() != "4")
+                            c.Text = "";
+                    }
+
             }
         }
 
@@ -187,7 +191,7 @@ namespace CsmCon
             int id = Common.ContentsInster(info.ContenTable, info.ContenCoList, dicxx, ArchId);
             if (id > 0)
                 cleTxt();
-            info.LoadContents(ArchId, LvContents, chkTspages.Checked);
+            info.LoadContentsadd(ArchId, LvContents, chkTspages.Checked);
             txtCode.Focus();
         }
 
@@ -214,8 +218,10 @@ namespace CsmCon
                 return;
             }
             AddTitle();
-            //if (this.LvModule.Items.Count > 0)
-            //    this.LvModule.Items[this.LvModule.Items.Count - 1].EnsureVisible();
+            if (this.LvContents.Items.Count > 0) {
+                LvContents.Items[LvContents.Items.Count - 1].Selected = true;
+                LvContents.Items[this.LvContents.Items.Count - 1].EnsureVisible();
+            }
         }
 
         public void LoadContents(int arid, int maxpage)
@@ -240,7 +246,7 @@ namespace CsmCon
                     return;
                 if (info.LsModuleIndex.Count > 0 && info.LsModule.Count > 0) {
                     string sttCode = this.txtCode.Text.Trim();
-                   // int id = info.LsModuleIndex.IndexOf(sttCode);
+                    // int id = info.LsModuleIndex.IndexOf(sttCode);
                     int id;
                     bool bl = int.TryParse(sttCode, out id);
                     if (!bl)
@@ -299,7 +305,7 @@ namespace CsmCon
 
         }
 
-        private void Settxt(string title)
+        public void Settxt(string title)
         {
             int pid = info.PagesWz;
             int tid = info.TitleWz;
@@ -307,11 +313,11 @@ namespace CsmCon
             info.SetInfoTxt(panel1, tid, title);
         }
 
-        public static void Setxtxtls(Panel p,int id, string str)
+        public static void Setxtxtls(Panel p, int id, string str)
         {
             foreach (Control ct in p.Controls) {
                 if (ct is TextBox || ct is ComboBox) {
-                    if (ct.Tag.ToString() == (id+2).ToString()) {
+                    if (ct.Tag.ToString() == (id + 2).ToString()) {
                         ct.Text = str;
                     }
                 }

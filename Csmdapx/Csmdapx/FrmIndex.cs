@@ -162,6 +162,7 @@ namespace Csmdapx
         {
             if (txtPages.ReadOnly) {
                 txtPages.ReadOnly = false;
+                txtPages.Text = "";
                 txtPages.SelectAll();
             }
             else {
@@ -684,6 +685,7 @@ namespace Csmdapx
         {
             this.BeginInvoke(new Action(() =>
             {
+                ClsIndex.ScanFilePath = "";
                 ImgView.Image = null;
                 ClsIndex.Archid = 0;
                 ClsIndex.ArchPos = "";
@@ -757,7 +759,8 @@ namespace Csmdapx
                     }
                     PageIndexInfo = PageIndexInfo.Trim();
                     Common.SetIndexCancel(arid, PageIndexInfo);
-                    string IndexFileName = Common.GetCurrentTime() + Common.TifExtension;
+                    string time = DateTime.Now.ToString("yyyyMMddHHmmssfff");
+                    string IndexFileName = time + Common.TifExtension;
                     string RemoteDir = IndexFileName.Substring(0, 8);
                     if (T_ConFigure.FtpStyle == 1) {
                         if (!Directory.Exists(Path.Combine(T_ConFigure.FtpTmpPath, T_ConFigure.TmpIndex)))
@@ -810,6 +813,8 @@ namespace Csmdapx
 
                     Common.SetArchWorkState(arid, (int)T_ConFigure.ArchStat.扫描完);
                 }
+                else
+                    Common.Writelog(arid, "排序完成退出时未找到文件!");
             } catch (Exception ex) {
                 MessageBox.Show("上传失败!" + ex.ToString());
                 Common.SetArchWorkState(arid, (int)T_ConFigure.ArchStat.扫描完);
@@ -875,6 +880,9 @@ namespace Csmdapx
 
                     Common.SetArchWorkState(arid, (int)T_ConFigure.ArchStat.扫描完);
                 }
+                else
+                    Common.Writelog(arid, "排序退出时未找到文件!");
+               
             } catch {
                 Common.SetArchWorkState(arid, (int)T_ConFigure.ArchStat.扫描完);
                 Common.Writelog(ClsIndex.Archid, "排序未完成失败");

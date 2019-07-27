@@ -2,12 +2,17 @@
 using HLFtp;
 using Spire.Xls;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using CsmImg;
+using System.Data.SqlClient;
 
 namespace Csmtool
 {
@@ -503,7 +508,7 @@ namespace Csmtool
 
         private void txtKeysZdyKeys_KeyDown(object sender, KeyEventArgs e)
         {
-             StringBuilder keyValue = new StringBuilder
+            StringBuilder keyValue = new StringBuilder
             {
                 Length = 0
             };
@@ -511,13 +516,13 @@ namespace Csmtool
             if ((e.KeyValue >= 33 && e.KeyValue <= 40) ||
                 (e.KeyValue >= 65 && e.KeyValue <= 90) ||   //a-z/A-Z
                 (e.KeyValue >= 112 && e.KeyValue <= 123) ||
-                e.KeyValue>=96 && e.KeyValue==111 )   //F1-F12
+                e.KeyValue >= 96 && e.KeyValue == 111)   //F1-F12
             {
                 keyValue.Append(e.KeyCode);
             }
             else if ((e.KeyValue >= 48 && e.KeyValue <= 57))    //0-9
                 keyValue.Append(e.KeyCode.ToString().Substring(1));
-            else if (e.KeyValue == 13  || e.KeyValue== 27 || e.KeyValue == 32 || e.KeyValue==46 )
+            else if (e.KeyValue == 13 || e.KeyValue == 27 || e.KeyValue == 32 || e.KeyValue == 46)
                 keyValue.Append(e.KeyCode.ToString().Substring(1));
             this.ActiveControl.Text = "";
             this.ActiveControl.Text = keyValue.ToString();
@@ -599,14 +604,12 @@ namespace Csmtool
                 Toolskeys.Lsinikey.Clear();
                 Toolskeys.LsiniCz.Clear();
                 Writeini.GetAllKeyValues(combKeyZdymodlx.Text.Trim(), out Toolskeys.LsiniCz, out Toolskeys.Lsinikey);
-                if (Toolskeys.Lsinikey.Count > 0 && Toolskeys.LsiniCz.Count>0)
-                {
+                if (Toolskeys.Lsinikey.Count > 0 && Toolskeys.LsiniCz.Count > 0) {
                     LbKey.Items.Clear();
-                    for (int i = 0; i < Toolskeys.LsiniCz.Count; i++)
-                    {
+                    for (int i = 0; i < Toolskeys.LsiniCz.Count; i++) {
                         string str = Toolskeys.LsiniCz[i].ToString().Replace("V", "");
                         int x = Toolskeys.LskeyOpernum.IndexOf(str);
-                        if (x <0)
+                        if (x < 0)
                             continue;
                         string s = Toolskeys.LskeyOper[x];
                         string c = Toolskeys.Lsinikey[i];
@@ -633,7 +636,7 @@ namespace Csmtool
                             str = "Ese";
                         else if (nk == 46)
                             str = "Del";
-                        string strs = s + ":" + c+str;
+                        string strs = s + ":" + c + str;
                         LbKey.Items.Add(strs);
                     }
                 }
@@ -647,7 +650,7 @@ namespace Csmtool
         void SelectKey()
         {
             txtKeysZdyKeys.Text = "";
-            labkeys.ForeColor =Color.Black;
+            labkeys.ForeColor = Color.Black;
             labkeys.Text = "未注册";
             if (combKeyzdyoperlx.Text.Length <= 0 || Toolskeys.LsiniCz.Count <= 0)
                 return;
@@ -678,7 +681,7 @@ namespace Csmtool
                     str = "Ese";
                 else if (nk == 46)
                     str = "Del";
-                labkeys.ForeColor=Color.Red;
+                labkeys.ForeColor = Color.Red;
                 labkeys.Text = str;
             }
         }
@@ -751,7 +754,135 @@ namespace Csmtool
             Writeini.Fileini = str;
             combKeyzdyTkey.SelectedIndex = 0;
         }
+        #region imgcombe
 
 
+        private void butImgadd_Click_1(object sender, EventArgs e)
+        {
+            OpenFileDialog openFile = new OpenFileDialog();
+            if (openFile.ShowDialog() == DialogResult.OK) {
+                lbImgPath.Items.Add(openFile.FileName);
+            }
+        }
+
+        private void butImgDel_Click_1(object sender, EventArgs e)
+        {
+            if (lbImgPath.Items.Count <= 0)
+                return;
+            try {
+                int id = lbImgPath.SelectedIndex;
+                lbImgPath.Items.RemoveAt(id);
+            } catch { }
+        }
+
+        void Istxt(bool bl)
+        {
+            this.BeginInvoke(new Action(() => {
+                if (!bl) {
+                    butImgadd.Enabled = false;
+                    butImgDel.Enabled = false;
+                    butCombe.Enabled = false;
+                    butImgSave.Enabled = false;
+                    pictgif.Visible = true;
+                    return;
+                }
+                butImgadd.Enabled = true;
+                butImgDel.Enabled = true;
+                butCombe.Enabled = true;
+                butImgSave.Enabled = true;
+                pictgif.Visible = false;
+                return;
+            }));
+        }
+
+        List<string> lsfile = new List<string>();
+        private void butCombe_Click(object sender, EventArgs e)
+        {
+            if (lbImgPath.Items.Count <= 0) {
+                MessageBox.Show("请先添加图像路径!");
+                return;
+            }
+            lsfile.Clear();
+            for (int i = 0; i < lbImgPath.Items.Count; i++) {
+                string str = lbImgPath.Items[i].ToString();
+                if (str.Trim().Length <= 0)
+                    continue;
+                lsfile.Add(str);
+            }
+            if (lsfile.Count <= 0)
+                return;
+            Istxt(false);
+            pictImg.Image = null;
+            Action Act = Imgcombe;
+            Act.BeginInvoke(null, null);
+        }
+
+        void Imgcombe()
+        {
+            Task t = Task.Run(() =>
+              {
+                  try {
+                      Bitmap bmp = ClsImg.ImgPj(lsfile);
+                      if (bmp != null) {
+                          this.Invoke(new Action(() => { pictImg.Image = bmp; }));
+                      }
+                      else
+                          MessageBox.Show("拼接失败");
+                  } catch (Exception e) {
+                      MessageBox.Show("拼接失败:" + e.ToString());
+                  } finally {
+                      this.BeginInvoke(new Action(() => { pictgif.Visible = false; }));
+                  }
+              });
+            Task.WaitAll(t);
+            Istxt(true);
+        }
+
+        private void butImgSave_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveFile=new SaveFileDialog();
+            if (saveFile.ShowDialog() == DialogResult.OK)
+            {
+                string file = saveFile.FileName;
+                pictImg.Image.Save(file+".jpg",ImageFormat.Jpeg);
+                if (File.Exists(file))
+                {
+                    MessageBox.Show("保存完成！");
+                    pictImg.Image = null;
+                    return;
+                }
+                MessageBox.Show("保存失败!");
+            }
+        }
+
+        #endregion
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (textBox1.Text.Trim().Length <= 0 || textBox2.Text.Trim().Length <= 0 ||
+                textBox3.Text.Trim().Length <= 0)
+            {
+                MessageBox.Show("请输入盒号范围及增加数字");
+                return;
+            }
+
+            string strsql = "select boxsn from M_IMAGEFILE where CHECKED=1 and  boxsn>=@b1 and boxsn<=@b2";
+            SqlParameter p1 = new SqlParameter("@b1", textBox1.Text.Trim());
+            SqlParameter p2 = new SqlParameter("@b2", textBox2.Text.Trim());
+            DataTable dt = SQLHelper.ExcuteTable(strsql, p1, p2);
+            if (dt == null || dt.Rows.Count <= 0)
+                return;
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+
+                string boxsn = dt.Rows[i][0].ToString();
+                int newboxn = Convert.ToInt32(boxsn) + Convert.ToInt32(textBox3.Text.Trim());
+                strsql = "update M_IMAGEFILE set Boxsn=@b1 where boxsn=@b2 and archno=1";
+                p1 = new SqlParameter("@b1", newboxn);
+                p2 = new SqlParameter("@b2", boxsn);
+                SQLHelper.ExcuteTable(strsql, p1, p2);
+            }
+        }
     }
+
 }

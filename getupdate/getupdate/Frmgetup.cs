@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.Configuration;
+using System.IO;
 using System.Threading;
 
 namespace getupdate
@@ -72,8 +73,8 @@ namespace getupdate
                     }
                     Application.DoEvents();
                 }
-            } catch  {
-                
+            } catch {
+
             } finally {
                 try {
                     string appName = Application.StartupPath + "\\" + "bgkj.exe";

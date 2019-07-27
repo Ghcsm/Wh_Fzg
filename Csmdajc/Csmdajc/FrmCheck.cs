@@ -144,10 +144,10 @@ namespace Csmdajc
 
         private void toolStripOcr_Click(object sender, EventArgs e)
         {
-            Clipboard.Clear();
             string txt = Himg._OcrRecttxt();
             if (txt.Length > 0) {
-                Clipboard.SetText(RegexCh(txt));
+                txt=(RegexCh(txt));
+                ucContents1.Settxt(txt);
             }
         }
         private string RegexCh(string s)
@@ -235,7 +235,6 @@ namespace Csmdajc
 
         private void toolStripDownPage_Click(object sender, EventArgs e)
         {
-          
             NextPage();
             ShowPage();
         }
@@ -244,19 +243,32 @@ namespace Csmdajc
             try {
                 if (Clscheck.CrrentPage != Clscheck.MaxPage) {
                     Himg._SavePage();
-                    Thread.Sleep(100);
+                    Thread.Sleep(50);
                     Himg._Pagenext(1);
                     ucContents1.OnChangContents(Clscheck.CrrentPage);
                 }
                 else if (Clscheck.CrrentPage == Clscheck.MaxPage) {
                     Himg._SavePage();
-                    Thread.Sleep(100);
+                    Thread.Sleep(50);
                     toolStripSave_Click(null, null);
                 }
             } catch (Exception ex) {
                 MessageBox.Show(ex.ToString());
             }
            
+        }
+
+        //东丽区专用
+        bool Entertag()
+        {
+            int entag = Common.GetEnterinfo(Clscheck.Archid);
+            int conte = Common.Getconteninfo(Clscheck.Archid);
+            if (entag != conte)
+            {
+                MessageBox.Show("信息录入手续" + entag.ToString()+" 目录录入业务id总计:"+conte.ToString()+" 不一致");
+                return false;
+            }
+            return true;
         }
 
         private void toolStripSave_Click(object sender, EventArgs e)
@@ -267,6 +279,9 @@ namespace Csmdajc
                 MessageBox.Show("登记页码和图像页码不一致无法完成质检!");
                 return;
             }
+            //东丽区专用
+            if (!Entertag())
+                return;
             if (MessageBox.Show("质检完成您确定要上传档案吗？", "提示", MessageBoxButtons.OKCancel,
                     MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.OK) {
                 string filepath = Clscheck.ScanFilePath;
@@ -814,8 +829,8 @@ namespace Csmdajc
                         string path = Path.Combine(T_ConFigure.FtpArchSave, filename.Substring(0, 8));
                         if (ftp.FtpMoveFile(sourefile, goalfile, path)) {
                             Thread.Sleep(5000);
-                            Common.DelTask(arid);
                             Common.SetCheckFinish(arid, DESEncrypt.DesEncrypt(filename), 1, (int)T_ConFigure.ArchStat.质检完);
+                            Common.DelTask(arid);
                             return;
                         }
                     }
@@ -826,8 +841,8 @@ namespace Csmdajc
                         string newpath = Path.Combine(T_ConFigure.FtpArchSave, RemoteDir);
                         bool x = await ftp.FtpUpFile(filetmp, newfile, newpath);
                         if (x) {
-                            Common.DelTask(arid);
                             Common.SetCheckFinish(arid, DESEncrypt.DesEncrypt(filename), 1, (int)T_ConFigure.ArchStat.质检完);
+                            Common.DelTask(arid);
                             try {
                                 File.Delete(filetmp);
                                 Directory.Delete(localPath);

@@ -63,8 +63,11 @@ namespace Csmxxbl
                 return;
             int stat = Common.GetArchWorkState(arid);
             if (stat >= (int)T_ConFigure.ArchStat.质检完) {
-                MessageBox.Show("此卷已质检完成,不能再修改信息！");
-                return;
+                if (MessageBox.Show("此卷已质检完成,若强制修改补录信息系统将记录您的操作。", "强行修改信息", MessageBoxButtons.OKCancel,
+                        MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) != DialogResult.OK) {
+                    return;
+                }
+                Common.Writelog(arid, "强制修改质检的录入信息!");
             }
             ucInfo.SaveInfo(arid, entertag);
         }
@@ -141,8 +144,11 @@ namespace Csmxxbl
                 return;
             int stat = Common.GetArchWorkState(arid);
             if (stat >= (int)T_ConFigure.ArchStat.质检完) {
-                MessageBox.Show("此卷已质检完成,不能再删除信息！");
-                return;
+                if (MessageBox.Show("此卷已质检完成,若强制修改补录信息系统将记录您的操作。", "强行修改信息", MessageBoxButtons.OKCancel,
+                        MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) != DialogResult.OK) {
+                    return;
+                }
+                Common.Writelog(arid, "强制修改质检的录入信息!");
             }
             ucInfo.DelInfo(arid, entertag);
         }
