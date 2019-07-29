@@ -340,6 +340,7 @@ namespace CsmCon
                 if (ct is TextBox || ct is ComboBox) {
                     if (ct.Tag.ToString() == id.ToString()) {
                         ct.Text = str;
+                        ct.Focus();
                     }
                 }
             }

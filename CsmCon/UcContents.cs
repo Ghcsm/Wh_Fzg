@@ -310,7 +310,7 @@ namespace CsmCon
             int pid = info.PagesWz;
             int tid = info.TitleWz;
             info.SetInfoTxt(panel1, pid, CrragePage.ToString());
-            info.SetInfoTxt(panel1, tid, title);
+            info.SetInfoTxt(panel1, tid+1, title);
         }
 
         public static void Setxtxtls(Panel p, int id, string str)

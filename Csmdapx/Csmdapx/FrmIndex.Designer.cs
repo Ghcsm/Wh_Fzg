@@ -90,6 +90,7 @@
             this.toolStripFiltr = new System.Windows.Forms.ToolStripButton();
             this.toolStripSplit = new System.Windows.Forms.ToolStripButton();
             this.toolProess = new System.Windows.Forms.ToolStripProgressBar();
+            this.toolStripSplitTag = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.toolArchno = new System.Windows.Forms.ToolStripLabel();
             this.dockCont2 = new DevComponents.DotNetBar.DockContainerItem();
@@ -105,7 +106,7 @@
             this.dockSite7 = new DevComponents.DotNetBar.DockSite();
             this.dockSite3 = new DevComponents.DotNetBar.DockSite();
             this.odgInsterFile = new System.Windows.Forms.OpenFileDialog();
-            this.toolStripSplitTag = new System.Windows.Forms.ToolStripButton();
+            this.toolStripCopy = new System.Windows.Forms.ToolStripButton();
             this.dockSite9.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bar2)).BeginInit();
             this.bar2.SuspendLayout();
@@ -646,6 +647,7 @@
             this.toolStripFiltr,
             this.toolStripSplit,
             this.toolProess,
+            this.toolStripCopy,
             this.toolStripSplitTag,
             this.toolStripSeparator5,
             this.toolArchno});
@@ -756,6 +758,17 @@
             this.toolProess.Name = "toolProess";
             this.toolProess.Size = new System.Drawing.Size(100, 24);
             this.toolProess.Visible = false;
+            // 
+            // toolStripSplitTag
+            // 
+            this.toolStripSplitTag.Font = new System.Drawing.Font("微软雅黑", 11F);
+            this.toolStripSplitTag.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.toolStripSplitTag.Image = ((System.Drawing.Image)(resources.GetObject("toolStripSplitTag.Image")));
+            this.toolStripSplitTag.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripSplitTag.Name = "toolStripSplitTag";
+            this.toolStripSplitTag.Size = new System.Drawing.Size(59, 24);
+            this.toolStripSplitTag.Text = "标记";
+            this.toolStripSplitTag.Click += new System.EventHandler(this.toolStripSplitTag_Click);
             // 
             // toolStripSeparator5
             // 
@@ -914,16 +927,15 @@
             this.dockSite3.TabIndex = 3;
             this.dockSite3.TabStop = false;
             // 
-            // toolStripSplitTag
+            // toolStripCopy
             // 
-            this.toolStripSplitTag.Font = new System.Drawing.Font("微软雅黑", 11F);
-            this.toolStripSplitTag.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.toolStripSplitTag.Image = ((System.Drawing.Image)(resources.GetObject("toolStripSplitTag.Image")));
-            this.toolStripSplitTag.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripSplitTag.Name = "toolStripSplitTag";
-            this.toolStripSplitTag.Size = new System.Drawing.Size(59, 24);
-            this.toolStripSplitTag.Text = "标记";
-            this.toolStripSplitTag.Click += new System.EventHandler(this.toolStripSplitTag_Click);
+            this.toolStripCopy.Font = new System.Drawing.Font("微软雅黑", 11F);
+            this.toolStripCopy.Image = global::Csmdapx.Properties.Resources._13;
+            this.toolStripCopy.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripCopy.Name = "toolStripCopy";
+            this.toolStripCopy.Size = new System.Drawing.Size(59, 24);
+            this.toolStripCopy.Text = "复制";
+            this.toolStripCopy.Click += new System.EventHandler(this.toolStripCopy_Click);
             // 
             // FrmIndex
             // 
@@ -1052,5 +1064,6 @@
         private System.Windows.Forms.ToolStripStatusLabel toollabenter;
         private System.Windows.Forms.ToolStripStatusLabel toollabentertime;
         private System.Windows.Forms.ToolStripButton toolStripSplitTag;
+        private System.Windows.Forms.ToolStripButton toolStripCopy;
     }
 }

@@ -150,7 +150,10 @@ namespace Csmdapx
 
         private void toolStripSplit_Click(object sender, EventArgs e)
         {
-
+            if (ImgView.Image==null)
+                return;
+            FrmCombe combe=new FrmCombe();
+            combe.ShowDialog();
         }
 
         private void toolStripCenter_Click(object sender, EventArgs e)
@@ -169,6 +172,15 @@ namespace Csmdapx
                 txtPages.Text = "已删除";
                 txtPages.ReadOnly = true;
             }
+        }
+
+        private void toolStripCopy_Click(object sender, EventArgs e)
+        {
+            if (Himg._CopyImg())
+                MessageBox.Show("复制完成！");
+            else
+                MessageBox.Show("复制失败!");
+
         }
 
         private void toolStripRecov_Click(object sender, EventArgs e)
@@ -226,8 +238,8 @@ namespace Csmdapx
                     Himg._PageNumber.Clear();
                     //天津东丽专用，以后删除
                     Setpages(regpage, pageabc.Count, arid);
-                    Task.Run(() => { FtpUpFinish(tagpage, regpage, filetmp, arid, archpos, pageabc, pagenum, fuhao); });
-                    //  Task.Run(new Action(() => { FtpUpFinish(tagpage,regpage, filetmp, arid, archpos, pageabc, pagenum, fuhao); }));
+                   // Task.Run(() => { FtpUpFinish(tagpage, regpage, filetmp, arid, archpos, pageabc, pagenum, fuhao); });
+                    Task.Run(new Action(() => { FtpUpFinish(tagpage,regpage, filetmp, arid, archpos, pageabc, pagenum, fuhao); }));
                     Cledata();
                     txtPages.Text = "";
                     gArch.LvData.Focus();
@@ -257,8 +269,8 @@ namespace Csmdapx
             int tag = Himg.TagPage;
             int pages = ClsIndex.RegPage;
             Cledata();
-            Task.Run(() => { FtpUpCanCel(filetmp, arid, archpos, pageabc, pagenum, pages, fuhao, tag); });
-            // Task.Run(new Action(() => { FtpUpCanCel(filetmp, arid, archpos, pageabc, pagenum, pages, fuhao); }));
+           // Task.Run(() => { FtpUpCanCel(filetmp, arid, archpos, pageabc, pagenum, pages, fuhao, tag); });
+             Task.Run(new Action(() => { FtpUpCanCel(filetmp, arid, archpos, pageabc, pagenum, pages, fuhao,tag); }));
             txtPages.Text = "";
             gArch.LvData.Focus();
         }
@@ -266,11 +278,13 @@ namespace Csmdapx
         private void toolStripBigPage_Click(object sender, EventArgs e)
         {
             Himg._Sizeimge(1);
+            txtPages.Focus();
         }
 
         private void toolStripSamllPage_Click(object sender, EventArgs e)
         {
             Himg._Sizeimge(0);
+            txtPages.Focus();
         }
 
         private void toolStripRoteImg_Click(object sender, EventArgs e)
@@ -326,6 +340,8 @@ namespace Csmdapx
             if (ClsIndex.keystr.Trim().Length > 0)
                 KeysDownEve(ClsIndex.keystr.Trim());
             Keys keyCode = e.KeyCode;
+            if (e.KeyCode == Keys.Enter)
+                toolStripDownPage_Click(null, null);
             if (e.KeyCode == Keys.Escape)
                 gArch.LvData.Focus();
         }
@@ -377,8 +393,61 @@ namespace Csmdapx
                     ClsIndex.lssqlOpernum.Add(val);
                 }
                 Writeini.GetAllKeyValues(this.Text, out ClsIndex.Lsinikeys, out ClsIndex.lsinival);
+                SettxtTag();
             });
         }
+
+        void SettxtTag()
+        {
+            this.BeginInvoke(new Action(() =>
+            {
+                ToolStripButton t = null;
+                foreach (var item in toolstripmain1.Items) {
+                    if (item is ToolStripButton) {
+                        t = (ToolStripButton)item;
+                        if (t.Text.Trim().Length > 0) {
+                            int name = ClsIndex.lsSqlOper.IndexOf(t.Text.Trim());
+                            if (name < 0)
+                                continue;
+                            string oper = ClsIndex.lssqlOpernum[name];
+                            if (oper.Trim().Length <= 0)
+                                continue;
+                            int id = ClsIndex.Lsinikeys.IndexOf("V" + oper);
+                            if (id < 0)
+                                continue;
+                            string val = ClsIndex.lsinival[id];
+                            val = pub.GetkeyVal(val);
+                            if (val.Trim().Length <= 0)
+                                continue;
+                            t.ToolTipText = "快捷键：" + val;
+                        }
+                    }
+                }
+                foreach (var item in toolstripmain2.Items) {
+                    if (item is ToolStripButton) {
+                        t = (ToolStripButton)item;
+                        if (t.Text.Trim().Length > 0) {
+                            int name = ClsIndex.lsSqlOper.IndexOf(t.Text.Trim());
+                            if (name < 0)
+                                continue;
+                            string oper = ClsIndex.lssqlOpernum[name];
+                            if (oper.Trim().Length <= 0)
+                                continue;
+                            int id = ClsIndex.Lsinikeys.IndexOf("V" + oper);
+                            if (id < 0)
+                                continue;
+                            string val = ClsIndex.lsinival[id];
+                            val = pub.GetkeyVal(val);
+                            if (val.Trim().Length <= 0)
+                                continue;
+                            t.ToolTipText = "快捷键：" + val;
+                        }
+                    }
+                }
+            }));
+        }
+
+
 
         void KeysDownEve(string key)
         {
@@ -705,7 +774,7 @@ namespace Csmdapx
             }));
         }
 
-        private async void FtpUpFinish(int tagpage, int regpage, string filetmp, int arid, string archpos, Dictionary<int, string> pageAbc, Dictionary<int, int> pagenumber, Dictionary<int, string> fuhao)
+        private void FtpUpFinish(int tagpage, int regpage, string filetmp, int arid, string archpos, Dictionary<int, string> pageAbc, Dictionary<int, int> pagenumber, Dictionary<int, string> fuhao)
         {
             try {
                 if (File.Exists(filetmp)) {
@@ -792,23 +861,38 @@ namespace Csmdapx
                         if (!Himg._OrderSave(tagpage, regpage, filetmp, LocalIndexFile, pageAbc, pagenumber, fuhao)) {
                             return;
                         }
-                        string newfile = Path.Combine(T_ConFigure.FtpArchIndex, RemoteDir, IndexFileName);
-                        string newpath = Path.Combine(T_ConFigure.FtpArchIndex, RemoteDir);
-                        bool x = await ftp.FtpUpFile(LocalIndexFile, newfile, newpath);
-                        if (x) {
-                            //Common.SetIndexCancel(arid, "");
+                        if (ftp.SaveRemoteFileUp(T_ConFigure.FtpArchIndex, RemoteDir, LocalIndexFile, IndexFileName)) {
                             Common.SetIndexFinish(arid, DESEncrypt.DesEncrypt(IndexFileName), (int)T_ConFigure.ArchStat.排序完, PageIndexInfoOk);
-                            Common.DelTask(arid);
+                            Common.DelTask(Convert.ToInt32(arid));
                             try {
                                 File.Delete(filetmp);
                                 File.Delete(LocalIndexFile);
                                 Directory.Delete(Path.Combine(T_ConFigure.LocalTempPath, archpos));
+                                string file = Path.Combine(T_ConFigure.gArchScanPath, archpos, T_ConFigure.ScanTempFile);
                                 if (ftp.FtpDelFile(Path.Combine(T_ConFigure.gArchScanPath, archpos,
                                     T_ConFigure.ScanTempFile)))
                                     ftp.FtpDelDir(Path.Combine(T_ConFigure.gArchScanPath, archpos));
                             } catch { }
                             return;
                         }
+                        //发现上传时图像有错位现象
+                        //string newfile = Path.Combine(T_ConFigure.FtpArchIndex, RemoteDir, IndexFileName);
+                        //string newpath = Path.Combine(T_ConFigure.FtpArchIndex, RemoteDir);
+                        //bool x = await ftp.FtpUpFile(LocalIndexFile, newfile, newpath);
+                        //if (x) {
+                        //    //Common.SetIndexCancel(arid, "");
+                        //    Common.SetIndexFinish(arid, DESEncrypt.DesEncrypt(IndexFileName), (int)T_ConFigure.ArchStat.排序完, PageIndexInfoOk);
+                        //    Common.DelTask(arid);
+                        //    try {
+                        //        File.Delete(filetmp);
+                        //        File.Delete(LocalIndexFile);
+                        //        Directory.Delete(Path.Combine(T_ConFigure.LocalTempPath, archpos));
+                        //        if (ftp.FtpDelFile(Path.Combine(T_ConFigure.gArchScanPath, archpos,
+                        //            T_ConFigure.ScanTempFile)))
+                        //            ftp.FtpDelDir(Path.Combine(T_ConFigure.gArchScanPath, archpos));
+                        //    } catch { }
+                        //    return;
+                        //}
                     }
 
                     Common.SetArchWorkState(arid, (int)T_ConFigure.ArchStat.扫描完);
@@ -824,7 +908,7 @@ namespace Csmdapx
             }
         }
 
-        private async void FtpUpCanCel(string filetmp, int arid, string archpos, Dictionary<int, string> pageAbc, Dictionary<int, int> pagenumber, int pages, Dictionary<int, string> fuhao, int tag)
+        private void FtpUpCanCel(string filetmp, int arid, string archpos, Dictionary<int, string> pageAbc, Dictionary<int, int> pagenumber, int pages, Dictionary<int, string> fuhao, int tag)
         {
             try {
                 if (File.Exists(filetmp)) {
@@ -864,17 +948,28 @@ namespace Csmdapx
                         }
                     }
                     else {
-                        string newfile = Path.Combine(T_ConFigure.gArchScanPath, archpos, T_ConFigure.ScanTempFile);
-                        string newpath = Path.Combine(T_ConFigure.gArchScanPath, archpos);
-                        bool x = await ftp.FtpUpFile(filetmp, newfile, newpath);
-                        if (x) {
-                            Common.DelTask(arid);
+
+                        if (ftp.SaveRemoteFileUp(T_ConFigure.gArchScanPath, archpos, filetmp, T_ConFigure.ScanTempFile)) {
+                            Common.SetScanFinish(arid, pages, 1, (int)T_ConFigure.ArchStat.扫描完);
+                            Common.DelTask(Convert.ToInt32(arid));
                             try {
                                 File.Delete(filetmp);
-                                Directory.Delete(Path.Combine(Common.LocalTempPath, archpos));
-                            } catch { }
+                                Directory.Delete(Path.Combine(T_ConFigure.LocalTempPath, archpos));
+                            } catch {
+                            }
                             return;
                         }
+                        // string newfile = Path.Combine(T_ConFigure.gArchScanPath, archpos, T_ConFigure.ScanTempFile);
+                        //  string newpath = Path.Combine(T_ConFigure.gArchScanPath, archpos);
+                        //bool x = await ftp.FtpUpFile(filetmp, newfile, newpath);
+                        //if (x) {
+                        //    Common.DelTask(arid);
+                        //    try {
+                        //        File.Delete(filetmp);
+                        //        Directory.Delete(Path.Combine(Common.LocalTempPath, archpos));
+                        //    } catch { }
+                        //    return;
+                        //}
 
                     }
 
@@ -882,7 +977,7 @@ namespace Csmdapx
                 }
                 else
                     Common.Writelog(arid, "排序退出时未找到文件!");
-               
+
             } catch {
                 Common.SetArchWorkState(arid, (int)T_ConFigure.ArchStat.扫描完);
                 Common.Writelog(ClsIndex.Archid, "排序未完成失败");
@@ -920,8 +1015,9 @@ namespace Csmdapx
 
 
 
+
         #endregion
 
-
+       
     }
 }

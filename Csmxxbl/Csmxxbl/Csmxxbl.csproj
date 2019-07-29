@@ -89,11 +89,6 @@
       <HintPath>..\..\DevComponents.DotNetBar2.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Hljsarch">
-      <HintPath>..\..\..\..\..\..\Csmhl\bg\Hljsarch\Hljsarch\bin\x86\Debug\Hljsarch.dll</HintPath>
-    </Reference>
-    <Reference Include="Leadtools, Version=19.0.4.0, Culture=neutral, PublicKeyToken=9cf889f53ea9b907, processorArchitecture=x86" />
-    <Reference Include="Leadtools.Controls.WinForms, Version=19.0.4.0, Culture=neutral, PublicKeyToken=9cf889f53ea9b907, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>

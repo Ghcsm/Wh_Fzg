@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using CsmImg;
 using System.Data.SqlClient;
+using HLjscom;
 
 namespace Csmtool
 {
@@ -79,6 +80,14 @@ namespace Csmtool
             return true;
         }
 
+        private void combtjSql_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (combtjSql.SelectedIndex != 4)
+            {
+                labcheck.Visible = false;
+                labarchcount.Visible = false;
+            }
+        }
         void CleScanstat(int arid, string boxsn, string archno)
         {
             Common.ClearScanWrok(arid);
@@ -243,13 +252,72 @@ namespace Csmtool
             dgvTjdata.DataSource = dt;
 
         }
+        void QuerFile()
+        {
+            dgvTjdata.DataSource = null;
+            DataTable dt = Common.GetArchQuerFile(txtTjBoxsn1.Text.Trim(), txtTjBoxsn2.Text.Trim());
+            if (dt == null || dt.Rows.Count <= 0)
+                return;
+
+            for (int i = 0; i < dt.Rows.Count; i++) {
+                string file = DESEncrypt.DesDecrypt(dt.Rows[i][0].ToString());
+                if (file.Trim().Length <= 0)
+                    continue;
+                string boxsn = dt.Rows[i][1].ToString();
+                string arno = dt.Rows[i][2].ToString();
+                string pathfile = Path.Combine("archsave", file.Substring(0, 8), file);
+                if (!ftp.FtpCheckFile(pathfile)) {
+                    if (dgvTjdata.Rows.Count == 0) {
+                        dgvTjdata.Columns.Add("file", "文件");
+                        dgvTjdata.Columns.Add("boxsn", "盒号");
+                        dgvTjdata.Columns.Add("archno", "卷号");
+                    }
+                    int index = dgvTjdata.Rows.Add();
+                    dgvTjdata.Rows[index].Cells[0].Value = file;
+                    dgvTjdata.Rows[index].Cells[1].Value = boxsn;
+                    dgvTjdata.Rows[index].Cells[2].Value = arno;
+
+                }
+                dgvTjdata.Refresh();
+            }
+        }
+        void QuerQuZt()
+        {
+            dgvTjdata.DataSource = null;
+            labcheck.Visible = false;
+            labarchcount.Visible = false;
+            DataTable dt = Common.GetQuzt(txtTjBoxsn1.Text.Trim());
+            if (dt == null || dt.Rows.Count <= 0) {
+                MessageBox.Show("未查到相关信息!");
+                return;
+            }
+            dgvTjdata.DataSource = dt;
+            labarchcount.Visible = true;
+            labarchcount.Text = string.Format("共{0}卷", dt.Rows.Count);
+            DataTable dt1 = dt.Select("质检=1").CopyToDataTable();
+            if (dt1 == null || dt.Rows.Count <= 0)
+                return;
+            labcheck.Visible = true;
+            labcheck.Text = string.Format("质检{0}卷", dt1.Rows.Count);
+
+
+        }
 
         private void buttjStart_Click(object sender, EventArgs e)
         {
             if (!istjtxt())
                 return;
+            if (combtjSql.SelectedIndex == 3) {
+                QuerFile();
+                return;
+            }
+            else if (combtjSql.SelectedIndex == 4) {
+                QuerQuZt();
+                return;
+            }
             Quersql();
         }
+
 
         void Exportxls(string file)
         {
@@ -777,7 +845,8 @@ namespace Csmtool
 
         void Istxt(bool bl)
         {
-            this.BeginInvoke(new Action(() => {
+            this.BeginInvoke(new Action(() =>
+            {
                 if (!bl) {
                     butImgadd.Enabled = false;
                     butImgDel.Enabled = false;
@@ -840,13 +909,11 @@ namespace Csmtool
 
         private void butImgSave_Click(object sender, EventArgs e)
         {
-            SaveFileDialog saveFile=new SaveFileDialog();
-            if (saveFile.ShowDialog() == DialogResult.OK)
-            {
+            SaveFileDialog saveFile = new SaveFileDialog();
+            if (saveFile.ShowDialog() == DialogResult.OK) {
                 string file = saveFile.FileName;
-                pictImg.Image.Save(file+".jpg",ImageFormat.Jpeg);
-                if (File.Exists(file))
-                {
+                pictImg.Image.Save(file + ".jpg", ImageFormat.Jpeg);
+                if (File.Exists(file)) {
                     MessageBox.Show("保存完成！");
                     pictImg.Image = null;
                     return;
@@ -859,30 +926,59 @@ namespace Csmtool
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (textBox1.Text.Trim().Length <= 0 || textBox2.Text.Trim().Length <= 0 ||
-                textBox3.Text.Trim().Length <= 0)
-            {
-                MessageBox.Show("请输入盒号范围及增加数字");
-                return;
-            }
+            //if (textBox1.Text.Trim().Length <= 0 || textBox2.Text.Trim().Length <= 0 ||
+            //    textBox3.Text.Trim().Length <= 0) {
+            //    MessageBox.Show("请输入盒号范围及增加数字");
+            //    return;
+            //}
 
-            string strsql = "select boxsn from M_IMAGEFILE where CHECKED=1 and  boxsn>=@b1 and boxsn<=@b2";
-            SqlParameter p1 = new SqlParameter("@b1", textBox1.Text.Trim());
-            SqlParameter p2 = new SqlParameter("@b2", textBox2.Text.Trim());
-            DataTable dt = SQLHelper.ExcuteTable(strsql, p1, p2);
-            if (dt == null || dt.Rows.Count <= 0)
-                return;
-            for (int i = 0; i < dt.Rows.Count; i++)
-            {
+            //string strsql = "select boxsn from M_IMAGEFILE where CHECKED=1 and  boxsn>=@b1 and boxsn<=@b2";
+            //SqlParameter p1 = new SqlParameter("@b1", textBox1.Text.Trim());
+            //SqlParameter p2 = new SqlParameter("@b2", textBox2.Text.Trim());
+            //DataTable dt = SQLHelper.ExcuteTable(strsql, p1, p2);
+            //if (dt == null || dt.Rows.Count <= 0)
+            //    return;
+            //for (int i = 0; i < dt.Rows.Count; i++) {
 
-                string boxsn = dt.Rows[i][0].ToString();
-                int newboxn = Convert.ToInt32(boxsn) + Convert.ToInt32(textBox3.Text.Trim());
-                strsql = "update M_IMAGEFILE set Boxsn=@b1 where boxsn=@b2 and archno=1";
-                p1 = new SqlParameter("@b1", newboxn);
-                p2 = new SqlParameter("@b2", boxsn);
-                SQLHelper.ExcuteTable(strsql, p1, p2);
+            //    string boxsn = dt.Rows[i][0].ToString();
+            //    int newboxn = Convert.ToInt32(boxsn) + Convert.ToInt32(textBox3.Text.Trim());
+            //    strsql = "update M_IMAGEFILE set Boxsn=@b1 where boxsn=@b2 and archno=1";
+            //    p1 = new SqlParameter("@b1", newboxn);
+            //    p2 = new SqlParameter("@b2", boxsn);
+            //    SQLHelper.ExcuteTable(strsql, p1, p2);
+            //}
+        }
+
+        private List<string> strfile = new List<string>();
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            FolderBrowserDialog flDialog = new FolderBrowserDialog();
+            if (flDialog.ShowDialog() == DialogResult.OK) {
+                strfile.Clear();
+                listBox1.Items.Clear();
+                var dir = new DirectoryInfo(flDialog.SelectedPath);
+                FileInfo[] dirname = dir.GetFiles("*.jpg");
+                for (int i = 0; i < dirname.Length; i++) {
+                    string str = dirname[i].FullName;
+                    strfile.Add(str);
+                    listBox1.Items.Add(str);
+                }
             }
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (textBox1.Text.Trim().Length <= 0) {
+                MessageBox.Show("请输入tf文件名!");
+                return;
+            }
+            HLjscom.Hljsimage hlimg = new Hljsimage();
+            string tif = Path.Combine(@"D:\", textBox1.Text.Trim() + ".tif");
+            hlimg.jpgTotif(strfile, tif);
+            MessageBox.Show("完成");
+        }
+
+
     }
 
 }

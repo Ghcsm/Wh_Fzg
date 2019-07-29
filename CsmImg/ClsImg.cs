@@ -58,7 +58,28 @@ namespace CsmImg
                 outimg = new Mat();
                 if (T_ConFigure.SfName.Trim().Length > 0)
                     stitcher.Stitch(new VectorOfMat(listmat.ToArray()), outimg);
-            } catch(Exception ex) {
+            } catch {
+                return bmp;
+            }
+            return outimg.Bitmap;
+        }
+
+        public static Bitmap ImgPj(List<Bitmap> strfile)
+        {
+            Bitmap bmp = null;
+            Mat outimg;
+            try {
+                List<Mat> listmat = new List<Mat>();
+                for (int i = 0; i < strfile.Count; i++) {
+                    string str = strfile[i].ToString();
+                    Image<Bgr, byte> a = new Image<Bgr, byte>(str);
+                    listmat.Add(a.Mat);
+                }
+                Stitcher stitcher = new Stitcher(false);
+                outimg = new Mat();
+                if (T_ConFigure.SfName.Trim().Length > 0)
+                    stitcher.Stitch(new VectorOfMat(listmat.ToArray()), outimg);
+            } catch {
                 return bmp;
             }
             return outimg.Bitmap;

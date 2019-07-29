@@ -12,6 +12,7 @@ using HLjscom;
 using DataRow = System.Data.DataRow;
 using System.Xml;
 using System.Drawing;
+using System.Net;
 using Spire.Xls;
 
 namespace Csmsjcf
@@ -1558,18 +1559,26 @@ namespace Csmsjcf
                 ClsDL.Boxsn = p1.ToString();
                 ClsDL.Boxsn2 = p2.ToString();
             }
-            if (!chkjpg.Checked && !chkxlsxml.Checked) {
+            if (!chkjpgxml.Checked && !chkxls.Checked) {
                 MessageBox.Show("请选择生成类型!");
                 return false;
             }
-            if (chkjpg.Checked)
+            if (chkjpgxml.Checked)
                 ClsDL.jpgxml = 1;
             else
                 ClsDL.jpgxml = 0;
-            if (chkxlsxml.Checked)
+            if (chkxls.Checked)
                 ClsDL.xls = 1;
             else
                 ClsDL.xls = 0;
+            if (!chkjpgxml.Checked && chkxls.Checked) {
+                ClsDL.lx = 1;
+                if (radCxzh.Checked) {
+                    MessageBox.Show("单导xls无需选择重新转换!");
+                    return false;
+                }
+            }
+
             if (radFtp.Checked)
                 ClsDL.Ftp = 1;
             else if (radTfPath.Checked) {
@@ -1731,6 +1740,8 @@ namespace Csmsjcf
         {
             try {
                 if (!File.Exists(file)) {
+                    if (!Directory.Exists(Path.GetDirectoryName(file)))
+                        Directory.CreateDirectory(Path.GetDirectoryName(file));
                     string strfile = Path.Combine(Application.StartupPath, "jnmltj.xlsx");
                     File.Copy(strfile, file);
                 }
@@ -1788,6 +1799,8 @@ namespace Csmsjcf
         {
             try {
                 if (!File.Exists(file)) {
+                    if (!Directory.Exists(Path.GetDirectoryName(file)))
+                        Directory.CreateDirectory(Path.GetDirectoryName(file));
                     string strfile = Path.Combine(Application.StartupPath, "txtj.xlsx");
                     File.Copy(strfile, file);
                 }
@@ -1861,6 +1874,8 @@ namespace Csmsjcf
         {
             try {
                 if (!File.Exists(file)) {
+                    if (!Directory.Exists(Path.GetDirectoryName(file)))
+                        Directory.CreateDirectory(Path.GetDirectoryName(file));
                     string strfile = Path.Combine(Application.StartupPath, "txtj.xlsx");
                     File.Copy(strfile, file);
                 }
@@ -1872,7 +1887,7 @@ namespace Csmsjcf
                 Himg.Filename = XFileName;
                 Himg.GetImgSize(out A0, out A1, out A2, out A3, out A4);
                 try {
-                    if (ClsDL.Ftp == 2) {
+                    if (ClsDL.Ftp == 1) {
                         if (File.Exists(XFileName)) {
                             File.Delete(XFileName);
                         }
@@ -2013,6 +2028,11 @@ namespace Csmsjcf
                     string dyqlr = dt.Rows[i][4].ToString();
                     string bdczh = dt.Rows[i][6].ToString();
                     string spsj = dt.Rows[i][9].ToString();
+                    if (bzid.Trim().Length <= 0) {
+                        string str = "业务编号不正确 id号：" + archid + " 二维码信息：" + ewm;
+                        ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
+                        return false;
+                    }
                     XmlElement xesub2 = xmldoc.CreateElement("BDC_BUSINESS");
                     xesub2.SetAttribute("XH", xh);
                     xesub2.SetAttribute("BZID", bzid);
@@ -2132,12 +2152,18 @@ namespace Csmsjcf
                 if (ClsDL.Zlcy == 2) {
                     Common.DataSplitUpdateboxsn(ClsDL.Houseid, ClsDL.Boxsn, ClsDL.Boxsn2);
                 }
-                ClsDL.dtboxsn = Common.DataSplitGetdata(ClsDL.Houseid, ClsDL.Boxsn, ClsDL.Boxsn2);
+
+                if (ClsDL.lx == 1)
+                    ClsDL.dtboxsn = Common.DataSplitGetdataxls(ClsDL.Houseid, ClsDL.Boxsn, ClsDL.Boxsn2);
+                else
+                    ClsDL.dtboxsn = Common.DataSplitGetdata(ClsDL.Houseid, ClsDL.Boxsn, ClsDL.Boxsn2);
                 if (ClsDL.dtboxsn == null || ClsDL.dtboxsn.Rows.Count <= 0)
                     return;
                 this.BeginInvoke(new Action(() => { lab_dl_juan.Text = "共计:" + ClsDL.dtboxsn.Rows.Count.ToString(); }));
                 for (int i = 0; i < ClsDL.dtboxsn.Rows.Count; i++) {
                     try {
+
+                        this.Invoke(new Action(() => { lab_dl_zx.Text = "正在执行第0卷:" + i.ToString(); }));
                         ClsDL.Archid = ClsDL.dtboxsn.Rows[i][0].ToString();
                         string boxsn = ClsDL.dtboxsn.Rows[i][1].ToString();
                         ClsDL.BoxsnTag = boxsn;
@@ -2151,14 +2177,12 @@ namespace Csmsjcf
                             ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
                             continue;
                         }
-
                         string loadfile = "";
                         if (!Getfile(out loadfile)) {
                             string str = "盒号:" + boxsn + "获取图像文件失败";
                             ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
                             continue;
                         }
-
                         ClsDL.ewmname = "DL-" + qu + "-" + lx + boxsn.PadLeft(6, '0');
                         string time = DateTime.Now.ToString("yyMMdd").ToString().Trim();
                         if (ClsDL.lsh > 0)
@@ -2166,8 +2190,8 @@ namespace Csmsjcf
                         else
                             ClsDL.xmlname = "120110" + time + (i + 1).ToString().PadLeft(6, '0');
                         if (ClsDL.xls == 1 && ClsDL.jpgxml == 1) {
-                            string jpgdir = Path.Combine(ClsDL.NewPath, qu,"jpg", ClsDL.ewmname);
-                            string xmldir = Path.Combine(ClsDL.NewPath, qu,"xml");
+                            string jpgdir = Path.Combine(ClsDL.NewPath, qu, "jpg", ClsDL.ewmname);
+                            string xmldir = Path.Combine(ClsDL.NewPath, qu, "xml");
                             if (!Directory.Exists(jpgdir))
                                 Directory.CreateDirectory(jpgdir);
                             if (!Directory.Exists(xmldir))
@@ -2185,6 +2209,13 @@ namespace Csmsjcf
                                 continue;
                             }
                             else {
+                                try {
+                                    if (ClsDL.Ftp == 1) {
+                                        if (File.Exists(loadfile)) {
+                                            File.Delete(loadfile);
+                                        }
+                                    }
+                                } catch { }
                                 string xmlfile = Path.Combine(xmldir, ClsDL.xmlname + ".xml");
                                 if (!Wirtexml(ClsDL.Archid, ClsDL.ewmname, ClsDL.xmlname, page, lsjpg, xmlfile)) {
                                     string str = "盒号:" + boxsn + "生成xml失败!";
@@ -2192,35 +2223,35 @@ namespace Csmsjcf
                                     continue;
                                 }
                                 else {
+
+                                    string newpath = Path.Combine(ClsDL.NewPath, qu);
+                                    if (Directory.Exists(newpath))
+                                        Directory.CreateDirectory(newpath);
                                     Common.DataSplitUpdate(ClsDL.Archid);
-                                    string ScPathXls = Path.Combine(ClsDL.NewPath, qu,
+                                    string ScPathXls = Path.Combine(newpath,
                                         ClsDL.Boxsn + "-" + ClsDL.Boxsn + "房屋统计.xlsx");
-                                    string scpathxlsml = Path.Combine(ClsDL.NewPath, qu,
+                                    string scpathxlsml = Path.Combine(newpath,
                                         ClsDL.Boxsn + "-" + ClsDL.Boxsn + "卷内目录统计.xlsx");
-                                    string scpathxlstj = Path.Combine(ClsDL.NewPath, qu,
+                                    string scpathxlstj = Path.Combine(newpath,
                                         ClsDL.Boxsn + "-" + ClsDL.Boxsn + "图像统计.xlsx");
-                                    if (!WriteFwtj(ScPathXls, ClsDL.Archid, ClsDL.xmlname, ClsDL.ewmname))
-                                    {
+                                    if (!WriteFwtj(ScPathXls, ClsDL.Archid, ClsDL.xmlname, ClsDL.ewmname)) {
                                         string str = "盒号:" + boxsn + "房屋统计写入xls表失败!";
                                         ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
                                         continue;
                                     }
 
-                                    if (!WriteMltj(scpathxlsml, ClsDL.Archid, ClsDL.xmlname, ClsDL.ewmname, page))
-                                    {
+                                    if (!WriteMltj(scpathxlsml, ClsDL.Archid, ClsDL.xmlname, ClsDL.ewmname, page)) {
                                         string str = "盒号:" + boxsn + "目录统计写入xls表失败!";
                                         ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
                                         continue;
                                     }
 
-                                    if (!WriteTxtj(scpathxlstj, ClsDL.ewmname, page, A0, A1, A2, A3, A4))
-                                    {
+                                    if (!WriteTxtj(scpathxlstj, ClsDL.ewmname, page, A0, A1, A2, A3, A4)) {
                                         string str = "盒号:" + boxsn + "图像统计写入xls表失败!";
                                         ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
                                         continue;
                                     }
                                 }
-                               
                             }
                         }
                         else if (ClsDL.jpgxml == 1) {
@@ -2243,38 +2274,45 @@ namespace Csmsjcf
                                 continue;
                             }
                             else {
+                                if (ClsDL.Ftp == 1) {
+                                    try {
+                                        if (File.Exists(loadfile)) {
+                                            File.Delete(loadfile);
+                                        }
+                                    } catch { }
+                                }
                                 string xmlfile = Path.Combine(xmldir, ClsDL.xmlname + ".xml");
                                 if (!Wirtexml(ClsDL.Archid, ClsDL.ewmname, ClsDL.xmlname, page, lsjpg, xmlfile)) {
                                     string str = "盒号:" + boxsn + "生成xml失败!";
                                     ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
                                     continue;
                                 }
-
                                 Common.DataSplitUpdate(ClsDL.Archid);
                             }
+
                         }
                         else if (ClsDL.xls == 1) {
-                            string ScPathXls = Path.Combine(ClsDL.NewPath, qu,
+                            string newpath = Path.Combine(ClsDL.NewPath, qu);
+                            if (Directory.Exists(newpath))
+                                Directory.CreateDirectory(newpath);
+                            string ScPathXls = Path.Combine(newpath,
                                 ClsDL.Boxsn + "-" + ClsDL.Boxsn + "房屋统计.xlsx");
-                            string scpathxlsml = Path.Combine(ClsDL.NewPath, qu,
+                            string scpathxlsml = Path.Combine(newpath,
                                 ClsDL.Boxsn + "-" + ClsDL.Boxsn + "卷内目录统计.xlsx");
-                            string scpathxlstj = Path.Combine(ClsDL.NewPath, qu,
+                            string scpathxlstj = Path.Combine(newpath,
                                 ClsDL.Boxsn + "-" + ClsDL.Boxsn + "图像统计.xlsx");
-                            if (!WriteFwtj(ScPathXls, ClsDL.Archid, ClsDL.xmlname, ClsDL.ewmname))
-                            {
+                            if (!WriteFwtj(ScPathXls, ClsDL.Archid, ClsDL.xmlname, ClsDL.ewmname)) {
                                 string str = "盒号:" + boxsn + "房屋统计写入xls表失败!";
                                 ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
                                 continue;
                             }
 
-                            if (!WriteMltj(scpathxlsml, ClsDL.Archid, ClsDL.xmlname, ClsDL.ewmname, page))
-                            {
+                            if (!WriteMltj(scpathxlsml, ClsDL.Archid, ClsDL.xmlname, ClsDL.ewmname, page)) {
                                 string str = "盒号:" + boxsn + "目录统计写入xls表失败!";
                                 ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
                                 continue;
                             }
-                            if (!WriteTxtj(scpathxlstj, ClsDL.ewmname, loadfile, page))
-                            {
+                            if (!WriteTxtj(scpathxlstj, ClsDL.ewmname, loadfile, page)) {
                                 string str = "盒号:" + boxsn + "图像统计写入xls表失败!";
                                 ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
                                 continue;

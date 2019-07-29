@@ -447,7 +447,59 @@ namespace Csmdajc
                     Clscheck.lssqlOpernum.Add(val);
                 }
                 Writeini.GetAllKeyValues(this.Text, out Clscheck.Lsinikeys, out Clscheck.lsinival);
+                SettxtTag();
             });
+        }
+
+
+        void SettxtTag()
+        {
+            this.BeginInvoke(new Action(() =>
+            {
+                ToolStripButton t = null;
+                foreach (var item in toolstripmain1.Items) {
+                    if (item is ToolStripButton) {
+                        t = (ToolStripButton)item;
+                        if (t.Text.Trim().Length > 0) {
+                            int name = Clscheck.lsSqlOper.IndexOf(t.Text.Trim());
+                            if (name < 0)
+                                continue;
+                            string oper = Clscheck.lssqlOpernum[name];
+                            if (oper.Trim().Length <= 0)
+                                continue;
+                            int id = Clscheck.Lsinikeys.IndexOf("V" + oper);
+                            if (id < 0)
+                                continue;
+                            string val = Clscheck.lsinival[id];
+                            val = pub.GetkeyVal(val);
+                            if (val.Trim().Length <= 0)
+                                continue;
+                            t.ToolTipText = "快捷键：" + val;
+                        }
+                    }
+                }
+                foreach (var item in toolstripmain2.Items) {
+                    if (item is ToolStripButton) {
+                        t = (ToolStripButton)item;
+                        if (t.Text.Trim().Length > 0) {
+                            int name = Clscheck.lsSqlOper.IndexOf(t.Text.Trim());
+                            if (name < 0)
+                                continue;
+                            string oper = Clscheck.lssqlOpernum[name];
+                            if (oper.Trim().Length <= 0)
+                                continue;
+                            int id = Clscheck.Lsinikeys.IndexOf("V" + oper);
+                            if (id < 0)
+                                continue;
+                            string val = Clscheck.lsinival[id];
+                            val = pub.GetkeyVal(val);
+                            if (val.Trim().Length <= 0)
+                                continue;
+                            t.ToolTipText = "快捷键：" + val;
+                        }
+                    }
+                }
+            }));
         }
 
 
@@ -463,7 +515,6 @@ namespace Csmdajc
                     }
                 }
             }
-
             if (!bl) {
                 foreach (var item in toolstripmain2.Items) {
                     if (item is ToolStripButton) {
@@ -818,7 +869,7 @@ namespace Csmdajc
 
         }
 
-        private async void FtpUpFinish(string filetmp, int arid, string filename, int pages, int tag)
+        private  void FtpUpFinish(string filetmp, int arid, string filename, int pages, int tag)
         {
             try {
                 if (File.Exists(filetmp)) {
@@ -836,19 +887,29 @@ namespace Csmdajc
                     }
                     else {
                         string RemoteDir = filename.Substring(0, 8);
-                        string localPath = Path.Combine(T_ConFigure.LocalTempPath, filename.Substring(0, 8));
-                        string newfile = Path.Combine(T_ConFigure.FtpArchSave, RemoteDir, filename);
-                        string newpath = Path.Combine(T_ConFigure.FtpArchSave, RemoteDir);
-                        bool x = await ftp.FtpUpFile(filetmp, newfile, newpath);
-                        if (x) {
-                            Common.SetCheckFinish(arid, DESEncrypt.DesEncrypt(filename), 1, (int)T_ConFigure.ArchStat.质检完);
+                        if (ftp.SaveRemoteFileUp(T_ConFigure.FtpArchSave, RemoteDir, filetmp, filename)) {
                             Common.DelTask(arid);
+                            Common.SetCheckFinish(arid, DESEncrypt.DesEncrypt(filename),1, (int)T_ConFigure.ArchStat.质检完);
                             try {
                                 File.Delete(filetmp);
-                                Directory.Delete(localPath);
+                                Directory.Delete(Path.GetDirectoryName(filetmp));
                             } catch { }
                             return;
+
                         }
+                        //发现图像上传时有错位现象
+                        //string newfile = Path.Combine(T_ConFigure.FtpArchSave, RemoteDir, filename);
+                        //string newpath = Path.Combine(T_ConFigure.FtpArchSave, RemoteDir);
+                        //bool x = await ftp.FtpUpFile(filetmp, newfile, newpath);
+                        //if (x) {
+                        //    Common.SetCheckFinish(arid, DESEncrypt.DesEncrypt(filename), 1, (int)T_ConFigure.ArchStat.质检完);
+                        //    Common.DelTask(arid);
+                        //    try {
+                        //        File.Delete(filetmp);
+                        //        Directory.Delete(localPath);
+                        //    } catch { }
+                        //    return;
+                        //}
                     }
                     if (archzt == 1)
                         Common.SetArchWorkState(arid, (int)T_ConFigure.ArchStat.排序完);

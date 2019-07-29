@@ -621,9 +621,9 @@ namespace DAL
             try {
                 string strSql = "";
                 if (T_User.UserId != 1)
-                    strSql = "select TypeModule'模式',Archid'卷id',ArchPos'案卷号',FileName'文件名',ArchStat'流程',Filepath'路径',pages '页码',Userid'用户',IP,DateTime'时间' from M_UpTask where Userid=@userid";
+                    strSql = "select TypeModule'模式',Archid'卷id',ArchPos'案卷号',FileName'文件名',ArchStat'流程',Filepath'路径',pages '页码',TagPage,Userid'用户',IP,DateTime'时间' from M_UpTask where Userid=@userid";
                 else
-                    strSql = "select TypeModule'模式',Archid'卷id',ArchPos'案卷号',FileName'文件名',ArchStat'流程',Filepath'路径',pages '页码',Userid'用户',IP,DateTime'时间' from M_UpTask";
+                    strSql = "select TypeModule'模式',Archid'卷id',ArchPos'案卷号',FileName'文件名',ArchStat'流程',Filepath'路径',pages '页码',TagPage,Userid'用户',IP,DateTime'时间' from M_UpTask";
                 SqlParameter p1 = new SqlParameter("@userid", T_User.LoginName);
                 DataTable dt = SQLHelper.ExcuteTable(strSql, p1);
                 return dt;
@@ -1133,7 +1133,17 @@ namespace DAL
 
         public static DataTable DataSplitGetdata(int houseid, string box1, string box2)
         {
-            string strSql = "select id,BOXSN,PAGES,IMGFILE,ArchXqStat,ArchLx from  M_IMAGEFILE where  SPLITERROR is null and  boxsn>=@box1 and boxsn<=@box2 and HOUSEID=@houseid and CHECKED=1";
+            string strSql = "select id,BOXSN,PAGES,IMGFILE,ArchXqStat,ArchLx from  M_IMAGEFILE where  SPLITERROR is null and  boxsn>=@box1 and boxsn<=@box2 and HOUSEID=@houseid and CHECKED=1 ORDER BY CONVERT(INT,BOXSN)";
+            SqlParameter p1 = new SqlParameter("@box1", box1);
+            SqlParameter p2 = new SqlParameter("@box2", box2);
+            SqlParameter p3 = new SqlParameter("@houseid", houseid);
+            DataTable dt = SQLHelper.ExcuteTable(strSql, p1, p2, p3);
+            return dt;
+        }
+
+        public static DataTable DataSplitGetdataxls(int houseid, string box1, string box2)
+        {
+            string strSql = "select id,BOXSN,PAGES,IMGFILE,ArchXqStat,ArchLx from  M_IMAGEFILE where  boxsn>=@box1 and boxsn<=@box2 and HOUSEID=@houseid and CHECKED=1";
             SqlParameter p1 = new SqlParameter("@box1", box1);
             SqlParameter p2 = new SqlParameter("@box2", box2);
             SqlParameter p3 = new SqlParameter("@houseid", houseid);
@@ -1143,7 +1153,7 @@ namespace DAL
 
         public static void DataSplitUpdateboxsn(int houseid, string boxsn, string boxsn2)
         {
-            string strSql = "update M_IMAGEFILE set SPLITERROR=null where boxsn>=@boxsn and boxsn<=@boxsn2 and HOUSEID=@houseid";
+            string strSql = "update M_IMAGEFILE set SPLITERROR=null where boxsn>=@boxsn and boxsn<=@boxsn2 and HOUSEID=@houseid ";
             SqlParameter p1 = new SqlParameter("@boxsn", boxsn);
             SqlParameter p2 = new SqlParameter("@boxsn2", boxsn2);
             SqlParameter p3 = new SqlParameter("@houseid", houseid);
@@ -1508,6 +1518,23 @@ namespace DAL
             }
         }
 
+        public static DataTable GetArchQuerFile(string boxsn, string boxsn2)
+        {
+            try {
+                string strSql = "select IMGFILE,boxsn,archno from M_IMAGEFILE WHERE CHECKED=1 AND boxsn>=@b1 and boxsn<=@b2 and HOUSEID=@houseid";
+                SqlParameter p1 = new SqlParameter("@b1", boxsn);
+                SqlParameter p2 = new SqlParameter("@b2", boxsn2);
+                SqlParameter p3 = new SqlParameter("@houseid", V_HouseSetCs.Houseid);
+                DataTable dt = SQLHelper.ExcuteTable(strSql, p1, p2, p3);
+                return dt;
+
+            } catch (Exception e) {
+                MessageBox.Show("查询失败:" + e.ToString());
+                return null;
+            }
+        }
+
+
         public static DataTable GetArchQuerstat(string str, string boxsn, string boxsn2, string col)
         {
             try {
@@ -1523,7 +1550,6 @@ namespace DAL
                 MessageBox.Show("查询失败:" + e.ToString());
                 return null;
             }
-
         }
 
         public static DataTable GetkeysInfo()
@@ -1567,6 +1593,15 @@ namespace DAL
             SqlParameter p2 = new SqlParameter("@oper", oper);
             SqlParameter p3 = new SqlParameter("@key", num);
             SQLHelper.ExecScalar(strSql, p1, p2, p3);
+        }
+
+
+        public static DataTable GetQuzt(string qu )
+        {
+            string strSql = "SELECT  boxsn'盒号',CHECKED'质检',INDEXED'排序' ,SCANED'扫描' FROM dbo.M_IMAGEFILE WHERE ArchXqStat=@qu";
+            SqlParameter p1 = new SqlParameter("@qu", qu);
+            DataTable dt = SQLHelper.ExcuteTable(strSql, p1);
+            return dt;
         }
 
         #endregion
@@ -1635,14 +1670,14 @@ namespace DAL
         }
         public static DataTable Getinfosx(string archid)
         {
-            string strSql = "select * from V_info where Archid=@arid";
+            string strSql = "select * from V_xlsFwtjinfo where Archid=@arid";
             SqlParameter p1 = new SqlParameter("@arid", archid);
             DataTable dt = SQLHelper.ExcuteTable(strSql, p1);
             return dt;
         }
         public static DataTable Getmlinfo2(string archid)
         {
-            string strSql = "select * from V_getmlinfo where archid=@archid order by frompage";
+            string strSql = "select  标题, 目录种类, 起始页码, 业务ID, Archid from 目录表 where archid=@archid ORDER BY CONVERT( INT ,起始页码)";
             SqlParameter p1 = new SqlParameter("@archid", archid);
             DataTable dt = SQLHelper.ExcuteTable(strSql, p1);
             return dt;

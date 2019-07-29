@@ -59,6 +59,9 @@
       <HintPath>..\CsmImg\bin\x86\Debug\CsmImg.dll</HintPath>
     </Reference>
     <Reference Include="DevComponents.DotNetBar2, Version=12.5.0.2, Culture=neutral, PublicKeyToken=c39c3242a43eee2b, processorArchitecture=MSIL" />
+    <Reference Include="Hljsarch">
+      <HintPath>..\Hljsarch\Hljsarch\bin\x86\Debug\Hljsarch.dll</HintPath>
+    </Reference>
     <Reference Include="Spire.Common">
       <HintPath>..\..\..\..\Control\Spire.Common.dll</HintPath>
     </Reference>

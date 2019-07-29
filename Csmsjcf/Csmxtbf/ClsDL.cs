@@ -31,7 +31,9 @@ namespace Csmsjcf
         public static string ewmname { get; set; } = "";
         public static DataTable dtboxsn { get; set; } = null;
 
-       
+        public static int lx { get; set; } = 0;
+
+
 
     }
 }

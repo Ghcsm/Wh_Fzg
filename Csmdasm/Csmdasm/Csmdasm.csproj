@@ -92,10 +92,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Hljsarch\Hljsarch\bin\x86\Debug\Hljsarch.dll</HintPath>
     </Reference>
-    <Reference Include="Jdshow, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Jdshow\bin\x86\Debug\Jdshow.dll</HintPath>
-    </Reference>
     <Reference Include="Leadtools, Version=19.0.0.0, Culture=neutral, PublicKeyToken=9cf889f53ea9b907, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\LEADTOOLS 19\Bin\Dotnet4\Win32\Leadtools.dll</HintPath>

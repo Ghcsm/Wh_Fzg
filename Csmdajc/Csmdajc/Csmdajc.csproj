@@ -87,15 +87,9 @@
     <Reference Include="DevComponents.DotNetBar2">
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fstit">
-      <HintPath>..\..\Fstit\bin\x86\Debug\Fstit.dll</HintPath>
-    </Reference>
     <Reference Include="Hljsarch, Version=1.0.7078.23673, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Hljsarch\Hljsarch\bin\x86\Debug\Hljsarch.dll</HintPath>
-    </Reference>
-    <Reference Include="Jdshow">
-      <HintPath>..\..\Jdshow\bin\x86\Debug\Jdshow.dll</HintPath>
     </Reference>
     <Reference Include="Leadtools, Version=19.0.0.0, Culture=neutral, PublicKeyToken=9cf889f53ea9b907, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>

@@ -1047,6 +1047,25 @@ namespace HLjscom
 
             return img;
         }
+
+
+        public Bitmap Getbmp(int page)
+        {
+            Bitmap bitmap = null;
+            try {
+                using (RasterCodecs _Codef = new RasterCodecs()) {
+
+                    RasterImage _imagepx = _Codef.Load(Filename, 0, CodecsLoadByteOrder.BgrOrGrayOrRomm, page, page);
+                    Image imgtp = RasterImageConverter.ConvertToImage(_imagepx, ConvertToImageOptions.None);
+                    bitmap = new Bitmap(imgtp);
+                }
+                return bitmap;
+            } catch (Exception e) {
+                return bitmap;
+            }
+
+        }
+
         //文字水印
         public RasterImage WaterImgtxt(RasterImage water)
         {
@@ -1236,7 +1255,7 @@ namespace HLjscom
                         a0.Add(i.ToString());
                     }
                     if (File.Exists(file)) {
-                        if (zlcf ==2) {
+                        if (zlcf == 2) {
                             try {
                                 File.Delete(file);
                             } catch { }
@@ -1704,6 +1723,8 @@ namespace HLjscom
             }
         }
 
+
+
         //排序
         public void _OrderSave(string _path)
         {
@@ -1786,7 +1807,7 @@ namespace HLjscom
             }
         }
         //排序
-        public bool _OrderSave(int tagpage,int regpage, string oldfile, string _path, Dictionary<int, string> Pabc, Dictionary<int, int> Pnumber, Dictionary<int, string> fuhao)
+        public bool _OrderSave(int tagpage, int regpage, string oldfile, string _path, Dictionary<int, string> Pabc, Dictionary<int, int> Pnumber, Dictionary<int, string> fuhao)
         {
             int pagecoun = 0;
             try {
@@ -1798,7 +1819,7 @@ namespace HLjscom
                         var abckeys = Pabc.Where(q => q.Value == zimu).Select(q => q.Key);
                         foreach (var a in abckeys) {
                             pagecoun += 1;
-                            OrderSave(a, pagecoun, _path);
+                            OrderSave(oldpage, pagecoun, oldfile, _path);
                         }
                         oldpage = zimu_a + abc;
                     }
@@ -1899,7 +1920,7 @@ namespace HLjscom
                 if (bit != 1) {
                     if (bit != 8) {
                         _Codef.Options.Jpeg.Save.QualityFactor = Factor;
-                        _Codef.Save(_imagepx, _path, RasterImageFormat.TifJpeg, bit, 1, 1, i, CodecsSavePageMode.Append);
+                        _Codef.Save(_imagepx, _path, RasterImageFormat.TifJpeg, 24, 1, 1, i, CodecsSavePageMode.Append);
                     }
                     else {
                         _Codef.Options.Jpeg.Save.QualityFactor = Factor;
@@ -1909,6 +1930,33 @@ namespace HLjscom
                 else {
                     _Codef.Save(_imagepx, _path, RasterImageFormat.CcittGroup4, 1, 1, 1, -1, CodecsSavePageMode.Append);
                 }
+            } catch { }
+        }
+
+        public void jpgTotif(List<string> jpg, string tif)
+        {
+            try {
+                RasterImage _imagepx;
+                RasterCodecs _Codef = new RasterCodecs();
+                for (int i = 0; i < jpg.Count; i++) {
+                    string oldfile = jpg[i];
+                    _imagepx = _Codef.Load(oldfile, 0, CodecsLoadByteOrder.BgrOrGrayOrRomm, 1, 1);
+                    int bit = _imagepx.BitsPerPixel;
+                    if (bit != 1) {
+                        if (bit != 8) {
+                            _Codef.Options.Jpeg.Save.QualityFactor = Factor;
+                            _Codef.Save(_imagepx, tif, RasterImageFormat.TifJpeg, bit, 1, 1, i, CodecsSavePageMode.Append);
+                        }
+                        else {
+                            _Codef.Options.Jpeg.Save.QualityFactor = Factor;
+                            _Codef.Save(_imagepx, tif, RasterImageFormat.TifJpeg, 8, 1, 1, i, CodecsSavePageMode.Append);
+                        }
+                    }
+                    else {
+                        _Codef.Save(_imagepx, tif, RasterImageFormat.CcittGroup4, 1, 1, 1, -1, CodecsSavePageMode.Append);
+                    }
+                }
+
             } catch { }
         }
 
@@ -2081,6 +2129,61 @@ namespace HLjscom
             } catch (Exception ex) {
                 MessageBox.Show(ex.ToString());
             }
+        }
+
+        public void _Insterpage(Image bmp, int page)
+        {
+            try {
+                if (_Imageview.Image != null) {
+                    Bitmap bitmap = new Bitmap(bmp);
+                    RasterImage rimg = RasterImageConverter.ConvertFromImage(bitmap, ConvertFromImageOptions.None);
+                    int bit = rimg.BitsPerPixel;
+                    if (bit != 1) {
+                        if (bit != 8) {
+                            _Codefile.Options.Jpeg2000.Save.CompressionRatio = (float)Factor;
+                            _Codefile.Options.Ecw.Save.QualityFactor = Factor;
+                            _Codefile.Save(rimg, Filename, RasterImageFormat.TifJpeg, 24, 1, 1, page, CodecsSavePageMode.Insert);
+                        }
+                        else {
+                            _Codefile.Options.Jpeg.Save.QualityFactor = Factor;
+                            _Codefile.Save(rimg, Filename, RasterImageFormat.TifJpeg, 8, 1, 1, page, CodecsSavePageMode.Insert);
+                        }
+                    }
+                    else {
+                        _Codefile.Save(rimg, Filename, RasterImageFormat.CcittGroup4, 1, 1, 1, page, CodecsSavePageMode.Insert);
+                    }
+                }
+
+            } catch {}
+        }
+
+        public bool _CopyImg()
+        {
+            if (_Imageview.Image == null)
+                return false;
+            try {
+                RasterImage img = _Imageview.Image.Clone();
+                int bit = img.BitsPerPixel;
+                int page = CrrentPage;
+                if (bit != 1) {
+                    if (bit != 8) {
+                        _Codefile.Options.Jpeg2000.Save.CompressionRatio = (float)Factor;
+                        _Codefile.Options.Ecw.Save.QualityFactor = Factor;
+                        _Codefile.Save(img, Filename, RasterImageFormat.TifJpeg, bit, 1, 1, page + 1, CodecsSavePageMode.Insert);
+                    }
+                    else {
+                        _Codefile.Options.Jpeg.Save.QualityFactor = Factor;
+                        _Codefile.Save(img, Filename, RasterImageFormat.TifJpeg, bit, 1, 1, page + 1, CodecsSavePageMode.Insert);
+                    }
+                }
+                else {
+                    _Codefile.Save(img, Filename, RasterImageFormat.CcittGroup4, bit, 1, 1, page + 1, CodecsSavePageMode.Insert);
+                }
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
+
         }
 
         // 转跳指定页码
@@ -2690,8 +2793,8 @@ namespace HLjscom
         {
             try {
                 _twains.EnableDuplexScanning = x;
-            } catch (Exception ex) {
-                MessageBox.Show(ex.ToString());
+            } catch {
+
             }
         }
 
@@ -2895,6 +2998,21 @@ namespace HLjscom
                 _PageFuhao[CrrentPage] = page;
             else if (_PageFuhao.Count <= 0 || !_PageFuhao.ContainsKey(CrrentPage))
                 _PageFuhao.Add(CrrentPage, page);
+        }
+
+        public void _DelePageTag(int p)
+        {
+            if (_PageFuhao.ContainsKey(p))
+                _PageFuhao.Remove(p);
+            else if (_PageAbc.ContainsKey(p))
+                _PageAbc.Remove(p);
+            else {
+                if (_PageNumber.ContainsKey(p))
+                    _PageNumber[p] = -9999;
+                else if (_PageNumber.Count <= 0 || !_PageNumber.ContainsKey(p)) {
+                    _PageNumber.Add(p, -9999);
+                }
+            }
         }
 
         //判断数字或英文页码

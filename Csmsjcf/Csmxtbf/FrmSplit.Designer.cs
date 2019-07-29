@@ -54,8 +54,8 @@
             this.combKf = new System.Windows.Forms.ComboBox();
             this.label14 = new System.Windows.Forms.Label();
             this.grdl2 = new System.Windows.Forms.GroupBox();
-            this.chkxlsxml = new System.Windows.Forms.CheckBox();
-            this.chkjpg = new System.Windows.Forms.CheckBox();
+            this.chkxls = new System.Windows.Forms.CheckBox();
+            this.chkjpgxml = new System.Windows.Forms.CheckBox();
             this.TabDatedb = new DevComponents.DotNetBar.SuperTabItem();
             this.superTabControlPanel1 = new DevComponents.DotNetBar.SuperTabControlPanel();
             this.gr1 = new DevComponents.DotNetBar.Controls.GroupPanel();
@@ -443,14 +443,14 @@
             // 
             this.txtB2.Location = new System.Drawing.Point(179, 121);
             this.txtB2.Name = "txtB2";
-            this.txtB2.Size = new System.Drawing.Size(43, 21);
+            this.txtB2.Size = new System.Drawing.Size(66, 21);
             this.txtB2.TabIndex = 4;
             // 
             // txtB1
             // 
-            this.txtB1.Location = new System.Drawing.Point(89, 121);
+            this.txtB1.Location = new System.Drawing.Point(77, 121);
             this.txtB1.Name = "txtB1";
-            this.txtB1.Size = new System.Drawing.Size(43, 21);
+            this.txtB1.Size = new System.Drawing.Size(55, 21);
             this.txtB1.TabIndex = 3;
             // 
             // label15
@@ -483,8 +483,8 @@
             // grdl2
             // 
             this.grdl2.BackColor = System.Drawing.Color.Transparent;
-            this.grdl2.Controls.Add(this.chkxlsxml);
-            this.grdl2.Controls.Add(this.chkjpg);
+            this.grdl2.Controls.Add(this.chkxls);
+            this.grdl2.Controls.Add(this.chkjpgxml);
             this.grdl2.Location = new System.Drawing.Point(13, 198);
             this.grdl2.Name = "grdl2";
             this.grdl2.Size = new System.Drawing.Size(311, 81);
@@ -492,27 +492,27 @@
             this.grdl2.TabStop = false;
             this.grdl2.Text = "生成结果";
             // 
-            // chkxlsxml
+            // chkxls
             // 
-            this.chkxlsxml.AutoSize = true;
-            this.chkxlsxml.Location = new System.Drawing.Point(156, 32);
-            this.chkxlsxml.Name = "chkxlsxml";
-            this.chkxlsxml.Size = new System.Drawing.Size(66, 16);
-            this.chkxlsxml.TabIndex = 2;
-            this.chkxlsxml.Text = "生成xls";
-            this.chkxlsxml.UseVisualStyleBackColor = true;
+            this.chkxls.AutoSize = true;
+            this.chkxls.Location = new System.Drawing.Point(156, 32);
+            this.chkxls.Name = "chkxls";
+            this.chkxls.Size = new System.Drawing.Size(66, 16);
+            this.chkxls.TabIndex = 2;
+            this.chkxls.Text = "生成xls";
+            this.chkxls.UseVisualStyleBackColor = true;
             // 
-            // chkjpg
+            // chkjpgxml
             // 
-            this.chkjpg.AutoSize = true;
-            this.chkjpg.Checked = true;
-            this.chkjpg.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkjpg.Location = new System.Drawing.Point(20, 32);
-            this.chkjpg.Name = "chkjpg";
-            this.chkjpg.Size = new System.Drawing.Size(96, 16);
-            this.chkjpg.TabIndex = 0;
-            this.chkjpg.Text = "生成jpg和xml";
-            this.chkjpg.UseVisualStyleBackColor = true;
+            this.chkjpgxml.AutoSize = true;
+            this.chkjpgxml.Checked = true;
+            this.chkjpgxml.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkjpgxml.Location = new System.Drawing.Point(20, 32);
+            this.chkjpgxml.Name = "chkjpgxml";
+            this.chkjpgxml.Size = new System.Drawing.Size(96, 16);
+            this.chkjpgxml.TabIndex = 0;
+            this.chkjpgxml.Text = "生成jpg和xml";
+            this.chkjpgxml.UseVisualStyleBackColor = true;
             // 
             // TabDatedb
             // 
@@ -1743,8 +1743,8 @@
         private System.Windows.Forms.ComboBox combKf;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.GroupBox grdl2;
-        private System.Windows.Forms.CheckBox chkxlsxml;
-        private System.Windows.Forms.CheckBox chkjpg;
+        private System.Windows.Forms.CheckBox chkxls;
+        private System.Windows.Forms.CheckBox chkjpgxml;
         private System.Windows.Forms.GroupBox grdl3;
         private System.Windows.Forms.RadioButton radFtp;
         private System.Windows.Forms.RadioButton radTfPath;

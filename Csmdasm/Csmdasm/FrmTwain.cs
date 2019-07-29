@@ -371,7 +371,7 @@ namespace Csmdasm
             }));
         }
 
-        private async void FtpUp(string filetmp, string archpos, int maxpage, int arid)
+        private void FtpUp(string filetmp, string archpos, int maxpage, int arid,int regpage)
         {
             try {
                 if (File.Exists(filetmp)) {
@@ -382,7 +382,10 @@ namespace Csmdasm
                         string path = Path.Combine(T_ConFigure.gArchScanPath, archpos);
                         if (ftp.FtpMoveFile(sourcefile, goalfile, path)) {
                             Thread.Sleep(5000);
-                            Common.SetScanFinish(arid, maxpage, 1, (int)T_ConFigure.ArchStat.扫描完);
+                            if (maxpage >= regpage)
+                                Common.SetScanFinish(arid, maxpage, 1, (int)T_ConFigure.ArchStat.扫描完);
+                            else
+                                Common.SetScanFinish(arid, maxpage, 1, (int)T_ConFigure.ArchStat.无);
                             Common.DelTask(arid);
                             try {
                                 Directory.Delete(Path.Combine(T_ConFigure.FtpTmpPath, T_ConFigure.TmpScan, archpos));
@@ -391,24 +394,38 @@ namespace Csmdasm
                         }
                     }
                     else {
-                        string newfile = Path.Combine(T_ConFigure.gArchScanPath, archpos, T_ConFigure.ScanTempFile);
-                        string newpath = Path.Combine(T_ConFigure.gArchScanPath, archpos);
-                        bool x = await ftp.FtpUpFile(filetmp, newfile, newpath);
-                        if (x) {
+                        if (ftp.SaveRemoteFileUp(T_ConFigure.gArchScanPath, archpos, filetmp, T_ConFigure.ScanTempFile)) {
+                            if (maxpage>=regpage)
                             Common.SetScanFinish(arid, maxpage, 1, (int)T_ConFigure.ArchStat.扫描完);
-                            Common.DelTask(arid);
+                            else
+                                Common.SetScanFinish(arid, maxpage, 1, (int)T_ConFigure.ArchStat.无);
+                            Common.DelTask(Convert.ToInt32(arid));
                             try {
                                 File.Delete(filetmp);
                                 Directory.Delete(Path.Combine(T_ConFigure.LocalTempPath, archpos));
-                            } catch { }
+                            } catch {
+                            }
                             return;
                         }
+                        // 新传输模式发现图像有错位现象
+                        // string newfile = Path.Combine(T_ConFigure.gArchScanPath, archpos, T_ConFigure.ScanTempFile);
+                        //string newpath = Path.Combine(T_ConFigure.gArchScanPath, archpos);
+                        //bool x = await ftp.FtpUpFile(filetmp, newfile, newpath);
+                        //if (x) {
+                        //    Common.SetScanFinish(arid, maxpage, 1, (int)T_ConFigure.ArchStat.扫描完);
+                        //    Common.DelTask(arid);
+                        //    try {
+                        //        File.Delete(filetmp);
+                        //        Directory.Delete(Path.Combine(T_ConFigure.LocalTempPath, archpos));
+                        //    } catch { }
+                        //    return;
+                        //}
 
                     }
                 }
                 else
                     Common.Writelog(arid, "扫描退出时未找到文件!");
-                Common.SetScanFinish(arid, maxpage, 0, (int)T_ConFigure.ArchStat.无);
+                    Common.SetScanFinish(arid, maxpage, 0, (int)T_ConFigure.ArchStat.无);
             } catch {
                 Common.SetScanFinish(arid, maxpage, 0, (int)T_ConFigure.ArchStat.无);
             } finally {
@@ -564,8 +581,9 @@ namespace Csmdasm
             string archpos = ClsTwain.ArchPos;
             int maxpage = ClsTwain.MaxPage;
             int arid = ClsTwain.Archid;
+            int regpage = ClsTwain.RegPage;
             Cledata();
-            Task.Run(new Action(() => { FtpUp(filetmp, archpos, maxpage, arid); }));
+            Task.Run(new Action(() => { FtpUp(filetmp, archpos, maxpage, arid, regpage); }));
             gArch.LvData.Focus();
         }
 
@@ -649,7 +667,7 @@ namespace Csmdasm
         {
             ClsTwain.Scanbool = true;
             Himg.Scanms = comBoxScanMode.SelectedIndex;
-            //  Himg._Duplexpage(chkDoublePages.Checked);
+             Himg._Duplexpage(chkDoublePages.Checked);
             if (comPagesSize.SelectedIndex == 1) {
                 if (rdVerPages.Checked) {
                     Himg._SetimgFx(1, 0);
@@ -702,7 +720,37 @@ namespace Csmdasm
                     ClsTwain.lssqlOpernum.Add(val);
                 }
                 Writeini.GetAllKeyValues(this.Text, out ClsTwain.Lsinikeys, out ClsTwain.lsinival);
+                SettxtTag();
             });
+        }
+
+        void SettxtTag()
+        {
+            this.BeginInvoke(new Action(() =>
+            {
+                ToolStripButton t = null;
+                foreach (var item in toolStrip1.Items) {
+                    if (item is ToolStripButton) {
+                        t = (ToolStripButton)item;
+                        if (t.Text.Trim().Length > 0) {
+                            int name = ClsTwain.lsSqlOper.IndexOf(t.Text.Trim());
+                            if (name < 0)
+                                continue;
+                            string oper = ClsTwain.lssqlOpernum[name];
+                            if (oper.Trim().Length <= 0)
+                                continue;
+                            int id = ClsTwain.Lsinikeys.IndexOf("V" + oper);
+                            if (id < 0)
+                                continue;
+                            string val = ClsTwain.lsinival[id];
+                            val = pub.GetkeyVal(val);
+                            if (val.Trim().Length <= 0)
+                                continue;
+                            t.ToolTipText = "快捷键：" + val;
+                        }
+                    }
+                }
+            }));
         }
 
         void KeysDownEve(string key)
