@@ -150,6 +150,12 @@
     <Compile Include="FrmCheck.Designer.cs">
       <DependentUpon>FrmCheck.cs</DependentUpon>
     </Compile>
+    <Compile Include="Frmgoto.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frmgoto.Designer.cs">
+      <DependentUpon>Frmgoto.cs</DependentUpon>
+    </Compile>
     <Compile Include="Frmwt.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -169,6 +175,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FrmCheck.zu-ZA.resx">
       <DependentUpon>FrmCheck.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frmgoto.resx">
+      <DependentUpon>Frmgoto.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Frmwt.resx">
       <DependentUpon>Frmwt.cs</DependentUpon>

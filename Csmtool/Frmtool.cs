@@ -286,7 +286,7 @@ namespace Csmtool
             dgvTjdata.DataSource = null;
             labcheck.Visible = false;
             labarchcount.Visible = false;
-            DataTable dt = Common.GetQuzt(txtTjBoxsn1.Text.Trim());
+            DataTable dt = Common.GetQuzt(txtTjBoxsn1.Text.Trim().PadLeft(4,'0'));
             if (dt == null || dt.Rows.Count <= 0) {
                 MessageBox.Show("未查到相关信息!");
                 return;

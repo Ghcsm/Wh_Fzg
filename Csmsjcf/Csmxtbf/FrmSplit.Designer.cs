@@ -50,7 +50,6 @@
             this.label16 = new System.Windows.Forms.Label();
             this.txtB2 = new System.Windows.Forms.TextBox();
             this.txtB1 = new System.Windows.Forms.TextBox();
-            this.label15 = new System.Windows.Forms.Label();
             this.combKf = new System.Windows.Forms.ComboBox();
             this.label14 = new System.Windows.Forms.Label();
             this.grdl2 = new System.Windows.Forms.GroupBox();
@@ -153,6 +152,10 @@
             this.fBdigImgPath = new System.Windows.Forms.FolderBrowserDialog();
             this.fontDialog = new System.Windows.Forms.FontDialog();
             this.colorDialog = new System.Windows.Forms.ColorDialog();
+            this.rabdlboxsn = new System.Windows.Forms.RadioButton();
+            this.raddlxq = new System.Windows.Forms.RadioButton();
+            this.txtXq = new System.Windows.Forms.TextBox();
+            this.gr0 = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.superTabControl1)).BeginInit();
             this.superTabControl1.SuspendLayout();
             this.superTabControlPanel2.SuspendLayout();
@@ -176,6 +179,7 @@
             this.gr2_2.SuspendLayout();
             this.gr2_3.SuspendLayout();
             this.gr2_1.SuspendLayout();
+            this.gr0.SuspendLayout();
             this.SuspendLayout();
             // 
             // superTabControl1
@@ -213,6 +217,7 @@
             // 
             // superTabControlPanel2
             // 
+            this.superTabControlPanel2.Controls.Add(this.gr0);
             this.superTabControlPanel2.Controls.Add(this.gr5);
             this.superTabControlPanel2.Controls.Add(this.chkboxsn);
             this.superTabControlPanel2.Controls.Add(this.txtlsh);
@@ -394,15 +399,11 @@
             this.grdl1.BackColor = System.Drawing.Color.Transparent;
             this.grdl1.Controls.Add(this.radCxzh);
             this.grdl1.Controls.Add(this.radZlcy);
-            this.grdl1.Controls.Add(this.label16);
-            this.grdl1.Controls.Add(this.txtB2);
-            this.grdl1.Controls.Add(this.txtB1);
-            this.grdl1.Controls.Add(this.label15);
             this.grdl1.Controls.Add(this.combKf);
             this.grdl1.Controls.Add(this.label14);
             this.grdl1.Location = new System.Drawing.Point(13, 23);
             this.grdl1.Name = "grdl1";
-            this.grdl1.Size = new System.Drawing.Size(310, 157);
+            this.grdl1.Size = new System.Drawing.Size(310, 83);
             this.grdl1.TabIndex = 2;
             this.grdl1.TabStop = false;
             this.grdl1.Text = "基本配置";
@@ -410,11 +411,10 @@
             // radCxzh
             // 
             this.radCxzh.AutoSize = true;
-            this.radCxzh.Location = new System.Drawing.Point(140, 67);
+            this.radCxzh.Location = new System.Drawing.Point(140, 56);
             this.radCxzh.Name = "radCxzh";
             this.radCxzh.Size = new System.Drawing.Size(71, 16);
             this.radCxzh.TabIndex = 7;
-            this.radCxzh.TabStop = true;
             this.radCxzh.Text = "重新转换";
             this.radCxzh.UseVisualStyleBackColor = true;
             // 
@@ -422,7 +422,7 @@
             // 
             this.radZlcy.AutoSize = true;
             this.radZlcy.Checked = true;
-            this.radZlcy.Location = new System.Drawing.Point(36, 67);
+            this.radZlcy.Location = new System.Drawing.Point(36, 56);
             this.radZlcy.Name = "radZlcy";
             this.radZlcy.Size = new System.Drawing.Size(71, 16);
             this.radZlcy.TabIndex = 6;
@@ -433,7 +433,7 @@
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(138, 127);
+            this.label16.Location = new System.Drawing.Point(174, 26);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(23, 12);
             this.label16.TabIndex = 5;
@@ -441,26 +441,17 @@
             // 
             // txtB2
             // 
-            this.txtB2.Location = new System.Drawing.Point(179, 121);
+            this.txtB2.Location = new System.Drawing.Point(215, 20);
             this.txtB2.Name = "txtB2";
             this.txtB2.Size = new System.Drawing.Size(66, 21);
             this.txtB2.TabIndex = 4;
             // 
             // txtB1
             // 
-            this.txtB1.Location = new System.Drawing.Point(77, 121);
+            this.txtB1.Location = new System.Drawing.Point(113, 20);
             this.txtB1.Name = "txtB1";
             this.txtB1.Size = new System.Drawing.Size(55, 21);
             this.txtB1.TabIndex = 3;
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(18, 125);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(53, 12);
-            this.label15.TabIndex = 2;
-            this.label15.Text = "盒号范围";
             // 
             // combKf
             // 
@@ -485,7 +476,7 @@
             this.grdl2.BackColor = System.Drawing.Color.Transparent;
             this.grdl2.Controls.Add(this.chkxls);
             this.grdl2.Controls.Add(this.chkjpgxml);
-            this.grdl2.Location = new System.Drawing.Point(13, 198);
+            this.grdl2.Location = new System.Drawing.Point(13, 208);
             this.grdl2.Name = "grdl2";
             this.grdl2.Size = new System.Drawing.Size(311, 81);
             this.grdl2.TabIndex = 1;
@@ -1576,6 +1567,51 @@
             // 
             this.FdigXls.Filter = "Xls文件|*.xls;*xlsx";
             // 
+            // rabdlboxsn
+            // 
+            this.rabdlboxsn.AutoSize = true;
+            this.rabdlboxsn.Location = new System.Drawing.Point(19, 23);
+            this.rabdlboxsn.Name = "rabdlboxsn";
+            this.rabdlboxsn.Size = new System.Drawing.Size(71, 16);
+            this.rabdlboxsn.TabIndex = 8;
+            this.rabdlboxsn.Text = "盒号范围";
+            this.rabdlboxsn.UseVisualStyleBackColor = true;
+            // 
+            // raddlxq
+            // 
+            this.raddlxq.AutoSize = true;
+            this.raddlxq.Checked = true;
+            this.raddlxq.Location = new System.Drawing.Point(21, 52);
+            this.raddlxq.Name = "raddlxq";
+            this.raddlxq.Size = new System.Drawing.Size(71, 16);
+            this.raddlxq.TabIndex = 9;
+            this.raddlxq.TabStop = true;
+            this.raddlxq.Text = "小区范围";
+            this.raddlxq.UseVisualStyleBackColor = true;
+            // 
+            // txtXq
+            // 
+            this.txtXq.Location = new System.Drawing.Point(113, 48);
+            this.txtXq.Name = "txtXq";
+            this.txtXq.Size = new System.Drawing.Size(168, 21);
+            this.txtXq.TabIndex = 10;
+            // 
+            // gr0
+            // 
+            this.gr0.BackColor = System.Drawing.Color.Transparent;
+            this.gr0.Controls.Add(this.txtB1);
+            this.gr0.Controls.Add(this.txtXq);
+            this.gr0.Controls.Add(this.txtB2);
+            this.gr0.Controls.Add(this.label16);
+            this.gr0.Controls.Add(this.raddlxq);
+            this.gr0.Controls.Add(this.rabdlboxsn);
+            this.gr0.Location = new System.Drawing.Point(13, 112);
+            this.gr0.Name = "gr0";
+            this.gr0.Size = new System.Drawing.Size(305, 90);
+            this.gr0.TabIndex = 11;
+            this.gr0.TabStop = false;
+            this.gr0.Text = "范围";
+            // 
             // FrmSplit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -1629,6 +1665,8 @@
             this.gr2_3.PerformLayout();
             this.gr2_1.ResumeLayout(false);
             this.gr2_1.PerformLayout();
+            this.gr0.ResumeLayout(false);
+            this.gr0.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1739,7 +1777,6 @@
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.TextBox txtB2;
         private System.Windows.Forms.TextBox txtB1;
-        private System.Windows.Forms.Label label15;
         private System.Windows.Forms.ComboBox combKf;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.GroupBox grdl2;
@@ -1762,5 +1799,9 @@
         private System.Windows.Forms.Button butCreatPth;
         private System.Windows.Forms.TextBox txtCreatePath;
         private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.RadioButton raddlxq;
+        private System.Windows.Forms.RadioButton rabdlboxsn;
+        private System.Windows.Forms.TextBox txtXq;
+        private System.Windows.Forms.GroupBox gr0;
     }
 }

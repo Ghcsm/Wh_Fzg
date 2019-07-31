@@ -20,9 +20,12 @@ namespace Csmdapx
         }
         Hljsimage Himg = new Hljsimage();
         public int ImgPage;
+        public string file;
         private List<Bitmap> bmp = new List<Bitmap>();
         private void FrmCombe_Shown(object sender, EventArgs e)
         {
+            bmp.Clear();
+            lbImgPage.Items.Clear();
             txtPage.Focus();
         }
 
@@ -34,17 +37,21 @@ namespace Csmdapx
             bool bl = int.TryParse(txtPage.Text.Trim(), out p);
             if (!bl) {
                 MessageBox.Show("页码不正确无法加载!");
-                txtPage.Focus(); return;
+                txtPage.Focus();
+                return;
             }
-            if (p > ImgPage) {
+            if (p >ImgPage) {
                 MessageBox.Show("页码超出范围无法加载!");
                 txtPage.Focus();
                 return;
             }
-            bmp.Clear();
-            Bitmap b = Himg.Getbmp(p);
+            Bitmap b = Himg.Getbmp(file,p);
             if (b == null)
+            {
+                MessageBox.Show("加载图像文件失败!");
+                txtPage.Focus();
                 return;
+            }
             bmp.Add(b);
             lbImgPage.Items.Add(p.ToString());
         }

@@ -58,7 +58,8 @@ namespace Csmmldj
             ucContents1.LoadContents();
             if (ContenInfPar.Infobl) {
                 string type = gArchSelect1.Archtype;
-                ucInfo.LoadInfo(arid, 1, type);
+                int p;
+                ucInfo.LoadInfo(arid, 1, type,out p);
             }
         }
 

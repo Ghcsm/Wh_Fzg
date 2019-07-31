@@ -345,7 +345,6 @@
         private System.Windows.Forms.GroupBox gr1;
         private System.Windows.Forms.Panel panelTop;
         private DevComponents.DotNetBar.Controls.ComboBoxEx comboxClass;
-        private System.Windows.Forms.TextBox txtBoxsn;
         private DevComponents.DotNetBar.ButtonX butOk;
         private System.Windows.Forms.GroupBox gr2;
         private System.Windows.Forms.Label label1;
@@ -369,5 +368,6 @@
         private DevComponents.Editors.ComboItem comboItem4;
         private DevComponents.Editors.ComboItem comboItem5;
         private System.Windows.Forms.ColumnHeader c_archxq;
+        public System.Windows.Forms.TextBox txtBoxsn;
     }
 }

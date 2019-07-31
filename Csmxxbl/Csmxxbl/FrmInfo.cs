@@ -18,6 +18,8 @@ namespace Csmxxbl
         private int entertag = 1;
         private bool chkbool = false;
         List<string> Lsinfo = new List<string>();
+        int ts;
+
         private void FrmInfo_Shown(object sender, EventArgs e)
         {
             ucInfo = new UcInfoEnter();
@@ -70,6 +72,8 @@ namespace Csmxxbl
                 Common.Writelog(arid, "强制修改质检的录入信息!");
             }
             ucInfo.SaveInfo(arid, entertag);
+            ts = Common.Getsx(arid, entertag);
+            labsx.Text = string.Format("已录{0}手", ts);
         }
 
         private void gArchSelect1_LineClickLoadInfo(object sender, EventArgs e)
@@ -79,8 +83,11 @@ namespace Csmxxbl
             if (arid <= 0)
                 return;
             ucInfo.Archid = arid;
-            ucInfo.LoadInfo(arid, entertag, type);
+            ucInfo.LoadInfo(arid, entertag, type,out ts);
+            labsx.Text = string.Format("已录{0}手",ts);
         }
+
+
 
         private void chkInfo_CheckedChanged(object sender, EventArgs e)
         {
@@ -109,6 +116,20 @@ namespace Csmxxbl
 
         private void gArchSelect1_LineFocus(object sender, EventArgs e)
         {
+            if (ts <=0) {
+                if (Lsinfo.Count <= 0) {
+                    MessageBox.Show("请先配置后台数据!");
+                    return;
+                }
+                FrminfoSql frmsql = new FrminfoSql();
+                frmsql.lsinfo = Lsinfo;
+                frmsql.ShowDialog();
+                List<string> info = new List<string>();
+                List<string> col = new List<string>();
+                info = frmsql.lscolinfo;
+                col = frmsql.lscol;
+                ucInfo.LoadInfo(info, col);
+            }
             ucInfo.GetFocus();
         }
 
@@ -129,7 +150,7 @@ namespace Csmxxbl
             List<string> col = new List<string>();
             info = frmsql.lscolinfo;
             col = frmsql.lscol;
-            ucInfo.LoadInfo(info,col);
+            ucInfo.LoadInfo(info, col);
         }
 
         private void butDel_Click(object sender, EventArgs e)
@@ -151,6 +172,18 @@ namespace Csmxxbl
                 Common.Writelog(arid, "强制修改质检的录入信息!");
             }
             ucInfo.DelInfo(arid, entertag);
+            ts = Common.Getsx(arid, entertag);
+            labsx.Text = string.Format("已录{0}手", ts);
+        }
+
+        private void butBL_Click(object sender, EventArgs e)
+        {
+            if (gArchSelect1.Archid <= 0)
+                return;
+            FrmPage page = new FrmPage();
+            page.Archid = gArchSelect1.Archid;
+            page.ShowDialog();
+
         }
     }
 }

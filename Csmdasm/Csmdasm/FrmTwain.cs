@@ -353,6 +353,8 @@ namespace Csmdasm
         {
             this.BeginInvoke(new Action(() =>
             {
+                Himg.Filename = "";
+                Himg.RegPage = 0;
                 ImgView.Image = null;
                 ClsTwain.Archid = 0;
                 ClsTwain.ArchPos = "";
@@ -371,11 +373,11 @@ namespace Csmdasm
             }));
         }
 
-        private void FtpUp(string filetmp, string archpos, int maxpage, int arid,int regpage)
+        private void FtpUp(string filetmp, string archpos, int maxpage, int arid, int regpage)
         {
             try {
                 if (File.Exists(filetmp)) {
-                    Common.WiteUpTask(arid, archpos, T_ConFigure.ScanTempFile, (int)T_ConFigure.ArchStat.扫描完, maxpage, filetmp,"0");
+                    Common.WiteUpTask(arid, archpos, T_ConFigure.ScanTempFile, (int)T_ConFigure.ArchStat.扫描完, maxpage, filetmp, "0");
                     if (T_ConFigure.FtpStyle == 1) {
                         string sourcefile = Path.Combine(T_ConFigure.FtpTmp, T_ConFigure.TmpScan, archpos, T_ConFigure.ScanTempFile);
                         string goalfile = Path.Combine(T_ConFigure.gArchScanPath, archpos, T_ConFigure.ScanTempFile);
@@ -395,8 +397,8 @@ namespace Csmdasm
                     }
                     else {
                         if (ftp.SaveRemoteFileUp(T_ConFigure.gArchScanPath, archpos, filetmp, T_ConFigure.ScanTempFile)) {
-                            if (maxpage>=regpage)
-                            Common.SetScanFinish(arid, maxpage, 1, (int)T_ConFigure.ArchStat.扫描完);
+                            if (maxpage >= regpage)
+                                Common.SetScanFinish(arid, maxpage, 1, (int)T_ConFigure.ArchStat.扫描完);
                             else
                                 Common.SetScanFinish(arid, maxpage, 1, (int)T_ConFigure.ArchStat.无);
                             Common.DelTask(Convert.ToInt32(arid));
@@ -425,7 +427,7 @@ namespace Csmdasm
                 }
                 else
                     Common.Writelog(arid, "扫描退出时未找到文件!");
-                    Common.SetScanFinish(arid, maxpage, 0, (int)T_ConFigure.ArchStat.无);
+                Common.SetScanFinish(arid, maxpage, 0, (int)T_ConFigure.ArchStat.无);
             } catch {
                 Common.SetScanFinish(arid, maxpage, 0, (int)T_ConFigure.ArchStat.无);
             } finally {
@@ -455,8 +457,18 @@ namespace Csmdasm
                 comPagesSize.SelectedIndex = 2;
             else if (e.KeyCode == Keys.NumPad4)
                 comPagesSize.SelectedIndex = 1;
+            else if (e.KeyCode == Keys.NumPad0) {
+                if (chkDoublePages.Checked)
+                    chkDoublePages.Checked = false;
+                else
+                    chkDoublePages.Checked = true;
+            }
+
             if (e.KeyCode == Keys.Escape)
-                gArch.LvData.Focus();
+            {
+                gArch.txtBoxsn.Focus();
+                gArch.txtBoxsn.SelectAll();
+            }
         }
 
         private void toolSelectTwain_Click(object sender, EventArgs e)
@@ -667,7 +679,7 @@ namespace Csmdasm
         {
             ClsTwain.Scanbool = true;
             Himg.Scanms = comBoxScanMode.SelectedIndex;
-             Himg._Duplexpage(chkDoublePages.Checked);
+            Himg._Duplexpage(chkDoublePages.Checked);
             if (comPagesSize.SelectedIndex == 1) {
                 if (rdVerPages.Checked) {
                     Himg._SetimgFx(1, 0);

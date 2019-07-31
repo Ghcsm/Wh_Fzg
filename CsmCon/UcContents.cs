@@ -224,6 +224,44 @@ namespace CsmCon
             }
         }
 
+        private List<string> LsPage = new List<string>();
+        private List<string> Lsywid = new List<string>();
+        public bool IsGetywid()
+        {
+            if (LvContents.Items.Count <= 0) {
+                MessageBox.Show("未发现目录!");
+                return false;
+            }
+            for (int i = 0; i < LvContents.Items.Count; i++) {
+                string ywid = LvContents.Items[i].SubItems[4].Text;
+                string page = LvContents.Items[i].SubItems[3].Text;
+                if (ywid.Trim().Length <= 0) {
+                    LsPage.Add(page);
+                    Lsywid.Add(ywid);
+                }
+            }
+            if (Lsywid.Count <= 0) {
+                MessageBox.Show("此卷档案未设置业务ID!");
+                return false;
+            }
+
+            UpdateYwid();
+            return true;
+        }
+
+
+        void UpdateYwid()
+        {
+            for (int i = 0; i < Lsywid.Count; i++) {
+                string p = LsPage[i].ToString();
+                string id = Lsywid[i].ToString();
+                if (p.Trim().Length<=0 && id.Trim().Length<=0)
+                    continue;
+                Common.SetYwid(p, id);
+            }
+        }
+
+
         public void LoadContents(int arid, int maxpage)
         {
             if (arid <= 0)
@@ -310,7 +348,7 @@ namespace CsmCon
             int pid = info.PagesWz;
             int tid = info.TitleWz;
             info.SetInfoTxt(panel1, pid, CrragePage.ToString());
-            info.SetInfoTxt(panel1, tid+1, title);
+            info.SetInfoTxt(panel1, tid + 1, title);
         }
 
         public static void Setxtxtls(Panel p, int id, string str)

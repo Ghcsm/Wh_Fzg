@@ -122,6 +122,12 @@
     <Compile Include="FrminfoSql.Designer.cs">
       <DependentUpon>FrminfoSql.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmPage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmPage.Designer.cs">
+      <DependentUpon>FrmPage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Frmpwd.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -141,6 +147,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FrminfoSql.resx">
       <DependentUpon>FrminfoSql.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmPage.resx">
+      <DependentUpon>FrmPage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Frmpwd.resx">
       <DependentUpon>Frmpwd.cs</DependentUpon>

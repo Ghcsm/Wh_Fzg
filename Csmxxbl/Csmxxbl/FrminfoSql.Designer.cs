@@ -57,7 +57,7 @@
             this.groupPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupPanel1.Location = new System.Drawing.Point(0, 0);
             this.groupPanel1.Name = "groupPanel1";
-            this.groupPanel1.Size = new System.Drawing.Size(800, 450);
+            this.groupPanel1.Size = new System.Drawing.Size(1173, 611);
             // 
             // 
             // 
@@ -97,7 +97,7 @@
             this.groupBox2.Controls.Add(this.dataGrid);
             this.groupBox2.Location = new System.Drawing.Point(3, 92);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(788, 349);
+            this.groupBox2.Size = new System.Drawing.Size(1161, 510);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "查询结果";
@@ -106,6 +106,7 @@
             // 
             this.dataGrid.AllowUserToAddRows = false;
             this.dataGrid.AllowUserToDeleteRows = false;
+            this.dataGrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
@@ -122,7 +123,7 @@
             this.dataGrid.ReadOnly = true;
             this.dataGrid.RowTemplate.Height = 23;
             this.dataGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGrid.Size = new System.Drawing.Size(782, 329);
+            this.dataGrid.Size = new System.Drawing.Size(1155, 490);
             this.dataGrid.TabIndex = 0;
             this.dataGrid.DoubleClick += new System.EventHandler(this.dataGrid_DoubleClick);
             // 
@@ -138,7 +139,7 @@
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(3, 9);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(788, 77);
+            this.groupBox1.Size = new System.Drawing.Size(1161, 77);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             // 
@@ -224,7 +225,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1173, 611);
             this.Controls.Add(this.groupPanel1);
             this.DoubleBuffered = true;
             this.MaximizeBox = false;

@@ -37,7 +37,7 @@ namespace CsmCon
         public string Archxystat { get; set; }
         public string ArchPos { get; set; }
         public string ArchNo { get; set; }
-        public string ArchXqzt {get;set;}
+        public string ArchXqzt { get; set; }
 
 
         #endregion
@@ -94,7 +94,7 @@ namespace CsmCon
                 MessageBox.Show("页码不正确");
                 return;
             }
-            if (ArchXqzt==null || ArchXqzt.Trim().Length<=0) {
+            if (ArchXqzt == null || ArchXqzt.Trim().Length <= 0) {
                 MessageBox.Show("该卷档案类型设置不正确!");
                 return;
             }
@@ -112,6 +112,8 @@ namespace CsmCon
         private void butPageUpdate_Click(object sender, EventArgs e)
         {
 
+            if (txtPages.Text.Trim().Length <= 0)
+                return;
             if (Archstat.Trim().Length > 0) {
                 int p = Convert.ToInt32(Archstat);
                 if (p >= (int)T_ConFigure.ArchStat.排序完) {
@@ -184,7 +186,7 @@ namespace CsmCon
             LvData.Focus();
             if (LvData.Items.Count > 0) {
                 LvData.Items[0].Selected = true;
-                LvData_Click(null, null);
+                // LvData_Click(null, null);
             }
         }
 
@@ -313,10 +315,12 @@ namespace CsmCon
             combLx.SelectedIndex = 0;
         }
 
+
         private void LvData_Click(object sender, EventArgs e)
         {
             if (LvData.SelectedItems.Count > 0 && LvData.SelectedIndices.Count > 0) {
                 Archid = Convert.ToInt32(LvData.SelectedItems[0].SubItems[5].Text);
+                int id = Archid;
                 Archtype = LvData.SelectedItems[0].SubItems[6].Text;
                 string boxs = LvData.SelectedItems[0].SubItems[1].Text;
                 ArchNo = LvData.SelectedItems[0].SubItems[2].Text;
@@ -331,11 +335,11 @@ namespace CsmCon
                 else
                     ArchRegPages = 0;
                 txtPages.Text = pags;
-
                 ArchImgFile = LvData.SelectedItems[0].SubItems[3].Text;
                 if (LineClickLoadInfo != null)
                     LineClickLoadInfo(sender, new EventArgs());
             }
+
         }
 
 

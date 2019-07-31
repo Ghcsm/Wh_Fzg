@@ -44,6 +44,7 @@ namespace Csmxxbl
             if (dt == null || dt.Rows.Count <= 0)
                 return;
             dataGrid.DataSource = dt;
+            dataGrid.Focus();
         }
 
         private void FrminfoSql_Shown(object sender, EventArgs e)

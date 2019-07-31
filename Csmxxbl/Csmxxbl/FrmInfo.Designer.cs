@@ -32,9 +32,11 @@
             this.gArchSelect1 = new CsmCon.gArchSelect();
             this.gr2 = new System.Windows.Forms.GroupBox();
             this.gr3 = new System.Windows.Forms.GroupBox();
+            this.butBL = new DevComponents.DotNetBar.ButtonX();
+            this.butDel = new DevComponents.DotNetBar.ButtonX();
             this.chkInfo = new System.Windows.Forms.CheckBox();
             this.butSave = new DevComponents.DotNetBar.ButtonX();
-            this.butDel = new DevComponents.DotNetBar.ButtonX();
+            this.labsx = new System.Windows.Forms.Label();
             this.gr1.SuspendLayout();
             this.gr3.SuspendLayout();
             this.SuspendLayout();
@@ -98,6 +100,8 @@
             // 
             this.gr3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.gr3.Controls.Add(this.labsx);
+            this.gr3.Controls.Add(this.butBL);
             this.gr3.Controls.Add(this.butDel);
             this.gr3.Controls.Add(this.chkInfo);
             this.gr3.Controls.Add(this.butSave);
@@ -107,10 +111,34 @@
             this.gr3.TabIndex = 3;
             this.gr3.TabStop = false;
             // 
+            // butBL
+            // 
+            this.butBL.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.butBL.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.butBL.Location = new System.Drawing.Point(272, 18);
+            this.butBL.Name = "butBL";
+            this.butBL.Size = new System.Drawing.Size(77, 36);
+            this.butBL.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.butBL.TabIndex = 3;
+            this.butBL.Text = "补录页码";
+            this.butBL.Click += new System.EventHandler(this.butBL_Click);
+            // 
+            // butDel
+            // 
+            this.butDel.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.butDel.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.butDel.Location = new System.Drawing.Point(155, 18);
+            this.butDel.Name = "butDel";
+            this.butDel.Size = new System.Drawing.Size(77, 36);
+            this.butDel.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.butDel.TabIndex = 2;
+            this.butDel.Text = "删除";
+            this.butDel.Click += new System.EventHandler(this.butDel_Click);
+            // 
             // chkInfo
             // 
             this.chkInfo.AutoSize = true;
-            this.chkInfo.Location = new System.Drawing.Point(308, 28);
+            this.chkInfo.Location = new System.Drawing.Point(432, 32);
             this.chkInfo.Name = "chkInfo";
             this.chkInfo.Size = new System.Drawing.Size(72, 16);
             this.chkInfo.TabIndex = 1;
@@ -123,31 +151,29 @@
             // 
             this.butSave.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.butSave.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.butSave.Location = new System.Drawing.Point(37, 20);
+            this.butSave.Location = new System.Drawing.Point(43, 18);
             this.butSave.Name = "butSave";
-            this.butSave.Size = new System.Drawing.Size(75, 34);
+            this.butSave.Size = new System.Drawing.Size(77, 36);
             this.butSave.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.butSave.TabIndex = 0;
             this.butSave.Text = "保存";
             this.butSave.Click += new System.EventHandler(this.butSave_Click);
             // 
-            // butDel
+            // labsx
             // 
-            this.butDel.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.butDel.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.butDel.Location = new System.Drawing.Point(149, 20);
-            this.butDel.Name = "butDel";
-            this.butDel.Size = new System.Drawing.Size(72, 33);
-            this.butDel.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.butDel.TabIndex = 2;
-            this.butDel.Text = "删除";
-            this.butDel.Click += new System.EventHandler(this.butDel_Click);
+            this.labsx.AutoSize = true;
+            this.labsx.ForeColor = System.Drawing.Color.Red;
+            this.labsx.Location = new System.Drawing.Point(551, 32);
+            this.labsx.Name = "labsx";
+            this.labsx.Size = new System.Drawing.Size(47, 12);
+            this.labsx.TabIndex = 0;
+            this.labsx.Text = "已录0手";
             // 
             // FrmInfo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(223)))), ((int)(((byte)(237)))), ((int)(((byte)(254)))));
             this.ClientSize = new System.Drawing.Size(1120, 553);
             this.Controls.Add(this.gr3);
             this.Controls.Add(this.gr2);
@@ -177,5 +203,7 @@
         private DevComponents.DotNetBar.ButtonX butSave;
         private System.Windows.Forms.CheckBox chkInfo;
         private DevComponents.DotNetBar.ButtonX butDel;
+        private DevComponents.DotNetBar.ButtonX butBL;
+        private System.Windows.Forms.Label labsx;
     }
 }

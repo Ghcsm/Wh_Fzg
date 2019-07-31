@@ -1535,29 +1535,41 @@ namespace Csmsjcf
             else
                 ClsDL.Zlcy = 2;
 
-            if (txtB1.Text.Trim().Length <= 0 || txtB2.Text.Trim().Length <= 0) {
-                MessageBox.Show("盒号范围不能为空!");
-                txtB1.Focus();
-                return false;
+            if (rabdlboxsn.Checked) {
+                if (txtB1.Text.Trim().Length <= 0 || txtB2.Text.Trim().Length <= 0) {
+                    MessageBox.Show("盒号范围不能为空!");
+                    txtB1.Focus();
+                    return false;
+                }
+                else {
+                    int p1;
+                    int p2;
+                    bool b1 = int.TryParse(txtB1.Text.Trim(), out p1);
+                    bool b2 = int.TryParse(txtB2.Text.Trim(), out p2);
+                    if (!b1 || !b2) {
+                        MessageBox.Show("盒号不正确!");
+                        txtB1.Focus();
+                        return false;
+                    }
+                    if (p1 > p2) {
+                        MessageBox.Show("盒号范围不正确!");
+                        txtB1.Focus();
+                        return false;
+                    }
+
+                    ClsDL.Boxsn = p1.ToString();
+                    ClsDL.Boxsn2 = p2.ToString();
+                }
+                ClsDL.Fanwei = 1;
             }
             else {
-                int p1;
-                int p2;
-                bool b1 = int.TryParse(txtB1.Text.Trim(), out p1);
-                bool b2 = int.TryParse(txtB2.Text.Trim(), out p2);
-                if (!b1 || !b2) {
-                    MessageBox.Show("盒号不正确!");
-                    txtB1.Focus();
+                if (txtXq.Text.Trim().Length <= 0) {
+                    MessageBox.Show("小区代码不能为空!");
+                    txtXq.Focus();
                     return false;
                 }
-                if (p1 > p2) {
-                    MessageBox.Show("盒号范围不正确!");
-                    txtB1.Focus();
-                    return false;
-                }
-
-                ClsDL.Boxsn = p1.ToString();
-                ClsDL.Boxsn2 = p2.ToString();
+                ClsDL.Fanwei = 2;
+                ClsDL.Quhao = txtXq.Text.Trim();
             }
             if (!chkjpgxml.Checked && !chkxls.Checked) {
                 MessageBox.Show("请选择生成类型!");
@@ -2149,14 +2161,26 @@ namespace Csmsjcf
         void Getboxsn()
         {
             try {
-                if (ClsDL.Zlcy == 2) {
-                    Common.DataSplitUpdateboxsn(ClsDL.Houseid, ClsDL.Boxsn, ClsDL.Boxsn2);
+                if (ClsDL.Fanwei == 1)
+                {
+                    if (ClsDL.Zlcy == 2) {
+                        Common.DataSplitUpdateboxsn(ClsDL.Houseid, ClsDL.Boxsn, ClsDL.Boxsn2);
+                    }
+                    if (ClsDL.lx == 1)
+                        ClsDL.dtboxsn = Common.DataSplitGetdataxls(ClsDL.Houseid, ClsDL.Boxsn, ClsDL.Boxsn2);
+                    else
+                        ClsDL.dtboxsn = Common.DataSplitGetdata(ClsDL.Houseid, ClsDL.Boxsn, ClsDL.Boxsn2);
                 }
-
-                if (ClsDL.lx == 1)
-                    ClsDL.dtboxsn = Common.DataSplitGetdataxls(ClsDL.Houseid, ClsDL.Boxsn, ClsDL.Boxsn2);
                 else
-                    ClsDL.dtboxsn = Common.DataSplitGetdata(ClsDL.Houseid, ClsDL.Boxsn, ClsDL.Boxsn2);
+                {
+                    if (ClsDL.Zlcy == 2) {
+                        Common.DataSplitUpdateboxsn(ClsDL.Houseid, ClsDL.Quhao);
+                    }
+                    if (ClsDL.lx == 1)
+                        ClsDL.dtboxsn = Common.DataSplitGetdataxls(ClsDL.Houseid, ClsDL.Quhao);
+                    else
+                        ClsDL.dtboxsn = Common.DataSplitGetdata(ClsDL.Houseid, ClsDL.Quhao);
+                }
                 if (ClsDL.dtboxsn == null || ClsDL.dtboxsn.Rows.Count <= 0)
                     return;
                 this.BeginInvoke(new Action(() => { lab_dl_juan.Text = "共计:" + ClsDL.dtboxsn.Rows.Count.ToString(); }));

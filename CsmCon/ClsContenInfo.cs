@@ -118,45 +118,38 @@ namespace CsmCon
                 return;
             if (loadcon)
                 return;
-            Task.Run(() =>
-            {
-                loadcon = true;
-                try {
-
-                    lsv.Invoke(new Action(() => { lsv.Items.Clear(); }));
-                    PageCount.Clear();
-                    DataTable dt = Common.LoadContents(ContenTable, ContenCol,
-                       ContenPages, Convert.ToInt32(ch), archid);
-                    if (dt == null || dt.Rows.Count <= 0)
-                        return;
-                    int i = 1;
-                    foreach (DataRow dr in dt.Rows) {
-                        ListViewItem lvi = new ListViewItem();
-                        lvi.Text = i.ToString();
-                        string id = dr["id"].ToString();
-                        lvi.SubItems.AddRange(new string[] { id });
-                        for (int t = 0; t < ContenCoList.Count; t++) {
-                            string str = dr[ContenCoList[t]].ToString();
-                            if (t == PagesWz)
-                                PageCount.Add(str);
-                            lvi.SubItems.AddRange(new string[] { str });
-                        }
-
-                        lsv.Invoke(new Action(() => { lsv.Items.Add(lvi); }));
-                        i++;
+            loadcon = true;
+            try {
+                lsv.Items.Clear();
+                PageCount.Clear();
+                DataTable dt = Common.LoadContents(ContenTable, ContenCol,
+                   ContenPages, Convert.ToInt32(ch), archid);
+                if (dt == null || dt.Rows.Count <= 0)
+                    return;
+                int i = 1;
+                foreach (DataRow dr in dt.Rows) {
+                    ListViewItem lvi = new ListViewItem();
+                    lvi.Text = i.ToString();
+                    string id = dr["id"].ToString();
+                    lvi.SubItems.AddRange(new string[] { id });
+                    for (int t = 0; t < ContenCoList.Count; t++) {
+                        string str = dr[ContenCoList[t]].ToString();
+                        if (t == PagesWz)
+                            PageCount.Add(str);
+                        lvi.SubItems.AddRange(new string[] { str });
                     }
-                    lsv.Invoke(new Action(() =>
-                    {
-                        if (lsv.Items.Count > 0) {
-                            lsv.Items[0].Selected = true;
-                        }
-                    }));
 
-                } catch {
-                } finally {
-                    loadcon = false;
+                    lsv.Invoke(new Action(() => { lsv.Items.Add(lvi); }));
+                    i++;
                 }
-            });
+                if (lsv.Items.Count > 0) {
+                    lsv.Items[0].Selected = true;
+                }
+
+            } catch {
+            } finally {
+                loadcon = false;
+            }
         }
         public void LoadContentsadd(int archid, ListViewEx lsv, bool ch)
         {
@@ -333,14 +326,20 @@ namespace CsmCon
         }
 
 
-
+        //点击目录时 光标跳到标题行最后
         public void SetInfoTxt(Control p, int id, string str)
         {
             foreach (Control ct in p.Controls) {
                 if (ct is TextBox || ct is ComboBox) {
                     if (ct.Tag.ToString() == id.ToString()) {
                         ct.Text = str;
-                        ct.Focus();
+                        if (id.ToString() == "1")
+                        {
+                            TextBox t = (TextBox) ct;
+                            t.Focus();
+                            t.SelectionStart = t.TextLength;
+                            t.SelectionLength = 0;
+                        }
                     }
                 }
             }
@@ -402,9 +401,8 @@ namespace CsmCon
             bool tf = true;
             foreach (Control ct in p.Controls) {
                 if (ct is TextBox || ct is ComboBox) {
-                    if (ct.Tag!=null ) {
-                        if (ct.Text.Trim().Length <=0)
-                        {
+                    if (ct.Tag != null) {
+                        if (ct.Tag.ToString() != "4" && ct.Text.Trim().Length <= 0) {
                             tf = false;
                             ct.Focus();
                         }

@@ -169,7 +169,8 @@ namespace CsmCon
             ComboBox comb = (ComboBox)sender;
             if (comb.Tag.ToString() == TsTag && TsTag != "-1") {
                 infostr = comb.Text.Trim();
-                LoadInfo(Archid, Enterinfo, Atype);
+                int p;
+                LoadInfo(Archid, Enterinfo, Atype,out p);
                 infostr = "0";
             }
         }
@@ -312,9 +313,11 @@ namespace CsmCon
             }
         }
 
-        public void LoadInfo(int archid, int enter, string atype)
+        public void LoadInfo(int archid, int enter, string atype,out int xs)
         {
-            try {
+            try
+            {
+                xs = 0;
                 Txtcle();
                 if (archid <= 0 || atype.Trim().Length <= 0)
                     return;
@@ -331,6 +334,7 @@ namespace CsmCon
                 DataTable dt = Common.GetInfoTable(t, archid, enter, infostr);
                 if (dt == null || dt.Rows.Count <= 0)
                     return;
+                xs = dt.Rows.Count;
                 string name = tabControl.TabPages[t].Name;
                 Control pl = tabControl.TabPages[t].Controls.Find(name, true)[0];
                 DataRow dr = dt.Rows[0];
@@ -345,7 +349,9 @@ namespace CsmCon
                     }
                 }
                 tabControl.SelectedIndex = t;
-            } catch (Exception e) {
+            } catch (Exception e)
+            {
+                xs = 0;
                 MessageBox.Show("加载信息失败:" + e.ToString());
             }
         }

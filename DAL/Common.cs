@@ -171,6 +171,14 @@ namespace DAL
             SQLHelper.ExecuteNonQuery(strSql, CommandType.StoredProcedure, p);
         }
 
+        public static void SetYwid(string page, string ywid)
+        {
+            string strSql = "update 目录表 set 手续id=@ywid where 起始页码<=@p and Archid=@arid  and len(手续id)<1";
+            SqlParameter p1 = new SqlParameter("@p", page);
+            SqlParameter p2 = new SqlParameter("@arid", ywid);
+            SQLHelper.ExcuteProc(strSql, p1, p2);
+        }
+
         #endregion
 
         #region  house
@@ -575,7 +583,7 @@ namespace DAL
         public static DataTable ReadPageIndexInfo(int ArchID)
         {
             try {
-                string strSql = "select top 1 PageIndexInfo,pages from M_imagefile where  id=@ArchID";
+                string strSql = "select top 1 PageIndexInfo,pages,ArchPage from M_imagefile where  id=@ArchID";
                 SqlParameter p1 = new SqlParameter("@ArchID", ArchID);
                 DataTable dt = DAL.SQLHelper.ExcuteTable(strSql, p1);
                 return dt;
@@ -605,6 +613,14 @@ namespace DAL
         {
             string strSql = "select count(*) from M_UpTask where Archid=@arid";
             SqlParameter p1 = new SqlParameter("@arid", arid);
+            int i = Convert.ToInt32(SQLHelper.ExecScalar(strSql, p1).ToString());
+            return i;
+        }
+
+        public static int Gettask()
+        {
+            string strSql = "select count(*) from M_UpTask where Userid=@userid";
+            SqlParameter p1 = new SqlParameter("@userid", T_User.LoginName);
             int i = Convert.ToInt32(SQLHelper.ExecScalar(strSql, p1).ToString());
             return i;
         }
@@ -646,6 +662,7 @@ namespace DAL
             p[2] = new SqlParameter("@stat", id);
             SQLHelper.ExecuteNonQuery(strSql, CommandType.StoredProcedure, p);
         }
+
 
         public static DataTable GetboxArchno(int b)
         {
@@ -1075,6 +1092,20 @@ namespace DAL
             SQLHelper.ExecScalar(strSql, p1, p2);
         }
 
+        public static int Getsx(int arid, int enter)
+        {
+            string strSql = "SELECT COUNT(*) FROM dbo.信息表 WHERE Archid=@arid AND EnterTag=@enter";
+            SqlParameter p1 = new SqlParameter("@arid", arid);
+            SqlParameter p2 = new SqlParameter("@enter", enter);
+            object obj = SQLHelper.ExecScalar(strSql, p1, p2);
+            if (obj == null)
+                return 0;
+            string str = obj.ToString();
+            if (str.Trim().Length <= 0)
+                return 0;
+            return Convert.ToInt32(str);
+        }
+
         private static void WirteWork(int archid, int ts, int enter, string table, string sx)
         {
             string strSql = "PWiteWork";
@@ -1127,6 +1158,23 @@ namespace DAL
             return dt;
         }
 
+        public static void SetInfoPages(string arid, string str)
+        {
+            string strSql = "update M_IMAGEFILE set ArchPage=@page where id=@arid";
+            SqlParameter p1 = new SqlParameter("@page", str);
+            SqlParameter p2 = new SqlParameter("@arid", arid);
+            SQLHelper.ExecScalar(strSql, p1, p2);
+        }
+        public static string GetInfoPages(string arid)
+        {
+            string strSql = "select ArchPage from M_IMAGEFILE where id=@arid";
+            SqlParameter p1 = new SqlParameter("@arid", arid);
+            Object obj = SQLHelper.ExecScalar(strSql, p1);
+            if (obj == null)
+                return "";
+            return obj.ToString();
+        }
+
         #endregion
 
         #region DataSplit
@@ -1141,6 +1189,15 @@ namespace DAL
             return dt;
         }
 
+        public static DataTable DataSplitGetdata(int houseid, string qu)
+        {
+            string strSql = "select id,BOXSN,PAGES,IMGFILE,ArchXqStat,ArchLx from  M_IMAGEFILE where  SPLITERROR is null and  ArchXqStat=@qu and HOUSEID=@houseid and CHECKED=1 ORDER BY CONVERT(INT,BOXSN)";
+            SqlParameter p1 = new SqlParameter("@qu", qu);
+            SqlParameter p2 = new SqlParameter("@houseid", houseid);
+            DataTable dt = SQLHelper.ExcuteTable(strSql, p1, p2);
+            return dt;
+        }
+
         public static DataTable DataSplitGetdataxls(int houseid, string box1, string box2)
         {
             string strSql = "select id,BOXSN,PAGES,IMGFILE,ArchXqStat,ArchLx from  M_IMAGEFILE where  boxsn>=@box1 and boxsn<=@box2 and HOUSEID=@houseid and CHECKED=1";
@@ -1151,6 +1208,16 @@ namespace DAL
             return dt;
         }
 
+
+        public static DataTable DataSplitGetdataxls(int houseid, string qu)
+        {
+            string strSql = "select id,BOXSN,PAGES,IMGFILE,ArchXqStat,ArchLx from  M_IMAGEFILE where  ArchXqStat=@qu and HOUSEID=@houseid and CHECKED=1";
+            SqlParameter p1 = new SqlParameter("@box1", qu);
+            SqlParameter p2= new SqlParameter("@houseid", houseid);
+            DataTable dt = SQLHelper.ExcuteTable(strSql, p1, p2);
+            return dt;
+        }
+
         public static void DataSplitUpdateboxsn(int houseid, string boxsn, string boxsn2)
         {
             string strSql = "update M_IMAGEFILE set SPLITERROR=null where boxsn>=@boxsn and boxsn<=@boxsn2 and HOUSEID=@houseid ";
@@ -1158,6 +1225,13 @@ namespace DAL
             SqlParameter p2 = new SqlParameter("@boxsn2", boxsn2);
             SqlParameter p3 = new SqlParameter("@houseid", houseid);
             SQLHelper.ExecScalar(strSql, p1, p2, p3);
+        }
+        public static void DataSplitUpdateboxsn(int houseid, string qu)
+        {
+            string strSql = "update M_IMAGEFILE set SPLITERROR=null where ArchXqStat=@qu and HOUSEID=@houseid ";
+            SqlParameter p1 = new SqlParameter("@qu", qu);
+            SqlParameter p2 = new SqlParameter("@houseid", houseid);
+            SQLHelper.ExecScalar(strSql, p1,p2);
         }
 
         public static void DataSplitUpdate(int houseid, string boxsn)
@@ -1596,7 +1670,7 @@ namespace DAL
         }
 
 
-        public static DataTable GetQuzt(string qu )
+        public static DataTable GetQuzt(string qu)
         {
             string strSql = "SELECT  boxsn'盒号',CHECKED'质检',INDEXED'排序' ,SCANED'扫描' FROM dbo.M_IMAGEFILE WHERE ArchXqStat=@qu";
             SqlParameter p1 = new SqlParameter("@qu", qu);

@@ -14,7 +14,10 @@ namespace Csmsjcf
         public static int Zlcy { get; set; } = 0;
         public static string FilePath { get; set; } = "";
         public static string NewPath { get; set; } = "";
+
+        public static int Fanwei { get; set; } = 0;
         public static string Boxsn { get; set; } = "0";
+        public static string Quhao { get; set; } = "0";
         public static string Boxsn2 { get; set; } = "0";
         public static string Archid { get; set; } = "0";
         public static string ArchFile { get; set; } = "";

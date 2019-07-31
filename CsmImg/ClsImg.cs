@@ -71,8 +71,8 @@ namespace CsmImg
             try {
                 List<Mat> listmat = new List<Mat>();
                 for (int i = 0; i < strfile.Count; i++) {
-                    string str = strfile[i].ToString();
-                    Image<Bgr, byte> a = new Image<Bgr, byte>(str);
+                    Bitmap bmp1 = strfile[i];
+                    Image<Bgr, byte> a = new Image<Bgr, byte>(bmp1);
                     listmat.Add(a.Mat);
                 }
                 Stitcher stitcher = new Stitcher(false);

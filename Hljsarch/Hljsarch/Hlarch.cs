@@ -50,6 +50,8 @@ namespace HLjscom
 
         public Dictionary<int, string> _PageFuhao = new Dictionary<int, string>();
 
+        public List<string> Fuhao = new List<string>();
+
         Ltoolsapi.Ltoolsapi api = null;
         //注册页码
         public int RegPage;
@@ -1049,18 +1051,19 @@ namespace HLjscom
         }
 
 
-        public Bitmap Getbmp(int page)
+        public Bitmap Getbmp(string file,int page)
         {
             Bitmap bitmap = null;
             try {
                 using (RasterCodecs _Codef = new RasterCodecs()) {
-
-                    RasterImage _imagepx = _Codef.Load(Filename, 0, CodecsLoadByteOrder.BgrOrGrayOrRomm, page, page);
+                    RasterImage _imagepx = _Codef.Load(file, 0, CodecsLoadByteOrder.BgrOrGrayOrRomm, page, page).Clone();
                     Image imgtp = RasterImageConverter.ConvertToImage(_imagepx, ConvertToImageOptions.None);
                     bitmap = new Bitmap(imgtp);
                 }
                 return bitmap;
-            } catch (Exception e) {
+            } catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
                 return bitmap;
             }
 
@@ -1819,7 +1822,7 @@ namespace HLjscom
                         var abckeys = Pabc.Where(q => q.Value == zimu).Select(q => q.Key);
                         foreach (var a in abckeys) {
                             pagecoun += 1;
-                            OrderSave(oldpage, pagecoun, oldfile, _path);
+                            OrderSave(a, pagecoun, oldfile, _path);
                         }
                         oldpage = zimu_a + abc;
                     }
@@ -2154,7 +2157,7 @@ namespace HLjscom
                     }
                 }
 
-            } catch {}
+            } catch { }
         }
 
         public bool _CopyImg()
@@ -2180,7 +2183,7 @@ namespace HLjscom
                     _Codefile.Save(img, Filename, RasterImageFormat.CcittGroup4, bit, 1, 1, page + 1, CodecsSavePageMode.Insert);
                 }
                 return true;
-            } catch (Exception e) {
+            } catch {
                 return false;
             }
 
@@ -2818,7 +2821,6 @@ namespace HLjscom
                         return tmp;
                     }
                 }
-
                 if (_PageAbc.Count > 0) {
                     _PageAbc.GroupBy(item => item.Value)
                         .Where(item => item.Count() > 1)
@@ -2878,21 +2880,35 @@ namespace HLjscom
         }
 
         //查找缺少页码
-        private List<int> addpageqs()
+        private List<string> addpageqs()
         {
-            List<int> tmp = new List<int>();
+            List<string> tmp = new List<string>();
             if (TagPage == 0) {
+                for (int t = 0; t < Fuhao.Count; t++) {
+                    string s = Fuhao[t];
+                    if (s.Trim().Length <= 0)
+                        continue;
+                    if (!_PageFuhao.ContainsValue(s))
+                        tmp.Add(s);
+                }
                 for (int i = 1; i <= RegPage - _PageAbc.Count - _PageFuhao.Count; i++) {
                     if (!_PageNumber.ContainsValue(i)) {
-                        tmp.Add(i);
+                        tmp.Add(i.ToString());
                     }
                 }
 
             }
             else {
+                for (int t = 0; t < Fuhao.Count; t++) {
+                    string s = Fuhao[t];
+                    if (s.Trim().Length <= 0)
+                        continue;
+                    if (!_PageFuhao.ContainsValue(s))
+                        tmp.Add(s);
+                }
                 for (int i = TagPage; i <= RegPage - _PageAbc.Count - _PageFuhao.Count + TagPage - 1; i++) {
                     if (!_PageNumber.ContainsValue(i)) {
-                        tmp.Add(i);
+                        tmp.Add(i.ToString());
                     }
                 }
             }
@@ -2904,20 +2920,29 @@ namespace HLjscom
         }
 
         //查找超出登记页码
-        private List<int> addpagedy()
+        private List<string> addpagedy()
         {
-            List<int> tmp = new List<int>();
+            List<string> tmp = new List<string>();
             if (TagPage == 0) {
+                foreach (var item in _PageFuhao.Values)
+                {
+                    if (Fuhao.IndexOf(item)<0)
+                        tmp.Add(item.ToString());
+                }
                 foreach (var item in _PageNumber.Values) {
                     if (item > RegPage - _PageAbc.Count - _PageFuhao.Count) {
-                        tmp.Add(item);
+                        tmp.Add(item.ToString());
                     }
                 }
             }
             else {
+                foreach (var item in _PageFuhao.Values) {
+                    if (Fuhao.IndexOf(item) < 0)
+                        tmp.Add(item.ToString());
+                }
                 foreach (var item in _PageNumber.Values) {
                     if (item > RegPage - _PageAbc.Count - _PageFuhao.Count + TagPage) {
-                        tmp.Add(item);
+                        tmp.Add(item.ToString());
                     }
                 }
             }
@@ -2946,7 +2971,7 @@ namespace HLjscom
                         return false;
                     }
                 }
-                List<int> lstmp = addpageqs().ToList();
+                List<string> lstmp = addpageqs().ToList();
                 if (lstmp.Count > 0) {
                     MessageBox.Show("缺少页码：" + string.Join(",", lstmp.ToArray()));
                     lstmp = addpagedy().ToList();

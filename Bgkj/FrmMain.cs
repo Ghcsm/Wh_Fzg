@@ -351,6 +351,11 @@ namespace Bgkj
         private void FrmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
             try {
+                if (Common.Gettask() > 0) {
+                    MessageBox.Show("任务正在进行中请稍候关闭程序!");
+                    e.Cancel = true;
+                    return;
+                }
                 Common.SetloginIp(0);
             } catch { }
         }

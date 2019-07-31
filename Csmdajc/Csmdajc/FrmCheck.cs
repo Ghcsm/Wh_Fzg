@@ -79,7 +79,7 @@ namespace Csmdajc
             try {
                 p = Convert.ToInt32(page);
             } catch { }
-            if (p > 0 && p < Clscheck.MaxPage)
+            if (p > 0 && p <= Clscheck.MaxPage)
                 Himg._Gotopage(p);
 
         }
@@ -146,7 +146,7 @@ namespace Csmdajc
         {
             string txt = Himg._OcrRecttxt();
             if (txt.Length > 0) {
-                txt=(RegexCh(txt));
+                txt = (RegexCh(txt));
                 ucContents1.Settxt(txt);
             }
         }
@@ -199,12 +199,12 @@ namespace Csmdajc
 
         private void toolStripGotoPage_Click(object sender, EventArgs e)
         {
-            //FrmGoto Fgoto = new FrmGoto();
-            //FrmGoto.Maxpage = MaxPage;
-            //Fgoto.ShowDialog();
-            //if (FrmGoto.Npage > 0) {
-            //    Himg._Gotopage(FrmGoto.Npage);
-            //}
+            Frmgoto Fgoto = new Frmgoto();
+            Frmgoto.Maxpage = Clscheck.MaxPage;
+            Fgoto.ShowDialog();
+            if (Frmgoto.Npage > 0) {
+                Himg._Gotopage(Frmgoto.Npage);
+            }
         }
 
         private void toolStripAutoSide_Click(object sender, EventArgs e)
@@ -255,7 +255,7 @@ namespace Csmdajc
             } catch (Exception ex) {
                 MessageBox.Show(ex.ToString());
             }
-           
+
         }
 
         //东丽区专用
@@ -263,9 +263,8 @@ namespace Csmdajc
         {
             int entag = Common.GetEnterinfo(Clscheck.Archid);
             int conte = Common.Getconteninfo(Clscheck.Archid);
-            if (entag != conte)
-            {
-                MessageBox.Show("信息录入手续" + entag.ToString()+" 目录录入业务id总计:"+conte.ToString()+" 不一致");
+            if (entag != conte) {
+                MessageBox.Show("信息录入手续" + entag.ToString() + " 目录录入业务id总计:" + conte.ToString() + " 不一致");
                 return false;
             }
             return true;
@@ -279,9 +278,10 @@ namespace Csmdajc
                 MessageBox.Show("登记页码和图像页码不一致无法完成质检!");
                 return;
             }
-            //东丽区专用
-            if (!Entertag())
-                return;
+            if (ucContents1.IsGetywid())
+                //东丽区专用
+                if (!Entertag())
+                    return;
             if (MessageBox.Show("质检完成您确定要上传档案吗？", "提示", MessageBoxButtons.OKCancel,
                     MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.OK) {
                 string filepath = Clscheck.ScanFilePath;
@@ -403,8 +403,11 @@ namespace Csmdajc
             Keys keyCode = e.KeyCode;
             if (e.KeyCode == Keys.ShiftKey)
                 ucContents1.txtCode.Focus();
-            if (e.KeyCode == Keys.Escape)
-                gArch.LvData.Focus();
+            if (e.KeyCode == Keys.Escape) {
+                gArch.txtBoxsn.Focus();
+                gArch.txtBoxsn.SelectAll();
+            }
+
         }
         private void toolStripRepair_Click(object sender, EventArgs e)
         {
@@ -415,10 +418,12 @@ namespace Csmdajc
                 string filetmp = Clscheck.FileNametmp;
                 int archid = Clscheck.Archid;
                 string archpos = Clscheck.ArchPos;
+                string file = Clscheck.ScanFilePath;
+                int page = Clscheck.MaxPage;
                 Cledata();
                 Task.Run(new Action(() =>
                 {
-                    Repair(filetmp, archid, archpos);
+                    Repair(filetmp, archid, archpos, page);
                 }));
                 gArch.LvData.Focus();
             }
@@ -854,11 +859,14 @@ namespace Csmdajc
         {
             this.Invoke(new Action(() =>
             {
+                Himg.Filename = "";
+                Himg.RegPage = 0;
                 ImgView.Image = null;
                 Clscheck.Archid = 0;
                 Clscheck.ArchPos = "";
                 Clscheck.RegPage = 0;
                 Clscheck.FileNametmp = "";
+                Clscheck.ScanFilePath = "";
                 toolArchno.Text = "当前卷号:";
                 labPageCrrent.Text = "第     页";
                 labPageCount.Text = "共      页";
@@ -869,7 +877,7 @@ namespace Csmdajc
 
         }
 
-        private  void FtpUpFinish(string filetmp, int arid, string filename, int pages, int tag)
+        private void FtpUpFinish(string filetmp, int arid, string filename, int pages, int tag)
         {
             try {
                 if (File.Exists(filetmp)) {
@@ -889,7 +897,7 @@ namespace Csmdajc
                         string RemoteDir = filename.Substring(0, 8);
                         if (ftp.SaveRemoteFileUp(T_ConFigure.FtpArchSave, RemoteDir, filetmp, filename)) {
                             Common.DelTask(arid);
-                            Common.SetCheckFinish(arid, DESEncrypt.DesEncrypt(filename),1, (int)T_ConFigure.ArchStat.质检完);
+                            Common.SetCheckFinish(arid, DESEncrypt.DesEncrypt(filename), 1, (int)T_ConFigure.ArchStat.质检完);
                             try {
                                 File.Delete(filetmp);
                                 Directory.Delete(Path.GetDirectoryName(filetmp));
@@ -926,10 +934,20 @@ namespace Csmdajc
             }
         }
 
-        private void Repair(string filetmp, int arid, string archpos)
+        private void Repair(string filetmp, int arid, string archpos, int page)
         {
             try {
                 Common.Writelog(Clscheck.Archid, "质检返工!");
+                //if (ftp.SaveRemoteFileUp(T_ConFigure.gArchScanPath, archpos, filetmp, T_ConFigure.ScanTempFile)) {
+                //    Common.SetScanFinish(arid, page, 1, (int)T_ConFigure.ArchStat.扫描完);
+                //    Common.DelTask(Convert.ToInt32(arid));
+                //    try {
+                //        File.Delete(filetmp);
+                //        Directory.Delete(Path.Combine(T_ConFigure.LocalTempPath, archpos));
+                //    } catch {
+                //    }
+                //    return;
+                //}
                 string sourefile = "";
                 if (T_ConFigure.FtpStyle == 0) {
                     if (archzt == 1)
