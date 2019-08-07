@@ -29,12 +29,15 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmPage));
             this.groupPanel1 = new DevComponents.DotNetBar.Controls.GroupPanel();
+            this.txtNumpage = new System.Windows.Forms.TextBox();
+            this.butDel = new DevComponents.DotNetBar.ButtonX();
+            this.butSavePage = new DevComponents.DotNetBar.ButtonX();
+            this.txtPage = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.lbPage = new System.Windows.Forms.ListBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.txtPage = new System.Windows.Forms.TextBox();
-            this.butSavePage = new DevComponents.DotNetBar.ButtonX();
-            this.butDel = new DevComponents.DotNetBar.ButtonX();
+            this.label3 = new System.Windows.Forms.Label();
             this.groupPanel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -43,16 +46,19 @@
             // 
             this.groupPanel1.CanvasColor = System.Drawing.SystemColors.Control;
             this.groupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007;
+            this.groupPanel1.Controls.Add(this.label3);
+            this.groupPanel1.Controls.Add(this.txtNumpage);
             this.groupPanel1.Controls.Add(this.butDel);
             this.groupPanel1.Controls.Add(this.butSavePage);
             this.groupPanel1.Controls.Add(this.txtPage);
+            this.groupPanel1.Controls.Add(this.label2);
             this.groupPanel1.Controls.Add(this.label1);
             this.groupPanel1.Controls.Add(this.groupBox1);
             this.groupPanel1.DisabledBackColor = System.Drawing.Color.Empty;
             this.groupPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupPanel1.Location = new System.Drawing.Point(0, 0);
             this.groupPanel1.Name = "groupPanel1";
-            this.groupPanel1.Size = new System.Drawing.Size(379, 192);
+            this.groupPanel1.Size = new System.Drawing.Size(447, 219);
             // 
             // 
             // 
@@ -83,6 +89,66 @@
             this.groupPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.groupPanel1.TabIndex = 0;
             // 
+            // txtNumpage
+            // 
+            this.txtNumpage.Location = new System.Drawing.Point(197, 50);
+            this.txtNumpage.Name = "txtNumpage";
+            this.txtNumpage.Size = new System.Drawing.Size(148, 21);
+            this.txtNumpage.TabIndex = 5;
+            this.txtNumpage.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNumpage_KeyPress);
+            // 
+            // butDel
+            // 
+            this.butDel.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.butDel.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.butDel.Location = new System.Drawing.Point(261, 146);
+            this.butDel.Name = "butDel";
+            this.butDel.Size = new System.Drawing.Size(75, 35);
+            this.butDel.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.butDel.TabIndex = 4;
+            this.butDel.Text = "删除";
+            this.butDel.Click += new System.EventHandler(this.butDel_Click);
+            // 
+            // butSavePage
+            // 
+            this.butSavePage.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.butSavePage.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.butSavePage.Location = new System.Drawing.Point(147, 146);
+            this.butSavePage.Name = "butSavePage";
+            this.butSavePage.Size = new System.Drawing.Size(75, 35);
+            this.butSavePage.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.butSavePage.TabIndex = 2;
+            this.butSavePage.Text = "添加";
+            this.butSavePage.Click += new System.EventHandler(this.butSavePage_Click);
+            // 
+            // txtPage
+            // 
+            this.txtPage.Location = new System.Drawing.Point(197, 105);
+            this.txtPage.Name = "txtPage";
+            this.txtPage.Size = new System.Drawing.Size(148, 21);
+            this.txtPage.TabIndex = 1;
+            this.txtPage.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPage_KeyPress);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.BackColor = System.Drawing.Color.Transparent;
+            this.label2.Location = new System.Drawing.Point(138, 53);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(53, 12);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "数字页码";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.Transparent;
+            this.label1.Location = new System.Drawing.Point(138, 108);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(47, 12);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "带-页码";
+            // 
             // groupBox1
             // 
             this.groupBox1.BackColor = System.Drawing.Color.Transparent;
@@ -105,53 +171,21 @@
             this.lbPage.Size = new System.Drawing.Size(92, 151);
             this.lbPage.TabIndex = 5;
             // 
-            // label1
+            // label3
             // 
-            this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.Color.Transparent;
-            this.label1.Location = new System.Drawing.Point(144, 26);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(47, 12);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "带-页码";
-            // 
-            // txtPage
-            // 
-            this.txtPage.Location = new System.Drawing.Point(142, 55);
-            this.txtPage.Name = "txtPage";
-            this.txtPage.Size = new System.Drawing.Size(208, 21);
-            this.txtPage.TabIndex = 1;
-            this.txtPage.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPage_KeyPress);
-            // 
-            // butSavePage
-            // 
-            this.butSavePage.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.butSavePage.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.butSavePage.Location = new System.Drawing.Point(143, 114);
-            this.butSavePage.Name = "butSavePage";
-            this.butSavePage.Size = new System.Drawing.Size(75, 35);
-            this.butSavePage.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.butSavePage.TabIndex = 2;
-            this.butSavePage.Text = "添加";
-            this.butSavePage.Click += new System.EventHandler(this.butSavePage_Click);
-            // 
-            // butDel
-            // 
-            this.butDel.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.butDel.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.butDel.Location = new System.Drawing.Point(266, 114);
-            this.butDel.Name = "butDel";
-            this.butDel.Size = new System.Drawing.Size(75, 35);
-            this.butDel.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.butDel.TabIndex = 4;
-            this.butDel.Text = "删除";
-            this.butDel.Click += new System.EventHandler(this.butDel_Click);
+            this.label3.AutoSize = true;
+            this.label3.BackColor = System.Drawing.Color.Transparent;
+            this.label3.Location = new System.Drawing.Point(199, 26);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(137, 12);
+            this.label3.TabIndex = 6;
+            this.label3.Text = "如数字页码为0,则不更新";
             // 
             // FrmPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(379, 192);
+            this.ClientSize = new System.Drawing.Size(447, 219);
             this.Controls.Add(this.groupPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -161,6 +195,7 @@
             this.Text = "页码补录";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmPage_FormClosing);
             this.Shown += new System.EventHandler(this.FrmPage_Shown);
+            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FrmPage_KeyPress);
             this.groupPanel1.ResumeLayout(false);
             this.groupPanel1.PerformLayout();
             this.groupBox1.ResumeLayout(false);
@@ -177,5 +212,8 @@
         private DevComponents.DotNetBar.ButtonX butSavePage;
         private System.Windows.Forms.TextBox txtPage;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox txtNumpage;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
     }
 }

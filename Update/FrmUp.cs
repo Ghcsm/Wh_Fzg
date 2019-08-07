@@ -12,6 +12,7 @@ namespace Update
             InitializeComponent();
         }
 
+        private int id = 0;
         private void FrmUpate_Shown(object sender, EventArgs e)
         {
             label1.Text = "    更新程序前请将各个环节操作\n保存退出以免数据丢失！ ";
@@ -24,12 +25,20 @@ namespace Update
                     MessageBox.Show("任务正在进行中请稍候退出程序！");
                     return;
                 }
-                string appName = Application.StartupPath + "\\" + "getupdate.exe";
-                Process.Start(appName);
+
+                id = 1;
                 Application.Exit();
             } catch {
-                MessageBox.Show("无法加载数据更新程序请重新安装！");
                 Application.Exit();
+            }
+        }
+
+        private void FrmUpate_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (id == 1)
+            {
+                string appName = Application.StartupPath + "\\" + "getupdate.exe";
+                Process.Start(appName);
             }
         }
     }

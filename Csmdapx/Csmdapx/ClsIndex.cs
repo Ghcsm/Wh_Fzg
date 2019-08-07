@@ -10,6 +10,7 @@ namespace Csmdapx
         public static int Archid;
         public static string ArchPos;
         public static string ScanFilePath;
+        public static string ScanFilePathtmp;
 
 
         public static List<string> Lsinikeys = new List<string>();

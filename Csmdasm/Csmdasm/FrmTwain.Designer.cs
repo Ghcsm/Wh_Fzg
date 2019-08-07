@@ -660,6 +660,8 @@
             // 
             // ImgView
             // 
+            this.ImgView.BackColor = System.Drawing.Color.SlateGray;
+            this.ImgView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.ImgView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ImgView.IsSyncSource = true;
             this.ImgView.IsSyncTarget = true;
@@ -668,6 +670,7 @@
             this.ImgView.Name = "ImgView";
             this.ImgView.Size = new System.Drawing.Size(796, 503);
             this.ImgView.TabIndex = 0;
+            this.ImgView.ViewHorizontalAlignment = Leadtools.Controls.ControlAlignment.Center;
             this.ImgView.Click += new System.EventHandler(this.ImgView_Click);
             // 
             // grBottom

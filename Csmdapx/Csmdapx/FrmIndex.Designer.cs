@@ -80,6 +80,7 @@
             this.toolStripClose = new System.Windows.Forms.ToolStripButton();
             this.toolstripmain1 = new System.Windows.Forms.ToolStrip();
             this.toolStripInsterImg = new System.Windows.Forms.ToolStripButton();
+            this.toolStripImportImg = new System.Windows.Forms.ToolStripButton();
             this.toolStripRevImg = new System.Windows.Forms.ToolStripButton();
             this.toolStripTrimImg = new System.Windows.Forms.ToolStripButton();
             this.toolStripFontDeep = new System.Windows.Forms.ToolStripButton();
@@ -90,6 +91,10 @@
             this.toolStripFiltr = new System.Windows.Forms.ToolStripButton();
             this.toolStripSplit = new System.Windows.Forms.ToolStripButton();
             this.toolProess = new System.Windows.Forms.ToolStripProgressBar();
+            this.toolStripCopy = new System.Windows.Forms.ToolStripButton();
+            this.toolStripYuan = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSider = new System.Windows.Forms.ToolStripButton();
+            this.toolStripHole = new System.Windows.Forms.ToolStripButton();
             this.toolStripSplitTag = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.toolArchno = new System.Windows.Forms.ToolStripLabel();
@@ -106,7 +111,7 @@
             this.dockSite7 = new DevComponents.DotNetBar.DockSite();
             this.dockSite3 = new DevComponents.DotNetBar.DockSite();
             this.odgInsterFile = new System.Windows.Forms.OpenFileDialog();
-            this.toolStripCopy = new System.Windows.Forms.ToolStripButton();
+            this.toolStripZhantie = new System.Windows.Forms.ToolStripButton();
             this.dockSite9.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bar2)).BeginInit();
             this.bar2.SuspendLayout();
@@ -319,14 +324,20 @@
             // 
             // ImgView
             // 
-            this.ImgView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ImgView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ImgView.BackColor = System.Drawing.Color.SlateGray;
+            this.ImgView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.ImgView.IsSyncSource = true;
             this.ImgView.IsSyncTarget = true;
             this.ImgView.ItemPadding = new System.Windows.Forms.Padding(1);
-            this.ImgView.Location = new System.Drawing.Point(3, 64);
+            this.ImgView.Location = new System.Drawing.Point(3, 55);
             this.ImgView.Name = "ImgView";
-            this.ImgView.Size = new System.Drawing.Size(971, 506);
+            this.ImgView.Size = new System.Drawing.Size(971, 519);
             this.ImgView.TabIndex = 1;
+            this.ImgView.ViewHorizontalAlignment = Leadtools.Controls.ControlAlignment.Center;
+            this.ImgView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ImgView_MouseClick);
             this.ImgView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ImgView_MouseDoubleClick);
             this.ImgView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ImgView_MouseDown);
             // 
@@ -339,8 +350,7 @@
             this.gr4.Controls.Add(this.labPageCrrent);
             this.gr4.Controls.Add(this.txtPages);
             this.gr4.Controls.Add(this.label1);
-            this.gr4.Dock = System.Windows.Forms.DockStyle.Top;
-            this.gr4.Location = new System.Drawing.Point(3, 17);
+            this.gr4.Location = new System.Drawing.Point(3, 4);
             this.gr4.Name = "gr4";
             this.gr4.Size = new System.Drawing.Size(971, 47);
             this.gr4.TabIndex = 0;
@@ -637,6 +647,7 @@
             // 
             this.toolstripmain1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripInsterImg,
+            this.toolStripImportImg,
             this.toolStripRevImg,
             this.toolStripTrimImg,
             this.toolStripFontDeep,
@@ -648,6 +659,10 @@
             this.toolStripSplit,
             this.toolProess,
             this.toolStripCopy,
+            this.toolStripZhantie,
+            this.toolStripYuan,
+            this.toolStripSider,
+            this.toolStripHole,
             this.toolStripSplitTag,
             this.toolStripSeparator5,
             this.toolArchno});
@@ -666,6 +681,16 @@
             this.toolStripInsterImg.Size = new System.Drawing.Size(59, 24);
             this.toolStripInsterImg.Text = "插入";
             this.toolStripInsterImg.Click += new System.EventHandler(this.toolStripInsterImg_Click);
+            // 
+            // toolStripImportImg
+            // 
+            this.toolStripImportImg.Font = new System.Drawing.Font("微软雅黑", 11F);
+            this.toolStripImportImg.Image = ((System.Drawing.Image)(resources.GetObject("toolStripImportImg.Image")));
+            this.toolStripImportImg.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripImportImg.Name = "toolStripImportImg";
+            this.toolStripImportImg.Size = new System.Drawing.Size(59, 24);
+            this.toolStripImportImg.Text = "导出";
+            this.toolStripImportImg.Click += new System.EventHandler(this.toolStripImportImg_Click);
             // 
             // toolStripRevImg
             // 
@@ -759,6 +784,46 @@
             this.toolProess.Size = new System.Drawing.Size(100, 24);
             this.toolProess.Visible = false;
             // 
+            // toolStripCopy
+            // 
+            this.toolStripCopy.Font = new System.Drawing.Font("微软雅黑", 11F);
+            this.toolStripCopy.Image = global::Csmdapx.Properties.Resources._13;
+            this.toolStripCopy.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripCopy.Name = "toolStripCopy";
+            this.toolStripCopy.Size = new System.Drawing.Size(59, 24);
+            this.toolStripCopy.Text = "复制";
+            this.toolStripCopy.Click += new System.EventHandler(this.toolStripCopy_Click);
+            // 
+            // toolStripYuan
+            // 
+            this.toolStripYuan.Font = new System.Drawing.Font("微软雅黑", 11F);
+            this.toolStripYuan.Image = ((System.Drawing.Image)(resources.GetObject("toolStripYuan.Image")));
+            this.toolStripYuan.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripYuan.Name = "toolStripYuan";
+            this.toolStripYuan.Size = new System.Drawing.Size(59, 24);
+            this.toolStripYuan.Text = "画圆";
+            this.toolStripYuan.Click += new System.EventHandler(this.toolStripYuan_Click);
+            // 
+            // toolStripSider
+            // 
+            this.toolStripSider.Font = new System.Drawing.Font("微软雅黑", 11F);
+            this.toolStripSider.Image = global::Csmdapx.Properties.Resources.maya_files;
+            this.toolStripSider.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripSider.Name = "toolStripSider";
+            this.toolStripSider.Size = new System.Drawing.Size(74, 24);
+            this.toolStripSider.Text = "去黑边";
+            this.toolStripSider.Click += new System.EventHandler(this.toolStripSider_Click);
+            // 
+            // toolStripHole
+            // 
+            this.toolStripHole.Font = new System.Drawing.Font("微软雅黑", 11F);
+            this.toolStripHole.Image = ((System.Drawing.Image)(resources.GetObject("toolStripHole.Image")));
+            this.toolStripHole.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripHole.Name = "toolStripHole";
+            this.toolStripHole.Size = new System.Drawing.Size(74, 24);
+            this.toolStripHole.Text = "装订孔";
+            this.toolStripHole.Click += new System.EventHandler(this.toolStripHole_Click);
+            // 
             // toolStripSplitTag
             // 
             this.toolStripSplitTag.Font = new System.Drawing.Font("微软雅黑", 11F);
@@ -780,7 +845,7 @@
             this.toolArchno.Font = new System.Drawing.Font("微软雅黑", 11F);
             this.toolArchno.ForeColor = System.Drawing.Color.Red;
             this.toolArchno.Name = "toolArchno";
-            this.toolArchno.Size = new System.Drawing.Size(73, 24);
+            this.toolArchno.Size = new System.Drawing.Size(73, 20);
             this.toolArchno.Text = "当前卷号:";
             // 
             // dockCont2
@@ -927,15 +992,15 @@
             this.dockSite3.TabIndex = 3;
             this.dockSite3.TabStop = false;
             // 
-            // toolStripCopy
+            // toolStripZhantie
             // 
-            this.toolStripCopy.Font = new System.Drawing.Font("微软雅黑", 11F);
-            this.toolStripCopy.Image = global::Csmdapx.Properties.Resources._13;
-            this.toolStripCopy.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripCopy.Name = "toolStripCopy";
-            this.toolStripCopy.Size = new System.Drawing.Size(59, 24);
-            this.toolStripCopy.Text = "复制";
-            this.toolStripCopy.Click += new System.EventHandler(this.toolStripCopy_Click);
+            this.toolStripZhantie.Font = new System.Drawing.Font("微软雅黑", 11F);
+            this.toolStripZhantie.Image = ((System.Drawing.Image)(resources.GetObject("toolStripZhantie.Image")));
+            this.toolStripZhantie.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripZhantie.Name = "toolStripZhantie";
+            this.toolStripZhantie.Size = new System.Drawing.Size(59, 24);
+            this.toolStripZhantie.Text = "粘贴";
+            this.toolStripZhantie.Click += new System.EventHandler(this.toolStripZhantie_Click);
             // 
             // FrmIndex
             // 
@@ -1065,5 +1130,10 @@
         private System.Windows.Forms.ToolStripStatusLabel toollabentertime;
         private System.Windows.Forms.ToolStripButton toolStripSplitTag;
         private System.Windows.Forms.ToolStripButton toolStripCopy;
+        private System.Windows.Forms.ToolStripButton toolStripSider;
+        private System.Windows.Forms.ToolStripButton toolStripHole;
+        private System.Windows.Forms.ToolStripButton toolStripYuan;
+        private System.Windows.Forms.ToolStripButton toolStripImportImg;
+        private System.Windows.Forms.ToolStripButton toolStripZhantie;
     }
 }

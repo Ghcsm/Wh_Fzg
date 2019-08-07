@@ -618,7 +618,8 @@ namespace WareHouse
                 }
             } catch {
             }
-            Common.SetArchxqStat(txtbox1.Text.Trim(),txtbox2.Text.Trim(),combzt.Text.Trim(),txtXqdm.Text.Trim().PadLeft(4,'0'));
+            bool chk = chkcheck.Checked;
+            Common.SetArchxqStat(txtbox1.Text.Trim(),txtbox2.Text.Trim(),combzt.Text.Trim(),txtXqdm.Text.Trim().PadLeft(4,'0'), chk);
             MessageBox.Show("完成!");
         }
 

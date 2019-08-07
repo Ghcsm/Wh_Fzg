@@ -112,8 +112,8 @@ namespace CsmCon
         private void butPageUpdate_Click(object sender, EventArgs e)
         {
 
-            if (txtPages.Text.Trim().Length <= 0)
-                return;
+            //if (txtPages.Text.Trim().Length <= 0)
+            //    return;
             if (Archstat.Trim().Length > 0) {
                 int p = Convert.ToInt32(Archstat);
                 if (p >= (int)T_ConFigure.ArchStat.排序完) {
@@ -122,12 +122,14 @@ namespace CsmCon
                     return;
                 }
             }
-            try {
-                int pages = Convert.ToInt32(txtPages.Text.Trim());
-                if (pages <= 0)
-                    return;
-                Common.UpdatePages(txtPages.Text.Trim(), Archid);
-                ArchRegPages = pages;
+            try
+            {
+                int pages;
+                bool bl =int.TryParse(txtPages.Text.Trim(),out pages);
+                if (bl) {
+                    Common.UpdatePages(txtPages.Text.Trim(), Archid);
+                    ArchRegPages = pages;
+                }
                 LineFocus?.Invoke(sender, new EventArgs());
             } catch {
                 MessageBox.Show("更新页码失败!");

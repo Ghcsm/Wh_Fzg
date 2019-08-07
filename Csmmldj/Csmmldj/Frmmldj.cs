@@ -55,7 +55,7 @@ namespace Csmmldj
             UcContents.ArchId = arid;
             UcContents.ArchMaxPage = gArchSelect1.ArchRegPages;
             UcContents.ArchStat =Convert.ToInt32(gArchSelect1.Archstat);
-            ucContents1.LoadContents();
+            ucContents1.LoadContents(arid, UcContents.ArchMaxPage);
             if (ContenInfPar.Infobl) {
                 string type = gArchSelect1.Archtype;
                 int p;

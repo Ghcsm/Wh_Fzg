@@ -15,9 +15,11 @@ namespace CsmCon
         }
         public static string Modulename { get; set; }
         //public event CntSelectHandleG GoFous;
+        public delegate void ArchSelectHandleFocus(object sender, EventArgs e);
         public event CntSelectHandle OneClickGotoPage;
         public delegate void CntSelectHandleG(object sender, EventArgs e);
         public delegate void CntSelectHandle(object sender, EventArgs e, string title, string page);
+        public event ArchSelectHandleFocus LineFocus;
         public static bool ModuleVisible { get; set; }
         public static bool ContentsEnabled { get; set; }
         public static int ArchMaxPage { get; set; }
@@ -26,6 +28,7 @@ namespace CsmCon
         public static int ArchStat { get; set; } = 0;
         public static int Mtmpid { get; set; } = 0;
         private int CrragePage = 0;
+        public string ywid = "0";
         ClsContenInfo info = new ClsContenInfo();
         private void Init()
         {
@@ -112,7 +115,13 @@ namespace CsmCon
                 MessageBox.Show("标题及页码等项不能为空!");
                 return false;
             }
-            string pages = info.Pagestmp;
+
+            string pages = Getpage();
+            if (pages.Trim().Length <= 0)
+            {
+                MessageBox.Show("起始页码不能为空!");
+                return false;
+            }
             int p = info.PagesWz;
             string pagestmp = "";
             if (id) {
@@ -141,6 +150,20 @@ namespace CsmCon
                 }
             }
             return true;
+        }
+
+        private string Getpage()
+        {
+            foreach (Control c in panel1.Controls) {
+                if (c is TextBox || c is ComboBox)
+                    if (c.Tag != null)
+                    {
+                        if (c.Tag.ToString() == "2")
+                            return c.Text.Trim();
+                    }
+
+            }
+            return "";
         }
 
         //东丽区 不清空业务id
@@ -182,8 +205,9 @@ namespace CsmCon
             Dictionary<int, string> dic1 = new Dictionary<int, string>();
             Dictionary<int, string> dicxx = new Dictionary<int, string>();
             foreach (Control t in panel1.Controls) {
-                if (t.Tag != null && t.Tag.ToString() != "") {
-                    string str = t.Text.Trim();
+                if (t.Tag != null && t.Tag.ToString() != "")
+                {
+                    string str =t.Text.Trim();
                     dic1.Add(Convert.ToInt32(t.Tag), str);
                 }
             }
@@ -192,7 +216,7 @@ namespace CsmCon
             if (id > 0)
                 cleTxt();
             info.LoadContentsadd(ArchId, LvContents, chkTspages.Checked);
-            txtCode.Focus();
+            //txtCode.Focus();
         }
 
         private void DeleteContents()
@@ -210,6 +234,7 @@ namespace CsmCon
             Common.ContentsDel(info.ContenTable, Mtmpid, ArchId);
             info.LoadContents(ArchId, LvContents, chkTspages.Checked);
         }
+     
 
         private void butAdd_Click(object sender, EventArgs e)
         {
@@ -218,14 +243,21 @@ namespace CsmCon
                 return;
             }
             AddTitle();
-            if (this.LvContents.Items.Count > 0) {
-                LvContents.Items[LvContents.Items.Count - 1].Selected = true;
-                LvContents.Items[this.LvContents.Items.Count - 1].EnsureVisible();
+            if (this.LvContents.Items.Count > 0 && CrragePage>0) {
+                LvContents.Items[CrragePage].Selected = true;
+                LvContents.Items[CrragePage].EnsureVisible();
             }
+            LineFocus?.Invoke(sender, new EventArgs());
+            // info.Setinfofocus(panel1);
         }
 
-        private List<string> LsPage = new List<string>();
-        private List<string> Lsywid = new List<string>();
+        public void Setinfofocus()
+        {
+            info.Setinfofocus(panel1);
+        }
+
+        //private List<string> LsPage = new List<string>();
+        //private List<string> Lsywid = new List<string>();
         public bool IsGetywid()
         {
             if (LvContents.Items.Count <= 0) {
@@ -234,33 +266,15 @@ namespace CsmCon
             }
             for (int i = 0; i < LvContents.Items.Count; i++) {
                 string ywid = LvContents.Items[i].SubItems[4].Text;
-                string page = LvContents.Items[i].SubItems[3].Text;
-                if (ywid.Trim().Length <= 0) {
-                    LsPage.Add(page);
-                    Lsywid.Add(ywid);
+                if (ywid.Trim().Length <= 0)
+                {
+                    MessageBox.Show("业务ID不能为空!");
+                    return false;
                 }
             }
-            if (Lsywid.Count <= 0) {
-                MessageBox.Show("此卷档案未设置业务ID!");
-                return false;
-            }
-
-            UpdateYwid();
             return true;
         }
-
-
-        void UpdateYwid()
-        {
-            for (int i = 0; i < Lsywid.Count; i++) {
-                string p = LsPage[i].ToString();
-                string id = Lsywid[i].ToString();
-                if (p.Trim().Length<=0 && id.Trim().Length<=0)
-                    continue;
-                Common.SetYwid(p, id);
-            }
-        }
-
+       
 
         public void LoadContents(int arid, int maxpage)
         {
@@ -270,12 +284,17 @@ namespace CsmCon
             ArchMaxPage = maxpage;
             info.LoadContents(ArchId, LvContents, chkTspages.Checked);
         }
-        public void LoadContents()
+
+        public void LoadContentsinfo(int arid, int maxpage)
         {
-            if (ArchId <= 0)
+            if (arid <= 0)
                 return;
-            info.LoadContents(ArchId, LvContents, chkTspages.Checked);
+            ArchId = arid;
+            ArchMaxPage = maxpage;
+            info.LoadContentsinfo(ArchId, LvContents, chkTspages.Checked);
         }
+
+
 
         private void txtCode_KeyDown(object sender, KeyEventArgs e)
         {
@@ -309,8 +328,11 @@ namespace CsmCon
                 return;
             }
             ContentsEdit();
-            if (this.LvModule.Items.Count > 0)
-                this.LvModule.Items[this.LvModule.Items.Count - 1].EnsureVisible();
+            if (this.LvContents.Items.Count > 0)
+            {
+                LvContents.Items[CrragePage].Selected = true;
+                LvContents.Items[CrragePage].EnsureVisible();
+            }
         }
 
         private void LvContents_Click(object sender, EventArgs e)
@@ -326,6 +348,7 @@ namespace CsmCon
             int tid = info.TitleWz;
             string page = "";
             string title = "";
+            CrragePage = LvContents.SelectedItems[0].Index;
             for (int i = 1; i < LvContents.Columns.Count; i++) {
                 string str = LvContents.SelectedItems[0].SubItems[i].Text;
                 if (i == 1)
@@ -337,10 +360,11 @@ namespace CsmCon
                     page = str;
                 else if (i == tid + 2)
                     title = str;
+                if (i ==5)
+                    ywid = str;
             }
             if (title.Trim().Length > 0)
                 OneClickGotoPage?.Invoke(sender, e, title, page);
-
         }
 
         public void Settxt(string title)
@@ -349,6 +373,14 @@ namespace CsmCon
             int tid = info.TitleWz;
             info.SetInfoTxt(panel1, pid, CrragePage.ToString());
             info.SetInfoTxt(panel1, tid + 1, title);
+        }
+        public void Setocrtxt(string title)
+        {
+            int pid = info.PagesWz;
+            int tid = info.TitleWz;
+            info.SetinfoOcrtxt(panel1,pid,CrragePage.ToString(),tid+1,title);
+            //info.SetInfoTxt(panel1, pid, CrragePage.ToString());
+           // info.SetInfoTxt(panel1, tid + 1, title);
         }
 
         public static void Setxtxtls(Panel p, int id, string str)
@@ -383,6 +415,10 @@ namespace CsmCon
                 }
                 else if (page > 0)
                     info.SetInfoTxtcls(panel1, info.PagesWz + 1, page.ToString());
+                if (LvContents.Items.Count > 0) {
+                    LvContents.Items[CrragePage].Selected = true;
+                    LvContents.Items[CrragePage].EnsureVisible();
+                }
             } catch { }
         }
 
@@ -416,8 +452,8 @@ namespace CsmCon
             DoubleModuleAddConte();
         }
 
+
         #endregion
-
-
+       
     }
 }

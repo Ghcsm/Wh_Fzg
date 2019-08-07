@@ -25,7 +25,7 @@ namespace Csmxxbl
             lbPage.Items.Clear();
             lspage.Clear();
             GetPage();
-            txtPage.Focus();
+            txtNumpage.Focus();
         }
 
         private void butSavePage_Click(object sender, EventArgs e)
@@ -48,8 +48,7 @@ namespace Csmxxbl
                         txtPage.Focus();
                         return;
                     }
-                    else if (s[0].ToString().Trim().Length <= 0 ||s[1].ToString().Trim().Length<=0)
-                    {
+                    else if (s[0].ToString().Trim().Length <= 0 || s[1].ToString().Trim().Length <= 0) {
                         MessageBox.Show("此页码不正确!");
                         txtPage.Focus();
                         return;
@@ -58,7 +57,6 @@ namespace Csmxxbl
                     return;
                 }
             }
-
             if (lspage.IndexOf(txtPage.Text.Trim()) >= 0) {
                 MessageBox.Show("页码已经存在!");
                 txtPage.Focus();
@@ -82,7 +80,7 @@ namespace Csmxxbl
                 return;
             }
             int id = lbPage.SelectedIndex;
-            if (id >= lbPage.Items.Count)
+            if (id <= lbPage.Items.Count)
                 lbPage.Items.RemoveAt(id);
             if (lspage.Count >= id)
                 lspage.RemoveAt(id);
@@ -98,14 +96,19 @@ namespace Csmxxbl
                 else
                     str += ";" + s;
             }
-            Common.SetInfoPages(Archid.ToString(), str);
+            int p = Convert.ToInt32(txtNumpage.Text.Trim()) + (lspage.Count);
+            Common.SetInfoPages(Archid.ToString(), str, txtNumpage.Text.Trim(), p.ToString());
         }
 
         void GetPage()
         {
             if (Archid <= 0)
                 return;
-            string str = Common.GetInfoPages(Archid.ToString());
+            DataTable dt= Common.GetInfoPages(Archid.ToString());
+            if (dt == null || dt.Rows.Count <= 0)
+                return;
+            string str = dt.Rows[0][0].ToString();
+            string page = dt.Rows[0][1].ToString();
             if (str.Trim().Length <= 0)
                 return;
             string[] s = str.Split(';');
@@ -116,6 +119,7 @@ namespace Csmxxbl
                 lspage.Add(s1);
                 lbPage.Items.Add(s1);
             }
+            txtNumpage.Text = page;
         }
 
         private void butSave_Click(object sender, EventArgs e)
@@ -133,17 +137,48 @@ namespace Csmxxbl
         {
             if (e.KeyChar == 13)
                 butSavePage_Click(null, null);
+            if (e.KeyChar==27)
+                this.Close();
         }
 
         private void FrmPage_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (lbPage.Items.Count <= 0)
-                return;
-            if (Archid <= 0) {
-                MessageBox.Show("案卷id获取失败,请重新打开!");
+            if (txtNumpage.Text.Trim().Length <= 0) {
+                MessageBox.Show("数字页码不为能空");
+                txtNumpage.Focus();
+                e.Cancel = true;
                 return;
             }
+            else {
+                int p;
+                bool bl = int.TryParse(txtNumpage.Text.Trim(), out p);
+                if (!bl) {
+                    MessageBox.Show("页码不正确!");
+                    txtNumpage.Focus();
+                    e.Cancel = true;
+                    return;
+                }
+                else if (p<=0)
+                {
+                    MessageBox.Show("数字页码不能为为0");
+                    return;
+                } 
+            }
             SavePage();
+        }
+
+        private void txtNumpage_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+                txtPage.Focus();
+            if (e.KeyChar == 27)
+                this.Close();
+        }
+
+        private void FrmPage_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 27)
+                this.Close();
         }
     }
 }

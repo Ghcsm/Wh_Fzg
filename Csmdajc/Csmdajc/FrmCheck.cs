@@ -27,9 +27,12 @@ namespace Csmdajc
         HFTP ftp = new HFTP();
         gArchSelect gArch;
         UcContents ucContents1;
-        UcInfoEnter ucInfo;
+        UcDLInfo ucdL;
         private int archzt = 0;
+        private string sx = "0";
         private Pubcls pub;
+        private MouseEventArgs exArgs;
+        private int Round = 0;
         private void Init()
         {
             try {
@@ -40,6 +43,7 @@ namespace Csmdajc
                     Dock = DockStyle.Fill
                 };
                 gArch.LineLoadFile += Garch_LineLoadFile;
+                gArch.LineClickLoadInfo += GArch_LineClickLoadInfo;
                 gr1.Controls.Add(gArch);
                 UcContents.Modulename = this.Text;
                 UcContents.ArchId = Clscheck.Archid;
@@ -51,6 +55,7 @@ namespace Csmdajc
                     ucContents1.Dock = DockStyle.Fill;
                 }
                 ucContents1.OneClickGotoPage += UcContents1_OneClickGotoPage;
+                ucContents1.LineFocus += UcContents1_LineFocus;
                 gr1_1.Controls.Add(ucContents1);
                 Clscheck.infobl = Common.GetConteninfoblchk();
                 if (Clscheck.infobl) {
@@ -63,12 +68,24 @@ namespace Csmdajc
                 MessageBox.Show("窗体控件初始化失败:" + ex.ToString());
             }
         }
+
+        private void UcContents1_LineFocus(object sender, EventArgs e)
+        {
+            ImgView.Focus();
+        }
+
+        private void GArch_LineClickLoadInfo(object sender, EventArgs e)
+        {
+            LoadContents();
+            gArch.LvData.Focus();
+        }
+
         void Infoshow()
         {
-            ucInfo = new UcInfoEnter();
-            ucInfo.Dock = DockStyle.Fill;
-            gr1_2.Controls.Add(ucInfo);
-            ucInfo.GetInfoCol();
+            ucdL = new UcDLInfo();
+            ucdL.Dock = DockStyle.Fill;
+            gr1_2.Controls.Add(ucdL);
+            ucdL.LoadInfo(Clscheck.Archid, sx);
         }
 
 
@@ -81,6 +98,14 @@ namespace Csmdajc
             } catch { }
             if (p > 0 && p <= Clscheck.MaxPage)
                 Himg._Gotopage(p);
+            if (Clscheck.Archid<= 0)
+                return;
+            string ywid = ucContents1.ywid;
+            if (sx != ywid)
+            {
+                sx = ywid;
+                ucdL.LoadInfo(Clscheck.Archid, sx);
+            }
 
         }
 
@@ -142,12 +167,17 @@ namespace Csmdajc
 
         #region ClickEve
 
+        private void toolStripRound_Click(object sender, EventArgs e)
+        {
+            Round = 1;
+        }
+
         private void toolStripOcr_Click(object sender, EventArgs e)
         {
             string txt = Himg._OcrRecttxt();
             if (txt.Length > 0) {
-                txt = (RegexCh(txt));
-                ucContents1.Settxt(txt);
+                txt = (RegexCh(txt)).Replace("天津市","").Replace("东丽区","");
+                ucContents1.Setocrtxt(txt);
             }
         }
         private string RegexCh(string s)
@@ -165,7 +195,12 @@ namespace Csmdajc
             if (e.Button == MouseButtons.Right)
                 toolStripCut_Click(sender, e);
             else
+            if (Round == 0)
                 Himg._Rectang(true);
+            else {
+                Himg._RectangYuan(true);
+                Round = 0;
+            }
 
         }
         private void ImgView_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -278,10 +313,9 @@ namespace Csmdajc
                 MessageBox.Show("登记页码和图像页码不一致无法完成质检!");
                 return;
             }
-            if (ucContents1.IsGetywid())
-                //东丽区专用
-                if (!Entertag())
-                    return;
+            //东丽区专用 
+            if (!ucContents1.IsGetywid() || !Entertag())
+                return;
             if (MessageBox.Show("质检完成您确定要上传档案吗？", "提示", MessageBoxButtons.OKCancel,
                     MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.OK) {
                 string filepath = Clscheck.ScanFilePath;
@@ -291,7 +325,7 @@ namespace Csmdajc
                 int tag = Himg.TagPage;
                 Cledata();
                 Task.Run(new Action(() => { FtpUpFinish(filepath, arid, filename, pages, tag); }));
-                gArch.LvData.Focus();
+                gArch.txtBoxsn.Focus();
             }
         }
 
@@ -395,6 +429,22 @@ namespace Csmdajc
             Himg._Fillrect(1);
         }
 
+        private void toolStripcopy_Click(object sender, EventArgs e)
+        {
+            Himg.CopyImg();
+        }
+        private void toolStripPase_Click(object sender, EventArgs e)
+        {
+            if (exArgs == null)
+                return;
+            Himg.PasteImg(exArgs);
+            exArgs = null;
+        }
+        private void ImgView_MouseClick(object sender, MouseEventArgs e)
+        {
+            exArgs = e;
+        }
+
         private void FrmIndex_KeyDown(object sender, KeyEventArgs e)
         {
             pub.KeyShortDown(e, Clscheck.lsinival, Clscheck.Lsinikeys, Clscheck.lssqlOpernum, Clscheck.lsSqlOper, out Clscheck.keystr);
@@ -402,7 +452,7 @@ namespace Csmdajc
                 KeysDownEve(Clscheck.keystr.Trim());
             Keys keyCode = e.KeyCode;
             if (e.KeyCode == Keys.ShiftKey)
-                ucContents1.txtCode.Focus();
+                ucContents1.Setinfofocus();
             if (e.KeyCode == Keys.Escape) {
                 gArch.txtBoxsn.Focus();
                 gArch.txtBoxsn.SelectAll();
@@ -544,7 +594,7 @@ namespace Csmdajc
 
         private void LoadContents()
         {
-            ucContents1.LoadContents(Clscheck.Archid, Clscheck.RegPage);
+            ucContents1.LoadContents(gArch.Archid, gArch.ArchRegPages);
         }
 
 
@@ -648,7 +698,7 @@ namespace Csmdajc
                     Himg.Filename = Clscheck.ScanFilePath;
                     Himg.LoadPage(pages);
                     ReadDict();
-                    LoadContents();
+                   // LoadContents();
                     Getuser();
                     Ispages();
                     return;
@@ -859,6 +909,7 @@ namespace Csmdajc
         {
             this.Invoke(new Action(() =>
             {
+                sx = "0";
                 Himg.Filename = "";
                 Himg.RegPage = 0;
                 ImgView.Image = null;
@@ -975,8 +1026,12 @@ namespace Csmdajc
         }
 
 
+
+
+
+
         #endregion
 
-
+       
     }
 }

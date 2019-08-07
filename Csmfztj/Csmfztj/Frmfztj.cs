@@ -170,28 +170,58 @@ namespace Csmfztj
 
         private bool istxt()
         {
-            if (txtbox1.Text.Trim().Length <= 0 || txtbox2.Text.Trim().Length <= 0)
-                return false;
-            try {
-                int b = Convert.ToInt32(txtbox1.Text.Trim());
-                int b2 = Convert.ToInt32(txtbox2.Text.Trim());
-                if (b <= 0 || b > b2)
+            if (rabox.Checked) {
+                if (txtbox1.Text.Trim().Length <= 0 || txtbox2.Text.Trim().Length <= 0)
                     return false;
-                return true;
-            } catch {
-                return false;
+                try {
+                    int b;
+                    int b1;
+                    bool bl1 = int.TryParse(txtbox1.Text.Trim(), out b);
+                    bool bl2 = int.TryParse(txtbox2.Text.Trim(), out b1);
+                    if (!bl1 || !bl2)
+                        return false;
+                    if (b <= 0 | b > b1)
+                        return false;
+                    return true;
+                } catch {
+                    return false;
+                }
             }
+            else {
+                if (txtbox1.Text.Trim().Length <= 0)
+                    return false;
+                int b;
+                bool bl = int.TryParse(txtbox1.Text.Trim(), out b);
+                if (!bl)
+                    return false;
+            }
+            return true;
+
         }
         private void butBoxTj_Click(object sender, EventArgs e)
         {
-            if (!istxt())
-            {
+            if (!istxt()) {
                 MessageBox.Show("请输入正确的盒号范围!");
                 txtbox1.Focus();
                 return;
             }
-            DataTable dt = Common.GetGroupAdmin("0", "0", txtbox1.Text.Trim(), txtbox2.Text.Trim(), "2");
+            DataTable dt = null;
+            if (rabox.Checked)
+                dt = Common.GetGroupAdmin("0", "0", txtbox1.Text.Trim(), txtbox2.Text.Trim(), "2");
+            else
+                dt = Common.GetGroupAdmin("0", "0", txtbox1.Text.Trim().PadLeft(4,'0'), "", "3");
             dgvBoxWordGroup.DataSource = dt;
+        }
+
+        private void rabqu_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rabqu.Checked)
+                txtbox2.Enabled = false;
+            else {
+                txtbox1.Enabled = true;
+                txtbox2.Enabled = true;
+            }
+
         }
     }
 }

@@ -14,6 +14,7 @@ using System.Xml;
 using System.Drawing;
 using System.Net;
 using Spire.Xls;
+using Exception = System.Exception;
 
 namespace Csmsjcf
 {
@@ -1642,6 +1643,9 @@ namespace Csmsjcf
                 grdl2.Enabled = true;
                 grdl3.Enabled = true;
                 butDlStart.Enabled = true;
+                label15.Visible = false;
+                stop = 0;
+                lab_dl_zx.Text = "完成";
             }));
         }
 
@@ -1998,7 +2002,12 @@ namespace Csmsjcf
                 }
                 string archtype = dt.Rows[0][1].ToString();
                 string page = dt.Rows[0][12].ToString();
-
+                if (page.Trim().Length <= 0)
+                {
+                    string str = "录入信息中页码不正确 id号：" + archid + " 二维码信息：" + ewm;
+                    ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
+                    return false;
+                }
                 XmlElement xesub1 = xmldoc.CreateElement("ArchiveID");
                 xesub1.InnerText = file;
                 xe1.AppendChild(xesub1);
@@ -2153,7 +2162,6 @@ namespace Csmsjcf
             } catch {
                 return false;
             }
-
             return true;
         }
 
@@ -2161,8 +2169,7 @@ namespace Csmsjcf
         void Getboxsn()
         {
             try {
-                if (ClsDL.Fanwei == 1)
-                {
+                if (ClsDL.Fanwei == 1) {
                     if (ClsDL.Zlcy == 2) {
                         Common.DataSplitUpdateboxsn(ClsDL.Houseid, ClsDL.Boxsn, ClsDL.Boxsn2);
                     }
@@ -2171,8 +2178,7 @@ namespace Csmsjcf
                     else
                         ClsDL.dtboxsn = Common.DataSplitGetdata(ClsDL.Houseid, ClsDL.Boxsn, ClsDL.Boxsn2);
                 }
-                else
-                {
+                else {
                     if (ClsDL.Zlcy == 2) {
                         Common.DataSplitUpdateboxsn(ClsDL.Houseid, ClsDL.Quhao);
                     }
@@ -2186,8 +2192,11 @@ namespace Csmsjcf
                 this.BeginInvoke(new Action(() => { lab_dl_juan.Text = "共计:" + ClsDL.dtboxsn.Rows.Count.ToString(); }));
                 for (int i = 0; i < ClsDL.dtboxsn.Rows.Count; i++) {
                     try {
-
-                        this.Invoke(new Action(() => { lab_dl_zx.Text = "正在执行第0卷:" + i.ToString(); }));
+                        if (stop == 1) {
+                            stop = 0;
+                            return;
+                        }
+                        this.Invoke(new Action(() => { lab_dl_zx.Text = string.Format("正在执行第0卷", i.ToString()); }));
                         ClsDL.Archid = ClsDL.dtboxsn.Rows[i][0].ToString();
                         string boxsn = ClsDL.dtboxsn.Rows[i][1].ToString();
                         ClsDL.BoxsnTag = boxsn;
@@ -2195,6 +2204,17 @@ namespace Csmsjcf
                         string file = ClsDL.dtboxsn.Rows[i][3].ToString();
                         string qu = ClsDL.dtboxsn.Rows[i][4].ToString();
                         string lx = ClsDL.dtboxsn.Rows[i][5].ToString();
+                        if (qu.Trim().Length <= 0)
+                        {
+                            string str = "盒号:" + boxsn + "小区代码不正确!";
+                            ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
+                            continue;
+                        }
+                        if (lx.Trim().Length <= 0) {
+                            string str = "盒号:" + boxsn + "档案所属类型不正确!";
+                            ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
+                            continue;
+                        }
                         ClsDL.ArchFile = DESEncrypt.DesDecrypt(file);
                         if (ClsDL.ArchFile.Trim().Length <= 0) {
                             string str = "盒号:" + boxsn + "文件名称解密失败!";
@@ -2221,6 +2241,12 @@ namespace Csmsjcf
                             if (!Directory.Exists(xmldir))
                                 Directory.CreateDirectory(xmldir);
                             Himg.Filename = loadfile;
+                            int imgpage = Himg._CountPage();
+                            if (page != imgpage.ToString()) {
+                                string str = "盒号:" + boxsn + "图像页码不一致!";
+                                ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
+                                continue;
+                            }
                             List<string> lsjpg = new List<string>();
                             List<string> A0 = new List<string>();
                             List<string> A1 = new List<string>();
@@ -2249,7 +2275,7 @@ namespace Csmsjcf
                                 else {
 
                                     string newpath = Path.Combine(ClsDL.NewPath, qu);
-                                    if (Directory.Exists(newpath))
+                                    if (!Directory.Exists(newpath))
                                         Directory.CreateDirectory(newpath);
                                     Common.DataSplitUpdate(ClsDL.Archid);
                                     string ScPathXls = Path.Combine(newpath,
@@ -2317,7 +2343,7 @@ namespace Csmsjcf
                         }
                         else if (ClsDL.xls == 1) {
                             string newpath = Path.Combine(ClsDL.NewPath, qu);
-                            if (Directory.Exists(newpath))
+                            if (!Directory.Exists(newpath))
                                 Directory.CreateDirectory(newpath);
                             string ScPathXls = Path.Combine(newpath,
                                 ClsDL.Boxsn + "-" + ClsDL.Boxsn + "房屋统计.xlsx");
@@ -2330,7 +2356,6 @@ namespace Csmsjcf
                                 ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
                                 continue;
                             }
-
                             if (!WriteMltj(scpathxlsml, ClsDL.Archid, ClsDL.xmlname, ClsDL.ewmname, page)) {
                                 string str = "盒号:" + boxsn + "目录统计写入xls表失败!";
                                 ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
@@ -2342,7 +2367,6 @@ namespace Csmsjcf
                                 continue;
                             }
                         }
-
 
                     } catch (Exception e) {
                         string str = "盒号:" + ClsDL.BoxsnTag + "意外问题" + e.ToString();
@@ -2357,7 +2381,6 @@ namespace Csmsjcf
                 Endtxt(true);
             }
 
-
         }
         private void butDlLog_Click(object sender, EventArgs e)
         {
@@ -2366,6 +2389,111 @@ namespace Csmsjcf
                 System.Diagnostics.Process p = System.Diagnostics.Process.Start(file);
             }
             else MessageBox.Show("日志文件不存在!");
+        }
+
+
+        private int stop = 0;
+        private void butDLStop_Click(object sender, EventArgs e)
+        {
+            stop = 1;
+            label15.Visible = true;
+        }
+
+        void enddc(bool bl)
+        {
+            if (!bl) {
+                txtB1.Enabled = false;
+                txtB2.Enabled = false;
+                txtXq.Enabled = false;
+                butDLimpor.Enabled = false;
+                return;
+            }
+            txtB1.Enabled = true;
+            txtB2.Enabled = true;
+            txtXq.Enabled = true;
+            butDLimpor.Enabled = true;
+        }
+
+        private void butDLimpor_Click(object sender, EventArgs e)
+        {
+            if (rabdlboxsn.Checked) {
+                if (txtB1.Text.Trim().Length <= 0 || txtB2.Text.Trim().Length <= 0) {
+                    MessageBox.Show("盒号卷号不能为空!");
+                    txtB1.Focus();
+                    return;
+                }
+                int b1, b2;
+                bool bl = int.TryParse(txtB1.Text, out b1);
+                bool bl2 = int.TryParse(txtB2.Text, out b2);
+                if (!bl || !bl2) {
+                    MessageBox.Show("盒号不正确!");
+                    txtB1.Focus();
+                    return;
+                }
+                if (b1 > b2) {
+                    MessageBox.Show("起始盒号不能大于终止盒号!");
+                    txtB1.Focus();
+                    return;
+                }
+            }
+            else {
+                if (txtXq.Text.Trim().Length <= 0) {
+                    MessageBox.Show("小区代码不能为空!");
+                    txtXq.Focus();
+                    return;
+                }
+            }
+            if (txtCreatePath.Text.Trim().Length <= 0) {
+                MessageBox.Show("生成路径不能为空!");
+                txtCreatePath.Focus();
+                return;
+            }
+            enddc(false);
+            WirteImporxls();
+        }
+
+
+        void WirteImporxls()
+        {
+            try
+            {
+                DataTable dt = Common.GetDataImportxls(ClsDL.Houseid, txtXq.Text.Trim());
+                if (dt == null || dt.Rows.Count <= 0)
+                {
+                    MessageBox.Show("未发现可导出数据!");
+                    return;
+                }
+                string strfile = Path.Combine(Application.StartupPath, "Tjd.xlsx");
+                string file = Path.Combine(txtCreatePath.Text.Trim(), DateTime.Now.ToString("yyyyMMdd").ToString()+("提交单.xlsx"));
+                if (!File.Exists(file))
+                    File.Copy(strfile,file);
+                Workbook work = new Workbook();
+                Worksheet wsheek = null;
+                work.LoadFromFile(file);
+                wsheek = work.Worksheets[0];
+                int rows = wsheek.LastRow + 1;
+                if (rows == 0)
+                    rows = 1;
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    
+                    wsheek.Range[rows + i,1].Text = (i+1).ToString();
+                    wsheek.Range[rows + i, 2].Text = dt.Rows[i][0].ToString();
+                    wsheek.Range[rows + i, 3].Text = dt.Rows[i][1].ToString();
+                    wsheek.Range[rows + i, 5].Text = dt.Rows[i][2].ToString();
+                    wsheek.Range[rows + i, 7].Text = dt.Rows[i][2].ToString();
+                }
+                work.SaveToFile(file, FileFormat.Version2007);
+                work.Dispose();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            finally
+            {
+                enddc(true);
+            }
         }
 
         #endregion

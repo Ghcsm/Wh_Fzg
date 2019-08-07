@@ -5,7 +5,10 @@ using Emgu.CV.Structure;
 using Emgu.CV.Util;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
+using System.Net;
 using DAL;
+using GdPicture14;
 
 namespace CsmImg
 {
@@ -102,6 +105,40 @@ namespace CsmImg
                 return bmp;
             }
             return outimg.Bitmap;
+        }
+
+        public static string CleHole(Bitmap bmp)
+        {
+            string file="";
+            LicenseManager oLicenceManager = new LicenseManager();
+            oLicenceManager.RegisterKEY(T_ConFigure.Imgid);
+            using (GdPictureImaging oGdPictureImaging = new GdPictureImaging())
+            {
+                int imageId = oGdPictureImaging.CreateGdPictureImageFromBitmap(bmp);
+                if (oGdPictureImaging.GetStat() != GdPictureStatus.OK)
+                    return file;
+                else {
+                    GdPictureStatus status = oGdPictureImaging.RemoveHolePunch(imageId, HolePunchMargins.MarginAll);
+                    if (status != GdPictureStatus.OK)
+                        return file;
+                    else
+                    {
+                        string path = @"c:\temp\cle";
+                        if (!Directory.Exists(path))
+                            Directory.CreateDirectory(path);
+                        file = Path.Combine(path, DateTime.Now.ToString("yyyyMMddHHmmssfff") + ".jpg");
+                        if (File.Exists(file))
+                            File.Delete(file);
+                        status = oGdPictureImaging.SaveAsTIFF(imageId, file, TiffCompression.TiffCompressionJPEG);
+                        if (status != GdPictureStatus.OK) {
+                            return "";
+                        }
+                    }
+                    oGdPictureImaging.ReleaseGdPictureImage(imageId);
+                }
+            }
+            return file;
+
         }
 
     }

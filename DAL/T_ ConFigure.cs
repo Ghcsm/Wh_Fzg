@@ -10,6 +10,7 @@ namespace DAL
     {
       
         public const string ScanTempFile = "ScanTemp.Tif";
+        public const string ScanTempFiletmp = "Scan1.Tif";
         public static string LocalTempPath = @"c:\Temp";
         public static string TmpScan = "Scan";
         public static string TmpIndex = "Index";
@@ -60,6 +61,8 @@ namespace DAL
         public static string SfName = "档案数字化管理系统";
 
         public static string SfCoName = "档案数字化管理系统";
+
+        public static string Imgid = "211883860501001421116010749430779";
         //"5gyXVVG7v5NU4MGCWs/OGNwTVozQ06KZm443PVYA0nD295v7IGaC8g==";
     }
 

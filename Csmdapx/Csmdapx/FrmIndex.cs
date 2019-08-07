@@ -12,6 +12,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using CsmImg;
 
 namespace Csmdapx
 {
@@ -25,6 +26,8 @@ namespace Csmdapx
         Hljsimage Himg = new Hljsimage();
         HFTP ftp = new HFTP();
         private Pubcls pub;
+        private int Yuan = 0;
+        private MouseEventArgs exArgs;
         private void Init()
         {
             try {
@@ -123,6 +126,14 @@ namespace Csmdapx
             Himg._Imagefontcolor(2);
         }
 
+        private void toolStripZhantie_Click(object sender, EventArgs e)
+        {
+            if (exArgs == null)
+                return;
+            Himg.PasteImg(exArgs);
+            exArgs = null;
+        }
+
         private void toolStripFontShall_Click(object sender, EventArgs e)
         {
             Himg._Imagefontcolor(3);
@@ -146,6 +157,11 @@ namespace Csmdapx
         private void toolStripFiltr_Click(object sender, EventArgs e)
         {
             Himg._ImgLd();
+        }
+
+        private void toolStripImportImg_Click(object sender, EventArgs e)
+        {
+
         }
 
         private void toolStripSplit_Click(object sender, EventArgs e)
@@ -178,16 +194,13 @@ namespace Csmdapx
 
         private void toolStripCopy_Click(object sender, EventArgs e)
         {
-            if (Himg._CopyImg())
-                MessageBox.Show("复制完成！");
-            else
-                MessageBox.Show("复制失败!");
-
+            Himg._CopyImg();
         }
 
         private void toolStripRecov_Click(object sender, EventArgs e)
         {
-            Himg.LoadPage(ClsIndex.CrrentPage); ;
+           // Himg.LoadPage(ClsIndex.CrrentPage); ;
+            Himg.HufuImg(ClsIndex.ScanFilePathtmp);
         }
 
         private void toolStripUppage_Click(object sender, EventArgs e)
@@ -195,7 +208,6 @@ namespace Csmdapx
             if (ImgView.Image == null || ClsIndex.CrrentPage == 1)
                 return;
             Himg._Pagenext(0);
-
         }
 
         private void toolStripDownPage_Click(object sender, EventArgs e)
@@ -233,6 +245,7 @@ namespace Csmdapx
                     string archpos = ClsIndex.ArchPos;
                     int regpage = ClsIndex.RegPage;
                     int tagpage = Himg.TagPage;
+                    string file2 = ClsIndex.ScanFilePathtmp;
                     Dictionary<int, string> pageabc = new Dictionary<int, string>(Himg._PageAbc);
                     Dictionary<int, int> pagenum = new Dictionary<int, int>(Himg._PageNumber);
                     Dictionary<int, string> fuhao = new Dictionary<int, string>(Himg._PageFuhao);
@@ -241,10 +254,10 @@ namespace Csmdapx
                     //天津东丽专用，以后删除
                     Setpages(regpage, pageabc.Count, arid);
                     // Task.Run(() => { FtpUpFinish(tagpage, regpage, filetmp, arid, archpos, pageabc, pagenum, fuhao); });
-                    Task.Run(new Action(() => { FtpUpFinish(tagpage, regpage, filetmp, arid, archpos, pageabc, pagenum, fuhao); }));
+                    Task.Run(new Action(() => { FtpUpFinish(file2,tagpage, regpage, filetmp, arid, archpos, pageabc, pagenum, fuhao); }));
                     Cledata();
                     txtPages.Text = "";
-                    gArch.LvData.Focus();
+                    gArch.txtBoxsn.Focus();
                 }
             }
         }
@@ -270,9 +283,10 @@ namespace Csmdapx
             Himg._PageNumber.Clear();
             int tag = Himg.TagPage;
             int pages = ClsIndex.RegPage;
+            string file2 = ClsIndex.ScanFilePathtmp;
             Cledata();
             // Task.Run(() => { FtpUpCanCel(filetmp, arid, archpos, pageabc, pagenum, pages, fuhao, tag); });
-            Task.Run(new Action(() => { FtpUpCanCel(filetmp, arid, archpos, pageabc, pagenum, pages, fuhao, tag); }));
+            Task.Run(new Action(() => { FtpUpCanCel(filetmp, file2, arid, archpos, pageabc, pagenum, pages, fuhao, tag); }));
             txtPages.Text = "";
             gArch.LvData.Focus();
         }
@@ -336,6 +350,27 @@ namespace Csmdapx
             }
         }
 
+        private void toolStripSider_Click(object sender, EventArgs e)
+        {
+            Himg._Clesider();
+        }
+
+        private void toolStripHole_Click(object sender, EventArgs e)
+        {
+            Bitmap b = Himg.Getbmp(ClsIndex.ScanFilePath, ClsIndex.CrrentPage);
+            string sfile = ClsImg.CleHole(b);
+            Himg._RelImage(sfile, ClsIndex.ScanFilePath);
+        }
+
+        private void toolStripYuan_Click(object sender, EventArgs e)
+        {
+            Yuan = 1;
+        }
+
+        private void ImgView_MouseClick(object sender, MouseEventArgs e)
+        {
+            exArgs = e;
+        }
         private void FrmIndex_KeyDown(object sender, KeyEventArgs e)
         {
             pub.KeyShortDown(e, ClsIndex.lsinival, ClsIndex.Lsinikeys, ClsIndex.lssqlOpernum, ClsIndex.lsSqlOper, out ClsIndex.keystr);
@@ -354,8 +389,15 @@ namespace Csmdapx
         {
             if (e.Button == MouseButtons.Right)
                 toolStripCut_Click(sender, e);
-            else
-                Himg._Rectang(true);
+            else {
+                if (Yuan == 0)
+                    Himg._Rectang(true);
+                else {
+                    Himg._RectangYuan(true);
+                    Yuan = 0;
+                }
+            }
+
         }
         private void toolStripSplitTag_Click(object sender, EventArgs e)
         {
@@ -643,32 +685,38 @@ namespace Csmdapx
                         string localPath = Path.Combine(T_ConFigure.FtpTmpPath, T_ConFigure.TmpIndex, ClsIndex.ArchPos);
                         string localScanFile = Path.Combine(T_ConFigure.FtpTmpPath, T_ConFigure.TmpIndex, ClsIndex.ArchPos, T_ConFigure.ScanTempFile);
                         ClsIndex.ScanFilePath = localScanFile;
-                        if (!Directory.Exists(localPath)) {
+                        ClsIndex.ScanFilePathtmp = Path.Combine(T_ConFigure.FtpTmpPath, T_ConFigure.TmpIndex, ClsIndex.ArchPos, T_ConFigure.ScanTempFiletmp);
+                        if (!Directory.Exists(localPath))
                             Directory.CreateDirectory(localPath);
-                        }
-                        if (File.Exists(localScanFile)) {
+                        if (File.Exists(localScanFile))
                             File.Delete(localScanFile);
-                        }
+                        if (File.Exists(ClsIndex.ScanFilePathtmp))
+                            File.Delete(ClsIndex.ScanFilePathtmp);
                         if (ftp.FtpCheckFile(Path.Combine(T_ConFigure.gArchScanPath, ClsIndex.ArchPos, T_ConFigure.ScanTempFile))) {
                             string sourcefile = Path.Combine(T_ConFigure.gArchScanPath, ClsIndex.ArchPos, T_ConFigure.ScanTempFile);
                             string goalfile = Path.Combine(T_ConFigure.FtpTmp, T_ConFigure.TmpIndex, ClsIndex.ArchPos, T_ConFigure.ScanTempFile);
                             string path = Path.Combine(T_ConFigure.FtpTmp, T_ConFigure.TmpIndex, ClsIndex.ArchPos);
                             if (ftp.FtpMoveFile(sourcefile, goalfile, path))
-                                return (FileMoveBool(localScanFile));
+                                if ((FileMoveBool(localScanFile))) {
+                                    File.Copy(localScanFile, ClsIndex.ScanFilePathtmp);
+                                    return true;
+                                }
                         }
                     }
                     else {
                         string localPath = Path.Combine(T_ConFigure.LocalTempPath, ClsIndex.ArchPos);
                         string localScanFile = Path.Combine(T_ConFigure.LocalTempPath, ClsIndex.ArchPos, T_ConFigure.ScanTempFile);
+                        ClsIndex.ScanFilePathtmp = Path.Combine(T_ConFigure.LocalTempPath, ClsIndex.ArchPos, T_ConFigure.ScanTempFiletmp);
                         ClsIndex.ScanFilePath = localScanFile;
-                        if (!Directory.Exists(localPath)) {
+                        if (!Directory.Exists(localPath))
                             Directory.CreateDirectory(localPath);
-                        }
-                        if (File.Exists(localScanFile)) {
+                        if (File.Exists(localScanFile))
                             File.Delete(localScanFile);
-                        }
+                        if (File.Exists(ClsIndex.ScanFilePathtmp))
+                            File.Delete(ClsIndex.ScanFilePathtmp);
                         if (ftp.FtpCheckFile(Path.Combine(T_ConFigure.gArchScanPath, ClsIndex.ArchPos, T_ConFigure.ScanTempFile))) {
                             if (ftp.DownLoadFile(T_ConFigure.gArchScanPath, ClsIndex.ArchPos, localScanFile, T_ConFigure.ScanTempFile)) {
+                                File.Copy(localScanFile, ClsIndex.ScanFilePathtmp);
                                 return true;
                             }
                         }
@@ -767,6 +815,7 @@ namespace Csmdapx
         {
             this.BeginInvoke(new Action(() =>
             {
+                ClsIndex.ScanFilePathtmp = "";
                 Himg._PageNumber.Clear();
                 Himg._PageAbc.Clear();
                 Himg._PageFuhao.Clear();
@@ -793,7 +842,7 @@ namespace Csmdapx
             }));
         }
 
-        private void FtpUpFinish(int tagpage, int regpage, string filetmp, int arid, string archpos, Dictionary<int, string> pageAbc, Dictionary<int, int> pagenumber, Dictionary<int, string> fuhao)
+        private void FtpUpFinish(string file2,int tagpage, int regpage, string filetmp, int arid, string archpos, Dictionary<int, string> pageAbc, Dictionary<int, int> pagenumber, Dictionary<int, string> fuhao)
         {
             try {
                 if (File.Exists(filetmp)) {
@@ -878,6 +927,7 @@ namespace Csmdapx
                             Common.SetIndexFinish(arid, DESEncrypt.DesEncrypt(IndexFileName), (int)T_ConFigure.ArchStat.排序完, PageIndexInfoOk);
                             try {
                                 File.Delete(filetmp);
+                                File.Delete(file2);
                                 Directory.Delete(Path.Combine(T_ConFigure.FtpTmpPath, T_ConFigure.TmpScan, archpos));
                             } catch { }
                             return;
@@ -894,6 +944,7 @@ namespace Csmdapx
                             Common.DelTask(Convert.ToInt32(arid));
                             try {
                                 File.Delete(filetmp);
+                                File.Delete(file2);
                                 File.Delete(LocalIndexFile);
                                 Directory.Delete(Path.Combine(T_ConFigure.LocalTempPath, archpos));
                                 string file = Path.Combine(T_ConFigure.gArchScanPath, archpos, T_ConFigure.ScanTempFile);
@@ -936,7 +987,7 @@ namespace Csmdapx
             }
         }
 
-        private void FtpUpCanCel(string filetmp, int arid, string archpos, Dictionary<int, string> pageAbc, Dictionary<int, int> pagenumber, int pages, Dictionary<int, string> fuhao, int tag)
+        private void FtpUpCanCel(string filetmp,string filetmp2, int arid, string archpos, Dictionary<int, string> pageAbc, Dictionary<int, int> pagenumber, int pages, Dictionary<int, string> fuhao, int tag)
         {
             try {
                 if (File.Exists(filetmp)) {
@@ -982,6 +1033,7 @@ namespace Csmdapx
                             Common.DelTask(Convert.ToInt32(arid));
                             try {
                                 File.Delete(filetmp);
+                                File.Delete(filetmp2);
                                 Directory.Delete(Path.Combine(T_ConFigure.LocalTempPath, archpos));
                             } catch {
                             }
@@ -1000,7 +1052,6 @@ namespace Csmdapx
                         //}
 
                     }
-
                     Common.SetArchWorkState(arid, (int)T_ConFigure.ArchStat.扫描完);
                 }
                 else
@@ -1026,6 +1077,8 @@ namespace Csmdapx
         bool Pdzd(string str, KeyPressEventArgs e)
         {
             if (!Char.IsDigit(e.KeyChar) && e.KeyChar != (char)13 && e.KeyChar != (char)8 && e.KeyChar != (char)45) {
+                if (txtPages.SelectedText.IndexOf('-') >= 0)
+                    return false;
                 if (txtPages.SelectedText != "") {
                     int p;
                     bool bl = int.TryParse(str, out p);
@@ -1039,7 +1092,6 @@ namespace Csmdapx
                 return false;
             return true;
         }
-
 
 
 

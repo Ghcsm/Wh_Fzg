@@ -25,6 +25,7 @@ namespace Csmtool
         }
 
         private HLFtp.HFTP ftp;
+        Hljsimage Himg = new Hljsimage();
 
         #region Archstat
 
@@ -82,10 +83,19 @@ namespace Csmtool
 
         private void combtjSql_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (combtjSql.SelectedIndex != 4)
-            {
+            if (combtjSql.SelectedIndex != 4) {
                 labcheck.Visible = false;
                 labarchcount.Visible = false;
+            }
+            if (combtjSql.SelectedIndex == 5) {
+                labImgpath.Visible = true;
+                txtImgPath.Visible = true;
+                butImgPath.Visible = true;
+            }
+            else {
+                labImgpath.Visible = false;
+                txtImgPath.Visible = false;
+                butImgPath.Visible = false;
             }
         }
         void CleScanstat(int arid, string boxsn, string archno)
@@ -216,7 +226,6 @@ namespace Csmtool
                     return false;
                 }
             }
-
             if (rabtjCol.Checked) {
                 if (txtTjBoxsn1.Text.Trim().Length <= 0) {
                     MessageBox.Show("请输入字段号范围!");
@@ -229,6 +238,13 @@ namespace Csmtool
                 combtjSql.Focus();
                 return false;
             }
+
+            if (combtjSql.SelectedIndex == 5) {
+                if (txtImgPath.Text.Trim().Length <= 0) {
+                    MessageBox.Show("请选择最终图像文件路径!");
+                    return false;
+                }
+            }
             return true;
         }
         private void rabtjBoxsn_CheckedChanged(object sender, EventArgs e)
@@ -239,10 +255,11 @@ namespace Csmtool
             txtTjBoxsn1.Focus();
         }
 
+        //检测档案单工序状态
         void Quersql()
         {
             DataTable dt;
-            if (rabBoxsn.Checked)
+            if (rabtjBoxsn.Checked)
                 dt = Common.GetArchQuerstat(combtjSql.Text.Trim(), txtTjBoxsn1.Text.Trim(), txtTjBoxsn2.Text.Trim(), "");
             else
                 dt = Common.GetArchQuerstat(combtjSql.Text.Trim(), "", "", txtTjBoxsn1.Text.Trim());
@@ -252,10 +269,16 @@ namespace Csmtool
             dgvTjdata.DataSource = dt;
 
         }
+
+        //检测文件是否存在
         void QuerFile()
         {
             dgvTjdata.DataSource = null;
-            DataTable dt = Common.GetArchQuerFile(txtTjBoxsn1.Text.Trim(), txtTjBoxsn2.Text.Trim());
+            DataTable dt;
+            if (rabtjBoxsn.Checked)
+                dt = Common.GetArchQuerFile(txtTjBoxsn1.Text.Trim(), txtTjBoxsn2.Text.Trim());
+            else
+                dt = Common.GetArchQuerFile(txtTjBoxsn1.Text.Trim());
             if (dt == null || dt.Rows.Count <= 0)
                 return;
 
@@ -281,12 +304,18 @@ namespace Csmtool
                 dgvTjdata.Refresh();
             }
         }
+
+        //按区检测档案状态
         void QuerQuZt()
         {
             dgvTjdata.DataSource = null;
             labcheck.Visible = false;
             labarchcount.Visible = false;
-            DataTable dt = Common.GetQuzt(txtTjBoxsn1.Text.Trim().PadLeft(4,'0'));
+            DataTable dt = null;
+            if (rabtjCol.Checked)
+                dt = Common.GetQuzt(txtTjBoxsn1.Text.Trim().PadLeft(4, '0'));
+            else
+                dt = Common.GetQuzt(txtTjBoxsn1.Text.Trim(), txtTjBoxsn2.Text.Trim());
             if (dt == null || dt.Rows.Count <= 0) {
                 MessageBox.Show("未查到相关信息!");
                 return;
@@ -300,7 +329,132 @@ namespace Csmtool
             labcheck.Visible = true;
             labcheck.Text = string.Format("质检{0}卷", dt1.Rows.Count);
 
+        }
+        //检测几手档案与业务id是否一致
+        void CheckYwid()
+        {
+            dgvTjdata.DataSource = null;
+            dgvTjdata.DataSource = null;
+            DataTable dt;
+            if (rabtjBoxsn.Checked)
+                dt = Common.GetArchYwid(txtTjBoxsn1.Text.Trim(), txtTjBoxsn2.Text.Trim());
+            else
+                dt = Common.GetArchYwid(txtTjBoxsn1.Text.Trim());
+            if (dt == null || dt.Rows.Count <= 0)
+                return;
+            for (int i = 0; i < dt.Rows.Count; i++) {
+                int id = Convert.ToInt32(dt.Rows[i][0].ToString());
+                string boxsn = dt.Rows[0][1].ToString();
+                string archo = dt.Rows[0][2].ToString();
+                if (id <= 0)
+                    continue;
+                int entag = Common.GetEnterinfo(id);
+                int conte = Common.Getconteninfo(id);
+                if (entag != conte) {
+                    if (dgvTjdata.Rows.Count == 0) {
+                        dgvTjdata.Columns.Add("boxsn", "盒号");
+                        dgvTjdata.Columns.Add("archno", "卷号");
+                        dgvTjdata.Columns.Add("sx", "共几手");
+                        dgvTjdata.Columns.Add("ywid", "业务id");
+                    }
+                    int index = dgvTjdata.Rows.Add();
+                    dgvTjdata.Rows[index].Cells[0].Value = boxsn;
+                    dgvTjdata.Rows[index].Cells[1].Value = archo;
+                    dgvTjdata.Rows[index].Cells[2].Value = entag;
+                    dgvTjdata.Rows[index].Cells[3].Value = conte;
 
+                }
+                dgvTjdata.Refresh();
+            }
+
+        }
+
+        //检测图像页码是否不一致
+        void CheckPage()
+        {
+            dgvTjdata.DataSource = null;
+            DataTable dt;
+            if (rabtjBoxsn.Checked)
+                dt = Common.GetArchPage(txtTjBoxsn1.Text.Trim(), txtTjBoxsn2.Text.Trim());
+            else
+                dt = Common.GetArchPage(txtTjBoxsn1.Text.Trim());
+            if (dt == null || dt.Rows.Count <= 0)
+                return;
+
+            for (int i = 0; i < dt.Rows.Count; i++) {
+                string file = DESEncrypt.DesDecrypt(dt.Rows[i][0].ToString());
+                string page = dt.Rows[0][1].ToString();
+                string boxsn = dt.Rows[i][2].ToString();
+                string arno = dt.Rows[i][3].ToString();
+                if (file.Trim().Length <= 0)
+                    continue;
+                if (dgvTjdata.Rows.Count == 0) {
+                    dgvTjdata.Columns.Add("boxsn", "盒号");
+                    dgvTjdata.Columns.Add("archno", "卷号");
+                    dgvTjdata.Columns.Add("imgpage", "图像页码");
+                    dgvTjdata.Columns.Add("Page", "登记页码");
+                }
+                string pathfile = Path.Combine(txtImgPath.Text.Trim(), file.Substring(0, 8), file);
+                if (!File.Exists(pathfile)) {
+                    int index = dgvTjdata.Rows.Add();
+                    dgvTjdata.Rows[index].Cells[0].Value = boxsn;
+                    dgvTjdata.Rows[index].Cells[1].Value = arno;
+                    dgvTjdata.Rows[index].Cells[2].Value = 0;
+                    dgvTjdata.Rows[index].Cells[3].Value = page;
+                }
+                else {
+                    Himg.Filename = pathfile;
+                    int imgpage = Himg._CountPage();
+                    int Page = Convert.ToInt32(page);
+                    if (imgpage != Page) {
+                        int index = dgvTjdata.Rows.Add();
+                        dgvTjdata.Rows[index].Cells[0].Value = boxsn;
+                        dgvTjdata.Rows[index].Cells[1].Value = arno;
+                        dgvTjdata.Rows[index].Cells[2].Value = imgpage;
+                        dgvTjdata.Rows[index].Cells[3].Value = page;
+                    }
+                }
+
+                dgvTjdata.Refresh();
+            }
+        }
+
+        void GetQuarchstat()
+        {
+            dgvTjdata.DataSource = null;
+            DataTable dt;
+            if (rabtjBoxsn.Checked)
+                dt = Common.GetArchLx(txtTjBoxsn1.Text.Trim(), txtTjBoxsn2.Text.Trim());
+            else
+                dt = Common.GetArchLx(txtTjBoxsn1.Text.Trim());
+            if (dt == null || dt.Rows.Count <= 0)
+                return;
+            dgvTjdata.DataSource = dt;
+            DataTable dt1 = null;
+            try {
+                dt1 = dt.Select("ArchLx='C'").CopyToDataTable();
+                if (dt1 != null || dt1.Rows.Count > 0) {
+                    labarchcount.Visible = true;
+                    labarchcount.Text = "所有权:" + dt1.Rows.Count;
+                }
+            } catch { }
+
+            try {
+                dt1 = dt.Select("ArchLx='F'").CopyToDataTable();
+                if (dt1 != null || dt1.Rows.Count > 0) {
+                    labcheck.Visible = true;
+                    labcheck.Text = "查封卷:" + dt1.Rows.Count;
+                }
+            } catch { }
+
+            try {
+                dt1 = dt.Select("ArchLx='Y'").CopyToDataTable();
+                if (dt1 != null || dt1.Rows.Count > 0) {
+                    labImgpath.Visible = true;
+                    labImgpath.Text = "抵押卷:" + dt1.Rows.Count;
+                }
+            } catch { }
+            dt1.Dispose();
         }
 
         private void buttjStart_Click(object sender, EventArgs e)
@@ -313,6 +467,18 @@ namespace Csmtool
             }
             else if (combtjSql.SelectedIndex == 4) {
                 QuerQuZt();
+                return;
+            }
+            else if (combtjSql.SelectedIndex == 5) {
+                CheckPage();
+                return;
+            }
+            else if (combtjSql.SelectedIndex == 6) {
+                CheckYwid();
+                return;
+            }
+            else if (combtjSql.SelectedIndex == 7) {
+                GetQuarchstat();
                 return;
             }
             Quersql();
@@ -924,31 +1090,6 @@ namespace Csmtool
 
         #endregion
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            //if (textBox1.Text.Trim().Length <= 0 || textBox2.Text.Trim().Length <= 0 ||
-            //    textBox3.Text.Trim().Length <= 0) {
-            //    MessageBox.Show("请输入盒号范围及增加数字");
-            //    return;
-            //}
-
-            //string strsql = "select boxsn from M_IMAGEFILE where CHECKED=1 and  boxsn>=@b1 and boxsn<=@b2";
-            //SqlParameter p1 = new SqlParameter("@b1", textBox1.Text.Trim());
-            //SqlParameter p2 = new SqlParameter("@b2", textBox2.Text.Trim());
-            //DataTable dt = SQLHelper.ExcuteTable(strsql, p1, p2);
-            //if (dt == null || dt.Rows.Count <= 0)
-            //    return;
-            //for (int i = 0; i < dt.Rows.Count; i++) {
-
-            //    string boxsn = dt.Rows[i][0].ToString();
-            //    int newboxn = Convert.ToInt32(boxsn) + Convert.ToInt32(textBox3.Text.Trim());
-            //    strsql = "update M_IMAGEFILE set Boxsn=@b1 where boxsn=@b2 and archno=1";
-            //    p1 = new SqlParameter("@b1", newboxn);
-            //    p2 = new SqlParameter("@b2", boxsn);
-            //    SQLHelper.ExcuteTable(strsql, p1, p2);
-            //}
-        }
-
         private List<string> strfile = new List<string>();
         private void button1_Click_1(object sender, EventArgs e)
         {
@@ -972,12 +1113,49 @@ namespace Csmtool
                 MessageBox.Show("请输入tf文件名!");
                 return;
             }
-            HLjscom.Hljsimage hlimg = new Hljsimage();
             string tif = Path.Combine(@"D:\", textBox1.Text.Trim() + ".tif");
-            hlimg.jpgTotif(strfile, tif);
+            Himg.jpgTotif(strfile, tif);
             MessageBox.Show("完成");
         }
 
+        #region toolsqit
+
+        bool istxtqit()
+        {
+            if (txttoolsB1.Text.Trim().Length <= 0 || txttoolsB2.Text.Trim().Length <= 0) {
+                MessageBox.Show("盒号不能为空!");
+                txttoolsB1.Focus();
+                return false;
+            }
+            else {
+                int b1, b2;
+                bool bl1 = int.TryParse(txttoolsB1.Text.Trim(), out b1);
+                bool bl2 = int.TryParse(txttoolsB2.Text.Trim(), out b2);
+                if (!bl1 || !bl2) {
+                    MessageBox.Show("盒号范围不正确!");
+                    txttoolsB1.Focus();
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        private void buttools_Click(object sender, EventArgs e)
+        {
+            if (T_User.UserId != 1)
+            {
+                MessageBox.Show("此功能只能管理员使用!");
+                txttoolsB1.Focus();
+                return;
+            }
+            if (!istxtqit())
+                return;
+            Common.SetNewboxsn(txttoolsB1.Text.Trim(),txttoolsB2.Text.Trim());
+            MessageBox.Show("更改完成");
+
+        }
+
+        #endregion
 
     }
 

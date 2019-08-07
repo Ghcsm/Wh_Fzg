@@ -79,6 +79,7 @@
             this.PanleHouseBox = new DevComponents.DotNetBar.PanelEx();
             this.PanleHouseMj = new DevComponents.DotNetBar.Controls.GroupPanel();
             this.imgListmjj2 = new System.Windows.Forms.ImageList(this.components);
+            this.chkcheck = new System.Windows.Forms.CheckBox();
             this.statusStrip1.SuspendLayout();
             this.groupPanel1.SuspendLayout();
             this.gr2.SuspendLayout();
@@ -197,6 +198,7 @@
             // 
             this.groupPanel1.CanvasColor = System.Drawing.SystemColors.Control;
             this.groupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007;
+            this.groupPanel1.Controls.Add(this.chkcheck);
             this.groupPanel1.Controls.Add(this.txtXqdm);
             this.groupPanel1.Controls.Add(this.butSetzt);
             this.groupPanel1.Controls.Add(this.combzt);
@@ -260,7 +262,7 @@
             this.butSetzt.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.butSetzt.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.butSetzt.Enabled = false;
-            this.butSetzt.Location = new System.Drawing.Point(56, 608);
+            this.butSetzt.Location = new System.Drawing.Point(66, 608);
             this.butSetzt.Name = "butSetzt";
             this.butSetzt.Size = new System.Drawing.Size(75, 31);
             this.butSetzt.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -271,6 +273,7 @@
             // 
             // combzt
             // 
+            this.combzt.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.combzt.FormattingEnabled = true;
             this.combzt.Items.AddRange(new object[] {
             "C",
@@ -656,6 +659,17 @@
             this.imgListmjj2.TransparentColor = System.Drawing.Color.Transparent;
             this.imgListmjj2.Images.SetKeyName(0, "1-1.jpg");
             // 
+            // chkcheck
+            // 
+            this.chkcheck.AutoSize = true;
+            this.chkcheck.BackColor = System.Drawing.Color.Transparent;
+            this.chkcheck.Location = new System.Drawing.Point(8, 601);
+            this.chkcheck.Name = "chkcheck";
+            this.chkcheck.Size = new System.Drawing.Size(60, 16);
+            this.chkcheck.TabIndex = 37;
+            this.chkcheck.Text = "质检后";
+            this.chkcheck.UseVisualStyleBackColor = false;
+            // 
             // StoreView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -736,5 +750,6 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox txtXqdm;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.CheckBox chkcheck;
     }
 }

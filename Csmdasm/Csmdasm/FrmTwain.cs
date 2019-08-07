@@ -249,15 +249,30 @@ namespace Csmdasm
                 if (dt == null || dt.Rows.Count <= 0)
                     return;
                 string PageIndexInfo = dt.Rows[0][0].ToString();
+                string pageg = dt.Rows[0][2].ToString();
                 if (string.IsNullOrEmpty(PageIndexInfo))
                     return;
                 string[] arrPage = PageIndexInfo.Split(';');
                 if (arrPage == null || arrPage.Length <= 0)
                     return;
-                foreach (string i in arrPage) {
-                    LisPage.Add(i);
+                foreach (string i in arrPage)
+                {
+                    string[] s = i.Split(':');
+                    LisPage.Add(s[1].ToString());
                 }
-                for (int i = 1; i < ClsTwain.RegPage; i++) {
+                string[] pagegl = pageg.Split(';');
+                foreach (string  i in pagegl)
+                {
+                    if (LisPage.IndexOf(i) < 0)
+                    {
+                        if (Qspages.Trim().Length <= 0)
+                            Qspages += i.ToString();
+                        else {
+                            Qspages += "," + i.ToString();
+                        }
+                    }
+                }
+                for (int i = 1; i < ClsTwain.RegPage-pagegl.Length; i++) {
                     if (LisPage.IndexOf(i.ToString()) < 0) {
                         if (Qspages.Trim().Length <= 0)
                             Qspages += i.ToString();
@@ -453,19 +468,20 @@ namespace Csmdasm
                     KeysDownEve(ClsTwain.keystr.Trim());
             }
             Keys keyCode = e.KeyCode;
-            if (e.KeyCode == Keys.NumPad3)
-                comPagesSize.SelectedIndex = 2;
-            else if (e.KeyCode == Keys.NumPad4)
-                comPagesSize.SelectedIndex = 1;
-            else if (e.KeyCode == Keys.NumPad0) {
-                if (chkDoublePages.Checked)
-                    chkDoublePages.Checked = false;
-                else
-                    chkDoublePages.Checked = true;
+            if (!gArch.txtBoxsn.Focused) {
+                if (e.KeyCode == Keys.NumPad3)
+                    comPagesSize.SelectedIndex = 2;
+                else if (e.KeyCode == Keys.NumPad4)
+                    comPagesSize.SelectedIndex = 1;
+                else if (e.KeyCode == Keys.NumPad0) {
+                    if (chkDoublePages.Checked)
+                        chkDoublePages.Checked = false;
+                    else
+                        chkDoublePages.Checked = true;
+                }
             }
 
-            if (e.KeyCode == Keys.Escape)
-            {
+            if (e.KeyCode == Keys.Escape) {
                 gArch.txtBoxsn.Focus();
                 gArch.txtBoxsn.SelectAll();
             }

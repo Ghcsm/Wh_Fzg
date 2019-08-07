@@ -106,6 +106,12 @@
     <Compile Include="UcContents.Designer.cs">
       <DependentUpon>UcContents.cs</DependentUpon>
     </Compile>
+    <Compile Include="UcDLInfo.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UcDLInfo.Designer.cs">
+      <DependentUpon>UcDLInfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="UcImgBrowSe.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -133,6 +139,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UcContents.resx">
       <DependentUpon>UcContents.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UcDLInfo.resx">
+      <DependentUpon>UcDLInfo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UcImgBrowSe.resx">
       <DependentUpon>UcImgBrowSe.cs</DependentUpon>

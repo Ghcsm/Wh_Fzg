@@ -25,20 +25,24 @@ namespace Bgkj
                 this.txtUser.Focus();
                 return;
             }
-            if (!Setusersys())
-            {
+            if (!Setusersys()) {
                 txtUser.Focus();
                 return;
             }
-            FrmMain fmMain = new FrmMain();
-            this.Hide();
-            fmMain.ShowDialog();
+
+            try {
+                FrmMain fmMain = new FrmMain();
+                this.Hide();
+                fmMain.ShowDialog();
+            } catch {
+                Application.Exit();
+            }
+
         }
 
         private bool Setusersys()
         {
-            try
-            {
+            try {
                 int id = -1;
                 T_User.LoginName = this.txtUser.Text.Trim();
                 try {

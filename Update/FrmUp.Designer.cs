@@ -122,6 +122,7 @@
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "检测更新";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FrmUpate_FormClosed);
             this.Shown += new System.EventHandler(this.FrmUpate_Shown);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

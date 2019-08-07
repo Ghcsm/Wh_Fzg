@@ -153,24 +153,33 @@ namespace Bgkj
         {
             Task.Run(() =>
             {
-                T_ConFigure.Moid = cid.Getid();
-                if (T_ConFigure.Moid.Length < 28 || T_ConFigure.Moid == null || T_ConFigure.Moid.Length > 36) {
-                    showerr(0);
-                    Application.Exit();
-                }
-                T_Sysset.Getsoid(T_ConFigure.Moid);
-                if (T_ConFigure.Mosn != null && T_ConFigure.Motm != null) {
-                    if (T_ConFigure.Mosn.Length < 36 && T_ConFigure.Mosn.Length > 28 &&
-                        T_ConFigure.Motm.Length < 65 && T_ConFigure.Motm.Length > 45) {
-                        if (!cid.GetId(T_ConFigure.Mosn, T_ConFigure.Motm)) {
-                            ClsIsinfo.Istime();
-                            return;
+                try
+                {
+                    T_ConFigure.Moid = cid.Getid();
+                    if (T_ConFigure.Moid.Length < 28 || T_ConFigure.Moid == null || T_ConFigure.Moid.Length > 36) {
+                        showerr(0);
+                        Application.Exit();
+                    }
+                    T_Sysset.Getsoid(T_ConFigure.Moid);
+                    if (T_ConFigure.Mosn != null && T_ConFigure.Motm != null) {
+                        if (T_ConFigure.Mosn.Length < 36 && T_ConFigure.Mosn.Length > 28 &&
+                            T_ConFigure.Motm.Length < 65 && T_ConFigure.Motm.Length > 45) {
+                            if (!cid.GetId(T_ConFigure.Mosn, T_ConFigure.Motm)) {
+                                ClsIsinfo.Istime();
+                                return;
+                            }
                         }
                     }
+                    T_ConFigure.Bgsoft = true;
+                    this.BeginInvoke(new Action(() => { t.Enabled = true; }));
+                    ClsIsinfo.Istime();
                 }
-                T_ConFigure.Bgsoft = true;
-                this.BeginInvoke(new Action(() => { t.Enabled = true; }));
-                ClsIsinfo.Istime();
+                catch 
+                {
+                    T_ConFigure.Bgsoft = true;
+                    this.BeginInvoke(new Action(() => { t.Enabled = true; }));
+                    ClsIsinfo.Istime();
+                }
             });
         }
 

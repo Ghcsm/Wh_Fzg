@@ -33,18 +33,6 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.gr2 = new System.Windows.Forms.GroupBox();
             this.superTabControl1 = new DevComponents.DotNetBar.SuperTabControl();
-            this.superTabControlPanel3 = new DevComponents.DotNetBar.SuperTabControlPanel();
-            this.gr3 = new System.Windows.Forms.GroupBox();
-            this.dgvBoxWordGroup = new System.Windows.Forms.DataGridView();
-            this.butBoxTj = new DevComponents.DotNetBar.ButtonX();
-            this.txtbox2 = new System.Windows.Forms.TextBox();
-            this.txtbox1 = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.sTabm3 = new DevComponents.DotNetBar.SuperTabItem();
-            this.superTabControlPanel2 = new DevComponents.DotNetBar.SuperTabControlPanel();
-            this.dgvAdminWorkGroup = new System.Windows.Forms.DataGridView();
-            this.sTabm2 = new DevComponents.DotNetBar.SuperTabItem();
             this.superTabControlPanel1 = new DevComponents.DotNetBar.SuperTabControlPanel();
             this.dgvWorkgroup = new DevComponents.DotNetBar.Controls.DataGridViewX();
             this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -60,6 +48,18 @@
             this.T_Zhengli = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.T_ZhuangD = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.sTabm1 = new DevComponents.DotNetBar.SuperTabItem();
+            this.superTabControlPanel3 = new DevComponents.DotNetBar.SuperTabControlPanel();
+            this.gr3 = new System.Windows.Forms.GroupBox();
+            this.dgvBoxWordGroup = new System.Windows.Forms.DataGridView();
+            this.butBoxTj = new DevComponents.DotNetBar.ButtonX();
+            this.txtbox2 = new System.Windows.Forms.TextBox();
+            this.txtbox1 = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.sTabm3 = new DevComponents.DotNetBar.SuperTabItem();
+            this.superTabControlPanel2 = new DevComponents.DotNetBar.SuperTabControlPanel();
+            this.dgvAdminWorkGroup = new System.Windows.Forms.DataGridView();
+            this.sTabm2 = new DevComponents.DotNetBar.SuperTabItem();
             this.txt_zh_time = new DevComponents.DotNetBar.Controls.MaskedTextBoxAdv();
             this.txt_qi_time = new DevComponents.DotNetBar.Controls.MaskedTextBoxAdv();
             this.but_datj_tj = new DevComponents.DotNetBar.ButtonX();
@@ -69,17 +69,19 @@
             this.label1 = new System.Windows.Forms.Label();
             this.stat_fztj = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.rabox = new System.Windows.Forms.RadioButton();
+            this.rabqu = new System.Windows.Forms.RadioButton();
             this.groupBox1.SuspendLayout();
             this.gr2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.superTabControl1)).BeginInit();
             this.superTabControl1.SuspendLayout();
+            this.superTabControlPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvWorkgroup)).BeginInit();
             this.superTabControlPanel3.SuspendLayout();
             this.gr3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvBoxWordGroup)).BeginInit();
             this.superTabControlPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAdminWorkGroup)).BeginInit();
-            this.superTabControlPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvWorkgroup)).BeginInit();
             this.stat_fztj.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -131,8 +133,8 @@
             this.superTabControl1.ControlBox.SubItems.AddRange(new DevComponents.DotNetBar.BaseItem[] {
             this.superTabControl1.ControlBox.MenuBox,
             this.superTabControl1.ControlBox.CloseBox});
-            this.superTabControl1.Controls.Add(this.superTabControlPanel1);
             this.superTabControl1.Controls.Add(this.superTabControlPanel3);
+            this.superTabControl1.Controls.Add(this.superTabControlPanel1);
             this.superTabControl1.Controls.Add(this.superTabControlPanel2);
             this.superTabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.superTabControl1.Location = new System.Drawing.Point(3, 17);
@@ -148,128 +150,6 @@
             this.sTabm2,
             this.sTabm3});
             this.superTabControl1.Text = "superTabControl1";
-            // 
-            // superTabControlPanel3
-            // 
-            this.superTabControlPanel3.Controls.Add(this.gr3);
-            this.superTabControlPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.superTabControlPanel3.Location = new System.Drawing.Point(0, 28);
-            this.superTabControlPanel3.Name = "superTabControlPanel3";
-            this.superTabControlPanel3.Size = new System.Drawing.Size(736, 288);
-            this.superTabControlPanel3.TabIndex = 0;
-            this.superTabControlPanel3.TabItem = this.sTabm3;
-            // 
-            // gr3
-            // 
-            this.gr3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.gr3.Controls.Add(this.dgvBoxWordGroup);
-            this.gr3.Controls.Add(this.butBoxTj);
-            this.gr3.Controls.Add(this.txtbox2);
-            this.gr3.Controls.Add(this.txtbox1);
-            this.gr3.Controls.Add(this.label4);
-            this.gr3.Controls.Add(this.label3);
-            this.gr3.Location = new System.Drawing.Point(3, 3);
-            this.gr3.Name = "gr3";
-            this.gr3.Size = new System.Drawing.Size(730, 282);
-            this.gr3.TabIndex = 0;
-            this.gr3.TabStop = false;
-            // 
-            // dgvBoxWordGroup
-            // 
-            this.dgvBoxWordGroup.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.dgvBoxWordGroup.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvBoxWordGroup.Location = new System.Drawing.Point(192, 20);
-            this.dgvBoxWordGroup.Name = "dgvBoxWordGroup";
-            this.dgvBoxWordGroup.RowTemplate.Height = 23;
-            this.dgvBoxWordGroup.Size = new System.Drawing.Size(532, 256);
-            this.dgvBoxWordGroup.TabIndex = 9;
-            // 
-            // butBoxTj
-            // 
-            this.butBoxTj.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.butBoxTj.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.butBoxTj.Location = new System.Drawing.Point(83, 110);
-            this.butBoxTj.Name = "butBoxTj";
-            this.butBoxTj.Size = new System.Drawing.Size(78, 45);
-            this.butBoxTj.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.butBoxTj.TabIndex = 8;
-            this.butBoxTj.Text = "统计";
-            this.butBoxTj.Click += new System.EventHandler(this.butBoxTj_Click);
-            // 
-            // txtbox2
-            // 
-            this.txtbox2.Location = new System.Drawing.Point(83, 66);
-            this.txtbox2.Name = "txtbox2";
-            this.txtbox2.Size = new System.Drawing.Size(92, 21);
-            this.txtbox2.TabIndex = 7;
-            // 
-            // txtbox1
-            // 
-            this.txtbox1.Location = new System.Drawing.Point(83, 28);
-            this.txtbox1.Name = "txtbox1";
-            this.txtbox1.Size = new System.Drawing.Size(92, 21);
-            this.txtbox1.TabIndex = 6;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(16, 71);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(65, 12);
-            this.label4.TabIndex = 4;
-            this.label4.Text = "终止盒号：";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(16, 31);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(65, 12);
-            this.label3.TabIndex = 5;
-            this.label3.Text = "起始盒号：";
-            // 
-            // sTabm3
-            // 
-            this.sTabm3.AttachedControl = this.superTabControlPanel3;
-            this.sTabm3.GlobalItem = false;
-            this.sTabm3.Name = "sTabm3";
-            this.sTabm3.Text = "盒号统计";
-            this.sTabm3.Visible = false;
-            // 
-            // superTabControlPanel2
-            // 
-            this.superTabControlPanel2.Controls.Add(this.dgvAdminWorkGroup);
-            this.superTabControlPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.superTabControlPanel2.Location = new System.Drawing.Point(0, 28);
-            this.superTabControlPanel2.Name = "superTabControlPanel2";
-            this.superTabControlPanel2.Size = new System.Drawing.Size(736, 288);
-            this.superTabControlPanel2.TabIndex = 0;
-            this.superTabControlPanel2.TabItem = this.sTabm2;
-            // 
-            // dgvAdminWorkGroup
-            // 
-            this.dgvAdminWorkGroup.AllowUserToAddRows = false;
-            this.dgvAdminWorkGroup.AllowUserToDeleteRows = false;
-            this.dgvAdminWorkGroup.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvAdminWorkGroup.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvAdminWorkGroup.Location = new System.Drawing.Point(0, 0);
-            this.dgvAdminWorkGroup.Name = "dgvAdminWorkGroup";
-            this.dgvAdminWorkGroup.ReadOnly = true;
-            this.dgvAdminWorkGroup.RowTemplate.Height = 23;
-            this.dgvAdminWorkGroup.Size = new System.Drawing.Size(736, 288);
-            this.dgvAdminWorkGroup.TabIndex = 0;
-            // 
-            // sTabm2
-            // 
-            this.sTabm2.AttachedControl = this.superTabControlPanel2;
-            this.sTabm2.GlobalItem = false;
-            this.sTabm2.Name = "sTabm2";
-            this.sTabm2.Text = "管理统计";
-            this.sTabm2.Visible = false;
             // 
             // superTabControlPanel1
             // 
@@ -397,6 +277,130 @@
             this.sTabm1.Name = "sTabm1";
             this.sTabm1.Text = "工作产量";
             // 
+            // superTabControlPanel3
+            // 
+            this.superTabControlPanel3.Controls.Add(this.gr3);
+            this.superTabControlPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.superTabControlPanel3.Location = new System.Drawing.Point(0, 28);
+            this.superTabControlPanel3.Name = "superTabControlPanel3";
+            this.superTabControlPanel3.Size = new System.Drawing.Size(736, 288);
+            this.superTabControlPanel3.TabIndex = 0;
+            this.superTabControlPanel3.TabItem = this.sTabm3;
+            // 
+            // gr3
+            // 
+            this.gr3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.gr3.Controls.Add(this.rabqu);
+            this.gr3.Controls.Add(this.rabox);
+            this.gr3.Controls.Add(this.dgvBoxWordGroup);
+            this.gr3.Controls.Add(this.butBoxTj);
+            this.gr3.Controls.Add(this.txtbox2);
+            this.gr3.Controls.Add(this.txtbox1);
+            this.gr3.Controls.Add(this.label4);
+            this.gr3.Controls.Add(this.label3);
+            this.gr3.Location = new System.Drawing.Point(3, 3);
+            this.gr3.Name = "gr3";
+            this.gr3.Size = new System.Drawing.Size(730, 282);
+            this.gr3.TabIndex = 0;
+            this.gr3.TabStop = false;
+            // 
+            // dgvBoxWordGroup
+            // 
+            this.dgvBoxWordGroup.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvBoxWordGroup.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvBoxWordGroup.Location = new System.Drawing.Point(243, 20);
+            this.dgvBoxWordGroup.Name = "dgvBoxWordGroup";
+            this.dgvBoxWordGroup.RowTemplate.Height = 23;
+            this.dgvBoxWordGroup.Size = new System.Drawing.Size(481, 256);
+            this.dgvBoxWordGroup.TabIndex = 9;
+            // 
+            // butBoxTj
+            // 
+            this.butBoxTj.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.butBoxTj.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.butBoxTj.Location = new System.Drawing.Point(83, 190);
+            this.butBoxTj.Name = "butBoxTj";
+            this.butBoxTj.Size = new System.Drawing.Size(78, 45);
+            this.butBoxTj.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.butBoxTj.TabIndex = 8;
+            this.butBoxTj.Text = "统计";
+            this.butBoxTj.Click += new System.EventHandler(this.butBoxTj_Click);
+            // 
+            // txtbox2
+            // 
+            this.txtbox2.Location = new System.Drawing.Point(145, 68);
+            this.txtbox2.Name = "txtbox2";
+            this.txtbox2.Size = new System.Drawing.Size(76, 21);
+            this.txtbox2.TabIndex = 7;
+            // 
+            // txtbox1
+            // 
+            this.txtbox1.Location = new System.Drawing.Point(145, 30);
+            this.txtbox1.Name = "txtbox1";
+            this.txtbox1.Size = new System.Drawing.Size(76, 21);
+            this.txtbox1.TabIndex = 6;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(74, 73);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(65, 12);
+            this.label4.TabIndex = 4;
+            this.label4.Text = "终止盒号：";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(74, 33);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(65, 12);
+            this.label3.TabIndex = 5;
+            this.label3.Text = "起始盒号：";
+            // 
+            // sTabm3
+            // 
+            this.sTabm3.AttachedControl = this.superTabControlPanel3;
+            this.sTabm3.GlobalItem = false;
+            this.sTabm3.Name = "sTabm3";
+            this.sTabm3.Text = "盒号统计";
+            this.sTabm3.Visible = false;
+            // 
+            // superTabControlPanel2
+            // 
+            this.superTabControlPanel2.Controls.Add(this.dgvAdminWorkGroup);
+            this.superTabControlPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.superTabControlPanel2.Location = new System.Drawing.Point(0, 28);
+            this.superTabControlPanel2.Name = "superTabControlPanel2";
+            this.superTabControlPanel2.Size = new System.Drawing.Size(736, 288);
+            this.superTabControlPanel2.TabIndex = 0;
+            this.superTabControlPanel2.TabItem = this.sTabm2;
+            // 
+            // dgvAdminWorkGroup
+            // 
+            this.dgvAdminWorkGroup.AllowUserToAddRows = false;
+            this.dgvAdminWorkGroup.AllowUserToDeleteRows = false;
+            this.dgvAdminWorkGroup.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvAdminWorkGroup.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvAdminWorkGroup.Location = new System.Drawing.Point(0, 0);
+            this.dgvAdminWorkGroup.Name = "dgvAdminWorkGroup";
+            this.dgvAdminWorkGroup.ReadOnly = true;
+            this.dgvAdminWorkGroup.RowTemplate.Height = 23;
+            this.dgvAdminWorkGroup.Size = new System.Drawing.Size(736, 288);
+            this.dgvAdminWorkGroup.TabIndex = 0;
+            // 
+            // sTabm2
+            // 
+            this.sTabm2.AttachedControl = this.superTabControlPanel2;
+            this.sTabm2.GlobalItem = false;
+            this.sTabm2.Name = "sTabm2";
+            this.sTabm2.Text = "管理统计";
+            this.sTabm2.Visible = false;
+            // 
             // txt_zh_time
             // 
             // 
@@ -495,6 +499,29 @@
             this.toolStripStatusLabel1.Size = new System.Drawing.Size(44, 17);
             this.toolStripStatusLabel1.Text = " 就 绪 ";
             // 
+            // rabox
+            // 
+            this.rabox.AutoSize = true;
+            this.rabox.Checked = true;
+            this.rabox.Location = new System.Drawing.Point(16, 32);
+            this.rabox.Name = "rabox";
+            this.rabox.Size = new System.Drawing.Size(47, 16);
+            this.rabox.TabIndex = 10;
+            this.rabox.TabStop = true;
+            this.rabox.Text = "盒号";
+            this.rabox.UseVisualStyleBackColor = true;
+            // 
+            // rabqu
+            // 
+            this.rabqu.AutoSize = true;
+            this.rabqu.Location = new System.Drawing.Point(16, 69);
+            this.rabqu.Name = "rabqu";
+            this.rabqu.Size = new System.Drawing.Size(47, 16);
+            this.rabqu.TabIndex = 11;
+            this.rabqu.Text = "区号";
+            this.rabqu.UseVisualStyleBackColor = true;
+            this.rabqu.CheckedChanged += new System.EventHandler(this.rabqu_CheckedChanged);
+            // 
             // Frmfztj
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -516,14 +543,14 @@
             this.gr2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.superTabControl1)).EndInit();
             this.superTabControl1.ResumeLayout(false);
+            this.superTabControlPanel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvWorkgroup)).EndInit();
             this.superTabControlPanel3.ResumeLayout(false);
             this.gr3.ResumeLayout(false);
             this.gr3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvBoxWordGroup)).EndInit();
             this.superTabControlPanel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvAdminWorkGroup)).EndInit();
-            this.superTabControlPanel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvWorkgroup)).EndInit();
             this.stat_fztj.ResumeLayout(false);
             this.stat_fztj.PerformLayout();
             this.ResumeLayout(false);
@@ -572,5 +599,7 @@
         private System.Windows.Forms.TextBox txtbox1;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.RadioButton rabqu;
+        private System.Windows.Forms.RadioButton rabox;
     }
 }

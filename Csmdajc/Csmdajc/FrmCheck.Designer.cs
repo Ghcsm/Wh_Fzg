@@ -85,6 +85,8 @@
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripGotoPage = new System.Windows.Forms.ToolStripButton();
             this.toolStripAutoSide = new System.Windows.Forms.ToolStripButton();
+            this.toolStripcopy = new System.Windows.Forms.ToolStripButton();
+            this.toolStripPase = new System.Windows.Forms.ToolStripButton();
             this.toolStripFiltr = new System.Windows.Forms.ToolStripButton();
             this.toolProess = new System.Windows.Forms.ToolStripProgressBar();
             this.toolStripOcr = new System.Windows.Forms.ToolStripButton();
@@ -104,6 +106,7 @@
             this.dockSite7 = new DevComponents.DotNetBar.DockSite();
             this.dockSite3 = new DevComponents.DotNetBar.DockSite();
             this.odgInsterFile = new System.Windows.Forms.OpenFileDialog();
+            this.toolStripRound = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -240,10 +243,14 @@
             // ImgView
             // 
             resources.ApplyResources(this.ImgView, "ImgView");
+            this.ImgView.BackColor = System.Drawing.Color.SlateGray;
+            this.ImgView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.ImgView.IsSyncSource = true;
             this.ImgView.IsSyncTarget = true;
             this.ImgView.ItemPadding = new System.Windows.Forms.Padding(1);
             this.ImgView.Name = "ImgView";
+            this.ImgView.ViewHorizontalAlignment = Leadtools.Controls.ControlAlignment.Center;
+            this.ImgView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ImgView_MouseClick);
             this.ImgView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ImgView_MouseDoubleClick);
             this.ImgView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ImgView_MouseDown);
             // 
@@ -501,6 +508,9 @@
             this.toolStripSeparator4,
             this.toolStripGotoPage,
             this.toolStripAutoSide,
+            this.toolStripRound,
+            this.toolStripcopy,
+            this.toolStripPase,
             this.toolStripFiltr,
             this.toolProess,
             this.toolStripOcr,
@@ -557,6 +567,18 @@
             resources.ApplyResources(this.toolStripAutoSide, "toolStripAutoSide");
             this.toolStripAutoSide.Name = "toolStripAutoSide";
             this.toolStripAutoSide.Click += new System.EventHandler(this.toolStripAutoSide_Click);
+            // 
+            // toolStripcopy
+            // 
+            resources.ApplyResources(this.toolStripcopy, "toolStripcopy");
+            this.toolStripcopy.Name = "toolStripcopy";
+            this.toolStripcopy.Click += new System.EventHandler(this.toolStripcopy_Click);
+            // 
+            // toolStripPase
+            // 
+            resources.ApplyResources(this.toolStripPase, "toolStripPase");
+            this.toolStripPase.Name = "toolStripPase";
+            this.toolStripPase.Click += new System.EventHandler(this.toolStripPase_Click);
             // 
             // toolStripFiltr
             // 
@@ -705,6 +727,12 @@
             this.dockSite3.Name = "dockSite3";
             this.dockSite3.TabStop = false;
             // 
+            // toolStripRound
+            // 
+            resources.ApplyResources(this.toolStripRound, "toolStripRound");
+            this.toolStripRound.Name = "toolStripRound";
+            this.toolStripRound.Click += new System.EventHandler(this.toolStripRound_Click);
+            // 
             // FrmCheck
             // 
             resources.ApplyResources(this, "$this");
@@ -835,5 +863,8 @@
         private System.Windows.Forms.GroupBox gr1_2;
         private System.Windows.Forms.ToolStripButton toolStripOcr;
         private System.Windows.Forms.Label labpage;
+        private System.Windows.Forms.ToolStripButton toolStripcopy;
+        private System.Windows.Forms.ToolStripButton toolStripPase;
+        private System.Windows.Forms.ToolStripButton toolStripRound;
     }
 }

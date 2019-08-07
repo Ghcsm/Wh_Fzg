@@ -104,6 +104,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\CsmImg\bin\x86\Debug\CsmImg.dll</HintPath>
     </Reference>
+    <Reference Include="CsmInfo">
+      <HintPath>..\CsmInfo\Csmdajc\bin\x86\Debug\CsmInfo.dll</HintPath>
+    </Reference>
     <Reference Include="Csmmldj, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Csmmldj\Csmmldj\bin\x86\Debug\Csmmldj.dll</HintPath>

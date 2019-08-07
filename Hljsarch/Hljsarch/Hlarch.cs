@@ -86,7 +86,7 @@ namespace HLjscom
         //设置扫描模式，追加替换
         public int Scanms = 0;
         public int TagPage = 0;
-
+        private RasterImage Imgcopy;
 
         #endregion
 
@@ -266,6 +266,30 @@ namespace HLjscom
             }
         }
 
+        public void _RectangYuan(Boolean reg)
+        {
+            try {
+                if (_Imageview.Image != null)
+                    _Imageview.Image.MakeRegionEmpty();
+                if (reg == true) {
+                    regionInteractiveMode.AutoRegionToFloater = false;
+                    regionInteractiveMode.Shape = ImageViewerRubberBandShape.Ellipse;
+                    regionInteractiveMode.BorderPen = Pens.Red;
+                    _Imageview.InteractiveModes.BeginUpdate();
+                    _Imageview.InteractiveModes.Clear();
+                    _Imageview.InteractiveModes.Add(regionInteractiveMode);
+                    _Imageview.InteractiveModes.EndUpdate();
+                }
+                else if (_Imageview.Image != null) {
+                    _Imageview.InteractiveModes.Clear();
+                    _Imageview.Image.MakeRegionEmpty();
+                }
+
+            } catch (Exception ex) {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
 
         //微调
         public void _RoteimgWt(ImageViewer img, int x)
@@ -356,7 +380,7 @@ namespace HLjscom
                     RasterColor color = _Imageview.Image.GetPixel((int)pt.X, (int)pt.Y);
                     //if (color.R < 200 && color.G < 200 && color.B < 200)
                     //{
-                    RasterColor lowerColor = new RasterColor(255, 255, 255);
+                    RasterColor lowerColor = new RasterColor(64, 64, 68);
                     RasterColor upperColor = new RasterColor(0, 0, 0);
                     _Imageview.Image.AddMagicWandToRegion((int)pt.X, (int)pt.Y, lowerColor, upperColor, RasterRegionCombineMode.Set);
                     FillCommand fill = new FillCommand(RasterColor.FromKnownColor(RasterKnownColor.White));
@@ -617,6 +641,66 @@ namespace HLjscom
 
 
 
+        public void _Clesider()
+        {
+            if (_Imageview.Image == null)
+                return;
+            RasterImage img = _Imageview.Image.Clone();
+            ColorResolutionCommand command = new ColorResolutionCommand();
+            command.Mode = ColorResolutionCommandMode.InPlace;
+            command.BitsPerPixel = 1;
+            command.DitheringMethod = RasterDitheringMethod.None;
+            command.PaletteFlags = ColorResolutionCommandPaletteFlags.Fixed;
+            command.Colors = 0;
+            command.Run(img);
+
+            BorderRemoveCommand _BorderRemove = null;
+            _BorderRemove = new BorderRemoveCommand();
+            _BorderRemove.Border = BorderRemoveBorderFlags.All;
+            _BorderRemove.Flags = BorderRemoveCommandFlags.UseVariance | BorderRemoveCommandFlags.SingleRegion;
+            _BorderRemove.Percent = 400;
+            _BorderRemove.Variance = 10;
+            _BorderRemove.WhiteNoiseLength = 9;
+            _BorderRemove.Run(img);
+            _Imageview.Image.SetRegion(null, _BorderRemove.Region, RasterRegionCombineMode.Set);
+            FillCommand filler = new FillCommand(RasterColor.White);
+            filler.Run(_Imageview.Image);
+            _Imageview.Image.MakeRegionEmpty();
+        }
+
+        public void _CleHoleImg()
+        {
+            if (_Imageview.Image == null)
+                return;
+            RasterImage img = _Imageview.Image.Clone();
+            ColorResolutionCommand command = new ColorResolutionCommand();
+            command.Mode = ColorResolutionCommandMode.InPlace;
+            command.BitsPerPixel = 1;
+            command.DitheringMethod = RasterDitheringMethod.None;
+            command.PaletteFlags = ColorResolutionCommandPaletteFlags.Fixed;
+            command.Colors = 0;
+            command.Run(img);
+
+            HolePunchRemoveCommand _HolePunchRemove = null;
+            _HolePunchRemove = new HolePunchRemoveCommand();
+            //   _HolePunchRemove.Flags = HolePunchRemoveCommandFlags.UseDpi | HolePunchRemoveCommandFlags.UseSize;
+            _HolePunchRemove.Location = HolePunchRemoveCommandLocation.Left | HolePunchRemoveCommandLocation.Right | HolePunchRemoveCommandLocation.Top;
+            //_HolePunchRemove.MaximumHoleCount = 2;
+            //_HolePunchRemove.MinimumHoleCount = 1;
+            //_HolePunchRemove.MaximumHoleWidth = 12;
+            //_HolePunchRemove.MaximumHoleHeight = 12;
+            //_HolePunchRemove.MinimumHoleWidth = 3;
+            //_HolePunchRemove.MinimumHoleHeight = 3;
+            _HolePunchRemove.Run(img);
+            _Imageview.Image.SetRegion(null, _HolePunchRemove.Region, RasterRegionCombineMode.Set);
+            FillCommand filler = new FillCommand(RasterColor.White);
+            // filler.Run(_Imageview.Image);
+            _Imageview.Image = img;
+        }
+
+
+
+
         // 私有-图像转灰度
         private void Desaimage()
         {
@@ -767,7 +851,7 @@ namespace HLjscom
                     CropCommand cmdcrop = new CropCommand();
                     cmdcrop.Rectangle = _Imageview.Image.GetRegionBounds(null);
                     cmdcrop.Run(_Imageview.Image);
-                    AutoCropCommand autoCropCommand = new AutoCropCommand(64);
+                    AutoCropCommand autoCropCommand = new AutoCropCommand(1);
                     autoCropCommand.Run(rasterImage);
                     //if (_Imageview.Image.ImageHeight < _Imageview.Image.ImageWidth)
                     //{
@@ -927,6 +1011,30 @@ namespace HLjscom
             }
         }
 
+
+        public void HufuImg(string file)
+        {
+            using (RasterCodecs _Codef = new RasterCodecs()) {
+                RasterImage _imagepx = _Codef.Load(file, 0, CodecsLoadByteOrder.BgrOrGrayOrRomm, CrrentPage, CrrentPage).Clone();
+                int bit = _imagepx.BitsPerPixel;
+                if (bit != 1) {
+                    if (bit != 8) {
+                        _Codefile.Options.Jpeg2000.Save.CompressionRatio = (float)Factor;
+                        _Codefile.Options.Ecw.Save.QualityFactor = Factor;
+                        _Codefile.Save(_imagepx, Filename, RasterImageFormat.TifJpeg, 24, 1, 1, CrrentPage, CodecsSavePageMode.Replace);
+                    }
+                    else {
+                        _Codefile.Options.Jpeg.Save.QualityFactor = Factor;
+                        _Codefile.Save(_imagepx, Filename, RasterImageFormat.TifJpeg, 8, 1, 1, CrrentPage, CodecsSavePageMode.Replace);
+                    }
+                }
+                else {
+                    _Codefile.Save(_imagepx, Filename, RasterImageFormat.CcittGroup4, bit, 1, 1, CrrentPage, CodecsSavePageMode.Replace);
+                }
+                _Gotopage(CrrentPage);
+            }
+        }
+
         public string _GetA3page()
         {
             RasterCodecs _Codef = new RasterCodecs();
@@ -1051,7 +1159,7 @@ namespace HLjscom
         }
 
 
-        public Bitmap Getbmp(string file,int page)
+        public Bitmap Getbmp(string file, int page)
         {
             Bitmap bitmap = null;
             try {
@@ -1061,13 +1169,12 @@ namespace HLjscom
                     bitmap = new Bitmap(imgtp);
                 }
                 return bitmap;
-            } catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 MessageBox.Show(ex.ToString());
                 return bitmap;
             }
-
         }
+
 
         //文字水印
         public RasterImage WaterImgtxt(RasterImage water)
@@ -2126,11 +2233,37 @@ namespace HLjscom
                         _Codefile.Save(Instimg, Filename, RasterImageFormat.CcittGroup4, bit, 1, 1, page, CodecsSavePageMode.Insert);
                     }
                     _Gotopage(page);
-                    // CountPage += 1; 
                 }
 
             } catch (Exception ex) {
                 MessageBox.Show(ex.ToString());
+            }
+        }
+
+        public void _RelImage(string instimg, string oldfile)
+        {
+            try {
+                RasterCodecs _Codef = new RasterCodecs();
+                RasterImage img = _Codef.Load(instimg, 0, CodecsLoadByteOrder.BgrOrGray, 1, 1);
+                int bit = img.BitsPerPixel;
+                if (bit != 1) {
+                    if (bit != 8) {
+                        _Codefile.Options.Jpeg2000.Save.CompressionRatio = (float)Factor;
+                        _Codefile.Options.Ecw.Save.QualityFactor = Factor;
+                        _Codefile.Save(img, Filename, RasterImageFormat.TifJpeg, 24, 1, 1, CrrentPage, CodecsSavePageMode.Replace);
+                    }
+                    else {
+                        _Codefile.Options.Jpeg.Save.QualityFactor = Factor;
+                        _Codefile.Save(img, Filename, RasterImageFormat.TifJpeg, 8, 1, 1, CrrentPage, CodecsSavePageMode.Replace);
+                    }
+                }
+                else {
+                    _Codefile.Save(img, Filename, RasterImageFormat.CcittGroup4, bit, 1, 1, CrrentPage, CodecsSavePageMode.Replace);
+                }
+                _Gotopage(CrrentPage);
+                File.Delete(instimg);
+
+            } catch {
             }
         }
 
@@ -2160,33 +2293,81 @@ namespace HLjscom
             } catch { }
         }
 
+        public void CopyImg()
+        {
+            if (_Imageview.Image == null)
+                return;
+            LeadRect rcw = _Imageview.Image.GetRegionBounds(null);
+            if (rcw.X != 0 && rcw.Y != 0) {
+                CopyRectangleCommand command = new CopyRectangleCommand();
+                command.Rectangle = rcw;
+                command.CreateFlags = RasterMemoryFlags.Conventional;
+                command.Run(_Imageview.Image.Clone());
+                Imgcopy = command.DestinationImage;
+                _Imageview.Image.MakeRegionEmpty();
+            }
+        }
+
+
         public bool _CopyImg()
         {
             if (_Imageview.Image == null)
                 return false;
-            try {
-                RasterImage img = _Imageview.Image.Clone();
-                int bit = img.BitsPerPixel;
-                int page = CrrentPage;
-                if (bit != 1) {
-                    if (bit != 8) {
-                        _Codefile.Options.Jpeg2000.Save.CompressionRatio = (float)Factor;
-                        _Codefile.Options.Ecw.Save.QualityFactor = Factor;
-                        _Codefile.Save(img, Filename, RasterImageFormat.TifJpeg, bit, 1, 1, page + 1, CodecsSavePageMode.Insert);
+            LeadRect rcw = _Imageview.Image.GetRegionBounds(null);
+            if (rcw.X != 0 && rcw.Y != 0) {
+                CopyRectangleCommand command = new CopyRectangleCommand();
+                command.Rectangle = rcw;
+                command.CreateFlags = RasterMemoryFlags.Conventional;
+                command.Run(_Imageview.Image.Clone());
+                Imgcopy = command.DestinationImage;
+                _Imageview.Image.MakeRegionEmpty();
+                return true;
+            }
+            else {
+                try {
+                    RasterImage img = _Imageview.Image.Clone();
+                    int bit = img.BitsPerPixel;
+                    int page = CrrentPage;
+                    if (bit != 1) {
+                        if (bit != 8) {
+                            _Codefile.Options.Jpeg2000.Save.CompressionRatio = (float)Factor;
+                            _Codefile.Options.Ecw.Save.QualityFactor = Factor;
+                            _Codefile.Save(img, Filename, RasterImageFormat.TifJpeg, bit, 1, 1, page + 1, CodecsSavePageMode.Insert);
+                        }
+                        else {
+                            _Codefile.Options.Jpeg.Save.QualityFactor = Factor;
+                            _Codefile.Save(img, Filename, RasterImageFormat.TifJpeg, bit, 1, 1, page + 1, CodecsSavePageMode.Insert);
+                        }
                     }
                     else {
-                        _Codefile.Options.Jpeg.Save.QualityFactor = Factor;
-                        _Codefile.Save(img, Filename, RasterImageFormat.TifJpeg, bit, 1, 1, page + 1, CodecsSavePageMode.Insert);
+                        _Codefile.Save(img, Filename, RasterImageFormat.CcittGroup4, bit, 1, 1, page + 1, CodecsSavePageMode.Insert);
                     }
+                    return true;
+                } catch {
+                    return false;
                 }
-                else {
-                    _Codefile.Save(img, Filename, RasterImageFormat.CcittGroup4, bit, 1, 1, page + 1, CodecsSavePageMode.Insert);
-                }
-                return true;
-            } catch {
-                return false;
             }
+        }
 
+        public void PasteImg(MouseEventArgs e)
+        {
+            if (Imgcopy == null)
+                return;
+            RasterImage simg = _Imageview.Image.Clone();
+            LeadPointD pt = _Imageview.ConvertPoint(null, ImageViewerCoordinateType.Control, ImageViewerCoordinateType.Image, new LeadPointD(e.X, e.Y));
+            Point onpt = new Point((int)pt.X, (int)pt.Y);
+            int xy = Imgcopy.Width / 2;
+            AlphaBlendCommand alphaBlend = new AlphaBlendCommand
+            {
+                DestinationRectangle = LeadRect.Create(onpt.X - xy, onpt.Y - xy, Imgcopy.Width, Imgcopy.Height),
+                SourceImage = Imgcopy,
+                Opacity = 255,
+                SourcePoint = new LeadPoint(0, 0)
+
+            };
+            alphaBlend.Run(simg);
+            _Imageview.Image = simg.Clone();
+            _Imageview.Zoom(ControlSizeMode.FitAlways, 1, _Imageview.DefaultZoomOrigin);
         }
 
         // 转跳指定页码
@@ -2924,9 +3105,8 @@ namespace HLjscom
         {
             List<string> tmp = new List<string>();
             if (TagPage == 0) {
-                foreach (var item in _PageFuhao.Values)
-                {
-                    if (Fuhao.IndexOf(item)<0)
+                foreach (var item in _PageFuhao.Values) {
+                    if (Fuhao.IndexOf(item) < 0)
                         tmp.Add(item.ToString());
                 }
                 foreach (var item in _PageNumber.Values) {

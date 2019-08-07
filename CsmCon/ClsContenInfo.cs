@@ -38,9 +38,11 @@ namespace CsmCon
         public int txtrows { get; set; } = 1;
         public string Pagestmp { get; set; } = "";
         public string Archtype { get; set; } = "";
+        private int keydown = 0;
 
         private Panel ptxt;
         AutoCompleteStringCollection source = new AutoCompleteStringCollection();
+        private DataTable contendt;
 
         public void GetContenInfo()
         {
@@ -94,6 +96,7 @@ namespace CsmCon
             lsModulelx.Clear();
             LsModuleIndex.Clear();
             DataTable dt = Common.GetcontenModule();
+            contendt = dt;
             if (dt != null && dt.Rows.Count > 0) {
                 foreach (DataRow dr in dt.Rows) {
                     ListViewItem lvi = new ListViewItem();
@@ -111,7 +114,8 @@ namespace CsmCon
             }
 
         }
-
+        //东丽区专用  ywid
+        private string ywid = "0";
         public void LoadContents(int archid, ListViewEx lsv, bool ch)
         {
             if (archid <= 0)
@@ -138,9 +142,65 @@ namespace CsmCon
                             PageCount.Add(str);
                         lvi.SubItems.AddRange(new string[] { str });
                     }
-
-                    lsv.Invoke(new Action(() => { lsv.Items.Add(lvi); }));
+                    lsv.Items.Add(lvi);
                     i++;
+                }
+                foreach (ListViewItem lvi in lsv.Items) {
+                    string str = lvi.SubItems[5].Text.ToString();
+                    if (str != ywid) {
+                        lvi.BackColor = Color.Red;
+                        ywid = str;
+                    }
+                }
+                if (lsv.Items.Count > 0) {
+                    lsv.Items[0].Selected = true;
+                }
+
+            } catch {
+            } finally {
+                loadcon = false;
+            }
+        }
+
+        public void LoadContentsinfo(int archid, ListViewEx lsv, bool ch)
+        {
+            if (archid <= 0)
+                return;
+            if (loadcon)
+                return;
+            loadcon = true;
+            try {
+                lsv.Items.Clear();
+                PageCount.Clear();
+                DataTable dt = Common.LoadContents(ContenTable, ContenCol,
+                    ContenPages, Convert.ToInt32(ch), archid);
+                if (dt == null || dt.Rows.Count <= 0) {
+                    Common.InsterMl(archid);
+                    loadcon = false;
+                    LoadContents(archid, lsv, ch);
+                    return;
+                }
+                int i = 1;
+                foreach (DataRow dr in dt.Rows) {
+                    ListViewItem lvi = new ListViewItem();
+                    lvi.Text = i.ToString();
+                    string id = dr["id"].ToString();
+                    lvi.SubItems.AddRange(new string[] { id });
+                    for (int t = 0; t < ContenCoList.Count; t++) {
+                        string str = dr[ContenCoList[t]].ToString();
+                        if (t == PagesWz)
+                            PageCount.Add(str);
+                        lvi.SubItems.AddRange(new string[] { str });
+                    }
+                    lsv.Items.Add(lvi);
+                    i++;
+                }
+                foreach (ListViewItem lvi in lsv.Items) {
+                    string str = lvi.SubItems[5].Text.ToString();
+                    if (str != ywid) {
+                        lvi.BackColor = Color.Red;
+                        ywid = str;
+                    }
                 }
                 if (lsv.Items.Count > 0) {
                     lsv.Items[0].Selected = true;
@@ -282,13 +342,7 @@ namespace CsmCon
                 txt.Width = txtwidth;
                 txt.TabIndex = id;
                 txt.Tag = id;
-                if (txt.Tag.ToString() == (TitleWz + 1).ToString()) {
-                    //东丽区自动匹配
-                    txt.AutoCompleteCustomSource = source;
-                    txt.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-                    txt.AutoCompleteSource = AutoCompleteSource.CustomSource;
-                    txt.Leave += Txt_Leave;
-                }
+
                 txt.BringToFront();
                 if (id <= colnum)
                     txt.Location = new Point(yy, 5);
@@ -305,12 +359,23 @@ namespace CsmCon
                 cb.TabIndex = id;
                 cb.Tag = id;
                 cb.BringToFront();
-                string[] a = val.Split(';');
-                for (int i = 0; i < a.Length; i++) {
-                    string b = a[i];
-                    if (b.Trim().Length > 0) {
-                        cb.Items.Add(b);
+                if (val.IndexOf(';') >= 0) {
+                    string[] a = val.Split(';');
+                    for (int i = 0; i < a.Length; i++) {
+                        string b = a[i];
+                        if (b.Trim().Length > 0) {
+                            cb.Items.Add(b);
+                        }
                     }
+                }
+                if (cb.Tag.ToString() == (TitleWz + 1).ToString()) {
+                    //东丽区自动匹配
+                    cb.KeyUp += Cb_KeyUp;
+                    cb.Leave += Cb_Leave;
+                    cb.KeyDown += Cb_KeyDown;
+                    cb.DropDownClosed += Cb_DropDownClosed;
+                    cb.SelectedIndexChanged += Cb_SelectedIndexChanged;
+                    cb.MouseClick += Cb_MouseClick;
                 }
                 if (id <= colnum)
                     cb.Location = new Point(yy, 5);
@@ -325,25 +390,72 @@ namespace CsmCon
             }
         }
 
+      
 
-        //点击目录时 光标跳到标题行最后
-        public void SetInfoTxt(Control p, int id, string str)
+        public void Setinfofocus(Control p)
         {
             foreach (Control ct in p.Controls) {
                 if (ct is TextBox || ct is ComboBox) {
+                    if (ct.Tag.ToString() == "1") {
+                        ct.Focus();
+                        //if (id.ToString() == "1") {
+
+                        // ct.SelectionStart = ct.TextLength;
+                        // ct.SelectionLength = 0;
+                        //}
+                    }
+                }
+            }
+        }
+
+
+        //点击目录时 光标跳到标题行最后  要求选中目录时光标不跳到标题
+        public void SetInfoTxt(Control p, int id, string str)
+        {
+            foreach (Control ct in p.Controls) {
+                if (ct is TextBox) {
                     if (ct.Tag.ToString() == id.ToString()) {
                         ct.Text = str;
-                        if (id.ToString() == "1")
-                        {
-                            TextBox t = (TextBox) ct;
+                        //if (id.ToString() == "1") {
+                        //    TextBox t = (TextBox)ct;
+                        //    t.Focus();
+                        //    t.SelectionStart = t.TextLength;
+                        //    t.SelectionLength = 0;
+                        //}
+                    }
+                }
+                if (ct is ComboBox) {
+                    if (ct.Tag.ToString() == id.ToString()) {
+                        ct.Text = str;
+                        //if (id.ToString() == "1") {
+                        //    ComboBox t = (ComboBox)ct;
+                        //    t.Focus();
+                        //}
+                    }
+                }
+            }
+        }
+
+        public void SetinfoOcrtxt(Control p, int id, string str1, int id2, string str2)
+        {
+            foreach (Control ct in p.Controls) {
+                if (ct is TextBox) {
+                    if (ct.Tag.ToString() == id.ToString()) {
+                        ct.Text = str1;
+                    }
+                }
+                if (ct is ComboBox) {
+                    if (ct.Tag.ToString() == id2.ToString()) {
+                        ct.Text = str2;
+                        if (id.ToString() == "1") {
+                            ComboBox t = (ComboBox)ct;
                             t.Focus();
-                            t.SelectionStart = t.TextLength;
-                            t.SelectionLength = 0;
                         }
                     }
                 }
             }
         }
+
         public void SetInfoTxtcls(Control p, int id, string str)
         {
             foreach (Control ct in p.Controls) {
@@ -351,7 +463,7 @@ namespace CsmCon
                     if (ct.Tag.ToString() == id.ToString()) {
                         ct.Text = str;
                     }
-                    else
+                    else if (ct.Tag.ToString() != "4")
                         ct.Text = "";
                 }
             }
@@ -402,9 +514,8 @@ namespace CsmCon
             foreach (Control ct in p.Controls) {
                 if (ct is TextBox || ct is ComboBox) {
                     if (ct.Tag != null) {
-                        if (ct.Tag.ToString() != "4" && ct.Text.Trim().Length <= 0) {
+                        if (ct.Tag.ToString()!="4" && ct.Text.Trim().Length <= 0) {
                             tf = false;
-                            ct.Focus();
                         }
                     }
                 }
@@ -415,29 +526,131 @@ namespace CsmCon
 
         private void Cb_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (e.KeyChar == 13)
+            if (e.KeyChar == 13) {
                 SendKeys.Send("{Tab}");
+            }
+
         }
 
         private void Txt_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == 13)
                 SendKeys.Send("{Tab}");
-
         }
-        private void Txt_Leave(object sender, EventArgs e)
+
+        private void Cb_MouseClick(object sender, MouseEventArgs e)
         {
-            TextBox txt = (TextBox)sender;
-            //东丽区自动配置，输入标题时 目录种类显示
-            if (txt.Tag.ToString() == (PagesWz).ToString()) {
-                int id = LsModule.IndexOf(txt.Text.Trim());
-                string str = "";
-                if (id >= 0) {
-                    str = lsModulelx[id].ToString();
-                    UcContents.Setxtxtls(ptxt, PagesWz, str);
+            keydown = 1;
+            ComboBox cob = (ComboBox)sender;
+            txtcomb = cob.Text.Trim();
+        }
+
+
+        private void Cb_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try {
+                keydown = 1;
+                ComboBox cob = (ComboBox)sender;
+                txtcomb = cob.Items[cob.SelectedIndex].ToString();
+                if (cob.Text.Trim().Length > 0) {
+                    cob.SelectionStart = cob.Text.Trim().Length;
+                    cob.SelectionLength = 0;
                 }
+            } catch { }
+        }
+
+        private void Cb_DropDownClosed(object sender, EventArgs e)
+        {
+            try {
+                ComboBox comb = (ComboBox)sender;
+                txtcomb = comb.SelectedValue.ToString();
+                comb.Items.Add(txtcomb);
+                comb.Text = txtcomb;
+                //if (txtcomb.Trim().Length > 0) {
+                //    comb.SelectionStart = comb.Text.Trim().Length;
+                //    comb.SelectionLength = 0;
+                //}
+
+            } catch { }
+        }
+
+
+        private void Cb_Leave(object sender, EventArgs e)
+        {
+            try {
+                ComboBox txt = (ComboBox)sender;
+                if (txt.Text.Trim().Length > 0)
+                    txt.Items.Add(txt.Text.Trim());
+                //东丽区自动配置，输入标题时 目录种类显示
+                if (txt.Tag.ToString() == (PagesWz).ToString() ) {
+                    int id = LsModule.IndexOf(txt.Text.Trim());
+                    string str = "";
+                    if (id >= 0) {
+                        str = lsModulelx[id].ToString();
+                        UcContents.Setxtxtls(ptxt, PagesWz, str);
+                    }
+                    //if (txt.Text.Trim().Length > 0) {
+                    //    txt.SelectionStart = txt.Text.Trim().Length;
+                    //    txt.SelectionLength = 0;
+                    //}
+
+                }
+            } catch { }
+        }
+
+        private string txtcomb = "";
+        private void Cb_KeyDown(object sender, KeyEventArgs e)
+        {
+            try {
+                keydown = 1;
+                ComboBox cob = (ComboBox)sender;
+                txtcomb = cob.Text.Trim();
+                //if (cob.Text.Trim().Length > 0) {
+                //    cob.SelectionStart = cob.Text.Trim().Length;
+                //    cob.SelectionLength = 0;
+                //}
+
+            } catch {
+
             }
         }
 
+
+        private void Cb_KeyUp(object sender, KeyEventArgs e)
+        {
+            try {
+                if (e.KeyValue >= 37 && e.KeyValue <= 40)
+                    return;
+                ComboBox comb = (ComboBox)sender;
+                comb.Items.Clear();
+                if (comb.Text.Trim().Length <= 0)
+                    return;
+                if (contendt == null || contendt.Rows.Count <= 0)
+                    return;
+                if (keydown == 0)
+                    return;
+                if (comb.Tag.ToString() == (TitleWz + 1).ToString()) {
+                    try {
+                        string s = "TITLE like '%" + comb.Text.Trim() + "%'";
+                        DataTable dt1 = contendt.Select(s).CopyToDataTable();
+                        if (dt1.Rows.Count > 0) {
+                            for (int i = 0; i < dt1.Rows.Count; i++) {
+                                comb.Items.Add(dt1.Rows[i]["TITLE"].ToString());
+                            }
+
+                            comb.DroppedDown = true;
+                            //comb.SelectionStart = comb.Text.Trim().Length;
+                            //comb.SelectionLength = 0;
+                        }
+
+                        keydown = 0;
+                    } catch {
+                        comb.Items.Add(comb.Text.Trim());
+                    }
+                    comb.SelectionStart = comb.Text.Trim().Length;
+                    comb.SelectionLength = 0;
+                }
+            } catch { }
+        }
     }
 }

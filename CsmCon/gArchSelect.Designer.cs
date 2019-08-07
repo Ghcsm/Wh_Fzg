@@ -317,6 +317,7 @@
             // 
             this.txtPages.Location = new System.Drawing.Point(71, 15);
             this.txtPages.Name = "txtPages";
+            this.txtPages.ReadOnly = true;
             this.txtPages.Size = new System.Drawing.Size(100, 21);
             this.txtPages.TabIndex = 1;
             this.txtPages.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPages_KeyPress);
