@@ -31,7 +31,6 @@ namespace Csminfo
         UcDLInfo ucdL;
         private int archzt = 0;
         private Pubcls pub;
-        private string sx = "0";
         private void Init()
         {
             try {
@@ -54,6 +53,7 @@ namespace Csminfo
                     ucContents1.Dock = DockStyle.Fill;
                 }
                 ucContents1.OneClickGotoPage += UcContents1_OneClickGotoPage;
+                ucContents1.LineFocus += UcContents1_LineFocus;
                 gr1_1.Controls.Add(ucContents1);
                 Clscheck.infobl = Common.GetConteninfoblchk();
                 if (Clscheck.infobl) {
@@ -67,9 +67,15 @@ namespace Csminfo
             }
         }
 
+        private void UcContents1_LineFocus(object sender, EventArgs e)
+        {
+            ImgView.Focus();
+        }
+
         private void GArch_LineClickLoadInfo(object sender, EventArgs e)
         {
             LoadContents();
+            ucdL.LoadInfo(gArch.Archid);
             gArch.LvData.Focus();
         }
 
@@ -78,7 +84,7 @@ namespace Csminfo
             ucdL = new UcDLInfo();
             ucdL.Dock = DockStyle.Fill;
             gr1_2.Controls.Add(ucdL);
-            ucdL.LoadInfo(Clscheck.Archid, sx);
+            ucdL.LoadInfo(Clscheck.Archid);
         }
 
 
@@ -91,13 +97,6 @@ namespace Csminfo
             } catch { }
             if (p > 0 && p <= Clscheck.MaxPage)
                 Himg._Gotopage(p);
-            string ywid = ucContents1.ywid;
-            if (sx != ywid) {
-                sx = ywid;
-                ucdL.LoadInfo(gArch.Archid, sx);
-            }
-
-
         }
 
         private void FrmIndex_Load(object sender, EventArgs e)
@@ -106,7 +105,7 @@ namespace Csminfo
                 Init();
                 Himg._Instimagtwain(this.ImgView, this.Handle, 0);
                 Himg._Rectang(true);
-                Writeini.Fileini = Path.Combine(Application.StartupPath, "Csmkeyval.ini");
+                //Writeini.Fileini = Path.Combine(Application.StartupPath, "Csmkeyval.ini");
                 Getsqlkey();
                 pub = new Pubcls();
                 Startocr();
@@ -162,7 +161,7 @@ namespace Csminfo
         {
             string txt = Himg._OcrRecttxt();
             if (txt.Length > 0) {
-                txt = (RegexCh(txt)).Replace("天津市", "").Replace("东丽区","");
+                txt = (RegexCh(txt)).Replace("天津市", "").Replace("东丽区", "");
                 ucContents1.Setocrtxt(txt);
             }
         }
@@ -258,13 +257,13 @@ namespace Csminfo
         {
             try {
                 if (Clscheck.CrrentPage != Clscheck.MaxPage) {
-                   // Himg._SavePage();
+                    // Himg._SavePage();
                     Thread.Sleep(50);
                     Himg._Pagenext(1);
                     ucContents1.OnChangContents(Clscheck.CrrentPage);
                 }
                 else if (Clscheck.CrrentPage == Clscheck.MaxPage) {
-                   // Himg._SavePage();
+                    // Himg._SavePage();
                     Thread.Sleep(50);
                     toolStripSave_Click(null, null);
                 }
@@ -472,7 +471,19 @@ namespace Csminfo
                     Clscheck.lsSqlOper.Add(key);
                     Clscheck.lssqlOpernum.Add(val);
                 }
-                Writeini.GetAllKeyValues(this.Text, out Clscheck.Lsinikeys, out Clscheck.lsinival);
+                dt = Common.GetOpenkey(this.Text);
+                if (dt == null || dt.Rows.Count <= 0)
+                    return;
+                for (int i = 0; i < dt.Rows.Count; i++) {
+                    string strid = dt.Rows[i][0].ToString();
+                    string strkey = dt.Rows[i][2].ToString();
+                    string strnum = dt.Rows[i][3].ToString();
+                    if (strid.Trim().Length > 0 && strkey.Trim().Length > 0 && strnum.Trim().Length > 0) {
+                        Clscheck.Lsinikeys.Add(strkey);
+                        Clscheck.lsinival.Add(strnum);
+                        // ClsTwain.LsId.Add(strid);
+                    }
+                }
                 SettxtTag();
             });
         }
@@ -531,23 +542,27 @@ namespace Csminfo
 
         void KeysDownEve(string key)
         {
-            bool bl = false;
-            foreach (var item in toolstripmain1.Items) {
-                if (item is ToolStripButton) {
-                    ToolStripButton t = (ToolStripButton)item;
-                    if (t.Text == key) {
-                        t.PerformClick();
-                        bl = true;
-                    }
-                }
-            }
-            if (!bl) {
-                foreach (var item in toolstripmain2.Items) {
+            string[] str = key.Split(':');
+            for (int i = 0; i < str.Length; i++) {
+                string s = str[i];
+                bool bl = false;
+                foreach (var item in toolstripmain1.Items) {
                     if (item is ToolStripButton) {
                         ToolStripButton t = (ToolStripButton)item;
-                        if (t.Text == key) {
+                        if (t.Text == s) {
                             t.PerformClick();
                             bl = true;
+                        }
+                    }
+                }
+                if (!bl) {
+                    foreach (var item in toolstripmain2.Items) {
+                        if (item is ToolStripButton) {
+                            ToolStripButton t = (ToolStripButton)item;
+                            if (t.Text == s) {
+                                t.PerformClick();
+                                bl = true;
+                            }
                         }
                     }
                 }
@@ -669,8 +684,8 @@ namespace Csminfo
                     }
                     Himg.Filename = Clscheck.ScanFilePath;
                     Himg.LoadPage(pages);
-                    ReadDict();
-                  //  LoadContents();
+                    // ReadDict();
+                    LoadContents();
                     Getuser();
                     Ispages();
                     return;

@@ -22,8 +22,8 @@ namespace CsmImg
             Stitcher stitcher = new Stitcher(false);
             Mat outimg = new Mat();
             try {
-                if (T_ConFigure.SfName.Trim().Length>0)
-                stitcher.Stitch(new VectorOfMat(new Mat[] { a.Mat, b.Mat }), outimg);
+                if (T_ConFigure.SfName.Trim().Length > 0)
+                    stitcher.Stitch(new VectorOfMat(new Mat[] { a.Mat, b.Mat }), outimg);
             } catch {
                 return bmp;
             }
@@ -109,11 +109,10 @@ namespace CsmImg
 
         public static string CleHole(Bitmap bmp)
         {
-            string file="";
+            string file = "";
             LicenseManager oLicenceManager = new LicenseManager();
             oLicenceManager.RegisterKEY(T_ConFigure.Imgid);
-            using (GdPictureImaging oGdPictureImaging = new GdPictureImaging())
-            {
+            using (GdPictureImaging oGdPictureImaging = new GdPictureImaging()) {
                 int imageId = oGdPictureImaging.CreateGdPictureImageFromBitmap(bmp);
                 if (oGdPictureImaging.GetStat() != GdPictureStatus.OK)
                     return file;
@@ -121,8 +120,7 @@ namespace CsmImg
                     GdPictureStatus status = oGdPictureImaging.RemoveHolePunch(imageId, HolePunchMargins.MarginAll);
                     if (status != GdPictureStatus.OK)
                         return file;
-                    else
-                    {
+                    else {
                         string path = @"c:\temp\cle";
                         if (!Directory.Exists(path))
                             Directory.CreateDirectory(path);
@@ -138,6 +136,39 @@ namespace CsmImg
                 }
             }
             return file;
+        }
+
+        public static void CleHole(List<string> strfile)
+        {
+            LicenseManager oLicenceManager = new LicenseManager();
+            oLicenceManager.RegisterKEY(T_ConFigure.Imgid);
+            int imageId = 0;
+            try {
+                using (GdPictureImaging oGdPictureImaging = new GdPictureImaging()) {
+                    for (int i = 0; i < strfile.Count; i++) {
+                        string file = strfile[i];
+                        imageId = oGdPictureImaging.CreateGdPictureImageFromFile(file);
+                        if (oGdPictureImaging.GetStat() != GdPictureStatus.OK)
+                            continue;
+                        else {
+                            GdPictureStatus status = oGdPictureImaging.RemoveHolePunch(imageId, HolePunchMargins.MarginAll);
+                            if (status != GdPictureStatus.OK)
+                                continue;
+                            else
+                            {
+                                string path = Path.Combine(Path.GetDirectoryName(file));
+                                if (!Directory.Exists(path))
+                                    Directory.CreateDirectory(path);
+                                status = oGdPictureImaging.SaveAsTIFF(imageId, file, TiffCompression.TiffCompressionJPEG);
+                                if (status != GdPictureStatus.OK) {
+                                    continue;
+                                }
+                            }
+                        }
+                    }
+                    oGdPictureImaging.ReleaseGdPictureImage(imageId);
+                }
+            } catch {}
 
         }
 

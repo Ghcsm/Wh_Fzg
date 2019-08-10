@@ -50,6 +50,8 @@
             this.sTabm1 = new DevComponents.DotNetBar.SuperTabItem();
             this.superTabControlPanel3 = new DevComponents.DotNetBar.SuperTabControlPanel();
             this.gr3 = new System.Windows.Forms.GroupBox();
+            this.rabqu = new System.Windows.Forms.RadioButton();
+            this.rabox = new System.Windows.Forms.RadioButton();
             this.dgvBoxWordGroup = new System.Windows.Forms.DataGridView();
             this.butBoxTj = new DevComponents.DotNetBar.ButtonX();
             this.txtbox2 = new System.Windows.Forms.TextBox();
@@ -69,8 +71,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.stat_fztj = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.rabox = new System.Windows.Forms.RadioButton();
-            this.rabqu = new System.Windows.Forms.RadioButton();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.groupBox1.SuspendLayout();
             this.gr2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.superTabControl1)).BeginInit();
@@ -98,9 +99,9 @@
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.dateTime_qishi_date);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Location = new System.Drawing.Point(9, 0);
+            this.groupBox1.Location = new System.Drawing.Point(9, 28);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(754, 426);
+            this.groupBox1.Size = new System.Drawing.Size(799, 522);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             // 
@@ -112,7 +113,7 @@
             this.gr2.Controls.Add(this.superTabControl1);
             this.gr2.Location = new System.Drawing.Point(6, 84);
             this.gr2.Name = "gr2";
-            this.gr2.Size = new System.Drawing.Size(742, 336);
+            this.gr2.Size = new System.Drawing.Size(787, 432);
             this.gr2.TabIndex = 26;
             this.gr2.TabStop = false;
             // 
@@ -142,7 +143,7 @@
             this.superTabControl1.ReorderTabsEnabled = true;
             this.superTabControl1.SelectedTabFont = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold);
             this.superTabControl1.SelectedTabIndex = 2;
-            this.superTabControl1.Size = new System.Drawing.Size(736, 316);
+            this.superTabControl1.Size = new System.Drawing.Size(781, 412);
             this.superTabControl1.TabFont = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.superTabControl1.TabIndex = 0;
             this.superTabControl1.Tabs.AddRange(new DevComponents.DotNetBar.BaseItem[] {
@@ -157,7 +158,7 @@
             this.superTabControlPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.superTabControlPanel1.Location = new System.Drawing.Point(0, 28);
             this.superTabControlPanel1.Name = "superTabControlPanel1";
-            this.superTabControlPanel1.Size = new System.Drawing.Size(736, 288);
+            this.superTabControlPanel1.Size = new System.Drawing.Size(781, 384);
             this.superTabControlPanel1.TabIndex = 1;
             this.superTabControlPanel1.TabItem = this.sTabm1;
             // 
@@ -194,7 +195,7 @@
             this.dgvWorkgroup.Name = "dgvWorkgroup";
             this.dgvWorkgroup.ReadOnly = true;
             this.dgvWorkgroup.RowTemplate.Height = 23;
-            this.dgvWorkgroup.Size = new System.Drawing.Size(736, 288);
+            this.dgvWorkgroup.Size = new System.Drawing.Size(781, 384);
             this.dgvWorkgroup.TabIndex = 27;
             // 
             // ID
@@ -283,7 +284,7 @@
             this.superTabControlPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.superTabControlPanel3.Location = new System.Drawing.Point(0, 28);
             this.superTabControlPanel3.Name = "superTabControlPanel3";
-            this.superTabControlPanel3.Size = new System.Drawing.Size(736, 288);
+            this.superTabControlPanel3.Size = new System.Drawing.Size(781, 384);
             this.superTabControlPanel3.TabIndex = 0;
             this.superTabControlPanel3.TabItem = this.sTabm3;
             // 
@@ -302,9 +303,32 @@
             this.gr3.Controls.Add(this.label3);
             this.gr3.Location = new System.Drawing.Point(3, 3);
             this.gr3.Name = "gr3";
-            this.gr3.Size = new System.Drawing.Size(730, 282);
+            this.gr3.Size = new System.Drawing.Size(775, 378);
             this.gr3.TabIndex = 0;
             this.gr3.TabStop = false;
+            // 
+            // rabqu
+            // 
+            this.rabqu.AutoSize = true;
+            this.rabqu.Location = new System.Drawing.Point(16, 69);
+            this.rabqu.Name = "rabqu";
+            this.rabqu.Size = new System.Drawing.Size(47, 16);
+            this.rabqu.TabIndex = 11;
+            this.rabqu.Text = "区号";
+            this.rabqu.UseVisualStyleBackColor = true;
+            this.rabqu.CheckedChanged += new System.EventHandler(this.rabqu_CheckedChanged);
+            // 
+            // rabox
+            // 
+            this.rabox.AutoSize = true;
+            this.rabox.Checked = true;
+            this.rabox.Location = new System.Drawing.Point(16, 32);
+            this.rabox.Name = "rabox";
+            this.rabox.Size = new System.Drawing.Size(47, 16);
+            this.rabox.TabIndex = 10;
+            this.rabox.TabStop = true;
+            this.rabox.Text = "盒号";
+            this.rabox.UseVisualStyleBackColor = true;
             // 
             // dgvBoxWordGroup
             // 
@@ -315,7 +339,7 @@
             this.dgvBoxWordGroup.Location = new System.Drawing.Point(243, 20);
             this.dgvBoxWordGroup.Name = "dgvBoxWordGroup";
             this.dgvBoxWordGroup.RowTemplate.Height = 23;
-            this.dgvBoxWordGroup.Size = new System.Drawing.Size(481, 256);
+            this.dgvBoxWordGroup.Size = new System.Drawing.Size(526, 352);
             this.dgvBoxWordGroup.TabIndex = 9;
             // 
             // butBoxTj
@@ -414,8 +438,9 @@
             this.txt_zh_time.Name = "txt_zh_time";
             this.txt_zh_time.Size = new System.Drawing.Size(119, 20);
             this.txt_zh_time.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.txt_zh_time.TabIndex = 25;
-            this.txt_zh_time.Text = "235959";
+            this.txt_zh_time.TabIndex = 4;
+            this.txt_zh_time.Text = "230000";
+            this.txt_zh_time.ValidatingType = typeof(System.DateTime);
             // 
             // txt_qi_time
             // 
@@ -430,8 +455,9 @@
             this.txt_qi_time.Name = "txt_qi_time";
             this.txt_qi_time.Size = new System.Drawing.Size(120, 20);
             this.txt_qi_time.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.txt_qi_time.TabIndex = 24;
+            this.txt_qi_time.TabIndex = 2;
             this.txt_qi_time.Text = "000000";
+            this.txt_qi_time.ValidatingType = typeof(System.DateTime);
             // 
             // but_datj_tj
             // 
@@ -452,7 +478,7 @@
             this.dateTime_zhongz_date.Location = new System.Drawing.Point(119, 55);
             this.dateTime_zhongz_date.Name = "dateTime_zhongz_date";
             this.dateTime_zhongz_date.Size = new System.Drawing.Size(114, 21);
-            this.dateTime_zhongz_date.TabIndex = 4;
+            this.dateTime_zhongz_date.TabIndex = 3;
             // 
             // label2
             // 
@@ -486,10 +512,10 @@
             // 
             this.stat_fztj.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1});
-            this.stat_fztj.Location = new System.Drawing.Point(0, 441);
+            this.stat_fztj.Location = new System.Drawing.Point(0, 565);
             this.stat_fztj.Name = "stat_fztj";
             this.stat_fztj.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.stat_fztj.Size = new System.Drawing.Size(771, 22);
+            this.stat_fztj.Size = new System.Drawing.Size(816, 22);
             this.stat_fztj.TabIndex = 1;
             this.stat_fztj.Text = "statusStrip1";
             // 
@@ -499,39 +525,25 @@
             this.toolStripStatusLabel1.Size = new System.Drawing.Size(44, 17);
             this.toolStripStatusLabel1.Text = " 就 绪 ";
             // 
-            // rabox
+            // toolStrip1
             // 
-            this.rabox.AutoSize = true;
-            this.rabox.Checked = true;
-            this.rabox.Location = new System.Drawing.Point(16, 32);
-            this.rabox.Name = "rabox";
-            this.rabox.Size = new System.Drawing.Size(47, 16);
-            this.rabox.TabIndex = 10;
-            this.rabox.TabStop = true;
-            this.rabox.Text = "盒号";
-            this.rabox.UseVisualStyleBackColor = true;
-            // 
-            // rabqu
-            // 
-            this.rabqu.AutoSize = true;
-            this.rabqu.Location = new System.Drawing.Point(16, 69);
-            this.rabqu.Name = "rabqu";
-            this.rabqu.Size = new System.Drawing.Size(47, 16);
-            this.rabqu.TabIndex = 11;
-            this.rabqu.Text = "区号";
-            this.rabqu.UseVisualStyleBackColor = true;
-            this.rabqu.CheckedChanged += new System.EventHandler(this.rabqu_CheckedChanged);
+            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(816, 25);
+            this.toolStrip1.TabIndex = 2;
+            this.toolStrip1.Text = "toolStrip1";
             // 
             // Frmfztj
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.ClientSize = new System.Drawing.Size(771, 463);
+            this.ClientSize = new System.Drawing.Size(816, 587);
+            this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.stat_fztj);
             this.Controls.Add(this.groupBox1);
             this.DoubleBuffered = true;
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Frmfztj";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -601,5 +613,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.RadioButton rabqu;
         private System.Windows.Forms.RadioButton rabox;
+        private System.Windows.Forms.ToolStrip toolStrip1;
     }
 }

@@ -85,8 +85,10 @@
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripGotoPage = new System.Windows.Forms.ToolStripButton();
             this.toolStripAutoSide = new System.Windows.Forms.ToolStripButton();
+            this.toolStripRound = new System.Windows.Forms.ToolStripButton();
             this.toolStripcopy = new System.Windows.Forms.ToolStripButton();
             this.toolStripPase = new System.Windows.Forms.ToolStripButton();
+            this.toolStripMagin = new System.Windows.Forms.ToolStripButton();
             this.toolStripFiltr = new System.Windows.Forms.ToolStripButton();
             this.toolProess = new System.Windows.Forms.ToolStripProgressBar();
             this.toolStripOcr = new System.Windows.Forms.ToolStripButton();
@@ -106,7 +108,8 @@
             this.dockSite7 = new DevComponents.DotNetBar.DockSite();
             this.dockSite3 = new DevComponents.DotNetBar.DockSite();
             this.odgInsterFile = new System.Windows.Forms.OpenFileDialog();
-            this.toolStripRound = new System.Windows.Forms.ToolStripButton();
+            this.toolStripYzidthsider = new System.Windows.Forms.ToolStripButton();
+            this.toolStripZwidthsider = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -508,9 +511,12 @@
             this.toolStripSeparator4,
             this.toolStripGotoPage,
             this.toolStripAutoSide,
+            this.toolStripYzidthsider,
+            this.toolStripZwidthsider,
             this.toolStripRound,
             this.toolStripcopy,
             this.toolStripPase,
+            this.toolStripMagin,
             this.toolStripFiltr,
             this.toolProess,
             this.toolStripOcr,
@@ -568,17 +574,33 @@
             this.toolStripAutoSide.Name = "toolStripAutoSide";
             this.toolStripAutoSide.Click += new System.EventHandler(this.toolStripAutoSide_Click);
             // 
+            // toolStripRound
+            // 
+            resources.ApplyResources(this.toolStripRound, "toolStripRound");
+            this.toolStripRound.Image = global::Csmdajc.Properties.Resources._25;
+            this.toolStripRound.Name = "toolStripRound";
+            this.toolStripRound.Click += new System.EventHandler(this.toolStripRound_Click);
+            // 
             // toolStripcopy
             // 
             resources.ApplyResources(this.toolStripcopy, "toolStripcopy");
+            this.toolStripcopy.Image = global::Csmdajc.Properties.Resources._27;
             this.toolStripcopy.Name = "toolStripcopy";
             this.toolStripcopy.Click += new System.EventHandler(this.toolStripcopy_Click);
             // 
             // toolStripPase
             // 
             resources.ApplyResources(this.toolStripPase, "toolStripPase");
+            this.toolStripPase.Image = global::Csmdajc.Properties.Resources._28;
             this.toolStripPase.Name = "toolStripPase";
             this.toolStripPase.Click += new System.EventHandler(this.toolStripPase_Click);
+            // 
+            // toolStripMagin
+            // 
+            resources.ApplyResources(this.toolStripMagin, "toolStripMagin");
+            this.toolStripMagin.Image = global::Csmdajc.Properties.Resources._29;
+            this.toolStripMagin.Name = "toolStripMagin";
+            this.toolStripMagin.Click += new System.EventHandler(this.toolStripMagin_Click);
             // 
             // toolStripFiltr
             // 
@@ -596,6 +618,7 @@
             // toolStripOcr
             // 
             resources.ApplyResources(this.toolStripOcr, "toolStripOcr");
+            this.toolStripOcr.Image = global::Csmdajc.Properties.Resources._26;
             this.toolStripOcr.Name = "toolStripOcr";
             this.toolStripOcr.Click += new System.EventHandler(this.toolStripOcr_Click);
             // 
@@ -727,11 +750,17 @@
             this.dockSite3.Name = "dockSite3";
             this.dockSite3.TabStop = false;
             // 
-            // toolStripRound
+            // toolStripYzidthsider
             // 
-            resources.ApplyResources(this.toolStripRound, "toolStripRound");
-            this.toolStripRound.Name = "toolStripRound";
-            this.toolStripRound.Click += new System.EventHandler(this.toolStripRound_Click);
+            resources.ApplyResources(this.toolStripYzidthsider, "toolStripYzidthsider");
+            this.toolStripYzidthsider.Name = "toolStripYzidthsider";
+            this.toolStripYzidthsider.Click += new System.EventHandler(this.toolStripYzidthsider_Click);
+            // 
+            // toolStripZwidthsider
+            // 
+            resources.ApplyResources(this.toolStripZwidthsider, "toolStripZwidthsider");
+            this.toolStripZwidthsider.Name = "toolStripZwidthsider";
+            this.toolStripZwidthsider.Click += new System.EventHandler(this.toolStripZwidthsider_Click);
             // 
             // FrmCheck
             // 
@@ -866,5 +895,8 @@
         private System.Windows.Forms.ToolStripButton toolStripcopy;
         private System.Windows.Forms.ToolStripButton toolStripPase;
         private System.Windows.Forms.ToolStripButton toolStripRound;
+        private System.Windows.Forms.ToolStripButton toolStripMagin;
+        private System.Windows.Forms.ToolStripButton toolStripYzidthsider;
+        private System.Windows.Forms.ToolStripButton toolStripZwidthsider;
     }
 }

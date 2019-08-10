@@ -254,6 +254,14 @@ namespace Csmtool
             else txtTjBoxsn2.Enabled = false;
             txtTjBoxsn1.Focus();
         }
+        private void butImgPath_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog flDialog=new FolderBrowserDialog();
+            if (flDialog.ShowDialog() == DialogResult.OK)
+                txtImgPath.Text = flDialog.SelectedPath;
+            else
+                txtImgPath.Text = "";
+        }
 
         //检测档案单工序状态
         void Quersql()
@@ -373,6 +381,7 @@ namespace Csmtool
         void CheckPage()
         {
             dgvTjdata.DataSource = null;
+            dgvTjdata.Rows.Clear();
             DataTable dt;
             if (rabtjBoxsn.Checked)
                 dt = Common.GetArchPage(txtTjBoxsn1.Text.Trim(), txtTjBoxsn2.Text.Trim());
@@ -382,13 +391,14 @@ namespace Csmtool
                 return;
 
             for (int i = 0; i < dt.Rows.Count; i++) {
+                Application.DoEvents();
                 string file = DESEncrypt.DesDecrypt(dt.Rows[i][0].ToString());
-                string page = dt.Rows[0][1].ToString();
+                string page = dt.Rows[i][1].ToString();
                 string boxsn = dt.Rows[i][2].ToString();
                 string arno = dt.Rows[i][3].ToString();
                 if (file.Trim().Length <= 0)
                     continue;
-                if (dgvTjdata.Rows.Count == 0) {
+                if (dgvTjdata.Columns.Count == 0) {
                     dgvTjdata.Columns.Add("boxsn", "盒号");
                     dgvTjdata.Columns.Add("archno", "卷号");
                     dgvTjdata.Columns.Add("imgpage", "图像页码");
@@ -459,6 +469,7 @@ namespace Csmtool
 
         private void buttjStart_Click(object sender, EventArgs e)
         {
+            dgvTjdata.DataSource = null;
             if (!istjtxt())
                 return;
             if (combtjSql.SelectedIndex == 3) {
@@ -553,7 +564,6 @@ namespace Csmtool
             Task.Run(() =>
             {
                 Toolskeys.dtkeys = Common.GetkeysInfo();
-
                 if (Toolskeys.dtkeys == null || Toolskeys.dtkeys.Rows.Count <= 0)
                     return;
                 for (int i = 0; i < Toolskeys.dtkeys.Rows.Count; i++) {
@@ -621,6 +631,7 @@ namespace Csmtool
             }
 
         }
+      
 
 
         bool Iskeystxt()
@@ -805,6 +816,23 @@ namespace Csmtool
             return str;
         }
 
+        string IsInikeysval2()
+        {
+            string str = "";
+            if (combKeyZdymodlx.Text.Trim().Length <= 0) {
+                MessageBox.Show("模块类型不能为空!");
+                combKeyZdymodlx.Focus();
+                return str;
+            }
+            if (combKeyzdyoperlx.Text.Trim().Length <= 0) {
+                MessageBox.Show("操作类型不能为空!");
+                combKeyzdyoperlx.Focus();
+                return str;
+            }
+            str = combKeyzdyTkey.SelectedIndex.ToString() + "-" + Toolskeys.KeyAscill.ToString();
+            return str;
+        }
+
         string Isinikey()
         {
             string str = "";
@@ -837,16 +865,30 @@ namespace Csmtool
             try {
                 Toolskeys.Lsinikey.Clear();
                 Toolskeys.LsiniCz.Clear();
-                Writeini.GetAllKeyValues(combKeyZdymodlx.Text.Trim(), out Toolskeys.LsiniCz, out Toolskeys.Lsinikey);
-                if (Toolskeys.Lsinikey.Count > 0 && Toolskeys.LsiniCz.Count > 0) {
+                Toolskeys.LsId.Clear();
+                DataTable dt = Common.GetOpenkey(combKeyZdymodlx.Text.Trim());
+                if (dt == null || dt.Rows.Count <= 0)
+                    return;
+                for (int i = 0; i < dt.Rows.Count; i++) {
+                    string strid = dt.Rows[i][0].ToString();
+                    string strkey = dt.Rows[i][2].ToString();
+                    string strnum = dt.Rows[i][3].ToString();
+                    if (strid.Trim().Length > 0 && strkey.Trim().Length > 0 && strnum.Trim().Length > 0) {
+                        Toolskeys.Lsinikey.Add(strkey);
+                        Toolskeys.LsiniCz.Add(strnum);
+                        Toolskeys.LsId.Add(strid);
+                    }
+                }
+
+                if (Toolskeys.Lsinikey.Count > 0 && Toolskeys.LsiniCz.Count > 0 && Toolskeys.LsId.Count > 0) {
                     LbKey.Items.Clear();
-                    for (int i = 0; i < Toolskeys.LsiniCz.Count; i++) {
-                        string str = Toolskeys.LsiniCz[i].ToString().Replace("V", "");
+                    for (int i = 0; i < Toolskeys.Lsinikey.Count; i++) {
+                        string str = Toolskeys.Lsinikey[i].ToString().Replace("V", "");
                         int x = Toolskeys.LskeyOpernum.IndexOf(str);
                         if (x < 0)
                             continue;
                         string s = Toolskeys.LskeyOper[x];
-                        string c = Toolskeys.Lsinikey[i];
+                        string c = Toolskeys.LsiniCz[i];
                         string[] KeyV = c.Split(new char[] { '-' });
                         if (KeyV[0].Trim().ToString() == "1") {
                             c = "Ctrl+";
@@ -875,7 +917,6 @@ namespace Csmtool
                     }
                 }
 
-
             } catch {
                 MessageBox.Show("读取快捷键失败!");
             }
@@ -889,9 +930,9 @@ namespace Csmtool
             if (combKeyzdyoperlx.Text.Length <= 0 || Toolskeys.LsiniCz.Count <= 0)
                 return;
             string str = "V" + Toolskeys.LskeyOpernum[combKeyzdyoperlx.SelectedIndex];
-            int x = Toolskeys.LsiniCz.IndexOf(str);
+            int x = Toolskeys.Lsinikey.IndexOf(str);
             if (x >= 0) {
-                str = Toolskeys.Lsinikey[x];
+                str = Toolskeys.LsiniCz[x];
                 string[] KeyV = str.Split(new char[] { '-' });
                 if (KeyV[0].Trim().ToString() == "1") {
                     str = "Ctrl+";
@@ -920,30 +961,28 @@ namespace Csmtool
             }
         }
 
+        //保存快捷键
         void Savekey(string keys, string val)
         {
             try {
-                if (Toolskeys.Lsinikey.IndexOf(val) >= 0) {
-                    if (MessageBox.Show("此快捷键已注册，是否强制重新注册？", "警告", MessageBoxButtons.OKCancel,
-                            MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.OK) {
-                        Writeini.Delkeyval(combKeyZdymodlx.Text.Trim(), keys);
-                        if (Writeini.Wirtekey(combKeyZdymodlx.Text.Trim(), keys, val)) {
+                int x = Toolskeys.LsiniCz.IndexOf(val);
+                if (x >= 0) {
+                    string id = Toolskeys.LsId[x];
+                    if (!chkkeys.Checked) {
+                        if (MessageBox.Show("此快捷键已注册，是否强制重新注册？", "警告", MessageBoxButtons.OKCancel,
+                                MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.OK) {
+                            Common.UpdatekeyOper(combKeyZdymodlx.Text.Trim(), keys, val, id);
                             MessageBox.Show("注册成功!");
                             txtKeysZdyKeys.Focus();
                             return;
                         }
-                        MessageBox.Show("注册失败,或请重启程序!");
                     }
+                    return;
                 }
-                else {
-                    if (Writeini.Wirtekey(combKeyZdymodlx.Text.Trim(), keys, val)) {
-                        MessageBox.Show("注册成功!");
-                        txtKeysZdyKeys.Focus();
-                        return;
-                    }
-
-                    MessageBox.Show("注册失败,或请重启程序!");
-                }
+                Common.InsterkeyOper(combKeyZdymodlx.Text.Trim(), keys, val);
+                MessageBox.Show("注册成功!");
+                txtKeysZdyKeys.Focus();
+                return;
             } catch (Exception e) {
                 MessageBox.Show("注册失败:" + e.ToString());
             } finally {
@@ -972,7 +1011,7 @@ namespace Csmtool
             string str = Isinikey().Trim();
             if (str.Length <= 0)
                 return;
-            Writeini.Delkeyval(combKeyZdymodlx.Text.Trim(), str);
+            Common.Keysdelvale(combKeyZdymodlx.Text.Trim(), str);
             Getinikeyval();
             MessageBox.Show("清除成功!");
             txtKeysZdyKeys.Focus();
@@ -984,9 +1023,10 @@ namespace Csmtool
             ftp = new HFTP();
             GetModul();
             Getkeys();
-            string str = Path.Combine(Application.StartupPath, "CsmKeyVal.ini");
-            Writeini.Fileini = str;
             combKeyzdyTkey.SelectedIndex = 0;
+            //string str = Path.Combine(Application.StartupPath, "CsmKeyVal.ini");
+            //Writeini.Fileini = str;
+
         }
         #region imgcombe
 
@@ -1142,21 +1182,21 @@ namespace Csmtool
 
         private void buttools_Click(object sender, EventArgs e)
         {
-            if (T_User.UserId != 1)
-            {
+            if (T_User.UserId != 1) {
                 MessageBox.Show("此功能只能管理员使用!");
                 txttoolsB1.Focus();
                 return;
             }
             if (!istxtqit())
                 return;
-            Common.SetNewboxsn(txttoolsB1.Text.Trim(),txttoolsB2.Text.Trim());
+            Common.SetNewboxsn(txttoolsB1.Text.Trim(), txttoolsB2.Text.Trim());
             MessageBox.Show("更改完成");
 
         }
 
-        #endregion
 
+        #endregion
+     
     }
 
 }

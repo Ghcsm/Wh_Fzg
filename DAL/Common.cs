@@ -124,15 +124,13 @@ namespace DAL
             string strSql = "select count(*) from 目录表 where Archid=@arid and 标题='目录'";
             SqlParameter p1 = new SqlParameter("@arid", arid);
             object obj = SQLHelper.ExecScalar(strSql, p1);
-            if (obj == null)
-            {
-                strSql= "INSERT INTO dbo.目录表( 标题, 目录种类, 业务ID, 起始页码, Archid )VALUES  ( '目录', '目录', '1',1, " + arid + ")";
+            if (obj == null) {
+                strSql = "INSERT INTO dbo.目录表( 标题, 目录种类, 业务ID, 起始页码, Archid )VALUES  ( '目录', '目录', '1',1, " + arid + ")";
                 SQLHelper.ExecScalar(strSql);
                 return;
             }
             int count = Convert.ToInt32(obj.ToString());
-            if (count <= 0)
-            {
+            if (count <= 0) {
                 strSql = "INSERT INTO dbo.目录表( 标题, 目录种类, 业务ID, 起始页码, Archid )VALUES  ( '目录', '目录', '1',1, " + arid + ")";
                 SQLHelper.ExecScalar(strSql);
                 return;
@@ -236,12 +234,14 @@ namespace DAL
             if (chk)
                 strSq = "update M_IMAGEFILE set ArchXqStat=@zt,ArchLx=@lx where Boxsn>=@b1 and Boxsn<=@b2 ";
             else
-                strSq = "update M_IMAGEFILE set ArchXqStat=@zt,ArchLx=@lx where Boxsn>=@b1 and Boxsn<=@b2 and CHECKED IS null or  LEN(CHECKED)<1";
+                strSq = "update M_IMAGEFILE set ArchXqStat=@zt,ArchLx=@lx where Boxsn>=@b1 and Boxsn<=@b2 and CHECKED<>1";
             SqlParameter p1 = new SqlParameter("@b1", b1);
             SqlParameter p2 = new SqlParameter("@b2", b2);
             SqlParameter p3 = new SqlParameter("@zt", lx);
             SqlParameter p4 = new SqlParameter("@lx", zt);
             SQLHelper.ExecScalar(strSq, p1, p2, p3, p4);
+            string str = "设置小区状态范围:" + b1 + "-" + b2 + " 小区状态:" + zt + " 类型:" + lx + " 更新状态:" + chk;
+            Writelog(0, str);
         }
 
         public static DataTable GetOthersys()
@@ -1160,7 +1160,7 @@ namespace DAL
         //东丽区专用
         public static DataTable GetcheckInfo(int archid)
         {
-            string strSql = "select 案卷类型,登记类型,收件编号,权利人,抵押人,坐落,地号,产权证号,宗地号,不动产单元号,审批日期,档案手续 from 信息表 where Archid=@arid";
+            string strSql = "select 登记类型,收件编号,权利人,坐落,抵押人,地号,产权证号,宗地号,不动产单元号,审批日期,案卷类型,档案手续 from 信息表 where Archid=@arid order by 档案手续";
             SqlParameter p1 = new SqlParameter("@arid", archid);
             DataTable dt = SQLHelper.ExcuteTable(strSql, p1);
             return dt;
@@ -1195,12 +1195,14 @@ namespace DAL
 
         public static void SetInfoPages(string arid, string str, string page, string counpage)
         {
-            string strSql = "update M_IMAGEFILE set PAGES=@p,ArchPage=@gpage,ArchTmpPage=@page where id=@arid and ArchState<=3";
+            string strSql = "update M_IMAGEFILE set PAGES=@p,ArchPage=@gpage,ArchTmpPage=@page where id=@arid ";
             SqlParameter p1 = new SqlParameter("@gpage", str);
             SqlParameter p2 = new SqlParameter("@page", page);
             SqlParameter p3 = new SqlParameter("@arid", arid);
             SqlParameter p4 = new SqlParameter("@p", counpage);
             SQLHelper.ExecScalar(strSql, p1, p2, p3, p4);
+            string str1 = "修改Archid" + arid + "页码为：" + counpage;
+            Writelog(0, str1);
         }
         public static DataTable GetInfoPages(string arid)
         {
@@ -1325,6 +1327,16 @@ namespace DAL
             SqlParameter p1 = new SqlParameter("@qu", qu);
             SqlParameter p2 = new SqlParameter("@houseid", houseid);
             DataTable dt = SQLHelper.ExcuteTable(strSql, p1, p2);
+            return dt;
+        }
+
+        public static DataTable GetDataImportxls(int houseid, string b1, string b2)
+        {
+            string strSql = "select * From V_getTjd where  boxsn>=@b1 and boxsn<=@b2 and 档案手续=1 order by boxsn";
+            SqlParameter p1 = new SqlParameter("@b1", b1);
+            SqlParameter p2 = new SqlParameter("@houseid", houseid);
+            SqlParameter p3 = new SqlParameter("@b2", b2);
+            DataTable dt = SQLHelper.ExcuteTable(strSql, p1, p2, p3);
             return dt;
         }
 
@@ -1817,6 +1829,59 @@ namespace DAL
             SqlParameter p3 = new SqlParameter("@key", num);
             SQLHelper.ExecScalar(strSql, p1, p2, p3);
         }
+        public static void Keysdelvale(string modul, string oper)
+        {
+
+            string strSql = "delete from M_OperterKeyUserid where Moudle=@mod  and OperKey=@key";
+            SqlParameter p1 = new SqlParameter("@mod", modul);
+            SqlParameter p2 = new SqlParameter("@key", oper);
+            SQLHelper.ExecScalar(strSql, p1, p2);
+
+        }
+
+
+        public static void UpdateInsterkeyOper(string module, string openkey, string keynum, string id)
+        {
+            string strSql = "";
+            strSql = "delete from M_OperterKeyUserid where id=@id";
+            SqlParameter p1 = new SqlParameter("@id", id);
+            SQLHelper.ExecScalar(strSql);
+            strSql = "Insert into M_OperterKeyUserid (Moudle,OperKey,OperkeyNum,Userid) values (@mod,@oper,@key,@userid)";
+            p1 = new SqlParameter("@mod", module);
+            SqlParameter p2 = new SqlParameter("@oper", openkey);
+            SqlParameter p3 = new SqlParameter("@key", keynum);
+            SqlParameter p4 = new SqlParameter("@key", T_User.UserId);
+            SQLHelper.ExecScalar(strSql, p1, p2, p3, p4);
+        }
+
+        public static void InsterkeyOper(string module, string openkey, string keynum)
+        {
+            string strSql = "Insert into M_OperterKeyUserid (Moudle,OperKey,OperkeyNum,Userid) values (@mod,@oper,@key,@userid)";
+            SqlParameter p1 = new SqlParameter("@mod", module);
+            SqlParameter p2 = new SqlParameter("@oper", openkey);
+            SqlParameter p3 = new SqlParameter("@key", keynum);
+            SqlParameter p4 = new SqlParameter("@userid", T_User.UserId);
+            SQLHelper.ExecScalar(strSql, p1, p2, p3, p4);
+        }
+
+        public static void UpdatekeyOper(string module, string openkey, string keynum, string id)
+        {
+            string strSql = "update M_OperterKeyUserid set Moudle=@mod,OperKey=@oper,OperkeyNum=@key where id=@id";
+            SqlParameter p1 = new SqlParameter("@mod", module);
+            SqlParameter p2 = new SqlParameter("@oper", openkey);
+            SqlParameter p3 = new SqlParameter("@key", keynum);
+            SqlParameter p4 = new SqlParameter("@id", id);
+            SQLHelper.ExecScalar(strSql, p1, p2, p3, p4);
+        }
+
+        public static DataTable GetOpenkey(string module)
+        {
+            string strSql = "select * from M_OperterKeyUserid where  Moudle=@mod and Userid=@usid";
+            SqlParameter p1 = new SqlParameter("@usid", T_User.UserId);
+            SqlParameter p2 = new SqlParameter("@mod", module);
+            DataTable dt = SQLHelper.ExcuteTable(strSql, p1, p2);
+            return dt;
+        }
 
 
         public static DataTable GetQuzt(string qu)
@@ -2245,7 +2310,7 @@ namespace DAL
             SqlParameter p1 = new SqlParameter("@b2", newb);
             SqlParameter p2 = new SqlParameter("@b1", oldb);
             SqlParameter p3 = new SqlParameter("@hid", V_HouseSetCs.Houseid);
-            SQLHelper.ExecScalar(strSql, p1, p2,p3);
+            SQLHelper.ExecScalar(strSql, p1, p2, p3);
             string str = "更改盒号:" + oldb + "-->为新盒号:" + newb;
             Writelog(0, str);
         }

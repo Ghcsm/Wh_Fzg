@@ -290,6 +290,26 @@ namespace HLjscom
             }
         }
 
+        public void _ImgMagni(bool tf)
+        {
+            if (_Imageview.Image == null) {
+                return;
+            }
+            if (tf == true) {
+                ImageViewerMagnifyGlassInteractiveMode magnifyGlassInteractiveMode = new ImageViewerMagnifyGlassInteractiveMode();
+                _Imageview.InteractiveModes.BeginUpdate();
+                _Imageview.InteractiveModes.Clear();
+                _Imageview.InteractiveModes.Add(magnifyGlassInteractiveMode);
+            }
+            else {
+                ImageViewerNoneInteractiveMode noneInteractiveMode = new ImageViewerNoneInteractiveMode();
+                _Imageview.InteractiveModes.BeginUpdate();
+                _Imageview.InteractiveModes.Clear();
+                _Imageview.InteractiveModes.Add(noneInteractiveMode);
+            }
+            _Imageview.InteractiveModes.EndUpdate();
+        }
+
 
         //微调
         public void _RoteimgWt(ImageViewer img, int x)
@@ -911,6 +931,47 @@ namespace HLjscom
             }
         }
 
+
+        public void SetImgWidthSide(int xy)
+        {
+            int x, y;
+            if (_Imageview.Image != null) {
+                RasterImage rasterImage = _Imageview.Image.Clone();
+                int w = rasterImage.Width;
+                int h = rasterImage.Height;
+                SizeCommand sizeCommand = new SizeCommand();
+                sizeCommand.Flags = RasterSizeFlags.None;
+                sizeCommand.Width = w + 18;
+                sizeCommand.Height = h;
+                sizeCommand.Run(_Imageview.Image);
+                if (xy == 0) {
+                    x = 0;
+                    y = 0;
+                }
+                else {
+                    x = 18;
+                    y = 0;
+                }
+                new FillCommand
+                {
+                    Color = RasterColor.FromRgb(16777215)
+                }.Run(_Imageview.Image);
+                CombineFastCommand Command = new CombineFastCommand();
+                Command.DestinationRectangle = new LeadRect(
+                  x,
+                  y,
+                  rasterImage.Width,
+                  rasterImage.Height);
+                Command.SourcePoint = LeadPoint.Empty;
+                Command.DestinationImage = _Imageview.Image;
+                Command.Flags = CombineFastCommandFlags.OperationAdd | CombineFastCommandFlags.Destination0;
+                Command.Run(rasterImage);
+                _Imageview.Image.MakeRegionEmpty();
+
+            }
+        }
+
+
         public void _Filterbot()
         {
             try {
@@ -1012,26 +1073,26 @@ namespace HLjscom
         }
 
 
-        public void HufuImg(string file)
+        public void HufuImg(string file, int page)
         {
             using (RasterCodecs _Codef = new RasterCodecs()) {
-                RasterImage _imagepx = _Codef.Load(file, 0, CodecsLoadByteOrder.BgrOrGrayOrRomm, CrrentPage, CrrentPage).Clone();
+                RasterImage _imagepx = _Codef.Load(file, 0, CodecsLoadByteOrder.BgrOrGrayOrRomm, page, page).Clone();
                 int bit = _imagepx.BitsPerPixel;
                 if (bit != 1) {
                     if (bit != 8) {
                         _Codefile.Options.Jpeg2000.Save.CompressionRatio = (float)Factor;
                         _Codefile.Options.Ecw.Save.QualityFactor = Factor;
-                        _Codefile.Save(_imagepx, Filename, RasterImageFormat.TifJpeg, 24, 1, 1, CrrentPage, CodecsSavePageMode.Replace);
+                        _Codefile.Save(_imagepx, Filename, RasterImageFormat.TifJpeg, 24, 1, 1, page, CodecsSavePageMode.Replace);
                     }
                     else {
                         _Codefile.Options.Jpeg.Save.QualityFactor = Factor;
-                        _Codefile.Save(_imagepx, Filename, RasterImageFormat.TifJpeg, 8, 1, 1, CrrentPage, CodecsSavePageMode.Replace);
+                        _Codefile.Save(_imagepx, Filename, RasterImageFormat.TifJpeg, 8, 1, 1, page, CodecsSavePageMode.Replace);
                     }
                 }
                 else {
-                    _Codefile.Save(_imagepx, Filename, RasterImageFormat.CcittGroup4, bit, 1, 1, CrrentPage, CodecsSavePageMode.Replace);
+                    _Codefile.Save(_imagepx, Filename, RasterImageFormat.CcittGroup4, bit, 1, 1, page, CodecsSavePageMode.Replace);
                 }
-                _Gotopage(CrrentPage);
+                _Gotopage(page);
             }
         }
 
@@ -1722,6 +1783,87 @@ namespace HLjscom
             }
         }
 
+
+
+        public void _SplitImgScan(string yfile, out List<string> filetmp)
+        {
+            try {
+                RasterImage _imagepx;
+                filetmp = new List<string>();
+                using (RasterCodecs _Codef = new RasterCodecs()) {
+                    CodecsImageInfo info = _Codef.GetInformation(yfile, true);
+                    for (int i = 1; i <= info.TotalPages; i++) {
+                        _imagepx = _Codef.Load(yfile, 0, CodecsLoadByteOrder.BgrOrGrayOrRomm, i, i);
+
+                        string pathdir = Path.Combine(Path.GetDirectoryName(yfile), "cle");
+                        if (!Directory.Exists(pathdir)) {
+                            Directory.CreateDirectory(pathdir);
+                        }
+                        string newfile = Path.Combine(pathdir, i.ToString().PadLeft(4, '0') + ".jpg");
+                        try {
+                            if (File.Exists(newfile))
+                                File.Delete(newfile);
+                        } catch { }
+                        filetmp.Add(newfile);
+                        int bit = _imagepx.BitsPerPixel;
+                        if (bit != 1) {
+                            if (bit != 8) {
+                                _Codef.Options.Jpeg.Save.QualityFactor = Factor;
+                                _Codef.Save(_imagepx, newfile, RasterImageFormat.TifJpeg, bit, 1, 1, i, CodecsSavePageMode.Append);
+
+                            }
+                            else {
+                                _Codef.Options.Jpeg.Save.QualityFactor = Factor;
+                                _Codef.Save(_imagepx, newfile, RasterImageFormat.TifJpeg, 8, 1, 1, i, CodecsSavePageMode.Append);
+                            }
+                        }
+                        else {
+                            _Codef.Save(_imagepx, newfile, RasterImageFormat.CcittGroup4, 1, 1, 1, -1, CodecsSavePageMode.Append);
+                        }
+                    }
+                }
+            } catch {
+                filetmp = null;
+            }
+        }
+
+
+        public string MergeImg(List<string> file)
+        {
+            try {
+                RasterImage _imagepx;
+                string newfile = "";
+                using (RasterCodecs _Codef = new RasterCodecs()) {
+                    for (int i = 0; i <= file.Count; i++) {
+                        string yfile = file[i];
+                        _imagepx = _Codef.Load(yfile, 0, CodecsLoadByteOrder.BgrOrGrayOrRomm, 1, 1);
+                        newfile = Path.Combine(Path.GetDirectoryName(yfile), "ScanTemp.Tif");
+                        int bit = _imagepx.BitsPerPixel;
+                        if (bit != 1) {
+                            if (bit != 8) {
+                                _Codef.Options.Jpeg.Save.QualityFactor = Factor;
+                                _Codef.Save(_imagepx, newfile, RasterImageFormat.TifJpeg, bit, 1, 1, -1, CodecsSavePageMode.Append);
+                            }
+                            else {
+                                _Codef.Options.Jpeg.Save.QualityFactor = Factor;
+                                _Codef.Save(_imagepx, newfile, RasterImageFormat.TifJpeg, 8, 1, 1, -1, CodecsSavePageMode.Append);
+                            }
+                        }
+                        else {
+                            _Codef.Save(_imagepx, newfile, RasterImageFormat.CcittGroup4, 1, 1, 1, -1, CodecsSavePageMode.Append);
+                        }
+
+                        try {
+                            File.Delete(yfile);
+                        } catch { }
+                    }
+                }
+                return newfile;
+            } catch {
+                return "";
+            }
+        }
+
         private void MySetCapability(TwainCapabilityType capType, TwainItemType itemType, object data)
         {
             using (TwainCapability twainCapability = new TwainCapability()) {
@@ -1917,9 +2059,10 @@ namespace HLjscom
             }
         }
         //排序
-        public bool _OrderSave(int tagpage, int regpage, string oldfile, string _path, Dictionary<int, string> Pabc, Dictionary<int, int> Pnumber, Dictionary<int, string> fuhao)
+        public bool _OrderSave(int tagpage, int regpage, string oldfile, string _path, Dictionary<int, string> Pabc, Dictionary<int, int> Pnumber, Dictionary<int, string> fuhao, out string newkey)
         {
             int pagecoun = 0;
+            newkey = "";
             try {
                 if (Pabc.Count >= 1) {
                     int zimu_a = (int)Convert.ToByte('a');
@@ -1930,6 +2073,10 @@ namespace HLjscom
                         foreach (var a in abckeys) {
                             pagecoun += 1;
                             OrderSave(a, pagecoun, oldfile, _path);
+                            if (newkey.Trim().Length <= 0)
+                                newkey += pagecoun.ToString() + ":" + zimu;
+                            else
+                                newkey += ";" + pagecoun.ToString() + ":" + zimu;
                         }
                         oldpage = zimu_a + abc;
                     }
@@ -1942,6 +2089,10 @@ namespace HLjscom
                             if (Pnumber[k].Equals(i)) {
                                 pagecoun += 1;
                                 OrderSave(k, pagecoun, oldfile, _path);
+                                if (newkey.Trim().Length <= 0)
+                                    newkey += pagecoun.ToString() + ":" + i.ToString();
+                                else
+                                    newkey += ";" + pagecoun.ToString() + ":" + i.ToString();
                                 if (fuhao.Count > 0) {
                                     for (int t = 0; t < fh; t++) {
                                         string str = i + "-" + (t + 1);
@@ -1953,6 +2104,10 @@ namespace HLjscom
                                             pagecoun += 1;
                                             OrderSave(oldpage, pagecoun, oldfile, _path);
                                             fuhao.Remove(oldpage);
+                                            if (newkey.Trim().Length <= 0)
+                                                newkey += pagecoun.ToString() + ":" + str;
+                                            else
+                                                newkey += ";" + pagecoun.ToString() + ":" + str;
                                         }
                                     }
                                 }
@@ -1969,6 +2124,10 @@ namespace HLjscom
                             if (Pnumber[k].Equals(i)) {
                                 pagecoun += 1;
                                 OrderSave(k, pagecoun, oldfile, _path);
+                                if (newkey.Trim().Length <= 0)
+                                    newkey += pagecoun.ToString() + ":" + i.ToString();
+                                else
+                                    newkey += ";" + pagecoun.ToString() + ":" + i.ToString();
                                 if (fuhao.Count > 0) {
                                     for (int t = 0; t < fh; t++) {
                                         string str = i + "-" + (t + 1);
@@ -1980,6 +2139,10 @@ namespace HLjscom
                                             pagecoun += 1;
                                             OrderSave(oldpage, pagecoun, oldfile, _path);
                                             fuhao.Remove(oldpage);
+                                            if (newkey.Trim().Length <= 0)
+                                                newkey += pagecoun.ToString() + ":" + str;
+                                            else
+                                                newkey += ";" + pagecoun.ToString() + ":" + str;
                                         }
                                     }
                                 }
@@ -3101,31 +3264,51 @@ namespace HLjscom
         }
 
         //查找超出登记页码
-        private List<string> addpagedy()
+        private Dictionary<int, string> addpagedy()
         {
-            List<string> tmp = new List<string>();
+            Dictionary<int, string> tmp = new Dictionary<int, string>();
+            List<string> tmpval = new List<string>();
             if (TagPage == 0) {
                 foreach (var item in _PageFuhao.Values) {
                     if (Fuhao.IndexOf(item) < 0)
-                        tmp.Add(item.ToString());
+                        tmpval.Add(item.ToString());
                 }
                 foreach (var item in _PageNumber.Values) {
                     if (item > RegPage - _PageAbc.Count - _PageFuhao.Count) {
-                        tmp.Add(item.ToString());
+                        tmpval.Add(item.ToString());
                     }
                 }
             }
             else {
                 foreach (var item in _PageFuhao.Values) {
                     if (Fuhao.IndexOf(item) < 0)
-                        tmp.Add(item.ToString());
+                        tmpval.Add(item.ToString());
                 }
                 foreach (var item in _PageNumber.Values) {
                     if (item > RegPage - _PageAbc.Count - _PageFuhao.Count + TagPage) {
-                        tmp.Add(item.ToString());
+                        tmpval.Add(item.ToString());
                     }
                 }
             }
+            for (int i = 0; i < tmpval.Count; i++) {
+                string s = tmpval[i];
+                var abckeys = _PageAbc.Where(q => q.Value == s).Select(q => q.Key);
+                foreach (var a in abckeys) {
+                    tmp.Add(a, s);
+                    continue;
+                }
+                abckeys = _PageFuhao.Where(q => q.Value == s).Select(q => q.Key);
+                foreach (var a in abckeys) {
+                    tmp.Add(a, s);
+                    continue;
+                }
+                if (s.IndexOf('-') < 0)
+                {
+                    int k = _PageNumber.First(q => q.Value == Convert.ToInt32(s)).Key;
+                    tmp.Add(k, s);
+                }
+            }
+
             if (dianjicount >= tmp.Count) {
                 dianjicount = 0;
             }
@@ -3144,8 +3327,32 @@ namespace HLjscom
                         dianjicount = 0;
                     }
                     if (tmp.Count - 1 >= dianjicount) {
-                        MessageBox.Show(string.Format("第{0}页重复", tmp.Values.First()));
+                        MessageBox.Show(string.Format("第{0}页重复", tmp.ElementAt(dianjicount).Value.ToString()));
                         int page = Convert.ToInt32(tmp.ElementAt(dianjicount).Key);
+                        _Gotopage(page);
+                        dianjicount++;
+                        return false;
+                    }
+                }
+                Dictionary<int, string> tmp1 = addpagedy();
+                {
+                    if (dianjicount >= tmp1.Count) {
+                        dianjicount = 0;
+                    }
+                    if (tmp1.Count - 1 >= dianjicount)
+                    {
+                        string s = "";
+                        foreach (var s1 in tmp1.Values)
+                        {
+                            if (s1.Trim().Length<=0)
+                                continue;
+                            if (s.Trim().Length <= 0)
+                                s += s1;
+                            else
+                                s += "," + s1;
+                        }
+                        MessageBox.Show(string.Format("第{0}页超出", s));
+                        int page = Convert.ToInt32(tmp1.ElementAt(dianjicount).Key);
                         _Gotopage(page);
                         dianjicount++;
                         return false;
@@ -3154,21 +3361,7 @@ namespace HLjscom
                 List<string> lstmp = addpageqs().ToList();
                 if (lstmp.Count > 0) {
                     MessageBox.Show("缺少页码：" + string.Join(",", lstmp.ToArray()));
-                    lstmp = addpagedy().ToList();
-                    {
-                        if (lstmp.Count > 0) {
-                            MessageBox.Show("超出登记页码:" + string.Join(",", lstmp.ToArray()));
-                            return false;
-                        }
-                    }
                     return false;
-                }
-                lstmp = addpagedy().ToList();
-                {
-                    if (lstmp.Count > 0) {
-                        MessageBox.Show("超出登记页码：" + string.Join(",", lstmp.ToArray()));
-                        return false;
-                    }
                 }
                 return true;
             }

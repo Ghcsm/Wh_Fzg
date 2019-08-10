@@ -116,7 +116,7 @@ namespace CsmCon
         }
         //东丽区专用  ywid
         private string ywid = "0";
-        public void LoadContents(int archid, ListViewEx lsv, bool ch)
+        public void LoadContents(int archid, ListViewEx lsv, bool ch,int index)
         {
             if (archid <= 0)
                 return;
@@ -153,6 +153,7 @@ namespace CsmCon
                     }
                 }
                 if (lsv.Items.Count > 0) {
+                    if (index<=0)
                     lsv.Items[0].Selected = true;
                 }
 
@@ -177,7 +178,7 @@ namespace CsmCon
                 if (dt == null || dt.Rows.Count <= 0) {
                     Common.InsterMl(archid);
                     loadcon = false;
-                    LoadContents(archid, lsv, ch);
+                    LoadContents(archid, lsv, ch,0);
                     return;
                 }
                 int i = 1;
@@ -540,9 +541,14 @@ namespace CsmCon
 
         private void Cb_MouseClick(object sender, MouseEventArgs e)
         {
-            keydown = 1;
-            ComboBox cob = (ComboBox)sender;
-            txtcomb = cob.Text.Trim();
+            try
+            {
+                keydown = 1;
+                ComboBox cob = (ComboBox)sender;
+                txtcomb = cob.Text.Trim();
+            }
+            catch 
+            {}
         }
 
 
@@ -601,7 +607,10 @@ namespace CsmCon
         private string txtcomb = "";
         private void Cb_KeyDown(object sender, KeyEventArgs e)
         {
-            try {
+            try
+            {
+                if (e.KeyCode == Keys.ControlKey || e.KeyValue == 32)
+                    return;
                 keydown = 1;
                 ComboBox cob = (ComboBox)sender;
                 txtcomb = cob.Text.Trim();
@@ -619,7 +628,7 @@ namespace CsmCon
         private void Cb_KeyUp(object sender, KeyEventArgs e)
         {
             try {
-                if (e.KeyValue >= 37 && e.KeyValue <= 40)
+                if (e.KeyValue >= 37 && e.KeyValue <= 40 || e.KeyCode==Keys.ControlKey)
                     return;
                 ComboBox comb = (ComboBox)sender;
                 comb.Items.Clear();

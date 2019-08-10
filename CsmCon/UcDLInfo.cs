@@ -18,50 +18,61 @@ namespace CsmCon
             InitializeComponent();
         }
 
-        private void Cle()
+        public void Cleinfo()
         {
-            foreach (Control c in groupPanel1.Controls) {
-                if (c is TextBox || c is ComboBox) {
-                    c.Text = "";
-                }
+            try
+            {
+                dgvInfo.Columns.Clear();
+                dgvInfo.Rows.Clear();
             }
+            catch 
+            {}
+           
         }
 
-        private void SetInfo(int id, string str)
+        public void Getywid(string s)
         {
-            foreach (Control c in groupPanel1.Controls) {
-                if (c is TextBox || c is ComboBox) {
-                    if (c.Tag.ToString() == id.ToString()) {
-                        c.Text = str;
-                    }
-                }
-            }
+            labywid.Text = string.Format("第{0}手", s);
         }
 
-        public void LoadInfo(int arid, string sx)
+        public void LoadInfo(int arid)
         {
-            Cle();
+            dgvInfo.Columns.Clear();
+            dgvInfo.Rows.Clear();
             DataTable dt = Common.GetcheckInfo(arid);
             if (dt == null || dt.Rows.Count <= 0)
                 return;
             labcount.Text = string.Format("共{0}手", dt.Rows.Count.ToString());
-            labcrr.Text = string.Format("当前第{0}手", 0);
-            string s = "档案手续='" + sx+"'";
-            DataTable dt1 = null;
             try {
-                dt1 = dt.Select(s).CopyToDataTable();
-            } catch {
-                MessageBox.Show("此手信息获取不存在!");
-                return;
-            }
-            labcrr.Text = string.Format("当前第{0}手", sx);
-            for (int i = 0; i < dt1.Columns.Count; i++) {
-                string s1 = dt1.Rows[0][i].ToString();
-                if (s1.Trim().Length <= 0)
-                    continue;
-                SetInfo((i+1), s1);
-            }
+                if (dgvInfo.Columns.Count <= 0) {
+                    dgvInfo.Columns.Add("name", "名称");
+                    for (int i = 0; i < 9; i++) {
+                        dgvInfo.Rows.Add();
+                    }
+                    dgvInfo.Rows[0].Cells[0].Value = "登记类型";
+                    dgvInfo.Rows[1].Cells[0].Value = "收件编号";
+                    dgvInfo.Rows[2].Cells[0].Value = "权利人";
+                    dgvInfo.Rows[3].Cells[0].Value = "坐落";
+                    dgvInfo.Rows[4].Cells[0].Value = "抵押人";
+                    dgvInfo.Rows[5].Cells[0].Value = "地号";
+                    dgvInfo.Rows[6].Cells[0].Value = "产权证号";
+                    dgvInfo.Rows[7].Cells[0].Value = "宗地号";
+                    dgvInfo.Rows[8].Cells[0].Value = "不动产单元号";
+                    dgvInfo.Rows[9].Cells[0].Value = "审批日期";
 
+                }
+                for (int t = 0; t < dt.Rows.Count; t++) {
+
+                    dgvInfo.Columns.Add("ywid", ("业务ID:" + (t + 1).ToString()));
+                    for (int i = 0; i < 10; i++) {
+                        string str = dt.Rows[t][i].ToString();
+                        dgvInfo.Rows[i].Cells[t + 1].Value = str;
+                    }
+                }
+
+            } catch {
+                MessageBox.Show("信息加载失败，请重新加载!");
+            }
 
         }
     }

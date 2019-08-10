@@ -1,4 +1,5 @@
 ﻿using CsmCon;
+using CsmImg;
 using DAL;
 using HLFtp;
 using HLjscom;
@@ -6,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
+using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -255,16 +257,13 @@ namespace Csmdasm
                 string[] arrPage = PageIndexInfo.Split(';');
                 if (arrPage == null || arrPage.Length <= 0)
                     return;
-                foreach (string i in arrPage)
-                {
+                foreach (string i in arrPage) {
                     string[] s = i.Split(':');
                     LisPage.Add(s[1].ToString());
                 }
                 string[] pagegl = pageg.Split(';');
-                foreach (string  i in pagegl)
-                {
-                    if (LisPage.IndexOf(i) < 0)
-                    {
+                foreach (string i in pagegl) {
+                    if (LisPage.IndexOf(i) < 0) {
                         if (Qspages.Trim().Length <= 0)
                             Qspages += i.ToString();
                         else {
@@ -272,7 +271,7 @@ namespace Csmdasm
                         }
                     }
                 }
-                for (int i = 1; i < ClsTwain.RegPage-pagegl.Length; i++) {
+                for (int i = 1; i < ClsTwain.RegPage - pagegl.Length; i++) {
                     if (LisPage.IndexOf(i.ToString()) < 0) {
                         if (Qspages.Trim().Length <= 0)
                             Qspages += i.ToString();
@@ -388,11 +387,23 @@ namespace Csmdasm
             }));
         }
 
-        private void FtpUp(string filetmp, string archpos, int maxpage, int arid, int regpage)
+        private void FtpUp(string filetmp, string archpos, int maxpage, int arid, int regpage,bool bl)
         {
             try {
                 if (File.Exists(filetmp)) {
                     Common.WiteUpTask(arid, archpos, T_ConFigure.ScanTempFile, (int)T_ConFigure.ArchStat.扫描完, maxpage, filetmp, "0");
+                    if (bl)
+                    {
+                        List<string> lsfile = new List<string>();
+                        Himg._SplitImgScan(filetmp,out lsfile);
+                        ClsImg.CleHole(lsfile);
+                        string f = Himg.MergeImg(lsfile).Trim();
+                        if (f.Length > 0)
+                        {
+                            File.Delete(filetmp);
+                            filetmp = f;
+                        }
+                    }
                     if (T_ConFigure.FtpStyle == 1) {
                         string sourcefile = Path.Combine(T_ConFigure.FtpTmp, T_ConFigure.TmpScan, archpos, T_ConFigure.ScanTempFile);
                         string goalfile = Path.Combine(T_ConFigure.gArchScanPath, archpos, T_ConFigure.ScanTempFile);
@@ -610,8 +621,9 @@ namespace Csmdasm
             int maxpage = ClsTwain.MaxPage;
             int arid = ClsTwain.Archid;
             int regpage = ClsTwain.RegPage;
+            bool blimg = chkImg.Checked;
             Cledata();
-            Task.Run(new Action(() => { FtpUp(filetmp, archpos, maxpage, arid, regpage); }));
+            Task.Run(new Action(() => { FtpUp(filetmp, archpos, maxpage, arid, regpage, blimg); }));
             gArch.LvData.Focus();
         }
 
@@ -747,7 +759,19 @@ namespace Csmdasm
                     ClsTwain.lsSqlOper.Add(key);
                     ClsTwain.lssqlOpernum.Add(val);
                 }
-                Writeini.GetAllKeyValues(this.Text, out ClsTwain.Lsinikeys, out ClsTwain.lsinival);
+                dt = Common.GetOpenkey(this.Text);
+                if (dt == null || dt.Rows.Count <= 0)
+                    return;
+                for (int i = 0; i < dt.Rows.Count; i++) {
+                    string strid = dt.Rows[i][0].ToString();
+                    string strkey = dt.Rows[i][2].ToString();
+                    string strnum = dt.Rows[i][3].ToString();
+                    if (strid.Trim().Length > 0 && strkey.Trim().Length > 0 && strnum.Trim().Length > 0) {
+                        ClsTwain.Lsinikeys.Add(strkey);
+                        ClsTwain.lsinival.Add(strnum);
+                        // ClsTwain.LsId.Add(strid);
+                    }
+                }
                 SettxtTag();
             });
         }
@@ -783,65 +807,70 @@ namespace Csmdasm
 
         void KeysDownEve(string key)
         {
-            bool bl = false;
-            switch (key) {
-                case "双面选择":
-                    if (chkDoublePages.Checked == false) {
-                        chkDoublePages.Checked = true;
-                    }
-                    else
-                        chkDoublePages.Checked = false;
+            string[] str = key.Split(':');
+            for (int i = 0; i < str.Length; i++)
+            {
+                string k = str[i];
+                bool bl = false;
+                switch (k) {
+                    case "双面选择":
+                        if (chkDoublePages.Checked == false) {
+                            chkDoublePages.Checked = true;
+                        }
+                        else
+                            chkDoublePages.Checked = false;
 
-                    bl = true;
-                    break;
-                case "纵向":
-                    rdVerPages.Checked = true;
-                    bl = true;
-                    break;
-                case "横向":
-                    rdHorpages.Checked = true;
-                    bl = true;
-                    break;
-                case "A3":
-                    comPagesSize.SelectedIndex = 2;
-                    bl = true;
-                    break;
-                case "A4":
-                    comPagesSize.SelectedIndex = 1;
-                    bl = true;
-                    break;
-                case "B5":
-                    comPagesSize.SelectedIndex = 0;
-                    bl = true;
-                    break;
-                case "彩色":
-                    rdColorRed.Checked = true;
-                    bl = true;
-                    break;
-                case "灰度":
-                    rdColorGray.Checked = true;
-                    bl = true;
-                    break;
-                case "黑白":
-                    rdColorWithe.Checked = true;
-                    bl = true;
-                    break;
-                case "ADF":
-                    rdFeedAuto.Checked = true;
-                    bl = true;
-                    break;
-                case "平板":
-                    rdFeedFlat.Checked = true;
-                    bl = true;
-                    break;
-            }
-            if (bl)
-                return;
-            foreach (var item in toolStrip1.Items) {
-                if (item is ToolStripButton) {
-                    ToolStripButton t = (ToolStripButton)item;
-                    if (t.Text == key) {
-                        t.PerformClick();
+                        bl = true;
+                        break;
+                    case "纵向":
+                        rdVerPages.Checked = true;
+                        bl = true;
+                        break;
+                    case "横向":
+                        rdHorpages.Checked = true;
+                        bl = true;
+                        break;
+                    case "A3":
+                        comPagesSize.SelectedIndex = 2;
+                        bl = true;
+                        break;
+                    case "A4":
+                        comPagesSize.SelectedIndex = 1;
+                        bl = true;
+                        break;
+                    case "B5":
+                        comPagesSize.SelectedIndex = 0;
+                        bl = true;
+                        break;
+                    case "彩色":
+                        rdColorRed.Checked = true;
+                        bl = true;
+                        break;
+                    case "灰度":
+                        rdColorGray.Checked = true;
+                        bl = true;
+                        break;
+                    case "黑白":
+                        rdColorWithe.Checked = true;
+                        bl = true;
+                        break;
+                    case "ADF":
+                        rdFeedAuto.Checked = true;
+                        bl = true;
+                        break;
+                    case "平板":
+                        rdFeedFlat.Checked = true;
+                        bl = true;
+                        break;
+                }
+                if (bl)
+                    return;
+                foreach (var item in toolStrip1.Items) {
+                    if (item is ToolStripButton) {
+                        ToolStripButton t = (ToolStripButton)item;
+                        if (t.Text == k) {
+                            t.PerformClick();
+                        }
                     }
                 }
             }

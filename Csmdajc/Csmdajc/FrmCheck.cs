@@ -29,10 +29,10 @@ namespace Csmdajc
         UcContents ucContents1;
         UcDLInfo ucdL;
         private int archzt = 0;
-        private string sx = "0";
         private Pubcls pub;
         private MouseEventArgs exArgs;
         private int Round = 0;
+        private int ImgSize = 0;
         private void Init()
         {
             try {
@@ -43,7 +43,7 @@ namespace Csmdajc
                     Dock = DockStyle.Fill
                 };
                 gArch.LineLoadFile += Garch_LineLoadFile;
-                gArch.LineClickLoadInfo += GArch_LineClickLoadInfo;
+               // gArch.LineClickLoadInfo += GArch_LineClickLoadInfo;
                 gr1.Controls.Add(gArch);
                 UcContents.Modulename = this.Text;
                 UcContents.ArchId = Clscheck.Archid;
@@ -85,7 +85,7 @@ namespace Csmdajc
             ucdL = new UcDLInfo();
             ucdL.Dock = DockStyle.Fill;
             gr1_2.Controls.Add(ucdL);
-            ucdL.LoadInfo(Clscheck.Archid, sx);
+            ucdL.LoadInfo(Clscheck.Archid);
         }
 
 
@@ -98,15 +98,8 @@ namespace Csmdajc
             } catch { }
             if (p > 0 && p <= Clscheck.MaxPage)
                 Himg._Gotopage(p);
-            if (Clscheck.Archid<= 0)
-                return;
             string ywid = ucContents1.ywid;
-            if (sx != ywid)
-            {
-                sx = ywid;
-                ucdL.LoadInfo(Clscheck.Archid, sx);
-            }
-
+            ucdL.Getywid(ywid);
         }
 
         private void FrmIndex_Load(object sender, EventArgs e)
@@ -115,7 +108,7 @@ namespace Csmdajc
                 Init();
                 Himg._Instimagtwain(this.ImgView, this.Handle, 0);
                 Himg._Rectang(true);
-                Writeini.Fileini = Path.Combine(Application.StartupPath, "Csmkeyval.ini");
+                //Writeini.Fileini = Path.Combine(Application.StartupPath, "Csmkeyval.ini");
                 Getsqlkey();
                 pub = new Pubcls();
                 Startocr();
@@ -167,6 +160,11 @@ namespace Csmdajc
 
         #region ClickEve
 
+        private void toolStripMagin_Click(object sender, EventArgs e)
+        {
+            ImgSize = 1;
+            Himg._ImgMagni(true);
+        }
         private void toolStripRound_Click(object sender, EventArgs e)
         {
             Round = 1;
@@ -176,7 +174,7 @@ namespace Csmdajc
         {
             string txt = Himg._OcrRecttxt();
             if (txt.Length > 0) {
-                txt = (RegexCh(txt)).Replace("天津市","").Replace("东丽区","");
+                txt = (RegexCh(txt)).Replace("天津市", "").Replace("东丽区", "");
                 ucContents1.Setocrtxt(txt);
             }
         }
@@ -193,15 +191,19 @@ namespace Csmdajc
         private void ImgView_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
+            {
+                ImgSize = 0;
+                Himg._ImgMagni(false);
                 toolStripCut_Click(sender, e);
-            else
-            if (Round == 0)
-                Himg._Rectang(true);
-            else {
-                Himg._RectangYuan(true);
-                Round = 0;
             }
-
+            else if (ImgSize == 0) {
+                if (Round == 0)
+                    Himg._Rectang(true);
+                else {
+                    Himg._RectangYuan(true);
+                    Round = 0;
+                }
+            }
         }
         private void ImgView_MouseDoubleClick(object sender, MouseEventArgs e)
         {
@@ -383,6 +385,15 @@ namespace Csmdajc
         {
             Himg._Sizeimge(1);
         }
+        private void toolStripYzidthsider_Click(object sender, EventArgs e)
+        {
+            Himg.SetImgWidthSide(0);
+        }
+
+        private void toolStripZwidthsider_Click(object sender, EventArgs e)
+        {
+            Himg.SetImgWidthSide(1);
+        }
 
         private void toolStripSamllPage_Click(object sender, EventArgs e)
         {
@@ -443,6 +454,7 @@ namespace Csmdajc
         private void ImgView_MouseClick(object sender, MouseEventArgs e)
         {
             exArgs = e;
+
         }
 
         private void FrmIndex_KeyDown(object sender, KeyEventArgs e)
@@ -501,7 +513,19 @@ namespace Csmdajc
                     Clscheck.lsSqlOper.Add(key);
                     Clscheck.lssqlOpernum.Add(val);
                 }
-                Writeini.GetAllKeyValues(this.Text, out Clscheck.Lsinikeys, out Clscheck.lsinival);
+                dt = Common.GetOpenkey(this.Text);
+                if (dt == null || dt.Rows.Count <= 0)
+                    return;
+                for (int i = 0; i < dt.Rows.Count; i++) {
+                    string strid = dt.Rows[i][0].ToString();
+                    string strkey = dt.Rows[i][2].ToString();
+                    string strnum = dt.Rows[i][3].ToString();
+                    if (strid.Trim().Length > 0 && strkey.Trim().Length > 0 && strnum.Trim().Length > 0) {
+                        Clscheck.Lsinikeys.Add(strkey);
+                        Clscheck.lsinival.Add(strnum);
+                        // ClsTwain.LsId.Add(strid);
+                    }
+                }
                 SettxtTag();
             });
         }
@@ -560,23 +584,28 @@ namespace Csmdajc
 
         void KeysDownEve(string key)
         {
-            bool bl = false;
-            foreach (var item in toolstripmain1.Items) {
-                if (item is ToolStripButton) {
-                    ToolStripButton t = (ToolStripButton)item;
-                    if (t.Text == key) {
-                        t.PerformClick();
-                        bl = true;
-                    }
-                }
-            }
-            if (!bl) {
-                foreach (var item in toolstripmain2.Items) {
+            string[] str = key.Split(':');
+            for (int i = 0; i < str.Length; i++)
+            {
+                string s = str[i];
+                bool bl = false;
+                foreach (var item in toolstripmain1.Items) {
                     if (item is ToolStripButton) {
                         ToolStripButton t = (ToolStripButton)item;
-                        if (t.Text == key) {
+                        if (t.Text == s) {
                             t.PerformClick();
                             bl = true;
+                        }
+                    }
+                }
+                if (!bl) {
+                    foreach (var item in toolstripmain2.Items) {
+                        if (item is ToolStripButton) {
+                            ToolStripButton t = (ToolStripButton)item;
+                            if (t.Text == s) {
+                                t.PerformClick();
+                                bl = true;
+                            }
                         }
                     }
                 }
@@ -698,7 +727,8 @@ namespace Csmdajc
                     Himg.Filename = Clscheck.ScanFilePath;
                     Himg.LoadPage(pages);
                     ReadDict();
-                   // LoadContents();
+                    LoadContents();
+                    ucdL.LoadInfo(Clscheck.Archid);
                     Getuser();
                     Ispages();
                     return;
@@ -909,7 +939,7 @@ namespace Csmdajc
         {
             this.Invoke(new Action(() =>
             {
-                sx = "0";
+                ucdL.Cleinfo();
                 Himg.Filename = "";
                 Himg.RegPage = 0;
                 ImgView.Image = null;
@@ -1024,11 +1054,6 @@ namespace Csmdajc
                 Common.Writelog(Clscheck.Archid, "质检退回失败!");
             }
         }
-
-
-
-
-
 
         #endregion
 

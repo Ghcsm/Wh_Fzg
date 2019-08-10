@@ -13,6 +13,7 @@ namespace DAL
             List<string> Lsinikeys, List<string> lssqlOpernum, List<string> lsSqlOper, out string strkey)
         {
             strkey = "";
+
             if (lsinival.Count <= 0 || Lsinikeys.Count <= 0 || lssqlOpernum.Count <= 0 || lsSqlOper.Count <= 0)
                 return;
             StringBuilder keyValue = new StringBuilder
@@ -44,17 +45,28 @@ namespace DAL
             else if (e.KeyValue == 13 || e.KeyValue == 27 || e.KeyValue == 32 || e.KeyValue == 46)
                 keyValue.Append(e.KeyValue.ToString());
             string str = keyValue.ToString();
+
             int x = lsinival.IndexOf(str);
-            if (x >= 0) {
-                str = Lsinikeys[x].Remove(0, 1);
-                x = lssqlOpernum.IndexOf(str);
-            }
-            if (x >= 0) {
-                str = lsSqlOper[x];
-                strkey = str;
+            if (x < 0)
+                return;
+                for (int i = x; i < lsinival.Count; i++) {
+                   if (keyValue.ToString()!= lsinival[i].ToString())
+                       continue;
+                if (x >= 0) {
+                    str = Lsinikeys[i].Remove(0, 1);
+                    x = lssqlOpernum.IndexOf(str);
+                }
+                if (x >= 0) {
+                    str = lsSqlOper[x];
+                    if (strkey.Trim().Length <= 0)
+                        strkey = str;
+                    else
+                        strkey += ":" + str;
+                }
             }
             return;
         }
+
 
 
 

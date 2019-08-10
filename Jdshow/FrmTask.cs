@@ -166,12 +166,12 @@ namespace Jdshow
                 Dictionary<int, int> num = new Dictionary<int, int>();
                 Dictionary<int, string> abc = new Dictionary<int, string>();
                 Dictionary<int, string> fuhao = new Dictionary<int, string>();
-                ReadDict(Convert.ToInt32(archid), out num, out abc, out fuhao,out pageinfo);
+                ReadDict(Convert.ToInt32(archid), out num, out abc, out fuhao);
                 string time = DateTime.Now.ToString("yyyyMMddHHmmssfff");
                 string IndexFileName = time + Common.TifExtension;
                 string RemoteDir = IndexFileName.Substring(0, 8);
                 string LocalIndexFile = Path.Combine(@T_ConFigure.LocalTempPath, IndexFileName);
-                if (!Himg._OrderSave(tagpage,Convert.ToInt32(pages), filepath, LocalIndexFile, abc, num, fuhao)) {
+                if (!Himg._OrderSave(tagpage,Convert.ToInt32(pages), filepath, LocalIndexFile, abc, num, fuhao,out pageinfo)) {
                     return;
                 }
                 if (ftp.SaveRemoteFileUp(T_ConFigure.FtpArchIndex, RemoteDir, LocalIndexFile, IndexFileName)) {
@@ -205,9 +205,8 @@ namespace Jdshow
         }
 
 
-        public void ReadDict(int arid, out Dictionary<int, int> number,out Dictionary<int, string> abc,out Dictionary<int, string> fuhao,out string pageinfo)
+        public void ReadDict(int arid, out Dictionary<int, int> number,out Dictionary<int, string> abc,out Dictionary<int, string> fuhao)
         {
-            pageinfo = "";
             number = new Dictionary<int, int>();
             abc = new Dictionary<int, string>();
             fuhao = new Dictionary<int, string>();
@@ -230,14 +229,6 @@ namespace Jdshow
                                 fuhao.Add(Convert.ToInt32(str[0]), str[1].ToString());
                             else
                                 abc.Add(Convert.ToInt32(str[0]), str[1].ToString());
-
-                            if (str[1].ToString()=="-9999")
-                                continue;
-                            if (pageinfo.Trim().Length<=0)
-                                pageinfo += str[0].ToString() + ":" + str[1].ToString();
-                            else
-                                pageinfo += ";" + str[0].ToString() + ":" + str[1].ToString();
-
                         }
                     }
                 }

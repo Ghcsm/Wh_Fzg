@@ -119,6 +119,7 @@
             this.dockSite7 = new DevComponents.DotNetBar.DockSite();
             this.dockSite3 = new DevComponents.DotNetBar.DockSite();
             this.oFdInsterFile = new System.Windows.Forms.OpenFileDialog();
+            this.chkImg = new System.Windows.Forms.CheckBox();
             this.dockSite9.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bar2)).BeginInit();
             this.bar2.SuspendLayout();
@@ -150,7 +151,7 @@
             // 
             this.toolTop.Location = new System.Drawing.Point(0, 0);
             this.toolTop.Name = "toolTop";
-            this.toolTop.Size = new System.Drawing.Size(1350, 25);
+            this.toolTop.Size = new System.Drawing.Size(1360, 25);
             this.toolTop.TabIndex = 0;
             // 
             // dotManger
@@ -173,9 +174,9 @@
             this.dockSite4.AccessibleRole = System.Windows.Forms.AccessibleRole.Window;
             this.dockSite4.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.dockSite4.DocumentDockContainer = new DevComponents.DotNetBar.DocumentDockContainer();
-            this.dockSite4.Location = new System.Drawing.Point(0, 708);
+            this.dockSite4.Location = new System.Drawing.Point(0, 752);
             this.dockSite4.Name = "dockSite4";
-            this.dockSite4.Size = new System.Drawing.Size(1350, 0);
+            this.dockSite4.Size = new System.Drawing.Size(1360, 0);
             this.dockSite4.TabIndex = 4;
             this.dockSite4.TabStop = false;
             // 
@@ -185,10 +186,10 @@
             this.dockSite9.Controls.Add(this.bar2);
             this.dockSite9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dockSite9.DocumentDockContainer = new DevComponents.DotNetBar.DocumentDockContainer(new DevComponents.DotNetBar.DocumentBaseContainer[] {
-            ((DevComponents.DotNetBar.DocumentBaseContainer)(new DevComponents.DotNetBar.DocumentBarContainer(this.bar2, 955, 683)))}, DevComponents.DotNetBar.eOrientation.Horizontal);
+            ((DevComponents.DotNetBar.DocumentBaseContainer)(new DevComponents.DotNetBar.DocumentBarContainer(this.bar2, 965, 727)))}, DevComponents.DotNetBar.eOrientation.Horizontal);
             this.dockSite9.Location = new System.Drawing.Point(395, 25);
             this.dockSite9.Name = "dockSite9";
-            this.dockSite9.Size = new System.Drawing.Size(955, 683);
+            this.dockSite9.Size = new System.Drawing.Size(965, 727);
             this.dockSite9.TabIndex = 9;
             this.dockSite9.TabStop = false;
             // 
@@ -219,7 +220,7 @@
             this.bar2.Location = new System.Drawing.Point(0, 0);
             this.bar2.Name = "bar2";
             this.bar2.SelectedDockTab = 0;
-            this.bar2.Size = new System.Drawing.Size(955, 683);
+            this.bar2.Size = new System.Drawing.Size(965, 727);
             this.bar2.Stretch = true;
             this.bar2.Style = DevComponents.DotNetBar.eDotNetBarStyle.Office2003;
             this.bar2.TabIndex = 0;
@@ -233,7 +234,7 @@
             this.panelDock2.DisabledBackColor = System.Drawing.Color.Empty;
             this.panelDock2.Location = new System.Drawing.Point(3, 28);
             this.panelDock2.Name = "panelDock2";
-            this.panelDock2.Size = new System.Drawing.Size(949, 652);
+            this.panelDock2.Size = new System.Drawing.Size(959, 696);
             this.panelDock2.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.panelDock2.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground;
             this.panelDock2.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
@@ -259,7 +260,7 @@
             this.splitCont1.Panel2.Controls.Add(this.grDock);
             this.splitCont1.Panel2.Controls.Add(this.grBottom);
             this.splitCont1.Panel2.Controls.Add(this.grTop);
-            this.splitCont1.Size = new System.Drawing.Size(949, 625);
+            this.splitCont1.Size = new System.Drawing.Size(959, 669);
             this.splitCont1.SplitterDistance = 143;
             this.splitCont1.TabIndex = 1;
             // 
@@ -269,6 +270,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.gr2.BackColor = System.Drawing.Color.Transparent;
+            this.gr2.Controls.Add(this.chkImg);
             this.gr2.Controls.Add(this.grPageInfo);
             this.gr2.Controls.Add(this.grScanMode);
             this.gr2.Controls.Add(this.grDpi);
@@ -279,7 +281,7 @@
             this.gr2.Controls.Add(this.chkDoublePages);
             this.gr2.Location = new System.Drawing.Point(3, 6);
             this.gr2.Name = "gr2";
-            this.gr2.Size = new System.Drawing.Size(137, 616);
+            this.gr2.Size = new System.Drawing.Size(137, 660);
             this.gr2.TabIndex = 2;
             this.gr2.TabStop = false;
             this.gr2.Text = "扫描参数";
@@ -289,7 +291,7 @@
             this.grPageInfo.Controls.Add(this.labPagesSize);
             this.grPageInfo.Controls.Add(this.labColor);
             this.grPageInfo.Controls.Add(this.labDpi);
-            this.grPageInfo.Location = new System.Drawing.Point(7, 508);
+            this.grPageInfo.Location = new System.Drawing.Point(7, 546);
             this.grPageInfo.Name = "grPageInfo";
             this.grPageInfo.Size = new System.Drawing.Size(126, 104);
             this.grPageInfo.TabIndex = 7;
@@ -326,7 +328,7 @@
             // grScanMode
             // 
             this.grScanMode.Controls.Add(this.comBoxScanMode);
-            this.grScanMode.Location = new System.Drawing.Point(7, 449);
+            this.grScanMode.Location = new System.Drawing.Point(7, 483);
             this.grScanMode.Name = "grScanMode";
             this.grScanMode.Size = new System.Drawing.Size(127, 50);
             this.grScanMode.TabIndex = 6;
@@ -368,7 +370,7 @@
             this.grDpi.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.grDpi.Controls.Add(this.comBoxDpi);
-            this.grDpi.Location = new System.Drawing.Point(7, 386);
+            this.grDpi.Location = new System.Drawing.Point(7, 418);
             this.grDpi.Name = "grDpi";
             this.grDpi.Size = new System.Drawing.Size(120, 55);
             this.grDpi.TabIndex = 5;
@@ -592,9 +594,9 @@
             this.toollabchecktime,
             this.toollabenter,
             this.toollabentertime});
-            this.statuser.Location = new System.Drawing.Point(0, 603);
+            this.statuser.Location = new System.Drawing.Point(0, 647);
             this.statuser.Name = "statuser";
-            this.statuser.Size = new System.Drawing.Size(802, 22);
+            this.statuser.Size = new System.Drawing.Size(812, 22);
             this.statuser.TabIndex = 3;
             this.statuser.Text = "statusStrip1";
             // 
@@ -654,7 +656,7 @@
             this.grDock.Controls.Add(this.ImgView);
             this.grDock.Location = new System.Drawing.Point(0, 42);
             this.grDock.Name = "grDock";
-            this.grDock.Size = new System.Drawing.Size(802, 523);
+            this.grDock.Size = new System.Drawing.Size(812, 567);
             this.grDock.TabIndex = 2;
             this.grDock.TabStop = false;
             // 
@@ -668,7 +670,7 @@
             this.ImgView.ItemPadding = new System.Windows.Forms.Padding(1);
             this.ImgView.Location = new System.Drawing.Point(3, 17);
             this.ImgView.Name = "ImgView";
-            this.ImgView.Size = new System.Drawing.Size(796, 503);
+            this.ImgView.Size = new System.Drawing.Size(806, 547);
             this.ImgView.TabIndex = 0;
             this.ImgView.ViewHorizontalAlignment = Leadtools.Controls.ControlAlignment.Center;
             this.ImgView.Click += new System.EventHandler(this.ImgView_Click);
@@ -678,9 +680,9 @@
             this.grBottom.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.grBottom.Controls.Add(this.labQsPages);
-            this.grBottom.Location = new System.Drawing.Point(2, 559);
+            this.grBottom.Location = new System.Drawing.Point(2, 603);
             this.grBottom.Name = "grBottom";
-            this.grBottom.Size = new System.Drawing.Size(802, 41);
+            this.grBottom.Size = new System.Drawing.Size(812, 41);
             this.grBottom.TabIndex = 1;
             this.grBottom.TabStop = false;
             // 
@@ -704,7 +706,7 @@
             this.grTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.grTop.Location = new System.Drawing.Point(0, 0);
             this.grTop.Name = "grTop";
-            this.grTop.Size = new System.Drawing.Size(802, 42);
+            this.grTop.Size = new System.Drawing.Size(812, 42);
             this.grTop.TabIndex = 0;
             this.grTop.TabStop = false;
             this.grTop.Text = "基本信息";
@@ -786,7 +788,7 @@
             this.toolProess});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(949, 27);
+            this.toolStrip1.Size = new System.Drawing.Size(959, 27);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -949,10 +951,10 @@
             this.dockSite1.Controls.Add(this.bar1);
             this.dockSite1.Dock = System.Windows.Forms.DockStyle.Left;
             this.dockSite1.DocumentDockContainer = new DevComponents.DotNetBar.DocumentDockContainer(new DevComponents.DotNetBar.DocumentBaseContainer[] {
-            ((DevComponents.DotNetBar.DocumentBaseContainer)(new DevComponents.DotNetBar.DocumentBarContainer(this.bar1, 392, 683)))}, DevComponents.DotNetBar.eOrientation.Horizontal);
+            ((DevComponents.DotNetBar.DocumentBaseContainer)(new DevComponents.DotNetBar.DocumentBarContainer(this.bar1, 392, 727)))}, DevComponents.DotNetBar.eOrientation.Horizontal);
             this.dockSite1.Location = new System.Drawing.Point(0, 25);
             this.dockSite1.Name = "dockSite1";
-            this.dockSite1.Size = new System.Drawing.Size(395, 683);
+            this.dockSite1.Size = new System.Drawing.Size(395, 727);
             this.dockSite1.TabIndex = 1;
             this.dockSite1.TabStop = false;
             // 
@@ -982,7 +984,7 @@
             this.bar1.LayoutType = DevComponents.DotNetBar.eLayoutType.DockContainer;
             this.bar1.Location = new System.Drawing.Point(0, 0);
             this.bar1.Name = "bar1";
-            this.bar1.Size = new System.Drawing.Size(392, 683);
+            this.bar1.Size = new System.Drawing.Size(392, 727);
             this.bar1.Stretch = true;
             this.bar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.Office2003;
             this.bar1.TabIndex = 0;
@@ -995,7 +997,7 @@
             this.panelDock1.DisabledBackColor = System.Drawing.Color.Empty;
             this.panelDock1.Location = new System.Drawing.Point(3, 23);
             this.panelDock1.Name = "panelDock1";
-            this.panelDock1.Size = new System.Drawing.Size(386, 657);
+            this.panelDock1.Size = new System.Drawing.Size(386, 701);
             this.panelDock1.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.panelDock1.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground;
             this.panelDock1.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
@@ -1009,7 +1011,7 @@
             this.gr1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gr1.Location = new System.Drawing.Point(0, 0);
             this.gr1.Name = "gr1";
-            this.gr1.Size = new System.Drawing.Size(386, 657);
+            this.gr1.Size = new System.Drawing.Size(386, 701);
             this.gr1.TabIndex = 0;
             this.gr1.TabStop = false;
             // 
@@ -1024,9 +1026,9 @@
             this.dockSite2.AccessibleRole = System.Windows.Forms.AccessibleRole.Window;
             this.dockSite2.Dock = System.Windows.Forms.DockStyle.Right;
             this.dockSite2.DocumentDockContainer = new DevComponents.DotNetBar.DocumentDockContainer();
-            this.dockSite2.Location = new System.Drawing.Point(1350, 25);
+            this.dockSite2.Location = new System.Drawing.Point(1360, 25);
             this.dockSite2.Name = "dockSite2";
-            this.dockSite2.Size = new System.Drawing.Size(0, 683);
+            this.dockSite2.Size = new System.Drawing.Size(0, 727);
             this.dockSite2.TabIndex = 2;
             this.dockSite2.TabStop = false;
             // 
@@ -1034,9 +1036,9 @@
             // 
             this.dockSite8.AccessibleRole = System.Windows.Forms.AccessibleRole.Window;
             this.dockSite8.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.dockSite8.Location = new System.Drawing.Point(0, 708);
+            this.dockSite8.Location = new System.Drawing.Point(0, 752);
             this.dockSite8.Name = "dockSite8";
-            this.dockSite8.Size = new System.Drawing.Size(1350, 0);
+            this.dockSite8.Size = new System.Drawing.Size(1360, 0);
             this.dockSite8.TabIndex = 8;
             this.dockSite8.TabStop = false;
             // 
@@ -1046,7 +1048,7 @@
             this.dockSite5.Dock = System.Windows.Forms.DockStyle.Left;
             this.dockSite5.Location = new System.Drawing.Point(0, 0);
             this.dockSite5.Name = "dockSite5";
-            this.dockSite5.Size = new System.Drawing.Size(0, 708);
+            this.dockSite5.Size = new System.Drawing.Size(0, 752);
             this.dockSite5.TabIndex = 5;
             this.dockSite5.TabStop = false;
             // 
@@ -1054,9 +1056,9 @@
             // 
             this.dockSite6.AccessibleRole = System.Windows.Forms.AccessibleRole.Window;
             this.dockSite6.Dock = System.Windows.Forms.DockStyle.Right;
-            this.dockSite6.Location = new System.Drawing.Point(1350, 0);
+            this.dockSite6.Location = new System.Drawing.Point(1360, 0);
             this.dockSite6.Name = "dockSite6";
-            this.dockSite6.Size = new System.Drawing.Size(0, 708);
+            this.dockSite6.Size = new System.Drawing.Size(0, 752);
             this.dockSite6.TabIndex = 6;
             this.dockSite6.TabStop = false;
             // 
@@ -1066,7 +1068,7 @@
             this.dockSite7.Dock = System.Windows.Forms.DockStyle.Top;
             this.dockSite7.Location = new System.Drawing.Point(0, 0);
             this.dockSite7.Name = "dockSite7";
-            this.dockSite7.Size = new System.Drawing.Size(1350, 0);
+            this.dockSite7.Size = new System.Drawing.Size(1360, 0);
             this.dockSite7.TabIndex = 7;
             this.dockSite7.TabStop = false;
             // 
@@ -1077,15 +1079,25 @@
             this.dockSite3.DocumentDockContainer = new DevComponents.DotNetBar.DocumentDockContainer();
             this.dockSite3.Location = new System.Drawing.Point(0, 0);
             this.dockSite3.Name = "dockSite3";
-            this.dockSite3.Size = new System.Drawing.Size(1350, 0);
+            this.dockSite3.Size = new System.Drawing.Size(1360, 0);
             this.dockSite3.TabIndex = 3;
             this.dockSite3.TabStop = false;
+            // 
+            // chkImg
+            // 
+            this.chkImg.AutoSize = true;
+            this.chkImg.Location = new System.Drawing.Point(20, 390);
+            this.chkImg.Name = "chkImg";
+            this.chkImg.Size = new System.Drawing.Size(72, 16);
+            this.chkImg.TabIndex = 8;
+            this.chkImg.Text = "图像处理";
+            this.chkImg.UseVisualStyleBackColor = true;
             // 
             // FrmTwain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1350, 708);
+            this.ClientSize = new System.Drawing.Size(1360, 752);
             this.Controls.Add(this.dockSite9);
             this.Controls.Add(this.dockSite2);
             this.Controls.Add(this.dockSite1);
@@ -1235,5 +1247,6 @@
         private System.Windows.Forms.ToolStripStatusLabel toollabenter;
         private System.Windows.Forms.ToolStripStatusLabel toollabentertime;
         private System.Windows.Forms.Label labQsPages;
+        private System.Windows.Forms.CheckBox chkImg;
     }
 }

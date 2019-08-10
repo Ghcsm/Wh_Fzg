@@ -45,6 +45,7 @@
             this.Tools_jd = new System.Windows.Forms.ToolStripProgressBar();
             this.imglist_box = new System.Windows.Forms.ImageList(this.components);
             this.groupPanel1 = new DevComponents.DotNetBar.Controls.GroupPanel();
+            this.chkcheck = new System.Windows.Forms.CheckBox();
             this.txtXqdm = new System.Windows.Forms.TextBox();
             this.butSetzt = new DevComponents.DotNetBar.ButtonX();
             this.combzt = new System.Windows.Forms.ComboBox();
@@ -79,7 +80,6 @@
             this.PanleHouseBox = new DevComponents.DotNetBar.PanelEx();
             this.PanleHouseMj = new DevComponents.DotNetBar.Controls.GroupPanel();
             this.imgListmjj2 = new System.Windows.Forms.ImageList(this.components);
-            this.chkcheck = new System.Windows.Forms.CheckBox();
             this.statusStrip1.SuspendLayout();
             this.groupPanel1.SuspendLayout();
             this.gr2.SuspendLayout();
@@ -249,6 +249,17 @@
             // 
             this.groupPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.groupPanel1.TabIndex = 23;
+            // 
+            // chkcheck
+            // 
+            this.chkcheck.AutoSize = true;
+            this.chkcheck.BackColor = System.Drawing.Color.Transparent;
+            this.chkcheck.Location = new System.Drawing.Point(8, 601);
+            this.chkcheck.Name = "chkcheck";
+            this.chkcheck.Size = new System.Drawing.Size(60, 16);
+            this.chkcheck.TabIndex = 37;
+            this.chkcheck.Text = "质检后";
+            this.chkcheck.UseVisualStyleBackColor = false;
             // 
             // txtXqdm
             // 
@@ -658,17 +669,6 @@
             this.imgListmjj2.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imgListmjj2.ImageStream")));
             this.imgListmjj2.TransparentColor = System.Drawing.Color.Transparent;
             this.imgListmjj2.Images.SetKeyName(0, "1-1.jpg");
-            // 
-            // chkcheck
-            // 
-            this.chkcheck.AutoSize = true;
-            this.chkcheck.BackColor = System.Drawing.Color.Transparent;
-            this.chkcheck.Location = new System.Drawing.Point(8, 601);
-            this.chkcheck.Name = "chkcheck";
-            this.chkcheck.Size = new System.Drawing.Size(60, 16);
-            this.chkcheck.TabIndex = 37;
-            this.chkcheck.Text = "质检后";
-            this.chkcheck.UseVisualStyleBackColor = false;
             // 
             // StoreView
             // 

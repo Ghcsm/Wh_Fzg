@@ -237,6 +237,10 @@
       <Project>{6A86EABC-3A88-4759-9EA0-24B936265E28}</Project>
       <Name>CsmCon</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\CsmImg\CsmImg.csproj">
+      <Project>{33C0A84D-E55B-40D1-9805-37DEDAA1219E}</Project>
+      <Name>CsmImg</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

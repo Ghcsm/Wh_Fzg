@@ -31,6 +31,7 @@ namespace Csmtool
 
         public static List<string> Lsinikey = new List<string>();
         public static List<string> LsiniCz = new List<string>();
+        public static List<string> LsId = new List<string>();
 
 
     }

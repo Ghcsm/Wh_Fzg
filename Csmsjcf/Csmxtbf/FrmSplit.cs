@@ -1746,10 +1746,11 @@ namespace Csmsjcf
                 work.SaveToFile(file, FileFormat.Version2007);
                 work.Dispose();
                 return true;
-            } catch {
+            } catch (Exception ex) {
+                string str = "写入xls失败,id号" + archid + " 二维码:" + tm + " -->错误信息" + ex.ToString();
+                ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
                 return false;
             }
-
         }
 
         private bool WriteMltj(string file, string archid, string ariveid, string tm, string pagecount)
@@ -1806,7 +1807,9 @@ namespace Csmsjcf
                 work.SaveToFile(file, FileFormat.Version2007);
                 work.Dispose();
                 return true;
-            } catch {
+            } catch (Exception ex) {
+                string str = "写入xls失败,id号" + archid + " 二维码:" + tm + " -->错误信息" + ex.ToString();
+                ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
                 return false;
             }
         }
@@ -1882,7 +1885,9 @@ namespace Csmsjcf
                 work.SaveToFile(file, FileFormat.Version2007);
                 work.Dispose();
                 return true;
-            } catch {
+            } catch (Exception ex) {
+                string str = "写入xls失败" + " 二维码:" + tm + " -->错误信息" + ex.ToString();
+                ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
                 return false;
             }
         }
@@ -1971,7 +1976,9 @@ namespace Csmsjcf
                 work.SaveToFile(file, FileFormat.Version2007);
                 work.Dispose();
                 return true;
-            } catch {
+            } catch (Exception ex) {
+                string str = "写入xls失败" + " 二维码:" + tm + " -->错误信息" + ex.ToString();
+                ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
                 return false;
             }
         }
@@ -2002,8 +2009,7 @@ namespace Csmsjcf
                 }
                 string archtype = dt.Rows[0][1].ToString();
                 string page = dt.Rows[0][12].ToString();
-                if (page.Trim().Length <= 0)
-                {
+                if (page.Trim().Length <= 0) {
                     string str = "录入信息中页码不正确 id号：" + archid + " 二维码信息：" + ewm;
                     ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
                     return false;
@@ -2159,7 +2165,9 @@ namespace Csmsjcf
                     xe1.AppendChild(xesub2);
                 }
                 xmldoc.Save(ariveid);
-            } catch {
+            } catch (Exception ex) {
+                string str = "xml写入失败:" + archid + " 二维码信息：" + ewm + " --> 错误信息:" + ex.ToString();
+                ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
                 return false;
             }
             return true;
@@ -2204,8 +2212,7 @@ namespace Csmsjcf
                         string file = ClsDL.dtboxsn.Rows[i][3].ToString();
                         string qu = ClsDL.dtboxsn.Rows[i][4].ToString();
                         string lx = ClsDL.dtboxsn.Rows[i][5].ToString();
-                        if (qu.Trim().Length <= 0)
-                        {
+                        if (qu.Trim().Length <= 0) {
                             string str = "盒号:" + boxsn + "小区代码不正确!";
                             ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
                             continue;
@@ -2455,18 +2462,20 @@ namespace Csmsjcf
 
         void WirteImporxls()
         {
-            try
-            {
-                DataTable dt = Common.GetDataImportxls(ClsDL.Houseid, txtXq.Text.Trim());
-                if (dt == null || dt.Rows.Count <= 0)
-                {
+            try {
+                DataTable dt = null;
+                if (rabdlboxsn.Checked)
+                    dt = Common.GetDataImportxls(ClsDL.Houseid, txtB1.Text.Trim(), txtB2.Text.Trim());
+                else
+                    dt = Common.GetDataImportxls(ClsDL.Houseid, txtXq.Text.Trim());
+                if (dt == null || dt.Rows.Count <= 0) {
                     MessageBox.Show("未发现可导出数据!");
                     return;
                 }
                 string strfile = Path.Combine(Application.StartupPath, "Tjd.xlsx");
-                string file = Path.Combine(txtCreatePath.Text.Trim(), DateTime.Now.ToString("yyyyMMdd").ToString()+("提交单.xlsx"));
+                string file = Path.Combine(txtCreatePath.Text.Trim(), DateTime.Now.ToString("yyyyMMdd").ToString() + ("提交单.xlsx"));
                 if (!File.Exists(file))
-                    File.Copy(strfile,file);
+                    File.Copy(strfile, file);
                 Workbook work = new Workbook();
                 Worksheet wsheek = null;
                 work.LoadFromFile(file);
@@ -2474,10 +2483,9 @@ namespace Csmsjcf
                 int rows = wsheek.LastRow + 1;
                 if (rows == 0)
                     rows = 1;
-                for (int i = 0; i < dt.Rows.Count; i++)
-                {
-                    
-                    wsheek.Range[rows + i,1].Text = (i+1).ToString();
+                for (int i = 0; i < dt.Rows.Count; i++) {
+
+                    wsheek.Range[rows + i, 1].Text = (i + 1).ToString();
                     wsheek.Range[rows + i, 2].Text = dt.Rows[i][0].ToString();
                     wsheek.Range[rows + i, 3].Text = dt.Rows[i][1].ToString();
                     wsheek.Range[rows + i, 5].Text = dt.Rows[i][2].ToString();
@@ -2485,13 +2493,9 @@ namespace Csmsjcf
                 }
                 work.SaveToFile(file, FileFormat.Version2007);
                 work.Dispose();
-            }
-            catch(Exception ex)
-            {
+            } catch (Exception ex) {
                 MessageBox.Show(ex.ToString());
-            }
-            finally
-            {
+            } finally {
                 enddc(true);
             }
         }

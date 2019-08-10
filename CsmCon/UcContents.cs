@@ -45,7 +45,7 @@ namespace CsmCon
             Lvnameadd();
             if (ModuleVisible)
                 info.LoadModule(LvModule);
-            info.LoadContents(ArchId, LvContents, chkTspages.Checked);
+            info.LoadContents(ArchId, LvContents, chkTspages.Checked,0);
 
         }
         private void Lvnameadd()
@@ -195,7 +195,7 @@ namespace CsmCon
             int id = Common.ContentsEdit(info.ContenTable, info.ContenCoList, dicxx, Mtmpid.ToString(), ArchId);
             if (id > 0)
                 cleTxt();
-            info.LoadContents(ArchId, LvContents, chkTspages.Checked);
+            info.LoadContents(ArchId, LvContents, chkTspages.Checked,CrragePage);
             txtCode.Focus();
         }
         private void AddTitle()
@@ -232,7 +232,7 @@ namespace CsmCon
                 return;
             }
             Common.ContentsDel(info.ContenTable, Mtmpid, ArchId);
-            info.LoadContents(ArchId, LvContents, chkTspages.Checked);
+            info.LoadContents(ArchId, LvContents, chkTspages.Checked, CrragePage);
         }
      
 
@@ -282,7 +282,7 @@ namespace CsmCon
                 return;
             ArchId = arid;
             ArchMaxPage = maxpage;
-            info.LoadContents(ArchId, LvContents, chkTspages.Checked);
+            info.LoadContents(ArchId, LvContents, chkTspages.Checked, CrragePage);
         }
 
         public void LoadContentsinfo(int arid, int maxpage)
@@ -317,7 +317,7 @@ namespace CsmCon
         private void chkTspages_CheckedChanged(object sender, EventArgs e)
         {
             if (chkTspages.Checked) {
-                info.LoadContents(ArchId, LvContents, chkTspages.Checked);
+                info.LoadContents(ArchId, LvContents, chkTspages.Checked, CrragePage);
             }
         }
 

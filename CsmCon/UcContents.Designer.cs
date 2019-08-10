@@ -52,6 +52,7 @@
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colDodulelx = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.gr2 = new System.Windows.Forms.GroupBox();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.gr0.SuspendLayout();
             this.gr1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitCont)).BeginInit();
@@ -59,21 +60,24 @@
             this.splitCont.Panel2.SuspendLayout();
             this.splitCont.SuspendLayout();
             this.gr2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
             this.SuspendLayout();
             // 
             // gr0
             // 
-            this.gr0.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.gr0.Controls.Add(this.chkTspages);
             this.gr0.Controls.Add(this.panel1);
             this.gr0.Controls.Add(this.txtCode);
             this.gr0.Controls.Add(this.txtId);
             this.gr0.Controls.Add(this.chbModule);
             this.gr0.Controls.Add(this.label1);
-            this.gr0.Location = new System.Drawing.Point(3, 3);
+            this.gr0.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gr0.Location = new System.Drawing.Point(0, 0);
             this.gr0.Name = "gr0";
-            this.gr0.Size = new System.Drawing.Size(535, 183);
+            this.gr0.Size = new System.Drawing.Size(541, 196);
             this.gr0.TabIndex = 0;
             this.gr0.TabStop = false;
             // 
@@ -97,7 +101,7 @@
             this.panel1.AutoScroll = true;
             this.panel1.Location = new System.Drawing.Point(6, 42);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(523, 135);
+            this.panel1.Size = new System.Drawing.Size(529, 148);
             this.panel1.TabIndex = 3;
             // 
             // txtCode
@@ -197,9 +201,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.gr1.Controls.Add(this.splitCont);
-            this.gr1.Location = new System.Drawing.Point(3, 192);
+            this.gr1.Location = new System.Drawing.Point(6, 3);
             this.gr1.Name = "gr1";
-            this.gr1.Size = new System.Drawing.Size(449, 321);
+            this.gr1.Size = new System.Drawing.Size(449, 310);
             this.gr1.TabIndex = 2;
             this.gr1.TabStop = false;
             // 
@@ -216,8 +220,8 @@
             // splitCont.Panel2
             // 
             this.splitCont.Panel2.Controls.Add(this.LvModule);
-            this.splitCont.Size = new System.Drawing.Size(443, 301);
-            this.splitCont.SplitterDistance = 231;
+            this.splitCont.Size = new System.Drawing.Size(443, 290);
+            this.splitCont.SplitterDistance = 170;
             this.splitCont.TabIndex = 0;
             // 
             // LvContents
@@ -238,7 +242,7 @@
             this.LvContents.HideSelection = false;
             this.LvContents.Location = new System.Drawing.Point(0, 0);
             this.LvContents.Name = "LvContents";
-            this.LvContents.Size = new System.Drawing.Size(231, 301);
+            this.LvContents.Size = new System.Drawing.Size(170, 290);
             this.LvContents.SmallImageList = this.imageList1;
             this.LvContents.TabIndex = 5;
             this.LvContents.TabStop = false;
@@ -281,7 +285,7 @@
             this.LvModule.HideSelection = false;
             this.LvModule.Location = new System.Drawing.Point(0, 0);
             this.LvModule.Name = "LvModule";
-            this.LvModule.Size = new System.Drawing.Size(208, 301);
+            this.LvModule.Size = new System.Drawing.Size(269, 290);
             this.LvModule.TabIndex = 0;
             this.LvModule.TabStop = false;
             this.LvModule.UseCompatibleStateImageBehavior = false;
@@ -308,25 +312,42 @@
             // 
             // gr2
             // 
-            this.gr2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.gr2.Controls.Add(this.butAdd);
             this.gr2.Controls.Add(this.butEdit);
             this.gr2.Controls.Add(this.butModule);
             this.gr2.Controls.Add(this.butDel);
-            this.gr2.Location = new System.Drawing.Point(458, 192);
+            this.gr2.Dock = System.Windows.Forms.DockStyle.Right;
+            this.gr2.Location = new System.Drawing.Point(461, 0);
             this.gr2.Name = "gr2";
-            this.gr2.Size = new System.Drawing.Size(80, 321);
+            this.gr2.Size = new System.Drawing.Size(80, 316);
             this.gr2.TabIndex = 1;
             this.gr2.TabStop = false;
+            // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer1.Name = "splitContainer1";
+            this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.gr0);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.gr2);
+            this.splitContainer1.Panel2.Controls.Add(this.gr1);
+            this.splitContainer1.Size = new System.Drawing.Size(541, 516);
+            this.splitContainer1.SplitterDistance = 196;
+            this.splitContainer1.TabIndex = 3;
+            this.splitContainer1.TabStop = false;
             // 
             // UcContents
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.gr2);
-            this.Controls.Add(this.gr0);
-            this.Controls.Add(this.gr1);
+            this.Controls.Add(this.splitContainer1);
             this.DoubleBuffered = true;
             this.Name = "UcContents";
             this.Size = new System.Drawing.Size(541, 516);
@@ -339,6 +360,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitCont)).EndInit();
             this.splitCont.ResumeLayout(false);
             this.gr2.ResumeLayout(false);
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -368,5 +393,6 @@
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.SplitContainer splitCont;
         public System.Windows.Forms.TextBox txtCode;
+        private System.Windows.Forms.SplitContainer splitContainer1;
     }
 }
