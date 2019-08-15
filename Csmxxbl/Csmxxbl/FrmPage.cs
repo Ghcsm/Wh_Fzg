@@ -109,7 +109,7 @@ namespace Csmxxbl
                 return;
             string str = dt.Rows[0][0].ToString();
             string page = dt.Rows[0][1].ToString();
-            if (str.Trim().Length <= 0)
+            if (page.Trim().Length <= 0)
                 return;
             string[] s = str.Split(';');
             for (int i = 0; i < s.Length; i++) {

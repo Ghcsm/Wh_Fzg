@@ -17,6 +17,7 @@ using System.Drawing;
 using System.Drawing.Printing;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Runtime.ExceptionServices;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
@@ -87,6 +88,7 @@ namespace HLjscom
         public int Scanms = 0;
         public int TagPage = 0;
         private RasterImage Imgcopy;
+        public int CopyImgid = 0;
 
         #endregion
 
@@ -247,6 +249,8 @@ namespace HLjscom
             try {
                 if (_Imageview.Image != null)
                     _Imageview.Image.MakeRegionEmpty();
+                if (CopyImgid == 1)
+                    return;
                 if (reg == true) {
                     regionInteractiveMode.AutoRegionToFloater = false;
                     regionInteractiveMode.Shape = ImageViewerRubberBandShape.Rectangle;
@@ -395,17 +399,21 @@ namespace HLjscom
             try {
                 if (tf == false) {
                     tf = true;
+
                     LeadPointD pt = _Imageview.ConvertPoint(null, ImageViewerCoordinateType.Control, ImageViewerCoordinateType.Image, new LeadPointD(e.X, e.Y));
                     Point onpt = new Point((int)pt.X, (int)pt.Y);
                     RasterColor color = _Imageview.Image.GetPixel((int)pt.X, (int)pt.Y);
-                    //if (color.R < 200 && color.G < 200 && color.B < 200)
+                    //if (color.R > 100 || color.G > 200 || color.B > 200)
                     //{
-                    RasterColor lowerColor = new RasterColor(64, 64, 68);
-                    RasterColor upperColor = new RasterColor(0, 0, 0);
+                    //    tf = false;
+                    //    return;
+                    //}
+                     RasterColor lowerColor = new RasterColor(50, 50, 50);
+                    RasterColor upperColor = new RasterColor(50, 50, 50);
                     _Imageview.Image.AddMagicWandToRegion((int)pt.X, (int)pt.Y, lowerColor, upperColor, RasterRegionCombineMode.Set);
                     FillCommand fill = new FillCommand(RasterColor.FromKnownColor(RasterKnownColor.White));
                     fill.Run(_Imageview.Image);
-                    //}
+                  
                     _Imageview.Image.MakeRegionEmpty();
                     tf = false;
                 }
@@ -2403,6 +2411,36 @@ namespace HLjscom
             }
         }
 
+        public void _ImporPage(string file)
+        {
+            try {
+                if (_Imageview.Image != null)
+                {
+                    if (File.Exists(file))
+                        File.Delete(file);
+                    RasterImage Instimg = _Imageview.Image.Clone();
+                    int bit = Instimg.BitsPerPixel;
+                    if (bit != 1) {
+                        if (bit != 8) {
+                            _Codefile.Options.Jpeg2000.Save.CompressionRatio = (float)Factor;
+                            _Codefile.Options.Ecw.Save.QualityFactor = Factor;
+                            _Codefile.Save(Instimg, file, RasterImageFormat.TifJpeg, bit, 1, 1, 1, CodecsSavePageMode.Append);
+                        }
+                        else {
+                            _Codefile.Options.Jpeg.Save.QualityFactor = Factor;
+                            _Codefile.Save(Instimg, file, RasterImageFormat.TifJpeg, bit, 1, 1, 1, CodecsSavePageMode.Append);
+                        }
+                    }
+                    else {
+                        _Codefile.Save(Instimg, file, RasterImageFormat.CcittGroup4, bit, 1, 1, 1, CodecsSavePageMode.Append);
+                    }
+                }
+
+            } catch (Exception ex) {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
         public void _RelImage(string instimg, string oldfile)
         {
             try {
@@ -2472,18 +2510,49 @@ namespace HLjscom
         }
 
 
+        public void CombineFloater()
+        {
+            if (_Imageview.Floater != null)
+            {
+                _Imageview.CombineFloater(false);
+                _Imageview.Floater = null;
+            }
+        }
+
+
         public bool _CopyImg()
         {
+            CopyImgid = 0;
             if (_Imageview.Image == null)
                 return false;
             LeadRect rcw = _Imageview.Image.GetRegionBounds(null);
             if (rcw.X != 0 && rcw.Y != 0) {
-                CopyRectangleCommand command = new CopyRectangleCommand();
-                command.Rectangle = rcw;
-                command.CreateFlags = RasterMemoryFlags.Conventional;
-                command.Run(_Imageview.Image.Clone());
-                Imgcopy = command.DestinationImage;
+                //CopyRectangleCommand command = new CopyRectangleCommand();
+                //command.Rectangle = rcw;
+                //command.CreateFlags = RasterMemoryFlags.Conventional;
+                //command.Run(_Imageview.Image.Clone());
+                //Imgcopy = command.DestinationImage;
+                //_Imageview.Image.MakeRegionEmpty();
+                _Imageview.InteractiveModes.Clear();
+                _Imageview.ActiveItem.ImageRegionToFloater();
+                _Imageview.Floater = _Imageview.Image.Clone();
                 _Imageview.Image.MakeRegionEmpty();
+                ImageViewerFloaterInteractiveMode FloaterInteractiveMode = new ImageViewerFloaterInteractiveMode();
+                FloaterInteractiveMode.EnablePan = true;
+                FloaterInteractiveMode.EnableZoom = false;
+                FloaterInteractiveMode.EnablePinchZoom = false;
+                FloaterInteractiveMode.WorkOnBounds = false;
+                FloaterInteractiveMode.FloaterRegionRenderMode = ControlRegionRenderMode.Animated;
+                FloaterInteractiveMode.AutoItemMode = ImageViewerAutoItemMode.AutoSetActive;
+                FloaterInteractiveMode.MouseButtons = System.Windows.Forms.MouseButtons.Left;
+                FloaterInteractiveMode.FloaterOpacity = 0.5;
+                FloaterInteractiveMode.FloaterRegionRenderMode = ControlRegionRenderMode.Animated;
+                FloaterInteractiveMode.Item = null;
+                _Imageview.InteractiveModes.BeginUpdate();
+                FloaterInteractiveMode.IsEnabled = true;
+                _Imageview.InteractiveModes.Add(FloaterInteractiveMode);
+                _Imageview.InteractiveModes.EndUpdate();
+                CopyImgid = 1;
                 return true;
             }
             else {

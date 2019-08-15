@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using CsmImg;
 using System.Data.SqlClient;
+using System.Linq;
 using HLjscom;
 
 namespace Csmtool
@@ -256,7 +257,7 @@ namespace Csmtool
         }
         private void butImgPath_Click(object sender, EventArgs e)
         {
-            FolderBrowserDialog flDialog=new FolderBrowserDialog();
+            FolderBrowserDialog flDialog = new FolderBrowserDialog();
             if (flDialog.ShowDialog() == DialogResult.OK)
                 txtImgPath.Text = flDialog.SelectedPath;
             else
@@ -467,11 +468,116 @@ namespace Csmtool
             dt1.Dispose();
         }
 
-        private void buttjStart_Click(object sender, EventArgs e)
+
+        private void Checkcontenpage()
         {
             dgvTjdata.DataSource = null;
-            if (!istjtxt())
+            DataTable dt;
+            if (rabtjBoxsn.Checked)
+                dt = Common.GetcheckContenPage(txtTjBoxsn1.Text.Trim(), txtTjBoxsn2.Text.Trim());
+            else
+                dt = Common.GetcheckContenPage(txtTjBoxsn1.Text.Trim());
+            dgvTjdata.DataSource = dt;
+        }
+
+        private void CheckDisn()
+        {
+            dgvTjdata.DataSource = null;
+            DataTable dt;
+            if (rabtjBoxsn.Checked)
+                dt = Common.GetBoxsnid(txtTjBoxsn1.Text.Trim(), txtTjBoxsn2.Text.Trim());
+            else
+                dt = Common.GetBoxsnid(txtTjBoxsn1.Text.Trim());
+            if (dt == null || dt.Rows.Count <= 0)
                 return;
+            labarchcount.Visible = true;
+            for (int i = 0; i < dt.Rows.Count; i++) {
+                labarchcount.Text = String.Format("正在执行{0}卷", (i + 1).ToString());
+                Application.DoEvents();
+                string arid = dt.Rows[i][0].ToString();
+                string boxsn = dt.Rows[i][1].ToString();
+                string xqsn = dt.Rows[i][2].ToString();
+                if (arid.Trim().Length <= 0)
+                    continue;
+                List<string> dsn = new List<string>();
+                DataTable dtid = Common.GetInfoDisn(arid);
+                if (dtid == null || dtid.Rows.Count <= 0)
+                    continue;
+                for (int t = 0; t < dtid.Rows.Count; t++) {
+                    string d = dtid.Rows[t][0].ToString();
+                    if (d.Trim().Length <= 0)
+                        continue;
+                    d = d.Replace("-", "");
+                    if (d == "字")
+                        continue;
+                    if (d == "东丽字")
+                        continue;
+                    d = d.Replace("东丽字", "");
+                    dsn.Add(d.Trim());
+                }
+                if (dsn.Count <= 1)
+                    continue;
+                dsn = dsn.Distinct().ToList();
+                if (dsn.Count <= 1)
+                    continue;
+
+                if (dgvTjdata.Rows.Count == 0) {
+                    dgvTjdata.Columns.Add("boxsn", "盒号");
+                    dgvTjdata.Columns.Add("xqsn", "小区代号");
+                }
+                int index = dgvTjdata.Rows.Add();
+                dgvTjdata.Rows[index].Cells[0].Value = boxsn;
+                dgvTjdata.Rows[index].Cells[1].Value = xqsn;
+
+            }
+            labarchcount.Text = "共0卷";
+            labarchcount.Visible = false;
+        }
+
+
+        void CheckYwid14()
+        {
+            dgvTjdata.DataSource = null;
+            DataTable dt;
+            if (rabtjBoxsn.Checked)
+                dt = Common.GetBoxsnid(txtTjBoxsn1.Text.Trim(), txtTjBoxsn2.Text.Trim());
+            else
+                dt = Common.GetBoxsnid(txtTjBoxsn1.Text.Trim());
+            if (dt == null || dt.Rows.Count <= 0)
+                return;
+            labarchcount.Visible = true;
+            for (int i = 0; i < dt.Rows.Count; i++) {
+                labarchcount.Text = String.Format("正在执行{0}卷", (i + 1).ToString());
+                Application.DoEvents();
+                string arid = dt.Rows[i][0].ToString();
+                string boxsn = dt.Rows[i][1].ToString();
+                string xqsn = dt.Rows[i][2].ToString();
+                if (arid.Trim().Length <= 0)
+                    continue;
+                DataTable dtarid = Common.GetInfoall(arid);
+                if (dtarid == null || dtarid.Rows.Count <= 0)
+                    continue;
+                string ywid = dtarid.Rows[0][0].ToString();
+                if (ywid.Trim().Length !=14)
+                {
+                    if (dgvTjdata.Rows.Count == 0) {
+                        dgvTjdata.Columns.Add("boxsn", "盒号");
+                        dgvTjdata.Columns.Add("xqsn", "小区代号");
+                        dgvTjdata.Columns.Add("sjsn", "收件编号");
+                    }
+                    int index = dgvTjdata.Rows.Add();
+                    dgvTjdata.Rows[index].Cells[0].Value = boxsn;
+                    dgvTjdata.Rows[index].Cells[1].Value = xqsn;
+                    dgvTjdata.Rows[index].Cells[2].Value = ywid;
+                }
+            }
+            labarchcount.Text = "共0卷";
+            labarchcount.Visible = false;
+        }
+
+        void IsSqlinfo()
+        {
+
             if (combtjSql.SelectedIndex == 3) {
                 QuerFile();
                 return;
@@ -492,7 +598,35 @@ namespace Csmtool
                 GetQuarchstat();
                 return;
             }
+            else if (combtjSql.SelectedIndex == 8) {
+                Checkcontenpage();
+                return;
+            }
+            else if (combtjSql.SelectedIndex == 9) {
+                CheckDisn();
+                return;
+            }
+            else if (combtjSql.SelectedIndex == 10)
+            {
+                CheckYwid14();
+                return;
+            }
             Quersql();
+        }
+        private void buttjStart_Click(object sender, EventArgs e)
+        {
+            dgvTjdata.DataSource = null;
+            buttjStart.Enabled = false;
+            try {
+                if (!istjtxt())
+                    return;
+                IsSqlinfo();
+            } catch (Exception exception) {
+                MessageBox.Show(exception.ToString());
+            } finally {
+                buttjStart.Enabled = true;
+            }
+
         }
 
 
@@ -631,7 +765,7 @@ namespace Csmtool
             }
 
         }
-      
+
 
 
         bool Iskeystxt()
@@ -1194,9 +1328,29 @@ namespace Csmtool
 
         }
 
+        bool Isconten()
+        {
+            int b, p;
+            bool bl = int.TryParse(txtContenboxsn.Text.Trim(), out b);
+            bool pl = int.TryParse(txtContePage.Text.Trim(), out p);
+            if (!bl || !pl) {
+                MessageBox.Show("盒号或者页码不正确!");
+                txtContenboxsn.Focus();
+                return false;
+            }
+            return true;
+        }
+        private void butContenPage_Click(object sender, EventArgs e)
+        {
+            if (!Isconten())
+                return;
+            Common.SetContenPage(txtContenboxsn.Text.Trim(), txtContePage.Text.Trim());
+            MessageBox.Show("修改完成!");
+        }
 
         #endregion
-     
+
+
     }
 
 }

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Net;
+using System.Windows.Forms;
 using DAL;
 using GdPicture14;
 
@@ -61,7 +62,9 @@ namespace CsmImg
                 outimg = new Mat();
                 if (T_ConFigure.SfName.Trim().Length > 0)
                     stitcher.Stitch(new VectorOfMat(listmat.ToArray()), outimg);
-            } catch {
+            } catch(Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
                 return bmp;
             }
             return outimg.Bitmap;

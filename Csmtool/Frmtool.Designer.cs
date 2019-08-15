@@ -48,6 +48,8 @@
             this.comboItem10 = new DevComponents.Editors.ComboItem();
             this.comboItem11 = new DevComponents.Editors.ComboItem();
             this.comboItem12 = new DevComponents.Editors.ComboItem();
+            this.comboItem13 = new DevComponents.Editors.ComboItem();
+            this.comboItem14 = new DevComponents.Editors.ComboItem();
             this.buttjxls = new DevComponents.DotNetBar.ButtonX();
             this.buttjStart = new DevComponents.DotNetBar.ButtonX();
             this.txtTjBoxsn2 = new System.Windows.Forms.TextBox();
@@ -84,6 +86,20 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.TabitemlArchStat = new DevComponents.DotNetBar.SuperTabItem();
+            this.superTabControlPanel4 = new DevComponents.DotNetBar.SuperTabControlPanel();
+            this.groupBox11 = new System.Windows.Forms.GroupBox();
+            this.groupBox12 = new System.Windows.Forms.GroupBox();
+            this.butContenPage = new DevComponents.DotNetBar.ButtonX();
+            this.txtContePage = new System.Windows.Forms.TextBox();
+            this.txtContenboxsn = new System.Windows.Forms.TextBox();
+            this.label21 = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
+            this.buttools = new DevComponents.DotNetBar.ButtonX();
+            this.txttoolsB2 = new System.Windows.Forms.TextBox();
+            this.txttoolsB1 = new System.Windows.Forms.TextBox();
+            this.label19 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.Tabitemtools = new DevComponents.DotNetBar.SuperTabItem();
             this.superTabControlPanel1 = new DevComponents.DotNetBar.SuperTabControlPanel();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
@@ -116,14 +132,6 @@
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.TabitemlKeys = new DevComponents.DotNetBar.SuperTabItem();
-            this.superTabControlPanel4 = new DevComponents.DotNetBar.SuperTabControlPanel();
-            this.groupBox11 = new System.Windows.Forms.GroupBox();
-            this.buttools = new DevComponents.DotNetBar.ButtonX();
-            this.txttoolsB2 = new System.Windows.Forms.TextBox();
-            this.txttoolsB1 = new System.Windows.Forms.TextBox();
-            this.label19 = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
-            this.Tabitemtools = new DevComponents.DotNetBar.SuperTabItem();
             this.superTabControlPanel2 = new DevComponents.DotNetBar.SuperTabControlPanel();
             this.groupBox10 = new System.Windows.Forms.GroupBox();
             this.butImgSave = new DevComponents.DotNetBar.ButtonX();
@@ -142,6 +150,7 @@
             this.button1 = new System.Windows.Forms.Button();
             this.临时 = new DevComponents.DotNetBar.SuperTabItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.comboItem15 = new DevComponents.Editors.ComboItem();
             this.gr1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TabControl)).BeginInit();
             this.TabControl.SuspendLayout();
@@ -153,14 +162,15 @@
             this.gr2.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.superTabControlPanel4.SuspendLayout();
+            this.groupBox11.SuspendLayout();
+            this.groupBox12.SuspendLayout();
             this.superTabControlPanel1.SuspendLayout();
             this.groupBox7.SuspendLayout();
             this.groupBox9.SuspendLayout();
             this.groupBox8.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.groupBox6.SuspendLayout();
-            this.superTabControlPanel4.SuspendLayout();
-            this.groupBox11.SuspendLayout();
             this.superTabControlPanel2.SuspendLayout();
             this.groupBox10.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictImg)).BeginInit();
@@ -197,8 +207,8 @@
             this.TabControl.ControlBox.MenuBox,
             this.TabControl.ControlBox.CloseBox});
             this.TabControl.Controls.Add(this.TabcontrolArchStat);
-            this.TabControl.Controls.Add(this.superTabControlPanel1);
             this.TabControl.Controls.Add(this.superTabControlPanel4);
+            this.TabControl.Controls.Add(this.superTabControlPanel1);
             this.TabControl.Controls.Add(this.superTabControlPanel2);
             this.TabControl.Controls.Add(this.superTabControlPanel3);
             this.TabControl.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -358,7 +368,10 @@
             this.comboItem9,
             this.comboItem10,
             this.comboItem11,
-            this.comboItem12});
+            this.comboItem12,
+            this.comboItem13,
+            this.comboItem14,
+            this.comboItem15});
             this.combtjSql.Location = new System.Drawing.Point(353, 20);
             this.combtjSql.Name = "combtjSql";
             this.combtjSql.Size = new System.Drawing.Size(211, 21);
@@ -397,6 +410,14 @@
             // comboItem12
             // 
             this.comboItem12.Text = "按区统计卷数";
+            // 
+            // comboItem13
+            // 
+            this.comboItem13.Text = "检测减去目录页数是否空";
+            // 
+            // comboItem14
+            // 
+            this.comboItem14.Text = "检测地号不一致";
             // 
             // buttjxls
             // 
@@ -775,6 +796,142 @@
             this.TabitemlArchStat.Name = "TabitemlArchStat";
             this.TabitemlArchStat.Text = "案卷处理";
             // 
+            // superTabControlPanel4
+            // 
+            this.superTabControlPanel4.Controls.Add(this.groupBox11);
+            this.superTabControlPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.superTabControlPanel4.Location = new System.Drawing.Point(0, 28);
+            this.superTabControlPanel4.Name = "superTabControlPanel4";
+            this.superTabControlPanel4.Size = new System.Drawing.Size(902, 565);
+            this.superTabControlPanel4.TabIndex = 0;
+            this.superTabControlPanel4.TabItem = this.Tabitemtools;
+            // 
+            // groupBox11
+            // 
+            this.groupBox11.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.groupBox11.Controls.Add(this.groupBox12);
+            this.groupBox11.Controls.Add(this.buttools);
+            this.groupBox11.Controls.Add(this.txttoolsB2);
+            this.groupBox11.Controls.Add(this.txttoolsB1);
+            this.groupBox11.Controls.Add(this.label19);
+            this.groupBox11.Controls.Add(this.label18);
+            this.groupBox11.Location = new System.Drawing.Point(9, 16);
+            this.groupBox11.Name = "groupBox11";
+            this.groupBox11.Size = new System.Drawing.Size(310, 540);
+            this.groupBox11.TabIndex = 0;
+            this.groupBox11.TabStop = false;
+            this.groupBox11.Text = "盒号相关";
+            // 
+            // groupBox12
+            // 
+            this.groupBox12.Controls.Add(this.butContenPage);
+            this.groupBox12.Controls.Add(this.txtContePage);
+            this.groupBox12.Controls.Add(this.txtContenboxsn);
+            this.groupBox12.Controls.Add(this.label21);
+            this.groupBox12.Controls.Add(this.label20);
+            this.groupBox12.Location = new System.Drawing.Point(6, 141);
+            this.groupBox12.Name = "groupBox12";
+            this.groupBox12.Size = new System.Drawing.Size(298, 100);
+            this.groupBox12.TabIndex = 4;
+            this.groupBox12.TabStop = false;
+            this.groupBox12.Text = "更改减目录后页数";
+            // 
+            // butContenPage
+            // 
+            this.butContenPage.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.butContenPage.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.butContenPage.Location = new System.Drawing.Point(201, 55);
+            this.butContenPage.Name = "butContenPage";
+            this.butContenPage.Size = new System.Drawing.Size(75, 32);
+            this.butContenPage.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.butContenPage.TabIndex = 3;
+            this.butContenPage.Text = "修改";
+            this.butContenPage.Click += new System.EventHandler(this.butContenPage_Click);
+            // 
+            // txtContePage
+            // 
+            this.txtContePage.Location = new System.Drawing.Point(71, 71);
+            this.txtContePage.Name = "txtContePage";
+            this.txtContePage.Size = new System.Drawing.Size(100, 21);
+            this.txtContePage.TabIndex = 2;
+            // 
+            // txtContenboxsn
+            // 
+            this.txtContenboxsn.Location = new System.Drawing.Point(71, 27);
+            this.txtContenboxsn.Name = "txtContenboxsn";
+            this.txtContenboxsn.Size = new System.Drawing.Size(100, 21);
+            this.txtContenboxsn.TabIndex = 1;
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(19, 73);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(29, 12);
+            this.label21.TabIndex = 0;
+            this.label21.Text = "页数";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(19, 32);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(29, 12);
+            this.label20.TabIndex = 0;
+            this.label20.Text = "盒号";
+            // 
+            // buttools
+            // 
+            this.buttools.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.buttools.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.buttools.Location = new System.Drawing.Point(207, 75);
+            this.buttools.Name = "buttools";
+            this.buttools.Size = new System.Drawing.Size(75, 38);
+            this.buttools.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.buttools.TabIndex = 3;
+            this.buttools.Text = "更改";
+            this.buttools.Click += new System.EventHandler(this.buttools_Click);
+            // 
+            // txttoolsB2
+            // 
+            this.txttoolsB2.Location = new System.Drawing.Point(77, 89);
+            this.txttoolsB2.Name = "txttoolsB2";
+            this.txttoolsB2.Size = new System.Drawing.Size(100, 21);
+            this.txttoolsB2.TabIndex = 2;
+            // 
+            // txttoolsB1
+            // 
+            this.txttoolsB1.Location = new System.Drawing.Point(77, 48);
+            this.txttoolsB1.Name = "txttoolsB1";
+            this.txttoolsB1.Size = new System.Drawing.Size(100, 21);
+            this.txttoolsB1.TabIndex = 1;
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(20, 94);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(41, 12);
+            this.label19.TabIndex = 0;
+            this.label19.Text = "新盒号";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(20, 54);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(41, 12);
+            this.label18.TabIndex = 0;
+            this.label18.Text = "原盒号";
+            // 
+            // Tabitemtools
+            // 
+            this.Tabitemtools.AttachedControl = this.superTabControlPanel4;
+            this.Tabitemtools.GlobalItem = false;
+            this.Tabitemtools.Name = "Tabitemtools";
+            this.Tabitemtools.Text = "其他集合";
+            // 
             // superTabControlPanel1
             // 
             this.superTabControlPanel1.Controls.Add(this.groupBox7);
@@ -1129,81 +1286,6 @@
             this.TabitemlKeys.Name = "TabitemlKeys";
             this.TabitemlKeys.Text = "快捷键设置";
             // 
-            // superTabControlPanel4
-            // 
-            this.superTabControlPanel4.Controls.Add(this.groupBox11);
-            this.superTabControlPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.superTabControlPanel4.Location = new System.Drawing.Point(0, 28);
-            this.superTabControlPanel4.Name = "superTabControlPanel4";
-            this.superTabControlPanel4.Size = new System.Drawing.Size(902, 565);
-            this.superTabControlPanel4.TabIndex = 0;
-            this.superTabControlPanel4.TabItem = this.Tabitemtools;
-            // 
-            // groupBox11
-            // 
-            this.groupBox11.Controls.Add(this.buttools);
-            this.groupBox11.Controls.Add(this.txttoolsB2);
-            this.groupBox11.Controls.Add(this.txttoolsB1);
-            this.groupBox11.Controls.Add(this.label19);
-            this.groupBox11.Controls.Add(this.label18);
-            this.groupBox11.Location = new System.Drawing.Point(9, 16);
-            this.groupBox11.Name = "groupBox11";
-            this.groupBox11.Size = new System.Drawing.Size(310, 540);
-            this.groupBox11.TabIndex = 0;
-            this.groupBox11.TabStop = false;
-            this.groupBox11.Text = "盒号相关";
-            // 
-            // buttools
-            // 
-            this.buttools.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.buttools.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.buttools.Location = new System.Drawing.Point(207, 75);
-            this.buttools.Name = "buttools";
-            this.buttools.Size = new System.Drawing.Size(75, 38);
-            this.buttools.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.buttools.TabIndex = 3;
-            this.buttools.Text = "更改";
-            this.buttools.Click += new System.EventHandler(this.buttools_Click);
-            // 
-            // txttoolsB2
-            // 
-            this.txttoolsB2.Location = new System.Drawing.Point(77, 89);
-            this.txttoolsB2.Name = "txttoolsB2";
-            this.txttoolsB2.Size = new System.Drawing.Size(100, 21);
-            this.txttoolsB2.TabIndex = 2;
-            // 
-            // txttoolsB1
-            // 
-            this.txttoolsB1.Location = new System.Drawing.Point(77, 48);
-            this.txttoolsB1.Name = "txttoolsB1";
-            this.txttoolsB1.Size = new System.Drawing.Size(100, 21);
-            this.txttoolsB1.TabIndex = 1;
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(20, 94);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(41, 12);
-            this.label19.TabIndex = 0;
-            this.label19.Text = "新盒号";
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(20, 54);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(41, 12);
-            this.label18.TabIndex = 0;
-            this.label18.Text = "原盒号";
-            // 
-            // Tabitemtools
-            // 
-            this.Tabitemtools.AttachedControl = this.superTabControlPanel4;
-            this.Tabitemtools.GlobalItem = false;
-            this.Tabitemtools.Name = "Tabitemtools";
-            this.Tabitemtools.Text = "其他集合";
-            // 
             // superTabControlPanel2
             // 
             this.superTabControlPanel2.Controls.Add(this.groupBox10);
@@ -1394,6 +1476,10 @@
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
             // 
+            // comboItem15
+            // 
+            this.comboItem15.Text = "检测最后一手14位";
+            // 
             // Frmtool
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -1422,6 +1508,11 @@
             this.groupBox2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.superTabControlPanel4.ResumeLayout(false);
+            this.groupBox11.ResumeLayout(false);
+            this.groupBox11.PerformLayout();
+            this.groupBox12.ResumeLayout(false);
+            this.groupBox12.PerformLayout();
             this.superTabControlPanel1.ResumeLayout(false);
             this.groupBox7.ResumeLayout(false);
             this.groupBox9.ResumeLayout(false);
@@ -1430,9 +1521,6 @@
             this.groupBox5.ResumeLayout(false);
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
-            this.superTabControlPanel4.ResumeLayout(false);
-            this.groupBox11.ResumeLayout(false);
-            this.groupBox11.PerformLayout();
             this.superTabControlPanel2.ResumeLayout(false);
             this.groupBox10.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictImg)).EndInit();
@@ -1560,6 +1648,15 @@
         private System.Windows.Forms.TextBox txttoolsB1;
         private DevComponents.DotNetBar.ButtonX buttools;
         private System.Windows.Forms.CheckBox chkkeys;
+        private DevComponents.Editors.ComboItem comboItem13;
+        private System.Windows.Forms.GroupBox groupBox12;
+        private DevComponents.DotNetBar.ButtonX butContenPage;
+        private System.Windows.Forms.TextBox txtContePage;
+        private System.Windows.Forms.TextBox txtContenboxsn;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.Label label20;
+        private DevComponents.Editors.ComboItem comboItem14;
+        private DevComponents.Editors.ComboItem comboItem15;
     }
 }
 

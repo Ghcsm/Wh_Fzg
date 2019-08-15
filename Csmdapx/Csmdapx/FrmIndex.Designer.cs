@@ -91,6 +91,8 @@
             this.toolStripFiltr = new System.Windows.Forms.ToolStripButton();
             this.toolStripSplit = new System.Windows.Forms.ToolStripButton();
             this.toolProess = new System.Windows.Forms.ToolStripProgressBar();
+            this.toolStripYzidthsider = new System.Windows.Forms.ToolStripButton();
+            this.toolStripZwidthsider = new System.Windows.Forms.ToolStripButton();
             this.toolStripCopy = new System.Windows.Forms.ToolStripButton();
             this.toolStripZhantie = new System.Windows.Forms.ToolStripButton();
             this.toolStripYuan = new System.Windows.Forms.ToolStripButton();
@@ -112,8 +114,6 @@
             this.dockSite7 = new DevComponents.DotNetBar.DockSite();
             this.dockSite3 = new DevComponents.DotNetBar.DockSite();
             this.odgInsterFile = new System.Windows.Forms.OpenFileDialog();
-            this.toolStripZwidthsider = new System.Windows.Forms.ToolStripButton();
-            this.toolStripYzidthsider = new System.Windows.Forms.ToolStripButton();
             this.dockSite9.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bar2)).BeginInit();
             this.bar2.SuspendLayout();
@@ -330,7 +330,6 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ImgView.BackColor = System.Drawing.Color.SlateGray;
-            this.ImgView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.ImgView.IsSyncSource = true;
             this.ImgView.IsSyncTarget = true;
             this.ImgView.ItemPadding = new System.Windows.Forms.Padding(1);
@@ -788,6 +787,26 @@
             this.toolProess.Size = new System.Drawing.Size(100, 24);
             this.toolProess.Visible = false;
             // 
+            // toolStripYzidthsider
+            // 
+            this.toolStripYzidthsider.Font = new System.Drawing.Font("微软雅黑", 11F);
+            this.toolStripYzidthsider.Image = ((System.Drawing.Image)(resources.GetObject("toolStripYzidthsider.Image")));
+            this.toolStripYzidthsider.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripYzidthsider.Name = "toolStripYzidthsider";
+            this.toolStripYzidthsider.Size = new System.Drawing.Size(74, 24);
+            this.toolStripYzidthsider.Text = "右白边";
+            this.toolStripYzidthsider.Click += new System.EventHandler(this.toolStripYzidthsider_Click);
+            // 
+            // toolStripZwidthsider
+            // 
+            this.toolStripZwidthsider.Font = new System.Drawing.Font("微软雅黑", 11F);
+            this.toolStripZwidthsider.Image = ((System.Drawing.Image)(resources.GetObject("toolStripZwidthsider.Image")));
+            this.toolStripZwidthsider.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripZwidthsider.Name = "toolStripZwidthsider";
+            this.toolStripZwidthsider.Size = new System.Drawing.Size(74, 24);
+            this.toolStripZwidthsider.Text = "左白边";
+            this.toolStripZwidthsider.Click += new System.EventHandler(this.toolStripWidthsider_Click);
+            // 
             // toolStripCopy
             // 
             this.toolStripCopy.Font = new System.Drawing.Font("微软雅黑", 11F);
@@ -1005,26 +1024,6 @@
             this.dockSite3.Size = new System.Drawing.Size(1378, 0);
             this.dockSite3.TabIndex = 3;
             this.dockSite3.TabStop = false;
-            // 
-            // toolStripZwidthsider
-            // 
-            this.toolStripZwidthsider.Font = new System.Drawing.Font("微软雅黑", 11F);
-            this.toolStripZwidthsider.Image = ((System.Drawing.Image)(resources.GetObject("toolStripZwidthsider.Image")));
-            this.toolStripZwidthsider.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripZwidthsider.Name = "toolStripZwidthsider";
-            this.toolStripZwidthsider.Size = new System.Drawing.Size(74, 24);
-            this.toolStripZwidthsider.Text = "左白边";
-            this.toolStripZwidthsider.Click += new System.EventHandler(this.toolStripWidthsider_Click);
-            // 
-            // toolStripYzidthsider
-            // 
-            this.toolStripYzidthsider.Font = new System.Drawing.Font("微软雅黑", 11F);
-            this.toolStripYzidthsider.Image = ((System.Drawing.Image)(resources.GetObject("toolStripYzidthsider.Image")));
-            this.toolStripYzidthsider.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripYzidthsider.Name = "toolStripYzidthsider";
-            this.toolStripYzidthsider.Size = new System.Drawing.Size(74, 24);
-            this.toolStripYzidthsider.Text = "右白边";
-            this.toolStripYzidthsider.Click += new System.EventHandler(this.toolStripYzidthsider_Click);
             // 
             // FrmIndex
             // 

@@ -29,6 +29,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmPage));
             this.groupPanel1 = new DevComponents.DotNetBar.Controls.GroupPanel();
+            this.label3 = new System.Windows.Forms.Label();
             this.txtNumpage = new System.Windows.Forms.TextBox();
             this.butDel = new DevComponents.DotNetBar.ButtonX();
             this.butSavePage = new DevComponents.DotNetBar.ButtonX();
@@ -37,7 +38,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.lbPage = new System.Windows.Forms.ListBox();
-            this.label3 = new System.Windows.Forms.Label();
             this.groupPanel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -88,6 +88,16 @@
             // 
             this.groupPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.groupPanel1.TabIndex = 0;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.BackColor = System.Drawing.Color.Transparent;
+            this.label3.Location = new System.Drawing.Point(199, 26);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(137, 12);
+            this.label3.TabIndex = 6;
+            this.label3.Text = "如数字页码为0,则不更新";
             // 
             // txtNumpage
             // 
@@ -171,16 +181,6 @@
             this.lbPage.Size = new System.Drawing.Size(92, 151);
             this.lbPage.TabIndex = 5;
             // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.BackColor = System.Drawing.Color.Transparent;
-            this.label3.Location = new System.Drawing.Point(199, 26);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(137, 12);
-            this.label3.TabIndex = 6;
-            this.label3.Text = "如数字页码为0,则不更新";
-            // 
             // FrmPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -190,6 +190,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "FrmPage";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "页码补录";

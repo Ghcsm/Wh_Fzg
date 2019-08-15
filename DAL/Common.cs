@@ -1766,6 +1766,97 @@ namespace DAL
             }
         }
 
+        public static DataTable GetBoxsnid(string boxsn, string boxsn2)
+        {
+            try {
+                string strSql = "select id,boxsn, ArchLx from M_IMAGEFILE WHERE CHECKED=1 AND boxsn>=@b1 and boxsn<=@b2 and HOUSEID=@houseid";
+                SqlParameter p1 = new SqlParameter("@b1", boxsn);
+                SqlParameter p2 = new SqlParameter("@b2", boxsn2);
+                SqlParameter p3 = new SqlParameter("@houseid", V_HouseSetCs.Houseid);
+                DataTable dt = SQLHelper.ExcuteTable(strSql, p1, p2, p3);
+                return dt;
+
+            } catch (Exception e) {
+                MessageBox.Show("查询失败:" + e.ToString());
+                return null;
+            }
+        }
+
+        public static DataTable GetBoxsnid(string qu)
+        {
+            try {
+                string strSql = "select id,boxsn,ArchLx from M_IMAGEFILE WHERE CHECKED=1 AND ArchXqStat=@qu and HOUSEID=@houseid";
+                SqlParameter p1 = new SqlParameter("@qu", qu);
+                SqlParameter p2 = new SqlParameter("@houseid", V_HouseSetCs.Houseid);
+                DataTable dt = SQLHelper.ExcuteTable(strSql, p1, p2);
+                return dt;
+
+            } catch (Exception e) {
+                MessageBox.Show("查询失败:" + e.ToString());
+                return null;
+            }
+        }
+
+        public static DataTable GetInfoDisn(string arid)
+        {
+            try {
+                string strSql = "select 地号 from 信息表 where Archid=@arid order by 档案手续";
+                SqlParameter p1 = new SqlParameter("@arid", arid);
+                DataTable dt = SQLHelper.ExcuteTable(strSql, p1);
+                return dt;
+
+            } catch (Exception e) {
+                MessageBox.Show("查询失败:" + e.ToString());
+                return null;
+            }
+        }
+        public static DataTable GetInfoall(string arid)
+        {
+            try {
+                string strSql = " SELECT 收件编号 FROM 信息表 WHERE 档案手续 IN (SELECT MAX(档案手续) FROM dbo.信息表 WHERE Archid=@arid) AND Archid=@arid";
+                SqlParameter p1 = new SqlParameter("@arid", arid);
+                DataTable dt = SQLHelper.ExcuteTable(strSql, p1);
+                return dt;
+
+            } catch (Exception e) {
+                MessageBox.Show("查询失败:" + e.ToString());
+                return null;
+            }
+        }
+
+
+        public static DataTable GetcheckContenPage(string boxsn, string boxsn2)
+        {
+            try {
+                string strSql =
+                    " SELECT BOXSN,ArchXqStat FROM dbo.M_IMAGEFILE WHERE id IN (  SELECT Archid FROM 信息表 WHERE Archid IN ( SELECT id FROM dbo.M_IMAGEFILE WHERE CHECKED=1 AND boxsn>=@b1 and boxsn<=@b2 and HOUSEID=@houseid) AND Pages IS NULL)";
+                SqlParameter p1 = new SqlParameter("@b1", boxsn);
+                SqlParameter p2 = new SqlParameter("@b2", boxsn2);
+                SqlParameter p3 = new SqlParameter("@houseid", V_HouseSetCs.Houseid);
+                DataTable dt = SQLHelper.ExcuteTable(strSql, p1, p2, p3);
+                return dt;
+
+            } catch (Exception e) {
+                MessageBox.Show("查询失败:" + e.ToString());
+                return null;
+            }
+        }
+
+        public static DataTable GetcheckContenPage(string qu)
+        {
+            try {
+                string strSql = " SELECT BOXSN,ArchXqStat FROM dbo.M_IMAGEFILE WHERE id IN (  SELECT Archid FROM 信息表 WHERE Archid IN ( SELECT id FROM dbo.M_IMAGEFILE WHERE CHECKED=1 AND ArchXqStat=@qu and HOUSEID=@houseid) AND Pages IS NULL)";
+                SqlParameter p1 = new SqlParameter("@qu", qu);
+                SqlParameter p2 = new SqlParameter("@houseid", V_HouseSetCs.Houseid);
+                DataTable dt = SQLHelper.ExcuteTable(strSql, p1, p2);
+                return dt;
+
+            } catch (Exception e) {
+                MessageBox.Show("查询失败:" + e.ToString());
+                return null;
+            }
+        }
+
 
 
         public static DataTable GetArchQuerstat(string str, string boxsn, string boxsn2, string col)
@@ -2315,7 +2406,16 @@ namespace DAL
             Writelog(0, str);
         }
 
-
+        public static void SetContenPage(string box, string page)
+        {
+            string strSql =
+                "UPDATE dbo.信息表 SET Pages = @p WHERE Archid in (SELECT id FROM dbo.M_IMAGEFILE WHERE BOXSN = @b)";
+            SqlParameter p1 = new SqlParameter("@p", page);
+            SqlParameter p2 = new SqlParameter("@b", box);
+            SQLHelper.ExecScalar(strSql, p1, p2);
+            string str = "修改信息表中页码盒号:" + box + "-->页码:" + page;
+            Writelog(0, str);
+        }
 
         public static DataTable GetOperator(int ArchID)
         {

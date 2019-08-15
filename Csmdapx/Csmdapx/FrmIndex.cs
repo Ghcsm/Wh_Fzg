@@ -160,7 +160,11 @@ namespace Csmdapx
 
         private void toolStripImportImg_Click(object sender, EventArgs e)
         {
-
+            SaveFileDialog savedDialog = new SaveFileDialog();
+            if (savedDialog.ShowDialog() == DialogResult.OK) {
+                string strfile = savedDialog.FileName;
+                Himg._ImporPage(strfile);
+            }
         }
         private void toolStripWidthsider_Click(object sender, EventArgs e)
         {
@@ -404,11 +408,20 @@ namespace Csmdapx
         }
         private void ImgView_MouseDown(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Right)
-                toolStripCut_Click(sender, e);
-            else {
-                if (Yuan == 0)
+
+            if (e.Button == MouseButtons.Right) {
+                if (Himg.CopyImgid == 1) {
+                    Himg.CombineFloater();
                     Himg._Rectang(true);
+                    Himg.CopyImgid = 0;
+                }
+                else
+                    toolStripCut_Click(sender, e);
+            }
+            else {
+                if (Yuan == 0) {
+                    Himg._Rectang(true);
+                }
                 else {
                     Himg._RectangYuan(true);
                     Yuan = 0;
@@ -418,7 +431,6 @@ namespace Csmdapx
         }
         private void toolStripSplitTag_Click(object sender, EventArgs e)
         {
-
             if (Himg.TagPage > 0) {
                 Himg.TagPage = 0;
                 toolStripSplitTag.ForeColor = Color.Black;

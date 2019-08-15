@@ -36,6 +36,10 @@ namespace Csmsjcf
 
         public static int lx { get; set; } = 0;
 
+        public static bool Pcbox { get; set; } = false;
+
+        public static List<string> Lspcbox = new List<string>();
+
 
 
     }

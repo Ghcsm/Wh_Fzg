@@ -29,6 +29,8 @@
         {
             this.superTabControl1 = new DevComponents.DotNetBar.SuperTabControl();
             this.superTabControlPanel2 = new DevComponents.DotNetBar.SuperTabControlPanel();
+            this.butDLimpor = new System.Windows.Forms.Button();
+            this.butDLStop = new System.Windows.Forms.Button();
             this.gr0 = new System.Windows.Forms.GroupBox();
             this.txtB1 = new System.Windows.Forms.TextBox();
             this.txtXq = new System.Windows.Forms.TextBox();
@@ -44,6 +46,7 @@
             this.txtlsh = new DevComponents.DotNetBar.Controls.TextBoxX();
             this.butDlLog = new System.Windows.Forms.Button();
             this.butDlStart = new System.Windows.Forms.Button();
+            this.label15 = new System.Windows.Forms.Label();
             this.lab_dl_zx = new System.Windows.Forms.Label();
             this.lab_dl_juan = new System.Windows.Forms.Label();
             this.grdl3 = new System.Windows.Forms.GroupBox();
@@ -156,9 +159,11 @@
             this.fBdigImgPath = new System.Windows.Forms.FolderBrowserDialog();
             this.fontDialog = new System.Windows.Forms.FontDialog();
             this.colorDialog = new System.Windows.Forms.ColorDialog();
-            this.butDLStop = new System.Windows.Forms.Button();
-            this.label15 = new System.Windows.Forms.Label();
-            this.butDLimpor = new System.Windows.Forms.Button();
+            this.chkPcboxn = new System.Windows.Forms.CheckBox();
+            this.lbPcbox = new System.Windows.Forms.ListBox();
+            this.txtPcbox = new System.Windows.Forms.TextBox();
+            this.butPcadd = new System.Windows.Forms.Button();
+            this.butPcdel = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.superTabControl1)).BeginInit();
             this.superTabControl1.SuspendLayout();
             this.superTabControlPanel2.SuspendLayout();
@@ -220,6 +225,11 @@
             // 
             // superTabControlPanel2
             // 
+            this.superTabControlPanel2.Controls.Add(this.butPcdel);
+            this.superTabControlPanel2.Controls.Add(this.butPcadd);
+            this.superTabControlPanel2.Controls.Add(this.txtPcbox);
+            this.superTabControlPanel2.Controls.Add(this.lbPcbox);
+            this.superTabControlPanel2.Controls.Add(this.chkPcboxn);
             this.superTabControlPanel2.Controls.Add(this.butDLimpor);
             this.superTabControlPanel2.Controls.Add(this.butDLStop);
             this.superTabControlPanel2.Controls.Add(this.gr0);
@@ -240,6 +250,26 @@
             this.superTabControlPanel2.Size = new System.Drawing.Size(882, 601);
             this.superTabControlPanel2.TabIndex = 0;
             this.superTabControlPanel2.TabItem = this.TabDatedb;
+            // 
+            // butDLimpor
+            // 
+            this.butDLimpor.Location = new System.Drawing.Point(359, 411);
+            this.butDLimpor.Name = "butDLimpor";
+            this.butDLimpor.Size = new System.Drawing.Size(109, 52);
+            this.butDLimpor.TabIndex = 13;
+            this.butDLimpor.Text = "导出提交单";
+            this.butDLimpor.UseVisualStyleBackColor = true;
+            this.butDLimpor.Click += new System.EventHandler(this.butDLimpor_Click);
+            // 
+            // butDLStop
+            // 
+            this.butDLStop.Location = new System.Drawing.Point(532, 302);
+            this.butDLStop.Name = "butDLStop";
+            this.butDLStop.Size = new System.Drawing.Size(109, 52);
+            this.butDLStop.TabIndex = 12;
+            this.butDLStop.Text = "暂停";
+            this.butDLStop.UseVisualStyleBackColor = true;
+            this.butDLStop.Click += new System.EventHandler(this.butDLStop_Click);
             // 
             // gr0
             // 
@@ -376,9 +406,9 @@
             // 
             // butDlLog
             // 
-            this.butDlLog.Location = new System.Drawing.Point(716, 302);
+            this.butDlLog.Location = new System.Drawing.Point(532, 411);
             this.butDlLog.Name = "butDlLog";
-            this.butDlLog.Size = new System.Drawing.Size(97, 43);
+            this.butDlLog.Size = new System.Drawing.Size(109, 52);
             this.butDlLog.TabIndex = 6;
             this.butDlLog.Text = "日志";
             this.butDlLog.UseVisualStyleBackColor = true;
@@ -386,13 +416,25 @@
             // 
             // butDlStart
             // 
-            this.butDlStart.Location = new System.Drawing.Point(360, 302);
+            this.butDlStart.Location = new System.Drawing.Point(359, 302);
             this.butDlStart.Name = "butDlStart";
-            this.butDlStart.Size = new System.Drawing.Size(97, 43);
+            this.butDlStart.Size = new System.Drawing.Size(109, 52);
             this.butDlStart.TabIndex = 5;
             this.butDlStart.Text = "开始";
             this.butDlStart.UseVisualStyleBackColor = true;
             this.butDlStart.Click += new System.EventHandler(this.butDlStart_Click);
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.BackColor = System.Drawing.Color.Transparent;
+            this.label15.ForeColor = System.Drawing.Color.Red;
+            this.label15.Location = new System.Drawing.Point(399, 244);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(89, 12);
+            this.label15.TabIndex = 4;
+            this.label15.Text = "正在停止请稍候";
+            this.label15.Visible = false;
             // 
             // lab_dl_zx
             // 
@@ -1618,37 +1660,51 @@
             // 
             this.FdigXls.Filter = "Xls文件|*.xls;*xlsx";
             // 
-            // butDLStop
+            // chkPcboxn
             // 
-            this.butDLStop.Location = new System.Drawing.Point(532, 302);
-            this.butDLStop.Name = "butDLStop";
-            this.butDLStop.Size = new System.Drawing.Size(97, 43);
-            this.butDLStop.TabIndex = 12;
-            this.butDLStop.Text = "暂停";
-            this.butDLStop.UseVisualStyleBackColor = true;
-            this.butDLStop.Click += new System.EventHandler(this.butDLStop_Click);
+            this.chkPcboxn.AutoSize = true;
+            this.chkPcboxn.Location = new System.Drawing.Point(695, 121);
+            this.chkPcboxn.Name = "chkPcboxn";
+            this.chkPcboxn.Size = new System.Drawing.Size(72, 16);
+            this.chkPcboxn.TabIndex = 14;
+            this.chkPcboxn.Text = "排除盒号";
+            this.chkPcboxn.UseVisualStyleBackColor = true;
             // 
-            // label15
+            // lbPcbox
             // 
-            this.label15.AutoSize = true;
-            this.label15.BackColor = System.Drawing.Color.Transparent;
-            this.label15.ForeColor = System.Drawing.Color.Red;
-            this.label15.Location = new System.Drawing.Point(399, 244);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(89, 12);
-            this.label15.TabIndex = 4;
-            this.label15.Text = "正在停止请稍候";
-            this.label15.Visible = false;
+            this.lbPcbox.FormattingEnabled = true;
+            this.lbPcbox.ItemHeight = 12;
+            this.lbPcbox.Location = new System.Drawing.Point(695, 170);
+            this.lbPcbox.Name = "lbPcbox";
+            this.lbPcbox.Size = new System.Drawing.Size(72, 112);
+            this.lbPcbox.TabIndex = 15;
             // 
-            // butDLimpor
+            // txtPcbox
             // 
-            this.butDLimpor.Location = new System.Drawing.Point(359, 411);
-            this.butDLimpor.Name = "butDLimpor";
-            this.butDLimpor.Size = new System.Drawing.Size(87, 52);
-            this.butDLimpor.TabIndex = 13;
-            this.butDLimpor.Text = "导出提交单";
-            this.butDLimpor.UseVisualStyleBackColor = true;
-            this.butDLimpor.Click += new System.EventHandler(this.butDLimpor_Click);
+            this.txtPcbox.Location = new System.Drawing.Point(695, 143);
+            this.txtPcbox.Name = "txtPcbox";
+            this.txtPcbox.Size = new System.Drawing.Size(126, 21);
+            this.txtPcbox.TabIndex = 16;
+            // 
+            // butPcadd
+            // 
+            this.butPcadd.Location = new System.Drawing.Point(789, 183);
+            this.butPcadd.Name = "butPcadd";
+            this.butPcadd.Size = new System.Drawing.Size(65, 27);
+            this.butPcadd.TabIndex = 17;
+            this.butPcadd.Text = "添加";
+            this.butPcadd.UseVisualStyleBackColor = true;
+            this.butPcadd.Click += new System.EventHandler(this.butPcadd_Click);
+            // 
+            // butPcdel
+            // 
+            this.butPcdel.Location = new System.Drawing.Point(789, 229);
+            this.butPcdel.Name = "butPcdel";
+            this.butPcdel.Size = new System.Drawing.Size(65, 27);
+            this.butPcdel.TabIndex = 17;
+            this.butPcdel.Text = "删除";
+            this.butPcdel.UseVisualStyleBackColor = true;
+            this.butPcdel.Click += new System.EventHandler(this.butPcdel_Click);
             // 
             // FrmSplit
             // 
@@ -1844,5 +1900,10 @@
         private System.Windows.Forms.Button butDLStop;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Button butDLimpor;
+        private System.Windows.Forms.Button butPcdel;
+        private System.Windows.Forms.Button butPcadd;
+        private System.Windows.Forms.TextBox txtPcbox;
+        private System.Windows.Forms.ListBox lbPcbox;
+        private System.Windows.Forms.CheckBox chkPcboxn;
     }
 }

@@ -1625,6 +1625,16 @@ namespace Csmsjcf
             }
             else
                 ClsDL.lsh = 0;
+
+            ClsDL.Pcbox = false;
+            if (chkPcboxn.Checked) {
+                if (lbPcbox.Items.Count <= 0) {
+                    MessageBox.Show("请输入排除的盒号!");
+                    lbPcbox.Focus();
+                    return false;
+                }
+                ClsDL.Pcbox = true;
+            }
             return true;
         }
 
@@ -2130,8 +2140,10 @@ namespace Csmsjcf
                     id += 1;
                     if (ys1 == 0) {
                         if (lsywid.Count > 0)
+                        {
                             ys1 = Convert.ToInt32(lsywid[0]);
-                        lsywid.RemoveAt(0);
+                            lsywid.RemoveAt(0);
+                        }
                     }
                     if (tmpjl < ys1)
                         tmpjl += 1;
@@ -2212,6 +2224,13 @@ namespace Csmsjcf
                         string file = ClsDL.dtboxsn.Rows[i][3].ToString();
                         string qu = ClsDL.dtboxsn.Rows[i][4].ToString();
                         string lx = ClsDL.dtboxsn.Rows[i][5].ToString();
+                        if (ClsDL.Pcbox) {
+                            if (ClsDL.Lspcbox.IndexOf(boxsn) >= 0) {
+                                ClsDL.dtboxsn.Rows.RemoveAt(i);
+                                i--;
+                                continue;
+                            }
+                        }
                         if (qu.Trim().Length <= 0) {
                             string str = "盒号:" + boxsn + "小区代码不正确!";
                             ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
@@ -2500,6 +2519,37 @@ namespace Csmsjcf
             }
         }
 
+
+        private void butPcadd_Click(object sender, EventArgs e)
+        {
+            if (txtPcbox.Text.Trim().Length <= 0) {
+                MessageBox.Show("请输入盒号!");
+                txtPcbox.Focus();
+                return;
+            }
+
+            if (ClsDL.Lspcbox.IndexOf(txtPcbox.Text.Trim()) >= 0) {
+                MessageBox.Show("此盒号已存在!");
+                txtPcbox.Focus();
+                return;
+            }
+            lbPcbox.Items.Add(txtPcbox.Text.Trim());
+            ClsDL.Lspcbox.Add(txtPcbox.Text.Trim());
+        }
+
+
+        private void butPcdel_Click(object sender, EventArgs e)
+        {
+            if (lbPcbox.Items.Count <= 0)
+                return;
+            if (lbPcbox.SelectedItems.Count <= 0)
+                return;
+            int x = lbPcbox.SelectedIndex;
+            lbPcbox.Items.RemoveAt(x);
+            if (x >ClsDL.Lspcbox.Count)
+                return;
+            ClsDL.Lspcbox.RemoveAt(x);
+        }
         #endregion
 
 
