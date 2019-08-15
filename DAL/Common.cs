@@ -79,6 +79,15 @@ namespace DAL
             SQLHelper.ExecScalar(strSql, p1);
         }
 
+        public static void XgContenModule(string id,string title,string titlelx)
+        {
+            string strSql = "Update M_ContentsModule SET title=@title,TitleLx=@lx WHERE id=@id";
+            SqlParameter p1 = new SqlParameter("@id", id);
+            SqlParameter p2 = new SqlParameter("@title", title);
+            SqlParameter p3 = new SqlParameter("@lx", titlelx);
+            SQLHelper.ExecScalar(strSql, p1,p2,p3);
+        }
+
         public static bool GetConteninfobl()
         {
             string str = "select ContenInfoBl from M_GenSetConten";
@@ -1193,20 +1202,21 @@ namespace DAL
             return dt;
         }
 
-        public static void SetInfoPages(string arid, string str, string page, string counpage)
+        public static void SetInfoPages(string arid, string str, string page, string counpage,string userid)
         {
-            string strSql = "update M_IMAGEFILE set PAGES=@p,ArchPage=@gpage,ArchTmpPage=@page where id=@arid ";
+            string strSql = "update M_IMAGEFILE set PAGES=@p,ArchPage=@gpage,ArchTmpPage=@page,RelateStaff=@staff where id=@arid ";
             SqlParameter p1 = new SqlParameter("@gpage", str);
             SqlParameter p2 = new SqlParameter("@page", page);
             SqlParameter p3 = new SqlParameter("@arid", arid);
             SqlParameter p4 = new SqlParameter("@p", counpage);
-            SQLHelper.ExecScalar(strSql, p1, p2, p3, p4);
+            SqlParameter p5 = new SqlParameter("@staff", userid);
+            SQLHelper.ExecScalar(strSql, p1, p2, p3, p4,p5);
             string str1 = "修改Archid" + arid + "页码为：" + counpage;
             Writelog(0, str1);
         }
         public static DataTable GetInfoPages(string arid)
         {
-            string strSql = "select ArchPage,ArchTmpPage from M_IMAGEFILE where id=@arid";
+            string strSql = "select ArchPage,ArchTmpPage,RelateStaff from M_IMAGEFILE where id=@arid";
             SqlParameter p1 = new SqlParameter("@arid", arid);
             DataTable dt = SQLHelper.ExcuteTable(strSql, p1);
             return dt;
@@ -1821,6 +1831,22 @@ namespace DAL
             } catch (Exception e) {
                 MessageBox.Show("查询失败:" + e.ToString());
                 return null;
+            }
+        }
+
+        public static int GetContepage(string arid)
+        {
+            try {
+                string strSql = " SELECT COUNT(*) FROM dbo.目录表 WHERE 标题='目录' AND Archid=@arid";
+                SqlParameter p1 = new SqlParameter("@arid", arid);
+                object obj = SQLHelper.ExecScalar(strSql, p1);
+                if (obj == null)
+                    return 0;
+                return Convert.ToInt32(obj.ToString());
+
+            } catch 
+            {
+                return 0;
             }
         }
 

@@ -45,6 +45,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.butXg = new DevComponents.DotNetBar.ButtonX();
             this.groupPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -52,6 +53,7 @@
             // 
             this.groupPanel1.CanvasColor = System.Drawing.SystemColors.Control;
             this.groupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007;
+            this.groupPanel1.Controls.Add(this.butXg);
             this.groupPanel1.Controls.Add(this.txtlx);
             this.groupPanel1.Controls.Add(this.lvConten);
             this.groupPanel1.Controls.Add(this.butDel);
@@ -241,6 +243,18 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "类别:";
             // 
+            // butXg
+            // 
+            this.butXg.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.butXg.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.butXg.Location = new System.Drawing.Point(584, 63);
+            this.butXg.Name = "butXg";
+            this.butXg.Size = new System.Drawing.Size(75, 23);
+            this.butXg.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.butXg.TabIndex = 8;
+            this.butXg.Text = "修改";
+            this.butXg.Click += new System.EventHandler(this.butXg_Click);
+            // 
             // UcContenModule
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -280,5 +294,6 @@
         private System.Windows.Forms.ColumnHeader columnHeader4;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox txtlx;
+        private DevComponents.DotNetBar.ButtonX butXg;
     }
 }

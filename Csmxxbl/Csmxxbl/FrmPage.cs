@@ -97,18 +97,19 @@ namespace Csmxxbl
                     str += ";" + s;
             }
             int p = Convert.ToInt32(txtNumpage.Text.Trim()) + (lspage.Count);
-            Common.SetInfoPages(Archid.ToString(), str, txtNumpage.Text.Trim(), p.ToString());
+            Common.SetInfoPages(Archid.ToString(), str, txtNumpage.Text.Trim(), p.ToString(),txtUserid.Text.Trim());
         }
 
         void GetPage()
         {
             if (Archid <= 0)
                 return;
-            DataTable dt= Common.GetInfoPages(Archid.ToString());
+            DataTable dt = Common.GetInfoPages(Archid.ToString());
             if (dt == null || dt.Rows.Count <= 0)
                 return;
             string str = dt.Rows[0][0].ToString();
             string page = dt.Rows[0][1].ToString();
+            string userid = dt.Rows[0][2].ToString();
             if (page.Trim().Length <= 0)
                 return;
             string[] s = str.Split(';');
@@ -120,6 +121,7 @@ namespace Csmxxbl
                 lbPage.Items.Add(s1);
             }
             txtNumpage.Text = page;
+            txtUserid.Text = userid;
         }
 
         private void butSave_Click(object sender, EventArgs e)
@@ -137,12 +139,17 @@ namespace Csmxxbl
         {
             if (e.KeyChar == 13)
                 butSavePage_Click(null, null);
-            if (e.KeyChar==27)
+            if (e.KeyChar == 27)
                 this.Close();
         }
 
         private void FrmPage_FormClosing(object sender, FormClosingEventArgs e)
         {
+            if (txtUserid.Text.Trim().Length <= 0) {
+                MessageBox.Show("用户ID不能为空!");
+                txtUserid.Focus();
+                return;
+            }
             if (txtNumpage.Text.Trim().Length <= 0) {
                 MessageBox.Show("数字页码不为能空");
                 txtNumpage.Focus();
@@ -158,11 +165,10 @@ namespace Csmxxbl
                     e.Cancel = true;
                     return;
                 }
-                else if (p<=0)
-                {
+                else if (p <= 0) {
                     MessageBox.Show("数字页码不能为为0");
                     return;
-                } 
+                }
             }
             SavePage();
         }
@@ -170,7 +176,7 @@ namespace Csmxxbl
         private void txtNumpage_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == 13)
-                txtPage.Focus();
+                txtUserid.Focus();
             if (e.KeyChar == 27)
                 this.Close();
         }
@@ -179,6 +185,12 @@ namespace Csmxxbl
         {
             if (e.KeyChar == 27)
                 this.Close();
+        }
+
+        private void txtUserid_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+                txtPage.Focus();
         }
     }
 }

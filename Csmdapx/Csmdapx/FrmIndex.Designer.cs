@@ -71,6 +71,8 @@
             this.toolStripCleSide = new System.Windows.Forms.ToolStripButton();
             this.toolStripCut = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSharePen = new System.Windows.Forms.ToolStripSplitButton();
+            this.toolStripSharePenSet = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripColorDeep = new System.Windows.Forms.ToolStripButton();
             this.toolStripColorShall = new System.Windows.Forms.ToolStripButton();
             this.toolStripInterSpeck = new System.Windows.Forms.ToolStripButton();
@@ -338,6 +340,7 @@
             this.ImgView.Size = new System.Drawing.Size(971, 519);
             this.ImgView.TabIndex = 1;
             this.ImgView.ViewHorizontalAlignment = Leadtools.Controls.ControlAlignment.Center;
+            this.ImgView.ViewMargin = new System.Windows.Forms.Padding(2);
             this.ImgView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ImgView_MouseClick);
             this.ImgView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ImgView_MouseDoubleClick);
             this.ImgView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ImgView_MouseDown);
@@ -436,6 +439,7 @@
             this.toolStripCleSide,
             this.toolStripCut,
             this.toolStripSeparator3,
+            this.toolStripSharePen,
             this.toolStripColorDeep,
             this.toolStripColorShall,
             this.toolStripInterSpeck,
@@ -573,6 +577,25 @@
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(6, 27);
+            // 
+            // toolStripSharePen
+            // 
+            this.toolStripSharePen.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripSharePenSet});
+            this.toolStripSharePen.Font = new System.Drawing.Font("微软雅黑", 11F);
+            this.toolStripSharePen.Image = ((System.Drawing.Image)(resources.GetObject("toolStripSharePen.Image")));
+            this.toolStripSharePen.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripSharePen.Name = "toolStripSharePen";
+            this.toolStripSharePen.Size = new System.Drawing.Size(71, 24);
+            this.toolStripSharePen.Text = "锐化";
+            this.toolStripSharePen.ButtonClick += new System.EventHandler(this.toolStripSharePen_ButtonClick);
+            // 
+            // toolStripSharePenSet
+            // 
+            this.toolStripSharePenSet.Name = "toolStripSharePenSet";
+            this.toolStripSharePenSet.Size = new System.Drawing.Size(108, 24);
+            this.toolStripSharePenSet.Text = "设置";
+            this.toolStripSharePenSet.Click += new System.EventHandler(this.toolStripSharePenSet_Click);
             // 
             // toolStripColorDeep
             // 
@@ -1160,5 +1183,7 @@
         private System.Windows.Forms.ToolStripButton toolStripZhantie;
         private System.Windows.Forms.ToolStripButton toolStripZwidthsider;
         private System.Windows.Forms.ToolStripButton toolStripYzidthsider;
+        private System.Windows.Forms.ToolStripSplitButton toolStripSharePen;
+        private System.Windows.Forms.ToolStripMenuItem toolStripSharePenSet;
     }
 }

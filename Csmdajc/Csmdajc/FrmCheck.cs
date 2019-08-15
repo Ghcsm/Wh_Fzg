@@ -159,7 +159,19 @@ namespace Csmdajc
         }
 
         #region ClickEve
+        private void toolStripSharePenSet_Click(object sender, EventArgs e)
+        {
+            FrmSharePenSet penset = new FrmSharePenSet();
+            penset.ShowDialog();
+        }
 
+        private void toolStripSharePen_ButtonClick(object sender, EventArgs e)
+        {
+            int sj = FrmSharePenSet.shuliang;
+            int bj = FrmSharePenSet.shuliang;
+            int yz = FrmSharePenSet.Yuzhi;
+            Himg._Sharpen(sj, bj, yz);
+        }
         private void toolStripMagin_Click(object sender, EventArgs e)
         {
             ImgSize = 1;
@@ -192,9 +204,16 @@ namespace Csmdajc
         {
             if (e.Button == MouseButtons.Right)
             {
-                ImgSize = 0;
-                Himg._ImgMagni(false);
+                if (Himg.CopyImgid == 1) {
+                    Himg.CombineFloater();
+                    Himg._Rectang(true);
+                    Himg.CopyImgid = 0;
+                }
+                else if (ImgSize>0)
+                    Himg._ImgMagni(false);
+                else 
                 toolStripCut_Click(sender, e);
+                ImgSize = 0;
             }
             else if (ImgSize == 0) {
                 if (Round == 0)
@@ -1054,6 +1073,7 @@ namespace Csmdajc
                 Common.Writelog(Clscheck.Archid, "质检退回失败!");
             }
         }
+
 
         #endregion
 

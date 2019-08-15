@@ -50,6 +50,7 @@
             this.comboItem12 = new DevComponents.Editors.ComboItem();
             this.comboItem13 = new DevComponents.Editors.ComboItem();
             this.comboItem14 = new DevComponents.Editors.ComboItem();
+            this.comboItem15 = new DevComponents.Editors.ComboItem();
             this.buttjxls = new DevComponents.DotNetBar.ButtonX();
             this.buttjStart = new DevComponents.DotNetBar.ButtonX();
             this.txtTjBoxsn2 = new System.Windows.Forms.TextBox();
@@ -150,7 +151,7 @@
             this.button1 = new System.Windows.Forms.Button();
             this.临时 = new DevComponents.DotNetBar.SuperTabItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.comboItem15 = new DevComponents.Editors.ComboItem();
+            this.comboItem16 = new DevComponents.Editors.ComboItem();
             this.gr1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TabControl)).BeginInit();
             this.TabControl.SuspendLayout();
@@ -371,7 +372,8 @@
             this.comboItem12,
             this.comboItem13,
             this.comboItem14,
-            this.comboItem15});
+            this.comboItem15,
+            this.comboItem16});
             this.combtjSql.Location = new System.Drawing.Point(353, 20);
             this.combtjSql.Name = "combtjSql";
             this.combtjSql.Size = new System.Drawing.Size(211, 21);
@@ -418,6 +420,10 @@
             // comboItem14
             // 
             this.comboItem14.Text = "检测地号不一致";
+            // 
+            // comboItem15
+            // 
+            this.comboItem15.Text = "检测最后一手14位";
             // 
             // buttjxls
             // 
@@ -1476,9 +1482,9 @@
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
             // 
-            // comboItem15
+            // comboItem16
             // 
-            this.comboItem15.Text = "检测最后一手14位";
+            this.comboItem16.Text = "检测第一页是否目录";
             // 
             // Frmtool
             // 
@@ -1657,6 +1663,7 @@
         private System.Windows.Forms.Label label20;
         private DevComponents.Editors.ComboItem comboItem14;
         private DevComponents.Editors.ComboItem comboItem15;
+        private DevComponents.Editors.ComboItem comboItem16;
     }
 }
 

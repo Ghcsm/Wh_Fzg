@@ -38,6 +38,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.lbPage = new System.Windows.Forms.ListBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.txtUserid = new System.Windows.Forms.TextBox();
             this.groupPanel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -46,6 +48,8 @@
             // 
             this.groupPanel1.CanvasColor = System.Drawing.SystemColors.Control;
             this.groupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007;
+            this.groupPanel1.Controls.Add(this.txtUserid);
+            this.groupPanel1.Controls.Add(this.label4);
             this.groupPanel1.Controls.Add(this.label3);
             this.groupPanel1.Controls.Add(this.txtNumpage);
             this.groupPanel1.Controls.Add(this.butDel);
@@ -103,8 +107,8 @@
             // 
             this.txtNumpage.Location = new System.Drawing.Point(197, 50);
             this.txtNumpage.Name = "txtNumpage";
-            this.txtNumpage.Size = new System.Drawing.Size(148, 21);
-            this.txtNumpage.TabIndex = 5;
+            this.txtNumpage.Size = new System.Drawing.Size(60, 21);
+            this.txtNumpage.TabIndex = 1;
             this.txtNumpage.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNumpage_KeyPress);
             // 
             // butDel
@@ -135,8 +139,8 @@
             // 
             this.txtPage.Location = new System.Drawing.Point(197, 105);
             this.txtPage.Name = "txtPage";
-            this.txtPage.Size = new System.Drawing.Size(148, 21);
-            this.txtPage.TabIndex = 1;
+            this.txtPage.Size = new System.Drawing.Size(199, 21);
+            this.txtPage.TabIndex = 3;
             this.txtPage.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPage_KeyPress);
             // 
             // label2
@@ -181,6 +185,24 @@
             this.lbPage.Size = new System.Drawing.Size(92, 151);
             this.lbPage.TabIndex = 5;
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.BackColor = System.Drawing.Color.Transparent;
+            this.label4.Location = new System.Drawing.Point(276, 53);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(59, 12);
+            this.label4.TabIndex = 7;
+            this.label4.Text = "用户编号:";
+            // 
+            // txtUserid
+            // 
+            this.txtUserid.Location = new System.Drawing.Point(344, 50);
+            this.txtUserid.Name = "txtUserid";
+            this.txtUserid.Size = new System.Drawing.Size(52, 21);
+            this.txtUserid.TabIndex = 2;
+            this.txtUserid.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtUserid_KeyPress);
+            // 
             // FrmPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -216,5 +238,7 @@
         private System.Windows.Forms.TextBox txtNumpage;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox txtUserid;
     }
 }

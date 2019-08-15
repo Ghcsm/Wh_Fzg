@@ -575,6 +575,40 @@ namespace Csmtool
             labarchcount.Visible = false;
         }
 
+        void CheckConten()
+        {
+            dgvTjdata.DataSource = null;
+            DataTable dt;
+            if (rabtjBoxsn.Checked)
+                dt = Common.GetBoxsnid(txtTjBoxsn1.Text.Trim(), txtTjBoxsn2.Text.Trim());
+            else
+                dt = Common.GetBoxsnid(txtTjBoxsn1.Text.Trim());
+            if (dt == null || dt.Rows.Count <= 0)
+                return;
+            labarchcount.Visible = true;
+            for (int i = 0; i < dt.Rows.Count; i++) {
+                labarchcount.Text = String.Format("正在执行{0}卷", (i + 1).ToString());
+                Application.DoEvents();
+                string arid = dt.Rows[i][0].ToString();
+                string boxsn = dt.Rows[i][1].ToString();
+                string xqsn = dt.Rows[i][2].ToString();
+                if (arid.Trim().Length <= 0)
+                    continue;
+                int id= Common.GetContepage(arid);
+                if (id==0) {
+                    if (dgvTjdata.Rows.Count == 0) {
+                        dgvTjdata.Columns.Add("boxsn", "盒号");
+                        dgvTjdata.Columns.Add("xqsn", "小区代号");
+                    }
+                    int index = dgvTjdata.Rows.Add();
+                    dgvTjdata.Rows[index].Cells[0].Value = boxsn;
+                    dgvTjdata.Rows[index].Cells[1].Value = xqsn;
+                }
+            }
+            labarchcount.Text = "共0卷";
+            labarchcount.Visible = false;
+        }
+
         void IsSqlinfo()
         {
 
@@ -609,6 +643,11 @@ namespace Csmtool
             else if (combtjSql.SelectedIndex == 10)
             {
                 CheckYwid14();
+                return;
+            }
+            else if (combtjSql.SelectedIndex == 11)
+            {
+                CheckConten();
                 return;
             }
             Quersql();

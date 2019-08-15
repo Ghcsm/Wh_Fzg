@@ -388,6 +388,19 @@ namespace Csmdapx
             Yuan = 1;
         }
 
+        private void toolStripSharePen_ButtonClick(object sender, EventArgs e)
+        {
+            int sj = FrmSharePenSet.shuliang;
+            int bj = FrmSharePenSet.shuliang;
+            int yz = FrmSharePenSet.Yuzhi;
+            Himg._Sharpen(sj, bj, yz);
+        }
+        private void toolStripSharePenSet_Click(object sender, EventArgs e)
+        {
+            FrmSharePenSet penset=new FrmSharePenSet();
+            penset.ShowDialog();
+        }
+
         private void ImgView_MouseClick(object sender, MouseEventArgs e)
         {
             exArgs = e;
@@ -1156,8 +1169,10 @@ namespace Csmdapx
 
 
 
+
+
         #endregion
 
-
+     
     }
 }

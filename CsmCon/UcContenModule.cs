@@ -89,7 +89,6 @@ namespace CsmCon
             } catch (Exception e) {
                 MessageBox.Show("删除数据失败:" + e.ToString());
             }
-
         }
 
         private void butNew_Click(object sender, EventArgs e)
@@ -153,6 +152,38 @@ namespace CsmCon
         {
             if (e.KeyChar == 13)
                 SendKeys.Send("{Tab}");
+        }
+
+        void xginfo()
+        {
+            if (txtTitle.Text.Trim().Length <= 0) {
+                MessageBox.Show("标题长度不正确!");
+                txtTitle.Focus();
+                return;
+            }
+            if (txtlx.Text.Trim().Length <= 0) {
+                MessageBox.Show("所属类型不能空!");
+                txtlx.Focus();
+                return;
+            }
+            if (txtNum.Text.Trim().Length <= 0) {
+                MessageBox.Show("此类型的代码已存在!");
+                txtNum.Focus();
+                return;
+            }
+            if (id.Trim().Length <= 0)
+                return;
+            try {
+                Common.XgContenModule(id, txtTitle.Text.Trim(), txtlx.Text.Trim());
+                LoadModule();
+            } catch (Exception e) {
+                MessageBox.Show("修改数据失败:" + e.ToString());
+            }
+        }
+
+        private void butXg_Click(object sender, EventArgs e)
+        {
+            xginfo();
         }
     }
 }

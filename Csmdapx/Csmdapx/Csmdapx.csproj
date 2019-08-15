@@ -177,6 +177,12 @@
     <Compile Include="FrmIndex.Designer.cs">
       <DependentUpon>FrmIndex.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmSharePenSet.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmSharePenSet.Designer.cs">
+      <DependentUpon>FrmSharePenSet.cs</DependentUpon>
+    </Compile>
     <Compile Include="Frmwt.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -199,6 +205,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FrmIndex.resx">
       <DependentUpon>FrmIndex.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmSharePenSet.resx">
+      <DependentUpon>FrmSharePenSet.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Frmwt.resx">
       <DependentUpon>Frmwt.cs</DependentUpon>

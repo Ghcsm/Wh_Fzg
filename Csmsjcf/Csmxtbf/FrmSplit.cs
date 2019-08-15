@@ -2112,9 +2112,15 @@ namespace Csmsjcf
                     } catch (Exception) {
                         ys = (Convert.ToInt32(pagecount) - p1).ToString();
                     }
-                    if (title == "目录") {
+
+                    if (i == 0 && title == "目录") {
                         mlpage = Convert.ToInt32(ys);
                         continue;
+                    }
+                    else if (i == 0 && title != "目录") {
+                        string str = "目录信息中缺少第一条目录 id号：" + archid + " 二维码信息：" + ewm;
+                        ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
+                        return false;
                     }
                     lsywid.Add(ys);
                     XmlElement xesub2 = xmldoc.CreateElement("CATALOGUE");
@@ -2139,8 +2145,7 @@ namespace Csmsjcf
                         continue;
                     id += 1;
                     if (ys1 == 0) {
-                        if (lsywid.Count > 0)
-                        {
+                        if (lsywid.Count > 0) {
                             ys1 = Convert.ToInt32(lsywid[0]);
                             lsywid.RemoveAt(0);
                         }
@@ -2546,7 +2551,7 @@ namespace Csmsjcf
                 return;
             int x = lbPcbox.SelectedIndex;
             lbPcbox.Items.RemoveAt(x);
-            if (x >ClsDL.Lspcbox.Count)
+            if (x > ClsDL.Lspcbox.Count)
                 return;
             ClsDL.Lspcbox.RemoveAt(x);
         }

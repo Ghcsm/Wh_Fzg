@@ -85,6 +85,8 @@
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripGotoPage = new System.Windows.Forms.ToolStripButton();
             this.toolStripAutoSide = new System.Windows.Forms.ToolStripButton();
+            this.toolStripYzidthsider = new System.Windows.Forms.ToolStripButton();
+            this.toolStripZwidthsider = new System.Windows.Forms.ToolStripButton();
             this.toolStripRound = new System.Windows.Forms.ToolStripButton();
             this.toolStripcopy = new System.Windows.Forms.ToolStripButton();
             this.toolStripPase = new System.Windows.Forms.ToolStripButton();
@@ -108,8 +110,8 @@
             this.dockSite7 = new DevComponents.DotNetBar.DockSite();
             this.dockSite3 = new DevComponents.DotNetBar.DockSite();
             this.odgInsterFile = new System.Windows.Forms.OpenFileDialog();
-            this.toolStripYzidthsider = new System.Windows.Forms.ToolStripButton();
-            this.toolStripZwidthsider = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSharePen = new System.Windows.Forms.ToolStripSplitButton();
+            this.toolStripSharePenSet = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -253,6 +255,7 @@
             this.ImgView.ItemPadding = new System.Windows.Forms.Padding(1);
             this.ImgView.Name = "ImgView";
             this.ImgView.ViewHorizontalAlignment = Leadtools.Controls.ControlAlignment.Center;
+            this.ImgView.ViewMargin = new System.Windows.Forms.Padding(2);
             this.ImgView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ImgView_MouseClick);
             this.ImgView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ImgView_MouseDoubleClick);
             this.ImgView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ImgView_MouseDown);
@@ -385,6 +388,7 @@
             this.toolStripCleSide,
             this.toolStripCut,
             this.toolStripSeparator3,
+            this.toolStripSharePen,
             this.toolStripColorDeep,
             this.toolStripColorShall,
             this.toolStripInterSpeck,
@@ -574,6 +578,18 @@
             this.toolStripAutoSide.Name = "toolStripAutoSide";
             this.toolStripAutoSide.Click += new System.EventHandler(this.toolStripAutoSide_Click);
             // 
+            // toolStripYzidthsider
+            // 
+            resources.ApplyResources(this.toolStripYzidthsider, "toolStripYzidthsider");
+            this.toolStripYzidthsider.Name = "toolStripYzidthsider";
+            this.toolStripYzidthsider.Click += new System.EventHandler(this.toolStripYzidthsider_Click);
+            // 
+            // toolStripZwidthsider
+            // 
+            resources.ApplyResources(this.toolStripZwidthsider, "toolStripZwidthsider");
+            this.toolStripZwidthsider.Name = "toolStripZwidthsider";
+            this.toolStripZwidthsider.Click += new System.EventHandler(this.toolStripZwidthsider_Click);
+            // 
             // toolStripRound
             // 
             resources.ApplyResources(this.toolStripRound, "toolStripRound");
@@ -750,17 +766,19 @@
             this.dockSite3.Name = "dockSite3";
             this.dockSite3.TabStop = false;
             // 
-            // toolStripYzidthsider
+            // toolStripSharePen
             // 
-            resources.ApplyResources(this.toolStripYzidthsider, "toolStripYzidthsider");
-            this.toolStripYzidthsider.Name = "toolStripYzidthsider";
-            this.toolStripYzidthsider.Click += new System.EventHandler(this.toolStripYzidthsider_Click);
+            this.toolStripSharePen.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripSharePenSet});
+            resources.ApplyResources(this.toolStripSharePen, "toolStripSharePen");
+            this.toolStripSharePen.Name = "toolStripSharePen";
+            this.toolStripSharePen.ButtonClick += new System.EventHandler(this.toolStripSharePen_ButtonClick);
             // 
-            // toolStripZwidthsider
+            // toolStripSharePenSet
             // 
-            resources.ApplyResources(this.toolStripZwidthsider, "toolStripZwidthsider");
-            this.toolStripZwidthsider.Name = "toolStripZwidthsider";
-            this.toolStripZwidthsider.Click += new System.EventHandler(this.toolStripZwidthsider_Click);
+            this.toolStripSharePenSet.Name = "toolStripSharePenSet";
+            resources.ApplyResources(this.toolStripSharePenSet, "toolStripSharePenSet");
+            this.toolStripSharePenSet.Click += new System.EventHandler(this.toolStripSharePenSet_Click);
             // 
             // FrmCheck
             // 
@@ -898,5 +916,7 @@
         private System.Windows.Forms.ToolStripButton toolStripMagin;
         private System.Windows.Forms.ToolStripButton toolStripYzidthsider;
         private System.Windows.Forms.ToolStripButton toolStripZwidthsider;
+        private System.Windows.Forms.ToolStripSplitButton toolStripSharePen;
+        private System.Windows.Forms.ToolStripMenuItem toolStripSharePenSet;
     }
 }

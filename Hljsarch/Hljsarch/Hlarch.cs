@@ -408,12 +408,12 @@ namespace HLjscom
                     //    tf = false;
                     //    return;
                     //}
-                     RasterColor lowerColor = new RasterColor(50, 50, 50);
+                    RasterColor lowerColor = new RasterColor(50, 50, 50);
                     RasterColor upperColor = new RasterColor(50, 50, 50);
                     _Imageview.Image.AddMagicWandToRegion((int)pt.X, (int)pt.Y, lowerColor, upperColor, RasterRegionCombineMode.Set);
                     FillCommand fill = new FillCommand(RasterColor.FromKnownColor(RasterKnownColor.White));
                     fill.Run(_Imageview.Image);
-                  
+
                     _Imageview.Image.MakeRegionEmpty();
                     tf = false;
                 }
@@ -460,7 +460,7 @@ namespace HLjscom
         }
 
 
-        // 私有-剪切去边
+        // 剪切去边
         private void Bcropcmd()
         {
             try {
@@ -498,7 +498,7 @@ namespace HLjscom
         }
 
 
-        //私有-剪切范围之外的图像
+        //剪切范围之外的图像
         private void Rectcrop()
         {
             try {
@@ -538,7 +538,7 @@ namespace HLjscom
         }
 
         /// <summary>
-        /// 私有-图像色深浅
+        /// 图像色深浅
         /// </summary>
         /// <param name="x">0:图像深;1:图像浅</param>
         private void Imagecolor(int x)
@@ -546,12 +546,12 @@ namespace HLjscom
             try {
                 if (x == 0) {
                     ChangeIntensityCommand cmdcolors = new ChangeIntensityCommand();
-                    cmdcolors.Brightness -= 30;
+                    cmdcolors.Brightness -= 20;
                     cmdcolors.Run(_Imageview.Image);
                 }
                 else if (x == 1) {
                     ChangeIntensityCommand cmdcolorq = new ChangeIntensityCommand();
-                    cmdcolorq.Brightness += 30;
+                    cmdcolorq.Brightness += 20;
                     cmdcolorq.Run(_Imageview.Image);
                 }
             } catch (Exception ex) {
@@ -560,7 +560,7 @@ namespace HLjscom
         }
 
         /// <summary>
-        /// 私有-字体颜色深浅
+        /// 字体颜色深浅
         /// </summary>
         /// <param name="x">2：字体深;3：字体浅</param>
         private void Fontcolor(int x)
@@ -602,7 +602,7 @@ namespace HLjscom
         }
 
         /// <summary>
-        /// 私有-镜像
+        /// 镜像
         /// </summary>
         private void Flipimage()
         {
@@ -729,7 +729,7 @@ namespace HLjscom
 
 
 
-        // 私有-图像转灰度
+        // 图像转灰度
         private void Desaimage()
         {
             try {
@@ -744,7 +744,7 @@ namespace HLjscom
         }
 
 
-        /// 私有-图像转黑白
+        /// 图像转黑白
         private void Dynaimage()
         {
             try {
@@ -990,6 +990,22 @@ namespace HLjscom
                 }
             } catch { }
         }
+
+
+        public void _Sharpen(int amout, int radius, int thre)
+        {
+            if (_Imageview.Image == null)
+                return;
+            if (radius == 0)
+                return;
+            UnsharpMaskCommand command = new UnsharpMaskCommand();
+            command.Amount = amout;
+            command.Radius = radius;
+            command.Threshold = thre;
+            command.ColorType = UnsharpMaskCommandColorType.Rgb;
+            command.Run(_Imageview.Image);
+        }
+
         # endregion
 
         #region 文件处理
@@ -2414,8 +2430,7 @@ namespace HLjscom
         public void _ImporPage(string file)
         {
             try {
-                if (_Imageview.Image != null)
-                {
+                if (_Imageview.Image != null) {
                     if (File.Exists(file))
                         File.Delete(file);
                     RasterImage Instimg = _Imageview.Image.Clone();
@@ -2500,20 +2515,33 @@ namespace HLjscom
                 return;
             LeadRect rcw = _Imageview.Image.GetRegionBounds(null);
             if (rcw.X != 0 && rcw.Y != 0) {
-                CopyRectangleCommand command = new CopyRectangleCommand();
-                command.Rectangle = rcw;
-                command.CreateFlags = RasterMemoryFlags.Conventional;
-                command.Run(_Imageview.Image.Clone());
-                Imgcopy = command.DestinationImage;
+                _Imageview.InteractiveModes.Clear();
+                _Imageview.ActiveItem.ImageRegionToFloater();
+                _Imageview.Floater = _Imageview.Image.Clone();
                 _Imageview.Image.MakeRegionEmpty();
+                ImageViewerFloaterInteractiveMode FloaterInteractiveMode = new ImageViewerFloaterInteractiveMode();
+                FloaterInteractiveMode.EnablePan = true;
+                FloaterInteractiveMode.EnableZoom = false;
+                FloaterInteractiveMode.EnablePinchZoom = false;
+                FloaterInteractiveMode.WorkOnBounds = false;
+                FloaterInteractiveMode.FloaterRegionRenderMode = ControlRegionRenderMode.Animated;
+                FloaterInteractiveMode.AutoItemMode = ImageViewerAutoItemMode.AutoSetActive;
+                FloaterInteractiveMode.MouseButtons = System.Windows.Forms.MouseButtons.Left;
+                FloaterInteractiveMode.FloaterOpacity = 0.5;
+                FloaterInteractiveMode.FloaterRegionRenderMode = ControlRegionRenderMode.Animated;
+                FloaterInteractiveMode.Item = null;
+                _Imageview.InteractiveModes.BeginUpdate();
+                FloaterInteractiveMode.IsEnabled = true;
+                _Imageview.InteractiveModes.Add(FloaterInteractiveMode);
+                _Imageview.InteractiveModes.EndUpdate();
+                CopyImgid = 1;
             }
         }
 
 
         public void CombineFloater()
         {
-            if (_Imageview.Floater != null)
-            {
+            if (_Imageview.Floater != null) {
                 _Imageview.CombineFloater(false);
                 _Imageview.Floater = null;
             }
@@ -2999,7 +3027,7 @@ namespace HLjscom
         }
 
         /// <summary>
-        /// 私有-设置扫描纸张大小
+        /// 设置扫描纸张大小
         /// </summary>
         /// <param name="_size">1:a4;2:a3</param>
         public void _Setpagesize(int x)
@@ -3027,7 +3055,7 @@ namespace HLjscom
             }
         }
 
-        // 私有-图像转格式
+        // 图像转格式
         private void Imgtobit(int x)
         {
             try {
@@ -3067,7 +3095,7 @@ namespace HLjscom
 
 
         /// <summary>
-        /// 私有-ADF和平板
+        /// ADF和平板
         /// </summary>       
         /// <param name="x">0:Adf;1:平板</param>
         private void Setadf(int x)
@@ -3224,12 +3252,13 @@ namespace HLjscom
             Dictionary<int, string> tmp = new Dictionary<int, string>();
             if (TagPage == 0) {
 
-                for (int i = 1; i <= _PageNumber.Count; i++) {
+                if ( _PageNumber.Count>0) {
                     _PageNumber.GroupBy(item => item.Value)
-                        .Where(item => item.Count() > 1 && item.Key == i && item.Key != -1)
+                        .Where(item => item.Count() > 1 && item.Key != -1 && item.Key != -9999)
                         .SelectMany(item => item)
                   .ToList()
                    .ForEach(item => tmp.Add(item.Key, item.Value.ToString()));
+
                     if (tmp.Count >= 2) {
                         return tmp;
                     }
@@ -3343,6 +3372,8 @@ namespace HLjscom
                         tmpval.Add(item.ToString());
                 }
                 foreach (var item in _PageNumber.Values) {
+                    if (item.ToString()=="-9999")
+                        continue;
                     if (item > RegPage - _PageAbc.Count - _PageFuhao.Count) {
                         tmpval.Add(item.ToString());
                     }
@@ -3371,13 +3402,11 @@ namespace HLjscom
                     tmp.Add(a, s);
                     continue;
                 }
-                if (s.IndexOf('-') < 0)
-                {
+                if (s.IndexOf('-') < 0) {
                     int k = _PageNumber.First(q => q.Value == Convert.ToInt32(s)).Key;
                     tmp.Add(k, s);
                 }
             }
-
             if (dianjicount >= tmp.Count) {
                 dianjicount = 0;
             }
@@ -3408,12 +3437,10 @@ namespace HLjscom
                     if (dianjicount >= tmp1.Count) {
                         dianjicount = 0;
                     }
-                    if (tmp1.Count - 1 >= dianjicount)
-                    {
+                    if (tmp1.Count - 1 >= dianjicount) {
                         string s = "";
-                        foreach (var s1 in tmp1.Values)
-                        {
-                            if (s1.Trim().Length<=0)
+                        foreach (var s1 in tmp1.Values) {
+                            if (s1.Trim().Length <= 0)
                                 continue;
                             if (s.Trim().Length <= 0)
                                 s += s1;
