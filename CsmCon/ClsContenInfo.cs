@@ -212,7 +212,7 @@ namespace CsmCon
                 loadcon = false;
             }
         }
-        public void LoadContentsadd(int archid, ListViewEx lsv, bool ch)
+        public void LoadContentsadd(int archid, ListViewEx lsv, bool ch,int info)
         {
             if (archid <= 0)
                 return;
@@ -241,6 +241,14 @@ namespace CsmCon
 
                     lsv.Invoke(new Action(() => { lsv.Items.Add(lvi); }));
                     i++;
+                }
+
+                if (info > 0)
+                {
+                    if (lsv.Items.Count > 0) {
+                        lsv.Items[lsv.Items.Count-1].Selected = true;
+                        lsv.Items[lsv.Items.Count-1].EnsureVisible();
+                    }
                 }
             } catch {
             } finally {

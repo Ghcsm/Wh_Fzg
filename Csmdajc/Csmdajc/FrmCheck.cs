@@ -392,10 +392,10 @@ namespace Csmdajc
                 }
                 if (ftp.FtpMoveFile(sourefile, goalfile, path)) {
                     Thread.Sleep(5000);
-                    if (archzt == 1)
-                        Common.SetArchWorkState(arid, (int)T_ConFigure.ArchStat.排序完);
-                    else
-                        Common.SetArchWorkState(arid, (int)T_ConFigure.ArchStat.质检完);
+                    //if (archzt == 1)
+                    //    Common.SetArchWorkState(arid, (int)T_ConFigure.ArchStat.排序完);
+                    //else
+                    //    Common.SetArchWorkState(arid, (int)T_ConFigure.ArchStat.质检完);
                 }
             }));
         }

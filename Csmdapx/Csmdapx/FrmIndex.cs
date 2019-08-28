@@ -91,6 +91,19 @@ namespace Csmdapx
             }
         }
         #region ClickEve
+
+        private void toolStripSplit2_Click(object sender, EventArgs e)
+        {
+            FrmCombin frmCombin2=new FrmCombin();
+            frmCombin2.file = ClsIndex.ScanFilePathtmp;
+            frmCombin2.MaxPage = ClsIndex.MaxPage;
+            frmCombin2.ShowDialog();
+            if (frmCombin2.NewImg == null)
+                return;
+            Himg._Insterpage(frmCombin2.NewImg);
+            ClsIndex.MaxPage = Himg._CountPage();
+
+        }
         private void ImgView_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             Himg._ImgFill(e);
@@ -112,6 +125,8 @@ namespace Csmdapx
 
         private void toolStripTrimImg_Click(object sender, EventArgs e)
         {
+            if (ImgView.Image == null)
+                return;
             Frmwt wt = new Frmwt();
             wt.imgview.Image = ImgView.Image.Clone();
             wt.ShowDialog();
@@ -160,6 +175,8 @@ namespace Csmdapx
 
         private void toolStripImportImg_Click(object sender, EventArgs e)
         {
+            if (ImgView.Image == null)
+                return;
             SaveFileDialog savedDialog = new SaveFileDialog();
             if (savedDialog.ShowDialog() == DialogResult.OK) {
                 string strfile = savedDialog.FileName;
@@ -210,7 +227,6 @@ namespace Csmdapx
 
         private void toolStripRecov_Click(object sender, EventArgs e)
         {
-            // Himg.LoadPage(ClsIndex.CrrentPage); ;
             Himg.HufuImg(ClsIndex.ScanFilePathtmp, ClsIndex.CrrentPage);
         }
 
@@ -238,15 +254,6 @@ namespace Csmdapx
                 txtPages.SelectAll();
                 return;
             }
-            //int p;
-            //bool bl = int.TryParse(txt, out p);
-            //if (bl) {
-            //    if (p > ClsIndex.RegPage) {
-            //        MessageBox.Show("页码不能大于登记页码!");
-            //        txtPages.Focus();
-            //        txtPages.SelectAll();
-            //    }
-            //}
             Himg._Oderpage(txt);
             if (ClsIndex.CrrentPage == ClsIndex.MaxPage)
                 this.toolStripSave_Click(null, null);
@@ -488,7 +495,7 @@ namespace Csmdapx
                     string strid = dt.Rows[i][0].ToString();
                     string strkey = dt.Rows[i][2].ToString();
                     string strnum = dt.Rows[i][3].ToString();
-                    if (strid.Trim().Length > 0 && strkey.Trim().Length > 0 && strnum.Trim().Length > 0) {
+                    if (strkey.Trim().Length > 0 && strnum.Trim().Length > 0) {
                         ClsIndex.Lsinikeys.Add(strkey);
                         ClsIndex.lsinival.Add(strnum);
                         // ClsTwain.LsId.Add(strid);
@@ -500,7 +507,7 @@ namespace Csmdapx
 
         void SettxtTag()
         {
-            this.BeginInvoke(new Action(() =>
+            this.Invoke(new Action(() =>
             {
                 ToolStripButton t = null;
                 foreach (var item in toolstripmain1.Items) {
@@ -549,7 +556,6 @@ namespace Csmdapx
         }
 
 
-
         void KeysDownEve(string key)
         {
             string[] str = key.Split(':');
@@ -578,7 +584,6 @@ namespace Csmdapx
                     }
                 }
             }
-
         }
 
         private void GetPages(int page, int counpage)
@@ -1100,7 +1105,7 @@ namespace Csmdapx
                     else {
 
                         if (ftp.SaveRemoteFileUp(T_ConFigure.gArchScanPath, archpos, filetmp, T_ConFigure.ScanTempFile)) {
-                            Common.SetScanFinish(arid, pages, 1, (int)T_ConFigure.ArchStat.扫描完);
+                            Common.SetArchWorkState(arid, (int) T_ConFigure.ArchStat.扫描完);
                             Common.DelTask(Convert.ToInt32(arid));
                             try {
                                 File.Delete(filetmp);
@@ -1171,8 +1176,9 @@ namespace Csmdapx
 
 
 
+
         #endregion
 
-     
+      
     }
 }

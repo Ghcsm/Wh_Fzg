@@ -2,6 +2,7 @@
 using System;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -33,11 +34,34 @@ namespace Bgkj
             try {
                 FrmMain fmMain = new FrmMain();
                 this.Hide();
+                Wirteini();
                 fmMain.ShowDialog();
             } catch {
                 Application.Exit();
             }
+        }
 
+        void Wirteini()
+        {
+            try {
+                string file = Path.Combine(Application.StartupPath, "Archselect.ini");
+                Writeini.Fileini = file;
+                Writeini.Wirteini("username", "user", txtUser.Text.Trim());
+            } catch { }
+
+        }
+
+        void Readini()
+        {
+            try
+            {
+                string file = Path.Combine(Application.StartupPath, "Archselect.ini");
+                Writeini.Fileini = file;
+                string user = Writeini.Readini("username", "user");
+                txtUser.Text = user;
+            }
+            catch 
+            {}
         }
 
         private bool Setusersys()
@@ -159,6 +183,11 @@ namespace Bgkj
             if (e.Button == MouseButtons.Left) {
                 this.Location = new Point(this.Location.X + e.X - ClsSetInfopar.mPoint.X, this.Location.Y + e.Y - ClsSetInfopar.mPoint.Y);
             }
+        }
+
+        private void FrmUI_Shown(object sender, EventArgs e)
+        {
+            Readini();
         }
     }
 }

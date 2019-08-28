@@ -2024,6 +2024,20 @@ namespace Csmsjcf
                     ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
                     return false;
                 }
+                else {
+                    int p;
+                    bool bl = int.TryParse(page, out p);
+                    if (!bl) {
+                        string str = "录入信息中页码不正确 id号：" + archid + " 二维码信息：" + ewm;
+                        ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
+                        return false;
+                    }
+                    if (p <= 0) {
+                        string str = "录入信息中页码不正确 id号：" + archid + " 二维码信息：" + ewm;
+                        ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
+                        return false;
+                    }
+                }
                 XmlElement xesub1 = xmldoc.CreateElement("ArchiveID");
                 xesub1.InnerText = file;
                 xe1.AppendChild(xesub1);
@@ -2104,21 +2118,25 @@ namespace Csmsjcf
                     string qsy = dt.Rows[i][4].ToString();
                     string ywid = dt.Rows[i][3].ToString();
                     string ys = "";
-                    int p1 = 0;
                     try {
-                        p1 = Convert.ToInt32(qsy);
                         string p2 = dt.Rows[i + 1][4].ToString();
-                        ys = (Convert.ToInt32(p2) - p1).ToString();
-                    } catch (Exception) {
-                        ys = (Convert.ToInt32(pagecount) - p1).ToString();
+                        ys = (Convert.ToInt32(p2) - Convert.ToInt32(qsy)).ToString();
+                    } catch {
+                        ys = (Convert.ToInt32(pagecount) - Convert.ToInt32(qsy)).ToString();
+                        if (ys == "0")
+                            ys = "1";
                     }
-
                     if (i == 0 && title == "目录") {
                         mlpage = Convert.ToInt32(ys);
                         continue;
                     }
                     else if (i == 0 && title != "目录") {
                         string str = "目录信息中缺少第一条目录 id号：" + archid + " 二维码信息：" + ewm;
+                        ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
+                        return false;
+                    }
+                    if (ys == "0") {
+                        string str = "目录页码不正确 id号：" + archid + " 二维码信息：" + ewm;
                         ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
                         return false;
                     }

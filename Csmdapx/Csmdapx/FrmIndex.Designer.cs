@@ -92,6 +92,7 @@
             this.toolStripAutoSide = new System.Windows.Forms.ToolStripButton();
             this.toolStripFiltr = new System.Windows.Forms.ToolStripButton();
             this.toolStripSplit = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSplit2 = new System.Windows.Forms.ToolStripButton();
             this.toolProess = new System.Windows.Forms.ToolStripProgressBar();
             this.toolStripYzidthsider = new System.Windows.Forms.ToolStripButton();
             this.toolStripZwidthsider = new System.Windows.Forms.ToolStripButton();
@@ -331,7 +332,7 @@
             this.ImgView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.ImgView.BackColor = System.Drawing.Color.SlateGray;
+            this.ImgView.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.ImgView.IsSyncSource = true;
             this.ImgView.IsSyncTarget = true;
             this.ImgView.ItemPadding = new System.Windows.Forms.Padding(1);
@@ -340,7 +341,7 @@
             this.ImgView.Size = new System.Drawing.Size(971, 519);
             this.ImgView.TabIndex = 1;
             this.ImgView.ViewHorizontalAlignment = Leadtools.Controls.ControlAlignment.Center;
-            this.ImgView.ViewMargin = new System.Windows.Forms.Padding(2);
+            this.ImgView.ViewMargin = new System.Windows.Forms.Padding(10);
             this.ImgView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ImgView_MouseClick);
             this.ImgView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ImgView_MouseDoubleClick);
             this.ImgView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ImgView_MouseDown);
@@ -681,6 +682,7 @@
             this.toolStripAutoSide,
             this.toolStripFiltr,
             this.toolStripSplit,
+            this.toolStripSplit2,
             this.toolProess,
             this.toolStripYzidthsider,
             this.toolStripZwidthsider,
@@ -802,6 +804,16 @@
             this.toolStripSplit.Size = new System.Drawing.Size(59, 24);
             this.toolStripSplit.Text = "拼接";
             this.toolStripSplit.Click += new System.EventHandler(this.toolStripSplit_Click);
+            // 
+            // toolStripSplit2
+            // 
+            this.toolStripSplit2.Font = new System.Drawing.Font("微软雅黑", 11F);
+            this.toolStripSplit2.Image = global::Csmdapx.Properties.Resources._20;
+            this.toolStripSplit2.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripSplit2.Name = "toolStripSplit2";
+            this.toolStripSplit2.Size = new System.Drawing.Size(68, 24);
+            this.toolStripSplit2.Text = "拼接2";
+            this.toolStripSplit2.Click += new System.EventHandler(this.toolStripSplit2_Click);
             // 
             // toolProess
             // 
@@ -1185,5 +1197,6 @@
         private System.Windows.Forms.ToolStripButton toolStripYzidthsider;
         private System.Windows.Forms.ToolStripSplitButton toolStripSharePen;
         private System.Windows.Forms.ToolStripMenuItem toolStripSharePenSet;
+        private System.Windows.Forms.ToolStripButton toolStripSplit2;
     }
 }

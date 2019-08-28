@@ -38,6 +38,7 @@
             this.panelDock2 = new DevComponents.DotNetBar.PanelDockContainer();
             this.splitCont1 = new System.Windows.Forms.SplitContainer();
             this.gr2 = new System.Windows.Forms.GroupBox();
+            this.chkImg = new System.Windows.Forms.CheckBox();
             this.grPageInfo = new System.Windows.Forms.GroupBox();
             this.labPagesSize = new System.Windows.Forms.Label();
             this.labColor = new System.Windows.Forms.Label();
@@ -119,7 +120,6 @@
             this.dockSite7 = new DevComponents.DotNetBar.DockSite();
             this.dockSite3 = new DevComponents.DotNetBar.DockSite();
             this.oFdInsterFile = new System.Windows.Forms.OpenFileDialog();
-            this.chkImg = new System.Windows.Forms.CheckBox();
             this.dockSite9.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bar2)).BeginInit();
             this.bar2.SuspendLayout();
@@ -285,6 +285,16 @@
             this.gr2.TabIndex = 2;
             this.gr2.TabStop = false;
             this.gr2.Text = "扫描参数";
+            // 
+            // chkImg
+            // 
+            this.chkImg.AutoSize = true;
+            this.chkImg.Location = new System.Drawing.Point(20, 390);
+            this.chkImg.Name = "chkImg";
+            this.chkImg.Size = new System.Drawing.Size(72, 16);
+            this.chkImg.TabIndex = 8;
+            this.chkImg.Text = "图像处理";
+            this.chkImg.UseVisualStyleBackColor = true;
             // 
             // grPageInfo
             // 
@@ -662,8 +672,7 @@
             // 
             // ImgView
             // 
-            this.ImgView.BackColor = System.Drawing.Color.SlateGray;
-            this.ImgView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.ImgView.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.ImgView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ImgView.IsSyncSource = true;
             this.ImgView.IsSyncTarget = true;
@@ -673,6 +682,7 @@
             this.ImgView.Size = new System.Drawing.Size(806, 547);
             this.ImgView.TabIndex = 0;
             this.ImgView.ViewHorizontalAlignment = Leadtools.Controls.ControlAlignment.Center;
+            this.ImgView.ViewMargin = new System.Windows.Forms.Padding(10);
             this.ImgView.Click += new System.EventHandler(this.ImgView_Click);
             // 
             // grBottom
@@ -1082,16 +1092,6 @@
             this.dockSite3.Size = new System.Drawing.Size(1360, 0);
             this.dockSite3.TabIndex = 3;
             this.dockSite3.TabStop = false;
-            // 
-            // chkImg
-            // 
-            this.chkImg.AutoSize = true;
-            this.chkImg.Location = new System.Drawing.Point(20, 390);
-            this.chkImg.Name = "chkImg";
-            this.chkImg.Size = new System.Drawing.Size(72, 16);
-            this.chkImg.TabIndex = 8;
-            this.chkImg.Text = "图像处理";
-            this.chkImg.UseVisualStyleBackColor = true;
             // 
             // FrmTwain
             // 

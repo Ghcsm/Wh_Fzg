@@ -239,13 +239,14 @@
             // 
             // ImgView
             // 
-            this.ImgView.BackColor = System.Drawing.Color.SlateGray;
+            this.ImgView.BackColor = System.Drawing.SystemColors.InactiveCaption;
             resources.ApplyResources(this.ImgView, "ImgView");
             this.ImgView.IsSyncSource = true;
             this.ImgView.IsSyncTarget = true;
             this.ImgView.ItemPadding = new System.Windows.Forms.Padding(1);
             this.ImgView.Name = "ImgView";
             this.ImgView.ViewHorizontalAlignment = Leadtools.Controls.ControlAlignment.Center;
+            this.ImgView.ViewMargin = new System.Windows.Forms.Padding(10);
             this.ImgView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ImgView_MouseDoubleClick);
             this.ImgView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ImgView_MouseDown);
             // 

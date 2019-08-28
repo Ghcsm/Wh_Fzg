@@ -61,7 +61,7 @@ namespace HLjscom
         // PrintDocument 对象
         private PrintDocument _PrintDoc;
         //压缩质量
-        private const int Factor = 80;
+        private const int Factor = 30;
         //系统临时目录
         public string Filename = "c:\\temp\\scantmp.tif";
         //句柄
@@ -353,6 +353,19 @@ namespace HLjscom
             }
         }
 
+
+        public void _RoteImageFolter(ImageViewer imgage)
+        {
+            if (imgage.Floater == null)
+                return;
+            ControlRegionRenderMode saveMode = imgage.FloaterRegionRenderMode;
+            imgage.FloaterRegionRenderMode = ControlRegionRenderMode.None;
+            imgage.Floater.RotateViewPerspective(90);
+            imgage.FloaterRegionRenderMode = saveMode;
+        }
+
+
+
         //矫正
         private void Autodeskew()
         {
@@ -446,6 +459,48 @@ namespace HLjscom
             }
         }
 
+        public void _SizeImgeFloter(ImageViewer imgage, int x)
+        {
+            if (imgage.Floater == null)
+                return;
+            if (x == 0) {
+
+                var transform = imgage.FloaterTransform;
+                transform.Scale(0.9, 0.9);
+                imgage.FloaterTransform = transform;
+            }
+            else if (x == 1) {
+                var transform = imgage.FloaterTransform;
+                transform.Scale(1.1, 1.1);
+                imgage.FloaterTransform = transform;
+            }
+        }
+
+        public void _FloterMove(ImageViewer image, int x)
+        {
+            if (image.Floater == null)
+                return;
+            var transform = image.FloaterTransform;
+            if (x == 0) {
+                double x1 = transform.OffsetX - 10;
+                transform.OffsetX = x1;
+            }
+            else if (x == 1) {
+                double x1 = transform.OffsetX + 10;
+                transform.OffsetX = x1;
+            }
+            else if (x == 2) {
+                double x1 = transform.OffsetY - 10;
+                transform.OffsetY = x1;
+            }
+            else if (x == 3) {
+                double x1 = transform.OffsetY + 10;
+                transform.OffsetY = x1;
+            }
+            image.FloaterTransform = transform;
+        }
+
+
         //自动去边
         private void Autocrop()
         {
@@ -454,6 +509,23 @@ namespace HLjscom
                 cmdauto.Threshold = 64;
                 cmdauto.Run(_Imageview.Image);
                 _Imageview.Image.MakeRegionEmpty();
+            } catch (Exception ex) {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
+        private void AutocropFloter(ImageViewer imgview)
+        {
+            if (imgview.Floater == null)
+                return;
+            try {
+                RasterImage img = imgview.Floater.Clone();
+                imgview.Floater = null;
+                AutoCropCommand cmdauto = new AutoCropCommand();
+                cmdauto.Threshold = 64;
+                cmdauto.Run(img);
+                _Imageview.Image.MakeRegionEmpty();
+                imgview.Floater = img.Clone();
             } catch (Exception ex) {
                 MessageBox.Show(ex.ToString());
             }
@@ -474,6 +546,26 @@ namespace HLjscom
                 MessageBox.Show(ex.ToString());
             }
         }
+        private void BcropcmdFloter(ImageViewer imgview)
+        {
+            if (imgview.Floater == null)
+                return;
+            try {
+                RasterImage img = imgview.Floater.Clone();
+                CropCommand cmdcrop = new CropCommand();
+                cmdcrop.Rectangle = new LeadRect(0, 0, _Imageview.Image.Width - 8, _Imageview.Image.Height - 8);
+                cmdcrop.Run(img);
+                cmdcrop.Rectangle = new LeadRect(5, 5, _Imageview.Image.Width - 8, _Imageview.Image.Height - 8);
+                cmdcrop.Run(img);
+                imgview.Image.MakeRegionEmpty();
+                imgview.Floater = img.Clone();
+            } catch (Exception ex) {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
+
+
 
         /// 填充去边
         public void _BfillImage(int id)
@@ -532,6 +624,25 @@ namespace HLjscom
                             break;
                     }
                 }
+            } catch (Exception ex) {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
+        public void _SidecropFloter(ImageViewer imgview, int x)
+        {
+            if (imgview.Floater == null)
+                return;
+            try {
+                switch (x) {
+                    case 0:
+                        AutocropFloter(imgview);
+                        break;
+                    case 1:
+                        BcropcmdFloter(imgview);
+                        break;
+                }
+
             } catch (Exception ex) {
                 MessageBox.Show(ex.ToString());
             }
@@ -1260,6 +1371,66 @@ namespace HLjscom
             }
         }
 
+        public RasterImage GetImg(string file, int page)
+        {
+            RasterImage bitmap = null;
+            try {
+                using (RasterCodecs _Codef = new RasterCodecs()) {
+                    RasterImage _imagepx = _Codef.Load(file, 0, CodecsLoadByteOrder.BgrOrGrayOrRomm, page, page).Clone();
+                    bitmap = _imagepx;
+                }
+                return bitmap;
+            } catch (Exception ex) {
+                MessageBox.Show(ex.ToString());
+                return bitmap;
+            }
+        }
+
+
+        ImageViewerFloaterInteractiveMode _floaterInteractiveMode;
+        public ImageViewerFloaterInteractiveMode FloaterInteractiveMode
+        {
+            get
+            { return _floaterInteractiveMode; }
+            set
+            { _floaterInteractiveMode = value; }
+        }
+
+
+        public void LoadFloater(string file, int p, ImageViewer imgview)
+        {
+            RasterImage _imagepx;
+            using (RasterCodecs _Codef = new RasterCodecs()) {
+                _imagepx = _Codef.Load(file, 0, CodecsLoadByteOrder.BgrOrGrayOrRomm, p, p).Clone();
+            }
+            imgview.ActiveItem.ImageRegionToFloater();
+            imgview.Image.MakeRegionEmpty();
+            if (imgview.Floater == null)
+                imgview.Floater = _imagepx.Clone();
+            else {
+                imgview.CombineFloater(false);
+                imgview.Floater = null;
+                imgview.Floater = _imagepx.Clone();
+            }
+
+            FloaterInteractiveMode = new ImageViewerFloaterInteractiveMode();
+            FloaterInteractiveMode.EnablePan = true;
+            FloaterInteractiveMode.EnableZoom = false;
+            FloaterInteractiveMode.EnablePinchZoom = false;
+            FloaterInteractiveMode.WorkOnBounds = false;
+            FloaterInteractiveMode.FloaterRegionRenderMode = ControlRegionRenderMode.Animated;
+            //FloaterInteractiveMode.ImageViewer.Image.GetRegion(null).SetData(null);
+            FloaterInteractiveMode.AutoItemMode = ImageViewerAutoItemMode.AutoSetActive;
+            FloaterInteractiveMode.MouseButtons = System.Windows.Forms.MouseButtons.Left;
+            FloaterInteractiveMode.FloaterOpacity = 0.5;
+            FloaterInteractiveMode.FloaterRegionRenderMode = ControlRegionRenderMode.Animated;
+            FloaterInteractiveMode.Item = null;
+            imgview.InteractiveModes.BeginUpdate();
+            FloaterInteractiveMode.IsEnabled = true;
+            imgview.InteractiveModes.Add(FloaterInteractiveMode);
+            imgview.InteractiveModes.EndUpdate();
+        }
+
 
         //文字水印
         public RasterImage WaterImgtxt(RasterImage water)
@@ -1390,15 +1561,15 @@ namespace HLjscom
                     if (bit != 1) {
                         if (bit != 8) {
                             _Codef.Options.Jpeg.Save.QualityFactor = Factor;
-                            _Codef.Save(_imagepx, file, RasterImageFormat.TifJpeg, bit, 1, 1, i, CodecsSavePageMode.Append);
+                            _Codef.Save(_imagepx, file, RasterImageFormat.Jpeg, bit, 1, 1, i, CodecsSavePageMode.Append);
                         }
                         else {
                             _Codef.Options.Jpeg.Save.QualityFactor = Factor;
-                            _Codef.Save(_imagepx, file, RasterImageFormat.TifJpeg, 8, 1, 1, i, CodecsSavePageMode.Append);
+                            _Codef.Save(_imagepx, file, RasterImageFormat.Jpeg, 8, 1, 1, i, CodecsSavePageMode.Append);
                         }
                     }
                     else {
-                        _Codef.Save(_imagepx, file, RasterImageFormat.CcittGroup4, 1, 1, 1, -1, CodecsSavePageMode.Append);
+                        _Codef.Save(_imagepx, file, RasterImageFormat.Jpeg, 1, 1, 1, -1, CodecsSavePageMode.Append);
                     }
                 }
                 _Codef.Dispose();
@@ -1461,15 +1632,15 @@ namespace HLjscom
                     if (bit != 1) {
                         if (bit != 8) {
                             _Codef.Options.Jpeg.Save.QualityFactor = Factor;
-                            _Codef.Save(_imagepx, file, RasterImageFormat.TifJpeg, bit, 1, 1, i, CodecsSavePageMode.Append);
+                            _Codef.Save(_imagepx, file, RasterImageFormat.Jpeg, bit, 1, 1, i, CodecsSavePageMode.Append);
                         }
                         else {
                             _Codef.Options.Jpeg.Save.QualityFactor = Factor;
-                            _Codef.Save(_imagepx, file, RasterImageFormat.TifJpeg, 8, 1, 1, i, CodecsSavePageMode.Append);
+                            _Codef.Save(_imagepx, file, RasterImageFormat.Jpeg, 8, 1, 1, i, CodecsSavePageMode.Append);
                         }
                     }
                     else {
-                        _Codef.Save(_imagepx, file, RasterImageFormat.CcittGroup4, 1, 1, 1, -1, CodecsSavePageMode.Append);
+                        _Codef.Save(_imagepx, file, RasterImageFormat.Jpeg, 1, 1, 1, -1, CodecsSavePageMode.Append);
                     }
                 }
                 _Codef.Dispose();
@@ -2000,6 +2171,34 @@ namespace HLjscom
         }
 
 
+        public void _CreateWidth(ImageViewer imgview)
+        {
+            try {
+                float w = 2510 * 2;
+                float h = 3500 * 2;
+                int bitsPerPixel = 24;
+                FillCommand fillCmd = new FillCommand(RasterColor.FromKnownColor(RasterKnownColor.White));
+                RasterByteOrder order = RasterByteOrder.Rgb;
+                RasterImage pageImage = new RasterImage(
+                    RasterMemoryFlags.Conventional,
+                    (int)w,
+                    (int)h,
+                    bitsPerPixel,
+                    order,
+                    RasterViewPerspective.TopLeft,
+                    null,
+                    IntPtr.Zero,
+                    0);
+                fillCmd.Run(pageImage);
+                imgview.Image = pageImage;
+                imgview.Zoom(ControlSizeMode.FitAlways, 1, imgview.DefaultZoomOrigin);
+            } catch {
+
+            }
+
+        }
+
+
 
         //排序
         public void _OrderSave(string _path)
@@ -2426,6 +2625,33 @@ namespace HLjscom
                 MessageBox.Show(ex.ToString());
             }
         }
+        public void _Insterpage(RasterImage instimg)
+        {
+            try {
+                if (_Imageview.Image != null) {
+                    int bit = instimg.BitsPerPixel;
+                    int page = CrrentPage + 1;
+                    if (bit != 1) {
+                        if (bit != 8) {
+                            _Codefile.Options.Jpeg2000.Save.CompressionRatio = (float)Factor;
+                            _Codefile.Options.Ecw.Save.QualityFactor = Factor;
+                            _Codefile.Save(instimg, Filename, RasterImageFormat.TifJpeg, bit, 1, 1, page, CodecsSavePageMode.Insert);
+                        }
+                        else {
+                            _Codefile.Options.Jpeg.Save.QualityFactor = Factor;
+                            _Codefile.Save(instimg, Filename, RasterImageFormat.TifJpeg, bit, 1, 1, page, CodecsSavePageMode.Insert);
+                        }
+                    }
+                    else {
+                        _Codefile.Save(instimg, Filename, RasterImageFormat.CcittGroup4, bit, 1, 1, page, CodecsSavePageMode.Insert);
+                    }
+                    _Gotopage(page);
+                }
+
+            } catch (Exception ex) {
+                MessageBox.Show(ex.ToString());
+            }
+        }
 
         public void _ImporPage(string file)
         {
@@ -2443,11 +2669,11 @@ namespace HLjscom
                         }
                         else {
                             _Codefile.Options.Jpeg.Save.QualityFactor = Factor;
-                            _Codefile.Save(Instimg, file, RasterImageFormat.TifJpeg, bit, 1, 1, 1, CodecsSavePageMode.Append);
+                            _Codefile.Save(Instimg, file, RasterImageFormat.Jpeg422, bit, 1, 1, 1, CodecsSavePageMode.Append);
                         }
                     }
                     else {
-                        _Codefile.Save(Instimg, file, RasterImageFormat.CcittGroup4, bit, 1, 1, 1, CodecsSavePageMode.Append);
+                        _Codefile.Save(Instimg, file, RasterImageFormat.Jpeg422, bit, 1, 1, 1, CodecsSavePageMode.Append);
                     }
                 }
 
@@ -2533,6 +2759,11 @@ namespace HLjscom
                 _Imageview.InteractiveModes.BeginUpdate();
                 FloaterInteractiveMode.IsEnabled = true;
                 _Imageview.InteractiveModes.Add(FloaterInteractiveMode);
+
+                var floater = _Imageview.Floater;
+                var transform = _Imageview.FloaterTransform;
+                transform.Translate(-rcw.X, -rcw.Y);
+                _Imageview.FloaterTransform = transform;
                 _Imageview.InteractiveModes.EndUpdate();
                 CopyImgid = 1;
             }
@@ -2548,6 +2779,16 @@ namespace HLjscom
         }
 
 
+
+        //复制图像
+        //CopyRectangleCommand command = new CopyRectangleCommand();
+        //command.Rectangle = rcw;
+        //command.CreateFlags = RasterMemoryFlags.Conventional;
+        //command.Run(_Imageview.Image.Clone());
+        //Imgcopy = command.DestinationImage;
+        //_Imageview.Image.MakeRegionEmpty();
+
+
         public bool _CopyImg()
         {
             CopyImgid = 0;
@@ -2555,12 +2796,6 @@ namespace HLjscom
                 return false;
             LeadRect rcw = _Imageview.Image.GetRegionBounds(null);
             if (rcw.X != 0 && rcw.Y != 0) {
-                //CopyRectangleCommand command = new CopyRectangleCommand();
-                //command.Rectangle = rcw;
-                //command.CreateFlags = RasterMemoryFlags.Conventional;
-                //command.Run(_Imageview.Image.Clone());
-                //Imgcopy = command.DestinationImage;
-                //_Imageview.Image.MakeRegionEmpty();
                 _Imageview.InteractiveModes.Clear();
                 _Imageview.ActiveItem.ImageRegionToFloater();
                 _Imageview.Floater = _Imageview.Image.Clone();
@@ -2579,6 +2814,10 @@ namespace HLjscom
                 _Imageview.InteractiveModes.BeginUpdate();
                 FloaterInteractiveMode.IsEnabled = true;
                 _Imageview.InteractiveModes.Add(FloaterInteractiveMode);
+                var floater = _Imageview.Floater;
+                var transform = _Imageview.FloaterTransform;
+                transform.Translate(-rcw.X, -rcw.Y);
+                _Imageview.FloaterTransform = transform;
                 _Imageview.InteractiveModes.EndUpdate();
                 CopyImgid = 1;
                 return true;
@@ -3252,7 +3491,7 @@ namespace HLjscom
             Dictionary<int, string> tmp = new Dictionary<int, string>();
             if (TagPage == 0) {
 
-                if ( _PageNumber.Count>0) {
+                if (_PageNumber.Count > 0) {
                     _PageNumber.GroupBy(item => item.Value)
                         .Where(item => item.Count() > 1 && item.Key != -1 && item.Key != -9999)
                         .SelectMany(item => item)
@@ -3326,6 +3565,11 @@ namespace HLjscom
         {
             List<string> tmp = new List<string>();
             if (TagPage == 0) {
+                for (int i = 0; i < _PageAbc.Count; i++) {
+                    string zimu = (Convert.ToChar(97 + i)).ToString();
+                    if (!_PageAbc.ContainsValue(zimu))
+                        tmp.Add(zimu);
+                }
                 for (int t = 0; t < Fuhao.Count; t++) {
                     string s = Fuhao[t];
                     if (s.Trim().Length <= 0)
@@ -3341,6 +3585,11 @@ namespace HLjscom
 
             }
             else {
+                for (int i = 0; i < _PageAbc.Count; i++) {
+                    string zimu = (Convert.ToChar(97 + i)).ToString();
+                    if (!_PageAbc.ContainsValue(zimu))
+                        tmp.Add(zimu);
+                }
                 for (int t = 0; t < Fuhao.Count; t++) {
                     string s = Fuhao[t];
                     if (s.Trim().Length <= 0)
@@ -3372,7 +3621,7 @@ namespace HLjscom
                         tmpval.Add(item.ToString());
                 }
                 foreach (var item in _PageNumber.Values) {
-                    if (item.ToString()=="-9999")
+                    if (item.ToString() == "-9999")
                         continue;
                     if (item > RegPage - _PageAbc.Count - _PageFuhao.Count) {
                         tmpval.Add(item.ToString());
@@ -3585,6 +3834,168 @@ namespace HLjscom
             }
         }
 
+
+        #endregion
+
+        #region 其他功能
+
+
+        public void SetAutoRect()
+        {
+            if (_Imageview.Image == null)
+                return;
+            RasterImage img = _Imageview.Image.Clone();
+            byte[] data1 = img.GetPixelData(1, 1);
+            int r = data1[2];
+            int g = data1[1];
+            int b = data1[0];
+            int a = 20;
+            int x0 = 0, y0 = 0;
+            //左上
+            for (int h = 0; h < img.Height - 1; h += 4) {
+                if (x0 > 0 && y0 > 0)
+                    break;
+                int w = h;
+                byte[] data = img.GetPixelData(h, w);
+                int oldr = data[2];
+                int oldg = data[1];
+                int oldb = data[0];
+                //正常黄底
+                if (oldr > 200 && oldg > 200 && oldg > 200) {
+                    if (oldr - r < a && oldg - g < a && oldb - b < a) {
+                        data[2] = 0;
+                        data[1] = 0;
+                        data[0] = 255;
+                        img.SetPixelData(h, w, data);
+                    }
+                    else {
+                        x0 = w;
+                        y0 = h;
+                        if (w > 0 && h > 0)
+                            break;
+                    }
+                }
+                else if (oldr < 100 || oldg < 100 || oldb < 100) {  // 深绿 合同封面
+                    x0 = w;
+                    y0 = h;
+                    if (w > 0 && h > 0)
+                        break;
+                }
+                else if (oldr > 150 && oldr < 200 && oldg > 150 && oldg < 200 && oldb > 150 && oldb < 200) {   //红色房证
+                    x0 = w;
+                    y0 = h;
+                    if (w > 0 && h > 0)
+                        break;
+                }
+                else {
+                    x0 = w;
+                    y0 = h;
+                    if (w > 0 && h > 0)
+                        break;
+                }
+                //}
+            }
+            int x1 = 0, y1 = 0;
+            int h1 = 50;
+            //左下
+            for (int h = img.Height - 1; h > 0; h -= 4) {
+                h1 += 4;
+                if (x1 > 0 && y1 > 0)
+                    break;
+                for (int w = 0; w < img.Width / 2; w += 4) {
+                    byte[] data = img.GetPixelData(h, w);
+
+                    int oldr = data[2];
+                    int oldg = data[1];
+                    int oldb = data[0];
+
+                    if (oldr > 200 && oldg > 200 && oldg > 200) {
+                        if (oldr - r < a && oldg - g < a && oldb - b < a) {
+                            data[2] = 0;
+                            data[1] = 0;
+                            data[0] = 255;
+                            img.SetPixelData(h, w, data);
+                        }
+                        else {
+                            x1 = w;
+                            y1 = h;
+                            if (w > 0 && h > 0)
+                                break;
+                        }
+                    }
+                    else if (oldr < 100 && oldg < 100 && oldb < 100) {  // 深绿 合同封面
+                        x1 = w;
+                        y1 = h;
+                        if (w > 0 && h > 0)
+                            break;
+                    }
+                    else if (oldr > 150 && oldr < 200 && oldg > 150 && oldg < 200 && oldb > 150 && oldb < 200) {   //红色房证
+                        x1 = w;
+                        y1 = h;
+                        if (w > 0 && h > 0)
+                            break;
+                    }
+                    else {
+                        x1 = w;
+                        y1 = h;
+                        if (w > 0 && h > 0)
+                            break;
+                    }
+                }
+            }// 右上
+            int x2 = 0, y2 = 0;
+            h1 = 50;
+            for (int h = 0; h < img.Height - 1; h += 4) {
+                h1 += 4;
+                if (x2 > 0 && y2 > 0)
+                    break;
+                for (int w = img.Width; w > img.Width / 2; w -= 4) {
+                    byte[] data = img.GetPixelData(h, w);
+
+                    int oldr = data[2];
+                    int oldg = data[1];
+                    int oldb = data[0];
+
+                    if (oldr > 200 && oldg > 200 && oldg > 200) {
+                        if (oldr - r < a && oldg - g < a && oldb - b < a) {
+                            data[2] = 255;
+                            data[1] = 0;
+                            data[0] = 0;
+                            img.SetPixelData(h, w, data);
+                        }
+                        else {
+                            x2 = w;
+                            y2 = h;
+                            if (w > 0 && h > 0)
+                                break;
+                        }
+                    }
+                    else if (oldr < 100 && oldg < 100 && oldb < 100) {  // 深绿 合同封面
+                        x2 = w;
+                        y2 = h;
+                        if (w > 0 && h > 0)
+                            break;
+                    }
+                    else if (oldr > 150 && oldr < 200 && oldg > 150 && oldg < 200 && oldb > 150 && oldb < 200) {   //红色房证
+                        x2 = w;
+                        y2 = h;
+                        if (w > 0 && h > 0)
+                            break;
+                    }
+                    else {
+                        x2 = w;
+                        y2 = h;
+                        if (w > 0 && h > 0)
+                            break;
+                    }
+                }
+            }
+            int ww = x2 - x0;
+            int hh = y1 - y0;
+            _Imageview.Image = img.Clone();
+            LeadRect rcw = new LeadRect(new LeadPoint(x0, y0), new LeadSize(ww, hh));
+            _Imageview.Image.AddRectangleToRegion(null, rcw, RasterRegionCombineMode.And);
+        }
 
         #endregion
     }

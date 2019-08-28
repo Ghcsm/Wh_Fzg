@@ -243,7 +243,7 @@ namespace DAL
             if (chk)
                 strSq = "update M_IMAGEFILE set ArchXqStat=@zt,ArchLx=@lx where Boxsn>=@b1 and Boxsn<=@b2 ";
             else
-                strSq = "update M_IMAGEFILE set ArchXqStat=@zt,ArchLx=@lx where Boxsn>=@b1 and Boxsn<=@b2 and CHECKED<>1";
+                strSq = "update M_IMAGEFILE set ArchXqStat=@zt,ArchLx=@lx where Boxsn>=@b1 and Boxsn<=@b2 and CHECKED is null or CHECKED<>1 ";
             SqlParameter p1 = new SqlParameter("@b1", b1);
             SqlParameter p2 = new SqlParameter("@b2", b2);
             SqlParameter p3 = new SqlParameter("@zt", lx);
@@ -1949,10 +1949,11 @@ namespace DAL
         public static void Keysdelvale(string modul, string oper)
         {
 
-            string strSql = "delete from M_OperterKeyUserid where Moudle=@mod  and OperKey=@key";
+            string strSql = "delete from M_OperterKeyUserid where Moudle=@mod  and OperKey=@key and Userid=@useid";
             SqlParameter p1 = new SqlParameter("@mod", modul);
             SqlParameter p2 = new SqlParameter("@key", oper);
-            SQLHelper.ExecScalar(strSql, p1, p2);
+            SqlParameter p3 = new SqlParameter("@useid", T_User.UserId);
+            SQLHelper.ExecScalar(strSql, p1, p2,p3);
 
         }
 
@@ -1983,12 +1984,13 @@ namespace DAL
 
         public static void UpdatekeyOper(string module, string openkey, string keynum, string id)
         {
-            string strSql = "update M_OperterKeyUserid set Moudle=@mod,OperKey=@oper,OperkeyNum=@key where id=@id";
+            string strSql = "update M_OperterKeyUserid set Moudle=@mod,OperKey=@oper,OperkeyNum=@key where id=@id and Userid=@useid";
             SqlParameter p1 = new SqlParameter("@mod", module);
             SqlParameter p2 = new SqlParameter("@oper", openkey);
             SqlParameter p3 = new SqlParameter("@key", keynum);
             SqlParameter p4 = new SqlParameter("@id", id);
-            SQLHelper.ExecScalar(strSql, p1, p2, p3, p4);
+            SqlParameter p5 = new SqlParameter("@useid", T_User.UserId);
+            SQLHelper.ExecScalar(strSql, p1, p2, p3, p4,p5);
         }
 
         public static DataTable GetOpenkey(string module)

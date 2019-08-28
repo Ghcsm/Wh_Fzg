@@ -655,6 +655,8 @@ namespace Csmtool
         private void buttjStart_Click(object sender, EventArgs e)
         {
             dgvTjdata.DataSource = null;
+            dgvTjdata.Columns.Clear();
+            dgvTjdata.Rows.Clear();
             buttjStart.Enabled = false;
             try {
                 if (!istjtxt())
@@ -1186,6 +1188,8 @@ namespace Csmtool
                 return;
             Common.Keysdelvale(combKeyZdymodlx.Text.Trim(), str);
             Getinikeyval();
+            string s = "清空快键键:" + str;
+            Common.Writelog(0, s);
             MessageBox.Show("清除成功!");
             txtKeysZdyKeys.Focus();
 

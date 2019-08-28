@@ -47,7 +47,7 @@ namespace Csminfo
                 UcContents.ArchId = Clscheck.Archid;
                 UcContents.ContentsEnabled = true;
                 UcContents.ModuleVisible = false;
-                // UcContents.ArchCheckZt = 0;
+                 UcContents.ArchCheckZt = 1;
                 ucContents1 = new UcContents();
                 {
                     ucContents1.Dock = DockStyle.Fill;
@@ -581,6 +581,7 @@ namespace Csminfo
         private void LoadContents()
         {
             UcContents.ArchStat = Convert.ToInt32(gArch.Archstat);
+            ucContents1.Infoadd = 1;
             ucContents1.LoadContentsinfo(gArch.Archid, gArch.ArchRegPages);
         }
 

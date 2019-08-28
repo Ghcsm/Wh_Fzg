@@ -168,6 +168,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "档案管理系统";
             this.Load += new System.EventHandler(this.FrmUI_Load);
+            this.Shown += new System.EventHandler(this.FrmUI_Shown);
             this.panle.ResumeLayout(false);
             this.panle.PerformLayout();
             this.ResumeLayout(false);

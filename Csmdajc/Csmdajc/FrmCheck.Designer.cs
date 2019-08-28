@@ -70,6 +70,8 @@
             this.toolStripCleSide = new System.Windows.Forms.ToolStripButton();
             this.toolStripCut = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSharePen = new System.Windows.Forms.ToolStripSplitButton();
+            this.toolStripSharePenSet = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripColorDeep = new System.Windows.Forms.ToolStripButton();
             this.toolStripColorShall = new System.Windows.Forms.ToolStripButton();
             this.toolStripInterSpeck = new System.Windows.Forms.ToolStripButton();
@@ -110,8 +112,6 @@
             this.dockSite7 = new DevComponents.DotNetBar.DockSite();
             this.dockSite3 = new DevComponents.DotNetBar.DockSite();
             this.odgInsterFile = new System.Windows.Forms.OpenFileDialog();
-            this.toolStripSharePen = new System.Windows.Forms.ToolStripSplitButton();
-            this.toolStripSharePenSet = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -248,14 +248,13 @@
             // ImgView
             // 
             resources.ApplyResources(this.ImgView, "ImgView");
-            this.ImgView.BackColor = System.Drawing.Color.SlateGray;
-            this.ImgView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.ImgView.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.ImgView.IsSyncSource = true;
             this.ImgView.IsSyncTarget = true;
             this.ImgView.ItemPadding = new System.Windows.Forms.Padding(1);
             this.ImgView.Name = "ImgView";
             this.ImgView.ViewHorizontalAlignment = Leadtools.Controls.ControlAlignment.Center;
-            this.ImgView.ViewMargin = new System.Windows.Forms.Padding(2);
+            this.ImgView.ViewMargin = new System.Windows.Forms.Padding(10);
             this.ImgView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ImgView_MouseClick);
             this.ImgView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ImgView_MouseDoubleClick);
             this.ImgView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ImgView_MouseDown);
@@ -466,6 +465,20 @@
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             resources.ApplyResources(this.toolStripSeparator3, "toolStripSeparator3");
+            // 
+            // toolStripSharePen
+            // 
+            this.toolStripSharePen.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripSharePenSet});
+            resources.ApplyResources(this.toolStripSharePen, "toolStripSharePen");
+            this.toolStripSharePen.Name = "toolStripSharePen";
+            this.toolStripSharePen.ButtonClick += new System.EventHandler(this.toolStripSharePen_ButtonClick);
+            // 
+            // toolStripSharePenSet
+            // 
+            this.toolStripSharePenSet.Name = "toolStripSharePenSet";
+            resources.ApplyResources(this.toolStripSharePenSet, "toolStripSharePenSet");
+            this.toolStripSharePenSet.Click += new System.EventHandler(this.toolStripSharePenSet_Click);
             // 
             // toolStripColorDeep
             // 
@@ -765,20 +778,6 @@
             this.dockSite3.DocumentDockContainer = new DevComponents.DotNetBar.DocumentDockContainer();
             this.dockSite3.Name = "dockSite3";
             this.dockSite3.TabStop = false;
-            // 
-            // toolStripSharePen
-            // 
-            this.toolStripSharePen.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripSharePenSet});
-            resources.ApplyResources(this.toolStripSharePen, "toolStripSharePen");
-            this.toolStripSharePen.Name = "toolStripSharePen";
-            this.toolStripSharePen.ButtonClick += new System.EventHandler(this.toolStripSharePen_ButtonClick);
-            // 
-            // toolStripSharePenSet
-            // 
-            this.toolStripSharePenSet.Name = "toolStripSharePenSet";
-            resources.ApplyResources(this.toolStripSharePenSet, "toolStripSharePenSet");
-            this.toolStripSharePenSet.Click += new System.EventHandler(this.toolStripSharePenSet_Click);
             // 
             // FrmCheck
             // 
