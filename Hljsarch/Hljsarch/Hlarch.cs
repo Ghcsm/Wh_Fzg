@@ -21,6 +21,7 @@ using System.Net;
 using System.Runtime.ExceptionServices;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using Exception = System.Exception;
 
 namespace HLjscom
 {
@@ -3839,17 +3840,59 @@ namespace HLjscom
 
         #region 其他功能
 
+        public void GetPixe(MouseEventArgs e, out int r, out int g, out int b, int lx)
+        {
+            r = -1;
+            g = -1;
+            b = -1;
+            try {
+                if (lx != 3 && lx != 5)
+                    return;
+                if (_Imageview.Image == null)
+                    return;
+                RasterImage img = _Imageview.Image.Clone();
+                LeadPointD pt = _Imageview.ConvertPoint(null, ImageViewerCoordinateType.Control, ImageViewerCoordinateType.Image, new LeadPointD(e.X, e.Y));
+                int x = (int)pt.X;
+                int y = (int)pt.Y;
+                List<int> lsr = new List<int>();
+                List<int> lsg = new List<int>();
+                List<int> lsb = new List<int>();
+                for (int w = x; w < x + lx; w++) {
+                    int h = w;
+                    byte[] data = img.GetPixelData(w, h);
+                    lsr.Add(data[2]);
+                    lsg.Add(data[1]);
+                    lsb.Add(data[0]);
+                }
+                r = lsr.Sum() / lsr.Count;
+                g = lsg.Sum() / lsg.Count;
+                b = lsb.Sum() / lsb.Count;
+            } catch { }
+        }
 
-        public void SetAutoRect()
+
+        public void SetAutoRect(int rgbr, int rgbg, int rgbb,int sc)
         {
             if (_Imageview.Image == null)
                 return;
             RasterImage img = _Imageview.Image.Clone();
-            byte[] data1 = img.GetPixelData(1, 1);
-            int r = data1[2];
-            int g = data1[1];
-            int b = data1[0];
+            int r = 0;
+            int g = 0;
+            int b = 0;
             int a = 20;
+            if (rgbr <= 0 && rgbb <= 0 && rgbb <= 0) {
+                byte[] data1 = img.GetPixelData(1, 1);
+                r = data1[2];
+                g = data1[1];
+                b = data1[0];
+            }
+            else {
+                r = rgbr;
+                g = rgbg;
+                b = rgbb;
+            }
+            if (sc >0)
+                a = sc;
             int x0 = 0, y0 = 0;
             //左上
             for (int h = 0; h < img.Height - 1; h += 4) {
@@ -3866,7 +3909,7 @@ namespace HLjscom
                         data[2] = 0;
                         data[1] = 0;
                         data[0] = 255;
-                        img.SetPixelData(h, w, data);
+                        // img.SetPixelData(h, w, data);
                     }
                     else {
                         x0 = w;
@@ -3914,7 +3957,7 @@ namespace HLjscom
                             data[2] = 0;
                             data[1] = 0;
                             data[0] = 255;
-                            img.SetPixelData(h, w, data);
+                            // img.SetPixelData(h, w, data);
                         }
                         else {
                             x1 = w;
@@ -3961,7 +4004,7 @@ namespace HLjscom
                             data[2] = 255;
                             data[1] = 0;
                             data[0] = 0;
-                            img.SetPixelData(h, w, data);
+                            // img.SetPixelData(h, w, data);
                         }
                         else {
                             x2 = w;

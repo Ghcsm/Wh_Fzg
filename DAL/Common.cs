@@ -1169,7 +1169,7 @@ namespace DAL
         //东丽区专用
         public static DataTable GetcheckInfo(int archid)
         {
-            string strSql = "select 登记类型,收件编号,权利人,坐落,抵押人,地号,产权证号,宗地号,不动产单元号,审批日期,案卷类型,档案手续 from 信息表 where Archid=@arid order by 档案手续";
+            string strSql = "select 登记类型,收件编号,权利人,坐落,抵押人,地号,产权证号,宗地号,不动产单元号,审批日期,案卷类型,档案手续 from 信息表 where Archid=@arid order by CONVERT(INT,档案手续)";
             SqlParameter p1 = new SqlParameter("@arid", archid);
             DataTable dt = SQLHelper.ExcuteTable(strSql, p1);
             return dt;

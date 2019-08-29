@@ -70,6 +70,10 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripCleSide = new System.Windows.Forms.ToolStripButton();
             this.toolStripCut = new System.Windows.Forms.ToolStripButton();
+            this.toolStripAutoRect = new System.Windows.Forms.ToolStripSplitButton();
+            this.toolStripAutoRectSet = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripAutoRectMouseGetcolor = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripAutoRectMouseGetcolor5 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripSharePen = new System.Windows.Forms.ToolStripSplitButton();
             this.toolStripSharePenSet = new System.Windows.Forms.ToolStripMenuItem();
@@ -439,6 +443,7 @@
             this.toolStripSeparator2,
             this.toolStripCleSide,
             this.toolStripCut,
+            this.toolStripAutoRect,
             this.toolStripSeparator3,
             this.toolStripSharePen,
             this.toolStripColorDeep,
@@ -573,6 +578,41 @@
             this.toolStripCut.Size = new System.Drawing.Size(59, 24);
             this.toolStripCut.Text = "剪切";
             this.toolStripCut.Click += new System.EventHandler(this.toolStripCut_Click);
+            // 
+            // toolStripAutoRect
+            // 
+            this.toolStripAutoRect.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripAutoRectSet,
+            this.toolStripAutoRectMouseGetcolor,
+            this.toolStripAutoRectMouseGetcolor5});
+            this.toolStripAutoRect.Font = new System.Drawing.Font("微软雅黑", 11F);
+            this.toolStripAutoRect.Image = ((System.Drawing.Image)(resources.GetObject("toolStripAutoRect.Image")));
+            this.toolStripAutoRect.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripAutoRect.Name = "toolStripAutoRect";
+            this.toolStripAutoRect.Size = new System.Drawing.Size(101, 24);
+            this.toolStripAutoRect.Text = "自动范围";
+            this.toolStripAutoRect.ButtonClick += new System.EventHandler(this.toolStripAutoRect_ButtonClick);
+            // 
+            // toolStripAutoRectSet
+            // 
+            this.toolStripAutoRectSet.Name = "toolStripAutoRectSet";
+            this.toolStripAutoRectSet.Size = new System.Drawing.Size(180, 24);
+            this.toolStripAutoRectSet.Text = "设置RGB";
+            this.toolStripAutoRectSet.Click += new System.EventHandler(this.toolStripAutoRectSet_Click_1);
+            // 
+            // toolStripAutoRectMouseGetcolor
+            // 
+            this.toolStripAutoRectMouseGetcolor.Name = "toolStripAutoRectMouseGetcolor";
+            this.toolStripAutoRectMouseGetcolor.Size = new System.Drawing.Size(180, 24);
+            this.toolStripAutoRectMouseGetcolor.Text = "鼠标取色3*3";
+            this.toolStripAutoRectMouseGetcolor.Click += new System.EventHandler(this.toolStripAutoRectMouseGetcolor_Click);
+            // 
+            // toolStripAutoRectMouseGetcolor5
+            // 
+            this.toolStripAutoRectMouseGetcolor5.Name = "toolStripAutoRectMouseGetcolor5";
+            this.toolStripAutoRectMouseGetcolor5.Size = new System.Drawing.Size(180, 24);
+            this.toolStripAutoRectMouseGetcolor5.Text = "鼠标取色5*5";
+            this.toolStripAutoRectMouseGetcolor5.Click += new System.EventHandler(this.toolStripAutoRectMouseGetcolor5_Click);
             // 
             // toolStripSeparator3
             // 
@@ -1198,5 +1238,9 @@
         private System.Windows.Forms.ToolStripSplitButton toolStripSharePen;
         private System.Windows.Forms.ToolStripMenuItem toolStripSharePenSet;
         private System.Windows.Forms.ToolStripButton toolStripSplit2;
+        private System.Windows.Forms.ToolStripSplitButton toolStripAutoRect;
+        private System.Windows.Forms.ToolStripMenuItem toolStripAutoRectSet;
+        private System.Windows.Forms.ToolStripMenuItem toolStripAutoRectMouseGetcolor;
+        private System.Windows.Forms.ToolStripMenuItem toolStripAutoRectMouseGetcolor5;
     }
 }

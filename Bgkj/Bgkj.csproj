@@ -143,6 +143,9 @@
     <Reference Include="Csmyhgl">
       <HintPath>..\Csmyhgl\Csmyhgl\bin\x86\Debug\Csmyhgl.dll</HintPath>
     </Reference>
+    <Reference Include="CsmZchk">
+      <HintPath>..\CsmZchk\CsmZchk\bin\x86\Debug\CsmZchk.dll</HintPath>
+    </Reference>
     <Reference Include="DAL, Version=1.0.7064.28337, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\DAL\bin\x86\Debug\DAL.dll</HintPath>

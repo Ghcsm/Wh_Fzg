@@ -5700,7 +5700,7 @@
     <value>宋体, 9pt</value>
   </data>
   <data name="dockCont2.Text" xml:space="preserve">
-    <value>目录著录</value>
+    <value>质量总检</value>
   </data>
   <data name="bar2.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
@@ -6306,7 +6306,7 @@
     <value>System.Windows.Forms.OpenFileDialog, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>FrmInfo</value>
+    <value>FrmZchk</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
     <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>

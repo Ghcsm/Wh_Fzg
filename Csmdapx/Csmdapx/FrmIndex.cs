@@ -28,6 +28,8 @@ namespace Csmdapx
         private Pubcls pub;
         private int Yuan = 0;
         private MouseEventArgs exArgs;
+        private int AutoRect = 0;
+        private int AutoRectid = 0;
         private void Init()
         {
             try {
@@ -60,6 +62,7 @@ namespace Csmdapx
         {
             Himg.Spage += new Hljsimage.ScanPage(GetPages);
             ftp.PercentChane += new HLFtp.HFTP.PChangedHandle(Downjd);
+            ReadIni();
         }
 
 
@@ -94,7 +97,7 @@ namespace Csmdapx
 
         private void toolStripSplit2_Click(object sender, EventArgs e)
         {
-            FrmCombin frmCombin2=new FrmCombin();
+            FrmCombin frmCombin2 = new FrmCombin();
             frmCombin2.file = ClsIndex.ScanFilePathtmp;
             frmCombin2.MaxPage = ClsIndex.MaxPage;
             frmCombin2.ShowDialog();
@@ -242,6 +245,7 @@ namespace Csmdapx
             if (ImgView.Image == null)
                 return;
             NexPage();
+            Himg.SetAutoRect(ClsIndex.RgbR,ClsIndex.RgbG,ClsIndex.RgbB,0);
             txtPages.Focus();
         }
 
@@ -404,14 +408,49 @@ namespace Csmdapx
         }
         private void toolStripSharePenSet_Click(object sender, EventArgs e)
         {
-            FrmSharePenSet penset=new FrmSharePenSet();
+            FrmSharePenSet penset = new FrmSharePenSet();
             penset.ShowDialog();
         }
 
         private void ImgView_MouseClick(object sender, MouseEventArgs e)
         {
             exArgs = e;
+            if (AutoRectid == 3 || AutoRectid == 5) {
+                Himg.GetPixe(e, out ClsIndex.RgbR, out ClsIndex.RgbG, out ClsIndex.RgbB, AutoRectid);
+                AutoRectid = 0;
+                if (ClsIndex.RgbR >= 0 && ClsIndex.RgbG >= 0 && ClsIndex.RgbB >= 0) {
+                    try {
+                        string file = Path.Combine(Application.StartupPath, "ScanConfig.ini");
+                        Writeini.Fileini = file;
+                        Writeini.Wirteini("ImageIndex", "AutoRectR", ClsIndex.RgbR.ToString());
+                        Writeini.Wirteini("ImageIndex", "AutoRectG", ClsIndex.RgbG.ToString());
+                        Writeini.Wirteini("ImageIndex", "AutoRectB", ClsIndex.RgbB.ToString());
+                    } catch { }
+                }
+            }
         }
+
+        void ReadIni()
+        {
+            try {
+                string file = Path.Combine(Application.StartupPath, "ScanConfig.ini");
+                Writeini.Fileini = file;
+                string r = Writeini.Readini("ImageIndex", "AutoRectR").ToString();
+                if (r.Trim().Length > 0)
+                    ClsIndex.RgbR = Convert.ToInt32(r);
+                r = Writeini.Readini("ImageIndex", "AutoRectG").ToString();
+                if (r.Trim().Length > 0)
+                    ClsIndex.RgbG = Convert.ToInt32(r);
+                r = Writeini.Readini("ImageIndex", "AutoRectB").ToString();
+                if (r.Trim().Length > 0) {
+                    ClsIndex.RgbB = Convert.ToInt32(r);
+                }
+            } catch { }
+
+        }
+
+
+
         private void FrmIndex_KeyDown(object sender, KeyEventArgs e)
         {
             pub.KeyShortDown(e, ClsIndex.lsinival, ClsIndex.Lsinikeys, ClsIndex.lssqlOpernum, ClsIndex.lsSqlOper, out ClsIndex.keystr);
@@ -465,6 +504,39 @@ namespace Csmdapx
             Himg.TagPage = p;
             toolStripSplitTag.ForeColor = Color.Red;
 
+        }
+
+        private void toolStripAutoRect_ButtonClick(object sender, EventArgs e)
+        {
+            if (AutoRect == 0) {
+                AutoRect = 1;
+                toolStripAutoRect.ForeColor = Color.Red;
+            }
+            else {
+                AutoRect = 0;
+                toolStripAutoRect.ForeColor = Color.Black;
+            }
+        }
+
+        private void toolStripAutoRectSet_Click_1(object sender, EventArgs e)
+        {
+            FrmRgb rgb = new FrmRgb();
+            rgb.Show();
+            ReadIni();
+        }
+
+        private void toolStripAutoRectMouseGetcolor_Click(object sender, EventArgs e)
+        {
+            if (ImgView.Image == null)
+                return;
+            AutoRectid = 3;
+
+        }
+        private void toolStripAutoRectMouseGetcolor5_Click(object sender, EventArgs e)
+        {
+            if (ImgView.Image == null)
+                return;
+            AutoRectid = 5;
         }
 
         #endregion
@@ -1105,7 +1177,7 @@ namespace Csmdapx
                     else {
 
                         if (ftp.SaveRemoteFileUp(T_ConFigure.gArchScanPath, archpos, filetmp, T_ConFigure.ScanTempFile)) {
-                            Common.SetArchWorkState(arid, (int) T_ConFigure.ArchStat.扫描完);
+                            Common.SetArchWorkState(arid, (int)T_ConFigure.ArchStat.扫描完);
                             Common.DelTask(Convert.ToInt32(arid));
                             try {
                                 File.Delete(filetmp);
@@ -1177,8 +1249,16 @@ namespace Csmdapx
 
 
 
+
+
+
+
+
+
+
+
         #endregion
 
-      
+
     }
 }

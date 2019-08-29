@@ -65,6 +65,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CsmImg", "CsmImg\CsmImg.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CsmInfo", "CsmInfo\Csmdajc\CsmInfo.csproj", "{82A9A780-36F0-4D2C-8742-707C2DA62347}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CsmZchk", "CsmZchk\CsmZchk\CsmZchk.csproj", "{BC17724E-1604-4839-9ED8-0BF923296155}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -321,6 +323,14 @@ Global
 		{82A9A780-36F0-4D2C-8742-707C2DA62347}.Release|Any CPU.Build.0 = Release|Any CPU
 		{82A9A780-36F0-4D2C-8742-707C2DA62347}.Release|x86.ActiveCfg = Release|x86
 		{82A9A780-36F0-4D2C-8742-707C2DA62347}.Release|x86.Build.0 = Release|x86
+		{BC17724E-1604-4839-9ED8-0BF923296155}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{BC17724E-1604-4839-9ED8-0BF923296155}.Debug|Any CPU.Build.0 = Debug|x86
+		{BC17724E-1604-4839-9ED8-0BF923296155}.Debug|x86.ActiveCfg = Debug|x86
+		{BC17724E-1604-4839-9ED8-0BF923296155}.Debug|x86.Build.0 = Debug|x86
+		{BC17724E-1604-4839-9ED8-0BF923296155}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC17724E-1604-4839-9ED8-0BF923296155}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC17724E-1604-4839-9ED8-0BF923296155}.Release|x86.ActiveCfg = Release|x86
+		{BC17724E-1604-4839-9ED8-0BF923296155}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

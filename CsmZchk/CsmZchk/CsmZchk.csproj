@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{5A96378B-ECDA-44E9-BD8C-AEAAC74CBA12}</ProjectGuid>
+    <ProjectGuid>{BC17724E-1604-4839-9ED8-0BF923296155}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Csmdapx</RootNamespace>
-    <AssemblyName>Csmdapx</AssemblyName>
+    <RootNamespace>CsmZchk</RootNamespace>
+    <AssemblyName>CsmZchk</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SignAssembly>false</SignAssembly>
@@ -47,7 +47,6 @@
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
-    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -78,27 +77,17 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CsmCon, Version=1.0.7096.23364, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="CsmCon">
       <HintPath>..\..\CsmCon\bin\x86\Debug\CsmCon.dll</HintPath>
-    </Reference>
-    <Reference Include="CsmImg">
-      <HintPath>..\..\CsmImg\bin\x86\Debug\CsmImg.dll</HintPath>
     </Reference>
     <Reference Include="DAL, Version=1.0.7062.37841, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\DAL\bin\x86\Debug\DAL.dll</HintPath>
     </Reference>
-    <Reference Include="DevComponents.DotNetBar2, Version=12.5.0.2, Culture=neutral, PublicKeyToken=c39c3242a43eee2b, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\DevComponents.DotNetBar2.dll</HintPath>
+    <Reference Include="DevComponents.DotNetBar2">
       <Private>True</Private>
     </Reference>
-    <Reference Include="FluentFTP, Version=27.0.0.0, Culture=neutral, PublicKeyToken=f4af092b1d8df44f, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\CsmImg\bin\x86\Debug\FluentFTP.dll</HintPath>
-    </Reference>
-    <Reference Include="Hljsarch, Version=1.0.7078.19591, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Hljsarch, Version=1.0.7078.23673, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Hljsarch\Hljsarch\bin\x86\Debug\Hljsarch.dll</HintPath>
     </Reference>
@@ -121,10 +110,6 @@
     <Reference Include="Leadtools.Drawing, Version=19.0.0.0, Culture=neutral, PublicKeyToken=9cf889f53ea9b907, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\LEADTOOLS 19\Bin\Dotnet4\Win32\Leadtools.Drawing.dll</HintPath>
-    </Reference>
-    <Reference Include="Leadtools.Forms, Version=19.0.0.0, Culture=neutral, PublicKeyToken=9cf889f53ea9b907, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\LEADTOOLS 19\Bin\Dotnet4\Win32\Leadtools.Forms.dll</HintPath>
     </Reference>
     <Reference Include="Leadtools.ImageProcessing.Color, Version=19.0.0.0, Culture=neutral, PublicKeyToken=9cf889f53ea9b907, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
@@ -158,41 +143,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ClsIndex.cs" />
-    <Compile Include="FrmCombe.cs">
+    <Compile Include="Clscheck.cs" />
+    <Compile Include="FrmZchk.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmCombe.Designer.cs">
-      <DependentUpon>FrmCombe.cs</DependentUpon>
+    <Compile Include="FrmZchk.Designer.cs">
+      <DependentUpon>FrmZchk.cs</DependentUpon>
     </Compile>
-    <Compile Include="FrmGoto.cs">
+    <Compile Include="Frmgoto.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmGoto.Designer.cs">
-      <DependentUpon>FrmGoto.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FrmIndex.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FrmIndex.Designer.cs">
-      <DependentUpon>FrmIndex.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FrmRgb.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FrmRgb.Designer.cs">
-      <DependentUpon>FrmRgb.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FrmSharePenSet.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FrmSharePenSet.Designer.cs">
-      <DependentUpon>FrmSharePenSet.cs</DependentUpon>
+    <Compile Include="Frmgoto.Designer.cs">
+      <DependentUpon>Frmgoto.cs</DependentUpon>
     </Compile>
     <Compile Include="Frmwt.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Frmwt.Designer.cs">
+    <Compile Include="Frmwt.designer.cs">
       <DependentUpon>Frmwt.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -203,20 +170,14 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="FrmCombe.resx">
-      <DependentUpon>FrmCombe.cs</DependentUpon>
+    <EmbeddedResource Include="FrmZchk.resx">
+      <DependentUpon>FrmZchk.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FrmGoto.resx">
-      <DependentUpon>FrmGoto.cs</DependentUpon>
+    <EmbeddedResource Include="FrmZchk.zu-ZA.resx">
+      <DependentUpon>FrmZchk.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FrmIndex.resx">
-      <DependentUpon>FrmIndex.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FrmRgb.resx">
-      <DependentUpon>FrmRgb.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FrmSharePenSet.resx">
-      <DependentUpon>FrmSharePenSet.cs</DependentUpon>
+    <EmbeddedResource Include="Frmgoto.resx">
+      <DependentUpon>Frmgoto.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Frmwt.resx">
       <DependentUpon>Frmwt.cs</DependentUpon>
@@ -290,61 +251,13 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\21.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\31.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\41.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\51.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\61.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\71.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\81.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\91.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\101.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\111.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\121.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\131.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\141.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\151.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\181.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\19.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\20.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\211.png" />
+    <None Include="Resources\21.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\22.png" />
@@ -354,18 +267,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\24.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\0_1309168158c9z6.gif" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\maya files.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\28.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\25.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
