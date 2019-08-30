@@ -13,11 +13,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace CsmZchk
+namespace CsmInfoChk
 {
-    public partial class FrmZchk : Form
+    public partial class FrmInfoChk : Form
     {
-        public FrmZchk()
+        public FrmInfoChk()
         {
             InitializeComponent();
 
@@ -47,7 +47,7 @@ namespace CsmZchk
                 UcContents.ArchId = Clscheck.Archid;
                 UcContents.ContentsEnabled = true;
                 UcContents.ModuleVisible = false;
-                UcContents.ArchCheckZt = 1;
+                 //UcContents.ArchCheckZt = 1;
                 ucContents1 = new UcContents();
                 {
                     ucContents1.Dock = DockStyle.Fill;
@@ -257,14 +257,14 @@ namespace CsmZchk
         {
             try {
                 if (Clscheck.CrrentPage != Clscheck.MaxPage) {
-                     Himg._SavePage();
-                    Thread.Sleep(50);
+                    // Himg._SavePage();
+                    //Thread.Sleep(50);
                     Himg._Pagenext(1);
                     ucContents1.OnChangContents(Clscheck.CrrentPage);
                 }
                 else if (Clscheck.CrrentPage == Clscheck.MaxPage) {
-                     Himg._SavePage();
-                    Thread.Sleep(50);
+                    // Himg._SavePage();
+                   // Thread.Sleep(50);
                     toolStripSave_Click(null, null);
                 }
             } catch (Exception ex) {
@@ -291,56 +291,28 @@ namespace CsmZchk
                 return;
             if (!ucContents1.IsGetywid() || !Entertag())
                 return;
-            if (MessageBox.Show("质检完成您确定要上传档案吗？", "提示", MessageBoxButtons.OKCancel,
-                    MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.OK) {
-                string filepath = Clscheck.ScanFilePath;
-                string filename = Clscheck.FileNametmp;
+            if (MessageBox.Show("数据质检完成您确定要上传档案吗？", "提示", MessageBoxButtons.OKCancel,
+                    MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.OK)
+            {
+                Common.SetInfochk(Clscheck.RegPage.ToString(),Clscheck.Archid.ToString(),this.Text,ucContents1.ywid);
                 int arid = Clscheck.Archid;
-                int pages = Clscheck.MaxPage;
-                int tag = Himg.TagPage;
+                string filename = Clscheck.FileNametmp;
+                string filepath = Clscheck.ScanFilePath;
                 Cledata();
-                Task.Run(new Action(() => { FtpUpFinish(filepath, arid, filename, pages, tag); }));
-                gArch.txtBoxsn.Focus();
-            }
-        }
-        private void FtpUpFinish(string filetmp, int arid, string filename, int pages, int tag)
-        {
-            try {
-                if (File.Exists(filetmp)) {
-                    Common.WiteUpTask(arid, "", filename, (int)T_ConFigure.ArchStat.总检完, pages, filetmp, tag.ToString());
-                    if (T_ConFigure.FtpStyle == 1) {
-                        string sourefile = Path.Combine(T_ConFigure.FtpTmp, T_ConFigure.TmpSave, filename.Substring(0, 8), filename);
-                        string goalfile = Path.Combine(T_ConFigure.FtpArchSave, filename.Substring(0, 8), filename);
-                        string path = Path.Combine(T_ConFigure.FtpArchSave, filename.Substring(0, 8));
-                        if (ftp.FtpMoveFile(sourefile, goalfile, path)) {
-                            Thread.Sleep(5000);
-                            Common.SetCheckFinish(arid, DESEncrypt.DesEncrypt(filename), 1, (int)T_ConFigure.ArchStat.总检完);
-                            Common.DelTask(arid);
-                            Common.SetInfochk(pages.ToString(), arid.ToString(), this.Text, ucContents1.ywid);
-                            return;
-                        }
-                    }
+                try {
+                    if (T_ConFigure.FtpStyle == 1)
+                        Imgclose(arid, filename);
                     else {
-                        string RemoteDir = filename.Substring(0, 8);
-                        if (ftp.SaveRemoteFileUp(T_ConFigure.FtpArchSave, RemoteDir, filetmp, filename)) {
-                            Common.DelTask(arid);
-                            Common.SetCheckFinish(arid, DESEncrypt.DesEncrypt(filename), 1, (int)T_ConFigure.ArchStat.总检完);
-                            Common.SetInfochk(pages.ToString(), arid.ToString(), this.Text, ucContents1.ywid);
-                            try {
-                                File.Delete(filetmp);
-                                Directory.Delete(Path.GetDirectoryName(filetmp));
-                            } catch { }
-                            return;
-
+                        if (File.Exists(filepath)) {
+                            File.Delete(filepath);
+                            Directory.Delete(Path.GetDirectoryName(filepath));
                         }
                     }
-                 Common.SetArchWorkState(arid, (int)T_ConFigure.ArchStat.质检完);
+                } catch {
                 }
-            } catch {
-                    Common.SetArchWorkState(arid, (int)T_ConFigure.ArchStat.质检完);
-            } finally {
-                GC.Collect();
+                gArch.LvData.Focus();
             }
+
         }
 
         private void toolStripClose_Click(object sender, EventArgs e)
@@ -619,7 +591,42 @@ namespace CsmZchk
         }
 
 
-     
+        public void ReadDict()
+        {
+            try {
+                Dictionary<int, int> pagenumber = new Dictionary<int, int>();
+                Dictionary<int, string> pageabc = new Dictionary<int, string>();
+                Dictionary<int, string> fuhao = new Dictionary<int, string>();
+                DataTable dt = Common.ReadPageIndexInfo(Clscheck.Archid);
+                if (dt != null && dt.Rows.Count > 0) {
+                    DataRow dr = dt.Rows[0];
+                    string PageIndexInfo = dr["PageIndexInfo"].ToString();
+                    int page = Convert.ToInt32(dr["pages"].ToString());
+                    if (!string.IsNullOrEmpty(PageIndexInfo)) {
+                        string[] arrPage = PageIndexInfo.Split(';');
+                        if (arrPage.Length > 0) {
+                            for (int i = 0; i < arrPage.Length; i++) {
+                                string[] str = arrPage[i].Trim().Split(':');
+                                if (str.Length <= 0)
+                                    continue;
+                                int p = Convert.ToInt32(str[0]);
+                                if (p > page)
+                                    continue;
+                                if (!isExists(str[1].ToString()) && str[1].IndexOf("-") < 0)
+                                    pagenumber.Add(p, Convert.ToInt32(str[1]));
+                                else if (str[1].IndexOf("-") >= 0)
+                                    fuhao.Add(p, str[1].ToString());
+                                else
+                                    pageabc.Add(p, str[1].ToString());
+                            }
+                        }
+                    }
+                    Himg._PageNumber = pagenumber;
+                    Himg._PageAbc = pageabc;
+                    Himg._PageFuhao = fuhao;
+                }
+            } catch { }
+        }
 
         private bool isExists(string str)
         {
@@ -652,15 +659,15 @@ namespace CsmZchk
                 return;
             }
             int stat = Common.GetArchWorkState(Clscheck.Archid);
-            if (stat < (int)T_ConFigure.ArchStat.质检完) {
-                MessageBox.Show("此卷未质检,不能进入总检！");
+            if (stat < (int)T_ConFigure.ArchStat.排序完) {
+                MessageBox.Show("此卷未排序,不能进入质检！");
                 Cledata();
                 return;
             }
-            //if (stat == (int)T_ConFigure.ArchStat.排序完)
-            //    stattmp = 1;
-            //else if (stat == (int)T_ConFigure.ArchStat.质检完)
-            //    stattmp = 2;
+            if (stat == (int)T_ConFigure.ArchStat.排序完)
+                stattmp = 1;
+            else if (stat == (int)T_ConFigure.ArchStat.质检完)
+                stattmp = 2;
             if (stat == (int)T_ConFigure.ArchStat.质检中) {
                 if (MessageBox.Show("您确认要强行进入质检吗?", "强行进入质检", MessageBoxButtons.OKCancel,
                         MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) != DialogResult.OK) {
@@ -720,12 +727,35 @@ namespace CsmZchk
                         sourefile = Path.Combine(T_ConFigure.FtpArchIndex, Clscheck.FileNametmp.Substring(0, 8), Clscheck.FileNametmp);
                         goalfile = Path.Combine(T_ConFigure.FtpTmp, T_ConFigure.TmpSave, Clscheck.FileNametmp.Substring(0, 8), Clscheck.FileNametmp);
                         path = Path.Combine(T_ConFigure.FtpTmp, T_ConFigure.TmpSave, Clscheck.FileNametmp.Substring(0, 8));
-                        sourefile = Path.Combine(T_ConFigure.FtpArchSave, Clscheck.FileNametmp.Substring(0, 8), Clscheck.FileNametmp);
-                        if (ftp.FtpCheckFile(sourefile)) {
-                            if (ftp.FtpMoveFile(sourefile, goalfile, path))
-                                return (FileMoveBool(localScanFile));
+                        if (stsa == 1) {
+                            sourefile = Path.Combine(T_ConFigure.FtpArchIndex, Clscheck.FileNametmp.Substring(0, 8), Clscheck.FileNametmp);
+                            if (ftp.FtpCheckFile(sourefile)) {
+                                if (ftp.FtpMoveFile(sourefile, goalfile, path))
+                                    return (FileMoveBool(localScanFile));
+                            }
                         }
-
+                        else if (stsa == 2) {
+                            sourefile = Path.Combine(T_ConFigure.FtpArchSave, Clscheck.FileNametmp.Substring(0, 8), Clscheck.FileNametmp);
+                            if (ftp.FtpCheckFile(sourefile)) {
+                                if (ftp.FtpMoveFile(sourefile, goalfile, path))
+                                    return (FileMoveBool(localScanFile));
+                            }
+                        }
+                        else {
+                            if (ftp.FtpCheckFile(sourefile)) {
+                                if (ftp.FtpMoveFile(sourefile, goalfile, path)) {
+                                    archzt = 1;
+                                    return (FileMoveBool(localScanFile));
+                                }
+                            }
+                            sourefile = Path.Combine(T_ConFigure.FtpArchSave, Clscheck.FileNametmp.Substring(0, 8), Clscheck.FileNametmp);
+                            if (ftp.FtpCheckFile(sourefile)) {
+                                if (ftp.FtpMoveFile(sourefile, goalfile, path)) {
+                                    archzt = 2;
+                                    return (FileMoveBool(localScanFile));
+                                }
+                            }
+                        }
                     }
                     else {
                         string localPath = Path.Combine(T_ConFigure.LocalTempPath, Clscheck.FileNametmp.Substring(0, 8));
@@ -738,16 +768,48 @@ namespace CsmZchk
                         if (File.Exists(localScanFile)) {
                             File.Delete(localScanFile);
                         }
-                        if (MessageBox.Show("已质检完成是否重新质检？", "警告", MessageBoxButtons.OKCancel,
-                                MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.OK) {
-                            if (ftp.FtpCheckFile(Path.Combine(T_ConFigure.FtpArchSave, Clscheck.FileNametmp.Substring(0, 8),
-                                Clscheck.FileNametmp))) {
-                                if (ftp.DownLoadFile(T_ConFigure.FtpArchSave, Clscheck.FileNametmp.Substring(0, 8),
+                        if (stsa == 1) {
+                            if (ftp.FtpCheckFile(Path.Combine(T_ConFigure.FtpArchIndex, Clscheck.FileNametmp.Substring(0, 8), Clscheck.FileNametmp))) {
+                                if (ftp.DownLoadFile(T_ConFigure.FtpArchIndex, Clscheck.FileNametmp.Substring(0, 8),
                                     localScanFile,
                                     Clscheck.FileNametmp)) {
                                     return true;
                                 }
+                                return false;
+                            }
+                        }
+                        else if (stsa == 2) {
+                            if (MessageBox.Show("已质检完成是否重新质检？", "警告", MessageBoxButtons.OKCancel,
+                                    MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.OK) {
+                                if (ftp.FtpCheckFile(Path.Combine(T_ConFigure.FtpArchSave, Clscheck.FileNametmp.Substring(0, 8),
+                                    Clscheck.FileNametmp))) {
+                                    if (ftp.DownLoadFile(T_ConFigure.FtpArchSave, Clscheck.FileNametmp.Substring(0, 8),
+                                        localScanFile,
+                                        Clscheck.FileNametmp)) {
+                                        return true;
+                                    }
 
+                                }
+                            }
+                        }
+                        else {
+                            if (ftp.FtpCheckFile(Path.Combine(T_ConFigure.FtpArchIndex, Clscheck.FileNametmp.Substring(0, 8),
+                                Clscheck.FileNametmp))) {
+                                if (ftp.DownLoadFile(T_ConFigure.FtpArchIndex, Clscheck.FileNametmp.Substring(0, 8),
+                                    localScanFile,
+                                    Clscheck.FileNametmp)) {
+                                    archzt = 1;
+                                    return true;
+                                }
+                            }
+                            else if (ftp.FtpCheckFile(Path.Combine(T_ConFigure.FtpArchSave, Clscheck.FileNametmp.Substring(0, 8),
+                                 Clscheck.FileNametmp))) {
+                                if (ftp.DownLoadFile(T_ConFigure.FtpArchSave, Clscheck.FileNametmp.Substring(0, 8),
+                                    localScanFile,
+                                    Clscheck.FileNametmp)) {
+                                    archzt = 2;
+                                    return true;
+                                }
                             }
                         }
                     }
@@ -757,6 +819,10 @@ namespace CsmZchk
                 } catch (Exception e) {
                     Cledata();
                     MessageBox.Show("加载文件失败!" + e.ToString());
+                    if (stsa == 2)
+                        Common.SetArchWorkState(Clscheck.Archid, (int)T_ConFigure.ArchStat.质检完);
+                    else
+                        Common.SetArchWorkState(Clscheck.Archid, (int)T_ConFigure.ArchStat.排序完);
                     return false;
                 }
             });
@@ -873,7 +939,104 @@ namespace CsmZchk
 
         }
 
-      
+        private void FtpUpFinish(string filetmp, int arid, string filename, int pages, int tag)
+        {
+            try {
+                if (File.Exists(filetmp)) {
+                    Common.WiteUpTask(arid, "", filename, (int)T_ConFigure.ArchStat.质检完, pages, filetmp, tag.ToString());
+                    if (T_ConFigure.FtpStyle == 1) {
+                        string sourefile = Path.Combine(T_ConFigure.FtpTmp, T_ConFigure.TmpSave, filename.Substring(0, 8), filename);
+                        string goalfile = Path.Combine(T_ConFigure.FtpArchSave, filename.Substring(0, 8), filename);
+                        string path = Path.Combine(T_ConFigure.FtpArchSave, filename.Substring(0, 8));
+                        if (ftp.FtpMoveFile(sourefile, goalfile, path)) {
+                            Thread.Sleep(5000);
+                            Common.SetCheckFinish(arid, DESEncrypt.DesEncrypt(filename), 1, (int)T_ConFigure.ArchStat.质检完);
+                            Common.DelTask(arid);
+                            return;
+                        }
+                    }
+                    else {
+                        string RemoteDir = filename.Substring(0, 8);
+                        if (ftp.SaveRemoteFileUp(T_ConFigure.FtpArchSave, RemoteDir, filetmp, filename)) {
+                            Common.DelTask(arid);
+                            Common.SetCheckFinish(arid, DESEncrypt.DesEncrypt(filename), 1, (int)T_ConFigure.ArchStat.质检完);
+                            try {
+                                File.Delete(filetmp);
+                                Directory.Delete(Path.GetDirectoryName(filetmp));
+                            } catch { }
+                            return;
+
+                        }
+                        //发现图像上传时有错位现象
+                        //string newfile = Path.Combine(T_ConFigure.FtpArchSave, RemoteDir, filename);
+                        //string newpath = Path.Combine(T_ConFigure.FtpArchSave, RemoteDir);
+                        //bool x = await ftp.FtpUpFile(filetmp, newfile, newpath);
+                        //if (x) {
+                        //    Common.SetCheckFinish(arid, DESEncrypt.DesEncrypt(filename), 1, (int)T_ConFigure.ArchStat.质检完);
+                        //    Common.DelTask(arid);
+                        //    try {
+                        //        File.Delete(filetmp);
+                        //        Directory.Delete(localPath);
+                        //    } catch { }
+                        //    return;
+                        //}
+                    }
+                    if (archzt == 1)
+                        Common.SetArchWorkState(arid, (int)T_ConFigure.ArchStat.排序完);
+                    else
+                        Common.SetArchWorkState(arid, (int)T_ConFigure.ArchStat.质检完);
+                }
+            } catch {
+                if (archzt == 1)
+                    Common.SetArchWorkState(arid, (int)T_ConFigure.ArchStat.排序完);
+                else
+                    Common.SetArchWorkState(arid, (int)T_ConFigure.ArchStat.质检完);
+            } finally {
+                GC.Collect();
+            }
+        }
+
+        private void Repair(string filetmp, int arid, string archpos, int page)
+        {
+            try {
+                Common.Writelog(Clscheck.Archid, "质检返工!");
+                //if (ftp.SaveRemoteFileUp(T_ConFigure.gArchScanPath, archpos, filetmp, T_ConFigure.ScanTempFile)) {
+                //    Common.SetScanFinish(arid, page, 1, (int)T_ConFigure.ArchStat.扫描完);
+                //    Common.DelTask(Convert.ToInt32(arid));
+                //    try {
+                //        File.Delete(filetmp);
+                //        Directory.Delete(Path.Combine(T_ConFigure.LocalTempPath, archpos));
+                //    } catch {
+                //    }
+                //    return;
+                //}
+                string sourefile = "";
+                if (T_ConFigure.FtpStyle == 0) {
+                    if (archzt == 1)
+                        sourefile = Path.Combine(T_ConFigure.FtpArchIndex, filetmp.Substring(0, 8), filetmp);
+                    else
+                        sourefile = Path.Combine(T_ConFigure.FtpArchSave, filetmp.Substring(0, 8), filetmp);
+                }
+                else
+                    sourefile = Path.Combine(T_ConFigure.FtpFwqPath, T_ConFigure.TmpSave, filetmp.Substring(0, 8), filetmp);
+                string goalfile = Path.Combine(T_ConFigure.gArchScanPath, archpos, T_ConFigure.ScanTempFile);
+                string path = Path.Combine(T_ConFigure.gArchScanPath, archpos);
+                if (ftp.FtpMoveFile(sourefile, goalfile, path)) {
+                    Common.SetArchWorkState(arid, (int)T_ConFigure.ArchStat.扫描完);
+                    Common.Writelog(Clscheck.Archid, "质检退!");
+                    Common.SetCheckFinish(arid, "", 2, (int)T_ConFigure.ArchStat.扫描完);
+                }
+                if (T_ConFigure.FtpStyle == 1) {
+                    try {
+                        File.Delete(filetmp);
+                    } catch { }
+                }
+            } catch {
+                Common.Writelog(Clscheck.Archid, "质检退回失败!");
+            }
+        }
+
+
         #endregion
 
 

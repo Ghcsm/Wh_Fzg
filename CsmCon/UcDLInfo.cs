@@ -18,6 +18,8 @@ namespace CsmCon
             InitializeComponent();
         }
 
+        public static int ywidts = 0;
+
         public void Cleinfo()
         {
             try
@@ -39,9 +41,11 @@ namespace CsmCon
         {
             dgvInfo.Columns.Clear();
             dgvInfo.Rows.Clear();
+            ywidts = 0;
             DataTable dt = Common.GetcheckInfo(arid);
             if (dt == null || dt.Rows.Count <= 0)
                 return;
+            ywidts = dt.Rows.Count;
             labcount.Text = string.Format("共{0}手", dt.Rows.Count.ToString());
             try {
                 if (dgvInfo.Columns.Count <= 0) {

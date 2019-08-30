@@ -104,6 +104,10 @@
             this.dockSite7 = new DevComponents.DotNetBar.DockSite();
             this.dockSite3 = new DevComponents.DotNetBar.DockSite();
             this.odgInsterFile = new System.Windows.Forms.OpenFileDialog();
+            this.toollabinfochk = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toollabinfochktime = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toollabezchk = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toollabzchktime = new System.Windows.Forms.ToolStripStatusLabel();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -185,7 +189,11 @@
             this.toollabcheck,
             this.toollabchecktime,
             this.toollabenter,
-            this.toollabentertime});
+            this.toollabentertime,
+            this.toollabinfochk,
+            this.toollabinfochktime,
+            this.toollabezchk,
+            this.toollabzchktime});
             resources.ApplyResources(this.statUser, "statUser");
             this.statUser.Name = "statUser";
             // 
@@ -705,6 +713,26 @@
             this.dockSite3.Name = "dockSite3";
             this.dockSite3.TabStop = false;
             // 
+            // toollabinfochk
+            // 
+            this.toollabinfochk.Name = "toollabinfochk";
+            resources.ApplyResources(this.toollabinfochk, "toollabinfochk");
+            // 
+            // toollabinfochktime
+            // 
+            this.toollabinfochktime.Name = "toollabinfochktime";
+            resources.ApplyResources(this.toollabinfochktime, "toollabinfochktime");
+            // 
+            // toollabezchk
+            // 
+            this.toollabezchk.Name = "toollabezchk";
+            resources.ApplyResources(this.toollabezchk, "toollabezchk");
+            // 
+            // toollabzchktime
+            // 
+            this.toollabzchktime.Name = "toollabzchktime";
+            resources.ApplyResources(this.toollabzchktime, "toollabzchktime");
+            // 
             // FrmZchk
             // 
             resources.ApplyResources(this, "$this");
@@ -835,5 +863,9 @@
         private System.Windows.Forms.GroupBox gr1_2;
         private System.Windows.Forms.ToolStripButton toolStripOcr;
         private System.Windows.Forms.Label labpage;
+        private System.Windows.Forms.ToolStripStatusLabel toollabinfochk;
+        private System.Windows.Forms.ToolStripStatusLabel toollabinfochktime;
+        private System.Windows.Forms.ToolStripStatusLabel toollabezchk;
+        private System.Windows.Forms.ToolStripStatusLabel toollabzchktime;
     }
 }

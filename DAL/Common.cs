@@ -667,6 +667,18 @@ namespace DAL
             SQLHelper.ExecScalar(strSql, p1);
         }
 
+        public static void SetInfochk(string page,string arid,string module,string ywid)
+        {
+            string strSql = "PInserCheckCount";
+            SqlParameter[] p = new SqlParameter[5];
+            p[0] = new SqlParameter("@userid",T_User.UserId);
+            p[1] = new SqlParameter("@Pages", page);
+            p[2] = new SqlParameter("@Moudle", module);
+            p[3] = new SqlParameter("@Ywid", ywid);
+            p[4] = new SqlParameter("@Archid", arid);
+            SQLHelper.ExecuteNonQuery(strSql, CommandType.StoredProcedure, p);
+        }
+
         public static DataTable GetTask()
         {
             try {
@@ -2450,6 +2462,19 @@ namespace DAL
             DataTable dt;
             try {
                 string strSql = "select * from V_GetUsertime where Archid=@archid ";
+                SqlParameter p1 = new SqlParameter("@archid", ArchID);
+                dt = SQLHelper.ExcuteTable(strSql, p1);
+                return dt;
+            } catch {
+                return null;
+            }
+        }
+
+        public static DataTable GetOperatorchk(int ArchID)
+        {
+            DataTable dt;
+            try {
+                string strSql = "select * from V_getChkcount where Archid=@archid ";
                 SqlParameter p1 = new SqlParameter("@archid", ArchID);
                 dt = SQLHelper.ExcuteTable(strSql, p1);
                 return dt;

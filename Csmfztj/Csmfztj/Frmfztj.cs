@@ -83,7 +83,11 @@ namespace Csmfztj
                     string gzhenglijuan = dr["zhenglijuan"].ToString();
                     string gzhuangdpage = dr["zhuangdingpage"].ToString();
                     string gzhuangdjuan = dr["zhuangdingjuan"].ToString();
-
+                    string infochkywid = dr["infochkywid"].ToString();
+                    string infochkpage = dr["infochkpage"].ToString();
+                    string infochkjuan = dr["infochjuan"].ToString();
+                    string zchkpage = dr["zchkpage"].ToString();
+                    string zchkjuan = dr["zhkjuan"].ToString();
                     if (gansj == "") {
                         gansj = "0";
                     }
@@ -141,6 +145,17 @@ namespace Csmfztj
                     if (gzhuangdjuan == "") {
                         gzhuangdjuan = "0";
                     }
+
+                    if (infochkjuan == "")
+                        infochkjuan = "0";
+                    if (infochkpage == "")
+                        infochkpage = "0";
+                    if (infochkywid == "")
+                        infochkywid = "0";
+                    if (zchkjuan == "")
+                        zchkjuan = "0";
+                    if (zchkpage == "")
+                        zchkpage = "0";
                     int t = dgvWorkgroup.Rows.Add();
                     dgvWorkgroup.Rows[t].Cells["id"].Value = i.ToString();
                     dgvWorkgroup.Rows[t].Cells["T_user"].Value = guser;
@@ -154,6 +169,8 @@ namespace Csmfztj
                     dgvWorkgroup.Rows[t].Cells["T_check"].Value = gcheckjuan + "卷" + gcheckpage + "页";
                     dgvWorkgroup.Rows[t].Cells["T_zhengli"].Value = gzhenglijuan + "卷" + 0 + "页";
                     dgvWorkgroup.Rows[t].Cells["T_zhuangD"].Value = gzhuangdjuan + "卷" + gzhuangdpage + "页";
+                    dgvWorkgroup.Rows[t].Cells["T_Infochk"].Value = infochkywid + "手" + infochkpage + "页"+infochkjuan+"卷";
+                    dgvWorkgroup.Rows[t].Cells["T_Zchk"].Value =  zchkpage + "页" + zchkjuan + "卷";
                     i++;
                 }
 

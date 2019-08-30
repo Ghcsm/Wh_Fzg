@@ -1,6 +1,6 @@
-﻿namespace Csmdajc
+﻿namespace CsmInfoChk
 {
-    partial class FrmCheck
+    partial class FrmInfoChk
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmCheck));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmInfoChk));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.gr2 = new System.Windows.Forms.GroupBox();
             this.splitCont = new DevComponents.DotNetBar.Controls.CollapsibleSplitContainer();
@@ -70,8 +70,6 @@
             this.toolStripCleSide = new System.Windows.Forms.ToolStripButton();
             this.toolStripCut = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSharePen = new System.Windows.Forms.ToolStripSplitButton();
-            this.toolStripSharePenSet = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripColorDeep = new System.Windows.Forms.ToolStripButton();
             this.toolStripColorShall = new System.Windows.Forms.ToolStripButton();
             this.toolStripInterSpeck = new System.Windows.Forms.ToolStripButton();
@@ -87,12 +85,6 @@
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripGotoPage = new System.Windows.Forms.ToolStripButton();
             this.toolStripAutoSide = new System.Windows.Forms.ToolStripButton();
-            this.toolStripYzidthsider = new System.Windows.Forms.ToolStripButton();
-            this.toolStripZwidthsider = new System.Windows.Forms.ToolStripButton();
-            this.toolStripRound = new System.Windows.Forms.ToolStripButton();
-            this.toolStripcopy = new System.Windows.Forms.ToolStripButton();
-            this.toolStripPase = new System.Windows.Forms.ToolStripButton();
-            this.toolStripMagin = new System.Windows.Forms.ToolStripButton();
             this.toolStripFiltr = new System.Windows.Forms.ToolStripButton();
             this.toolProess = new System.Windows.Forms.ToolStripProgressBar();
             this.toolStripOcr = new System.Windows.Forms.ToolStripButton();
@@ -149,7 +141,6 @@
             // splitContainer1.Panel1
             // 
             this.splitContainer1.Panel1.Controls.Add(this.gr2);
-            this.splitContainer1.Panel1Collapsed = true;
             // 
             // splitContainer1.Panel2
             // 
@@ -256,15 +247,14 @@
             // 
             // ImgView
             // 
-            resources.ApplyResources(this.ImgView, "ImgView");
             this.ImgView.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            resources.ApplyResources(this.ImgView, "ImgView");
             this.ImgView.IsSyncSource = true;
             this.ImgView.IsSyncTarget = true;
             this.ImgView.ItemPadding = new System.Windows.Forms.Padding(1);
             this.ImgView.Name = "ImgView";
             this.ImgView.ViewHorizontalAlignment = Leadtools.Controls.ControlAlignment.Center;
             this.ImgView.ViewMargin = new System.Windows.Forms.Padding(10);
-            this.ImgView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ImgView_MouseClick);
             this.ImgView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ImgView_MouseDoubleClick);
             this.ImgView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ImgView_MouseDown);
             // 
@@ -396,7 +386,6 @@
             this.toolStripCleSide,
             this.toolStripCut,
             this.toolStripSeparator3,
-            this.toolStripSharePen,
             this.toolStripColorDeep,
             this.toolStripColorShall,
             this.toolStripInterSpeck,
@@ -475,20 +464,6 @@
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             resources.ApplyResources(this.toolStripSeparator3, "toolStripSeparator3");
             // 
-            // toolStripSharePen
-            // 
-            this.toolStripSharePen.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripSharePenSet});
-            resources.ApplyResources(this.toolStripSharePen, "toolStripSharePen");
-            this.toolStripSharePen.Name = "toolStripSharePen";
-            this.toolStripSharePen.ButtonClick += new System.EventHandler(this.toolStripSharePen_ButtonClick);
-            // 
-            // toolStripSharePenSet
-            // 
-            this.toolStripSharePenSet.Name = "toolStripSharePenSet";
-            resources.ApplyResources(this.toolStripSharePenSet, "toolStripSharePenSet");
-            this.toolStripSharePenSet.Click += new System.EventHandler(this.toolStripSharePenSet_Click);
-            // 
             // toolStripColorDeep
             // 
             resources.ApplyResources(this.toolStripColorDeep, "toolStripColorDeep");
@@ -522,7 +497,6 @@
             // toolStripClose
             // 
             resources.ApplyResources(this.toolStripClose, "toolStripClose");
-            this.toolStripClose.Image = global::Csmdajc.Properties.Resources._23;
             this.toolStripClose.Name = "toolStripClose";
             this.toolStripClose.Click += new System.EventHandler(this.toolStripClose_Click);
             // 
@@ -537,12 +511,6 @@
             this.toolStripSeparator4,
             this.toolStripGotoPage,
             this.toolStripAutoSide,
-            this.toolStripYzidthsider,
-            this.toolStripZwidthsider,
-            this.toolStripRound,
-            this.toolStripcopy,
-            this.toolStripPase,
-            this.toolStripMagin,
             this.toolStripFiltr,
             this.toolProess,
             this.toolStripOcr,
@@ -567,7 +535,6 @@
             // toolStripTrimImg
             // 
             resources.ApplyResources(this.toolStripTrimImg, "toolStripTrimImg");
-            this.toolStripTrimImg.Image = global::Csmdajc.Properties.Resources._24;
             this.toolStripTrimImg.Name = "toolStripTrimImg";
             this.toolStripTrimImg.Click += new System.EventHandler(this.toolStripTrimImg_Click);
             // 
@@ -600,50 +567,9 @@
             this.toolStripAutoSide.Name = "toolStripAutoSide";
             this.toolStripAutoSide.Click += new System.EventHandler(this.toolStripAutoSide_Click);
             // 
-            // toolStripYzidthsider
-            // 
-            resources.ApplyResources(this.toolStripYzidthsider, "toolStripYzidthsider");
-            this.toolStripYzidthsider.Name = "toolStripYzidthsider";
-            this.toolStripYzidthsider.Click += new System.EventHandler(this.toolStripYzidthsider_Click);
-            // 
-            // toolStripZwidthsider
-            // 
-            resources.ApplyResources(this.toolStripZwidthsider, "toolStripZwidthsider");
-            this.toolStripZwidthsider.Name = "toolStripZwidthsider";
-            this.toolStripZwidthsider.Click += new System.EventHandler(this.toolStripZwidthsider_Click);
-            // 
-            // toolStripRound
-            // 
-            resources.ApplyResources(this.toolStripRound, "toolStripRound");
-            this.toolStripRound.Image = global::Csmdajc.Properties.Resources._25;
-            this.toolStripRound.Name = "toolStripRound";
-            this.toolStripRound.Click += new System.EventHandler(this.toolStripRound_Click);
-            // 
-            // toolStripcopy
-            // 
-            resources.ApplyResources(this.toolStripcopy, "toolStripcopy");
-            this.toolStripcopy.Image = global::Csmdajc.Properties.Resources._27;
-            this.toolStripcopy.Name = "toolStripcopy";
-            this.toolStripcopy.Click += new System.EventHandler(this.toolStripcopy_Click);
-            // 
-            // toolStripPase
-            // 
-            resources.ApplyResources(this.toolStripPase, "toolStripPase");
-            this.toolStripPase.Image = global::Csmdajc.Properties.Resources._28;
-            this.toolStripPase.Name = "toolStripPase";
-            this.toolStripPase.Click += new System.EventHandler(this.toolStripPase_Click);
-            // 
-            // toolStripMagin
-            // 
-            resources.ApplyResources(this.toolStripMagin, "toolStripMagin");
-            this.toolStripMagin.Image = global::Csmdajc.Properties.Resources._29;
-            this.toolStripMagin.Name = "toolStripMagin";
-            this.toolStripMagin.Click += new System.EventHandler(this.toolStripMagin_Click);
-            // 
             // toolStripFiltr
             // 
             resources.ApplyResources(this.toolStripFiltr, "toolStripFiltr");
-            this.toolStripFiltr.Image = global::Csmdajc.Properties.Resources._19;
             this.toolStripFiltr.Name = "toolStripFiltr";
             this.toolStripFiltr.Click += new System.EventHandler(this.toolStripFiltr_Click);
             // 
@@ -656,7 +582,6 @@
             // toolStripOcr
             // 
             resources.ApplyResources(this.toolStripOcr, "toolStripOcr");
-            this.toolStripOcr.Image = global::Csmdajc.Properties.Resources._26;
             this.toolStripOcr.Name = "toolStripOcr";
             this.toolStripOcr.Click += new System.EventHandler(this.toolStripOcr_Click);
             // 
@@ -808,7 +733,7 @@
             this.toollabzchktime.Name = "toollabzchktime";
             resources.ApplyResources(this.toollabzchktime, "toollabzchktime");
             // 
-            // FrmCheck
+            // FrmInfoChk
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -825,7 +750,7 @@
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.KeyPreview = true;
-            this.Name = "FrmCheck";
+            this.Name = "FrmInfoChk";
             this.Load += new System.EventHandler(this.FrmIndex_Load);
             this.Shown += new System.EventHandler(this.FrmIndex_Shown);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FrmIndex_KeyDown);
@@ -884,6 +809,7 @@
         private DevComponents.DotNetBar.DockContainerItem dockCont2;
         private System.Windows.Forms.ToolStrip toolstripmain2;
         private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.GroupBox gr2;
         private System.Windows.Forms.GroupBox gr3;
         private System.Windows.Forms.ToolStripButton toolStripCenter;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
@@ -932,20 +858,11 @@
         private System.Windows.Forms.ToolStripStatusLabel toollabchecktime;
         private System.Windows.Forms.ToolStripStatusLabel toollabenter;
         private System.Windows.Forms.ToolStripStatusLabel toollabentertime;
-        private System.Windows.Forms.ToolStripButton toolStripOcr;
-        private System.Windows.Forms.Label labpage;
-        private System.Windows.Forms.ToolStripButton toolStripcopy;
-        private System.Windows.Forms.ToolStripButton toolStripPase;
-        private System.Windows.Forms.ToolStripButton toolStripRound;
-        private System.Windows.Forms.ToolStripButton toolStripMagin;
-        private System.Windows.Forms.ToolStripButton toolStripYzidthsider;
-        private System.Windows.Forms.ToolStripButton toolStripZwidthsider;
-        private System.Windows.Forms.ToolStripSplitButton toolStripSharePen;
-        private System.Windows.Forms.ToolStripMenuItem toolStripSharePenSet;
-        private System.Windows.Forms.GroupBox gr2;
         private DevComponents.DotNetBar.Controls.CollapsibleSplitContainer splitCont;
         private System.Windows.Forms.GroupBox gr1_1;
         private System.Windows.Forms.GroupBox gr1_2;
+        private System.Windows.Forms.ToolStripButton toolStripOcr;
+        private System.Windows.Forms.Label labpage;
         private System.Windows.Forms.ToolStripStatusLabel toollabinfochk;
         private System.Windows.Forms.ToolStripStatusLabel toollabinfochktime;
         private System.Windows.Forms.ToolStripStatusLabel toollabezchk;

@@ -55,7 +55,7 @@ namespace DAL
             质检中 = 6,
             质检完 = 7,
             已关联 = 8,
-            任务中=9
+            总检完=9
         }
 
         public static string SfName = "档案数字化管理系统";

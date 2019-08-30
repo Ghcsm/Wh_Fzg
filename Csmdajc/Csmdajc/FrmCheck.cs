@@ -26,8 +26,8 @@ namespace Csmdajc
         Hljsimage Himg = new Hljsimage();
         HFTP ftp = new HFTP();
         gArchSelect gArch;
-        UcContents ucContents1;
-        UcDLInfo ucdL;
+        // UcContents ucContents1;
+        //  UcDLInfo ucdL;
         private int archzt = 0;
         private Pubcls pub;
         private MouseEventArgs exArgs;
@@ -43,27 +43,28 @@ namespace Csmdajc
                     Dock = DockStyle.Fill
                 };
                 gArch.LineLoadFile += Garch_LineLoadFile;
-               // gArch.LineClickLoadInfo += GArch_LineClickLoadInfo;
+                // gArch.LineClickLoadInfo += GArch_LineClickLoadInfo;
                 gr1.Controls.Add(gArch);
-                UcContents.Modulename = this.Text;
-                UcContents.ArchId = Clscheck.Archid;
-                UcContents.ContentsEnabled = true;
-                UcContents.ModuleVisible = false;
-                UcContents.ArchCheckZt = 1;
-                ucContents1 = new UcContents();
-                {
-                    ucContents1.Dock = DockStyle.Fill;
-                }
-                ucContents1.OneClickGotoPage += UcContents1_OneClickGotoPage;
-                ucContents1.LineFocus += UcContents1_LineFocus;
-                gr1_1.Controls.Add(ucContents1);
-                Clscheck.infobl = Common.GetConteninfoblchk();
-                if (Clscheck.infobl) {
-                    splitCont.Panel2Collapsed = false;
-                    Infoshow();
-                }
-                else
-                    splitCont.Panel2Collapsed = true;
+                // gr2.Visible = false;
+                //UcContents.Modulename = this.Text;
+                //UcContents.ArchId = Clscheck.Archid;
+                //UcContents.ContentsEnabled = true;
+                //UcContents.ModuleVisible = false;
+                //UcContents.ArchCheckZt = 1;
+                //ucContents1 = new UcContents();
+                //{
+                //    ucContents1.Dock = DockStyle.Fill;
+                //}
+                //ucContents1.OneClickGotoPage += UcContents1_OneClickGotoPage;
+                //ucContents1.LineFocus += UcContents1_LineFocus;
+                //gr1_1.Controls.Add(ucContents1);
+                //Clscheck.infobl = Common.GetConteninfoblchk();
+                //if (Clscheck.infobl) {
+                //    splitCont.Panel2Collapsed = false;
+                //    Infoshow();
+                //}
+                //else
+                //    splitCont.Panel2Collapsed = true;
             } catch (Exception ex) {
                 MessageBox.Show("窗体控件初始化失败:" + ex.ToString());
             }
@@ -82,10 +83,10 @@ namespace Csmdajc
 
         void Infoshow()
         {
-            ucdL = new UcDLInfo();
-            ucdL.Dock = DockStyle.Fill;
-            gr1_2.Controls.Add(ucdL);
-            ucdL.LoadInfo(Clscheck.Archid);
+            //ucdL = new UcDLInfo();
+            //ucdL.Dock = DockStyle.Fill;
+            //gr1_2.Controls.Add(ucdL);
+            //ucdL.LoadInfo(Clscheck.Archid);
         }
 
 
@@ -98,8 +99,8 @@ namespace Csmdajc
             } catch { }
             if (p > 0 && p <= Clscheck.MaxPage)
                 Himg._Gotopage(p);
-            string ywid = ucContents1.ywid;
-            ucdL.Getywid(ywid);
+            //string ywid = ucContents1.ywid;
+            //ucdL.Getywid(ywid);
         }
 
         private void FrmIndex_Load(object sender, EventArgs e)
@@ -184,11 +185,11 @@ namespace Csmdajc
 
         private void toolStripOcr_Click(object sender, EventArgs e)
         {
-            string txt = Himg._OcrRecttxt();
-            if (txt.Length > 0) {
-                txt = (RegexCh(txt)).Replace("天津市", "").Replace("东丽区", "");
-                ucContents1.Setocrtxt(txt);
-            }
+            //string txt = Himg._OcrRecttxt();
+            //if (txt.Length > 0) {
+            //    txt = (RegexCh(txt)).Replace("天津市", "").Replace("东丽区", "");
+            //    ucContents1.Setocrtxt(txt);
+            //}
         }
         private string RegexCh(string s)
         {
@@ -202,17 +203,16 @@ namespace Csmdajc
 
         private void ImgView_MouseDown(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Right)
-            {
+            if (e.Button == MouseButtons.Right) {
                 if (Himg.CopyImgid == 1) {
                     Himg.CombineFloater();
                     Himg._Rectang(true);
                     Himg.CopyImgid = 0;
                 }
-                else if (ImgSize>0)
+                else if (ImgSize > 0)
                     Himg._ImgMagni(false);
-                else 
-                toolStripCut_Click(sender, e);
+                else
+                    toolStripCut_Click(sender, e);
                 ImgSize = 0;
             }
             else if (ImgSize == 0) {
@@ -285,7 +285,7 @@ namespace Csmdajc
                 Thread.Sleep(100);
                 ShowPage();
                 Himg._Pagenext(0);
-                ucContents1.OnChangContents(Clscheck.CrrentPage);
+                // ucContents1.OnChangContents(Clscheck.CrrentPage);
             }
         }
 
@@ -301,7 +301,7 @@ namespace Csmdajc
                     Himg._SavePage();
                     Thread.Sleep(50);
                     Himg._Pagenext(1);
-                    ucContents1.OnChangContents(Clscheck.CrrentPage);
+                    //ucContents1.OnChangContents(Clscheck.CrrentPage);
                 }
                 else if (Clscheck.CrrentPage == Clscheck.MaxPage) {
                     Himg._SavePage();
@@ -335,8 +335,8 @@ namespace Csmdajc
                 return;
             }
             //东丽区专用 
-            if (!ucContents1.IsGetywid() || !Entertag())
-                return;
+            //if (!ucContents1.IsGetywid() || !Entertag())
+            //    return;
             if (MessageBox.Show("质检完成您确定要上传档案吗？", "提示", MessageBoxButtons.OKCancel,
                     MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.OK) {
                 string filepath = Clscheck.ScanFilePath;
@@ -482,8 +482,8 @@ namespace Csmdajc
             if (Clscheck.keystr.Trim().Length > 0)
                 KeysDownEve(Clscheck.keystr.Trim());
             Keys keyCode = e.KeyCode;
-            if (e.KeyCode == Keys.ShiftKey)
-                ucContents1.Setinfofocus();
+            //if (e.KeyCode == Keys.ShiftKey)
+            //    ucContents1.Setinfofocus();
             if (e.KeyCode == Keys.Escape) {
                 gArch.txtBoxsn.Focus();
                 gArch.txtBoxsn.SelectAll();
@@ -604,8 +604,7 @@ namespace Csmdajc
         void KeysDownEve(string key)
         {
             string[] str = key.Split(':');
-            for (int i = 0; i < str.Length; i++)
-            {
+            for (int i = 0; i < str.Length; i++) {
                 string s = str[i];
                 bool bl = false;
                 foreach (var item in toolstripmain1.Items) {
@@ -642,7 +641,7 @@ namespace Csmdajc
 
         private void LoadContents()
         {
-            ucContents1.LoadContents(gArch.Archid, gArch.ArchRegPages);
+            //ucContents1.LoadContents(gArch.Archid, gArch.ArchRegPages);
         }
 
 
@@ -747,7 +746,7 @@ namespace Csmdajc
                     Himg.LoadPage(pages);
                     ReadDict();
                     LoadContents();
-                    ucdL.LoadInfo(Clscheck.Archid);
+                    //ucdL.LoadInfo(Clscheck.Archid);
                     Getuser();
                     Ispages();
                     return;
@@ -935,8 +934,26 @@ namespace Csmdajc
                     toollabentertime.Text = string.Format("时间:{0}", entertime);
 
                 }));
+                dt = Common.GetOperatorchk(Clscheck.Archid);
+                if (dt == null || dt.Rows.Count <= 0)
+                    return;
+                this.BeginInvoke(new Action(() =>
+                {
+                    for (int i = 0; i < dt.Rows.Count; i++) {
+                        string user = dt.Rows[i][0].ToString();
+                        string time = dt.Rows[i][5].ToString();
+                        string module = dt.Rows[i][2].ToString();
+                        if (module.Contains("信息")) {
+                            toollabinfochk.Text = string.Format("信息质检:{0}", user);
+                            toollabinfochktime.Text = string.Format("时间:{0}", time);
+                        }
+                        else {
+                            toollabezchk.Text = string.Format("总质检:{0}", user);
+                            toollabzchktime.Text = string.Format("时间:{0}", time);
+                        }
+                    }
+                }));
                 dt.Dispose();
-
             }));
         }
 
@@ -958,7 +975,7 @@ namespace Csmdajc
         {
             this.Invoke(new Action(() =>
             {
-                ucdL.Cleinfo();
+                //ucdL.Cleinfo();
                 Himg.Filename = "";
                 Himg.RegPage = 0;
                 ImgView.Image = null;
@@ -1077,6 +1094,6 @@ namespace Csmdajc
 
         #endregion
 
-       
+
     }
 }

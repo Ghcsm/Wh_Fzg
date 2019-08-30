@@ -5724,7 +5724,7 @@
     <value>宋体, 9pt</value>
   </data>
   <data name="dockCont2.Text" xml:space="preserve">
-    <value>质量总检</value>
+    <value>目录著录</value>
   </data>
   <data name="bar2.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
@@ -6354,7 +6354,7 @@
     <value>System.Windows.Forms.ToolStripStatusLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>FrmZchk</value>
+    <value>FrmInfoChk</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
     <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
