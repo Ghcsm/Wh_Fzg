@@ -79,13 +79,13 @@ namespace DAL
             SQLHelper.ExecScalar(strSql, p1);
         }
 
-        public static void XgContenModule(string id,string title,string titlelx)
+        public static void XgContenModule(string id, string title, string titlelx)
         {
             string strSql = "Update M_ContentsModule SET title=@title,TitleLx=@lx WHERE id=@id";
             SqlParameter p1 = new SqlParameter("@id", id);
             SqlParameter p2 = new SqlParameter("@title", title);
             SqlParameter p3 = new SqlParameter("@lx", titlelx);
-            SQLHelper.ExecScalar(strSql, p1,p2,p3);
+            SQLHelper.ExecScalar(strSql, p1, p2, p3);
         }
 
         public static bool GetConteninfobl()
@@ -570,6 +570,18 @@ namespace DAL
             SQLHelper.ExecuteNonQuery(strSql, CommandType.StoredProcedure, p);
         }
 
+        public static void SetCheckZFinish(int arid, string file, int check, int stat)
+        {
+            string strSql = "PUpdateZCheckInfo";
+            SqlParameter[] p = new SqlParameter[5];
+            p[0] = new SqlParameter("@UserID", T_User.UserId);
+            p[1] = new SqlParameter("@FileName", file);
+            p[2] = new SqlParameter("@Archid", arid);
+            p[3] = new SqlParameter("@ArchState", stat);
+            p[4] = new SqlParameter("@check", check);
+            SQLHelper.ExecuteNonQuery(strSql, CommandType.StoredProcedure, p);
+        }
+
         public static int GetEnterinfo(int arid)
         {
             string strSql = "SELECT COUNT(*)  FROM 信息表 WHERE Archid =@arid";
@@ -667,11 +679,11 @@ namespace DAL
             SQLHelper.ExecScalar(strSql, p1);
         }
 
-        public static void SetInfochk(string page,string arid,string module,string ywid)
+        public static void SetInfochk(string page, string arid, string module, string ywid)
         {
             string strSql = "PInserCheckCount";
             SqlParameter[] p = new SqlParameter[5];
-            p[0] = new SqlParameter("@userid",T_User.UserId);
+            p[0] = new SqlParameter("@userid", T_User.UserId);
             p[1] = new SqlParameter("@Pages", page);
             p[2] = new SqlParameter("@Moudle", module);
             p[3] = new SqlParameter("@Ywid", ywid);
@@ -1186,7 +1198,14 @@ namespace DAL
             DataTable dt = SQLHelper.ExcuteTable(strSql, p1);
             return dt;
         }
-
+        public static DataTable GetcheckInfo(int archid, int ywid)
+        {
+            string strSql = "select 登记类型,收件编号,权利人,坐落,抵押人,地号,产权证号,宗地号,不动产单元号,审批日期,案卷类型,档案手续 from 信息表 where Archid=@arid and 档案手续=@ywid ";
+            SqlParameter p1 = new SqlParameter("@arid", archid);
+            SqlParameter p2 = new SqlParameter("@ywid", ywid);
+            DataTable dt = SQLHelper.ExcuteTable(strSql, p1, p2);
+            return dt;
+        }
 
         public static void GetQuerInfo()
         {
@@ -1214,15 +1233,17 @@ namespace DAL
             return dt;
         }
 
-        public static void SetInfoPages(string arid, string str, string page, string counpage,string userid)
+        public static void SetInfoPages(string arid, string str, string page, string counpage, string userid)
         {
-            string strSql = "update M_IMAGEFILE set PAGES=@p,ArchPage=@gpage,ArchTmpPage=@page,RelateStaff=@staff where id=@arid ";
+            string strSql = "update M_IMAGEFILE set PAGES=@p,ArchPage=@gpage,ArchTmpPage=@page,RelateStaff=@staff,REGSTAFF=@reguseid ,RelateTime=@relatime where id=@arid ";
             SqlParameter p1 = new SqlParameter("@gpage", str);
             SqlParameter p2 = new SqlParameter("@page", page);
             SqlParameter p3 = new SqlParameter("@arid", arid);
             SqlParameter p4 = new SqlParameter("@p", counpage);
             SqlParameter p5 = new SqlParameter("@staff", userid);
-            SQLHelper.ExecScalar(strSql, p1, p2, p3, p4,p5);
+            SqlParameter p6 = new SqlParameter("@reguseid", T_User.UserId);
+            SqlParameter p7 = new SqlParameter("@relatime", DateTime.Now.ToString());
+            SQLHelper.ExecScalar(strSql, p1, p2, p3, p4, p5, p6, p7);
             string str1 = "修改Archid" + arid + "页码为：" + counpage;
             Writelog(0, str1);
         }
@@ -1804,6 +1825,22 @@ namespace DAL
             }
         }
 
+        public static DataTable GetBoxsnPage(string boxsn, string boxsn2)
+        {
+            try {
+                string strSql = "select PageIndexInfo,boxsn, ArchLx from M_IMAGEFILE WHERE CHECKED=1 AND boxsn>=@b1 and boxsn<=@b2 and HOUSEID=@houseid";
+                SqlParameter p1 = new SqlParameter("@b1", boxsn);
+                SqlParameter p2 = new SqlParameter("@b2", boxsn2);
+                SqlParameter p3 = new SqlParameter("@houseid", V_HouseSetCs.Houseid);
+                DataTable dt = SQLHelper.ExcuteTable(strSql, p1, p2, p3);
+                return dt;
+
+            } catch (Exception e) {
+                MessageBox.Show("查询失败:" + e.ToString());
+                return null;
+            }
+        }
+
         public static DataTable GetBoxsnid(string qu)
         {
             try {
@@ -1856,8 +1893,21 @@ namespace DAL
                     return 0;
                 return Convert.ToInt32(obj.ToString());
 
-            } catch 
-            {
+            } catch {
+                return 0;
+            }
+        }
+
+        public static int GetcontenCount(string arid)
+        {
+            try {
+                string strSql = "select count(*) from 目录表 where Archid=@arid";
+                SqlParameter p1 = new SqlParameter("@arid", arid);
+                object obj = SQLHelper.ExecScalar(strSql, p1);
+                if (obj == null)
+                    return 0;
+                return Convert.ToInt32(obj.ToString());
+            } catch {
                 return 0;
             }
         }
@@ -1965,7 +2015,7 @@ namespace DAL
             SqlParameter p1 = new SqlParameter("@mod", modul);
             SqlParameter p2 = new SqlParameter("@key", oper);
             SqlParameter p3 = new SqlParameter("@useid", T_User.UserId);
-            SQLHelper.ExecScalar(strSql, p1, p2,p3);
+            SQLHelper.ExecScalar(strSql, p1, p2, p3);
 
         }
 
@@ -2002,7 +2052,7 @@ namespace DAL
             SqlParameter p3 = new SqlParameter("@key", keynum);
             SqlParameter p4 = new SqlParameter("@id", id);
             SqlParameter p5 = new SqlParameter("@useid", T_User.UserId);
-            SQLHelper.ExecScalar(strSql, p1, p2, p3, p4,p5);
+            SQLHelper.ExecScalar(strSql, p1, p2, p3, p4, p5);
         }
 
         public static DataTable GetOpenkey(string module)
@@ -2111,6 +2161,22 @@ namespace DAL
             return dt;
         }
 
+        public static DataTable GetinfoLook(string box1, string box2)
+        {
+            string strSql = "select boxsn,ArchXqStat,id,IMGFILE from M_IMAGEFILE where Boxsn>=@b1 and Boxsn<=@b2 order by boxsn";
+            SqlParameter p1 = new SqlParameter("@b1", box1);
+            SqlParameter p2 = new SqlParameter("@b2", box2);
+            DataTable dt = SQLHelper.ExcuteTable(strSql, p1, p2);
+            return dt;
+        }
+
+        public static DataTable GetinfoLook(string qu)
+        {
+            string strSql = "select boxsn,ArchXqStat,id,IMGFILE from M_IMAGEFILE where ArchXqStat=@qu order by boxsn";
+            SqlParameter p1 = new SqlParameter("@qu", qu);
+            DataTable dt = SQLHelper.ExcuteTable(strSql, p1);
+            return dt;
+        }
 
 
         #endregion
@@ -2457,6 +2523,55 @@ namespace DAL
             Writelog(0, str);
         }
 
+        public static DataTable GetboxsnFw(string b1, string b2)
+        {
+            string strSql = "select id,BOXSN,ArchXqStat,Pages from M_IMAGEFILE where Boxsn>=@b1 and Boxsn<=@b2 and checked=1";
+            SqlParameter p1 = new SqlParameter("@b1", b1);
+            SqlParameter p2 = new SqlParameter("@b2", b2);
+            DataTable dt = SQLHelper.ExcuteTable(strSql, p1, p2);
+            return dt;
+        }
+
+        public static DataTable GetboxsnFwXq(string xq)
+        {
+            string strSql = "select id,BOXSN,ArchXqStat,Pages from M_IMAGEFILE where ArchXqStat=@xq and checked=1";
+            SqlParameter p1 = new SqlParameter("@xq", xq);
+            DataTable dt = SQLHelper.ExcuteTable(strSql, p1);
+            return dt;
+        }
+
+        public static DataTable GetcontenMaxtitle(string arid, bool bl)
+        {
+            string strSql = "";
+            DataTable dt = null;
+            if (bl) {
+                strSql = "select max(cast(起始页码 as int)) from 目录表 where Archid=@arid";
+                SqlParameter p1 = new SqlParameter("@arid", arid);
+                object obj = SQLHelper.ExecScalar(strSql, p1);
+                if (obj == null)
+                    return null;
+                strSql = "select 标题 from 目录表 where Archid=@arid and 起始页码=@ym";
+                SqlParameter p2 = new SqlParameter("@arid", arid);
+                SqlParameter p3 = new SqlParameter("@ym", obj.ToString());
+                dt = SQLHelper.ExcuteTable(strSql, p2, p3);
+            }
+            else {
+                strSql = "select 标题 from 目录表 where Archid=@arid ";
+                SqlParameter p1 = new SqlParameter("@arid", arid);
+                dt = SQLHelper.ExcuteTable(strSql, p1);
+            }
+            return dt;
+        }
+
+        public static DataTable GetcontenTmp(string arid)
+        {
+            string strSql = "SELECT 标题,起始页码 FROM 目录表 WHERE Archid=@arid order by CONVERT(INT, 起始页码)";
+            SqlParameter p1 = new SqlParameter("@arid", arid);
+            DataTable dt = SQLHelper.ExcuteTable(strSql, p1);
+            return dt;
+        }
+
+
         public static DataTable GetOperator(int ArchID)
         {
             DataTable dt;
@@ -2467,6 +2582,20 @@ namespace DAL
                 return dt;
             } catch {
                 return null;
+            }
+        }
+
+        public static int GetPages(string box)
+        {
+            try {
+                string strSql = "select Pages from M_IMAGEFILE where Boxsn=@b";
+                SqlParameter p1 = new SqlParameter("@b", box);
+                object obj = SQLHelper.ExecScalar(strSql, p1);
+                if (obj == null)
+                    return 0;
+                return Convert.ToInt32(obj.ToString());
+            } catch {
+                return 0;
             }
         }
 

@@ -245,7 +245,8 @@ namespace Csmdapx
             if (ImgView.Image == null)
                 return;
             NexPage();
-            Himg.SetAutoRect(ClsIndex.RgbR,ClsIndex.RgbG,ClsIndex.RgbB,0);
+            if (AutoRect==1)
+            Himg.SetAutoRect(ClsIndex.RgbR,ClsIndex.RgbG,ClsIndex.RgbB,ClsIndex.Sc);
             txtPages.Focus();
         }
 
@@ -445,6 +446,11 @@ namespace Csmdapx
                 if (r.Trim().Length > 0) {
                     ClsIndex.RgbB = Convert.ToInt32(r);
                 }
+                r = Writeini.Readini("ImageIndex", "AutoRectSC").ToString();
+                if (r.Trim().Length > 0) {
+                    ClsIndex.Sc = Convert.ToInt32(r);
+                }
+
             } catch { }
 
         }
@@ -1177,7 +1183,7 @@ namespace Csmdapx
                     else {
 
                         if (ftp.SaveRemoteFileUp(T_ConFigure.gArchScanPath, archpos, filetmp, T_ConFigure.ScanTempFile)) {
-                            Common.SetArchWorkState(arid, (int)T_ConFigure.ArchStat.扫描完);
+                           // Common.SetArchWorkState(arid, (int)T_ConFigure.ArchStat.扫描完);
                             Common.DelTask(Convert.ToInt32(arid));
                             try {
                                 File.Delete(filetmp);
@@ -1200,13 +1206,13 @@ namespace Csmdapx
                         //}
 
                     }
-                    Common.SetArchWorkState(arid, (int)T_ConFigure.ArchStat.扫描完);
+                   // Common.SetArchWorkState(arid, (int)T_ConFigure.ArchStat.扫描完);
                 }
                 else
                     Common.Writelog(arid, "排序退出时未找到文件!");
 
             } catch {
-                Common.SetArchWorkState(arid, (int)T_ConFigure.ArchStat.扫描完);
+               // Common.SetArchWorkState(arid, (int)T_ConFigure.ArchStat.扫描完);
                 Common.Writelog(ClsIndex.Archid, "排序未完成失败");
 
             } finally {

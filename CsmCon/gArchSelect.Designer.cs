@@ -172,6 +172,7 @@
             this.ImgList.Images.SetKeyName(0, "red.png");
             this.ImgList.Images.SetKeyName(1, "yel.png");
             this.ImgList.Images.SetKeyName(2, "lv.png");
+            this.ImgList.Images.SetKeyName(3, "la.png");
             // 
             // panelTop
             // 

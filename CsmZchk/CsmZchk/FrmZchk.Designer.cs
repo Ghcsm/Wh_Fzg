@@ -44,6 +44,10 @@
             this.toollabchecktime = new System.Windows.Forms.ToolStripStatusLabel();
             this.toollabenter = new System.Windows.Forms.ToolStripStatusLabel();
             this.toollabentertime = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toollabinfochk = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toollabinfochktime = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toollabezchk = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toollabzchktime = new System.Windows.Forms.ToolStripStatusLabel();
             this.gr3 = new System.Windows.Forms.GroupBox();
             this.ImgView = new Leadtools.Controls.ImageViewer();
             this.gr4 = new System.Windows.Forms.GroupBox();
@@ -104,10 +108,6 @@
             this.dockSite7 = new DevComponents.DotNetBar.DockSite();
             this.dockSite3 = new DevComponents.DotNetBar.DockSite();
             this.odgInsterFile = new System.Windows.Forms.OpenFileDialog();
-            this.toollabinfochk = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toollabinfochktime = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toollabezchk = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toollabzchktime = new System.Windows.Forms.ToolStripStatusLabel();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -182,18 +182,19 @@
             // statUser
             // 
             this.statUser.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toollabenter,
+            this.toollabentertime,
             this.toollabscan,
             this.toollabscantime,
             this.toollabindex,
             this.toollabindextime,
             this.toollabcheck,
             this.toollabchecktime,
-            this.toollabenter,
-            this.toollabentertime,
             this.toollabinfochk,
             this.toollabinfochktime,
             this.toollabezchk,
-            this.toollabzchktime});
+            this.toollabzchktime
+            });
             resources.ApplyResources(this.statUser, "statUser");
             this.statUser.Name = "statUser";
             // 
@@ -237,6 +238,26 @@
             this.toollabentertime.Name = "toollabentertime";
             resources.ApplyResources(this.toollabentertime, "toollabentertime");
             // 
+            // toollabinfochk
+            // 
+            this.toollabinfochk.Name = "toollabinfochk";
+            resources.ApplyResources(this.toollabinfochk, "toollabinfochk");
+            // 
+            // toollabinfochktime
+            // 
+            this.toollabinfochktime.Name = "toollabinfochktime";
+            resources.ApplyResources(this.toollabinfochktime, "toollabinfochktime");
+            // 
+            // toollabezchk
+            // 
+            this.toollabezchk.Name = "toollabezchk";
+            resources.ApplyResources(this.toollabezchk, "toollabezchk");
+            // 
+            // toollabzchktime
+            // 
+            this.toollabzchktime.Name = "toollabzchktime";
+            resources.ApplyResources(this.toollabzchktime, "toollabzchktime");
+            // 
             // gr3
             // 
             resources.ApplyResources(this.gr3, "gr3");
@@ -247,8 +268,8 @@
             // 
             // ImgView
             // 
-            this.ImgView.BackColor = System.Drawing.SystemColors.InactiveCaption;
             resources.ApplyResources(this.ImgView, "ImgView");
+            this.ImgView.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.ImgView.IsSyncSource = true;
             this.ImgView.IsSyncTarget = true;
             this.ImgView.ItemPadding = new System.Windows.Forms.Padding(1);
@@ -713,25 +734,10 @@
             this.dockSite3.Name = "dockSite3";
             this.dockSite3.TabStop = false;
             // 
-            // toollabinfochk
+            // toolStripStatusLabel1
             // 
-            this.toollabinfochk.Name = "toollabinfochk";
-            resources.ApplyResources(this.toollabinfochk, "toollabinfochk");
-            // 
-            // toollabinfochktime
-            // 
-            this.toollabinfochktime.Name = "toollabinfochktime";
-            resources.ApplyResources(this.toollabinfochktime, "toollabinfochktime");
-            // 
-            // toollabezchk
-            // 
-            this.toollabezchk.Name = "toollabezchk";
-            resources.ApplyResources(this.toollabezchk, "toollabezchk");
-            // 
-            // toollabzchktime
-            // 
-            this.toollabzchktime.Name = "toollabzchktime";
-            resources.ApplyResources(this.toollabzchktime, "toollabzchktime");
+            //this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            //resources.ApplyResources(this.toolStripStatusLabel1, "toolStripStatusLabel1");
             // 
             // FrmZchk
             // 
@@ -867,5 +873,6 @@
         private System.Windows.Forms.ToolStripStatusLabel toollabinfochktime;
         private System.Windows.Forms.ToolStripStatusLabel toollabezchk;
         private System.Windows.Forms.ToolStripStatusLabel toollabzchktime;
+       
     }
 }

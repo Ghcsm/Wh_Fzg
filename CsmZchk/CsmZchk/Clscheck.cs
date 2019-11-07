@@ -24,5 +24,8 @@ namespace CsmZchk
 
         public static bool infobl { get; set; }=false;
 
+        public static List<string>lsTitle=new List<string>();
+        public static List<string>lsPage=new List<string>();
+
     }
 }

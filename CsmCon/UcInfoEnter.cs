@@ -24,6 +24,8 @@ namespace CsmCon
         private string Atype = "";
         private string infostr = "-1";
         private List<string> lsblstr = new List<string>();
+        private List<string> lsid = new List<string>();
+        private List<string> lsnum = new List<string>();
         public void GetInfoCol()
         {
             Common.GetInfoEnterSet();
@@ -32,6 +34,8 @@ namespace CsmCon
             int id = 0;
             string wycol = "";
             lsblstr.Clear();
+            lsid.Clear();
+            lsnum.Clear();
             for (int i = 0; i < ClsInfoEnter.InfoTable.Count; i++) {
                 id = 0;
                 txtcol = 0;
@@ -131,6 +135,12 @@ namespace CsmCon
                     txt.Location = new Point(yy, 5);
                 else
                     txt.Location = new Point(yy, txtrows * 30 - 20);
+                int p;
+                bool bl = int.TryParse(val, out p);
+                if (bl) {
+                    lsid.Add(id.ToString());
+                    lsnum.Add(p.ToString());
+                }
                 txt.KeyPress += Txt_KeyPress; ;
                 pl.Controls.Add(txt);
             }
@@ -142,6 +152,12 @@ namespace CsmCon
                 cb.TabIndex = id;
                 cb.Tag = id;
                 cb.BringToFront();
+                int p;
+                bool bl = int.TryParse(val, out p);
+                if (bl) {
+                    lsid.Add(id.ToString());
+                    lsnum.Add(p.ToString());
+                }
                 string[] a = val.Split(';');
                 for (int i = 0; i < a.Length; i++) {
                     string b = a[i];
@@ -170,7 +186,7 @@ namespace CsmCon
             if (comb.Tag.ToString() == TsTag && TsTag != "-1") {
                 infostr = comb.Text.Trim();
                 int p;
-                LoadInfo(Archid, Enterinfo, Atype,out p);
+                LoadInfo(Archid, Enterinfo, Atype, out p);
                 infostr = "0";
             }
         }
@@ -212,6 +228,17 @@ namespace CsmCon
                             return true;
                         }
                     }
+                    int x = lsid.IndexOf(p.Tag.ToString());
+                    if (x >= 0) {
+                        int m = Convert.ToInt32(lsnum[x].ToString());
+                        if (p.Text.Trim().Length > 0 && p.Text.Trim().Length != m) {
+                            MessageBox.Show(p.Name + "信息长度位数不正确!");
+                            p.Focus();
+                            return true;
+                        }
+                    }
+
+
                 }
             }
             return false;
@@ -276,8 +303,7 @@ namespace CsmCon
 
                     }
                 }
-                if (wycolstr.Trim().Length <= 0)
-                {
+                if (wycolstr.Trim().Length <= 0) {
                     MessageBox.Show("手续信息不能为空!");
                     return;
                 }
@@ -313,10 +339,9 @@ namespace CsmCon
             }
         }
 
-        public void LoadInfo(int archid, int enter, string atype,out int xs)
+        public void LoadInfo(int archid, int enter, string atype, out int xs)
         {
-            try
-            {
+            try {
                 xs = 0;
                 Txtcle();
                 if (archid <= 0 || atype.Trim().Length <= 0)
@@ -349,8 +374,7 @@ namespace CsmCon
                     }
                 }
                 tabControl.SelectedIndex = t;
-            } catch (Exception e)
-            {
+            } catch (Exception e) {
                 xs = 0;
                 MessageBox.Show("加载信息失败:" + e.ToString());
             }

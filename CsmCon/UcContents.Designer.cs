@@ -162,11 +162,10 @@
             this.butDel.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.butDel.Location = new System.Drawing.Point(16, 126);
             this.butDel.Name = "butDel";
-            this.butDel.Shortcuts.Add(DevComponents.DotNetBar.eShortcut.CtrlD);
             this.butDel.Size = new System.Drawing.Size(56, 31);
             this.butDel.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.butDel.TabIndex = 6;
-            this.butDel.Text = "删除(D)";
+            this.butDel.Text = "删除";
             this.butDel.Click += new System.EventHandler(this.butDel_Click);
             // 
             // butEdit
@@ -175,11 +174,10 @@
             this.butEdit.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.butEdit.Location = new System.Drawing.Point(16, 73);
             this.butEdit.Name = "butEdit";
-            this.butEdit.Shortcuts.Add(DevComponents.DotNetBar.eShortcut.CtrlF);
             this.butEdit.Size = new System.Drawing.Size(55, 31);
             this.butEdit.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.butEdit.TabIndex = 5;
-            this.butEdit.Text = "修改(F)";
+            this.butEdit.Text = "修改";
             this.butEdit.Click += new System.EventHandler(this.butEdit_Click);
             // 
             // butAdd
@@ -188,11 +186,11 @@
             this.butAdd.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.butAdd.Location = new System.Drawing.Point(16, 22);
             this.butAdd.Name = "butAdd";
-            this.butAdd.Shortcuts.Add(DevComponents.DotNetBar.eShortcut.CtrlS);
+            this.butAdd.Shortcuts.Add(DevComponents.DotNetBar.eShortcut.CtrlZ);
             this.butAdd.Size = new System.Drawing.Size(54, 31);
             this.butAdd.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.butAdd.TabIndex = 4;
-            this.butAdd.Text = "新增(S)";
+            this.butAdd.Text = "新增(Z)";
             this.butAdd.Click += new System.EventHandler(this.butAdd_Click);
             // 
             // gr1
@@ -377,16 +375,13 @@
         private DevComponents.DotNetBar.ButtonX butModule;
         private DevComponents.DotNetBar.ButtonX butDel;
         private DevComponents.DotNetBar.ButtonX butEdit;
-        private DevComponents.DotNetBar.ButtonX butAdd;
         private DevComponents.DotNetBar.Controls.ListViewEx LvModule;
         private System.Windows.Forms.ColumnHeader colDoduleTitle;
         private System.Windows.Forms.ColumnHeader colDoduleCode;
-        private DevComponents.DotNetBar.Controls.ListViewEx LvContents;
         private System.Windows.Forms.ColumnHeader colContentsSn;
         private System.Windows.Forms.ColumnHeader colContentsTitle;
         private System.Windows.Forms.CheckBox chkTspages;
         public System.Windows.Forms.TextBox txtId;
-        private System.Windows.Forms.GroupBox gr2;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.ColumnHeader colDodulelx;
@@ -394,5 +389,8 @@
         private System.Windows.Forms.SplitContainer splitCont;
         public System.Windows.Forms.TextBox txtCode;
         private System.Windows.Forms.SplitContainer splitContainer1;
+        public DevComponents.DotNetBar.Controls.ListViewEx LvContents;
+        public DevComponents.DotNetBar.ButtonX butAdd;
+        public System.Windows.Forms.GroupBox gr2;
     }
 }

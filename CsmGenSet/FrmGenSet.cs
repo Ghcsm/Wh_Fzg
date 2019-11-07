@@ -967,55 +967,55 @@ namespace CsmGenSet
             try {
                 string wycol = "";
                 string bl = "";
-                if (ClsGenSet.PrintInfo != null && ClsGenSet.PrintInfo.Rows.Count > 0) {
-                    DataTable dt = T_Sysset.GetInfoTable();
-                    if (dt == null || dt.Rows.Count <= 0)
+
+                DataTable dt = T_Sysset.GetInfoTable();
+                if (dt == null || dt.Rows.Count <= 0)
+                    return;
+                foreach (DataRow dr in dt.Rows) {
+                    string t = dr["InfoTable"].ToString();
+                    string zd = dr["InfoAddzd"].ToString();
+                    string name = dr["InfoName"].ToString();
+                    string num = dr["InfoNum"].ToString();
+                    string width = dr["InfoLabWidth"].ToString();
+                    string txtwidth = dr["InfoTxtWidth"].ToString();
+                    bl = dr["InfoCheck"].ToString();
+                    wycol = dr["Wycol"].ToString();
+                    if (t.Trim().Length <= 0)
                         return;
-                    foreach (DataRow dr in dt.Rows) {
-                        string t = dr["InfoTable"].ToString();
-                        string zd = dr["InfoAddzd"].ToString();
-                        string name = dr["InfoName"].ToString();
-                        string num = dr["InfoNum"].ToString();
-                        string width = dr["InfoLabWidth"].ToString();
-                        string txtwidth = dr["InfoTxtWidth"].ToString();
-                        bl = dr["InfoCheck"].ToString();
-                        wycol = dr["Wycol"].ToString();
-                        if (t.Trim().Length <= 0)
-                            return;
-                        combInfoTable.Items.Add(t);
-                        ClsInfoAdd.InfoTableLs.Add(t);
-                        ClsInfoAdd.InfoInfoZd.Add(zd);
-                        combInfoTableName.Items.Add(name);
-                        ClsInfoAdd.InfoTableName.Add(name);
-                        combInfoColNum.Items.Add(num);
-                        ClsInfoAdd.InfoColNum.Add(num);
-                        combInfoLabWith.Items.Add(width);
-                        ClsInfoAdd.InfoLabWidth.Add(width);
-                        combInfotxtWith.Items.Add(txtwidth);
-                        ClsInfoAdd.InfotxtWidth.Add(txtwidth);
-                    }
-                    DataRow dr1 = dt.Rows[0];
-                    ClsInfoAdd.InfoTable = dr1["InfoTable"].ToString();
-                    string str = dr1["InfoAddzd"].ToString();
-                    txtInfoAdd.Text = ClsInfoAdd.InfoTable;
-                    if (str.Length > 0) {
-                        string[] a = str.Split(';');
-                        for (int i = 0; i < a.Length; i++) {
-                            string b = a[i];
-                            chkInfoZd.Items.Add(b);
-                            combInfoWycol.Items.Add(b);
-                        }
-                    }
-                    combInfoWycol.Text = wycol;
-                    if (bl.Trim().Length <= 0)
-                        chkInfoblcheck.Checked = false;
-                    else {
-                        if (bl == "1")
-                            chkInfoblcheck.Checked = true;
-                        else
-                            chkInfoblcheck.Checked = false;
+                    combInfoTable.Items.Add(t);
+                    ClsInfoAdd.InfoTableLs.Add(t);
+                    ClsInfoAdd.InfoInfoZd.Add(zd);
+                    combInfoTableName.Items.Add(name);
+                    ClsInfoAdd.InfoTableName.Add(name);
+                    combInfoColNum.Items.Add(num);
+                    ClsInfoAdd.InfoColNum.Add(num);
+                    combInfoLabWith.Items.Add(width);
+                    ClsInfoAdd.InfoLabWidth.Add(width);
+                    combInfotxtWith.Items.Add(txtwidth);
+                    ClsInfoAdd.InfotxtWidth.Add(txtwidth);
+                }
+                DataRow dr1 = dt.Rows[0];
+                ClsInfoAdd.InfoTable = dr1["InfoTable"].ToString();
+                string str = dr1["InfoAddzd"].ToString();
+                txtInfoAdd.Text = ClsInfoAdd.InfoTable;
+                if (str.Length > 0) {
+                    string[] a = str.Split(';');
+                    for (int i = 0; i < a.Length; i++) {
+                        string b = a[i];
+                        chkInfoZd.Items.Add(b);
+                        combInfoWycol.Items.Add(b);
                     }
                 }
+                combInfoWycol.Text = wycol;
+                if (bl.Trim().Length <= 0)
+                    chkInfoblcheck.Checked = false;
+                else {
+                    if (bl == "1")
+                        chkInfoblcheck.Checked = true;
+                    else
+                        chkInfoblcheck.Checked = false;
+                }
+
             } catch (Exception e) {
                 MessageBox.Show("信息补录表加载失败:" + e.ToString());
             }
@@ -3114,6 +3114,77 @@ namespace CsmGenSet
 
         #endregion
 
+
+        #region ContenPageSet
+
+        private void LoadContenPageSet()
+        {
+            LvContenPageSet.Items.Clear();
+            DataTable dt = T_Sysset.GetContenPageSet();
+            if (dt == null || dt.Rows.Count <= 0)
+                return;
+            int i = 1;
+            foreach (DataRow dr in dt.Rows) {
+                ListViewItem lvi = new ListViewItem();
+                lvi.Text = i.ToString();
+                string id = dr["id"].ToString();
+                string title = dr["Title"].ToString();
+                string page = dr["Page"].ToString();
+                lvi.SubItems.AddRange(new string[] { title, page, id });
+                LvContenPageSet.Items.Add(lvi);
+                i++;
+            }
+        }
+
+        private void butContenPageSetAdd_Click(object sender, EventArgs e)
+        {
+            if (txtContenPageSetTitle.Text.Trim().Length <= 0 || txtContenPageSetPage.Text.Trim().Length <= 0)
+            {
+                MessageBox.Show("请输入标题和页数!");
+                txtContenPageSetTitle.Focus();
+                return;
+            }
+            T_Sysset.InsterContePageSet(txtContenPageSetTitle.Text.Trim(), txtContenPageSetPage.Text.Trim());
+            LoadContenPageSet();
+            txtContenPageSetTitle.Text = "";
+            txtContenPageSetPage.Text = "";
+            txtContenPageSetTitle.Focus();
+        }
+
+
+        private void butContenPageSetDel_Click(object sender, EventArgs e)
+        {
+            if (txtContenPageSetTitle.Text.Trim().Length <= 0 || txtContenPageSetPage.Text.Trim().Length <= 0)
+            {
+                MessageBox.Show("请选中要删除的目录");
+                LvContenPageSet.Focus();
+                return;
+            }
+            string id = LvContenPageSet.SelectedItems[0].SubItems[3].Text;
+            if (id.Trim().Length <= 0)
+            {
+                MessageBox.Show("ID获取失败,请重新选中!");
+                LvContenPageSet.Focus();return;
+            }
+            T_Sysset.DelContePageSet(Convert.ToInt32(id));
+            LoadContenPageSet();
+            txtContenPageSetTitle.Text = "";
+            txtContenPageSetPage.Text = "";
+            txtContenPageSetTitle.Focus();
+        }
+
+        private void LvContenPageSet_Click(object sender, EventArgs e)
+        {
+            if (LvContenPageSet.Items.Count <= 0 || LvContenPageSet.SelectedItems.Count <= 0)
+                return;
+            string title = LvContenPageSet.SelectedItems[0].SubItems[1].Text;
+            string page = LvContenPageSet.SelectedItems[0].SubItems[2].Text;
+            txtContenPageSetTitle.Text = title;
+            txtContenPageSetPage.Text = page;
+        }
+
+        #endregion
+
         private void Infoshow()
         {
             GetGenSetPrint();
@@ -3127,13 +3198,14 @@ namespace CsmGenSet
             GetnContenInfo();
             CreateTableab();
             GetnborrInfo();
+            LoadContenPageSet();
         }
         private void FrmGetSet_Shown(object sender, EventArgs e)
         {
             Infoshow();
         }
 
-
+        
     }
 
 }

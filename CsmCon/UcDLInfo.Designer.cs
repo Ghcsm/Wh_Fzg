@@ -30,8 +30,8 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.groupPanel1 = new DevComponents.DotNetBar.Controls.GroupPanel();
             this.dgvInfo = new DevComponents.DotNetBar.Controls.DataGridViewX();
-            this.labcount = new System.Windows.Forms.Label();
             this.labywid = new System.Windows.Forms.Label();
+            this.labcount = new System.Windows.Forms.Label();
             this.groupPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvInfo)).BeginInit();
             this.SuspendLayout();
@@ -103,18 +103,6 @@
             this.dgvInfo.Size = new System.Drawing.Size(439, 196);
             this.dgvInfo.TabIndex = 1;
             // 
-            // labcount
-            // 
-            this.labcount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.labcount.AutoSize = true;
-            this.labcount.BackColor = System.Drawing.Color.Transparent;
-            this.labcount.ForeColor = System.Drawing.Color.Red;
-            this.labcount.Location = new System.Drawing.Point(16, 213);
-            this.labcount.Name = "labcount";
-            this.labcount.Size = new System.Drawing.Size(35, 12);
-            this.labcount.TabIndex = 0;
-            this.labcount.Text = "共0手";
-            // 
             // labywid
             // 
             this.labywid.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -126,6 +114,19 @@
             this.labywid.Size = new System.Drawing.Size(35, 12);
             this.labywid.TabIndex = 0;
             this.labywid.Text = "第0手";
+            this.labywid.Visible = false;
+            // 
+            // labcount
+            // 
+            this.labcount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.labcount.AutoSize = true;
+            this.labcount.BackColor = System.Drawing.Color.Transparent;
+            this.labcount.ForeColor = System.Drawing.Color.Red;
+            this.labcount.Location = new System.Drawing.Point(16, 213);
+            this.labcount.Name = "labcount";
+            this.labcount.Size = new System.Drawing.Size(35, 12);
+            this.labcount.TabIndex = 0;
+            this.labcount.Text = "共0手";
             // 
             // UcDLInfo
             // 

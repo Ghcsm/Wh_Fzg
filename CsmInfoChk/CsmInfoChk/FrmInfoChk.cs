@@ -47,7 +47,7 @@ namespace CsmInfoChk
                 UcContents.ArchId = Clscheck.Archid;
                 UcContents.ContentsEnabled = true;
                 UcContents.ModuleVisible = false;
-                 //UcContents.ArchCheckZt = 1;
+                UcContents.ArchCheckZt = 1;
                 ucContents1 = new UcContents();
                 {
                     ucContents1.Dock = DockStyle.Fill;
@@ -156,7 +156,27 @@ namespace CsmInfoChk
         }
 
         #region ClickEve
+        private void toolStripDouGoto_Page_Click(object sender, EventArgs e)
+        {
+            FrmPage fpPage = new FrmPage();
+            fpPage.ShowDialog();
+        }
 
+        private void toolStripDouGoto_Click(object sender, EventArgs e)
+        {
+            string file = Path.Combine(Application.StartupPath, "ScanConfig.ini");
+            Writeini.Fileini = file;
+            string sj = DAL.Writeini.Readini("ImageConten", "GoPage").ToString();
+            if (sj.Trim().Length > 0)
+            {
+                int p;
+                bool b = int.TryParse(sj, out p);
+                if (!b || p <= 0)
+                    return;
+                p += Clscheck.CrrentPage;
+                Himg._Gotopage(p);
+            }
+        }
         private void toolStripOcr_Click(object sender, EventArgs e)
         {
             string txt = Himg._OcrRecttxt();
@@ -1037,8 +1057,9 @@ namespace CsmInfoChk
         }
 
 
+
         #endregion
 
-
+      
     }
 }

@@ -79,6 +79,40 @@ namespace CsmZchk
             gArch.LvData.Focus();
         }
 
+        void CheckPage()
+        {
+            if (Clscheck.lsTitle.Count <= 0 || Clscheck.lsPage.Count <= 0)
+                return;
+            if (ucContents1.LvContents.Items.Count <= 0)
+                return;
+          
+            int id = ucContents1.LvContents.SelectedItems[0].Index;
+            string title = ucContents1.LvContents.Items[id].SubItems[2].Text;
+            string page = ucContents1.LvContents.Items[id].SubItems[3].Text;
+            if (title.Trim().Length <= 0)
+                return;
+            int x = Clscheck.lsTitle.IndexOf(title);
+            if (x >= 0) {
+                string Spage = Clscheck.lsPage[x];
+                string str = "";
+                try {
+                    int p1 = Convert.ToInt32(ucContents1.LvContents.Items[id+1].SubItems[3].Text);
+                    if (Spage != (p1 - (Convert.ToInt32(page))).ToString()) {
+                        str = page;
+                    }
+                } catch {
+                    if ((Clscheck.RegPage + 1 - Convert.ToInt32(page)).ToString() != Spage) {
+                        str = page;
+                    }
+                }
+                if (str.Trim().Length>0)
+                MessageBox.Show( str + "页目录异常，请认真核对");
+
+            }
+
+
+        }
+
         void Infoshow()
         {
             ucdL = new UcDLInfo();
@@ -115,10 +149,26 @@ namespace CsmZchk
             }
         }
 
+        void LoadContePage()
+        {
+            DataTable dt = T_Sysset.GetContenPageSet();
+            if (dt == null || dt.Rows.Count <= 0)
+                return;
+            for (int i = 0; i < dt.Rows.Count; i++) {
+                string title = dt.Rows[i][1].ToString();
+                string page = dt.Rows[i][2].ToString();
+                if (title.Trim().Length <= 0)
+                    continue;
+                Clscheck.lsTitle.Add(title);
+                Clscheck.lsPage.Add(page);
+            }
+        }
+
         private void FrmIndex_Shown(object sender, EventArgs e)
         {
             Himg.Spage += new Hljsimage.ScanPage(GetPages);
             ftp.PercentChane += new HLFtp.HFTP.PChangedHandle(Downjd);
+            LoadContePage();
         }
 
         private void Garch_LineLoadFile(object sender, EventArgs e)
@@ -257,13 +307,14 @@ namespace CsmZchk
         {
             try {
                 if (Clscheck.CrrentPage != Clscheck.MaxPage) {
-                     Himg._SavePage();
+                    Himg._SavePage();
                     Thread.Sleep(50);
                     Himg._Pagenext(1);
                     ucContents1.OnChangContents(Clscheck.CrrentPage);
+                    CheckPage();
                 }
                 else if (Clscheck.CrrentPage == Clscheck.MaxPage) {
-                     Himg._SavePage();
+                    Himg._SavePage();
                     Thread.Sleep(50);
                     toolStripSave_Click(null, null);
                 }
@@ -289,6 +340,10 @@ namespace CsmZchk
         {
             if (ImgView.Image == null)
                 return;
+            if (Clscheck.MaxPage != Clscheck.RegPage) {
+                MessageBox.Show("登记页码和图像页码不一致无法完成质检!");
+                return;
+            }
             if (!ucContents1.IsGetywid() || !Entertag())
                 return;
             if (MessageBox.Show("质检完成您确定要上传档案吗？", "提示", MessageBoxButtons.OKCancel,
@@ -314,7 +369,7 @@ namespace CsmZchk
                         string path = Path.Combine(T_ConFigure.FtpArchSave, filename.Substring(0, 8));
                         if (ftp.FtpMoveFile(sourefile, goalfile, path)) {
                             Thread.Sleep(5000);
-                            Common.SetCheckFinish(arid, DESEncrypt.DesEncrypt(filename), 1, (int)T_ConFigure.ArchStat.总检完);
+                            Common.SetCheckZFinish(arid, DESEncrypt.DesEncrypt(filename), 1, (int)T_ConFigure.ArchStat.总检完);
                             Common.DelTask(arid);
                             Common.SetInfochk(pages.ToString(), arid.ToString(), this.Text, ucContents1.ywid);
                             return;
@@ -324,7 +379,7 @@ namespace CsmZchk
                         string RemoteDir = filename.Substring(0, 8);
                         if (ftp.SaveRemoteFileUp(T_ConFigure.FtpArchSave, RemoteDir, filetmp, filename)) {
                             Common.DelTask(arid);
-                            Common.SetCheckFinish(arid, DESEncrypt.DesEncrypt(filename), 1, (int)T_ConFigure.ArchStat.总检完);
+                            Common.SetCheckZFinish(arid, DESEncrypt.DesEncrypt(filename), 1, (int)T_ConFigure.ArchStat.总检完);
                             Common.SetInfochk(pages.ToString(), arid.ToString(), this.Text, ucContents1.ywid);
                             try {
                                 File.Delete(filetmp);
@@ -334,10 +389,10 @@ namespace CsmZchk
 
                         }
                     }
-                 Common.SetArchWorkState(arid, (int)T_ConFigure.ArchStat.质检完);
+                    Common.SetArchWorkState(arid, (int)T_ConFigure.ArchStat.质检完);
                 }
             } catch {
-                    Common.SetArchWorkState(arid, (int)T_ConFigure.ArchStat.质检完);
+                Common.SetArchWorkState(arid, (int)T_ConFigure.ArchStat.质检完);
             } finally {
                 GC.Collect();
             }
@@ -619,7 +674,7 @@ namespace CsmZchk
         }
 
 
-     
+
 
         private bool isExists(string str)
         {
@@ -789,6 +844,8 @@ namespace CsmZchk
                 string chktime = string.Empty;
                 string enter = string.Empty;
                 string entertime = string.Empty;
+                string zj = string.Empty;
+                string zjtime = string.Empty;
                 DataTable dt = Common.GetOperator(Clscheck.Archid);
                 if (dt == null || dt.Rows.Count <= 0)
                     return;
@@ -801,6 +858,8 @@ namespace CsmZchk
                 chktime = dr["质检时间"].ToString();
                 enter = dr["录入"].ToString();
                 entertime = dr["录入时间"].ToString();
+                zj = dr["总检"].ToString();
+                zjtime = dr["总检时间"].ToString();
                 this.BeginInvoke(new Action(() =>
                 {
                     toollabscan.Text = string.Format("扫描:{0}", Scanner);
@@ -809,8 +868,10 @@ namespace CsmZchk
                     toollabindextime.Text = string.Format("时间:{0}", indextime);
                     toollabcheck.Text = string.Format("质检:{0}", Checker);
                     toollabchecktime.Text = string.Format("时间:{0}", chktime);
-                    toollabenter.Text = string.Format("录入:{0}", enter);
+                    toollabenter.Text = string.Format("信息录入:{0}", enter);
                     toollabentertime.Text = string.Format("时间:{0}", entertime);
+                    toollabezchk.Text = string.Format("总质检:{0}", zj);
+                    toollabzchktime.Text = string.Format("时间:{0}", zjtime);
 
                 }));
                 dt = Common.GetOperatorchk(Clscheck.Archid);
@@ -818,18 +879,11 @@ namespace CsmZchk
                     return;
                 this.BeginInvoke(new Action(() =>
                 {
-                    for (int i = 0; i < dt.Rows.Count; i++) {
+                    for (int i = 0; i <1; i++) {
                         string user = dt.Rows[i][0].ToString();
-                        string time = dt.Rows[i][5].ToString();
-                        string module = dt.Rows[i][2].ToString();
-                        if (module.Contains("信息")) {
-                            toollabinfochk.Text = string.Format("信息质检:{0}", user);
-                            toollabinfochktime.Text = string.Format("时间:{0}", time);
-                        }
-                        else {
-                            toollabezchk.Text = string.Format("总质检:{0}", user);
-                            toollabzchktime.Text = string.Format("时间:{0}", time);
-                        }
+                        string time = dt.Rows[i][1].ToString();
+                        toollabinfochk.Text = string.Format("目录录入:{0}", user);
+                        toollabinfochktime.Text = string.Format("时间:{0}", time);
                     }
                 }));
                 dt.Dispose();
@@ -873,7 +927,7 @@ namespace CsmZchk
 
         }
 
-      
+
         #endregion
 
 

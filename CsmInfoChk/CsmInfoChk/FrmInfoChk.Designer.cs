@@ -44,6 +44,10 @@
             this.toollabchecktime = new System.Windows.Forms.ToolStripStatusLabel();
             this.toollabenter = new System.Windows.Forms.ToolStripStatusLabel();
             this.toollabentertime = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toollabinfochk = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toollabinfochktime = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toollabezchk = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toollabzchktime = new System.Windows.Forms.ToolStripStatusLabel();
             this.gr3 = new System.Windows.Forms.GroupBox();
             this.ImgView = new Leadtools.Controls.ImageViewer();
             this.gr4 = new System.Windows.Forms.GroupBox();
@@ -88,6 +92,8 @@
             this.toolStripFiltr = new System.Windows.Forms.ToolStripButton();
             this.toolProess = new System.Windows.Forms.ToolStripProgressBar();
             this.toolStripOcr = new System.Windows.Forms.ToolStripButton();
+            this.toolStripDouGoto = new System.Windows.Forms.ToolStripDropDownButton();
+            this.toolStripDouGoto_Page = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.toolArchno = new System.Windows.Forms.ToolStripLabel();
             this.toollbInfo = new System.Windows.Forms.ToolStripLabel();
@@ -104,10 +110,6 @@
             this.dockSite7 = new DevComponents.DotNetBar.DockSite();
             this.dockSite3 = new DevComponents.DotNetBar.DockSite();
             this.odgInsterFile = new System.Windows.Forms.OpenFileDialog();
-            this.toollabinfochk = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toollabinfochktime = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toollabezchk = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toollabzchktime = new System.Windows.Forms.ToolStripStatusLabel();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -236,6 +238,26 @@
             // 
             this.toollabentertime.Name = "toollabentertime";
             resources.ApplyResources(this.toollabentertime, "toollabentertime");
+            // 
+            // toollabinfochk
+            // 
+            this.toollabinfochk.Name = "toollabinfochk";
+            resources.ApplyResources(this.toollabinfochk, "toollabinfochk");
+            // 
+            // toollabinfochktime
+            // 
+            this.toollabinfochktime.Name = "toollabinfochktime";
+            resources.ApplyResources(this.toollabinfochktime, "toollabinfochktime");
+            // 
+            // toollabezchk
+            // 
+            this.toollabezchk.Name = "toollabezchk";
+            resources.ApplyResources(this.toollabezchk, "toollabezchk");
+            // 
+            // toollabzchktime
+            // 
+            this.toollabzchktime.Name = "toollabzchktime";
+            resources.ApplyResources(this.toollabzchktime, "toollabzchktime");
             // 
             // gr3
             // 
@@ -514,6 +536,7 @@
             this.toolStripFiltr,
             this.toolProess,
             this.toolStripOcr,
+            this.toolStripDouGoto,
             this.toolStripSeparator5,
             this.toolArchno,
             this.toollbInfo});
@@ -584,6 +607,20 @@
             resources.ApplyResources(this.toolStripOcr, "toolStripOcr");
             this.toolStripOcr.Name = "toolStripOcr";
             this.toolStripOcr.Click += new System.EventHandler(this.toolStripOcr_Click);
+            // 
+            // toolStripDouGoto
+            // 
+            this.toolStripDouGoto.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripDouGoto_Page});
+            resources.ApplyResources(this.toolStripDouGoto, "toolStripDouGoto");
+            this.toolStripDouGoto.Name = "toolStripDouGoto";
+            this.toolStripDouGoto.Click += new System.EventHandler(this.toolStripDouGoto_Click);
+            // 
+            // toolStripDouGoto_Page
+            // 
+            this.toolStripDouGoto_Page.Name = "toolStripDouGoto_Page";
+            resources.ApplyResources(this.toolStripDouGoto_Page, "toolStripDouGoto_Page");
+            this.toolStripDouGoto_Page.Click += new System.EventHandler(this.toolStripDouGoto_Page_Click);
             // 
             // toolStripSeparator5
             // 
@@ -712,26 +749,6 @@
             this.dockSite3.DocumentDockContainer = new DevComponents.DotNetBar.DocumentDockContainer();
             this.dockSite3.Name = "dockSite3";
             this.dockSite3.TabStop = false;
-            // 
-            // toollabinfochk
-            // 
-            this.toollabinfochk.Name = "toollabinfochk";
-            resources.ApplyResources(this.toollabinfochk, "toollabinfochk");
-            // 
-            // toollabinfochktime
-            // 
-            this.toollabinfochktime.Name = "toollabinfochktime";
-            resources.ApplyResources(this.toollabinfochktime, "toollabinfochktime");
-            // 
-            // toollabezchk
-            // 
-            this.toollabezchk.Name = "toollabezchk";
-            resources.ApplyResources(this.toollabezchk, "toollabezchk");
-            // 
-            // toollabzchktime
-            // 
-            this.toollabzchktime.Name = "toollabzchktime";
-            resources.ApplyResources(this.toollabzchktime, "toollabzchktime");
             // 
             // FrmInfoChk
             // 
@@ -867,5 +884,7 @@
         private System.Windows.Forms.ToolStripStatusLabel toollabinfochktime;
         private System.Windows.Forms.ToolStripStatusLabel toollabezchk;
         private System.Windows.Forms.ToolStripStatusLabel toollabzchktime;
+        private System.Windows.Forms.ToolStripDropDownButton toolStripDouGoto;
+        private System.Windows.Forms.ToolStripMenuItem toolStripDouGoto_Page;
     }
 }

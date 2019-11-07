@@ -9,6 +9,8 @@ namespace CsmCon
 {
     public partial class UcContents : UserControl
     {
+
+        
         public UcContents()
         {
             InitializeComponent();
@@ -38,7 +40,7 @@ namespace CsmCon
                 Modulename = "目录录入";
             //  info = new ClsContenInfo();
 
-            info.GetControl(panel1);
+            info.GetControl(panel1,gr2);
             this.chbModule.Checked = ModuleVisible;
             this.gr0.Enabled = ContentsEnabled;
             gr2.Enabled = ContentsEnabled;
@@ -327,10 +329,13 @@ namespace CsmCon
 
         private void butEdit_Click(object sender, EventArgs e)
         {
-            if (ArchStat >= (int)T_ConFigure.ArchStat.质检完 && ArchCheckZt == 0) {
-                MessageBox.Show("案卷已经质检完成无法修改目录");
-                return;
-            }
+            //if (ArchCheckZt < 1)
+            //{
+                if (ArchStat >= (int)T_ConFigure.ArchStat.质检完 && ArchCheckZt == 0) {
+                    MessageBox.Show("案卷已经质检完成无法修改目录");
+                    return;
+                }
+           // }
             ContentsEdit();
             if (this.LvContents.Items.Count > 0) {
                 LvContents.Items[CrragePage].Selected = true;
@@ -397,6 +402,22 @@ namespace CsmCon
             }
         }
 
+        public static  void Setadd(GroupBox g)
+        {
+            foreach (Control c in g.Controls)
+            {
+                if (c is DevComponents.DotNetBar.ButtonX)
+                {
+                    if (c.Text.Contains("新增"))
+                    {
+                        DevComponents.DotNetBar.ButtonX but = (DevComponents.DotNetBar.ButtonX) c;
+                        but.PerformClick();
+                        //SendKeys.Send("{Enter}");
+                    }
+                }
+            }
+        }
+
         private void butDel_Click(object sender, EventArgs e)
         {
             if (ArchStat >= (int)T_ConFigure.ArchStat.质检完 && ArchCheckZt == 0) {
@@ -457,6 +478,6 @@ namespace CsmCon
 
 
         #endregion
-
+        
     }
 }

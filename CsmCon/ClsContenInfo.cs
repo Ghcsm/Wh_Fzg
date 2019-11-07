@@ -41,6 +41,7 @@ namespace CsmCon
         private int keydown = 0;
 
         private Panel ptxt;
+        private GroupBox gr2;
         AutoCompleteStringCollection source = new AutoCompleteStringCollection();
         private DataTable contendt;
 
@@ -292,9 +293,10 @@ namespace CsmCon
         }
 
 
-        public void GetControl(Panel pl)
+        public void GetControl(Panel pl,GroupBox g)
         {
             ptxt = pl;
+            gr2 = g;
             GetContenInfo();
             if (ContenTable == null || ContenTable.Trim().Length <= 0)
                 return;
@@ -358,6 +360,7 @@ namespace CsmCon
                 else
                     txt.Location = new Point(yy, txtrows * 30 - 20);
                 txt.KeyPress += Txt_KeyPress;
+                txt.KeyDown += Txt_KeyDown;
                 pl.Controls.Add(txt);
             }
             else {
@@ -399,7 +402,50 @@ namespace CsmCon
             }
         }
 
-      
+        private void Txt_KeyDown(object sender, KeyEventArgs e)
+        {
+            KeyShortDown(e);
+        }
+
+        private void KeyShortDown(KeyEventArgs e)
+        {
+            StringBuilder keyValue = new StringBuilder
+            {
+                Length = 0
+            };
+            keyValue.Append("");
+            if (e.Control) {
+                keyValue.Append("1-");
+            }
+            else if (e.Alt) {
+                keyValue.Append("2-");
+            }
+            else if (e.Shift) {
+                keyValue.Append("3-");
+            }
+            else {
+                keyValue.Append("0-");
+            }
+            if ((e.KeyValue >= 33 && e.KeyValue <= 40) ||
+                (e.KeyValue >= 65 && e.KeyValue <= 90) ||   //a-z/A-Z
+                (e.KeyValue >= 112 && e.KeyValue <= 123) || e.KeyValue >= 96 && e.KeyValue == 111)   //F1-F12
+            {
+                keyValue.Append(e.KeyValue);
+            }
+            else if ((e.KeyValue >= 48 && e.KeyValue <= 57))    //0-9
+            {
+                keyValue.Append(e.KeyValue.ToString().Substring(1));
+            }
+            else if ((e.KeyValue == 13 || e.KeyValue == 27 || e.KeyValue == 32 || e.KeyValue == 46))
+                keyValue.Append(e.KeyValue.ToString());
+            string str = keyValue.ToString();
+            if (str =="1-40" || str == "1-90")
+            {
+                UcContents.Setadd(gr2);
+                //Action Act =
+               // Act.BeginInvoke(null, null);
+            }
+        }
 
         public void Setinfofocus(Control p)
         {

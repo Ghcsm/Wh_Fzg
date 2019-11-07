@@ -88,6 +88,8 @@
             this.toolStripFiltr = new System.Windows.Forms.ToolStripButton();
             this.toolProess = new System.Windows.Forms.ToolStripProgressBar();
             this.toolStripOcr = new System.Windows.Forms.ToolStripButton();
+            this.toolStripDouGotoP = new System.Windows.Forms.ToolStripSplitButton();
+            this.toolStripDouGoto_Pages = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.toolArchno = new System.Windows.Forms.ToolStripLabel();
             this.toollbInfo = new System.Windows.Forms.ToolStripLabel();
@@ -506,6 +508,7 @@
             this.toolStripFiltr,
             this.toolProess,
             this.toolStripOcr,
+            this.toolStripDouGotoP,
             this.toolStripSeparator5,
             this.toolArchno,
             this.toollbInfo});
@@ -576,6 +579,20 @@
             resources.ApplyResources(this.toolStripOcr, "toolStripOcr");
             this.toolStripOcr.Name = "toolStripOcr";
             this.toolStripOcr.Click += new System.EventHandler(this.toolStripOcr_Click);
+            // 
+            // toolStripDouGotoP
+            // 
+            this.toolStripDouGotoP.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripDouGoto_Pages});
+            resources.ApplyResources(this.toolStripDouGotoP, "toolStripDouGotoP");
+            this.toolStripDouGotoP.Name = "toolStripDouGotoP";
+            this.toolStripDouGotoP.ButtonClick += new System.EventHandler(this.toolStripDouGotoP_ButtonClick);
+            // 
+            // toolStripDouGoto_Pages
+            // 
+            this.toolStripDouGoto_Pages.Name = "toolStripDouGoto_Pages";
+            resources.ApplyResources(this.toolStripDouGoto_Pages, "toolStripDouGoto_Pages");
+            this.toolStripDouGoto_Pages.Click += new System.EventHandler(this.toolStripDouGoto_Pages_Click);
             // 
             // toolStripSeparator5
             // 
@@ -835,5 +852,7 @@
         private System.Windows.Forms.GroupBox gr1_2;
         private System.Windows.Forms.ToolStripButton toolStripOcr;
         private System.Windows.Forms.Label labpage;
+        private System.Windows.Forms.ToolStripSplitButton toolStripDouGotoP;
+        private System.Windows.Forms.ToolStripMenuItem toolStripDouGoto_Pages;
     }
 }

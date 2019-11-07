@@ -22,6 +22,7 @@ namespace CsmCon
         public static int Archid { get; set; }
         public static int ArchPages { get; set; }
         public static int Mtmpid { get; set; } = 0;
+        public static int ywid { get; set; } = 0;
         ClsContenInfo info = new ClsContenInfo();
         void Ini()
         {
@@ -62,11 +63,34 @@ namespace CsmCon
         private void lvconten_Click(object sender, EventArgs e)
         {
             int x = lvconten.SelectedItems[0].Index;
+            ywid =Convert.ToInt32(lvconten.SelectedItems[0].SubItems[5].Text);
             if (info.PageCount2.Count > 0) {
                 ArchPages = Convert.ToInt32(info.PageCount2[x]);
                 if (ArchPages > 0)
                     OneClickGotoPage?.Invoke(sender, e);
             }
+        }
+
+        public int Getywid()
+        {
+            if (lvconten.Items.Count <= 0)
+                return 0;
+            ywid = Convert.ToInt32(lvconten.SelectedItems[0].SubItems[5].Text);
+            return ywid;
+        }
+
+        public void OnChangContents(int page)
+        {
+            try {
+                int x = info.PageCount2.IndexOf(page.ToString());
+                if (x >= 0) {
+                    lvconten.SelectedItems.Clear();
+                    lvconten.Items[x].Selected = true;
+
+                     x = lvconten.SelectedItems[0].Index;
+                    ywid = Convert.ToInt32(lvconten.SelectedItems[0].SubItems[5].Text);
+                }
+            } catch { }
         }
 
     }

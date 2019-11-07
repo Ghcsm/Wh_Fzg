@@ -12,6 +12,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using CsmInfo;
 
 namespace Csminfo
 {
@@ -47,7 +48,7 @@ namespace Csminfo
                 UcContents.ArchId = Clscheck.Archid;
                 UcContents.ContentsEnabled = true;
                 UcContents.ModuleVisible = false;
-                 //UcContents.ArchCheckZt = 1;
+                UcContents.ArchCheckZt = 1;
                 ucContents1 = new UcContents();
                 {
                     ucContents1.Dock = DockStyle.Fill;
@@ -156,6 +157,28 @@ namespace Csminfo
         }
 
         #region ClickEve
+
+        private void toolStripDouGoto_Pages_Click(object sender, EventArgs e)
+        {
+            FrmPage fp = new FrmPage();
+            fp.ShowDialog();
+        }
+
+        private void toolStripDouGotoP_ButtonClick(object sender, EventArgs e)
+        {
+            string file = Path.Combine(Application.StartupPath, "ScanConfig.ini");
+            Writeini.Fileini = file;
+            string sj = Writeini.Readini("ImageConten", "GoPage").ToString();
+            if (sj.Trim().Length > 0) {
+                int p;
+                bool b = int.TryParse(sj, out p);
+                if (!b || p <= 0)
+                    return;
+                p += Clscheck.CrrentPage;
+                if (p <= Clscheck.MaxPage)
+                    Himg._Gotopage(p);
+            }
+        }
 
         private void toolStripOcr_Click(object sender, EventArgs e)
         {
@@ -1011,6 +1034,8 @@ namespace Csminfo
                 Common.Writelog(Clscheck.Archid, "质检退回失败!");
             }
         }
+
+
 
 
         #endregion

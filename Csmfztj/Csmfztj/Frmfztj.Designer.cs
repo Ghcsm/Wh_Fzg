@@ -33,6 +33,9 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.gr2 = new System.Windows.Forms.GroupBox();
             this.superTabControl1 = new DevComponents.DotNetBar.SuperTabControl();
+            this.superTabControlPanel1 = new DevComponents.DotNetBar.SuperTabControlPanel();
+            this.dgvWorkgroup = new DevComponents.DotNetBar.Controls.DataGridViewX();
+            this.sTabm1 = new DevComponents.DotNetBar.SuperTabItem();
             this.superTabControlPanel3 = new DevComponents.DotNetBar.SuperTabControlPanel();
             this.gr3 = new System.Windows.Forms.GroupBox();
             this.rabqu = new System.Windows.Forms.RadioButton();
@@ -44,9 +47,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.sTabm3 = new DevComponents.DotNetBar.SuperTabItem();
-            this.superTabControlPanel1 = new DevComponents.DotNetBar.SuperTabControlPanel();
-            this.dgvWorkgroup = new DevComponents.DotNetBar.Controls.DataGridViewX();
-            this.sTabm1 = new DevComponents.DotNetBar.SuperTabItem();
             this.superTabControlPanel2 = new DevComponents.DotNetBar.SuperTabControlPanel();
             this.dgvAdminWorkGroup = new System.Windows.Forms.DataGridView();
             this.sTabm2 = new DevComponents.DotNetBar.SuperTabItem();
@@ -70,19 +70,18 @@
             this.T_scans = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.T_index = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.T_check = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.T_Zhengli = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.T_ZhuangD = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.T_zhengli = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.T_Infochk = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.T_Zchk = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1.SuspendLayout();
             this.gr2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.superTabControl1)).BeginInit();
             this.superTabControl1.SuspendLayout();
+            this.superTabControlPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvWorkgroup)).BeginInit();
             this.superTabControlPanel3.SuspendLayout();
             this.gr3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvBoxWordGroup)).BeginInit();
-            this.superTabControlPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvWorkgroup)).BeginInit();
             this.superTabControlPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAdminWorkGroup)).BeginInit();
             this.stat_fztj.SuspendLayout();
@@ -153,6 +152,60 @@
             this.sTabm2,
             this.sTabm3});
             this.superTabControl1.Text = "superTabControl1";
+            // 
+            // superTabControlPanel1
+            // 
+            this.superTabControlPanel1.Controls.Add(this.dgvWorkgroup);
+            this.superTabControlPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.superTabControlPanel1.Location = new System.Drawing.Point(0, 28);
+            this.superTabControlPanel1.Name = "superTabControlPanel1";
+            this.superTabControlPanel1.Size = new System.Drawing.Size(781, 384);
+            this.superTabControlPanel1.TabIndex = 1;
+            this.superTabControlPanel1.TabItem = this.sTabm1;
+            // 
+            // dgvWorkgroup
+            // 
+            this.dgvWorkgroup.AllowUserToAddRows = false;
+            this.dgvWorkgroup.AllowUserToDeleteRows = false;
+            this.dgvWorkgroup.BackgroundColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.dgvWorkgroup.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvWorkgroup.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ID,
+            this.T_User,
+            this.T_ansj,
+            this.T_xxbl,
+            this.T_xxbl2,
+            this.T_mldj,
+            this.T_scanx,
+            this.T_scans,
+            this.T_index,
+            this.T_check,
+            this.T_zhengli,
+            this.T_Infochk,
+            this.T_Zchk});
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvWorkgroup.DefaultCellStyle = dataGridViewCellStyle1;
+            this.dgvWorkgroup.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvWorkgroup.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(215)))), ((int)(((byte)(229)))));
+            this.dgvWorkgroup.Location = new System.Drawing.Point(0, 0);
+            this.dgvWorkgroup.Name = "dgvWorkgroup";
+            this.dgvWorkgroup.ReadOnly = true;
+            this.dgvWorkgroup.RowTemplate.Height = 23;
+            this.dgvWorkgroup.Size = new System.Drawing.Size(781, 384);
+            this.dgvWorkgroup.TabIndex = 27;
+            // 
+            // sTabm1
+            // 
+            this.sTabm1.AttachedControl = this.superTabControlPanel1;
+            this.sTabm1.GlobalItem = false;
+            this.sTabm1.Name = "sTabm1";
+            this.sTabm1.Text = "工作产量";
             // 
             // superTabControlPanel3
             // 
@@ -269,61 +322,6 @@
             this.sTabm3.Name = "sTabm3";
             this.sTabm3.Text = "盒号统计";
             this.sTabm3.Visible = false;
-            // 
-            // superTabControlPanel1
-            // 
-            this.superTabControlPanel1.Controls.Add(this.dgvWorkgroup);
-            this.superTabControlPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.superTabControlPanel1.Location = new System.Drawing.Point(0, 28);
-            this.superTabControlPanel1.Name = "superTabControlPanel1";
-            this.superTabControlPanel1.Size = new System.Drawing.Size(781, 384);
-            this.superTabControlPanel1.TabIndex = 1;
-            this.superTabControlPanel1.TabItem = this.sTabm1;
-            // 
-            // dgvWorkgroup
-            // 
-            this.dgvWorkgroup.AllowUserToAddRows = false;
-            this.dgvWorkgroup.AllowUserToDeleteRows = false;
-            this.dgvWorkgroup.BackgroundColor = System.Drawing.SystemColors.GradientActiveCaption;
-            this.dgvWorkgroup.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvWorkgroup.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.ID,
-            this.T_User,
-            this.T_ansj,
-            this.T_xxbl,
-            this.T_xxbl2,
-            this.T_mldj,
-            this.T_scanx,
-            this.T_scans,
-            this.T_index,
-            this.T_check,
-            this.T_Zhengli,
-            this.T_ZhuangD,
-            this.T_Infochk,
-            this.T_Zchk});
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvWorkgroup.DefaultCellStyle = dataGridViewCellStyle1;
-            this.dgvWorkgroup.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvWorkgroup.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(215)))), ((int)(((byte)(229)))));
-            this.dgvWorkgroup.Location = new System.Drawing.Point(0, 0);
-            this.dgvWorkgroup.Name = "dgvWorkgroup";
-            this.dgvWorkgroup.ReadOnly = true;
-            this.dgvWorkgroup.RowTemplate.Height = 23;
-            this.dgvWorkgroup.Size = new System.Drawing.Size(781, 384);
-            this.dgvWorkgroup.TabIndex = 27;
-            // 
-            // sTabm1
-            // 
-            this.sTabm1.AttachedControl = this.superTabControlPanel1;
-            this.sTabm1.GlobalItem = false;
-            this.sTabm1.Name = "sTabm1";
-            this.sTabm1.Text = "工作产量";
             // 
             // superTabControlPanel2
             // 
@@ -525,17 +523,11 @@
             this.T_check.Name = "T_check";
             this.T_check.ReadOnly = true;
             // 
-            // T_Zhengli
+            // T_zhengli
             // 
-            this.T_Zhengli.HeaderText = "校验卷数";
-            this.T_Zhengli.Name = "T_Zhengli";
-            this.T_Zhengli.ReadOnly = true;
-            // 
-            // T_ZhuangD
-            // 
-            this.T_ZhuangD.HeaderText = "案卷装订";
-            this.T_ZhuangD.Name = "T_ZhuangD";
-            this.T_ZhuangD.ReadOnly = true;
+            this.T_zhengli.HeaderText = "案卷整理";
+            this.T_zhengli.Name = "T_zhengli";
+            this.T_zhengli.ReadOnly = true;
             // 
             // T_Infochk
             // 
@@ -571,12 +563,12 @@
             this.gr2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.superTabControl1)).EndInit();
             this.superTabControl1.ResumeLayout(false);
+            this.superTabControlPanel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvWorkgroup)).EndInit();
             this.superTabControlPanel3.ResumeLayout(false);
             this.gr3.ResumeLayout(false);
             this.gr3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvBoxWordGroup)).EndInit();
-            this.superTabControlPanel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvWorkgroup)).EndInit();
             this.superTabControlPanel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvAdminWorkGroup)).EndInit();
             this.stat_fztj.ResumeLayout(false);
@@ -628,8 +620,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn T_scans;
         private System.Windows.Forms.DataGridViewTextBoxColumn T_index;
         private System.Windows.Forms.DataGridViewTextBoxColumn T_check;
-        private System.Windows.Forms.DataGridViewTextBoxColumn T_Zhengli;
-        private System.Windows.Forms.DataGridViewTextBoxColumn T_ZhuangD;
+        private System.Windows.Forms.DataGridViewTextBoxColumn T_zhengli;
         private System.Windows.Forms.DataGridViewTextBoxColumn T_Infochk;
         private System.Windows.Forms.DataGridViewTextBoxColumn T_Zchk;
     }

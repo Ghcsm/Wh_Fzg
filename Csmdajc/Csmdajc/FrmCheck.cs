@@ -720,7 +720,7 @@ namespace Csmdajc
             }
             if (stat == (int)T_ConFigure.ArchStat.排序完)
                 stattmp = 1;
-            else if (stat == (int)T_ConFigure.ArchStat.质检完)
+            else if (stat >= (int)T_ConFigure.ArchStat.质检完)
                 stattmp = 2;
             if (stat == (int)T_ConFigure.ArchStat.质检中) {
                 if (MessageBox.Show("您确认要强行进入质检吗?", "强行进入质检", MessageBoxButtons.OKCancel,
@@ -910,6 +910,8 @@ namespace Csmdajc
                 string chktime = string.Empty;
                 string enter = string.Empty;
                 string entertime = string.Empty;
+                string zj = string.Empty;
+                string zjtime = string.Empty;
                 DataTable dt = Common.GetOperator(Clscheck.Archid);
                 if (dt == null || dt.Rows.Count <= 0)
                     return;
@@ -922,6 +924,8 @@ namespace Csmdajc
                 chktime = dr["质检时间"].ToString();
                 enter = dr["录入"].ToString();
                 entertime = dr["录入时间"].ToString();
+                zj = dr["总检"].ToString();
+                zjtime = dr["总检时间"].ToString();
                 this.BeginInvoke(new Action(() =>
                 {
                     toollabscan.Text = string.Format("扫描:{0}", Scanner);
@@ -932,6 +936,8 @@ namespace Csmdajc
                     toollabchecktime.Text = string.Format("时间:{0}", chktime);
                     toollabenter.Text = string.Format("录入:{0}", enter);
                     toollabentertime.Text = string.Format("时间:{0}", entertime);
+                    toollabezchk.Text = string.Format("总质检:{0}", zj);
+                    toollabzchktime.Text = string.Format("时间:{0}", zjtime);
 
                 }));
                 dt = Common.GetOperatorchk(Clscheck.Archid);
@@ -941,16 +947,10 @@ namespace Csmdajc
                 {
                     for (int i = 0; i < dt.Rows.Count; i++) {
                         string user = dt.Rows[i][0].ToString();
-                        string time = dt.Rows[i][5].ToString();
-                        string module = dt.Rows[i][2].ToString();
-                        if (module.Contains("信息")) {
+                        string time = dt.Rows[i][1].ToString();
                             toollabinfochk.Text = string.Format("信息质检:{0}", user);
                             toollabinfochktime.Text = string.Format("时间:{0}", time);
-                        }
-                        else {
-                            toollabezchk.Text = string.Format("总质检:{0}", user);
-                            toollabzchktime.Text = string.Format("时间:{0}", time);
-                        }
+                        
                     }
                 }));
                 dt.Dispose();

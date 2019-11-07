@@ -187,7 +187,7 @@ namespace HLjscom
             // 设置 document 对象以便进行页面计算
             printer.PrintDocument = document;
 
-            printer.SizeMode = RasterPaintSizeMode.FitAlways;
+            printer.SizeMode = RasterPaintSizeMode.Normal;
             printer.HorizontalAlignMode = RasterPaintAlignMode.Center;
             printer.VerticalAlignMode = RasterPaintAlignMode.Center;
 
@@ -911,7 +911,7 @@ namespace HLjscom
         {
             FillCommand cmdfill = new FillCommand();
             LeadRect rcw = _Imageview.Image.GetRegionBounds(null);
-            if (rcw.X > 1 || rcw.Y > 1) {
+            if (rcw.X >=0 || rcw.Y >=0) {
                 if (x == 0) {
                     _Imageview.Image.AddRectangleToRegion(null, rcw, RasterRegionCombineMode.And);
                     cmdfill.Color = RasterColor.White;
@@ -2060,55 +2060,7 @@ namespace HLjscom
             }
         }
 
-        private void MySetCapability(TwainCapabilityType capType, TwainItemType itemType, object data)
-        {
-            using (TwainCapability twainCapability = new TwainCapability()) {
-                twainCapability.Information.Type = capType;
-                twainCapability.Information.ContainerType = TwainContainerType.OneValue;
-                twainCapability.OneValueCapability.ItemType = itemType;
-                twainCapability.OneValueCapability.Value = data;
-                _twains.SetCapability(twainCapability, TwainSetCapabilityMode.Set);
-            }
-        }
-        //图像方向
-        public void _SetimgFx(int ORD, int PaperType)
-        {
-            try {
-                TwainFrame twainFrame = default(TwainFrame);
-                if (PaperType == 1) {
-                    twainFrame.LeftMargin = (float)Convert.ToDouble(0);
-                    twainFrame.TopMargin = (float)Convert.ToDouble(0);
-                    twainFrame.RightMargin = (float)Convert.ToDouble(11.69);
-                    twainFrame.BottomMargin = (float)Convert.ToDouble(16.53);
-                    this.MySetCapability(TwainCapabilityType.ImageFrames, TwainItemType.Frame, twainFrame);
-                }
-                else {
-                    twainFrame.LeftMargin = (float)Convert.ToDouble(0);
-                    twainFrame.TopMargin = (float)Convert.ToDouble(0);
-                    switch (ORD) {
-                        case 0: //横
-                            twainFrame.RightMargin = (float)Convert.ToDouble(11.69);
-                            twainFrame.BottomMargin = (float)Convert.ToDouble(8.26);
-                            break;
-                        case 1:     //纵                     
-                            twainFrame.RightMargin = (float)Convert.ToDouble(8.26);
-                            twainFrame.BottomMargin = (float)Convert.ToDouble(11.69);
-                            break;
-
-                        case 2:
-                            twainFrame.RightMargin = (float)Convert.ToDouble(7.27);
-                            twainFrame.BottomMargin = (float)Convert.ToDouble(10.42);
-                            break;
-                        case 3:
-                            twainFrame.RightMargin = (float)Convert.ToDouble(10.42);
-                            twainFrame.BottomMargin = (float)Convert.ToDouble(7.27);
-                            break;
-                    }
-                    this.MySetCapability(TwainCapabilityType.ImageFrames, TwainItemType.Frame, twainFrame);
-                }
-            } catch { }
-        }
-
+     
 
         //拼接
         public void _ImgPj(int page, string Sourimg, string _path)
@@ -3266,6 +3218,56 @@ namespace HLjscom
             CountPage = 0;
         }
 
+        private void MySetCapability(TwainCapabilityType capType, TwainItemType itemType, object data)
+        {
+            using (TwainCapability twainCapability = new TwainCapability()) {
+                twainCapability.Information.Type = capType;
+                twainCapability.Information.ContainerType = TwainContainerType.OneValue;
+                twainCapability.OneValueCapability.ItemType = itemType;
+                twainCapability.OneValueCapability.Value = data;
+                _twains.SetCapability(twainCapability, TwainSetCapabilityMode.Set);
+            }
+        }
+        //图像方向
+        public void _SetimgFx(int ORD, int PaperType)
+        {
+            try {
+                TwainFrame twainFrame = default(TwainFrame);
+                if (PaperType == 1) {
+                    twainFrame.LeftMargin = (float)Convert.ToDouble(0);
+                    twainFrame.TopMargin = (float)Convert.ToDouble(0);
+                    twainFrame.RightMargin = (float)Convert.ToDouble(11.69);
+                    twainFrame.BottomMargin = (float)Convert.ToDouble(16.53);
+                    this.MySetCapability(TwainCapabilityType.ImageFrames, TwainItemType.Frame, twainFrame);
+                }
+                else {
+                    twainFrame.LeftMargin = (float)Convert.ToDouble(0);
+                    twainFrame.TopMargin = (float)Convert.ToDouble(0);
+                    switch (ORD) {
+                        case 0: //横
+                            twainFrame.RightMargin = (float)Convert.ToDouble(11.9);
+                            twainFrame.BottomMargin = (float)Convert.ToDouble(8.5);
+                            break;
+                        case 1:     //纵                     
+                            twainFrame.RightMargin = (float)Convert.ToDouble(8.5);
+                            twainFrame.BottomMargin = (float)Convert.ToDouble(11.9);
+                            break;
+
+                        case 2:
+                            twainFrame.RightMargin = (float)Convert.ToDouble(7.27);
+                            twainFrame.BottomMargin = (float)Convert.ToDouble(10.42);
+                            break;
+                        case 3:
+                            twainFrame.RightMargin = (float)Convert.ToDouble(10.42);
+                            twainFrame.BottomMargin = (float)Convert.ToDouble(7.27);
+                            break;
+                    }
+                    this.MySetCapability(TwainCapabilityType.ImageFrames, TwainItemType.Frame, twainFrame);
+                }
+            } catch { }
+        }
+
+
         /// <summary>
         /// 设置扫描纸张大小
         /// </summary>
@@ -3583,7 +3585,6 @@ namespace HLjscom
                         tmp.Add(i.ToString());
                     }
                 }
-
             }
             else {
                 for (int i = 0; i < _PageAbc.Count; i++) {
@@ -3598,7 +3599,7 @@ namespace HLjscom
                     if (!_PageFuhao.ContainsValue(s))
                         tmp.Add(s);
                 }
-                for (int i = TagPage; i <= RegPage - _PageAbc.Count - _PageFuhao.Count + TagPage - 1; i++) {
+                for (int i = TagPage; i < RegPage - _PageAbc.Count - _PageFuhao.Count + TagPage - 1; i++) {
                     if (!_PageNumber.ContainsValue(i)) {
                         tmp.Add(i.ToString());
                     }
@@ -3635,7 +3636,7 @@ namespace HLjscom
                         tmpval.Add(item.ToString());
                 }
                 foreach (var item in _PageNumber.Values) {
-                    if (item > RegPage - _PageAbc.Count - _PageFuhao.Count + TagPage) {
+                    if (item > RegPage - _PageAbc.Count - _PageFuhao.Count + TagPage-1) {
                         tmpval.Add(item.ToString());
                     }
                 }
@@ -3652,8 +3653,17 @@ namespace HLjscom
                     tmp.Add(a, s);
                     continue;
                 }
-                if (s.IndexOf('-') < 0) {
-                    int k = _PageNumber.First(q => q.Value == Convert.ToInt32(s)).Key;
+                if (s.IndexOf('-') < 0)
+                {
+                    int x = Convert.ToInt32(s);
+                    int k = 0;
+                    //if (x<=_PageNumber.Count)
+                        try
+                        {
+                            k = _PageNumber.First(q => q.Value == x).Key;
+                        }
+                        catch 
+                        {}
                     tmp.Add(k, s);
                 }
             }
@@ -3871,45 +3881,206 @@ namespace HLjscom
         }
 
 
-        public void SetAutoRect(int rgbr, int rgbg, int rgbb,int sc)
+        //public void SetAutoRect(int rgbr, int rgbg, int rgbb,int sc)
+        //{
+        //    if (_Imageview.Image == null)
+        //        return;
+        //    RasterImage img = _Imageview.Image.Clone();
+        //    int r = 0;
+        //    int g = 0;
+        //    int b = 0;
+        //    int a = 20;
+        //    if (rgbr <= 0 && rgbb <= 0 && rgbb <= 0) {
+        //        byte[] data1 = img.GetPixelData(1, 1);
+        //        r = data1[2];
+        //        g = data1[1];
+        //        b = data1[0];
+        //    }
+        //    else {
+        //        r = rgbr;
+        //        g = rgbg;
+        //        b = rgbb;
+        //    }
+        //    if (sc >0)
+        //        a = sc;
+        //    int x0 = 0, y0 = 0;
+        //    //左上
+        //    for (int h = 0; h < img.Height - 1; h += 4) {
+        //        if (x0 > 0 && y0 > 0)
+        //            break;
+        //        int w = h;
+        //        byte[] data = img.GetPixelData(h, w);
+        //        int oldr = data[2];
+        //        int oldg = data[1];
+        //        int oldb = data[0];
+        //        //正常黄底
+        //        if (oldr > 200 && oldg > 200 && oldg > 200) {
+        //            if (oldr - r < a && oldg - g < a && oldb - b < a) {
+        //                data[2] = 0;
+        //                data[1] = 0;
+        //                data[0] = 255;
+        //                // img.SetPixelData(h, w, data);
+        //            }
+        //            else {
+        //                x0 = w;
+        //                y0 = h;
+        //                if (w > 0 && h > 0)
+        //                    break;
+        //            }
+        //        }
+        //        else if (oldr < 100 || oldg < 100 || oldb < 100) {  // 深绿 合同封面
+        //            x0 = w;
+        //            y0 = h;
+        //            if (w > 0 && h > 0)
+        //                break;
+        //        }
+        //        else if (oldr > 150 && oldr < 200 && oldg > 150 && oldg < 200 && oldb > 150 && oldb < 200) {   //红色房证
+        //            x0 = w;
+        //            y0 = h;
+        //            if (w > 0 && h > 0)
+        //                break;
+        //        }
+        //        else {
+        //            x0 = w;
+        //            y0 = h;
+        //            if (w > 0 && h > 0)
+        //                break;
+        //        }
+        //        //}
+        //    }
+        //    int x1 = 0, y1 = 0;
+        //    int h1 = 50;
+        //    //左下
+        //    for (int h = img.Height - 1; h > 0; h -= 4) {
+        //        h1 += 4;
+        //        if (x1 > 0 && y1 > 0)
+        //            break;
+        //        for (int w = 0; w < img.Width / 2; w += 4) {
+        //            byte[] data = img.GetPixelData(h, w);
+
+        //            int oldr = data[2];
+        //            int oldg = data[1];
+        //            int oldb = data[0];
+
+        //            if (oldr > 200 && oldg > 200 && oldg > 200) {
+        //                if (oldr - r < a && oldg - g < a && oldb - b < a) {
+        //                    data[2] = 0;
+        //                    data[1] = 0;
+        //                    data[0] = 255;
+        //                    // img.SetPixelData(h, w, data);
+        //                }
+        //                else {
+        //                    x1 = w;
+        //                    y1 = h;
+        //                    if (w > 0 && h > 0)
+        //                        break;
+        //                }
+        //            }
+        //            else if (oldr < 100 && oldg < 100 && oldb < 100) {  // 深绿 合同封面
+        //                x1 = w;
+        //                y1 = h;
+        //                if (w > 0 && h > 0)
+        //                    break;
+        //            }
+        //            else if (oldr > 150 && oldr < 200 && oldg > 150 && oldg < 200 && oldb > 150 && oldb < 200) {   //红色房证
+        //                x1 = w;
+        //                y1 = h;
+        //                if (w > 0 && h > 0)
+        //                    break;
+        //            }
+        //            else {
+        //                x1 = w;
+        //                y1 = h;
+        //                if (w > 0 && h > 0)
+        //                    break;
+        //            }
+        //        }
+        //    }// 右上
+        //    int x2 = 0, y2 = 0;
+        //    h1 = 50;
+        //    for (int h = 0; h < img.Height - 1; h += 4) {
+        //        h1 += 4;
+        //        if (x2 > 0 && y2 > 0)
+        //            break;
+        //        for (int w = img.Width; w > img.Width / 2; w -= 4) {
+        //            byte[] data = img.GetPixelData(h, w);
+
+        //            int oldr = data[2];
+        //            int oldg = data[1];
+        //            int oldb = data[0];
+
+        //            if (oldr > 200 && oldg > 200 && oldg > 200) {
+        //                if (oldr - r < a && oldg - g < a && oldb - b < a) {
+        //                    data[2] = 255;
+        //                    data[1] = 0;
+        //                    data[0] = 0;
+        //                    // img.SetPixelData(h, w, data);
+        //                }
+        //                else {
+        //                    x2 = w;
+        //                    y2 = h;
+        //                    if (w > 0 && h > 0)
+        //                        break;
+        //                }
+        //            }
+        //            else if (oldr < 100 && oldg < 100 && oldb < 100) {  // 深绿 合同封面
+        //                x2 = w;
+        //                y2 = h;
+        //                if (w > 0 && h > 0)
+        //                    break;
+        //            }
+        //            else if (oldr > 150 && oldr < 200 && oldg > 150 && oldg < 200 && oldb > 150 && oldb < 200) {   //红色房证
+        //                x2 = w;
+        //                y2 = h;
+        //                if (w > 0 && h > 0)
+        //                    break;
+        //            }
+        //            else {
+        //                x2 = w;
+        //                y2 = h;
+        //                if (w > 0 && h > 0)
+        //                    break;
+        //            }
+        //        }
+        //    }
+        //    int ww = x2 - x0;
+        //    int hh = y1 - y0;
+        //    _Imageview.Image = img.Clone();
+        //    LeadRect rcw = new LeadRect(new LeadPoint(x0, y0), new LeadSize(ww, hh));
+        //    _Imageview.Image.AddRectangleToRegion(null, rcw, RasterRegionCombineMode.And);
+        //}
+
+        public void SetAutoRect(int rgbr, int rgbg, int rgbb, int sc)
         {
             if (_Imageview.Image == null)
                 return;
             RasterImage img = _Imageview.Image.Clone();
-            int r = 0;
-            int g = 0;
-            int b = 0;
+            byte[] data1 = img.GetPixelData(1, 1);
+            int r = data1[2];
+            int g = data1[1];
+            int b = data1[0];
             int a = 20;
-            if (rgbr <= 0 && rgbb <= 0 && rgbb <= 0) {
-                byte[] data1 = img.GetPixelData(1, 1);
-                r = data1[2];
-                g = data1[1];
-                b = data1[0];
-            }
-            else {
-                r = rgbr;
-                g = rgbg;
-                b = rgbb;
-            }
-            if (sc >0)
+            if (sc > 1)
                 a = sc;
             int x0 = 0, y0 = 0;
-            //左上
-            for (int h = 0; h < img.Height - 1; h += 4) {
+
+            //上中
+            for (int h = 0; h < img.Height / 2; h++) {
                 if (x0 > 0 && y0 > 0)
                     break;
-                int w = h;
+                int w = img.Width / 2;
                 byte[] data = img.GetPixelData(h, w);
+
                 int oldr = data[2];
                 int oldg = data[1];
                 int oldb = data[0];
                 //正常黄底
-                if (oldr > 200 && oldg > 200 && oldg > 200) {
+                if (oldr > 200 && oldg > 200 && oldb > 200) {
                     if (oldr - r < a && oldg - g < a && oldb - b < a) {
-                        data[2] = 0;
+
+                        data[2] = 255;
                         data[1] = 0;
-                        data[0] = 255;
-                        // img.SetPixelData(h, w, data);
+                        data[0] = 0;
                     }
                     else {
                         x0 = w;
@@ -3936,47 +4107,25 @@ namespace HLjscom
                     if (w > 0 && h > 0)
                         break;
                 }
-                //}
             }
             int x1 = 0, y1 = 0;
-            int h1 = 50;
-            //左下
-            for (int h = img.Height - 1; h > 0; h -= 4) {
-                h1 += 4;
+
+            // 左中
+            for (int w = 0; w < img.Width; w++) {
+
                 if (x1 > 0 && y1 > 0)
                     break;
-                for (int w = 0; w < img.Width / 2; w += 4) {
-                    byte[] data = img.GetPixelData(h, w);
-
-                    int oldr = data[2];
-                    int oldg = data[1];
-                    int oldb = data[0];
-
-                    if (oldr > 200 && oldg > 200 && oldg > 200) {
-                        if (oldr - r < a && oldg - g < a && oldb - b < a) {
-                            data[2] = 0;
-                            data[1] = 0;
-                            data[0] = 255;
-                            // img.SetPixelData(h, w, data);
-                        }
-                        else {
-                            x1 = w;
-                            y1 = h;
-                            if (w > 0 && h > 0)
-                                break;
-                        }
-                    }
-                    else if (oldr < 100 && oldg < 100 && oldb < 100) {  // 深绿 合同封面
-                        x1 = w;
-                        y1 = h;
-                        if (w > 0 && h > 0)
-                            break;
-                    }
-                    else if (oldr > 150 && oldr < 200 && oldg > 150 && oldg < 200 && oldb > 150 && oldb < 200) {   //红色房证
-                        x1 = w;
-                        y1 = h;
-                        if (w > 0 && h > 0)
-                            break;
+                int h = img.Height / 2;
+                byte[] data = img.GetPixelData(h, w);
+                int oldr = data[2];
+                int oldg = data[1];
+                int oldb = data[0];
+                if (oldr > 200 && oldg > 200 && oldb > 200) {
+                    if (oldr - r < a && oldg - g < a && oldb - b < a) {
+                        data[2] = 0;
+                        data[1] = 0;
+                        data[0] = 255;
+                       
                     }
                     else {
                         x1 = w;
@@ -3985,58 +4134,122 @@ namespace HLjscom
                             break;
                     }
                 }
-            }// 右上
-            int x2 = 0, y2 = 0;
-            h1 = 50;
-            for (int h = 0; h < img.Height - 1; h += 4) {
-                h1 += 4;
-                if (x2 > 0 && y2 > 0)
-                    break;
-                for (int w = img.Width; w > img.Width / 2; w -= 4) {
-                    byte[] data = img.GetPixelData(h, w);
-
-                    int oldr = data[2];
-                    int oldg = data[1];
-                    int oldb = data[0];
-
-                    if (oldr > 200 && oldg > 200 && oldg > 200) {
-                        if (oldr - r < a && oldg - g < a && oldb - b < a) {
-                            data[2] = 255;
-                            data[1] = 0;
-                            data[0] = 0;
-                            // img.SetPixelData(h, w, data);
-                        }
-                        else {
-                            x2 = w;
-                            y2 = h;
-                            if (w > 0 && h > 0)
-                                break;
-                        }
-                    }
-                    else if (oldr < 100 && oldg < 100 && oldb < 100) {  // 深绿 合同封面
-                        x2 = w;
-                        y2 = h;
-                        if (w > 0 && h > 0)
-                            break;
-                    }
-                    else if (oldr > 150 && oldr < 200 && oldg > 150 && oldg < 200 && oldb > 150 && oldb < 200) {   //红色房证
-                        x2 = w;
-                        y2 = h;
-                        if (w > 0 && h > 0)
-                            break;
-                    }
-                    else {
-                        x2 = w;
-                        y2 = h;
-                        if (w > 0 && h > 0)
-                            break;
-                    }
+                else if (oldr < 100 && oldg < 100 && oldb < 100) {  // 深绿 合同封面
+                    x1 = w;
+                    y1 = h;
+                    if (w > 0 && h > 0)
+                        break;
+                }
+                else if (oldr > 150 && oldr < 200 && oldg > 150 && oldg < 200 && oldb > 150 && oldb < 200) {   //红色房证
+                    x1 = w;
+                    y1 = h;
+                    if (w > 0 && h > 0)
+                        break;
+                }
+                else {
+                    x1 = w;
+                    y1 = h;
+                    if (w > 0 && h > 0)
+                        break;
                 }
             }
-            int ww = x2 - x0;
-            int hh = y1 - y0;
+
+
+            // 下中
+            int x2 = 0, y2 = 0;
+            for (int h = img.Height - 1; h > img.Height / 2; h--) {
+                if (x2 > 0 && y2 > 0)
+                    break;
+                int w = img.Width / 2;
+                byte[] data = img.GetPixelData(h, w);
+                int oldr = data[2];
+                int oldg = data[1];
+                int oldb = data[0];
+                if (oldr > 200 && oldg > 200 && oldb > 200) {
+                    if (oldr - r < a && oldg - g < a && oldb - b < a) {
+                        data[2] = 255;
+                        data[1] = 0;
+                        data[0] = 0;
+                       
+                    }
+                    else {
+                        x2 = w;
+                        y2 = h;
+                        if (w > 0 && h > 0)
+                            break;
+                    }
+                }
+                else if (oldr < 100 && oldg < 100 && oldb < 100) {  // 深绿 合同封面
+                    x2 = w;
+                    y2 = h;
+                    if (w > 0 && h > 0)
+                        break;
+                }
+                else if (oldr > 150 && oldr < 200 && oldg > 150 && oldg < 200 && oldb > 150 && oldb < 200) {   //红色房证
+                    x2 = w;
+                    y2 = h;
+                    if (w > 0 && h > 0)
+                        break;
+                }
+                else {
+                    x2 = w;
+                    y2 = h;
+                    if (w > 0 && h > 0)
+                        break;
+                }
+            }
+
+
+            int x3 = 0, y3 = 0;
+            // 右中
+            for (int w = img.Width; w > img.Width / 2; w--) {
+
+                if (x3 > 0 && y3 > 0)
+                    break;
+                int h = img.Height / 2;
+                byte[] data = img.GetPixelData(h, w);
+                int oldr = data[2];
+                int oldg = data[1];
+                int oldb = data[0];
+                if (oldr > 200 && oldg > 200 && oldb > 200) {
+                    if (oldr - r < a && oldg - g < a && oldb - b < a) {
+                        data[2] = 0;
+                        data[1] = 0;
+                        data[0] = 255;
+                    }
+                    else {
+                        x3 = w;
+                        y3 = h;
+                        if (w > 0 && h > 0)
+                            break;
+                    }
+                }
+                else if (oldr < 100 && oldg < 100 && oldb < 100) {  // 深绿 合同封面
+                    x3 = w;
+                    y3 = h;
+                    if (w > 0 && h > 0)
+                        break;
+                }
+                else if (oldr > 150 && oldr < 200 && oldg > 150 && oldg < 200 && oldb > 150 && oldb < 200) {   //红色房证
+                    x3 = w;
+                    y3 = h;
+                    if (w > 0 && h > 0)
+                        break;
+                }
+                else {
+                    x3 = w;
+                    y3 = h;
+                    if (w > 0 && h > 0)
+                        break;
+                }
+            }
+            int xx = x1;
+            int yy = y0;
+            int ww = img.Width - y0 - (img.Width - x3);
+            int hh = img.Height - x1;
             _Imageview.Image = img.Clone();
-            LeadRect rcw = new LeadRect(new LeadPoint(x0, y0), new LeadSize(ww, hh));
+            //_Imageview.Image.MakeRegionEmpty();
+            LeadRect rcw = new LeadRect(new LeadPoint(xx, yy), new LeadSize(ww, hh));
             _Imageview.Image.AddRectangleToRegion(null, rcw, RasterRegionCombineMode.And);
         }
 

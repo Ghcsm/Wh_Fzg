@@ -26,7 +26,7 @@ namespace CsmCon
         public static string FileName { get; set; }
         public static bool Print { get; set; }
         public static int id { get; set; }
-
+        public int Ywid = 0;
 
         private int MaxPages;
         private int PagesCrren;
@@ -56,16 +56,20 @@ namespace CsmCon
 
         private void UcContents1_OneClickGotoPage(object sender, EventArgs e,string title,string page)
         {
+            Ywid = UcConten.ywid;
             int p = UcConten.ArchPages;
             if (p >= 1 && p < MaxPages)
                 Himg._Gotopage(p);
+            
         }
 
         private void UcContents0_OneClickGotoPage(object sender, EventArgs e)
         {
+            Ywid = UcConten.ywid;
             int p = UcConten.ArchPages;
             if (p >= 1 && p < MaxPages)
                 Himg._Gotopage(p);
+           
         }
 
         public void LoadFile(int arid, string file)
@@ -80,9 +84,9 @@ namespace CsmCon
         public void LoadConten(int arid)
         {
             if (id == 0)
-                ucContents0.LoadConten(ArchId);
+                ucContents0.LoadConten(arid);
             else
-                ucContents1.LoadContents(ArchId, 0);
+                ucContents1.LoadContents(arid, 0);
         }
 
         private void LoadFile()
@@ -117,6 +121,11 @@ namespace CsmCon
             if (ImgView.Image != null) {
                 if (PagesCrren < MaxPages)
                     Himg._Pagenext(1);
+                if (id == 0)
+                    ucContents0.OnChangContents(PagesCrren);
+                else
+                    ucContents1.OnChangContents(PagesCrren);
+                Ywid = UcConten.ywid;
             }
         }
 
@@ -125,6 +134,11 @@ namespace CsmCon
             if (ImgView.Image != null) {
                 if (PagesCrren > 1)
                     Himg._Pagenext(0);
+                if (id == 0)
+                    ucContents0.OnChangContents(PagesCrren);
+                else
+                    ucContents1.OnChangContents(PagesCrren);
+                Ywid = UcConten.ywid;
             }
         }
 

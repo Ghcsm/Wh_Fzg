@@ -330,7 +330,6 @@
             // 
             // toolStripButPrint
             // 
-            this.toolStripButPrint.Enabled = false;
             this.toolStripButPrint.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.toolStripButPrint.Image = global::Csmdacx.Properties.Resources.p;
             this.toolStripButPrint.ImageTransparentColor = System.Drawing.Color.Magenta;

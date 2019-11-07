@@ -266,6 +266,8 @@ namespace CsmCon
                         lvi.ImageIndex = 1;
                     else if (stat == 7)
                         lvi.ImageIndex = 2;
+                    else if (stat >= 9)
+                        lvi.ImageIndex = 3;
                     lvi.SubItems.AddRange(new string[] { boxsn, archno, ImgFile, pages, arid, type, stat.ToString(), xystat.ToString(), archlx });
                     this.LvData.Items.Add(lvi);
                     i++;

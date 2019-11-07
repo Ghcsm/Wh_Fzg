@@ -558,8 +558,7 @@ namespace Csmtool
                 if (dtarid == null || dtarid.Rows.Count <= 0)
                     continue;
                 string ywid = dtarid.Rows[0][0].ToString();
-                if (ywid.Trim().Length !=14)
-                {
+                if (ywid.Trim().Length != 14) {
                     if (dgvTjdata.Rows.Count == 0) {
                         dgvTjdata.Columns.Add("boxsn", "盒号");
                         dgvTjdata.Columns.Add("xqsn", "小区代号");
@@ -594,8 +593,8 @@ namespace Csmtool
                 string xqsn = dt.Rows[i][2].ToString();
                 if (arid.Trim().Length <= 0)
                     continue;
-                int id= Common.GetContepage(arid);
-                if (id==0) {
+                int id = Common.GetContepage(arid);
+                if (id == 0) {
                     if (dgvTjdata.Rows.Count == 0) {
                         dgvTjdata.Columns.Add("boxsn", "盒号");
                         dgvTjdata.Columns.Add("xqsn", "小区代号");
@@ -607,6 +606,83 @@ namespace Csmtool
             }
             labarchcount.Text = "共0卷";
             labarchcount.Visible = false;
+        }
+
+        void CheckTagPage()
+        {
+            dgvTjdata.DataSource = null;
+            DataTable dt = Common.GetBoxsnPage(txtTjBoxsn1.Text.Trim(), txtTjBoxsn2.Text.Trim());
+            if (dt == null || dt.Rows.Count <= 0)
+                return;
+            for (int i = 0; i < dt.Rows.Count; i++) {
+                string str = dt.Rows[i][0].ToString();
+                string boxsn = dt.Rows[i][1].ToString();
+                string lx = dt.Rows[i][2].ToString();
+                if (str.Trim().Length <= 0)
+                    continue;
+                string[] s = str.Split(';');
+                string a = s[1];
+                if (a.Trim().Length <= 0)
+                    continue;
+                string[] b = a.Split(':');
+                if (b.Length <= 0)
+                    continue;
+                string x = b[1];
+                int id;
+                bool bl = int.TryParse(x, out id);
+                if (!bl) {
+                    a = s[2];
+                    if (a.Trim().Length <= 0)
+                        continue;
+                    b = a.Split(':');
+                    if (b.Length <= 0)
+                        continue;
+                    x = b[1];
+                    bl = int.TryParse(x, out id);
+                    if (!bl)
+                        continue;
+
+                }
+                if (id > 10) {
+                    if (dgvTjdata.Rows.Count == 0) {
+                        dgvTjdata.Columns.Add("boxsn", "盒号");
+                        dgvTjdata.Columns.Add("xqsn", "小区代号");
+                    }
+                    int index = dgvTjdata.Rows.Add();
+                    dgvTjdata.Rows[index].Cells[0].Value = boxsn;
+                    dgvTjdata.Rows[index].Cells[1].Value = lx;
+                }
+            }
+        }
+
+
+        void CheckContenCount()
+        {
+            dgvTjdata.DataSource = null;
+            DataTable dt;
+            if (rabtjBoxsn.Checked)
+                dt = Common.GetBoxsnid(txtTjBoxsn1.Text.Trim(), txtTjBoxsn2.Text.Trim());
+            else
+                dt = Common.GetBoxsnid(txtTjBoxsn1.Text.Trim());
+            if (dt == null || dt.Rows.Count <= 0)
+                return;
+            for (int i = 0; i < dt.Rows.Count; i++) {
+                string arid = dt.Rows[i][0].ToString();
+                string boxsn = dt.Rows[i][1].ToString();
+                string lx = dt.Rows[i][2].ToString();
+                if (arid.Trim().Length <= 0)
+                    continue;
+                int t = Common.GetcontenCount(arid);
+                if (t <= 1) {
+                    if (dgvTjdata.Rows.Count == 0) {
+                        dgvTjdata.Columns.Add("boxsn", "盒号");
+                        dgvTjdata.Columns.Add("xqsn", "小区代号");
+                    }
+                    int index = dgvTjdata.Rows.Add();
+                    dgvTjdata.Rows[index].Cells[0].Value = boxsn;
+                    dgvTjdata.Rows[index].Cells[1].Value = lx;
+                }
+            }
         }
 
         void IsSqlinfo()
@@ -640,14 +716,20 @@ namespace Csmtool
                 CheckDisn();
                 return;
             }
-            else if (combtjSql.SelectedIndex == 10)
-            {
+            else if (combtjSql.SelectedIndex == 10) {
                 CheckYwid14();
                 return;
             }
-            else if (combtjSql.SelectedIndex == 11)
-            {
+            else if (combtjSql.SelectedIndex == 11) {
                 CheckConten();
+                return;
+            }
+            else if (combtjSql.SelectedIndex == 12) {
+                CheckTagPage();
+                return;
+            }
+            else if (combtjSql.SelectedIndex == 13) {
+                CheckContenCount();
                 return;
             }
             Quersql();
@@ -1391,7 +1473,311 @@ namespace Csmtool
             MessageBox.Show("修改完成!");
         }
 
+
         #endregion
+
+        #region chkConten
+
+        bool IstxtConten()
+        {
+            if (txtTitle.Text.Trim().Length <= 0 || txtQbox.Text.Trim().Length <= 0 || txtZbox.Text.Trim().Length <= 0) {
+                MessageBox.Show("请输入标题或盒号范围!");
+                txtTitle.Focus();
+                return false;
+            }
+            int b1, b2;
+            bool bl = int.TryParse(txtQbox.Text.Trim(), out b1);
+            bool bl2 = int.TryParse(txtZbox.Text.Trim(), out b2);
+            if (!bl || !bl2) {
+                MessageBox.Show("盒号范围值不正确!");
+                txtQbox.Focus();
+                return false;
+            }
+            if (b1 <= 0 || b2 <= 0) {
+                MessageBox.Show("盒号范围值不正确!");
+                txtQbox.Focus();
+                return false;
+            }
+            if (b1 > b2) {
+                MessageBox.Show("起始号号不能大于终止盒号!");
+                txtQbox.Focus();
+                return false;
+            }
+            if (chkPage.Checked) {
+                if (txtPage.Text.Trim().Length <= 0) {
+                    MessageBox.Show("检测页数不能为空!");
+                    txtPage.Focus();
+                    return false;
+                }
+                int p0;
+                bool b = int.TryParse(txtPage.Text.Trim(), out p0);
+                if (!b || p0 <= 0) {
+                    MessageBox.Show("页码值不正确!");
+                    txtPage.Focus();
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        void ChkContenSql()
+        {
+            DataTable dt = Common.GetboxsnFw(txtQbox.Text.Trim(), txtZbox.Text.Trim());
+            bool bl = chkLastConten.Checked;
+            string gjz = txtTitle.Text.Trim();
+            if (dt == null || dt.Rows.Count <= 0)
+                return;
+            for (int i = 0; i < dt.Rows.Count; i++) {
+                string arid = dt.Rows[i][0].ToString();
+                string boxsn = dt.Rows[i][1].ToString();
+                string xq = dt.Rows[i][2].ToString();
+                if (arid.Trim().Length <= 0)
+                    continue;
+                Application.DoEvents();
+                DataTable dt2 = Common.GetcontenMaxtitle(arid, bl);
+                if (dt2 == null || dt2.Rows.Count <= 0)
+                    return;
+                for (int t = 0; t < dt2.Rows.Count; t++) {
+                    string str = dt2.Rows[t][0].ToString();
+                    if (rabContenNotBh.Checked) {
+                        if (!str.Contains(gjz))
+                        {
+                            if (dgvContenSql.Rows.Count == 0) {
+                                dgvContenSql.Columns.Add("boxsn", "盒号");
+                                dgvContenSql.Columns.Add("xqsn", "小区代号");
+                                dgvContenSql.Columns.Add("title", "标题");
+                            }
+                            int index = dgvContenSql.Rows.Add();
+                            dgvContenSql.Rows[index].Cells[0].Value = boxsn;
+                            dgvContenSql.Rows[index].Cells[1].Value = xq;
+                            dgvContenSql.Rows[index].Cells[2].Value = str;
+                        }
+                    }
+                    else {
+                        if (str.Contains(gjz))
+                        {
+                            if (dgvContenSql.Rows.Count == 0) {
+                                dgvContenSql.Columns.Add("boxsn", "盒号");
+                                dgvContenSql.Columns.Add("xqsn", "小区代号");
+                                dgvContenSql.Columns.Add("title", "标题");
+                            }
+                            int index = dgvContenSql.Rows.Add();
+                            dgvContenSql.Rows[index].Cells[0].Value = boxsn;
+                            dgvContenSql.Rows[index].Cells[1].Value = xq;
+                            dgvContenSql.Rows[index].Cells[2].Value = str;
+                        }
+                    }
+                }
+            }
+        }
+
+        void ChkContenSqlPage()
+        {
+            butContenSelect.Enabled = false;
+            dgvContenSql.Rows.Clear();
+            try {
+                DataTable dt = null;
+                if (chkXq.Checked)
+                    dt = Common.GetboxsnFwXq(txtQbox.Text.Trim());
+                else
+                    dt = Common.GetboxsnFw(txtQbox.Text.Trim(), txtZbox.Text.Trim());
+                bool bl = chkLastConten.Checked;
+                string gjz = txtTitle.Text.Trim();
+                string Pagejc = txtPage.Text.Trim();
+                if (dt == null || dt.Rows.Count <= 0)
+                    return;
+                labCount.Text = "共计:" + dt.Rows.Count;
+                Application.DoEvents();
+                int p1, p2, p0=0;
+                for (int i = 0; i < dt.Rows.Count; i++) {
+                    string arid = dt.Rows[i][0].ToString();
+                    string boxsn = dt.Rows[i][1].ToString();
+                    string xq = dt.Rows[i][2].ToString();
+                    string Pages = dt.Rows[i][3].ToString();
+                    if (arid.Trim().Length <= 0)
+                        continue;
+                    labsy.Text = "第:" + (i + 1).ToString();
+                    Application.DoEvents();
+                    DataTable dt2 = Common.GetcontenTmp(arid);
+                    if (dt2 == null || dt2.Rows.Count <= 0)
+                        continue;
+                    for (int t = 0; t < dt2.Rows.Count; t++) {
+                        string str = dt2.Rows[t][0].ToString();
+                        string page = dt2.Rows[t][1].ToString();
+                        if (rabContenBh.Checked)
+                        {
+                            if (str.Contains(gjz)) {
+                                try {
+                                    string p = dt2.Rows[t + 1][1].ToString();
+                                    p1 = Convert.ToInt32(page);
+                                    p2 = Convert.ToInt32(p);
+                                    p0 = p2 - p1;
+
+                                } catch {
+                                    p1 = Convert.ToInt32(page);
+                                    p2 = Convert.ToInt32(Pages);
+                                    p0 = p2 - p1 + 1;
+                                }
+                            }
+                            else 
+                                continue;
+                        }
+                        else if (rabContenNotBh.Checked)
+                        {
+                            if (!str.Contains(gjz)) {
+                                try {
+                                    string p = dt2.Rows[t + 1][1].ToString();
+                                    p1 = Convert.ToInt32(page);
+                                    p2 = Convert.ToInt32(p);
+                                    p0 = p2 - p1;
+
+                                } catch {
+                                    p1 = Convert.ToInt32(page);
+                                    p2 = Convert.ToInt32(Pages);
+                                    p0 = p2 - p1 + 1;
+                                }
+                            }
+                            else
+                                continue;
+                        }
+                       
+                        if (dgvContenSql.Rows.Count == 0) {
+                            dgvContenSql.Columns.Add("boxsn", "盒号");
+                            dgvContenSql.Columns.Add("xqsn", "小区代号");
+                            dgvContenSql.Columns.Add("title", "标题");
+                        }
+                        else {
+                            if (!chkMax.Checked && !chkPage.Checked && !chkXy.Checked)
+                                continue;
+                            if (chkPage.Checked) {
+                                if (Pagejc.ToString() != p0.ToString())
+                                    continue;
+                            }
+                            else if (chkXy.Checked) {
+                                if (p0 >= Convert.ToInt32(Pagejc))
+                                    continue;
+                            }
+                            else if (chkMax.Checked) {
+                                if (Convert.ToInt32(Pagejc) >=p0)
+                                    continue;
+                            }
+                            int index = dgvContenSql.Rows.Add();
+                            dgvContenSql.Rows[index].Cells[0].Value = boxsn;
+                            dgvContenSql.Rows[index].Cells[1].Value = xq;
+                            dgvContenSql.Rows[index].Cells[2].Value = str;
+                        }
+                    }
+                }
+            } catch (Exception s) {
+                MessageBox.Show(s.ToString());
+            } finally {
+                butContenSelect.Enabled = true;
+                labsy.Text = "";
+                labCount.Text = "";
+            }
+        }
+        private void butContenSelect_Click(object sender, EventArgs e)
+        {
+            if (!IstxtConten())
+                return;
+            if (chkPage.Checked || chkMax.Checked || chkXy.Checked) {
+                ChkContenSqlPage();
+                return;
+            }
+            ChkContenSql();
+        }
+        #endregion
+
+
+
+        private void chkPage_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkPage.Checked) {
+                {
+                    chkLastConten.Checked = false;
+                    chkMax.Checked = false;
+                    chkXq.Checked = false;
+                }
+            }
+        }
+        private void chkMax_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkMax.Checked) {
+                chkLastConten.Checked = false;
+                chkPage.Checked = false;
+                chkXy.Checked = false;
+            }
+        }
+
+        private void chXy_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkXy.Checked) {
+                chkLastConten.Checked = false;
+                chkMax.Checked = false;
+                chkPage.Checked = false;
+            }
+        }
+
+        #region boxsnCount
+
+        private List<string> lsboxsn = new List<string>();
+        private void butBoxsnadd_Click(object sender, EventArgs e)
+        {
+            if (txtTjbox.Text.Trim().Length <= 0) {
+                MessageBox.Show("盒号不能为空");
+                txtTjbox.Focus();
+                return;
+            }
+            int b;
+            bool bl = int.TryParse(txtTjbox.Text.Trim(), out b);
+            if (!bl || b <= 0) {
+                MessageBox.Show("盒号不正确!");
+                txtTjbox.Focus();
+                return;
+            }
+            if (lsboxsn.IndexOf(b.ToString()) >= 0) {
+                MessageBox.Show("盒号已存在不允许重新添加!");
+                txtTjbox.Focus();
+                return;
+            }
+            lsboxsn.Add(txtTjbox.Text.Trim());
+            LbboxCount.Items.Add(txtTjbox.Text.Trim());
+            txtTjbox.Text = "";
+            txtTjbox.Focus();
+        }
+
+        private void butboxCle_Click(object sender, EventArgs e)
+        {
+            LbboxCount.Items.Clear();
+            lsboxsn.Clear();
+        }
+        #endregion
+
+        private void butBoxsnCount_Click(object sender, EventArgs e)
+        {
+            if (lsboxsn.Count <= 0) {
+                MessageBox.Show("请先添加盒号!");
+                txtTjbox.Focus();
+                return;
+            }
+            butBoxsnCount.Enabled = false;
+            butBoxsnadd.Enabled = false;
+            butboxCle.Enabled = false;
+            try {
+                int count = 0;
+                for (int i = 0; i < lsboxsn.Count; i++) {
+                    Application.DoEvents();
+                    string b = lsboxsn[i];
+                    int p = Common.GetPages(b);
+                    count += p;
+                }
+                labboxcount.Text = "共计:" + count.ToString();
+            } catch { } finally {
+                butBoxsnCount.Enabled = true;
+                butBoxsnadd.Enabled = true;
+                butboxCle.Enabled = true;
+            }
+        }
 
 
     }

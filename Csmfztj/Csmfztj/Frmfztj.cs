@@ -66,7 +66,7 @@ namespace Csmfztj
                     string guser = dr["UserName"].ToString();
                     string gansj = dr["Cabinet"].ToString();
                     string gdamlt = dr["damlt"].ToString();
-                    string gdamljuan = dr["dajuan"].ToString();
+                    string gdamljuan = dr["damljuan"].ToString();
                     string gxxblt = dr["dablt"].ToString();
                     string gxxblt2 = dr["dablt2"].ToString();
                     string gxxbljuan = dr["dabljuan"].ToString();
@@ -162,15 +162,15 @@ namespace Csmfztj
                     dgvWorkgroup.Rows[t].Cells["T_ansj"].Value = gansj + "卷";
                     dgvWorkgroup.Rows[t].Cells["T_xxbl"].Value = gxxbljuan + "卷" + gxxblt + "条";
                     dgvWorkgroup.Rows[t].Cells["T_xxbl2"].Value = gxxbljuan2 + "卷" + gxxblt2 + "条";
-                    dgvWorkgroup.Rows[t].Cells["T_mldj"].Value = gdamlt + "条";
+                    dgvWorkgroup.Rows[t].Cells["T_mldj"].Value = gdamljuan+"卷"+gdamlt + "条";
                     dgvWorkgroup.Rows[t].Cells["T_scanx"].Value = gscanjuanx + "卷" + gscanpagex + "页";
                     dgvWorkgroup.Rows[t].Cells["T_scans"].Value = gscanjuans + "卷" + gscanpages + "页";
                     dgvWorkgroup.Rows[t].Cells["T_index"].Value = gindexjuan + "卷" + gindexpage + "页";
                     dgvWorkgroup.Rows[t].Cells["T_check"].Value = gcheckjuan + "卷" + gcheckpage + "页";
-                    dgvWorkgroup.Rows[t].Cells["T_zhengli"].Value = gzhenglijuan + "卷" + 0 + "页";
-                    dgvWorkgroup.Rows[t].Cells["T_zhuangD"].Value = gzhuangdjuan + "卷" + gzhuangdpage + "页";
-                    dgvWorkgroup.Rows[t].Cells["T_Infochk"].Value = infochkywid + "手" + infochkpage + "页"+infochkjuan+"卷";
-                    dgvWorkgroup.Rows[t].Cells["T_Zchk"].Value =  zchkpage + "页" + zchkjuan + "卷";
+                    dgvWorkgroup.Rows[t].Cells["T_zhengli"].Value = gzhenglijuan + "卷" + gzhenglipage + "页";
+                  //  dgvWorkgroup.Rows[t].Cells["T_zhuangD"].Value = gzhuangdjuan + "卷" + gzhuangdpage + "页";
+                    dgvWorkgroup.Rows[t].Cells["T_Infochk"].Value = infochkywid + "手" + infochkjuan + "卷"+ infochkpage + "页";
+                    dgvWorkgroup.Rows[t].Cells["T_Zchk"].Value = zchkjuan + "卷" +zchkpage + "页";
                     i++;
                 }
 

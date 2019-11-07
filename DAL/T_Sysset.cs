@@ -660,7 +660,7 @@ namespace DAL
             return dt;
         }
 
-        public static void SaveGensetInfo(string table, string info, string name, string num, string width, string txtwidth, string wycol,bool bl)
+        public static void SaveGensetInfo(string table, string info, string name, string num, string width, string txtwidth, string wycol, bool bl)
         {
             string strSql = "insert into  M_GenSetInfo(InfoTable,InfoAddzd,InfoName,InfoNum,InfoLabWidth,InfoTxtWidth,Wycol,InfoCheck) values(@table,@info,@name,@num,@width,@txtwidth,@wycol,@bl)";
             SqlParameter[] par =
@@ -676,7 +676,7 @@ namespace DAL
             };
             SQLHelper.ExecScalar(strSql, par);
         }
-        public static void UpdateGensetInfo(string table, string info, string name, string num, string width, string txtwith, string wycol,bool bl)
+        public static void UpdateGensetInfo(string table, string info, string name, string num, string width, string txtwith, string wycol, bool bl)
         {
             string strSql = "update M_GenSetInfo set InfoAddzd=@info, InfoName=@name, InfoNum=@num,InfoLabWidth=@width,InfoTxtWidth=@txtwith, wycol=@wycol,InfoCheck=@bl where InfoTable=@table";
             SqlParameter[] par =
@@ -1048,6 +1048,32 @@ namespace DAL
             }
         }
 
+
+        #endregion
+
+        #region ContenPageset
+
+        public static void InsterContePageSet(string tit, string page)
+        {
+            string strSql = "INSERT INTO dbo.M_ContenPageSet (Title, Page)VALUES  (@title, @page)";
+            SqlParameter p0 = new SqlParameter("@title", tit);
+            SqlParameter p1 = new SqlParameter("@page", page);
+            SQLHelper.ExecScalar(strSql, p0, p1);
+        }
+
+        public static DataTable GetContenPageSet()
+        {
+            string strSql = "select * from M_ContenPageSet order by id";
+            DataTable dt = SQLHelper.ExcuteTable(strSql);
+            return dt;
+        }
+
+        public static void DelContePageSet(int id)
+        {
+            string strSql = "Delete from M_ContenPageSet where Id=@id";
+            SqlParameter p1 = new SqlParameter("@id", id);
+            SQLHelper.ExecScalar(strSql, p1);
+        }
 
         #endregion
     }

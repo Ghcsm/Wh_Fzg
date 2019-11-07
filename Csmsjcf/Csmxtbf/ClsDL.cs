@@ -15,6 +15,8 @@ namespace Csmsjcf
         public static string FilePath { get; set; } = "";
         public static string NewPath { get; set; } = "";
 
+        public static string Zdtime { get; set; } = "";
+
         public static int Fanwei { get; set; } = 0;
         public static string Boxsn { get; set; } = "0";
         public static string Quhao { get; set; } = "0";
@@ -33,6 +35,7 @@ namespace Csmsjcf
         public static string xmlname { get; set; } = "";
         public static string ewmname { get; set; } = "";
         public static DataTable dtboxsn { get; set; } = null;
+        public static List<string> Lsboxsn = new List<string>();
 
         public static int lx { get; set; } = 0;
 

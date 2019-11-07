@@ -93,8 +93,7 @@ namespace Csmdacx
 
         private void LoadFile()
         {
-            try
-            {
+            try {
                 butOk.Enabled = false;
                 if (ClsQuery.ArchID <= 0) {
                     MessageBox.Show("ID获取失败请重新选择案卷!");
@@ -104,9 +103,9 @@ namespace Csmdacx
                     MessageBox.Show("文件名称获取失败!");
                     return;
                 }
-                int ArchState = Common.GetArchCheckState(ClsQuery.ArchID);
-                if (ArchState != 1) {
-                    MessageBox.Show("此卷档案未质检无法进行查阅！");
+                int ArchState = Common.GetArchWorkState(ClsQuery.ArchID);
+                if (ArchState < 5) {
+                    MessageBox.Show("此卷档案未排序或未质检无法进行查阅！");
                     return;
                 }
                 string FileName = ClsQuery.FileNameTmp;
@@ -122,14 +121,25 @@ namespace Csmdacx
                     }
                 } catch {
                 }
-
                 string filjpg = Path.Combine(Common.ArchSavePah, FileName.Substring(0, 8), FileName);
-                if (ftp.FtpCheckFile(filjpg)) {
-                    if (ftp.DownLoadFile(Common.ArchSavePah, FileName.Substring(0, 8), localCheckFile, FileName)) {
-                        ImgBrow.Print = ClsQuery.Imgsys;
-                        imgBrow1.LoadFile(ClsQuery.ArchID, localCheckFile);
-                        imgBrow1.LoadConten(ClsQuery.ArchID);
-                        return;
+                if (ArchState == 5) {
+                    if (ftp.FtpCheckFile(filjpg)) {
+                        if (ftp.DownLoadFile(Common.ArchIndexPath, FileName.Substring(0, 8), localCheckFile, FileName)) {
+                            ImgBrow.Print = ClsQuery.Imgsys;
+                            imgBrow1.LoadFile(ClsQuery.ArchID, localCheckFile);
+                            imgBrow1.LoadConten(ClsQuery.ArchID);
+                            return;
+                        }
+                    }
+                }
+                else if (ArchState>=7){
+                    if (ftp.FtpCheckFile(filjpg)) {
+                        if (ftp.DownLoadFile(Common.ArchSavePah, FileName.Substring(0, 8), localCheckFile, FileName)) {
+                            ImgBrow.Print = ClsQuery.Imgsys;
+                            imgBrow1.LoadFile(ClsQuery.ArchID, localCheckFile);
+                            imgBrow1.LoadConten(ClsQuery.ArchID);
+                            return;
+                        }
                     }
                 }
                 MessageBox.Show("警告，文件不存在!");
@@ -137,8 +147,7 @@ namespace Csmdacx
 
             } catch (Exception ee) {
                 MessageBox.Show(ee.ToString());
-            } finally
-            {
+            } finally {
                 butOk.Enabled = true;
             }
         }

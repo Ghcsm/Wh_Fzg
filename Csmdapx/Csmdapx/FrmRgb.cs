@@ -21,6 +21,7 @@ namespace Csmdapx
         public string R = "-1";
         public string G = "-1";
         public string B = "-1";
+        public string Sc = "20";
 
 
         bool Isnum(string str)
@@ -73,6 +74,27 @@ namespace Csmdapx
             B = txtB.Text.Trim();
         }
 
+        private void txtSc_Leave(object sender, EventArgs e)
+        {
+            if (txtSc.Text.Length <= 0)
+                return;
+            int p;
+            bool bl = int.TryParse(txtSc.Text.Trim(), out p);
+            if (!bl)
+            {
+                MessageBox.Show("请输入正确的数值!");
+                txtSc.Focus();
+                return;
+            }
+            if (p <= 0)
+            {
+                MessageBox.Show("请输入正确的数值!");
+                txtSc.Focus();
+                return;
+            }
+            Sc = txtSc.Text.Trim();
+        }
+
 
         void WiteCs()
         {
@@ -81,6 +103,7 @@ namespace Csmdapx
             DAL.Writeini.Wirteini("ImageIndex", "AutoRectR", R);
             DAL.Writeini.Wirteini("ImageIndex", "AutoRectG", G);
             DAL.Writeini.Wirteini("ImageIndex", "AutoRectB", B);
+            DAL.Writeini.Wirteini("ImageIndex", "AutoRectSc", Sc);
         }
 
         void ReadIni()
@@ -102,11 +125,21 @@ namespace Csmdapx
                 B = yz;
                 txtB.Text = yz;
             }
+            string sc1 = DAL.Writeini.Readini("ImageIndex", "AutoRectSc").ToString();
+            if (sc1.Trim().Length > 0) {
+                 Sc= sc1;
+                txtSc.Text = Sc;
+            }
         }
 
         private void FrmRgb_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (R != "-1" && G != "-1" && B != "-1") {
+            Sc = txtSc.Text.Trim();
+            if (R != "-1" && G != "-1" && B != "-1" && Sc!="20")
+            {
+                R = txtR.Text.Trim();
+                G = txtG.Text.Trim();
+                B = txtB.Text.Trim();
                 WiteCs();
             }
         }
@@ -115,6 +148,14 @@ namespace Csmdapx
         {
             ReadIni();
             txtR.Focus();
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+            txtR.Text = "0";
+            txtG.Text = "0";
+            txtB.Text = "0";
+            txtSc.Text = "20";
         }
     }
 }

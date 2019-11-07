@@ -15,6 +15,7 @@ namespace Csmdapx
         public static int RgbR = 0;
         public static int RgbG = 0;
         public static int RgbB = 0;
+        public static int Sc = 20;
 
 
         public static List<string> Lsinikeys = new List<string>();
