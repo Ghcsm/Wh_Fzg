@@ -172,6 +172,7 @@ namespace CsmCon
                 cb.KeyPress += Cb_KeyPress;
                 if (TsTag == id.ToString())
                     cb.SelectedIndexChanged += Cb_SelectedIndexChanged;
+                cb.SelectedIndex = 0;
                 pl.Controls.Add(cb);
             }
             if (txtcol == colnum) {
@@ -197,7 +198,8 @@ namespace CsmCon
             Control pl = tabControl.SelectedTab.Controls.Find(name, true)[0];
             foreach (Control c in pl.Controls) {
                 if (c is TextBox || c is ComboBox)
-                    c.Text = "";
+                    if (c.Tag.ToString() != "4")
+                        c.Text = "";
             }
         }
 
@@ -228,6 +230,64 @@ namespace CsmCon
                             return true;
                         }
                     }
+                    else if (p.Tag.ToString() == "10") {
+                        string txt = p.Text.Trim();
+                        if (txt.Length > 0) {
+                            if (txt.IndexOf('-') < 0 && txt.Trim().Length != 4) {
+                                MessageBox.Show("审批日期不正确!");
+                                p.Focus();
+                                return true;
+                            }
+                            string n = "";
+                            string y = "";
+                            string d = "";
+                            string[] d2 = txt.Split('-');
+                            if (d2.Length < 1)
+                                return true;
+                            if (d2.Length == 3) {
+                                n = d2[0];
+                                y = d2[1];
+                                d = d2[2];
+                            }
+                            else if (d2.Length == 2) {
+                                n = d2[0];
+                                y = d2[1];
+                            }
+                            else if (d2.Length == 1) {
+                                n = d2[0];
+                            }
+                            DateTime dt;
+                            if (DateTime.TryParse(txt, out dt)) {
+                                int p1;
+                                bool bl = int.TryParse(n, out p1);
+                                if (!bl) {
+                                    MessageBox.Show("审批日期不正确!");
+                                    p.Focus();
+                                    return true;
+                                }
+                                if (p1 < 1980 || p1 > 2020) {
+                                    MessageBox.Show("审批日期不正确!");
+                                    p.Focus();
+                                    return true;
+                                }
+                                else if (y.Trim().Length > 0 && y.Trim().Length != 2) {
+                                    MessageBox.Show("审批日期不正确!");
+                                    p.Focus();
+                                    return true;
+                                }
+                                else if (d.Trim().Length > 0 && d.Trim().Length != 2) {
+                                    MessageBox.Show("审批日期不正确!");
+                                    p.Focus();
+                                    return true;
+                                }
+                            }
+                            else {
+                                MessageBox.Show("审批日期不正确!");
+                                p.Focus();
+                                return true;
+                            }
+                        }
+                    }
                     int x = lsid.IndexOf(p.Tag.ToString());
                     if (x >= 0) {
                         int m = Convert.ToInt32(lsnum[x].ToString());
@@ -237,7 +297,6 @@ namespace CsmCon
                             return true;
                         }
                     }
-
 
                 }
             }
@@ -339,6 +398,25 @@ namespace CsmCon
             }
         }
 
+        public void Setlsinfo(List<string> lsname, List<string> lsdata)
+        {
+            Txtcle();
+            string name = tabControl.SelectedTab.Name;
+            Control pl = tabControl.SelectedTab.Controls.Find(name, true)[0];
+            foreach (Control c in pl.Controls) {
+                if (c is TextBox || c is ComboBox) {
+                    string n = c.Name.Trim();
+                    int id = lsname.IndexOf(n);
+                    if (id >= 0) {
+                        string str = lsdata[id];
+                        if (str.Trim().Length > 0)
+                            c.Text = str;
+                    }
+                }
+            }
+
+        }
+
         public void LoadInfo(int archid, int enter, string atype, out int xs)
         {
             try {
@@ -394,8 +472,6 @@ namespace CsmCon
                 SetInfoTxt(pl, col, str);
             }
         }
-
-
 
         private void Cb_KeyPress(object sender, KeyPressEventArgs e)
         {

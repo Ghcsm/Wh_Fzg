@@ -20,6 +20,7 @@ namespace Csmxxbl
 
         public int Archid = 0;
         private List<string> lspage = new List<string>();
+        private int Numid = 1;
         private void FrmPage_Shown(object sender, EventArgs e)
         {
             lbPage.Items.Clear();
@@ -28,19 +29,29 @@ namespace Csmxxbl
             txtNumpage.Focus();
         }
 
+        private string strnum = "";
         private void butSavePage_Click(object sender, EventArgs e)
         {
-            if (txtPage.Text.Trim().Length <= 0) {
+            if (strnum.Trim().Length <= 0) {
+                strnum = txtPage.Text.Trim();
+                Numid = 1;
+            }
+            else {
+                if (strnum != txtPage.Text.Trim()) {
+                    Numid = 1;
+                    strnum = txtPage.Text.Trim();
+                }
+                else
+                    Numid += 1;
+            }
+            if (strnum.Length <= 0) {
                 MessageBox.Show("页码不能为空!");
                 txtPage.Focus();
                 return;
             }
-            if (txtPage.Text.IndexOf('-') < 0) {
-                MessageBox.Show("页码必须包含横杠!");
-                txtPage.Focus();
-                return;
-            }
-            else {
+
+            string str = "";
+            if (strnum.IndexOf('-') >= 0) {
                 try {
                     string[] s = txtPage.Text.Trim().Split('-');
                     if (s.Length < 2) {
@@ -56,18 +67,30 @@ namespace Csmxxbl
                 } catch {
                     return;
                 }
+                str = txtPage.Text.Trim();
             }
-            if (lspage.IndexOf(txtPage.Text.Trim()) >= 0) {
+            else {
+                int p;
+                bool bl = int.TryParse(strnum, out p);
+                if (!bl || p <= 0) {
+                    MessageBox.Show("页码数字不正确!");
+                    txtPage.Text = "";
+                    txtPage.Focus();
+                    return;
+                }
+                str = strnum + "-" + Numid.ToString();
+            }
+
+            if (lspage.IndexOf(str) >= 0) {
                 MessageBox.Show("页码已经存在!");
                 txtPage.Focus();
                 return;
             }
-            lspage.Add(txtPage.Text.Trim());
-            lbPage.Items.Add(txtPage.Text.Trim());
+            lspage.Add(str);
+            lbPage.Items.Add(str);
             if (lbPage.Items.Count > 0)
                 lbPage.SelectedIndex = lbPage.Items.Count - 1;
-
-            txtPage.Text = "";
+            txtPage.SelectAll();
             txtPage.Focus();
         }
 
@@ -97,7 +120,7 @@ namespace Csmxxbl
                     str += ";" + s;
             }
             int p = Convert.ToInt32(txtNumpage.Text.Trim()) + (lspage.Count);
-            Common.SetInfoPages(Archid.ToString(), str, txtNumpage.Text.Trim(), p.ToString(),txtUserid.Text.Trim());
+            Common.SetInfoPages(Archid.ToString(), str, txtNumpage.Text.Trim(), p.ToString(), txtUserid.Text.Trim());
         }
 
         void GetPage()

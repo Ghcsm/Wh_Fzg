@@ -688,7 +688,7 @@ namespace Csmdapx
                         int p;
                         bool bl = int.TryParse(txtpage, out p);
                         if (bl)
-                            txt = (p + 1).ToString();
+                            txt = (p - 1).ToString();
                         else
                             txt = ClsIndex.CrrentPage.ToString();
                     }
@@ -697,7 +697,7 @@ namespace Csmdapx
                         int p;
                         bool bl = int.TryParse(str[0], out p);
                         if (bl)
-                            txt = (p + 1).ToString();
+                            txt = (p - 1).ToString();
                         else
                             txt = ClsIndex.CrrentPage.ToString();
                     }

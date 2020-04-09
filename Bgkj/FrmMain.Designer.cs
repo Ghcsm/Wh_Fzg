@@ -404,7 +404,7 @@
             // 
             this.pictTop.BackColor = System.Drawing.Color.Transparent;
             this.pictTop.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictTop.Image = global::Bgkj.Properties.Resources.hw;
+            this.pictTop.Image = global::Bgkj.Properties.Resources._11;
             this.pictTop.Location = new System.Drawing.Point(0, 0);
             this.pictTop.Name = "pictTop";
             this.pictTop.Size = new System.Drawing.Size(794, 61);

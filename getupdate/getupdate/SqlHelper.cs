@@ -24,7 +24,6 @@ namespace getupdate
         {
             try
             {
-                Frmgetup.getxml();
                 conn = new SqlConnection(connstr);
                 if (conn.State != ConnectionState.Open)
                 {

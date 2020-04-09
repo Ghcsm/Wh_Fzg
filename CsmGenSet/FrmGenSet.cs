@@ -200,7 +200,7 @@ namespace CsmGenSet
                         fontspec += ClsGenSet.lsFont[i];
                 }
 
-                T_Sysset.UpdateGensetPrint(ClsGenSet.Sqltable, xy, col, ClsGenSet.PrintFont, fontspec);
+                T_Sysset.GensetPrintinfo(ClsGenSet.Sqltable, xy, col, ClsGenSet.PrintFont, fontspec);
                 MessageBox.Show("设置完成!");
             } catch (Exception e) {
                 MessageBox.Show(e.ToString());
@@ -577,7 +577,7 @@ namespace CsmGenSet
                         str += ClsPrintConten.ContenallSet[i];
                 }
 
-                T_Sysset.UpdateGensetPrintConten(ClsPrintConten.ContenTable, str);
+                T_Sysset.GensetPrintConteninfo(ClsPrintConten.ContenTable, str);
                 MessageBox.Show("保存成功!");
                 GetnPrintConten();
             } catch (Exception exception) {

@@ -74,6 +74,7 @@ namespace Csmxxbl
             ucInfo.SaveInfo(arid, entertag);
             ts = Common.Getsx(arid, entertag);
             labsx.Text = string.Format("已录{0}手", ts);
+            ucInfo.GetFocus();
         }
 
         private void gArchSelect1_LineClickLoadInfo(object sender, EventArgs e)
@@ -84,7 +85,7 @@ namespace Csmxxbl
                 return;
             ucInfo.Archid = arid;
             ucInfo.LoadInfo(arid, entertag, type,out ts);
-            labsx.Text = string.Format("已录{0}手",ts);
+            labsx.Text = string.Format("已录{0}手", ts);
         }
 
 

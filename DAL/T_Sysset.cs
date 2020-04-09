@@ -580,9 +580,34 @@ namespace DAL
             return dt;
         }
 
+
+        public static void GensetPrintinfo(string table, string xy, string col, string fontall, string fontspec)
+        {
+            string strSql = "select count(*) from M_genset";
+            object obj = SQLHelper.ExecScalar(strSql);
+            if (obj != null) {
+                int id = Convert.ToInt32(obj);
+                if (id > 0) {
+                    UpdateGensetPrint(table, xy, col, fontall, fontspec);
+                    return;
+                }
+            }
+            InsterGensetPrint(table, xy, col, fontall, fontspec);
+        }
         public static void UpdateGensetPrint(string table, string xy, string col, string fontall, string fontspec)
         {
             string strSql = "update M_genset set printTable=@table, PrintxyCol=@xy,PrintColInfo=@col ,PrintFontColAll=@fontall,PrintFontSpec=@fontspec";
+            SqlParameter p0 = new SqlParameter("@table", table);
+            SqlParameter p1 = new SqlParameter("@xy", xy);
+            SqlParameter p2 = new SqlParameter("@col", col);
+            SqlParameter p3 = new SqlParameter("@fontall", fontall);
+            SqlParameter p4 = new SqlParameter("@fontspec", fontspec);
+            SQLHelper.ExecScalar(strSql, p0, p1, p2, p3, p4);
+        }
+
+        public static void InsterGensetPrint(string table, string xy, string col, string fontall, string fontspec)
+        {
+            string strSql = "insert into  M_genset  (printTable,PrintxyCol,PrintColInfo,PrintFontColAll,PrintFontSpec) values(@table,@xy,@col,@fontall,@fontspec)";
             SqlParameter p0 = new SqlParameter("@table", table);
             SqlParameter p1 = new SqlParameter("@xy", xy);
             SqlParameter p2 = new SqlParameter("@col", col);
@@ -605,9 +630,32 @@ namespace DAL
             return dt;
         }
 
+
+        public static void GensetPrintConteninfo(string table, string info)
+        {
+            string strSql = "select count(*) from M_genset";
+            object obj = SQLHelper.ExecScalar(strSql);
+            if (obj != null) {
+                int id = Convert.ToInt32(obj);
+                if (id > 0) {
+                    UpdateGensetPrintConten(table, info);
+                    return;
+                }
+            }
+            InsterGensetPrintConten(table, info);
+        }
+
         public static void UpdateGensetPrintConten(string table, string info)
         {
             string strSql = "update M_genset set PrintContenTable=@table, PrintContenInfo=@info";
+            SqlParameter p0 = new SqlParameter("@table", table);
+            SqlParameter p1 = new SqlParameter("@info", info);
+            SQLHelper.ExecScalar(strSql, p0, p1);
+        }
+
+        public static void InsterGensetPrintConten(string table, string info)
+        {
+            string strSql = "insert into M_genset (PrintContenTable, PrintContenInfo) values (@table,@info)";
             SqlParameter p0 = new SqlParameter("@table", table);
             SqlParameter p1 = new SqlParameter("@info", info);
             SQLHelper.ExecScalar(strSql, p0, p1);

@@ -218,6 +218,9 @@ namespace Csmsjcf
                 str = "错误：未找到Xls模版文件!";
                 return str;
             }
+            if (!Directory.Exists(ClsFrmInfoPar.MimgPath)) {
+                Directory.CreateDirectory(ClsFrmInfoPar.MimgPath);
+            }
             str = Path.Combine(ClsFrmInfoPar.MimgPath, DateTime.Now.ToString("yyyyMMdd") + ".xls");
             if (!File.Exists(str)) {
                 File.Copy(xlsmode, str);

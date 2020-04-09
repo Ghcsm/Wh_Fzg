@@ -58,12 +58,12 @@ namespace CsmCon
                 txtTitle.Focus();
                 return;
             }
-            if (txtlx.Text.Trim().Length <= 0)
-            {
-                MessageBox.Show("所属类型不能空!");
-                txtlx.Focus();
-                return;
-            }
+            //if (txtlx.Text.Trim().Length <= 0)
+            //{
+            //    MessageBox.Show("所属类型不能空!");
+            //    txtlx.Focus();
+            //    return;
+            //}
             if (lscode.IndexOf(txtLb.Text.Trim() + txtNum.Text.Trim()) >= 0) {
                 MessageBox.Show("此类型的代码已存在!");
                 txtNum.Focus();

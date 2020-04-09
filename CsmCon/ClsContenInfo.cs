@@ -15,7 +15,6 @@ namespace CsmCon
 
     public class ClsContenInfo
     {
-
         public string ContenTable { get; set; } = "";
         public string ContenWith { get; set; } = "";
         public string ContenTxtwith { get; set; } = "";
@@ -42,6 +41,7 @@ namespace CsmCon
 
         private Panel ptxt;
         private GroupBox gr2;
+        private ListView lsmode;
         AutoCompleteStringCollection source = new AutoCompleteStringCollection();
         private DataTable contendt;
 
@@ -88,8 +88,37 @@ namespace CsmCon
                     lsv.BeginInvoke(new Action(() => { lsv.Items.Add(lvi); }));
                 }
             }
-
         }
+
+
+        public void LoadModule1(ListViewEx lsv, string str)
+        {
+            lsv.Items.Clear();
+            if (contendt != null && contendt.Rows.Count > 0) {
+                DataTable dt1 = null;
+                if (str.Trim().Length > 0) {
+                    try {
+                        string s = "TITLE like '%" + str + "%'";
+                        dt1 = contendt.Select(s).CopyToDataTable();
+                    } catch {
+                        dt1 = null;
+                    }
+                    if (dt1 == null || dt1.Rows.Count <= 0)
+                        return;
+                    foreach (DataRow dr in dt1.Rows) {
+                        ListViewItem lvi = new ListViewItem();
+                        string type = dr["CoType"].ToString();
+                        string code = dr["Code"].ToString();
+                        string title = dr["Title"].ToString();
+                        string titlelx = dr["TitleLx"].ToString();
+                        lvi.Text = code;
+                        lvi.SubItems.AddRange(new string[] { title, titlelx, type });
+                        lsv.BeginInvoke(new Action(() => { lsv.Items.Add(lvi); }));
+                    }
+                }
+            }
+        }
+
 
         public void LoadModulels()
         {
@@ -117,7 +146,7 @@ namespace CsmCon
         }
         //东丽区专用  ywid
         private string ywid = "0";
-        public void LoadContents(int archid, ListViewEx lsv, bool ch,int index)
+        public void LoadContents(int archid, ListViewEx lsv, bool ch, int index)
         {
             if (archid <= 0)
                 return;
@@ -146,16 +175,16 @@ namespace CsmCon
                     lsv.Items.Add(lvi);
                     i++;
                 }
-                foreach (ListViewItem lvi in lsv.Items) {
-                    string str = lvi.SubItems[5].Text.ToString();
-                    if (str != ywid) {
-                        lvi.BackColor = Color.Red;
-                        ywid = str;
-                    }
-                }
+                //foreach (ListViewItem lvi in lsv.Items) {
+                //    string str = lvi.SubItems[5].Text.ToString();
+                //    if (str != ywid) {
+                //        lvi.BackColor = Color.Red;
+                //        ywid = str;
+                //    }
+                //}
                 if (lsv.Items.Count > 0) {
-                    if (index<=0)
-                    lsv.Items[0].Selected = true;
+                    if (index <= 0)
+                        lsv.Items[0].Selected = true;
                 }
 
             } catch {
@@ -179,7 +208,7 @@ namespace CsmCon
                 if (dt == null || dt.Rows.Count <= 0) {
                     Common.InsterMl(archid);
                     loadcon = false;
-                    LoadContents(archid, lsv, ch,0);
+                    LoadContents(archid, lsv, ch, 0);
                     return;
                 }
                 int i = 1;
@@ -197,13 +226,13 @@ namespace CsmCon
                     lsv.Items.Add(lvi);
                     i++;
                 }
-                foreach (ListViewItem lvi in lsv.Items) {
-                    string str = lvi.SubItems[5].Text.ToString();
-                    if (str != ywid) {
-                        lvi.BackColor = Color.Red;
-                        ywid = str;
-                    }
-                }
+                //foreach (ListViewItem lvi in lsv.Items) {
+                //    string str = lvi.SubItems[5].Text.ToString();
+                //    if (str != ywid) {
+                //        lvi.BackColor = Color.Red;
+                //        ywid = str;
+                //    }
+                //}
                 if (lsv.Items.Count > 0) {
                     lsv.Items[0].Selected = true;
                 }
@@ -213,7 +242,7 @@ namespace CsmCon
                 loadcon = false;
             }
         }
-        public void LoadContentsadd(int archid, ListViewEx lsv, bool ch,int info)
+        public void LoadContentsadd(int archid, ListViewEx lsv, bool ch, int info)
         {
             if (archid <= 0)
                 return;
@@ -239,16 +268,14 @@ namespace CsmCon
                             PageCount.Add(str);
                         lvi.SubItems.AddRange(new string[] { str });
                     }
-
                     lsv.Invoke(new Action(() => { lsv.Items.Add(lvi); }));
                     i++;
                 }
 
-                if (info > 0)
-                {
+                if (info > 0) {
                     if (lsv.Items.Count > 0) {
-                        lsv.Items[lsv.Items.Count-1].Selected = true;
-                        lsv.Items[lsv.Items.Count-1].EnsureVisible();
+                        lsv.Items[lsv.Items.Count - 1].Selected = true;
+                        lsv.Items[lsv.Items.Count - 1].EnsureVisible();
                     }
                 }
             } catch {
@@ -293,10 +320,11 @@ namespace CsmCon
         }
 
 
-        public void GetControl(Panel pl,GroupBox g)
+        public void GetControl(Panel pl, GroupBox g, ListView ls)
         {
             ptxt = pl;
             gr2 = g;
+            lsmode = ls;
             GetContenInfo();
             if (ContenTable == null || ContenTable.Trim().Length <= 0)
                 return;
@@ -361,6 +389,7 @@ namespace CsmCon
                     txt.Location = new Point(yy, txtrows * 30 - 20);
                 txt.KeyPress += Txt_KeyPress;
                 txt.KeyDown += Txt_KeyDown;
+                txt.KeyUp += Txt_KeyUp;
                 pl.Controls.Add(txt);
             }
             else {
@@ -380,7 +409,7 @@ namespace CsmCon
                         }
                     }
                 }
-                if (cb.Tag.ToString() == (TitleWz + 1).ToString()) {
+                if (cb.Tag.ToString() == "1") {
                     //东丽区自动匹配
                     cb.KeyUp += Cb_KeyUp;
                     cb.Leave += Cb_Leave;
@@ -400,6 +429,16 @@ namespace CsmCon
                 txtcol = 0;
                 txtrows += 1;
             }
+        }
+
+        private void Txt_KeyUp(object sender, KeyEventArgs e)
+        {
+            //TextBox txt = (TextBox)sender;
+            //if (txt.Tag.ToString() == "1")
+            //    UcContents.LoadModule(contendt, lsmode, txt.Text.Trim());
+            ////if (LineClickLoadInfo != null)
+            //    LineClickLoadInfo(sender, new EventArgs());
+
         }
 
         private void Txt_KeyDown(object sender, KeyEventArgs e)
@@ -439,11 +478,11 @@ namespace CsmCon
             else if ((e.KeyValue == 13 || e.KeyValue == 27 || e.KeyValue == 32 || e.KeyValue == 46))
                 keyValue.Append(e.KeyValue.ToString());
             string str = keyValue.ToString();
-            if (str =="1-40" || str == "1-90")
-            {
+            if (str == "1-40" || str == "1-90") {
                 UcContents.Setadd(gr2);
+
                 //Action Act =
-               // Act.BeginInvoke(null, null);
+                // Act.BeginInvoke(null, null);
             }
         }
 
@@ -569,7 +608,7 @@ namespace CsmCon
             foreach (Control ct in p.Controls) {
                 if (ct is TextBox || ct is ComboBox) {
                     if (ct.Tag != null) {
-                        if (ct.Tag.ToString()!="4" && ct.Text.Trim().Length <= 0) {
+                        if (ct.Tag.ToString() == "1" && ct.Text.Trim().Length <= 0) {
                             tf = false;
                         }
                     }
@@ -591,129 +630,142 @@ namespace CsmCon
         {
             if (e.KeyChar == 13)
                 SendKeys.Send("{Tab}");
+            TextBox txt = (TextBox)sender;
+            if (txt.Tag.ToString() == "1") {
+                if (txt.Text.Trim().Length >= 0) {
+                    string str = txt.Text.Trim();
+                    int x = LsModule.IndexOf(str);
+                    if (x < 0)
+                        return;
+                    str = lsModulelx[x];
+                    if (str.Trim().Length > 0) {
+                        UcContents.Setinfo(ptxt, str);
+                    }
+                }
+            }
+
         }
 
         private void Cb_MouseClick(object sender, MouseEventArgs e)
         {
-            try
-            {
-                keydown = 1;
-                ComboBox cob = (ComboBox)sender;
-                txtcomb = cob.Text.Trim();
-            }
-            catch 
-            {}
+            //try
+            //{
+            //    keydown = 1;
+            //    ComboBox cob = (ComboBox)sender;
+            //    txtcomb = cob.Text.Trim();
+            //}
+            //catch 
+            //{}
         }
 
 
         private void Cb_SelectedIndexChanged(object sender, EventArgs e)
         {
-            try {
-                keydown = 1;
-                ComboBox cob = (ComboBox)sender;
-                txtcomb = cob.Items[cob.SelectedIndex].ToString();
-                if (cob.Text.Trim().Length > 0) {
-                    cob.SelectionStart = cob.Text.Trim().Length;
-                    cob.SelectionLength = 0;
-                }
-            } catch { }
+            //try {
+            //    keydown = 1;
+            //    ComboBox cob = (ComboBox)sender;
+            //    txtcomb = cob.Items[cob.SelectedIndex].ToString();
+            //    if (cob.Text.Trim().Length > 0) {
+            //        cob.SelectionStart = cob.Text.Trim().Length;
+            //        cob.SelectionLength = 0;
+            //    }
+            //} catch { }
         }
 
         private void Cb_DropDownClosed(object sender, EventArgs e)
         {
-            try {
-                ComboBox comb = (ComboBox)sender;
-                txtcomb = comb.SelectedValue.ToString();
-                comb.Items.Add(txtcomb);
-                comb.Text = txtcomb;
-                //if (txtcomb.Trim().Length > 0) {
-                //    comb.SelectionStart = comb.Text.Trim().Length;
-                //    comb.SelectionLength = 0;
-                //}
+            //try {
+            //    ComboBox comb = (ComboBox)sender;
+            //    txtcomb = comb.SelectedValue.ToString();
+            //    comb.Items.Add(txtcomb);
+            //    comb.Text = txtcomb;
+            //    //if (txtcomb.Trim().Length > 0) {
+            //    //    comb.SelectionStart = comb.Text.Trim().Length;
+            //    //    comb.SelectionLength = 0;
+            //    //}
 
-            } catch { }
+            //} catch { }
         }
 
 
         private void Cb_Leave(object sender, EventArgs e)
         {
-            try {
-                ComboBox txt = (ComboBox)sender;
-                if (txt.Text.Trim().Length > 0)
-                    txt.Items.Add(txt.Text.Trim());
-                //东丽区自动配置，输入标题时 目录种类显示
-                if (txt.Tag.ToString() == (PagesWz).ToString() ) {
-                    int id = LsModule.IndexOf(txt.Text.Trim());
-                    string str = "";
-                    if (id >= 0) {
-                        str = lsModulelx[id].ToString();
-                        UcContents.Setxtxtls(ptxt, PagesWz, str);
-                    }
-                    //if (txt.Text.Trim().Length > 0) {
-                    //    txt.SelectionStart = txt.Text.Trim().Length;
-                    //    txt.SelectionLength = 0;
-                    //}
+            //try {
+            //    ComboBox txt = (ComboBox)sender;
+            //    if (txt.Text.Trim().Length > 0)
+            //        txt.Items.Add(txt.Text.Trim());
+            //    //东丽区自动配置，输入标题时 目录种类显示
+            //    if (txt.Tag.ToString() == (PagesWz).ToString()) {
+            //        int id = LsModule.IndexOf(txt.Text.Trim());
+            //        string str = "";
+            //        if (id >= 0) {
+            //            str = lsModulelx[id].ToString();
+            //            UcContents.Setxtxtls(ptxt, PagesWz, str);
+            //        }
+            //        //if (txt.Text.Trim().Length > 0) {
+            //        //    txt.SelectionStart = txt.Text.Trim().Length;
+            //        //    txt.SelectionLength = 0;
+            //        //}
 
-                }
-            } catch { }
+            //    }
+            //} catch { }
         }
 
         private string txtcomb = "";
         private void Cb_KeyDown(object sender, KeyEventArgs e)
         {
-            try
-            {
-                if (e.KeyCode == Keys.ControlKey || e.KeyValue == 32)
-                    return;
-                keydown = 1;
-                ComboBox cob = (ComboBox)sender;
-                txtcomb = cob.Text.Trim();
-                //if (cob.Text.Trim().Length > 0) {
-                //    cob.SelectionStart = cob.Text.Trim().Length;
-                //    cob.SelectionLength = 0;
-                //}
+            //try {
+            //    if (e.KeyCode == Keys.ControlKey || e.KeyValue == 32)
+            //        return;
+            //    keydown = 1;
+            //    ComboBox cob = (ComboBox)sender;
+            //    txtcomb = cob.Text.Trim();
+            //    //if (cob.Text.Trim().Length > 0) {
+            //    //    cob.SelectionStart = cob.Text.Trim().Length;
+            //    //    cob.SelectionLength = 0;
+            //    //}
 
-            } catch {
+            //} catch {
 
-            }
+            //}
         }
 
 
         private void Cb_KeyUp(object sender, KeyEventArgs e)
         {
-            try {
-                if (e.KeyValue >= 37 && e.KeyValue <= 40 || e.KeyCode==Keys.ControlKey)
-                    return;
-                ComboBox comb = (ComboBox)sender;
-                comb.Items.Clear();
-                if (comb.Text.Trim().Length <= 0)
-                    return;
-                if (contendt == null || contendt.Rows.Count <= 0)
-                    return;
-                if (keydown == 0)
-                    return;
-                if (comb.Tag.ToString() == (TitleWz + 1).ToString()) {
-                    try {
-                        string s = "TITLE like '%" + comb.Text.Trim() + "%'";
-                        DataTable dt1 = contendt.Select(s).CopyToDataTable();
-                        if (dt1.Rows.Count > 0) {
-                            for (int i = 0; i < dt1.Rows.Count; i++) {
-                                comb.Items.Add(dt1.Rows[i]["TITLE"].ToString());
-                            }
+            //try {
+            //    if (e.KeyValue >= 37 && e.KeyValue <= 40 || e.KeyCode==Keys.ControlKey)
+            //        return;
+            //    ComboBox comb = (ComboBox)sender;
+            //    comb.Items.Clear();
+            //    if (comb.Text.Trim().Length <= 0)
+            //        return;
+            //    if (contendt == null || contendt.Rows.Count <= 0)
+            //        return;
+            //    if (keydown == 0)
+            //        return;
+            //    if (comb.Tag.ToString() == (TitleWz + 1).ToString()) {
+            //        try {
+            //            string s = "TITLE like '%" + comb.Text.Trim() + "%'";
+            //            DataTable dt1 = contendt.Select(s).CopyToDataTable();
+            //            if (dt1.Rows.Count > 0) {
+            //                for (int i = 0; i < dt1.Rows.Count; i++) {
+            //                    comb.Items.Add(dt1.Rows[i]["TITLE"].ToString());
+            //                }
 
-                            comb.DroppedDown = true;
-                            //comb.SelectionStart = comb.Text.Trim().Length;
-                            //comb.SelectionLength = 0;
-                        }
+            //                comb.DroppedDown = true;
+            //                //comb.SelectionStart = comb.Text.Trim().Length;
+            //                //comb.SelectionLength = 0;
+            //            }
 
-                        keydown = 0;
-                    } catch {
-                        comb.Items.Add(comb.Text.Trim());
-                    }
-                    comb.SelectionStart = comb.Text.Trim().Length;
-                    comb.SelectionLength = 0;
-                }
-            } catch { }
+            //            keydown = 0;
+            //        } catch {
+            //            comb.Items.Add(comb.Text.Trim());
+            //        }
+            //        comb.SelectionStart = comb.Text.Trim().Length;
+            //        comb.SelectionLength = 0;
+            //    }
+            //} catch { }
         }
     }
 }

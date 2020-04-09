@@ -13,7 +13,8 @@ namespace getupdate
         {
             InitializeComponent();
         }
-        getupdate.HFTP ftp = new getupdate.HFTP();
+
+        private getupdate.HFTP ftp;
 
         public static int id = 0;
         public static string ftppath = "";
@@ -67,13 +68,23 @@ namespace getupdate
                 string[] GetList = ftp.GetFileList(ftppath);
                 for (int i = 0; i < GetList.Length; i++) {
                     string Filename = GetList[i];
-                    string Localfile = localF + "\\" + Filename;
+                    string dirmain = localF + "\\Update";
+                    if (!Directory.Exists(dirmain))
+                        Directory.CreateDirectory(dirmain);
+                    string Localfile = dirmain + "\\" + Filename;
                     if (Filename != "getupdate") {
-                        if (ftp.DownLoadFile(ftppath, str, Localfile, Filename)) { }
+                        if (ftp.DownLoadFile(ftppath, str, Localfile, Filename))
+                        {
+                            string newfile = localF + "\\" + Filename;
+                            if (File.Exists(newfile))
+                                File.Delete(newfile);
+                            File.Move(Localfile, newfile);
+                        }
                     }
                     Application.DoEvents();
                 }
-            } catch {
+            } catch (Exception e) {
+                MessageBox.Show("更新失败:" + e.ToString());
 
             } finally {
                 try {
@@ -96,6 +107,7 @@ namespace getupdate
 
                 SQLHelper.connstr = Des.DesDecrypt(config.ConnectionStrings.ConnectionStrings["ConStr"].ConnectionString);
 
+
             } catch {
                 MessageBox.Show("读取配置文件错误,或无配置信息，请写入新的配置信息!");
                 Application.Exit();
@@ -106,6 +118,8 @@ namespace getupdate
 
         private void Frmgetup_Load(object sender, EventArgs e)
         {
+            getxml();
+            ftp = new getupdate.HFTP();
             ftp.PercentChane += new HFTP.PChangedHandle(Downjd);
         }
 

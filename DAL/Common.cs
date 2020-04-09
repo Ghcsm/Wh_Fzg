@@ -359,6 +359,22 @@ namespace DAL
             }
         }
 
+        public static DataTable QueryData(string zd, string tj, string gjz, string table, string allzd)
+        {
+            DataTable dt;
+            try {
+                string strSql = "";
+                if (tj == "包含")
+                    strSql = "select " + allzd.Replace(";",",") + " from " + table + " where " + zd + " like '%" + gjz + "%'";
+                else if (tj == "等于")
+                    strSql = "select " + allzd.Replace(";", ",") + " from " + table + " where " + zd + " ='" + gjz + "'";
+                dt = SQLHelper.ExcuteTable(strSql);
+                return dt;
+            } catch {
+                return null;
+            }
+        }
+
         public static DataTable QuerboxsnInfo(int id)
         {
             string strSql = "select top 100 boxsn,archno, IMGFILE,ArchYanShou from M_IMAGEFILE where id=@arid";
@@ -726,9 +742,22 @@ namespace DAL
         public static DataTable GetboxArchno(int b)
         {
             try {
-                string strSql = "select top 100 id from M_imagefile where boxsn=@box and CHECKED=1";
+                string strSql = "select top 100 id from M_imagefile where boxsn=@box ";
                 SqlParameter p1 = new SqlParameter("@box", b);
                 DataTable dt = SQLHelper.ExcuteTable(strSql, p1);
+                return dt;
+            } catch {
+                return null;
+            }
+        }
+
+        public static DataTable GetboxArchnoinfo(int box, int arno)
+        {
+            try {
+                string strSql = "select top 100 id from M_imagefile where boxsn=@box and archno=@arno ";
+                SqlParameter p1 = new SqlParameter("@box", box);
+                SqlParameter p2 = new SqlParameter("@arno", arno);
+                DataTable dt = SQLHelper.ExcuteTable(strSql, p1, p2);
                 return dt;
             } catch {
                 return null;
@@ -831,7 +860,7 @@ namespace DAL
                 string strSql = "";
                 SqlParameter p1 = new SqlParameter("@archid", archid);
                 if (xh.Trim().Length > 0) {
-                    strSql = "select " + str + " from " + table + " where Archid=@archid order by " + xh;
+                    strSql = "select " + str + " from " + table + " where Archid=@archid order by  CONVERT(INT," + xh + ")";
                 }
                 else
                     strSql = "select " + str + " from " + table + " where Archid=@archid ";
@@ -855,6 +884,17 @@ namespace DAL
                 return i;
             } catch {
                 return 0;
+            }
+        }
+        public static DataTable GetArchPages1(int ArchID)
+        {
+            try {
+                string strSql = "select 页码,条码,嫌疑人 from V_GetML where Archid=@id ";
+                SqlParameter p1 = new SqlParameter("@id", ArchID);
+                DataTable dt = SQLHelper.ExcuteTable(strSql, p1);
+                return dt;
+            } catch {
+                return null;
             }
         }
 
@@ -1153,16 +1193,26 @@ namespace DAL
 
         public static int Getsx(int arid, int enter)
         {
-            string strSql = "SELECT COUNT(*) FROM dbo.信息表 WHERE Archid=@arid AND EnterTag=@enter";
-            SqlParameter p1 = new SqlParameter("@arid", arid);
-            SqlParameter p2 = new SqlParameter("@enter", enter);
-            object obj = SQLHelper.ExecScalar(strSql, p1, p2);
-            if (obj == null)
+            try {
+                string strSql = "SELECT InfoTable FROM  dbo.M_GenSetInfo";
+                SqlParameter p1 = new SqlParameter("@arid", arid);
+                object obj = SQLHelper.ExecScalar(strSql, p1);
+                if (obj == null)
+                    return 0;
+                string str = obj.ToString();
+                strSql = "SELECT COUNT(*) FROM " + obj + " WHERE Archid=@arid AND EnterTag=@enter";
+                SqlParameter p2 = new SqlParameter("@arid", arid);
+                SqlParameter p3 = new SqlParameter("@enter", enter);
+                obj = SQLHelper.ExecScalar(strSql, p1, p2);
+                if (obj == null)
+                    return 0;
+                str = obj.ToString();
+                if (str.Trim().Length <= 0)
+                    return 0;
+                return Convert.ToInt32(str);
+            } catch {
                 return 0;
-            string str = obj.ToString();
-            if (str.Trim().Length <= 0)
-                return 0;
-            return Convert.ToInt32(str);
+            }
         }
 
         private static void WirteWork(int archid, int ts, int enter, string table, string sx)
@@ -1366,7 +1416,7 @@ namespace DAL
         }
         public static DataTable GetDataImportxls(int houseid, string qu)
         {
-            string strSql = "select * From V_getTjd where  ArchXqStat=@qu and 档案手续=1 order by boxsn";
+            string strSql = "select * From V_getTjd where  ArchXqStat=@qu and 档案手续='1' order by boxsn";
             SqlParameter p1 = new SqlParameter("@qu", qu);
             SqlParameter p2 = new SqlParameter("@houseid", houseid);
             DataTable dt = SQLHelper.ExcuteTable(strSql, p1, p2);
@@ -1375,7 +1425,7 @@ namespace DAL
 
         public static DataTable GetDataImportxls(int houseid, string b1, string b2)
         {
-            string strSql = "select * From V_getTjd where  boxsn>=@b1 and boxsn<=@b2 and 档案手续=1 order by boxsn";
+            string strSql = "select * From V_getTjd where  boxsn>=@b1 and boxsn<=@b2 and 档案手续='1' order by boxsn";
             SqlParameter p1 = new SqlParameter("@b1", b1);
             SqlParameter p2 = new SqlParameter("@houseid", houseid);
             SqlParameter p3 = new SqlParameter("@b2", b2);
@@ -1909,6 +1959,41 @@ namespace DAL
                 return Convert.ToInt32(obj.ToString());
             } catch {
                 return 0;
+            }
+        }
+
+        public static DataTable GetSptime(string arid)
+        {
+            DataTable dt = null;
+            try {
+                string strSql =
+                    "SELECT 审批日期 ,档案手续 FROM 信息表 WHERE  Archid =@arid";
+                SqlParameter p1 = new SqlParameter("@arid", arid);
+                dt = SQLHelper.ExcuteTable(strSql, p1);
+                return dt;
+            } catch {
+                return dt;
+            }
+        }
+
+        public static void UpContenSptime(string arid, string sx, string time)
+        {
+            string strSql = "update 信息表 set 审批日期=@time where Archid=@arid and 档案手续=@sx";
+            SqlParameter p1 = new SqlParameter("@time", time);
+            SqlParameter p2 = new SqlParameter("@arid", arid);
+            SqlParameter p3 = new SqlParameter("@sx", sx);
+            SQLHelper.ExecScalar(strSql, p1, p2, p3);
+        }
+
+        public static DataTable GetcontenTitpage(string arid)
+        {
+            try {
+                string strSql = "select 标题,起始页码  from 目录表 where Archid=@arid ORDER BY CONVERT(INT,起始页码)";
+                SqlParameter p1 = new SqlParameter("@arid", arid);
+                DataTable dt = SQLHelper.ExcuteTable(strSql, p1);
+                return dt;
+            } catch {
+                return null;
             }
         }
 
@@ -2540,23 +2625,25 @@ namespace DAL
             return dt;
         }
 
-        public static DataTable GetcontenMaxtitle(string arid, bool bl)
+        public static DataTable GetcontenMaxtitle(string arid, bool bl, int ywid)
         {
             string strSql = "";
             DataTable dt = null;
             if (bl) {
-                strSql = "select max(cast(起始页码 as int)) from 目录表 where Archid=@arid";
+                strSql = "select max(cast(起始页码 as int)) from 目录表 where Archid=@arid and 业务id=@ywid";
                 SqlParameter p1 = new SqlParameter("@arid", arid);
-                object obj = SQLHelper.ExecScalar(strSql, p1);
+                SqlParameter p2 = new SqlParameter("@ywid", ywid.ToString());
+                object obj = SQLHelper.ExecScalar(strSql, p1, p2);
                 if (obj == null)
                     return null;
-                strSql = "select 标题 from 目录表 where Archid=@arid and 起始页码=@ym";
-                SqlParameter p2 = new SqlParameter("@arid", arid);
-                SqlParameter p3 = new SqlParameter("@ym", obj.ToString());
-                dt = SQLHelper.ExcuteTable(strSql, p2, p3);
+                strSql = "select 标题 from 目录表 where Archid=@arid and 起始页码=@ym  and 业务id=@ywid";
+                SqlParameter p3 = new SqlParameter("@arid", arid);
+                SqlParameter p4 = new SqlParameter("@ym", obj.ToString());
+                SqlParameter p5 = new SqlParameter("@ywid", ywid.ToString());
+                dt = SQLHelper.ExcuteTable(strSql, p3, p4, p5);
             }
             else {
-                strSql = "select 标题 from 目录表 where Archid=@arid ";
+                strSql = "select 标题 from 目录表 where Archid=@arid";
                 SqlParameter p1 = new SqlParameter("@arid", arid);
                 dt = SQLHelper.ExcuteTable(strSql, p1);
             }

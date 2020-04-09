@@ -172,8 +172,8 @@ namespace CsmCon
 
         private void Witeini()
         {
-            ClsIni.Archbox = txtBoxsn.Text.Trim();
-            ClsIni.ArchNo = comboxClass.Text.Trim();
+            ClsIni.ArchNo = txtBoxsn.Text.Trim();
+            ClsIni.Archbox = comboxClass.Text.Trim();
             ClsIni.Rabchk = combLx.SelectedIndex.ToString();
             new ClsWriteini().WriteInt();
         }
@@ -285,11 +285,24 @@ namespace CsmCon
                     ClsIni.Archbox = (new ClsWriteini().ContentValue(ClsIni.strFile, "Archsn"));
                     ClsIni.ArchNo = (new ClsWriteini().ContentValue(ClsIni.strFile, "ArchQX"));
                     ClsIni.Rabchk = (new ClsWriteini().ContentValue(ClsIni.strFile, "Rabchk"));
+                    //comboxClass.Items.Clear();
+                    //comboxClass.Items.Add(ClsIni.Archbox);
+                    //comboxClass.Text = ClsIni.Archbox;
+                    //txtBoxsn.Text = ClsIni.ArchNo;
+                    //if (ClsIni.Rabchk.Trim().Length > 0) {
+                    //    try {
+                    //        int id = Convert.ToInt32(ClsIni.Rabchk.Trim());
+                    //        combLx.SelectedIndex = id;
+                    //        if (id == 1)
+                    //            comboxClass.Enabled = true;
+                    //    } catch { }
+                    //}
                     this.BeginInvoke(new Action(() =>
                     {
                         comboxClass.Items.Clear();
-                        comboxClass.Text = "";
-                        txtBoxsn.Text = ClsIni.Archbox;
+                        comboxClass.Items.Add(ClsIni.Archbox);
+                        comboxClass.Text = ClsIni.Archbox;
+                        txtBoxsn.Text = ClsIni.ArchNo;
                         if (ClsIni.Rabchk.Trim().Length > 0) {
                             try {
                                 int id = Convert.ToInt32(ClsIni.Rabchk.Trim());
@@ -298,7 +311,6 @@ namespace CsmCon
                                     comboxClass.Enabled = true;
                             } catch { }
                         }
-
                     }));
 
                 }
@@ -316,7 +328,7 @@ namespace CsmCon
                 butPageUpdate.Visible = false;
                 txtPages.Enabled = false;
             }
-            combLx.SelectedIndex = 0;
+            //combLx.SelectedIndex = 0;
         }
 
 
@@ -364,12 +376,12 @@ namespace CsmCon
 
         private void combLx_SelectedIndexChanged(object sender, EventArgs e)
         {
-            comboxClass.Items.Clear();
-            comboxClass.Text = "";
             comboxClass.Enabled = true;
             if (combLx.SelectedIndex == 0)
                 comboxClass.Enabled = false;
             if (combLx.SelectedIndex == 1) {
+                comboxClass.Items.Clear();
+                comboxClass.Text = "";
                 comboxClass.Items.Add("案卷信息");
                 comboxClass.Items.Add("目录信息");
                 comboxClass.SelectedIndex = 0;

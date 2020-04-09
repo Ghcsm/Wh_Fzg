@@ -27,6 +27,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.gr0 = new DevComponents.DotNetBar.Controls.GroupPanel();
             this.butPrintTm = new DevComponents.DotNetBar.ButtonX();
@@ -37,18 +38,17 @@
             this.tabControlPrint = new DevComponents.DotNetBar.TabControl();
             this.tabControlPanel2 = new DevComponents.DotNetBar.TabControlPanel();
             this.panePrintInfoShow = new DevComponents.DotNetBar.PanelEx();
-            this.tabItemInfoColShow = new DevComponents.DotNetBar.TabItem();
+            this.tabItemInfoColShow = new DevComponents.DotNetBar.TabItem(this.components);
             this.tabControlPanel3 = new DevComponents.DotNetBar.TabControlPanel();
             this.panelPrintXY = new DevComponents.DotNetBar.PanelEx();
             this.butPrintXyinfo = new DevComponents.DotNetBar.ButtonX();
-            this.tabItemInfoColXy = new DevComponents.DotNetBar.TabItem();
+            this.tabItemInfoColXy = new DevComponents.DotNetBar.TabItem(this.components);
             this.gr1 = new System.Windows.Forms.GroupBox();
             this.tabContrSelect = new DevComponents.DotNetBar.TabControl();
             this.tabControlSelectPanel1 = new DevComponents.DotNetBar.TabControlPanel();
             this.rbboxOne = new System.Windows.Forms.RadioButton();
             this.rbBoxAll = new System.Windows.Forms.RadioButton();
-            this.gArchSelect1 = new CsmCon.gArchSelect();
-            this.tabSelectbox = new DevComponents.DotNetBar.TabItem();
+            this.tabSelectbox = new DevComponents.DotNetBar.TabItem(this.components);
             this.tabControlPanel1 = new DevComponents.DotNetBar.TabControlPanel();
             this.lbInfo = new System.Windows.Forms.Label();
             this.butDelbox = new DevComponents.DotNetBar.ButtonX();
@@ -61,8 +61,17 @@
             this.c_id = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.c_box1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.c_box2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.tabItemboxRange = new DevComponents.DotNetBar.TabItem();
+            this.tabItemboxRange = new DevComponents.DotNetBar.TabItem(this.components);
             this.labStat = new System.Windows.Forms.Label();
+            this.TabBoxsnArchno = new DevComponents.DotNetBar.TabItem(this.components);
+            this.tabControlPanel4 = new DevComponents.DotNetBar.TabControlPanel();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txtBosn = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.txtArchno = new System.Windows.Forms.TextBox();
+            this.txtArchno2 = new System.Windows.Forms.TextBox();
+            this.gArchSelect1 = new CsmCon.gArchSelect();
+            this.labprint = new System.Windows.Forms.Label();
             this.gr0.SuspendLayout();
             this.gr2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tabControlPrint)).BeginInit();
@@ -74,6 +83,7 @@
             this.tabContrSelect.SuspendLayout();
             this.tabControlSelectPanel1.SuspendLayout();
             this.tabControlPanel1.SuspendLayout();
+            this.tabControlPanel4.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStrip1
@@ -334,8 +344,9 @@
             // 
             this.tabContrSelect.BackColor = System.Drawing.Color.Transparent;
             this.tabContrSelect.CanReorderTabs = true;
-            this.tabContrSelect.Controls.Add(this.tabControlSelectPanel1);
+            this.tabContrSelect.Controls.Add(this.tabControlPanel4);
             this.tabContrSelect.Controls.Add(this.tabControlPanel1);
+            this.tabContrSelect.Controls.Add(this.tabControlSelectPanel1);
             this.tabContrSelect.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabContrSelect.Location = new System.Drawing.Point(3, 17);
             this.tabContrSelect.Name = "tabContrSelect";
@@ -346,6 +357,7 @@
             this.tabContrSelect.TabLayoutType = DevComponents.DotNetBar.eTabLayoutType.FixedWithNavigationBox;
             this.tabContrSelect.Tabs.Add(this.tabSelectbox);
             this.tabContrSelect.Tabs.Add(this.tabItemboxRange);
+            this.tabContrSelect.Tabs.Add(this.TabBoxsnArchno);
             this.tabContrSelect.Text = "tabControl1";
             // 
             // tabControlSelectPanel1
@@ -394,31 +406,6 @@
             this.rbBoxAll.TabIndex = 1;
             this.rbBoxAll.Text = "整盒档案";
             this.rbBoxAll.UseVisualStyleBackColor = false;
-            // 
-            // gArchSelect1
-            // 
-            this.gArchSelect1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.gArchSelect1.Archid = 0;
-            this.gArchSelect1.ArchImgFile = null;
-            this.gArchSelect1.ArchNo = null;
-            this.gArchSelect1.ArchPos = null;
-            this.gArchSelect1.ArchRegPages = 0;
-            this.gArchSelect1.Archstat = null;
-            this.gArchSelect1.Archtype = null;
-            this.gArchSelect1.ArchXqzt = null;
-            this.gArchSelect1.Archxystat = null;
-            this.gArchSelect1.BackColor = System.Drawing.Color.Transparent;
-            this.gArchSelect1.Boxsn = 0;
-            this.gArchSelect1.GotoPages = false;
-            this.gArchSelect1.LoadFileBoole = false;
-            this.gArchSelect1.Location = new System.Drawing.Point(8, 0);
-            this.gArchSelect1.Name = "gArchSelect1";
-            this.gArchSelect1.PagesEnd = true;
-            this.gArchSelect1.Size = new System.Drawing.Size(366, 435);
-            this.gArchSelect1.TabIndex = 0;
-            this.gArchSelect1.LineClickLoadInfo += new CsmCon.gArchSelect.ArchSelectHandle(this.gArchSelect1_LineClickLoadInfo);
             // 
             // tabSelectbox
             // 
@@ -570,6 +557,114 @@
             this.labStat.Text = "未质检无法打印录入信息";
             this.labStat.Visible = false;
             // 
+            // TabBoxsnArchno
+            // 
+            this.TabBoxsnArchno.AttachedControl = this.tabControlPanel4;
+            this.TabBoxsnArchno.Name = "TabBoxsnArchno";
+            this.TabBoxsnArchno.Text = "批量打印2";
+            // 
+            // tabControlPanel4
+            // 
+            this.tabControlPanel4.Controls.Add(this.labprint);
+            this.tabControlPanel4.Controls.Add(this.txtArchno2);
+            this.tabControlPanel4.Controls.Add(this.txtArchno);
+            this.tabControlPanel4.Controls.Add(this.txtBosn);
+            this.tabControlPanel4.Controls.Add(this.label4);
+            this.tabControlPanel4.Controls.Add(this.label3);
+            this.tabControlPanel4.DisabledBackColor = System.Drawing.Color.Empty;
+            this.tabControlPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControlPanel4.Location = new System.Drawing.Point(0, 26);
+            this.tabControlPanel4.Name = "tabControlPanel4";
+            this.tabControlPanel4.Padding = new System.Windows.Forms.Padding(1);
+            this.tabControlPanel4.Size = new System.Drawing.Size(378, 478);
+            this.tabControlPanel4.Style.BackColor1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(142)))), ((int)(((byte)(179)))), ((int)(((byte)(231)))));
+            this.tabControlPanel4.Style.BackColor2.Color = System.Drawing.Color.FromArgb(((int)(((byte)(223)))), ((int)(((byte)(237)))), ((int)(((byte)(254)))));
+            this.tabControlPanel4.Style.Border = DevComponents.DotNetBar.eBorderType.SingleLine;
+            this.tabControlPanel4.Style.BorderColor.Color = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(97)))), ((int)(((byte)(156)))));
+            this.tabControlPanel4.Style.BorderSide = ((DevComponents.DotNetBar.eBorderSide)(((DevComponents.DotNetBar.eBorderSide.Left | DevComponents.DotNetBar.eBorderSide.Right) 
+            | DevComponents.DotNetBar.eBorderSide.Bottom)));
+            this.tabControlPanel4.Style.GradientAngle = 90;
+            this.tabControlPanel4.TabIndex = 9;
+            this.tabControlPanel4.TabItem = this.TabBoxsnArchno;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.BackColor = System.Drawing.Color.Transparent;
+            this.label3.Location = new System.Drawing.Point(52, 72);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(35, 12);
+            this.label3.TabIndex = 0;
+            this.label3.Text = "盒号:";
+            // 
+            // txtBosn
+            // 
+            this.txtBosn.Location = new System.Drawing.Point(93, 69);
+            this.txtBosn.Name = "txtBosn";
+            this.txtBosn.Size = new System.Drawing.Size(157, 21);
+            this.txtBosn.TabIndex = 1;
+            this.txtBosn.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtBosn_KeyPress);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.BackColor = System.Drawing.Color.Transparent;
+            this.label4.Location = new System.Drawing.Point(52, 118);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(131, 12);
+            this.label4.TabIndex = 0;
+            this.label4.Text = "卷号:            ----";
+            // 
+            // txtArchno
+            // 
+            this.txtArchno.Location = new System.Drawing.Point(93, 112);
+            this.txtArchno.Name = "txtArchno";
+            this.txtArchno.Size = new System.Drawing.Size(57, 21);
+            this.txtArchno.TabIndex = 2;
+            this.txtArchno.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtArchno_KeyPress);
+            // 
+            // txtArchno2
+            // 
+            this.txtArchno2.Location = new System.Drawing.Point(192, 112);
+            this.txtArchno2.Name = "txtArchno2";
+            this.txtArchno2.Size = new System.Drawing.Size(58, 21);
+            this.txtArchno2.TabIndex = 3;
+            this.txtArchno2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtArchno2_KeyPress);
+            // 
+            // gArchSelect1
+            // 
+            this.gArchSelect1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.gArchSelect1.Archid = 0;
+            this.gArchSelect1.ArchImgFile = null;
+            this.gArchSelect1.ArchNo = null;
+            this.gArchSelect1.ArchPos = null;
+            this.gArchSelect1.ArchRegPages = 0;
+            this.gArchSelect1.Archstat = null;
+            this.gArchSelect1.Archtype = null;
+            this.gArchSelect1.ArchXqzt = null;
+            this.gArchSelect1.Archxystat = null;
+            this.gArchSelect1.BackColor = System.Drawing.Color.Transparent;
+            this.gArchSelect1.Boxsn = 0;
+            this.gArchSelect1.GotoPages = false;
+            this.gArchSelect1.LoadFileBoole = false;
+            this.gArchSelect1.Location = new System.Drawing.Point(8, 0);
+            this.gArchSelect1.Name = "gArchSelect1";
+            this.gArchSelect1.PagesEnd = true;
+            this.gArchSelect1.Size = new System.Drawing.Size(366, 435);
+            this.gArchSelect1.TabIndex = 0;
+            this.gArchSelect1.LineClickLoadInfo += new CsmCon.gArchSelect.ArchSelectHandle(this.gArchSelect1_LineClickLoadInfo);
+            // 
+            // labprint
+            // 
+            this.labprint.AutoSize = true;
+            this.labprint.BackColor = System.Drawing.Color.Transparent;
+            this.labprint.Location = new System.Drawing.Point(52, 202);
+            this.labprint.Name = "labprint";
+            this.labprint.Size = new System.Drawing.Size(0, 12);
+            this.labprint.TabIndex = 4;
+            // 
             // FrmPrint
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -597,6 +692,8 @@
             this.tabControlSelectPanel1.PerformLayout();
             this.tabControlPanel1.ResumeLayout(false);
             this.tabControlPanel1.PerformLayout();
+            this.tabControlPanel4.ResumeLayout(false);
+            this.tabControlPanel4.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -640,5 +737,13 @@
         private DevComponents.DotNetBar.ButtonX butLog;
         private DevComponents.DotNetBar.ButtonX butPrintTm;
         private System.Windows.Forms.Label lbInfo;
+        private DevComponents.DotNetBar.TabControlPanel tabControlPanel4;
+        private DevComponents.DotNetBar.TabItem TabBoxsnArchno;
+        private System.Windows.Forms.TextBox txtArchno2;
+        private System.Windows.Forms.TextBox txtArchno;
+        private System.Windows.Forms.TextBox txtBosn;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label labprint;
     }
 }

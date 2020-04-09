@@ -13,6 +13,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ZXing;
+using ZXing.Common;
 
 namespace Csmdady
 {
@@ -618,6 +619,34 @@ namespace Csmdady
             string strxls = Path.Combine(Application.StartupPath, "目录模版.xlsx");
             if (!File.Exists(strxls))
                 return false;
+            if (tabItemboxRange.IsSelected) {
+                if (lvboxRange.Items.Count <= 0)
+                    return false;
+            }
+
+            if (TabBoxsnArchno.IsSelected) {
+                if (txtBosn.Text.Trim().Length <= 0 || txtArchno.Text.Trim().Length <= 0 || txtArchno2.Text.Trim().Length <= 0) {
+                    MessageBox.Show("盒号或卷号不能为空!");
+                    txtBosn.Focus();
+                }
+
+                int b, b1, b2;
+                bool bl = int.TryParse(txtBosn.Text.Trim(), out b);
+                if (!bl || b <= 0) {
+                    MessageBox.Show("盒号不正确!");
+                    return false;
+                }
+                bool b11 = int.TryParse(txtArchno.Text.Trim(), out b1);
+                bool b22 = int.TryParse(txtArchno2.Text.Trim(), out b2);
+                if (!b11 || !b22) {
+                    MessageBox.Show("卷号不正确!");
+                    return false;
+                }
+                if (b1 > b2) {
+                    MessageBox.Show("起始卷号不能于小终止卷号!");
+                    return false;
+                }
+            }
             return true;
         }
 
@@ -645,12 +674,14 @@ namespace Csmdady
                              int arid = Convert.ToInt32(dt.Rows[id][0].ToString());
                              GetArchContenWriteXlsPrint(arid);
                              Thread.Sleep(200);
-                             ClsPrintInfoDocument.printDocument.Print();
+                             //ClsPrintInfoDocument.printDocument.Print();
                          }
                      }
                      return true;
                  }
-                 else {
+                 else if (tabItemboxRange.IsSelected)
+                 {
+                     int arid = 0;
                      try {
                          for (int i = 0; i < lvboxRange.Items.Count; i++) {
                              int a = Convert.ToInt32(lvboxRange.Items[i].SubItems[1].Text);
@@ -660,20 +691,45 @@ namespace Csmdady
                                  if (dt == null || dt.Rows.Count <= 0)
                                      continue;
                                  for (int id = 1; id <= dt.Rows.Count; id++) {
-                                     int arid = Convert.ToInt32(dt.Rows[id][0].ToString());
+                                     arid = Convert.ToInt32(dt.Rows[id][0].ToString());
                                      GetArchContenWriteXlsPrint(arid);
                                      this.BeginInvoke(new Action(() => { lbInfo.Text = string.Format("正在打印第{0}盒", box); }));
                                      Thread.Sleep(200);
-                                     ClsPrintInfoDocument.printDocument.Print();
+                                     //ClsPrintInfoDocument.printDocument.Print();
                                  }
                              }
                          }
-
+                         this.BeginInvoke(new Action(() => { lbInfo.Text = string.Format("打印完成"); }));
                          return true;
                      } catch (Exception e) {
-                         WriteLog(e.ToString());
+                         WriteLog("ID:号"+arid.ToString()+e.ToString());
                          return false;
                      }
+                 }
+                 else {
+                     int arid=0;
+                     try {
+                         int boxsn = Convert.ToInt32(txtBosn.Text.Trim());
+                         int box1 = Convert.ToInt32(txtArchno.Text.Trim());
+                         int box2 = Convert.ToInt32(txtArchno2.Text.Trim());
+                         for (int i = box1; i <= box2; i++)
+                         {
+                             DataTable dt = Common.GetboxArchnoinfo(boxsn, i);
+                             if (dt==null || dt.Rows.Count<=0)
+                                 continue;
+                             arid = Convert.ToInt32(dt.Rows[0][0].ToString());
+                             GetArchContenWriteXlsPrint(arid);
+                             this.BeginInvoke(new Action(() => { labprint.Text = string.Format("正在打印第{0}卷", i); }));
+                             Thread.Sleep(200);
+                             //ClsPrintInfoDocument.printDocument.Print();
+
+                         }
+                     } catch (Exception e) {
+                         WriteLog("ID号:"+arid.ToString()+e.ToString());
+                         return false;
+                     }
+                     this.BeginInvoke(new Action(() => { labprint.Text = string.Format("打印完成"); }));
+                     return true;
                  }
              });
         }
@@ -685,9 +741,28 @@ namespace Csmdady
                 WriteLog(str);
                 return false;
             }
-            int countpage = Common.GetArchPages(archid);
+            DataTable dt = Common.GetArchPages1(archid);
+            if (dt == null || dt.Rows.Count <= 0) {
+                string str = "ID号:" + archid + "总页码或条码获取失败!";
+                WriteLog(str);
+                return false;
+            }
+            int countpage = Convert.ToInt32(dt.Rows[0][0].ToString());
+            string tm = dt.Rows[0][1].ToString();
+            string xyr = dt.Rows[0][2].ToString();
             if (countpage <= 0) {
                 string str = "ID号:" + archid + "总页码获取失败!";
+                WriteLog(str);
+                return false;
+            }
+            if (tm.Trim().Length <= 0) {
+                string str = "ID号:" + archid + "条码信息获取失败!";
+                WriteLog(str);
+                return false;
+            }
+            if (xyr.Trim().Length <= 0)
+            {
+                string str = "ID号:" + archid + "嫌疑人不能为空!";
                 WriteLog(str);
                 return false;
             }
@@ -696,7 +771,13 @@ namespace Csmdady
                 Worksheet wsheek = null;
                 work.LoadFromFile(Path.Combine(Application.StartupPath, "目录模版.xlsx"));
                 wsheek = work.Worksheets[0];
+                //生成条码
+                Bitmap bmp = CreateTm(tm);
+                if (bmp == null)
+                    return false;
+                wsheek.Pictures.Add(2, 2, bmp);
                 string strsn = ClsPrintConten.PrintContenSn;
+                wsheek.Range["A3:A3"].Text = tm;
                 //  string[] strxls = ClsPrintConten.printContenXls.ToArray();
                 //获取起始行和列
                 int rowsn = 0;
@@ -712,8 +793,19 @@ namespace Csmdady
                     dz = 0;
                     for (int j = 0; j < ArchConten.Columns.Count; j++) {
                         string str = ArchConten.Rows[i][j].ToString();
+                        if (i == ArchConten.Rows.Count - 1 & j == ArchConten.Columns.Count - 1)
+                            str =str+"/"+ countpage.ToString();
+                        if (j == 1)
+                        {
+                            if (str.Contains("XXX"))
+                                str = str.Replace("XXX", xyr);
+                            if (str.Contains("山东省即墨市人民法院刑事判决书"))
+                                str = str.Insert(10, "关于" + xyr+"案");
+                            else if (str.Contains("山东省即墨市人民检察院起诉书"))
+                                str = str.Insert(11, "关于" + xyr + "案");
+                        }
                         if (rowsn > 0)
-                            wsheek.Range[rowsn + i, colsn].Text = (i + 1).ToString();
+                            wsheek.Range[rowsn + i, colsn].Text = "0" + (i + 1).ToString();
                         if (ClsPrintConten.printContenXls.Count > 0) {
                             if (dz < ClsPrintConten.printContenXls.Count) {
                                 arow = Convert.ToInt32(ClsPrintConten.printContenXls[dz].Remove(0, 1));
@@ -748,23 +840,73 @@ namespace Csmdady
                                 }
                                 wsheek.Range[arow + i, bcol].Text = str;
                             }
-                            else if (dz < ClsPrintConten.PrintContenDz.Count && ClsPrintConten.PrintContenDz[dz] == "True")
+                            //else if (dz < ClsPrintConten.PrintContenDz.Count && ClsPrintConten.PrintContenDz[dz] == "True")
+                            //    wsheek.Range[arow + i, bcol].Text = str;
+                            //else if (arow == i && j == bcol) {
+                            //    wsheek.Range[arow + i, bcol].Text = str;
+                            //}
+                            else
                                 wsheek.Range[arow + i, bcol].Text = str;
-                            else if (arow == i && j == bcol) {
-                                wsheek.Range[arow + i, bcol].Text = str;
-                            }
                         }
                         dz += 1;
                     }
                 }
+                rowsn = wsheek.LastRow;
+                string fontname = wsheek.Rows[5].Cells[3].Style.Font.FontName;
+                double fontsize = wsheek.Rows[6].Cells[3].Style.Font.Size;
+                CellRange range = wsheek.Range["A6" + ":G" + rowsn];
+                range.BorderInside(LineStyleType.Thin, ExcelColors.Black);
+                range.BorderAround(LineStyleType.Thin, ExcelColors.Black);
+                range.Style.Font.Size = fontsize;
+                range.Style.Font.FontName = fontname;
+                range.HorizontalAlignment = HorizontalAlignType.Center;
+                range.VerticalAlignment = VerticalAlignType.Center;
+                range.Style.WrapText = true;
+                range.AutoFitRows();
+                double rowcount = 0;
+                for (int i = 5; i < rowsn; i++) {
+                    double row = wsheek.Rows[i].RowHeight;
+                    if (row < 29)
+                        wsheek.Rows[i].SetRowHeight(30, true);
+                }
+                for (int i = 5; i < 5 + ArchConten.Rows.Count; i++) {
+                    double row = wsheek.Rows[i].RowHeight;
+                    rowcount += row;
+                }
+                double pa1 = rowcount / (double)420;
+                string pa11 = pa1.ToString();
+                string s1 = "";
+                if (pa11.Trim().Length > 2)
+                    s1 = pa1.ToString().Substring(0, 3);
+                else
+                    s1 = pa1.ToString();
+                double x1 = Math.Ceiling(Convert.ToDouble(s1));
+                int inserrow = InsterRow((int)x1, rowcount);
+                for (int i = 0; i < inserrow; i++) {
+                    wsheek.InsertRow(i + rowsn + 1);
+                    range = wsheek.Range["A" + (i + rowsn + 1) + ":G" + (i + rowsn + 1)];
+                    range.BorderInside(LineStyleType.Thin, ExcelColors.Black);
+                    range.BorderAround(LineStyleType.Thin, ExcelColors.Black);
+                    wsheek.Rows[i + rowsn].SetRowHeight(30, true);
+                }
+                wsheek.PageSetup.PrintTitleRows = "$1:$5";
                 work.PrintDocument.Print();
                 return true;
             } catch (Exception e) {
-
                 string str = "ID号:" + archid + ":" + e;
                 WriteLog(str);
                 return false;
             }
+        }
+
+        int InsterRow(int pagecount, double rowcount)
+        {
+            double Pcount = pagecount * 30 * 15;
+            double row = Pcount - rowcount;
+            double id = row / (double)30;
+            double x = Math.Ceiling(id);
+            int num = (int)x;
+            return num;
         }
 
         #endregion
@@ -782,7 +924,7 @@ namespace Csmdady
                 c = "Y";
             else if (V_HouseSetCs.HouseName == "不动产查封")
                 c = "F";
-            string str = "DL-" + lx + "-"+ c+ boxsn;
+            string str = "DL-" + lx + "-" + c + boxsn;
             return str;
         }
         public static Bitmap Createwm(string asset, int x, int y)
@@ -875,8 +1017,7 @@ namespace Csmdady
             butBoxRangeAdd.Enabled = false;
             butDelbox.Enabled = false;
             if (tabSelectbox.IsSelected) {
-                if (rbboxOne.Checked)
-                {
+                if (rbboxOne.Checked) {
                     string boxsn = gArchSelect1.Boxsn.ToString();
                     string lx = gArchSelect1.ArchXqzt;
                     Printewm(GetTmgz(boxsn, lx));
@@ -894,5 +1035,47 @@ namespace Csmdady
 
 
         #endregion
+
+        #region CreateTm
+        public static Bitmap CreateTm(string str)
+        {
+            try {
+                BarcodeWriter writer = new BarcodeWriter();
+                writer.Format = BarcodeFormat.CODE_128;
+                EncodingOptions options = new EncodingOptions()
+                {
+                    Width = 472,
+                    Height = 35,
+                    Margin = 10,
+                    PureBarcode = true
+                };
+                writer.Options = options;
+                Bitmap map = writer.Write(str);
+                return map;
+            } catch (Exception e) {
+                MessageBox.Show("条码信息中不能包含汉字!" + e.ToString());
+                return null;
+            }
+        }
+
+        #endregion
+
+        private void txtBosn_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+                txtArchno.Focus();
+        }
+
+        private void txtArchno_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+                txtArchno2.Focus();
+        }
+
+        private void txtArchno2_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+                butPrintConten.Focus();
+        }
     }
 }

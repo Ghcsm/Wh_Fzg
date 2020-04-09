@@ -125,6 +125,12 @@
     <Compile Include="UcInfoEnter.Designer.cs">
       <DependentUpon>UcInfoEnter.cs</DependentUpon>
     </Compile>
+    <Compile Include="UcInfoGet.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UcInfoGet.Designer.cs">
+      <DependentUpon>UcInfoGet.cs</DependentUpon>
+    </Compile>
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>
@@ -148,6 +154,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UcInfoEnter.resx">
       <DependentUpon>UcInfoEnter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UcInfoGet.resx">
+      <DependentUpon>UcInfoGet.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

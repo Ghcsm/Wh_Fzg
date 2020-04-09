@@ -40,12 +40,21 @@
             this.butSaveInfo = new DevComponents.DotNetBar.ButtonX();
             this.grinfo = new System.Windows.Forms.GroupBox();
             this.gr2 = new System.Windows.Forms.GroupBox();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.tools_user = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tools_time = new System.Windows.Forms.ToolStripStatusLabel();
             this.gr1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitCont)).BeginInit();
             this.splitCont.Panel1.SuspendLayout();
             this.splitCont.Panel2.SuspendLayout();
             this.splitCont.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // imageList1
@@ -58,18 +67,17 @@
             // 
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(954, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(1342, 25);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
             // gr1
             // 
-            this.gr1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
             this.gr1.Controls.Add(this.splitCont);
-            this.gr1.Location = new System.Drawing.Point(7, 28);
+            this.gr1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gr1.Location = new System.Drawing.Point(0, 0);
             this.gr1.Name = "gr1";
-            this.gr1.Size = new System.Drawing.Size(400, 529);
+            this.gr1.Size = new System.Drawing.Size(392, 609);
             this.gr1.TabIndex = 1;
             this.gr1.TabStop = false;
             // 
@@ -88,8 +96,8 @@
             // 
             this.splitCont.Panel2.Controls.Add(this.groupBox1);
             this.splitCont.Panel2.Controls.Add(this.grinfo);
-            this.splitCont.Size = new System.Drawing.Size(394, 509);
-            this.splitCont.SplitterDistance = 301;
+            this.splitCont.Size = new System.Drawing.Size(386, 589);
+            this.splitCont.SplitterDistance = 348;
             this.splitCont.SplitterWidth = 20;
             this.splitCont.TabIndex = 0;
             // 
@@ -111,18 +119,20 @@
             this.gArchSelect1.Location = new System.Drawing.Point(0, 0);
             this.gArchSelect1.Name = "gArchSelect1";
             this.gArchSelect1.PagesEnd = false;
-            this.gArchSelect1.Size = new System.Drawing.Size(394, 301);
+            this.gArchSelect1.Size = new System.Drawing.Size(386, 348);
             this.gArchSelect1.TabIndex = 0;
             this.gArchSelect1.LineClickLoadInfo += new CsmCon.gArchSelect.ArchSelectHandle(this.gArchSelect1_LineClickLoadInfo);
+            this.gArchSelect1.LineFocus += new CsmCon.gArchSelect.ArchSelectHandleFocus(this.gArchSelect1_LineFocus);
+            this.gArchSelect1.LineGetInfo += new CsmCon.gArchSelect.ArchSelectHandleGetInfo(this.gArchSelect1_LineGetInfo);
             // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.butSaveInfo);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.groupBox1.Location = new System.Drawing.Point(0, 133);
+            this.groupBox1.Location = new System.Drawing.Point(0, 166);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(394, 55);
+            this.groupBox1.Size = new System.Drawing.Size(386, 55);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             // 
@@ -155,28 +165,68 @@
             this.grinfo.BackColor = System.Drawing.Color.Transparent;
             this.grinfo.Location = new System.Drawing.Point(0, 2);
             this.grinfo.Name = "grinfo";
-            this.grinfo.Size = new System.Drawing.Size(391, 125);
+            this.grinfo.Size = new System.Drawing.Size(383, 158);
             this.grinfo.TabIndex = 0;
             this.grinfo.TabStop = false;
             // 
             // gr2
             // 
-            this.gr2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.gr2.Location = new System.Drawing.Point(413, 28);
+            this.gr2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gr2.Location = new System.Drawing.Point(0, 0);
             this.gr2.Name = "gr2";
-            this.gr2.Size = new System.Drawing.Size(529, 529);
+            this.gr2.Size = new System.Drawing.Size(946, 609);
             this.gr2.TabIndex = 2;
             this.gr2.TabStop = false;
+            // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 25);
+            this.splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.gr1);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.statusStrip1);
+            this.splitContainer1.Panel2.Controls.Add(this.gr2);
+            this.splitContainer1.Size = new System.Drawing.Size(1342, 609);
+            this.splitContainer1.SplitterDistance = 392;
+            this.splitContainer1.TabIndex = 3;
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tools_user,
+            this.tools_time});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 587);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(946, 22);
+            this.statusStrip1.TabIndex = 3;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // tools_user
+            // 
+            this.tools_user.BackColor = System.Drawing.Color.Transparent;
+            this.tools_user.Name = "tools_user";
+            this.tools_user.Size = new System.Drawing.Size(35, 17);
+            this.tools_user.Text = "录入:";
+            // 
+            // tools_time
+            // 
+            this.tools_time.BackColor = System.Drawing.Color.Transparent;
+            this.tools_time.Name = "tools_time";
+            this.tools_time.Size = new System.Drawing.Size(35, 17);
+            this.tools_time.Text = "时间:";
             // 
             // Frmmldj
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.ClientSize = new System.Drawing.Size(954, 569);
-            this.Controls.Add(this.gr2);
-            this.Controls.Add(this.gr1);
+            this.ClientSize = new System.Drawing.Size(1342, 634);
+            this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.toolStrip1);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -191,6 +241,13 @@
             this.splitCont.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            this.splitContainer1.Panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -207,5 +264,9 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private DevComponents.DotNetBar.ButtonX butSaveInfo;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.ToolStripStatusLabel tools_user;
+        private System.Windows.Forms.ToolStripStatusLabel tools_time;
     }
 }

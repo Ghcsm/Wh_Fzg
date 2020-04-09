@@ -2329,7 +2329,7 @@ namespace HLjscom
                 }
 
 
-            } catch {
+            } catch (Exception ex) {
                 return false;
             }
         }
@@ -3599,7 +3599,7 @@ namespace HLjscom
                     if (!_PageFuhao.ContainsValue(s))
                         tmp.Add(s);
                 }
-                for (int i = TagPage; i < RegPage - _PageAbc.Count - _PageFuhao.Count + TagPage - 1; i++) {
+                for (int i = TagPage; i <= RegPage - _PageAbc.Count - _PageFuhao.Count + TagPage - 1; i++) {
                     if (!_PageNumber.ContainsValue(i)) {
                         tmp.Add(i.ToString());
                     }

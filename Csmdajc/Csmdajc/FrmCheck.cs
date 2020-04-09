@@ -28,6 +28,7 @@ namespace Csmdajc
         gArchSelect gArch;
         // UcContents ucContents1;
         //  UcDLInfo ucdL;
+        private int ImgNum = 0;
         private int archzt = 0;
         private Pubcls pub;
         private MouseEventArgs exArgs;
@@ -282,6 +283,8 @@ namespace Csmdajc
         private void toolStripUppage_Click(object sender, EventArgs e)
         {
             if (ImgView.Image != null && Clscheck.CrrentPage > 1) {
+                if (ImgNum >= 1)
+                    ImgNum -= 1;
                 Thread.Sleep(100);
                 ShowPage();
                 Himg._Pagenext(0);
@@ -298,12 +301,15 @@ namespace Csmdajc
         {
             try {
                 if (Clscheck.CrrentPage != Clscheck.MaxPage) {
+                    ImgNum += 1;
                     Himg._SavePage();
                     Thread.Sleep(50);
                     Himg._Pagenext(1);
+
                     //ucContents1.OnChangContents(Clscheck.CrrentPage);
                 }
                 else if (Clscheck.CrrentPage == Clscheck.MaxPage) {
+                    ImgNum += 1;
                     Himg._SavePage();
                     Thread.Sleep(50);
                     toolStripSave_Click(null, null);
@@ -330,15 +336,21 @@ namespace Csmdajc
         {
             if (ImgView.Image == null)
                 return;
+
             if (Clscheck.MaxPage != Clscheck.RegPage) {
                 MessageBox.Show("登记页码和图像页码不一致无法完成质检!");
+                return;
+            }
+
+            if (ImgNum < Clscheck.MaxPage-1) {
+                MessageBox.Show("未仔细检查此卷档案，请重新质检!");
                 return;
             }
             //东丽区专用 
             //if (!ucContents1.IsGetywid() || !Entertag())
             //    return;
             if (MessageBox.Show("质检完成您确定要上传档案吗？", "提示", MessageBoxButtons.OKCancel,
-                    MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.OK) {
+                MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.OK) {
                 string filepath = Clscheck.ScanFilePath;
                 string filename = Clscheck.FileNametmp;
                 int arid = Clscheck.Archid;
@@ -948,9 +960,9 @@ namespace Csmdajc
                     for (int i = 0; i < dt.Rows.Count; i++) {
                         string user = dt.Rows[i][0].ToString();
                         string time = dt.Rows[i][1].ToString();
-                            toollabinfochk.Text = string.Format("信息质检:{0}", user);
-                            toollabinfochktime.Text = string.Format("时间:{0}", time);
-                        
+                        toollabinfochk.Text = string.Format("信息质检:{0}", user);
+                        toollabinfochktime.Text = string.Format("时间:{0}", time);
+
                     }
                 }));
                 dt.Dispose();
@@ -990,6 +1002,7 @@ namespace Csmdajc
                 Clscheck.ScanFilePath = "";
                 Clscheck.task = false;
                 gArch.butLoad.Enabled = true;
+                ImgNum = 0;
             }));
 
         }
@@ -1054,7 +1067,7 @@ namespace Csmdajc
         private void Repair(string filetmp, int arid, string archpos, int page)
         {
             try {
-                Common.Writelog(Clscheck.Archid, "质检返工!");
+                Common.Writelog(arid, "质检返工!");
                 //if (ftp.SaveRemoteFileUp(T_ConFigure.gArchScanPath, archpos, filetmp, T_ConFigure.ScanTempFile)) {
                 //    Common.SetScanFinish(arid, page, 1, (int)T_ConFigure.ArchStat.扫描完);
                 //    Common.DelTask(Convert.ToInt32(arid));
@@ -1078,7 +1091,7 @@ namespace Csmdajc
                 string path = Path.Combine(T_ConFigure.gArchScanPath, archpos);
                 if (ftp.FtpMoveFile(sourefile, goalfile, path)) {
                     Common.SetArchWorkState(arid, (int)T_ConFigure.ArchStat.扫描完);
-                    Common.Writelog(Clscheck.Archid, "质检退!");
+                    Common.Writelog(arid, "质检退!");
                     Common.SetCheckFinish(arid, "", 2, (int)T_ConFigure.ArchStat.扫描完);
                 }
                 if (T_ConFigure.FtpStyle == 1) {
@@ -1087,7 +1100,7 @@ namespace Csmdajc
                     } catch { }
                 }
             } catch {
-                Common.Writelog(Clscheck.Archid, "质检退回失败!");
+                Common.Writelog(arid, "质检退回失败!");
             }
         }
 

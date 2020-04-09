@@ -10,7 +10,7 @@ namespace CsmCon
     public partial class UcContents : UserControl
     {
 
-        
+
         public UcContents()
         {
             InitializeComponent();
@@ -40,7 +40,7 @@ namespace CsmCon
                 Modulename = "目录录入";
             //  info = new ClsContenInfo();
 
-            info.GetControl(panel1,gr2);
+            info.GetControl(panel1, gr2, LvModule);
             this.chbModule.Checked = ModuleVisible;
             this.gr0.Enabled = ContentsEnabled;
             gr2.Enabled = ContentsEnabled;
@@ -81,6 +81,35 @@ namespace CsmCon
             }
         }
 
+        public static void LoadModule(DataTable dt, ListView lsv, string str)
+        {
+            lsv.Items.Clear();
+            if (dt != null && dt.Rows.Count > 0) {
+                DataTable dt1 = null;
+                if (str.Trim().Length > 0) {
+                    try {
+                        string s = "TITLE like '%" + str + "%'";
+                        dt1 = dt.Select(s).CopyToDataTable();
+                    } catch
+                    {
+                        dt1 = null;
+                    }
+                    if (dt1 == null || dt1.Rows.Count <= 0)
+                        return;
+                    foreach (DataRow dr in dt1.Rows) {
+                        ListViewItem lvi = new ListViewItem();
+                        string type = dr["CoType"].ToString();
+                        string code = dr["Code"].ToString();
+                        string title = dr["Title"].ToString();
+                        string titlelx = dr["TitleLx"].ToString();
+                        lvi.Text = code;
+                        lvi.SubItems.AddRange(new string[] { title, titlelx, type });
+                        lsv.BeginInvoke(new Action(() => { lsv.Items.Add(lvi); }));
+                    }
+                }
+            }
+        }
+
         private void butModule_Click(object sender, EventArgs e)
         {
             UcContenModule module = new UcContenModule();
@@ -97,9 +126,9 @@ namespace CsmCon
 
         private void txtCode_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!(Char.IsNumber(e.KeyChar)) && e.KeyChar != (char)13 && e.KeyChar != (char)8)
-                e.Handled = true;
-            else if (e.KeyChar == 13)
+            //if (!(Char.IsNumber(e.KeyChar)) && e.KeyChar != (char)13 && e.KeyChar != (char)8)
+            //    e.Handled = true;
+             if (e.KeyChar == 13)
                 SendKeys.Send("{Tab}");
         }
 
@@ -116,7 +145,7 @@ namespace CsmCon
                 return false;
             }
             if (!info.istxt(panel1)) {
-                MessageBox.Show("标题及页码等项不能为空!");
+                MessageBox.Show("标题名称不能为空!");
                 return false;
             }
 
@@ -244,12 +273,14 @@ namespace CsmCon
                 return;
             }
             AddTitle();
-            if (this.LvContents.Items.Count > 0 && CrragePage > 0) {
-                LvContents.Items[CrragePage].Selected = true;
-                LvContents.Items[CrragePage].EnsureVisible();
-            }
+            //if (this.LvContents.Items.Count > 0 && CrragePage > 0) {
+            //    LvContents.Items[CrragePage].Selected = true;
+            //    LvContents.Items[CrragePage].EnsureVisible();
+            //}
             LineFocus?.Invoke(sender, new EventArgs());
-            // info.Setinfofocus(panel1);
+            //info.Setinfofocus(panel1);
+            txtCode.Text = "";
+            txtCode.Focus();
         }
 
         public void Setinfofocus()
@@ -296,7 +327,7 @@ namespace CsmCon
                 return;
             ArchId = arid;
             ArchMaxPage = maxpage;
-            
+
             info.LoadContentsinfo(ArchId, LvContents, chkTspages.Checked);
         }
 
@@ -307,12 +338,18 @@ namespace CsmCon
             if (e.KeyCode == Keys.Enter) {
                 if (this.txtCode.Text.Trim().Length <= 0)
                     return;
+                cleTxt();
                 if (info.LsModuleIndex.Count > 0 && info.LsModule.Count > 0) {
                     string sttCode = this.txtCode.Text.Trim();
                     // int id = info.LsModuleIndex.IndexOf(sttCode);
                     int id;
                     bool bl = int.TryParse(sttCode, out id);
                     if (!bl)
+                        return;
+                    id -= 1;
+                    if (id < 0)
+                        return;
+                    if (id > info.LsModule.Count - 1)
                         return;
                     string str = info.LsModule[id];
                     info.SetInfoTxt(panel1, str);
@@ -331,11 +368,11 @@ namespace CsmCon
         {
             //if (ArchCheckZt < 1)
             //{
-                if (ArchStat >= (int)T_ConFigure.ArchStat.质检完 && ArchCheckZt == 0) {
-                    MessageBox.Show("案卷已经质检完成无法修改目录");
-                    return;
-                }
-           // }
+            if (ArchStat >= (int)T_ConFigure.ArchStat.质检完 && ArchCheckZt == 0) {
+                MessageBox.Show("案卷已经质检完成无法修改目录");
+                return;
+            }
+            // }
             ContentsEdit();
             if (this.LvContents.Items.Count > 0) {
                 LvContents.Items[CrragePage].Selected = true;
@@ -402,18 +439,32 @@ namespace CsmCon
             }
         }
 
-        public static  void Setadd(GroupBox g)
+        public static void Setadd(GroupBox g)
         {
-            foreach (Control c in g.Controls)
+            try
             {
-                if (c is DevComponents.DotNetBar.ButtonX)
-                {
-                    if (c.Text.Contains("新增"))
-                    {
-                        DevComponents.DotNetBar.ButtonX but = (DevComponents.DotNetBar.ButtonX) c;
-                        but.PerformClick();
-                        //SendKeys.Send("{Enter}");
+                foreach (Control c in g.Controls) {
+                    if (c is DevComponents.DotNetBar.ButtonX) {
+                        if (c.Text.Contains("新增")) {
+                            DevComponents.DotNetBar.ButtonX but = (DevComponents.DotNetBar.ButtonX)c;
+                            but.PerformClick();
+                            //SendKeys.Send("{Enter}");
+                        }
                     }
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("此处错误:" + e.ToString());
+            }
+        }
+
+        public static void Setinfo(Panel g, string str)
+        {
+            foreach (Control c in g.Controls) {
+                if (c is ComboBox) {
+                    if (c.Tag != null && c.Tag.ToString() == "4")
+                        c.Text = str;
                 }
             }
         }
@@ -478,6 +529,17 @@ namespace CsmCon
 
 
         #endregion
-        
+
+        private void txtCode_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (txtCode.Text.Trim().Length <= 0)
+                return;
+            int b;
+            bool bl = int.TryParse(txtCode.Text.Trim(), out b);
+            if (!bl)
+            {
+                info.LoadModule1(LvModule, txtCode.Text.Trim());
+            }
+        }
     }
 }

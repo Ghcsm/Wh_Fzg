@@ -110,6 +110,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ContenInfPar.cs" />
+    <Compile Include="FrmLsinfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmLsinfo.Designer.cs">
+      <DependentUpon>FrmLsinfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Frmmldj.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -124,6 +130,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="FrmLsinfo.resx">
+      <DependentUpon>FrmLsinfo.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Frmmldj.resx">
       <DependentUpon>Frmmldj.cs</DependentUpon>
       <SubType>Designer</SubType>
