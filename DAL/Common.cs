@@ -127,6 +127,54 @@ namespace DAL
             return id;
         }
 
+        public static int ContentsInster2(string wen, string zrz, string tit, string date, string page, int archid)
+        {
+            string strSql = "";
+            if (zrz.Trim().Length > 3) {
+
+                if (zrz.Contains("检察院"))
+                {
+                    int i = zrz.IndexOf("院");
+                    if (i >= 0)
+                    {
+                        string zrz2 = zrz.Substring(i+1, zrz.Length - i-1);
+                        zrz = zrz.Substring(0, i + 1);
+                        strSql = "insert into 目录表 (文号,责任者,责任者2,文件材料名称,日期,页号,Archid) VALUES ('" + wen + "','" + zrz + "','" + zrz2 + "','" + tit + "','" +
+                                 date + "','" + page + "','" + archid.ToString() + "')";
+                    }
+                    else
+                        strSql = "insert into 目录表 (文号,责任者,文件材料名称,日期,页号,Archid) VALUES ('" + wen + "','" + zrz + "','" + tit + "','" +
+                                 date + "','" + page + "','" + archid.ToString() + "')";
+                }
+                else 
+                strSql = "insert into 目录表 (文号,责任者,文件材料名称,日期,页号,Archid) VALUES ('" + wen + "','" + zrz + "','" + tit + "','" +
+                     date + "','" + page + "','" + archid.ToString() + "')";
+
+            }
+            else
+                strSql = "insert into 目录表 (文号,责任者2,文件材料名称,日期,页号,Archid) VALUES ('" + wen + "','" + zrz + "','" + tit + "','" +
+                         date + "','" + page + "','" + archid.ToString() + "')";
+            SQLHelper.ExecScalar(strSql);
+            strSql = "PInsertArchContent";
+            SqlParameter[] p = new SqlParameter[4];
+            p[0] = new SqlParameter("@ARCHID", archid);
+            p[1] = new SqlParameter("@UserID", T_User.UserId);
+            p[2] = new SqlParameter("@mID", archid);
+            p[3] = new SqlParameter("@info", "新增");
+            int id = SQLHelper.ExecuteNonQuery(strSql, CommandType.StoredProcedure, p);
+            return id;
+        }
+
+        public static void ContenJmqu(int id, int arid)
+        {
+            string strSql = "";
+            if (id == 1)
+                strSql = "update  目录表 set 责任者=REPLACE(责任者,'即墨市','即墨区') where Archid='" + arid + "'";
+            else if (id == 2)
+                strSql = "update  目录表 set 责任者=REPLACE(责任者,'即墨区','即墨市') where Archid='" + arid + "'";
+            SQLHelper.ExecScalar(strSql);
+        }
+
         //东丽区专用
         public static void InsterMl(int arid)
         {
@@ -228,6 +276,22 @@ namespace DAL
             SQLHelper.ExecuteNonQuery(strSql, CommandType.StoredProcedure, p);
         }
 
+
+        public static void ArchGrounding2(int houseid, int gui, int ab, int col, int row, int boxxh, string juannum, string boxsn)
+        {
+            string strSql = "PInsertCabinet1";
+            SqlParameter[] p = new SqlParameter[9];
+            p[0] = new SqlParameter("@HouseID", houseid);
+            p[1] = new SqlParameter("@CabNo", gui);
+            p[2] = new SqlParameter("@CabAB", ab);
+            p[3] = new SqlParameter("@ColNo", col);
+            p[4] = new SqlParameter("@RowNo", row);
+            p[5] = new SqlParameter("@BoxNo", boxxh);
+            p[6] = new SqlParameter("@BoxCount", juannum);
+            p[7] = new SqlParameter("@UserID", T_User.UserId);
+            p[8] = new SqlParameter("@BoxSN", boxsn);
+            SQLHelper.ExecuteNonQuery(strSql, CommandType.StoredProcedure, p);
+        }
         public static void ArchDel(int arid)
         {
             string strSql = "PdelCabInfo";
@@ -365,7 +429,7 @@ namespace DAL
             try {
                 string strSql = "";
                 if (tj == "包含")
-                    strSql = "select " + allzd.Replace(";",",") + " from " + table + " where " + zd + " like '%" + gjz + "%'";
+                    strSql = "select " + allzd.Replace(";", ",") + " from " + table + " where " + zd + " like '%" + gjz + "%'";
                 else if (tj == "等于")
                     strSql = "select " + allzd.Replace(";", ",") + " from " + table + " where " + zd + " ='" + gjz + "'";
                 dt = SQLHelper.ExcuteTable(strSql);
@@ -473,7 +537,21 @@ namespace DAL
             } catch (Exception e) {
                 MessageBox.Show("获取数据失败" + e.ToString());
                 return null;
+            }
+        }
 
+        public static DataTable QueryBoxsnArchnoc(string boxsn, string archno)
+        {
+            try {
+                string strSql = "select top 1 * from V_ImgFile where houseid=@houseid and Boxsn=@boxsn and ArchNo=@archno and ArchLx='c' ";
+                SqlParameter p1 = new SqlParameter("@boxsn", boxsn.Replace("c",""));
+                SqlParameter p2 = new SqlParameter("@archno", archno);
+                SqlParameter p3 = new SqlParameter("@houseid", V_HouseSetCs.Houseid);
+                DataTable dt = SQLHelper.ExcuteTable(strSql, p1, p2, p3);
+                return dt;
+            } catch (Exception e) {
+                MessageBox.Show("获取数据失败" + e.ToString());
+                return null;
             }
         }
 
@@ -751,10 +829,14 @@ namespace DAL
             }
         }
 
-        public static DataTable GetboxArchnoinfo(int box, int arno)
+        public static DataTable GetboxArchnoinfo(int box, int arno,bool bl)
         {
             try {
-                string strSql = "select top 100 id from M_imagefile where boxsn=@box and archno=@arno ";
+                string strSql ="";
+                if (!bl)
+                    strSql = "select top 100 id from M_imagefile where boxsn=@box and archno=@arno and archlx is null";
+                else
+                    strSql = "select top 100 id from M_imagefile where boxsn=@box and archno=@arno and archlx='c'";
                 SqlParameter p1 = new SqlParameter("@box", box);
                 SqlParameter p2 = new SqlParameter("@arno", arno);
                 DataTable dt = SQLHelper.ExcuteTable(strSql, p1, p2);
@@ -2213,12 +2295,38 @@ namespace DAL
 
         #endregion
 
-        #region 东丽区
+        #region 汕头
+
+        public static void DataSplitshantou(int houseid, string qu)
+        {
+            string strSql = "update M_IMAGEFILE set SPLITERROR=null where ArchImportID like '%"+qu+"%' and HOUSEID=@houseid ";
+            SqlParameter p1 = new SqlParameter("@qu", qu);
+            SqlParameter p2 = new SqlParameter("@houseid", houseid);
+            SQLHelper.ExecScalar(strSql, p1, p2);
+        }
+
+        public static DataTable DataSplitGetdatashantou(int houseid, string qu)
+        {
+            string strSql = "select id,BOXSN,PAGES,IMGFILE,archpage,ArchLx from  M_IMAGEFILE where  ArchImportID like '%"+qu+"%' and HOUSEID=@houseid and CHECKED=1";
+            SqlParameter p1 = new SqlParameter("@qu", qu);
+            SqlParameter p2 = new SqlParameter("@houseid", houseid);
+            DataTable dt = SQLHelper.ExcuteTable(strSql, p1, p2);
+            return dt;
+        }
+
+        public static DataTable DataSplitGetdatashantou2(int houseid, string qu)
+        {
+            string strSql = "select id,BOXSN,PAGES,IMGFILE,archpage,ArchLx from  M_IMAGEFILE where  SPLITERROR is null and  ArchImportID like '%" + qu + "%' and HOUSEID=@houseid and CHECKED=1 ORDER BY CONVERT(INT,BOXSN)";
+            SqlParameter p1 = new SqlParameter("@qu", qu);
+            SqlParameter p2 = new SqlParameter("@houseid", houseid);
+            DataTable dt = SQLHelper.ExcuteTable(strSql, p1, p2);
+            return dt;
+        }
 
 
         public static DataTable getinfo(string arid)
         {
-            string strSql = "select * from 信息表 where Archid=@arid";
+            string strSql = "select * from V_spiteinfo where Archid=@arid";
             SqlParameter p1 = new SqlParameter("@arid", arid);
             DataTable dt = SQLHelper.ExcuteTable(strSql, p1);
             return dt;
@@ -2226,11 +2334,28 @@ namespace DAL
 
         public static DataTable Getmlinfo(string archid)
         {
-            string strSql = "select * from 目录表 where archid=@archid order by CONVERT(INT, 起始页码)";
+            string strSql = "select * from V_spiteinfo where archid=@archid  order by CONVERT(INT, 页码)";
             SqlParameter p1 = new SqlParameter("@archid", archid);
             DataTable dt = SQLHelper.ExcuteTable(strSql, p1);
             return dt;
         }
+        public static DataTable Getmlinfo(string box1,string box2)
+        {
+            string strSql = "select * from V_spiteinfo where boxsn>=@box1 and boxsn<=@box2  and checked=1 order by boxsn,CONVERT(INT, 页码)";
+            SqlParameter p1 = new SqlParameter("@box1", box1);
+            SqlParameter p2 = new SqlParameter("@box2", box2);
+            DataTable dt = SQLHelper.ExcuteTable(strSql, p1,p2);
+            return dt;
+        }
+
+        public static DataTable Getmlinfo2(string dateid)
+        {
+            string strSql = "select * from V_spiteinfo where ArchImportID=@arid and checked=1 order by boxsn, CONVERT(INT, 页码)";
+            SqlParameter p1 = new SqlParameter("@arid", dateid);
+            DataTable dt = SQLHelper.ExcuteTable(strSql, p1);
+            return dt;
+        }
+
         public static DataTable Getinfosx(string archid)
         {
             string strSql = "select * from V_xlsFwtjinfo where Archid=@arid";
@@ -2238,13 +2363,13 @@ namespace DAL
             DataTable dt = SQLHelper.ExcuteTable(strSql, p1);
             return dt;
         }
-        public static DataTable Getmlinfo2(string archid)
-        {
-            string strSql = "select  标题, 目录种类, 起始页码, 业务ID, Archid from 目录表 where archid=@archid ORDER BY CONVERT( INT ,起始页码)";
-            SqlParameter p1 = new SqlParameter("@archid", archid);
-            DataTable dt = SQLHelper.ExcuteTable(strSql, p1);
-            return dt;
-        }
+        //public static DataTable Getmlinfo2(string archid)
+        //{
+        //    string strSql = "select  标题, 目录种类, 起始页码, 业务ID, Archid from 目录表 where archid=@archid ORDER BY CONVERT( INT ,起始页码)";
+        //    SqlParameter p1 = new SqlParameter("@archid", archid);
+        //    DataTable dt = SQLHelper.ExcuteTable(strSql, p1);
+        //    return dt;
+        //}
 
         public static DataTable GetinfoLook(string box1, string box2)
         {

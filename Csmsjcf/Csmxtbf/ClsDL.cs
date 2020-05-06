@@ -24,7 +24,7 @@ namespace Csmsjcf
         public static string Archid { get; set; } = "0";
         public static string ArchFile { get; set; } = "";
         public static int xls { get; set; } = 0;
-        public static int jpgxml { get; set; } = 0;
+        public static string jpgpdf { get; set; } = "";
         public static int lsh { get; set; } = 0;
 
         public static string BoxsnTag { get; set; } = "";

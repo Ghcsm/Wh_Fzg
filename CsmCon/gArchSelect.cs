@@ -94,10 +94,10 @@ namespace CsmCon
                 MessageBox.Show("页码不正确");
                 return;
             }
-            if (ArchXqzt == null || ArchXqzt.Trim().Length <= 0) {
-                MessageBox.Show("该卷档案类型设置不正确!");
-                return;
-            }
+            //if (ArchXqzt == null || ArchXqzt.Trim().Length <= 0) {
+            //    MessageBox.Show("该卷档案类型设置不正确!");
+            //    return;
+            //}
             if (LineLoadFile != null)
                 LineLoadFile(sender, new EventArgs());
         }
@@ -215,8 +215,11 @@ namespace CsmCon
             }
             else if (combLx.SelectedIndex == 2) {
                 try {
-                    int boxNo = int.Parse(txtBoxsn.Text.Trim());
-                    boxNo = int.Parse(comboxClass.Text.Trim());
+                    if (!comboxClass.Text.Trim().Contains("c"))
+                    {
+                        int boxNo = int.Parse(txtBoxsn.Text.Trim());
+                        boxNo = int.Parse(comboxClass.Text.Trim());
+                    }
                 } catch (Exception) {
                     MessageBox.Show("号码输入错误");
                     this.txtBoxsn.Focus();
@@ -237,7 +240,12 @@ namespace CsmCon
             else if (combLx.SelectedIndex == 1)
                 dt = Common.QueryBoxsnid(txtBoxsn.Text.Trim());
             else if (combLx.SelectedIndex == 2)
-                dt = Common.QueryBoxsnArchno(comboxClass.Text.Trim(), txtBoxsn.Text.Trim());
+            {
+                if (comboxClass.Text.Trim().Contains("c"))
+                    dt = Common.QueryBoxsnArchnoc(comboxClass.Text.Trim(), txtBoxsn.Text.Trim());
+                else 
+                  dt = Common.QueryBoxsnArchno(comboxClass.Text.Trim(), txtBoxsn.Text.Trim());
+            }
             if (dt != null && dt.Rows.Count > 0) {
                 int i = 1;
                 int stat = 0;

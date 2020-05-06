@@ -679,8 +679,7 @@ namespace Csmdady
                      }
                      return true;
                  }
-                 else if (tabItemboxRange.IsSelected)
-                 {
+                 else if (tabItemboxRange.IsSelected) {
                      int arid = 0;
                      try {
                          for (int i = 0; i < lvboxRange.Items.Count; i++) {
@@ -702,20 +701,21 @@ namespace Csmdady
                          this.BeginInvoke(new Action(() => { lbInfo.Text = string.Format("打印完成"); }));
                          return true;
                      } catch (Exception e) {
-                         WriteLog("ID:号"+arid.ToString()+e.ToString());
+                         WriteLog("ID:号" + arid.ToString() + e.ToString());
                          return false;
                      }
                  }
                  else {
-                     int arid=0;
-                     try {
+                     int arid = 0;
+                     try
+                     {
+                         bool bl = chkCq.Checked;
                          int boxsn = Convert.ToInt32(txtBosn.Text.Trim());
                          int box1 = Convert.ToInt32(txtArchno.Text.Trim());
                          int box2 = Convert.ToInt32(txtArchno2.Text.Trim());
-                         for (int i = box1; i <= box2; i++)
-                         {
-                             DataTable dt = Common.GetboxArchnoinfo(boxsn, i);
-                             if (dt==null || dt.Rows.Count<=0)
+                         for (int i = box1; i <= box2; i++) {
+                             DataTable dt = Common.GetboxArchnoinfo(boxsn, i, bl);
+                             if (dt == null || dt.Rows.Count <= 0)
                                  continue;
                              arid = Convert.ToInt32(dt.Rows[0][0].ToString());
                              GetArchContenWriteXlsPrint(arid);
@@ -725,7 +725,7 @@ namespace Csmdady
 
                          }
                      } catch (Exception e) {
-                         WriteLog("ID号:"+arid.ToString()+e.ToString());
+                         WriteLog("ID号:" + arid.ToString() + e.ToString());
                          return false;
                      }
                      this.BeginInvoke(new Action(() => { labprint.Text = string.Format("打印完成"); }));
@@ -747,7 +747,20 @@ namespace Csmdady
                 WriteLog(str);
                 return false;
             }
-            int countpage = Convert.ToInt32(dt.Rows[0][0].ToString());
+
+            string page = dt.Rows[0][0].ToString();
+            if (page.Trim().Length <= 0) {
+                string str = "ID号:" + archid + "总页码获取失败!";
+                WriteLog(str);
+                return false;
+            }
+            int countpage;
+            bool bl = int.TryParse(page, out countpage);
+            if (!bl || countpage <= 0) {
+                string str = "ID号:" + archid + "总页码获取失败!";
+                WriteLog(str);
+                return false;
+            }
             string tm = dt.Rows[0][1].ToString();
             string xyr = dt.Rows[0][2].ToString();
             if (countpage <= 0) {
@@ -760,12 +773,11 @@ namespace Csmdady
                 WriteLog(str);
                 return false;
             }
-            if (xyr.Trim().Length <= 0)
-            {
-                string str = "ID号:" + archid + "嫌疑人不能为空!";
-                WriteLog(str);
-                return false;
-            }
+            //if (xyr.Trim().Length <= 0) {
+            //    string str = "ID号:" + archid + "嫌疑人不能为空!";
+            //    WriteLog(str);
+            //    return false;
+            //}
             try {
                 Workbook work = new Workbook();
                 Worksheet wsheek = null;
@@ -791,18 +803,67 @@ namespace Csmdady
                 int dz = 0;
                 for (int i = 0; i < ArchConten.Rows.Count; i++) {
                     dz = 0;
+                    string zrz = ArchConten.Rows[i][0].ToString();
                     for (int j = 0; j < ArchConten.Columns.Count; j++) {
                         string str = ArchConten.Rows[i][j].ToString();
                         if (i == ArchConten.Rows.Count - 1 & j == ArchConten.Columns.Count - 1)
-                            str =str+"/"+ countpage.ToString();
-                        if (j == 1)
-                        {
+                            str = str + "/" + countpage.ToString();
+
+                        if (zrz.Contains("即墨区")) {
+                            if (!zrz.Contains("青岛市"))
+                                zrz = "青岛市" + zrz;
+                        }
+
+                        if (j == 0) {
+                            if (str.Contains("即墨区")) {
+                                if (!str.Contains("青岛市"))
+                                    str = "青岛市" + str;
+                            }
+                        }
+
+                        if (j == 1) {
+                            if (!str.Contains("即墨市") && !str.Contains("即墨区")) {
+                                if (zrz.Contains("检察院")) {
+                                    int id = zrz.IndexOf("院");
+                                    zrz = zrz.Substring(0, id + 1);
+                                    str = zrz + str;
+                                }
+                                else if (zrz.Trim().Length == 3 && !zrz.Contains("即墨"))
+                                    str = "即墨市人民检察院" + zrz + str;
+                                else if (!str.Contains("事务所"))
+                                    str = zrz + str;
+                            }
+                            if (str.ToLower().Contains("xxx"))
+                                str = str.Replace("xxx", xyr);
                             if (str.Contains("XXX"))
                                 str = str.Replace("XXX", xyr);
-                            if (str.Contains("山东省即墨市人民法院刑事判决书"))
-                                str = str.Insert(10, "关于" + xyr+"案");
-                            else if (str.Contains("山东省即墨市人民检察院起诉书"))
-                                str = str.Insert(11, "关于" + xyr + "案");
+                            if (str.Contains("刑事判决书") || str.Contains("刑事附带民事判决书")) {
+                                int id = str.IndexOf("院");
+                                str = str.Insert(id + 1, "关于" + xyr + "案");
+                            }
+                            else if (str.Contains("起诉书")) {
+                                int id = str.IndexOf("院");
+                                str = str.Insert(id + 1, "关于" + xyr + "案");
+                            }
+                            else if (str.Contains("即墨市人民检察院起诉书"))
+                                str = str.Insert(8, "关于" + xyr + "案");
+                            else if (str.Contains("批准逮捕决定书")) {
+                                int id = str.IndexOf("院");
+                                if (id >= 0)
+                                    str = str.Insert(id + 1, "关于" + xyr + "案");
+                                else {
+                                    id = str.IndexOf("分局");
+                                    if (id >= 0) {
+                                        str = str.Insert(id + 2, "关于" + xyr + "案");
+                                    }
+                                    else {
+                                        id = str.IndexOf("局");
+                                        if (id >= 0)
+                                            str = str.Insert(id + 1, "关于" + xyr + "案");
+                                    }
+                                }
+                            }
+
                         }
                         if (rowsn > 0)
                             wsheek.Range[rowsn + i, colsn].Text = "0" + (i + 1).ToString();
@@ -890,6 +951,7 @@ namespace Csmdady
                     wsheek.Rows[i + rowsn].SetRowHeight(30, true);
                 }
                 wsheek.PageSetup.PrintTitleRows = "$1:$5";
+                // work.SaveToFile("d:\\123.xls");
                 work.PrintDocument.Print();
                 return true;
             } catch (Exception e) {

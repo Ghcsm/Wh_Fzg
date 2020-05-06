@@ -23,7 +23,9 @@ namespace Csmmldj
         public static List<string> lsdata = new List<string>();
         private void FrmLsinfo_Load(object sender, EventArgs e)
         {
-            lsinfo=new UcInfoGet();
+            lsname.Clear();
+            lsdata.Clear();
+            lsinfo =new UcInfoGet();
             lsinfo.Dock = DockStyle.Fill;
             lsinfo.DoubleClk += Lsinfo_DoubleClk;
             gr1.Controls.Add(lsinfo);

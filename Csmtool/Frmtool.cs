@@ -2023,7 +2023,90 @@ namespace Csmtool
             }
         }
 
+        bool isnian()
+        {
+            bool tf = false;
+            if (txtNian.Text.Trim().Length <= 0 || txtNianjuan1.Text.Trim().Length <= 0 ||
+                txtNianJuan2.Text.Trim().Length <= 0) {
+                MessageBox.Show("年份或卷号不正确!");
+                txtNian.Focus();
+                return tf;
+            }
+            int boxsn, archno1, archno2;
+            bool bl = int.TryParse(txtNian.Text.Trim(), out boxsn);
+            if (!bl || boxsn <= 0) {
+                MessageBox.Show("盒号不正确!");
+                txtNian.Focus();
+                return tf;
+            }
+            bl = int.TryParse(txtNianjuan1.Text.Trim(), out archno1);
+            if (!bl || archno1 <= 0) {
+                MessageBox.Show("起始卷号不正确!");
+                txtNianjuan1.Focus();
+                return tf;
+            }
+            bl = int.TryParse(txtNianJuan2.Text.Trim(), out archno2);
+            if (!bl || archno2 <= 0) {
+                MessageBox.Show("终止卷号不正确!");
+                txtNianJuan2.Focus();
+                return tf;
+            }
+            return true;
+        }
 
+        private void butAdddata_Click(object sender, EventArgs e)
+        {
+            if (!isnian())
+                return;
+            int box = Convert.ToInt32(txtNian.Text.Trim());
+            int arch1 = Convert.ToInt32(txtNianjuan1.Text.Trim());
+            int arch2 = Convert.ToInt32(txtNianJuan2.Text.Trim());
+            butAdddata.Enabled = false;
+            txtNian.Enabled = false;
+            txtNianjuan1.Enabled = false;
+            txtNianJuan2.Enabled = false;
+            try
+            {
+                for (int i = arch1; i <= arch2; i++)
+                {
+
+                    labnianstat.Text = "正在执行:" + i.ToString();
+                    Application.DoEvents();
+                    Common.ArchGrounding2(1, 1, 1, 1, 1, 1, i.ToString(), box.ToString());
+                }
+
+                labnianstat.Text = "完成";
+            }
+            catch 
+            {}
+            finally
+            {
+                labnianstat.Text = "完成";
+                butAdddata.Enabled = true;
+                txtNian.Enabled = true;
+                txtNianjuan1.Enabled = true;
+                txtNianJuan2.Enabled = true;
+            }
+            
+        }
+
+        private void txtNian_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+                txtNianjuan1.Focus();
+        }
+
+        private void txtNianjuan1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+                txtNianJuan2.Focus();
+        }
+
+        private void txtNianJuan2_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+                butAdddata.Focus();
+        }
     }
 
 }

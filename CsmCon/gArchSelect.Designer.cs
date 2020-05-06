@@ -72,7 +72,7 @@
             this.gr1.Controls.Add(this.panelTop);
             this.gr1.Location = new System.Drawing.Point(3, 3);
             this.gr1.Name = "gr1";
-            this.gr1.Size = new System.Drawing.Size(360, 416);
+            this.gr1.Size = new System.Drawing.Size(359, 416);
             this.gr1.TabIndex = 0;
             this.gr1.TabStop = false;
             this.gr1.Text = "盒内档案";
@@ -104,7 +104,7 @@
             this.LvData.HideSelection = false;
             this.LvData.Location = new System.Drawing.Point(5, 63);
             this.LvData.Name = "LvData";
-            this.LvData.Size = new System.Drawing.Size(349, 348);
+            this.LvData.Size = new System.Drawing.Size(348, 348);
             this.LvData.SmallImageList = this.ImgList;
             this.LvData.StateImageList = this.ImgList;
             this.LvData.TabIndex = 1;
@@ -184,7 +184,7 @@
             this.panelTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelTop.Location = new System.Drawing.Point(3, 17);
             this.panelTop.Name = "panelTop";
-            this.panelTop.Size = new System.Drawing.Size(354, 40);
+            this.panelTop.Size = new System.Drawing.Size(353, 40);
             this.panelTop.TabIndex = 0;
             // 
             // combLx
@@ -231,7 +231,7 @@
             this.butOk.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.butOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.butOk.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.butOk.Location = new System.Drawing.Point(291, 7);
+            this.butOk.Location = new System.Drawing.Point(290, 7);
             this.butOk.Name = "butOk";
             this.butOk.Size = new System.Drawing.Size(53, 26);
             this.butOk.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -247,7 +247,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtBoxsn.Location = new System.Drawing.Point(205, 11);
             this.txtBoxsn.Name = "txtBoxsn";
-            this.txtBoxsn.Size = new System.Drawing.Size(74, 21);
+            this.txtBoxsn.Size = new System.Drawing.Size(73, 21);
             this.txtBoxsn.TabIndex = 3;
             this.txtBoxsn.Tag = "4";
             this.txtBoxsn.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtBoxsn_KeyPress);
@@ -276,7 +276,7 @@
             this.gr2.Controls.Add(this.txtPages);
             this.gr2.Location = new System.Drawing.Point(0, 415);
             this.gr2.Name = "gr2";
-            this.gr2.Size = new System.Drawing.Size(366, 47);
+            this.gr2.Size = new System.Drawing.Size(365, 47);
             this.gr2.TabIndex = 1;
             this.gr2.TabStop = false;
             // 
@@ -318,7 +318,6 @@
             // 
             this.txtPages.Location = new System.Drawing.Point(71, 15);
             this.txtPages.Name = "txtPages";
-            this.txtPages.ReadOnly = true;
             this.txtPages.Size = new System.Drawing.Size(100, 21);
             this.txtPages.TabIndex = 1;
             this.txtPages.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPages_KeyPress);
@@ -331,7 +330,7 @@
             this.Controls.Add(this.gr2);
             this.DoubleBuffered = true;
             this.Name = "gArchSelect";
-            this.Size = new System.Drawing.Size(366, 462);
+            this.Size = new System.Drawing.Size(365, 462);
             this.Load += new System.EventHandler(this.gArchSelect_Load);
             this.gr1.ResumeLayout(false);
             this.panelTop.ResumeLayout(false);

@@ -184,7 +184,7 @@ namespace CsmCon
                 //}
                 if (lsv.Items.Count > 0) {
                     if (index <= 0)
-                        lsv.Items[0].Selected = true;
+                        lsv.Items[index].Selected = true;
                 }
 
             } catch {
@@ -484,6 +484,10 @@ namespace CsmCon
                 //Action Act =
                 // Act.BeginInvoke(null, null);
             }
+         else  if (str == "1-88") {
+                UcContents.SetXg(gr2);
+
+            }
         }
 
         public void Setinfofocus(Control p)
@@ -557,8 +561,8 @@ namespace CsmCon
                     if (ct.Tag.ToString() == id.ToString()) {
                         ct.Text = str;
                     }
-                    else if (ct.Tag.ToString() != "4")
-                        ct.Text = "";
+                    //else if (ct.Tag.ToString() != "4")
+                    //    ct.Text = "";
                 }
             }
         }

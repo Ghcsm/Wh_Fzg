@@ -29,11 +29,6 @@
         {
             this.superTabControl1 = new DevComponents.DotNetBar.SuperTabControl();
             this.superTabControlPanel2 = new DevComponents.DotNetBar.SuperTabControlPanel();
-            this.butPcdel = new System.Windows.Forms.Button();
-            this.butPcadd = new System.Windows.Forms.Button();
-            this.txtPcbox = new System.Windows.Forms.TextBox();
-            this.lbPcbox = new System.Windows.Forms.ListBox();
-            this.chkPcboxn = new System.Windows.Forms.CheckBox();
             this.butDLimpor = new System.Windows.Forms.Button();
             this.butDLStop = new System.Windows.Forms.Button();
             this.gr0 = new System.Windows.Forms.GroupBox();
@@ -162,14 +157,6 @@
             this.fBdigImgPath = new System.Windows.Forms.FolderBrowserDialog();
             this.fontDialog = new System.Windows.Forms.FontDialog();
             this.colorDialog = new System.Windows.Forms.ColorDialog();
-            this.chkZdTime = new System.Windows.Forms.CheckBox();
-            this.txtZdTime = new System.Windows.Forms.TextBox();
-            this.rabBoxList = new System.Windows.Forms.RadioButton();
-            this.lsbBoxList = new System.Windows.Forms.ListBox();
-            this.txtBoxList = new System.Windows.Forms.TextBox();
-            this.butBoxListAdd = new System.Windows.Forms.Button();
-            this.butBoxListDel = new System.Windows.Forms.Button();
-            this.label18 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.superTabControl1)).BeginInit();
             this.superTabControl1.SuspendLayout();
             this.superTabControlPanel2.SuspendLayout();
@@ -231,13 +218,6 @@
             // 
             // superTabControlPanel2
             // 
-            this.superTabControlPanel2.Controls.Add(this.txtZdTime);
-            this.superTabControlPanel2.Controls.Add(this.chkZdTime);
-            this.superTabControlPanel2.Controls.Add(this.butPcdel);
-            this.superTabControlPanel2.Controls.Add(this.butPcadd);
-            this.superTabControlPanel2.Controls.Add(this.txtPcbox);
-            this.superTabControlPanel2.Controls.Add(this.lbPcbox);
-            this.superTabControlPanel2.Controls.Add(this.chkPcboxn);
             this.superTabControlPanel2.Controls.Add(this.butDLimpor);
             this.superTabControlPanel2.Controls.Add(this.butDLStop);
             this.superTabControlPanel2.Controls.Add(this.gr0);
@@ -257,55 +237,9 @@
             this.superTabControlPanel2.TabIndex = 0;
             this.superTabControlPanel2.TabItem = this.TabDatedb;
             // 
-            // butPcdel
-            // 
-            this.butPcdel.Location = new System.Drawing.Point(789, 229);
-            this.butPcdel.Name = "butPcdel";
-            this.butPcdel.Size = new System.Drawing.Size(65, 27);
-            this.butPcdel.TabIndex = 17;
-            this.butPcdel.Text = "删除";
-            this.butPcdel.UseVisualStyleBackColor = true;
-            this.butPcdel.Click += new System.EventHandler(this.butPcdel_Click);
-            // 
-            // butPcadd
-            // 
-            this.butPcadd.Location = new System.Drawing.Point(789, 183);
-            this.butPcadd.Name = "butPcadd";
-            this.butPcadd.Size = new System.Drawing.Size(65, 27);
-            this.butPcadd.TabIndex = 17;
-            this.butPcadd.Text = "添加";
-            this.butPcadd.UseVisualStyleBackColor = true;
-            this.butPcadd.Click += new System.EventHandler(this.butPcadd_Click);
-            // 
-            // txtPcbox
-            // 
-            this.txtPcbox.Location = new System.Drawing.Point(695, 143);
-            this.txtPcbox.Name = "txtPcbox";
-            this.txtPcbox.Size = new System.Drawing.Size(126, 21);
-            this.txtPcbox.TabIndex = 16;
-            // 
-            // lbPcbox
-            // 
-            this.lbPcbox.FormattingEnabled = true;
-            this.lbPcbox.ItemHeight = 12;
-            this.lbPcbox.Location = new System.Drawing.Point(695, 170);
-            this.lbPcbox.Name = "lbPcbox";
-            this.lbPcbox.Size = new System.Drawing.Size(72, 112);
-            this.lbPcbox.TabIndex = 15;
-            // 
-            // chkPcboxn
-            // 
-            this.chkPcboxn.AutoSize = true;
-            this.chkPcboxn.Location = new System.Drawing.Point(695, 121);
-            this.chkPcboxn.Name = "chkPcboxn";
-            this.chkPcboxn.Size = new System.Drawing.Size(72, 16);
-            this.chkPcboxn.TabIndex = 14;
-            this.chkPcboxn.Text = "排除盒号";
-            this.chkPcboxn.UseVisualStyleBackColor = true;
-            // 
             // butDLimpor
             // 
-            this.butDLimpor.Location = new System.Drawing.Point(383, 488);
+            this.butDLimpor.Location = new System.Drawing.Point(379, 440);
             this.butDLimpor.Name = "butDLimpor";
             this.butDLimpor.Size = new System.Drawing.Size(109, 52);
             this.butDLimpor.TabIndex = 13;
@@ -315,7 +249,7 @@
             // 
             // butDLStop
             // 
-            this.butDLStop.Location = new System.Drawing.Point(556, 379);
+            this.butDLStop.Location = new System.Drawing.Point(552, 331);
             this.butDLStop.Name = "butDLStop";
             this.butDLStop.Size = new System.Drawing.Size(109, 52);
             this.butDLStop.TabIndex = 12;
@@ -326,12 +260,6 @@
             // gr0
             // 
             this.gr0.BackColor = System.Drawing.Color.Transparent;
-            this.gr0.Controls.Add(this.label18);
-            this.gr0.Controls.Add(this.butBoxListDel);
-            this.gr0.Controls.Add(this.butBoxListAdd);
-            this.gr0.Controls.Add(this.txtBoxList);
-            this.gr0.Controls.Add(this.lsbBoxList);
-            this.gr0.Controls.Add(this.rabBoxList);
             this.gr0.Controls.Add(this.txtB1);
             this.gr0.Controls.Add(this.txtXq);
             this.gr0.Controls.Add(this.txtB2);
@@ -340,28 +268,28 @@
             this.gr0.Controls.Add(this.rabdlboxsn);
             this.gr0.Location = new System.Drawing.Point(13, 112);
             this.gr0.Name = "gr0";
-            this.gr0.Size = new System.Drawing.Size(305, 237);
+            this.gr0.Size = new System.Drawing.Size(305, 105);
             this.gr0.TabIndex = 11;
             this.gr0.TabStop = false;
             this.gr0.Text = "范围";
             // 
             // txtB1
             // 
-            this.txtB1.Location = new System.Drawing.Point(113, 20);
+            this.txtB1.Location = new System.Drawing.Point(113, 26);
             this.txtB1.Name = "txtB1";
             this.txtB1.Size = new System.Drawing.Size(55, 21);
             this.txtB1.TabIndex = 3;
             // 
             // txtXq
             // 
-            this.txtXq.Location = new System.Drawing.Point(113, 48);
+            this.txtXq.Location = new System.Drawing.Point(113, 66);
             this.txtXq.Name = "txtXq";
             this.txtXq.Size = new System.Drawing.Size(168, 21);
             this.txtXq.TabIndex = 10;
             // 
             // txtB2
             // 
-            this.txtB2.Location = new System.Drawing.Point(215, 20);
+            this.txtB2.Location = new System.Drawing.Point(215, 26);
             this.txtB2.Name = "txtB2";
             this.txtB2.Size = new System.Drawing.Size(66, 21);
             this.txtB2.TabIndex = 4;
@@ -369,7 +297,7 @@
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(174, 26);
+            this.label16.Location = new System.Drawing.Point(174, 32);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(23, 12);
             this.label16.TabIndex = 5;
@@ -379,18 +307,18 @@
             // 
             this.raddlxq.AutoSize = true;
             this.raddlxq.Checked = true;
-            this.raddlxq.Location = new System.Drawing.Point(21, 52);
+            this.raddlxq.Location = new System.Drawing.Point(21, 70);
             this.raddlxq.Name = "raddlxq";
             this.raddlxq.Size = new System.Drawing.Size(71, 16);
             this.raddlxq.TabIndex = 9;
             this.raddlxq.TabStop = true;
-            this.raddlxq.Text = "小区范围";
+            this.raddlxq.Text = "字段范围";
             this.raddlxq.UseVisualStyleBackColor = true;
             // 
             // rabdlboxsn
             // 
             this.rabdlboxsn.AutoSize = true;
-            this.rabdlboxsn.Location = new System.Drawing.Point(19, 23);
+            this.rabdlboxsn.Location = new System.Drawing.Point(19, 29);
             this.rabdlboxsn.Name = "rabdlboxsn";
             this.rabdlboxsn.Size = new System.Drawing.Size(71, 16);
             this.rabdlboxsn.TabIndex = 8;
@@ -439,7 +367,7 @@
             // 
             // butDlLog
             // 
-            this.butDlLog.Location = new System.Drawing.Point(556, 488);
+            this.butDlLog.Location = new System.Drawing.Point(552, 440);
             this.butDlLog.Name = "butDlLog";
             this.butDlLog.Size = new System.Drawing.Size(109, 52);
             this.butDlLog.TabIndex = 6;
@@ -449,7 +377,7 @@
             // 
             // butDlStart
             // 
-            this.butDlStart.Location = new System.Drawing.Point(383, 379);
+            this.butDlStart.Location = new System.Drawing.Point(379, 331);
             this.butDlStart.Name = "butDlStart";
             this.butDlStart.Size = new System.Drawing.Size(109, 52);
             this.butDlStart.TabIndex = 5;
@@ -462,7 +390,7 @@
             this.label15.AutoSize = true;
             this.label15.BackColor = System.Drawing.Color.Transparent;
             this.label15.ForeColor = System.Drawing.Color.Red;
-            this.label15.Location = new System.Drawing.Point(388, 299);
+            this.label15.Location = new System.Drawing.Point(388, 251);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(89, 12);
             this.label15.TabIndex = 4;
@@ -473,7 +401,7 @@
             // 
             this.lab_dl_zx.AutoSize = true;
             this.lab_dl_zx.BackColor = System.Drawing.Color.Transparent;
-            this.lab_dl_zx.Location = new System.Drawing.Point(388, 253);
+            this.lab_dl_zx.Location = new System.Drawing.Point(388, 205);
             this.lab_dl_zx.Name = "lab_dl_zx";
             this.lab_dl_zx.Size = new System.Drawing.Size(83, 12);
             this.lab_dl_zx.TabIndex = 4;
@@ -483,7 +411,7 @@
             // 
             this.lab_dl_juan.AutoSize = true;
             this.lab_dl_juan.BackColor = System.Drawing.Color.Transparent;
-            this.lab_dl_juan.Location = new System.Drawing.Point(388, 204);
+            this.lab_dl_juan.Location = new System.Drawing.Point(388, 156);
             this.lab_dl_juan.Name = "lab_dl_juan";
             this.lab_dl_juan.Size = new System.Drawing.Size(47, 12);
             this.lab_dl_juan.TabIndex = 4;
@@ -496,7 +424,7 @@
             this.grdl3.Controls.Add(this.txtTfPath);
             this.grdl3.Controls.Add(this.radTfPath);
             this.grdl3.Controls.Add(this.radFtp);
-            this.grdl3.Location = new System.Drawing.Point(13, 453);
+            this.grdl3.Location = new System.Drawing.Point(12, 336);
             this.grdl3.Name = "grdl3";
             this.grdl3.Size = new System.Drawing.Size(310, 140);
             this.grdl3.TabIndex = 3;
@@ -602,7 +530,7 @@
             this.grdl2.BackColor = System.Drawing.Color.Transparent;
             this.grdl2.Controls.Add(this.chkxls);
             this.grdl2.Controls.Add(this.chkjpgxml);
-            this.grdl2.Location = new System.Drawing.Point(13, 355);
+            this.grdl2.Location = new System.Drawing.Point(12, 238);
             this.grdl2.Name = "grdl2";
             this.grdl2.Size = new System.Drawing.Size(311, 81);
             this.grdl2.TabIndex = 1;
@@ -616,7 +544,7 @@
             this.chkxls.Name = "chkxls";
             this.chkxls.Size = new System.Drawing.Size(66, 16);
             this.chkxls.TabIndex = 2;
-            this.chkxls.Text = "生成xls";
+            this.chkxls.Text = "生成Pdf";
             this.chkxls.UseVisualStyleBackColor = true;
             // 
             // chkjpgxml
@@ -626,9 +554,9 @@
             this.chkjpgxml.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkjpgxml.Location = new System.Drawing.Point(20, 32);
             this.chkjpgxml.Name = "chkjpgxml";
-            this.chkjpgxml.Size = new System.Drawing.Size(96, 16);
+            this.chkjpgxml.Size = new System.Drawing.Size(66, 16);
             this.chkjpgxml.TabIndex = 0;
-            this.chkjpgxml.Text = "生成jpg和xml";
+            this.chkjpgxml.Text = "生成jpg";
             this.chkjpgxml.UseVisualStyleBackColor = true;
             // 
             // TabDatedb
@@ -1693,80 +1621,6 @@
             // 
             this.FdigXls.Filter = "Xls文件|*.xls;*xlsx";
             // 
-            // chkZdTime
-            // 
-            this.chkZdTime.AutoSize = true;
-            this.chkZdTime.Location = new System.Drawing.Point(369, 143);
-            this.chkZdTime.Name = "chkZdTime";
-            this.chkZdTime.Size = new System.Drawing.Size(90, 16);
-            this.chkZdTime.TabIndex = 18;
-            this.chkZdTime.Text = "指定6位日期";
-            this.chkZdTime.UseVisualStyleBackColor = true;
-            this.chkZdTime.CheckedChanged += new System.EventHandler(this.chkZdTime_CheckedChanged);
-            // 
-            // txtZdTime
-            // 
-            this.txtZdTime.Location = new System.Drawing.Point(465, 139);
-            this.txtZdTime.Name = "txtZdTime";
-            this.txtZdTime.Size = new System.Drawing.Size(129, 21);
-            this.txtZdTime.TabIndex = 19;
-            // 
-            // rabBoxList
-            // 
-            this.rabBoxList.AutoSize = true;
-            this.rabBoxList.Location = new System.Drawing.Point(21, 82);
-            this.rabBoxList.Name = "rabBoxList";
-            this.rabBoxList.Size = new System.Drawing.Size(71, 16);
-            this.rabBoxList.TabIndex = 20;
-            this.rabBoxList.TabStop = true;
-            this.rabBoxList.Text = "盒号列表";
-            this.rabBoxList.UseVisualStyleBackColor = true;
-            // 
-            // lsbBoxList
-            // 
-            this.lsbBoxList.FormattingEnabled = true;
-            this.lsbBoxList.ItemHeight = 12;
-            this.lsbBoxList.Location = new System.Drawing.Point(115, 82);
-            this.lsbBoxList.Name = "lsbBoxList";
-            this.lsbBoxList.Size = new System.Drawing.Size(84, 148);
-            this.lsbBoxList.TabIndex = 20;
-            // 
-            // txtBoxList
-            // 
-            this.txtBoxList.Location = new System.Drawing.Point(241, 93);
-            this.txtBoxList.Name = "txtBoxList";
-            this.txtBoxList.Size = new System.Drawing.Size(45, 21);
-            this.txtBoxList.TabIndex = 20;
-            // 
-            // butBoxListAdd
-            // 
-            this.butBoxListAdd.Location = new System.Drawing.Point(215, 128);
-            this.butBoxListAdd.Name = "butBoxListAdd";
-            this.butBoxListAdd.Size = new System.Drawing.Size(70, 34);
-            this.butBoxListAdd.TabIndex = 20;
-            this.butBoxListAdd.Text = "添加";
-            this.butBoxListAdd.UseVisualStyleBackColor = true;
-            this.butBoxListAdd.Click += new System.EventHandler(this.butBoxListAdd_Click);
-            // 
-            // butBoxListDel
-            // 
-            this.butBoxListDel.Location = new System.Drawing.Point(215, 175);
-            this.butBoxListDel.Name = "butBoxListDel";
-            this.butBoxListDel.Size = new System.Drawing.Size(70, 34);
-            this.butBoxListDel.TabIndex = 20;
-            this.butBoxListDel.Text = "删除";
-            this.butBoxListDel.UseVisualStyleBackColor = true;
-            this.butBoxListDel.Click += new System.EventHandler(this.butBoxListDel_Click);
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(204, 96);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(35, 12);
-            this.label18.TabIndex = 20;
-            this.label18.Text = "盒号:";
-            // 
             // FrmSplit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -1959,18 +1813,5 @@
         private System.Windows.Forms.Button butDLStop;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Button butDLimpor;
-        private System.Windows.Forms.Button butPcdel;
-        private System.Windows.Forms.Button butPcadd;
-        private System.Windows.Forms.TextBox txtPcbox;
-        private System.Windows.Forms.ListBox lbPcbox;
-        private System.Windows.Forms.CheckBox chkPcboxn;
-        private System.Windows.Forms.TextBox txtZdTime;
-        private System.Windows.Forms.CheckBox chkZdTime;
-        private System.Windows.Forms.RadioButton rabBoxList;
-        private System.Windows.Forms.Button butBoxListDel;
-        private System.Windows.Forms.Button butBoxListAdd;
-        private System.Windows.Forms.TextBox txtBoxList;
-        private System.Windows.Forms.ListBox lsbBoxList;
-        private System.Windows.Forms.Label label18;
     }
 }

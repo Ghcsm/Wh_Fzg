@@ -62,7 +62,7 @@ namespace HLjscom
         // PrintDocument 对象
         private PrintDocument _PrintDoc;
         //压缩质量
-        private const int Factor = 30;
+        private const int Factor = 80;
         //系统临时目录
         public string Filename = "c:\\temp\\scantmp.tif";
         //句柄
@@ -911,7 +911,7 @@ namespace HLjscom
         {
             FillCommand cmdfill = new FillCommand();
             LeadRect rcw = _Imageview.Image.GetRegionBounds(null);
-            if (rcw.X >=0 || rcw.Y >=0) {
+            if (rcw.X >= 0 || rcw.Y >= 0) {
                 if (x == 0) {
                     _Imageview.Image.AddRectangleToRegion(null, rcw, RasterRegionCombineMode.And);
                     cmdfill.Color = RasterColor.White;
@@ -1828,6 +1828,66 @@ namespace HLjscom
             }
         }
 
+        public string _SplitImgjpgPdf(string tffile, string jpgpath, string pdfpath, string fileformat, List<int> page, int p1, int p2,int imgp1,int imgp2)
+        {
+            try {
+                int id = 0;
+                using (RasterCodecs _codecs = new RasterCodecs()) {
+                    CodecsImageInfo info = _codecs.GetInformation(tffile, true);
+                    for (int i = p1; i <= p2; i++) {
+                        id += 1;
+                        RasterImage _imagepx = _codecs.Load(tffile, 0, CodecsLoadByteOrder.BgrOrGrayOrRomm, i, i);
+                        int bit = _imagepx.BitsPerPixel;
+                        int fp = 0;
+                        for (int j = 0; j < page.Count; j++)
+                        {
+
+                        }
+
+                        jpgpath = Path.Combine(jpgpath, id.ToString().PadLeft(4,'0') +"_"+fp.ToString().PadLeft(2,'0')+ ".jpg");
+                        pdfpath = Path.Combine(jpgpath, id.ToString().PadLeft(4,'0') +"_"+fp.ToString().PadLeft(2,'0')+ ".pdf");
+                        _codecs.Options.Jpeg.Save.QualityFactor = Factor;
+                        if (bit != 1) {
+                            if (bit != 8) {
+                                if (fileformat == "jpg")
+                                    _codecs.Save(_imagepx, jpgpath, RasterImageFormat.TifJpeg, bit, 1, 1, i, CodecsSavePageMode.Append);
+                                else if (fileformat == "pdf")
+                                    _codecs.Save(_imagepx, pdfpath, RasterImageFormat.RasPdfJpeg, bit, 1, 1, i, CodecsSavePageMode.Append);
+                                else if (fileformat == "jpgpdf") {
+                                    _codecs.Save(_imagepx, jpgpath, RasterImageFormat.TifJpeg, bit, 1, 1, i, CodecsSavePageMode.Append);
+                                    _codecs.Save(_imagepx, pdfpath, RasterImageFormat.RasPdfJpeg, bit, 1, 1, i, CodecsSavePageMode.Append);
+                                }
+                            }
+                            else {
+
+                                if (fileformat == "jpg")
+                                    _codecs.Save(_imagepx, jpgpath, RasterImageFormat.TifJpeg, 8, 1, 1, i, CodecsSavePageMode.Append);
+                                else if (fileformat == "pdf")
+                                    _codecs.Save(_imagepx, pdfpath, RasterImageFormat.RasPdfJpeg, 8, 1, 1, i, CodecsSavePageMode.Append);
+                                else if (fileformat == "jpgpdf") {
+                                    _codecs.Save(_imagepx, jpgpath, RasterImageFormat.TifJpeg, 8, 1, 1, i, CodecsSavePageMode.Append);
+                                    _codecs.Save(_imagepx, pdfpath, RasterImageFormat.RasPdfJpeg, 8, 1, 1, i, CodecsSavePageMode.Append);
+                                }
+                            }
+                        }
+                        else {
+                            if (fileformat == "jpg")
+                                _codecs.Save(_imagepx, jpgpath, RasterImageFormat.TifJpeg, 1, 1, 1, i, CodecsSavePageMode.Append);
+                            else if (fileformat == "pdf")
+                                _codecs.Save(_imagepx, pdfpath, RasterImageFormat.RasPdfJpeg, 1, 1, 1, i, CodecsSavePageMode.Append);
+                            else if (fileformat == "jpgpdf") {
+                                _codecs.Save(_imagepx, jpgpath, RasterImageFormat.TifJpeg, 1, 1, 1, i, CodecsSavePageMode.Append);
+                                _codecs.Save(_imagepx, pdfpath, RasterImageFormat.RasPdfJpeg, 1, 1, 1, i, CodecsSavePageMode.Append);
+                            }
+                        }
+                    }
+                }
+                return "ok";
+            } catch (Exception ex) {
+                return "错误：" + ex;
+            }
+        }
+
         //拆分图像
         public string _SplitImg(string yimg, string mimg, int p1, int p2, string qzd, string hzd, int cd, int id, string fileformat, int qs)
         {
@@ -2060,7 +2120,7 @@ namespace HLjscom
             }
         }
 
-     
+
 
         //拼接
         public void _ImgPj(int page, string Sourimg, string _path)
@@ -3636,7 +3696,7 @@ namespace HLjscom
                         tmpval.Add(item.ToString());
                 }
                 foreach (var item in _PageNumber.Values) {
-                    if (item > RegPage - _PageAbc.Count - _PageFuhao.Count + TagPage-1) {
+                    if (item > RegPage - _PageAbc.Count - _PageFuhao.Count + TagPage - 1) {
                         tmpval.Add(item.ToString());
                     }
                 }
@@ -3653,17 +3713,13 @@ namespace HLjscom
                     tmp.Add(a, s);
                     continue;
                 }
-                if (s.IndexOf('-') < 0)
-                {
+                if (s.IndexOf('-') < 0) {
                     int x = Convert.ToInt32(s);
                     int k = 0;
                     //if (x<=_PageNumber.Count)
-                        try
-                        {
-                            k = _PageNumber.First(q => q.Value == x).Key;
-                        }
-                        catch 
-                        {}
+                    try {
+                        k = _PageNumber.First(q => q.Value == x).Key;
+                    } catch { }
                     tmp.Add(k, s);
                 }
             }
@@ -4125,7 +4181,7 @@ namespace HLjscom
                         data[2] = 0;
                         data[1] = 0;
                         data[0] = 255;
-                       
+
                     }
                     else {
                         x1 = w;
@@ -4170,7 +4226,7 @@ namespace HLjscom
                         data[2] = 255;
                         data[1] = 0;
                         data[0] = 0;
-                       
+
                     }
                     else {
                         x2 = w;

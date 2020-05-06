@@ -26,14 +26,16 @@ namespace Csmdajc
         Hljsimage Himg = new Hljsimage();
         HFTP ftp = new HFTP();
         gArchSelect gArch;
-        // UcContents ucContents1;
-        //  UcDLInfo ucdL;
+        UcContents ucContents1;
+        UcDLInfo ucdL;
+        UcInfoEnter ucInfo;
         private int ImgNum = 0;
         private int archzt = 0;
         private Pubcls pub;
         private MouseEventArgs exArgs;
         private int Round = 0;
         private int ImgSize = 0;
+        private List<int> strpage = new List<int>();
         private void Init()
         {
             try {
@@ -44,28 +46,28 @@ namespace Csmdajc
                     Dock = DockStyle.Fill
                 };
                 gArch.LineLoadFile += Garch_LineLoadFile;
-                // gArch.LineClickLoadInfo += GArch_LineClickLoadInfo;
+                gArch.LineClickLoadInfo += GArch_LineClickLoadInfo;
                 gr1.Controls.Add(gArch);
                 // gr2.Visible = false;
-                //UcContents.Modulename = this.Text;
-                //UcContents.ArchId = Clscheck.Archid;
-                //UcContents.ContentsEnabled = true;
-                //UcContents.ModuleVisible = false;
-                //UcContents.ArchCheckZt = 1;
-                //ucContents1 = new UcContents();
-                //{
-                //    ucContents1.Dock = DockStyle.Fill;
-                //}
-                //ucContents1.OneClickGotoPage += UcContents1_OneClickGotoPage;
-                //ucContents1.LineFocus += UcContents1_LineFocus;
-                //gr1_1.Controls.Add(ucContents1);
-                //Clscheck.infobl = Common.GetConteninfoblchk();
-                //if (Clscheck.infobl) {
-                //    splitCont.Panel2Collapsed = false;
-                //    Infoshow();
-                //}
-                //else
-                //    splitCont.Panel2Collapsed = true;
+                UcContents.Modulename = this.Text;
+                UcContents.ArchId = Clscheck.Archid;
+                UcContents.ContentsEnabled = true;
+                UcContents.ModuleVisible = false;
+                UcContents.ArchCheckZt = 1;
+                ucContents1 = new UcContents();
+                {
+                    ucContents1.Dock = DockStyle.Fill;
+                }
+                ucContents1.OneClickGotoPage += UcContents1_OneClickGotoPage;
+                ucContents1.LineFocus += UcContents1_LineFocus;
+                gr1_1.Controls.Add(ucContents1);
+                Clscheck.infobl = Common.GetConteninfoblchk();
+                if (Clscheck.infobl) {
+                    splitCont.Panel2Collapsed = false;
+                    Infoshow();
+                }
+                else
+                    splitCont.Panel2Collapsed = true;
             } catch (Exception ex) {
                 MessageBox.Show("窗体控件初始化失败:" + ex.ToString());
             }
@@ -78,7 +80,18 @@ namespace Csmdajc
 
         private void GArch_LineClickLoadInfo(object sender, EventArgs e)
         {
-            LoadContents();
+            //LoadContents();
+            Clscheck.Archid = gArch.Archid;
+            Clscheck.RegPage = gArch.ArchRegPages;
+            int arid = Clscheck.Archid;
+            if (arid <= 0)
+                return;
+            UcContents.ArchId = arid;
+            UcContents.ArchMaxPage = Clscheck.RegPage;
+            // UcContents.ArchStat = Convert.ToInt32(gArchSelect1.Archstat);
+            ucContents1.LoadContents(arid, UcContents.ArchMaxPage);
+            int p;
+            ucInfo.LoadInfo(arid, 1, "案卷信息", out p);
             gArch.LvData.Focus();
         }
 
@@ -88,6 +101,10 @@ namespace Csmdajc
             //ucdL.Dock = DockStyle.Fill;
             //gr1_2.Controls.Add(ucdL);
             //ucdL.LoadInfo(Clscheck.Archid);
+            ucInfo = new UcInfoEnter();
+            ucInfo.Dock = DockStyle.Fill;
+            gr1_2.Controls.Add(ucInfo);
+            ucInfo.GetInfoCol();
         }
 
 
@@ -95,11 +112,20 @@ namespace Csmdajc
         {
             labConten.Text = title;
             int p = 0;
-            try {
-                p = Convert.ToInt32(page);
-            } catch { }
+            bool bl = int.TryParse(page, out p);
+            if (!bl || p <= 0)
+                return;
             if (p > 0 && p <= Clscheck.MaxPage)
-                Himg._Gotopage(p);
+            {
+                int id = 0;
+                for (int i = 0; i < strpage.Count; i++)
+                {
+                    int s = strpage[i];
+                    if (s < p)
+                        id += 1;
+                }
+                Himg._Gotopage(p+id);
+            }
             //string ywid = ucContents1.ywid;
             //ucdL.Getywid(ywid);
         }
@@ -113,7 +139,7 @@ namespace Csmdajc
                 //Writeini.Fileini = Path.Combine(Application.StartupPath, "Csmkeyval.ini");
                 Getsqlkey();
                 pub = new Pubcls();
-                Startocr();
+                //  Startocr();
             } catch (Exception ex) {
                 MessageBox.Show("初始化失败请重新加载" + ex.ToString());
                 Himg.Dispose();
@@ -128,6 +154,7 @@ namespace Csmdajc
 
         private void Garch_LineLoadFile(object sender, EventArgs e)
         {
+            strpage.Clear();
             try {
                 if (ImgView.Image == null && Clscheck.ArchPos == null ||
                     ImgView.Image == null && Clscheck.ArchPos.Trim().Length <= 0) {
@@ -287,8 +314,19 @@ namespace Csmdajc
                     ImgNum -= 1;
                 Thread.Sleep(100);
                 ShowPage();
-                Himg._Pagenext(0);
-                // ucContents1.OnChangContents(Clscheck.CrrentPage);
+               // Himg._Pagenext(0);
+                int p = Clscheck.CrrentPage;
+                int id = 0;
+                for (int i = 0; i < strpage.Count; i++) {
+                    int s = strpage[i];
+                    if (s < p)
+                        id += 1;
+                }
+                p =p-id-1;
+                if (p <= 0)
+                    return;
+                Himg._Gotopage(p);
+                ucContents1.OnChangContents(p);
             }
         }
 
@@ -304,9 +342,26 @@ namespace Csmdajc
                     ImgNum += 1;
                     Himg._SavePage();
                     Thread.Sleep(50);
-                    Himg._Pagenext(1);
+                    int p = Clscheck.CrrentPage;
+                    int id = 0;
+                    for (int i = 0; i < strpage.Count; i++) {
+                        int s = strpage[i];
+                        if (s < p)
+                            id += 1;
+                    }
+                    p = id+p+1;
+                    if (p >=Clscheck.MaxPage)
+                    {
+                        Himg._SavePage();
+                        Thread.Sleep(50);
+                        toolStripSave_Click(null, null);
+                        return;
+                    }
+                    Himg._Gotopage(p);
+                    //ucContents1.OnChangContents(p);
+                    //Himg._Pagenext(1);
 
-                    //ucContents1.OnChangContents(Clscheck.CrrentPage);
+                    ucContents1.OnChangContents(p);
                 }
                 else if (Clscheck.CrrentPage == Clscheck.MaxPage) {
                     ImgNum += 1;
@@ -342,7 +397,7 @@ namespace Csmdajc
                 return;
             }
 
-            if (ImgNum < Clscheck.MaxPage-1) {
+            if (ImgNum < Clscheck.MaxPage - 1) {
                 MessageBox.Show("未仔细检查此卷档案，请重新质检!");
                 return;
             }
@@ -486,6 +541,18 @@ namespace Csmdajc
         {
             exArgs = e;
 
+        }
+        private void ImgView_MouseDoubleClick_1(object sender, MouseEventArgs e)
+        {
+            Himg._ImgFill(e);
+        }
+
+        private void ImgView_MouseDown_1(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+                toolStripCut_Click(sender, e);
+            else
+                Himg._Rectang(true);
         }
 
         private void FrmIndex_KeyDown(object sender, KeyEventArgs e)
@@ -653,7 +720,7 @@ namespace Csmdajc
 
         private void LoadContents()
         {
-            //ucContents1.LoadContents(gArch.Archid, gArch.ArchRegPages);
+           // ucContents1.LoadContents(gArch.Archid, gArch.ArchRegPages);
         }
 
 
@@ -668,6 +735,7 @@ namespace Csmdajc
                     DataRow dr = dt.Rows[0];
                     string PageIndexInfo = dr["PageIndexInfo"].ToString();
                     int page = Convert.ToInt32(dr["pages"].ToString());
+                    string arpage = dr["archpage"].ToString();
                     if (!string.IsNullOrEmpty(PageIndexInfo)) {
                         string[] arrPage = PageIndexInfo.Split(';');
                         if (arrPage.Length > 0) {
@@ -684,6 +752,19 @@ namespace Csmdajc
                                     fuhao.Add(p, str[1].ToString());
                                 else
                                     pageabc.Add(p, str[1].ToString());
+                            }
+                        }
+                    }
+                    if (!string.IsNullOrEmpty(arpage))
+                    {
+                        string[] arrPage = arpage.Split(';');
+                        if (arrPage.Length > 0)
+                        {
+                            for (int i = 0; i < arrPage.Length; i++)
+                            {
+                                string[] str = arrPage[i].Trim().Split('-');
+                                if (str.Length>0)
+                                strpage.Add(Convert.ToInt32(str[0]));
                             }
                         }
                     }
@@ -936,8 +1017,8 @@ namespace Csmdajc
                 chktime = dr["质检时间"].ToString();
                 enter = dr["录入"].ToString();
                 entertime = dr["录入时间"].ToString();
-                zj = dr["总检"].ToString();
-                zjtime = dr["总检时间"].ToString();
+               // zj = dr["总检"].ToString();
+                //zjtime = dr["总检时间"].ToString();
                 this.BeginInvoke(new Action(() =>
                 {
                     toollabscan.Text = string.Format("扫描:{0}", Scanner);
@@ -948,8 +1029,8 @@ namespace Csmdajc
                     toollabchecktime.Text = string.Format("时间:{0}", chktime);
                     toollabenter.Text = string.Format("录入:{0}", enter);
                     toollabentertime.Text = string.Format("时间:{0}", entertime);
-                    toollabezchk.Text = string.Format("总质检:{0}", zj);
-                    toollabzchktime.Text = string.Format("时间:{0}", zjtime);
+                    //toollabezchk.Text = string.Format("总质检:{0}", zj);
+                    //toollabzchktime.Text = string.Format("时间:{0}", zjtime);
 
                 }));
                 dt = Common.GetOperatorchk(Clscheck.Archid);
@@ -1105,8 +1186,10 @@ namespace Csmdajc
         }
 
 
+
+
         #endregion
 
-
+       
     }
 }

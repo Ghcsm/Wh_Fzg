@@ -35,6 +35,13 @@
             this.splitCont = new DevComponents.DotNetBar.Controls.CollapsibleSplitContainer();
             this.gr1_1 = new System.Windows.Forms.GroupBox();
             this.gr1_2 = new System.Windows.Forms.GroupBox();
+            this.gr3 = new System.Windows.Forms.GroupBox();
+            this.ImgView = new Leadtools.Controls.ImageViewer();
+            this.gr4 = new System.Windows.Forms.GroupBox();
+            this.labConten = new System.Windows.Forms.Label();
+            this.labPageCount = new System.Windows.Forms.Label();
+            this.labpage = new System.Windows.Forms.Label();
+            this.labPageCrrent = new System.Windows.Forms.Label();
             this.statUser = new System.Windows.Forms.StatusStrip();
             this.toollabscan = new System.Windows.Forms.ToolStripStatusLabel();
             this.toollabscantime = new System.Windows.Forms.ToolStripStatusLabel();
@@ -44,13 +51,10 @@
             this.toollabchecktime = new System.Windows.Forms.ToolStripStatusLabel();
             this.toollabenter = new System.Windows.Forms.ToolStripStatusLabel();
             this.toollabentertime = new System.Windows.Forms.ToolStripStatusLabel();
-            this.gr3 = new System.Windows.Forms.GroupBox();
-            this.ImgView = new Leadtools.Controls.ImageViewer();
-            this.gr4 = new System.Windows.Forms.GroupBox();
-            this.labConten = new System.Windows.Forms.Label();
-            this.labPageCount = new System.Windows.Forms.Label();
-            this.labpage = new System.Windows.Forms.Label();
-            this.labPageCrrent = new System.Windows.Forms.Label();
+            this.toollabinfochk = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toollabinfochktime = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toollabezchk = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toollabzchktime = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.doNetManger1 = new DevComponents.DotNetBar.DotNetBarManager(this.components);
             this.dockSite4 = new DevComponents.DotNetBar.DockSite();
@@ -112,10 +116,6 @@
             this.dockSite7 = new DevComponents.DotNetBar.DockSite();
             this.dockSite3 = new DevComponents.DotNetBar.DockSite();
             this.odgInsterFile = new System.Windows.Forms.OpenFileDialog();
-            this.toollabinfochk = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toollabinfochktime = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toollabezchk = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toollabzchktime = new System.Windows.Forms.ToolStripStatusLabel();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -125,9 +125,9 @@
             this.splitCont.Panel1.SuspendLayout();
             this.splitCont.Panel2.SuspendLayout();
             this.splitCont.SuspendLayout();
-            this.statUser.SuspendLayout();
             this.gr3.SuspendLayout();
             this.gr4.SuspendLayout();
+            this.statUser.SuspendLayout();
             this.dockSite9.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bar2)).BeginInit();
             this.bar2.SuspendLayout();
@@ -149,12 +149,11 @@
             // splitContainer1.Panel1
             // 
             this.splitContainer1.Panel1.Controls.Add(this.gr2);
-            this.splitContainer1.Panel1Collapsed = true;
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.statUser);
             this.splitContainer1.Panel2.Controls.Add(this.gr3);
+            this.splitContainer1.Panel2.Controls.Add(this.statUser);
             // 
             // gr2
             // 
@@ -187,6 +186,59 @@
             resources.ApplyResources(this.gr1_2, "gr1_2");
             this.gr1_2.Name = "gr1_2";
             this.gr1_2.TabStop = false;
+            // 
+            // gr3
+            // 
+            this.gr3.Controls.Add(this.ImgView);
+            this.gr3.Controls.Add(this.gr4);
+            resources.ApplyResources(this.gr3, "gr3");
+            this.gr3.Name = "gr3";
+            this.gr3.TabStop = false;
+            // 
+            // ImgView
+            // 
+            resources.ApplyResources(this.ImgView, "ImgView");
+            this.ImgView.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.ImgView.IsSyncSource = true;
+            this.ImgView.IsSyncTarget = true;
+            this.ImgView.ItemPadding = new System.Windows.Forms.Padding(1);
+            this.ImgView.Name = "ImgView";
+            this.ImgView.ViewHorizontalAlignment = Leadtools.Controls.ControlAlignment.Center;
+            this.ImgView.ViewMargin = new System.Windows.Forms.Padding(10);
+            this.ImgView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ImgView_MouseDoubleClick_1);
+            this.ImgView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ImgView_MouseDown_1);
+            // 
+            // gr4
+            // 
+            resources.ApplyResources(this.gr4, "gr4");
+            this.gr4.Controls.Add(this.labConten);
+            this.gr4.Controls.Add(this.labPageCount);
+            this.gr4.Controls.Add(this.labpage);
+            this.gr4.Controls.Add(this.labPageCrrent);
+            this.gr4.Name = "gr4";
+            this.gr4.TabStop = false;
+            // 
+            // labConten
+            // 
+            resources.ApplyResources(this.labConten, "labConten");
+            this.labConten.ForeColor = System.Drawing.Color.Red;
+            this.labConten.Name = "labConten";
+            // 
+            // labPageCount
+            // 
+            resources.ApplyResources(this.labPageCount, "labPageCount");
+            this.labPageCount.Name = "labPageCount";
+            // 
+            // labpage
+            // 
+            resources.ApplyResources(this.labpage, "labpage");
+            this.labpage.ForeColor = System.Drawing.Color.Red;
+            this.labpage.Name = "labpage";
+            // 
+            // labPageCrrent
+            // 
+            resources.ApplyResources(this.labPageCrrent, "labPageCrrent");
+            this.labPageCrrent.Name = "labPageCrrent";
             // 
             // statUser
             // 
@@ -246,59 +298,25 @@
             this.toollabentertime.Name = "toollabentertime";
             resources.ApplyResources(this.toollabentertime, "toollabentertime");
             // 
-            // gr3
+            // toollabinfochk
             // 
-            resources.ApplyResources(this.gr3, "gr3");
-            this.gr3.Controls.Add(this.ImgView);
-            this.gr3.Controls.Add(this.gr4);
-            this.gr3.Name = "gr3";
-            this.gr3.TabStop = false;
+            this.toollabinfochk.Name = "toollabinfochk";
+            resources.ApplyResources(this.toollabinfochk, "toollabinfochk");
             // 
-            // ImgView
+            // toollabinfochktime
             // 
-            resources.ApplyResources(this.ImgView, "ImgView");
-            this.ImgView.BackColor = System.Drawing.SystemColors.InactiveCaption;
-            this.ImgView.IsSyncSource = true;
-            this.ImgView.IsSyncTarget = true;
-            this.ImgView.ItemPadding = new System.Windows.Forms.Padding(1);
-            this.ImgView.Name = "ImgView";
-            this.ImgView.ViewHorizontalAlignment = Leadtools.Controls.ControlAlignment.Center;
-            this.ImgView.ViewMargin = new System.Windows.Forms.Padding(10);
-            this.ImgView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ImgView_MouseClick);
-            this.ImgView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ImgView_MouseDoubleClick);
-            this.ImgView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ImgView_MouseDown);
+            this.toollabinfochktime.Name = "toollabinfochktime";
+            resources.ApplyResources(this.toollabinfochktime, "toollabinfochktime");
             // 
-            // gr4
+            // toollabezchk
             // 
-            this.gr4.Controls.Add(this.labConten);
-            this.gr4.Controls.Add(this.labPageCount);
-            this.gr4.Controls.Add(this.labpage);
-            this.gr4.Controls.Add(this.labPageCrrent);
-            resources.ApplyResources(this.gr4, "gr4");
-            this.gr4.Name = "gr4";
-            this.gr4.TabStop = false;
+            this.toollabezchk.Name = "toollabezchk";
+            resources.ApplyResources(this.toollabezchk, "toollabezchk");
             // 
-            // labConten
+            // toollabzchktime
             // 
-            resources.ApplyResources(this.labConten, "labConten");
-            this.labConten.ForeColor = System.Drawing.Color.Red;
-            this.labConten.Name = "labConten";
-            // 
-            // labPageCount
-            // 
-            resources.ApplyResources(this.labPageCount, "labPageCount");
-            this.labPageCount.Name = "labPageCount";
-            // 
-            // labpage
-            // 
-            resources.ApplyResources(this.labpage, "labpage");
-            this.labpage.ForeColor = System.Drawing.Color.Red;
-            this.labpage.Name = "labpage";
-            // 
-            // labPageCrrent
-            // 
-            resources.ApplyResources(this.labPageCrrent, "labPageCrrent");
-            this.labPageCrrent.Name = "labPageCrrent";
+            this.toollabzchktime.Name = "toollabzchktime";
+            resources.ApplyResources(this.toollabzchktime, "toollabzchktime");
             // 
             // toolStrip1
             // 
@@ -788,26 +806,6 @@
             this.dockSite3.Name = "dockSite3";
             this.dockSite3.TabStop = false;
             // 
-            // toollabinfochk
-            // 
-            this.toollabinfochk.Name = "toollabinfochk";
-            resources.ApplyResources(this.toollabinfochk, "toollabinfochk");
-            // 
-            // toollabinfochktime
-            // 
-            this.toollabinfochktime.Name = "toollabinfochktime";
-            resources.ApplyResources(this.toollabinfochktime, "toollabinfochktime");
-            // 
-            // toollabezchk
-            // 
-            this.toollabezchk.Name = "toollabezchk";
-            resources.ApplyResources(this.toollabezchk, "toollabezchk");
-            // 
-            // toollabzchktime
-            // 
-            this.toollabzchktime.Name = "toollabzchktime";
-            resources.ApplyResources(this.toollabzchktime, "toollabzchktime");
-            // 
             // FrmCheck
             // 
             resources.ApplyResources(this, "$this");
@@ -839,11 +837,11 @@
             this.splitCont.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitCont)).EndInit();
             this.splitCont.ResumeLayout(false);
-            this.statUser.ResumeLayout(false);
-            this.statUser.PerformLayout();
             this.gr3.ResumeLayout(false);
             this.gr4.ResumeLayout(false);
             this.gr4.PerformLayout();
+            this.statUser.ResumeLayout(false);
+            this.statUser.PerformLayout();
             this.dockSite9.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.bar2)).EndInit();
             this.bar2.ResumeLayout(false);
@@ -884,7 +882,6 @@
         private DevComponents.DotNetBar.DockContainerItem dockCont2;
         private System.Windows.Forms.ToolStrip toolstripmain2;
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.GroupBox gr3;
         private System.Windows.Forms.ToolStripButton toolStripCenter;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton toolStripUppage;
@@ -914,13 +911,8 @@
         private System.Windows.Forms.ToolStripProgressBar toolProess;
         private System.Windows.Forms.OpenFileDialog odgInsterFile;
         private System.Windows.Forms.ToolStripButton toolStripOutSpeck;
-        private Leadtools.Controls.ImageViewer ImgView;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripLabel toolArchno;
-        private System.Windows.Forms.GroupBox gr4;
-        private System.Windows.Forms.Label labConten;
-        private System.Windows.Forms.Label labPageCount;
-        private System.Windows.Forms.Label labPageCrrent;
         private System.Windows.Forms.ToolStripButton toolStripRepair;
         private System.Windows.Forms.ToolStripLabel toollbInfo;
         private System.Windows.Forms.StatusStrip statUser;
@@ -933,7 +925,6 @@
         private System.Windows.Forms.ToolStripStatusLabel toollabenter;
         private System.Windows.Forms.ToolStripStatusLabel toollabentertime;
         private System.Windows.Forms.ToolStripButton toolStripOcr;
-        private System.Windows.Forms.Label labpage;
         private System.Windows.Forms.ToolStripButton toolStripcopy;
         private System.Windows.Forms.ToolStripButton toolStripPase;
         private System.Windows.Forms.ToolStripButton toolStripRound;
@@ -942,13 +933,20 @@
         private System.Windows.Forms.ToolStripButton toolStripZwidthsider;
         private System.Windows.Forms.ToolStripSplitButton toolStripSharePen;
         private System.Windows.Forms.ToolStripMenuItem toolStripSharePenSet;
-        private System.Windows.Forms.GroupBox gr2;
-        private DevComponents.DotNetBar.Controls.CollapsibleSplitContainer splitCont;
-        private System.Windows.Forms.GroupBox gr1_1;
-        private System.Windows.Forms.GroupBox gr1_2;
         private System.Windows.Forms.ToolStripStatusLabel toollabinfochk;
         private System.Windows.Forms.ToolStripStatusLabel toollabinfochktime;
         private System.Windows.Forms.ToolStripStatusLabel toollabezchk;
         private System.Windows.Forms.ToolStripStatusLabel toollabzchktime;
+        private System.Windows.Forms.GroupBox gr3;
+        private Leadtools.Controls.ImageViewer ImgView;
+        private System.Windows.Forms.GroupBox gr4;
+        private System.Windows.Forms.Label labConten;
+        private System.Windows.Forms.Label labPageCount;
+        private System.Windows.Forms.Label labpage;
+        private System.Windows.Forms.Label labPageCrrent;
+        private System.Windows.Forms.GroupBox gr2;
+        private DevComponents.DotNetBar.Controls.CollapsibleSplitContainer splitCont;
+        private System.Windows.Forms.GroupBox gr1_2;
+        private System.Windows.Forms.GroupBox gr1_1;
     }
 }

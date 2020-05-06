@@ -31,6 +31,7 @@ namespace CsmZchk
         UcDLInfo ucdL;
         private int archzt = 0;
         private Pubcls pub;
+        private List<int> strpage = new List<int>();
         private void Init()
         {
             try {
@@ -75,7 +76,7 @@ namespace CsmZchk
         private void GArch_LineClickLoadInfo(object sender, EventArgs e)
         {
             LoadContents();
-            ucdL.LoadInfo(gArch.Archid);
+            //ucdL.LoadInfo(gArch.Archid);
             gArch.LvData.Focus();
         }
 
@@ -109,16 +110,19 @@ namespace CsmZchk
                 MessageBox.Show( str + "页目录异常，请认真核对");
 
             }
-
-
         }
 
         void Infoshow()
         {
-            ucdL = new UcDLInfo();
-            ucdL.Dock = DockStyle.Fill;
-            gr1_2.Controls.Add(ucdL);
-            ucdL.LoadInfo(Clscheck.Archid);
+            ucInfo = new UcInfoEnter();
+            ucInfo.Dock = DockStyle.Fill;
+            gr1_2.Controls.Add(ucInfo);
+            ucInfo.GetInfoCol();
+
+            //ucdL = new UcDLInfo();
+            //ucdL.Dock = DockStyle.Fill;
+            //gr1_2.Controls.Add(ucdL);
+            //ucdL.LoadInfo(Clscheck.Archid);
         }
 
 
@@ -173,6 +177,7 @@ namespace CsmZchk
 
         private void Garch_LineLoadFile(object sender, EventArgs e)
         {
+            strpage.Clear();
             try {
                 if (ImgView.Image == null && Clscheck.ArchPos == null ||
                     ImgView.Image == null && Clscheck.ArchPos.Trim().Length <= 0) {
@@ -293,8 +298,20 @@ namespace CsmZchk
             if (ImgView.Image != null && Clscheck.CrrentPage > 1) {
                 Thread.Sleep(100);
                 ShowPage();
-                Himg._Pagenext(0);
-                ucContents1.OnChangContents(Clscheck.CrrentPage);
+                int p = Clscheck.CrrentPage;
+                int id = 0;
+                for (int i = 0; i < strpage.Count; i++) {
+                    int s = strpage[i];
+                    if (s < p)
+                        id += 1;
+                }
+                p = p - id - 1;
+                if (p <= 0)
+                    return;
+                Himg._Gotopage(p);
+                ucContents1.OnChangContents(p);
+                //Himg._Pagenext(0);
+                //ucContents1.OnChangContents(Clscheck.CrrentPage);
             }
         }
 
@@ -309,9 +326,23 @@ namespace CsmZchk
                 if (Clscheck.CrrentPage != Clscheck.MaxPage) {
                     Himg._SavePage();
                     Thread.Sleep(50);
-                    Himg._Pagenext(1);
-                    ucContents1.OnChangContents(Clscheck.CrrentPage);
-                    CheckPage();
+                    int p = Clscheck.CrrentPage;
+                    int id = 0;
+                    for (int i = 0; i < strpage.Count; i++) {
+                        int s = strpage[i];
+                        if (s < p)
+                            id += 1;
+                    }
+                    p = id + p + 1;
+                    if (p >= Clscheck.MaxPage) {
+                        Himg._SavePage();
+                        Thread.Sleep(50);
+                        toolStripSave_Click(null, null);
+                        return;
+                    }
+                    Himg._Gotopage(p);
+                    ucContents1.OnChangContents(p);
+                   // CheckPage();
                 }
                 else if (Clscheck.CrrentPage == Clscheck.MaxPage) {
                     Himg._SavePage();
@@ -338,25 +369,26 @@ namespace CsmZchk
 
         private void toolStripSave_Click(object sender, EventArgs e)
         {
-            if (ImgView.Image == null)
-                return;
-            if (Clscheck.MaxPage != Clscheck.RegPage) {
-                MessageBox.Show("登记页码和图像页码不一致无法完成质检!");
-                return;
-            }
-            if (!ucContents1.IsGetywid() || !Entertag())
-                return;
-            if (MessageBox.Show("质检完成您确定要上传档案吗？", "提示", MessageBoxButtons.OKCancel,
-                    MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.OK) {
-                string filepath = Clscheck.ScanFilePath;
-                string filename = Clscheck.FileNametmp;
-                int arid = Clscheck.Archid;
-                int pages = Clscheck.MaxPage;
-                int tag = Himg.TagPage;
-                Cledata();
-                Task.Run(new Action(() => { FtpUpFinish(filepath, arid, filename, pages, tag); }));
-                gArch.txtBoxsn.Focus();
-            }
+            toolStripClose_Click(null, null);
+            //if (ImgView.Image == null)
+            //    return;
+            //if (Clscheck.MaxPage != Clscheck.RegPage) {
+            //    MessageBox.Show("登记页码和图像页码不一致无法完成质检!");
+            //    return;
+            //}
+            //if (!ucContents1.IsGetywid() || !Entertag())
+            //    return;
+            //if (MessageBox.Show("质检完成您确定要上传档案吗？", "提示", MessageBoxButtons.OKCancel,
+            //        MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.OK) {
+            //    string filepath = Clscheck.ScanFilePath;
+            //    string filename = Clscheck.FileNametmp;
+            //    int arid = Clscheck.Archid;
+            //    int pages = Clscheck.MaxPage;
+            //    int tag = Himg.TagPage;
+            //    Cledata();
+            //    Task.Run(new Action(() => { FtpUpFinish(filepath, arid, filename, pages, tag); }));
+            //    gArch.txtBoxsn.Focus();
+            //}
         }
         private void FtpUpFinish(string filetmp, int arid, string filename, int pages, int tag)
         {
@@ -402,8 +434,8 @@ namespace CsmZchk
         {
             if (ImgView.Image == null)
                 return;
-            if (!ucContents1.IsGetywid() || !Entertag())
-                return;
+            //if (!ucContents1.IsGetywid() || !Entertag())
+            //    return;
             int arid = Clscheck.Archid;
             string filename = Clscheck.FileNametmp;
             string filepath = Clscheck.ScanFilePath;
@@ -738,7 +770,7 @@ namespace CsmZchk
                     }
                     Himg.Filename = Clscheck.ScanFilePath;
                     Himg.LoadPage(pages);
-                    // ReadDict();
+                     ReadDict();
                     LoadContents();
                     Getuser();
                     Ispages();
@@ -858,8 +890,8 @@ namespace CsmZchk
                 chktime = dr["质检时间"].ToString();
                 enter = dr["录入"].ToString();
                 entertime = dr["录入时间"].ToString();
-                zj = dr["总检"].ToString();
-                zjtime = dr["总检时间"].ToString();
+                //zj = dr["总检"].ToString();
+                //zjtime = dr["总检时间"].ToString();
                 this.BeginInvoke(new Action(() =>
                 {
                     toollabscan.Text = string.Format("扫描:{0}", Scanner);
@@ -870,8 +902,8 @@ namespace CsmZchk
                     toollabchecktime.Text = string.Format("时间:{0}", chktime);
                     toollabenter.Text = string.Format("信息录入:{0}", enter);
                     toollabentertime.Text = string.Format("时间:{0}", entertime);
-                    toollabezchk.Text = string.Format("总质检:{0}", zj);
-                    toollabzchktime.Text = string.Format("时间:{0}", zjtime);
+                    //toollabezchk.Text = string.Format("总质检:{0}", zj);
+                    //toollabzchktime.Text = string.Format("时间:{0}", zjtime);
 
                 }));
                 dt = Common.GetOperatorchk(Clscheck.Archid);
@@ -925,6 +957,31 @@ namespace CsmZchk
                 gArch.butLoad.Enabled = true;
             }));
 
+        }
+
+        public void ReadDict()
+        {
+            try {
+                Dictionary<int, int> pagenumber = new Dictionary<int, int>();
+                Dictionary<int, string> pageabc = new Dictionary<int, string>();
+                Dictionary<int, string> fuhao = new Dictionary<int, string>();
+                DataTable dt = Common.ReadPageIndexInfo(Clscheck.Archid);
+                if (dt != null && dt.Rows.Count > 0) {
+                    DataRow dr = dt.Rows[0];
+                    string arpage = dr["archpage"].ToString();
+                    if (!string.IsNullOrEmpty(arpage)) {
+                        string[] arrPage = arpage.Split(';');
+                        if (arrPage.Length > 0) {
+                            for (int i = 0; i < arrPage.Length; i++) {
+                                string[] str = arrPage[i].Trim().Split('-');
+                                if (str.Length > 0)
+                                    strpage.Add(Convert.ToInt32(str[0]));
+                            }
+                        }
+                    }
+                    
+                }
+            } catch { }
         }
 
 

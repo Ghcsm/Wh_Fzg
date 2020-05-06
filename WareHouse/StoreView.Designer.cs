@@ -96,6 +96,7 @@
             // 
             // statusStrip1
             // 
+            this.statusStrip1.ImageScalingSize = new System.Drawing.Size(21, 21);
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ToolsS_txt,
             this.ToolsSlabYs,
@@ -108,9 +109,10 @@
             this.toolFileId,
             this.tools_kong,
             this.Tools_jd});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 650);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 870);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1132, 22);
+            this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
+            this.statusStrip1.Size = new System.Drawing.Size(1509, 26);
             this.statusStrip1.TabIndex = 2;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -119,7 +121,7 @@
             this.ToolsS_txt.BackColor = System.Drawing.Color.Transparent;
             this.ToolsS_txt.ForeColor = System.Drawing.Color.Black;
             this.ToolsS_txt.Name = "ToolsS_txt";
-            this.ToolsS_txt.Size = new System.Drawing.Size(16, 17);
+            this.ToolsS_txt.Size = new System.Drawing.Size(20, 21);
             this.ToolsS_txt.Text = "  ";
             // 
             // ToolsSlabYs
@@ -127,59 +129,59 @@
             this.ToolsSlabYs.BackColor = System.Drawing.SystemColors.Control;
             this.ToolsSlabYs.ForeColor = System.Drawing.Color.Black;
             this.ToolsSlabYs.Name = "ToolsSlabYs";
-            this.ToolsSlabYs.Size = new System.Drawing.Size(95, 17);
+            this.ToolsSlabYs.Size = new System.Drawing.Size(126, 21);
             this.ToolsSlabYs.Text = "验收状态:未验收";
             // 
             // ToolsSlab
             // 
             this.ToolsSlab.Name = "ToolsSlab";
-            this.ToolsSlab.Size = new System.Drawing.Size(63, 17);
+            this.ToolsSlab.Size = new System.Drawing.Size(83, 21);
             this.ToolsSlab.Text = " 当前盒号:";
             // 
             // toolsBoxsn
             // 
             this.toolsBoxsn.Name = "toolsBoxsn";
-            this.toolsBoxsn.Size = new System.Drawing.Size(0, 17);
+            this.toolsBoxsn.Size = new System.Drawing.Size(0, 21);
             // 
             // ToolsS_code
             // 
             this.ToolsS_code.Name = "ToolsS_code";
-            this.ToolsS_code.Size = new System.Drawing.Size(162, 17);
+            this.ToolsS_code.Size = new System.Drawing.Size(213, 21);
             this.ToolsS_code.Text = "案卷号：00A-00-00-00-00  ";
             // 
             // toolFile
             // 
             this.toolFile.Name = "toolFile";
-            this.toolFile.Size = new System.Drawing.Size(59, 17);
+            this.toolFile.Size = new System.Drawing.Size(78, 21);
             this.toolFile.Text = "文件名称:";
             // 
             // toolFileName
             // 
             this.toolFileName.Name = "toolFileName";
-            this.toolFileName.Size = new System.Drawing.Size(0, 17);
+            this.toolFileName.Size = new System.Drawing.Size(0, 21);
             // 
             // toolId
             // 
             this.toolId.Name = "toolId";
-            this.toolId.Size = new System.Drawing.Size(48, 17);
+            this.toolId.Size = new System.Drawing.Size(63, 21);
             this.toolId.Text = "文件ID:";
             // 
             // toolFileId
             // 
             this.toolFileId.Name = "toolFileId";
-            this.toolFileId.Size = new System.Drawing.Size(0, 17);
+            this.toolFileId.Size = new System.Drawing.Size(0, 21);
             // 
             // tools_kong
             // 
             this.tools_kong.Name = "tools_kong";
-            this.tools_kong.Size = new System.Drawing.Size(674, 17);
+            this.tools_kong.Size = new System.Drawing.Size(906, 21);
             this.tools_kong.Spring = true;
             // 
             // Tools_jd
             // 
             this.Tools_jd.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.Tools_jd.Name = "Tools_jd";
-            this.Tools_jd.Size = new System.Drawing.Size(200, 16);
+            this.Tools_jd.Size = new System.Drawing.Size(267, 21);
             this.Tools_jd.Visible = false;
             // 
             // imglist_box
@@ -218,8 +220,9 @@
             this.groupPanel1.DisabledBackColor = System.Drawing.Color.Empty;
             this.groupPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupPanel1.Location = new System.Drawing.Point(0, 0);
+            this.groupPanel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupPanel1.Name = "groupPanel1";
-            this.groupPanel1.Size = new System.Drawing.Size(1132, 650);
+            this.groupPanel1.Size = new System.Drawing.Size(1509, 870);
             // 
             // 
             // 
@@ -254,18 +257,20 @@
             // 
             this.chkcheck.AutoSize = true;
             this.chkcheck.BackColor = System.Drawing.Color.Transparent;
-            this.chkcheck.Location = new System.Drawing.Point(8, 601);
+            this.chkcheck.Location = new System.Drawing.Point(11, 801);
+            this.chkcheck.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.chkcheck.Name = "chkcheck";
-            this.chkcheck.Size = new System.Drawing.Size(60, 16);
+            this.chkcheck.Size = new System.Drawing.Size(78, 20);
             this.chkcheck.TabIndex = 37;
             this.chkcheck.Text = "质检后";
             this.chkcheck.UseVisualStyleBackColor = false;
             // 
             // txtXqdm
             // 
-            this.txtXqdm.Location = new System.Drawing.Point(79, 569);
+            this.txtXqdm.Location = new System.Drawing.Point(105, 759);
+            this.txtXqdm.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtXqdm.Name = "txtXqdm";
-            this.txtXqdm.Size = new System.Drawing.Size(56, 21);
+            this.txtXqdm.Size = new System.Drawing.Size(73, 26);
             this.txtXqdm.TabIndex = 36;
             // 
             // butSetzt
@@ -273,9 +278,10 @@
             this.butSetzt.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.butSetzt.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.butSetzt.Enabled = false;
-            this.butSetzt.Location = new System.Drawing.Point(66, 608);
+            this.butSetzt.Location = new System.Drawing.Point(88, 811);
+            this.butSetzt.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.butSetzt.Name = "butSetzt";
-            this.butSetzt.Size = new System.Drawing.Size(75, 31);
+            this.butSetzt.Size = new System.Drawing.Size(100, 41);
             this.butSetzt.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.butSetzt.TabIndex = 35;
             this.butSetzt.Text = "设置状态";
@@ -290,32 +296,36 @@
             "C",
             "Y",
             "F"});
-            this.combzt.Location = new System.Drawing.Point(79, 537);
+            this.combzt.Location = new System.Drawing.Point(105, 716);
+            this.combzt.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.combzt.Name = "combzt";
-            this.combzt.Size = new System.Drawing.Size(55, 20);
+            this.combzt.Size = new System.Drawing.Size(72, 24);
             this.combzt.TabIndex = 34;
             // 
             // txtbox2
             // 
-            this.txtbox2.Location = new System.Drawing.Point(79, 507);
+            this.txtbox2.Location = new System.Drawing.Point(105, 676);
+            this.txtbox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtbox2.Name = "txtbox2";
-            this.txtbox2.Size = new System.Drawing.Size(56, 21);
+            this.txtbox2.Size = new System.Drawing.Size(73, 26);
             this.txtbox2.TabIndex = 33;
             // 
             // txtbox1
             // 
-            this.txtbox1.Location = new System.Drawing.Point(79, 478);
+            this.txtbox1.Location = new System.Drawing.Point(105, 637);
+            this.txtbox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtbox1.Name = "txtbox1";
-            this.txtbox1.Size = new System.Drawing.Size(56, 21);
+            this.txtbox1.Size = new System.Drawing.Size(73, 26);
             this.txtbox1.TabIndex = 32;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
             this.label5.BackColor = System.Drawing.Color.Transparent;
-            this.label5.Location = new System.Drawing.Point(14, 572);
+            this.label5.Location = new System.Drawing.Point(19, 763);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(59, 12);
+            this.label5.Size = new System.Drawing.Size(80, 16);
             this.label5.TabIndex = 31;
             this.label5.Text = "小区代码:";
             // 
@@ -323,9 +333,10 @@
             // 
             this.label4.AutoSize = true;
             this.label4.BackColor = System.Drawing.Color.Transparent;
-            this.label4.Location = new System.Drawing.Point(14, 540);
+            this.label4.Location = new System.Drawing.Point(19, 720);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(59, 12);
+            this.label4.Size = new System.Drawing.Size(80, 16);
             this.label4.TabIndex = 31;
             this.label4.Text = "档案类型:";
             // 
@@ -333,9 +344,10 @@
             // 
             this.label3.AutoSize = true;
             this.label3.BackColor = System.Drawing.Color.Transparent;
-            this.label3.Location = new System.Drawing.Point(14, 512);
+            this.label3.Location = new System.Drawing.Point(19, 683);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(59, 12);
+            this.label3.Size = new System.Drawing.Size(80, 16);
             this.label3.TabIndex = 31;
             this.label3.Text = "终止盒号:";
             // 
@@ -343,9 +355,10 @@
             // 
             this.label2.AutoSize = true;
             this.label2.BackColor = System.Drawing.Color.Transparent;
-            this.label2.Location = new System.Drawing.Point(14, 483);
+            this.label2.Location = new System.Drawing.Point(19, 644);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(59, 12);
+            this.label2.Size = new System.Drawing.Size(80, 16);
             this.label2.TabIndex = 31;
             this.label2.Text = "起始盒号:";
             // 
@@ -353,9 +366,10 @@
             // 
             this.butOpenFile.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.butOpenFile.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.butOpenFile.Location = new System.Drawing.Point(56, 430);
+            this.butOpenFile.Location = new System.Drawing.Point(75, 573);
+            this.butOpenFile.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.butOpenFile.Name = "butOpenFile";
-            this.butOpenFile.Size = new System.Drawing.Size(85, 37);
+            this.butOpenFile.Size = new System.Drawing.Size(113, 49);
             this.butOpenFile.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.butOpenFile.TabIndex = 30;
             this.butOpenFile.Text = "查看图像";
@@ -370,9 +384,11 @@
             this.gr2.Controls.Add(this.labHouseCeng);
             this.gr2.Controls.Add(this.labHouseKf);
             this.gr2.Controls.Add(this.labHouseGui);
-            this.gr2.Location = new System.Drawing.Point(4, 80);
+            this.gr2.Location = new System.Drawing.Point(5, 107);
+            this.gr2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.gr2.Name = "gr2";
-            this.gr2.Size = new System.Drawing.Size(142, 169);
+            this.gr2.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.gr2.Size = new System.Drawing.Size(189, 225);
             this.gr2.TabIndex = 29;
             this.gr2.TabStop = false;
             this.gr2.Text = "信息";
@@ -380,54 +396,60 @@
             // labHouseJuan
             // 
             this.labHouseJuan.AutoSize = true;
-            this.labHouseJuan.Location = new System.Drawing.Point(17, 136);
+            this.labHouseJuan.Location = new System.Drawing.Point(23, 181);
+            this.labHouseJuan.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labHouseJuan.Name = "labHouseJuan";
-            this.labHouseJuan.Size = new System.Drawing.Size(95, 12);
+            this.labHouseJuan.Size = new System.Drawing.Size(128, 16);
             this.labHouseJuan.TabIndex = 0;
             this.labHouseJuan.Text = "当前选择：第0卷";
             // 
             // labHouseBox
             // 
             this.labHouseBox.AutoSize = true;
-            this.labHouseBox.Location = new System.Drawing.Point(17, 113);
+            this.labHouseBox.Location = new System.Drawing.Point(23, 151);
+            this.labHouseBox.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labHouseBox.Name = "labHouseBox";
-            this.labHouseBox.Size = new System.Drawing.Size(95, 12);
+            this.labHouseBox.Size = new System.Drawing.Size(128, 16);
             this.labHouseBox.TabIndex = 0;
             this.labHouseBox.Text = "当前选择：第0盒";
             // 
             // labHouseLie
             // 
             this.labHouseLie.AutoSize = true;
-            this.labHouseLie.Location = new System.Drawing.Point(17, 90);
+            this.labHouseLie.Location = new System.Drawing.Point(23, 120);
+            this.labHouseLie.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labHouseLie.Name = "labHouseLie";
-            this.labHouseLie.Size = new System.Drawing.Size(95, 12);
+            this.labHouseLie.Size = new System.Drawing.Size(128, 16);
             this.labHouseLie.TabIndex = 0;
             this.labHouseLie.Text = "当前选择：第0列";
             // 
             // labHouseCeng
             // 
             this.labHouseCeng.AutoSize = true;
-            this.labHouseCeng.Location = new System.Drawing.Point(17, 67);
+            this.labHouseCeng.Location = new System.Drawing.Point(23, 89);
+            this.labHouseCeng.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labHouseCeng.Name = "labHouseCeng";
-            this.labHouseCeng.Size = new System.Drawing.Size(95, 12);
+            this.labHouseCeng.Size = new System.Drawing.Size(128, 16);
             this.labHouseCeng.TabIndex = 0;
             this.labHouseCeng.Text = "当前选择：第0层";
             // 
             // labHouseKf
             // 
             this.labHouseKf.AutoSize = true;
-            this.labHouseKf.Location = new System.Drawing.Point(17, 21);
+            this.labHouseKf.Location = new System.Drawing.Point(23, 28);
+            this.labHouseKf.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labHouseKf.Name = "labHouseKf";
-            this.labHouseKf.Size = new System.Drawing.Size(107, 12);
+            this.labHouseKf.Size = new System.Drawing.Size(144, 16);
             this.labHouseKf.TabIndex = 0;
             this.labHouseKf.Text = "当前选择：第0库房";
             // 
             // labHouseGui
             // 
             this.labHouseGui.AutoSize = true;
-            this.labHouseGui.Location = new System.Drawing.Point(17, 44);
+            this.labHouseGui.Location = new System.Drawing.Point(23, 59);
+            this.labHouseGui.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labHouseGui.Name = "labHouseGui";
-            this.labHouseGui.Size = new System.Drawing.Size(95, 12);
+            this.labHouseGui.Size = new System.Drawing.Size(128, 16);
             this.labHouseGui.TabIndex = 0;
             this.labHouseGui.Text = "当前选择：第0柜";
             // 
@@ -442,9 +464,11 @@
             this.gr3.Controls.Add(this.butUp);
             this.gr3.Controls.Add(this.label1);
             this.gr3.Controls.Add(this.txtGroundNum);
-            this.gr3.Location = new System.Drawing.Point(4, 269);
+            this.gr3.Location = new System.Drawing.Point(5, 359);
+            this.gr3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.gr3.Name = "gr3";
-            this.gr3.Size = new System.Drawing.Size(145, 148);
+            this.gr3.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.gr3.Size = new System.Drawing.Size(193, 197);
             this.gr3.TabIndex = 28;
             this.gr3.TabStop = false;
             this.gr3.Text = "上下架";
@@ -452,9 +476,10 @@
             // labGround
             // 
             this.labGround.AutoSize = true;
-            this.labGround.Location = new System.Drawing.Point(42, 85);
+            this.labGround.Location = new System.Drawing.Point(56, 113);
+            this.labGround.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labGround.Name = "labGround";
-            this.labGround.Size = new System.Drawing.Size(59, 12);
+            this.labGround.Size = new System.Drawing.Size(80, 16);
             this.labGround.TabIndex = 7;
             this.labGround.Text = "已上架0盒";
             this.labGround.Visible = false;
@@ -462,9 +487,10 @@
             // radioGroundAB
             // 
             this.radioGroundAB.AutoSize = true;
-            this.radioGroundAB.Location = new System.Drawing.Point(102, 26);
+            this.radioGroundAB.Location = new System.Drawing.Point(136, 35);
+            this.radioGroundAB.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.radioGroundAB.Name = "radioGroundAB";
-            this.radioGroundAB.Size = new System.Drawing.Size(35, 16);
+            this.radioGroundAB.Size = new System.Drawing.Size(45, 20);
             this.radioGroundAB.TabIndex = 6;
             this.radioGroundAB.Text = "面";
             this.radioGroundAB.UseVisualStyleBackColor = true;
@@ -472,9 +498,10 @@
             // radioGroundCeng
             // 
             this.radioGroundCeng.AutoSize = true;
-            this.radioGroundCeng.Location = new System.Drawing.Point(55, 26);
+            this.radioGroundCeng.Location = new System.Drawing.Point(73, 35);
+            this.radioGroundCeng.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.radioGroundCeng.Name = "radioGroundCeng";
-            this.radioGroundCeng.Size = new System.Drawing.Size(35, 16);
+            this.radioGroundCeng.Size = new System.Drawing.Size(45, 20);
             this.radioGroundCeng.TabIndex = 5;
             this.radioGroundCeng.Text = "层";
             this.radioGroundCeng.UseVisualStyleBackColor = true;
@@ -483,9 +510,10 @@
             // 
             this.radioGroundBoxsn.AutoSize = true;
             this.radioGroundBoxsn.Checked = true;
-            this.radioGroundBoxsn.Location = new System.Drawing.Point(12, 26);
+            this.radioGroundBoxsn.Location = new System.Drawing.Point(16, 35);
+            this.radioGroundBoxsn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.radioGroundBoxsn.Name = "radioGroundBoxsn";
-            this.radioGroundBoxsn.Size = new System.Drawing.Size(35, 16);
+            this.radioGroundBoxsn.Size = new System.Drawing.Size(45, 20);
             this.radioGroundBoxsn.TabIndex = 4;
             this.radioGroundBoxsn.TabStop = true;
             this.radioGroundBoxsn.Text = "盒";
@@ -495,9 +523,10 @@
             // 
             this.butDown.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.butDown.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.butDown.Location = new System.Drawing.Point(78, 107);
+            this.butDown.Location = new System.Drawing.Point(104, 143);
+            this.butDown.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.butDown.Name = "butDown";
-            this.butDown.Size = new System.Drawing.Size(56, 30);
+            this.butDown.Size = new System.Drawing.Size(75, 40);
             this.butDown.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.butDown.TabIndex = 3;
             this.butDown.Text = "下架(卷)";
@@ -507,9 +536,10 @@
             // 
             this.butUp.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.butUp.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.butUp.Location = new System.Drawing.Point(12, 107);
+            this.butUp.Location = new System.Drawing.Point(16, 143);
+            this.butUp.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.butUp.Name = "butUp";
-            this.butUp.Size = new System.Drawing.Size(56, 30);
+            this.butUp.Size = new System.Drawing.Size(75, 40);
             this.butUp.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.butUp.TabIndex = 2;
             this.butUp.Text = "上架";
@@ -518,26 +548,29 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(14, 57);
+            this.label1.Location = new System.Drawing.Point(19, 76);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 12);
+            this.label1.Size = new System.Drawing.Size(48, 16);
             this.label1.TabIndex = 1;
             this.label1.Text = "数量:";
             // 
             // txtGroundNum
             // 
-            this.txtGroundNum.Location = new System.Drawing.Point(52, 52);
+            this.txtGroundNum.Location = new System.Drawing.Point(69, 69);
+            this.txtGroundNum.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtGroundNum.Name = "txtGroundNum";
-            this.txtGroundNum.Size = new System.Drawing.Size(79, 21);
+            this.txtGroundNum.Size = new System.Drawing.Size(104, 26);
             this.txtGroundNum.TabIndex = 0;
             // 
             // rabHouseB
             // 
             this.rabHouseB.AutoSize = true;
             this.rabHouseB.BackColor = System.Drawing.Color.Transparent;
-            this.rabHouseB.Location = new System.Drawing.Point(75, 45);
+            this.rabHouseB.Location = new System.Drawing.Point(100, 60);
+            this.rabHouseB.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.rabHouseB.Name = "rabHouseB";
-            this.rabHouseB.Size = new System.Drawing.Size(41, 16);
+            this.rabHouseB.Size = new System.Drawing.Size(53, 20);
             this.rabHouseB.TabIndex = 27;
             this.rabHouseB.Text = "B面";
             this.rabHouseB.UseVisualStyleBackColor = false;
@@ -548,9 +581,10 @@
             this.rabHouseA.AutoSize = true;
             this.rabHouseA.BackColor = System.Drawing.Color.Transparent;
             this.rabHouseA.Checked = true;
-            this.rabHouseA.Location = new System.Drawing.Point(16, 45);
+            this.rabHouseA.Location = new System.Drawing.Point(21, 60);
+            this.rabHouseA.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.rabHouseA.Name = "rabHouseA";
-            this.rabHouseA.Size = new System.Drawing.Size(41, 16);
+            this.rabHouseA.Size = new System.Drawing.Size(53, 20);
             this.rabHouseA.TabIndex = 26;
             this.rabHouseA.TabStop = true;
             this.rabHouseA.Text = "A面";
@@ -561,9 +595,10 @@
             // 
             this.labAb.AutoSize = true;
             this.labAb.BackColor = System.Drawing.Color.Transparent;
-            this.labAb.Location = new System.Drawing.Point(6, 19);
+            this.labAb.Location = new System.Drawing.Point(8, 25);
+            this.labAb.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labAb.Name = "labAb";
-            this.labAb.Size = new System.Drawing.Size(53, 12);
+            this.labAb.Size = new System.Drawing.Size(72, 16);
             this.labAb.TabIndex = 25;
             this.labAb.Text = "选择Ab面";
             // 
@@ -576,9 +611,11 @@
             this.gr1.Controls.Add(this.PanleHouseJuan);
             this.gr1.Controls.Add(this.PanleHouseBox);
             this.gr1.Controls.Add(this.PanleHouseMj);
-            this.gr1.Location = new System.Drawing.Point(153, 0);
+            this.gr1.Location = new System.Drawing.Point(204, 0);
+            this.gr1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.gr1.Name = "gr1";
-            this.gr1.Size = new System.Drawing.Size(976, 643);
+            this.gr1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.gr1.Size = new System.Drawing.Size(1301, 860);
             this.gr1.TabIndex = 24;
             this.gr1.TabStop = false;
             // 
@@ -590,9 +627,10 @@
             this.PanleHouseJuan.CanvasColor = System.Drawing.SystemColors.Control;
             this.PanleHouseJuan.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.PanleHouseJuan.DisabledBackColor = System.Drawing.Color.Empty;
-            this.PanleHouseJuan.Location = new System.Drawing.Point(5, 524);
+            this.PanleHouseJuan.Location = new System.Drawing.Point(7, 702);
+            this.PanleHouseJuan.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.PanleHouseJuan.Name = "PanleHouseJuan";
-            this.PanleHouseJuan.Size = new System.Drawing.Size(970, 115);
+            this.PanleHouseJuan.Size = new System.Drawing.Size(1293, 153);
             this.PanleHouseJuan.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.PanleHouseJuan.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground;
             this.PanleHouseJuan.Style.BackColor2.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2;
@@ -610,9 +648,10 @@
             this.PanleHouseBox.CanvasColor = System.Drawing.SystemColors.Control;
             this.PanleHouseBox.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.PanleHouseBox.DisabledBackColor = System.Drawing.Color.Empty;
-            this.PanleHouseBox.Location = new System.Drawing.Point(5, 416);
+            this.PanleHouseBox.Location = new System.Drawing.Point(7, 558);
+            this.PanleHouseBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.PanleHouseBox.Name = "PanleHouseBox";
-            this.PanleHouseBox.Size = new System.Drawing.Size(970, 105);
+            this.PanleHouseBox.Size = new System.Drawing.Size(1293, 140);
             this.PanleHouseBox.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.PanleHouseBox.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground;
             this.PanleHouseBox.Style.BackColor2.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2;
@@ -630,10 +669,10 @@
             this.PanleHouseMj.CanvasColor = System.Drawing.SystemColors.Control;
             this.PanleHouseMj.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007;
             this.PanleHouseMj.DisabledBackColor = System.Drawing.Color.Empty;
-            this.PanleHouseMj.Location = new System.Drawing.Point(5, 13);
-            this.PanleHouseMj.Margin = new System.Windows.Forms.Padding(9);
+            this.PanleHouseMj.Location = new System.Drawing.Point(7, 17);
+            this.PanleHouseMj.Margin = new System.Windows.Forms.Padding(12, 12, 12, 12);
             this.PanleHouseMj.Name = "PanleHouseMj";
-            this.PanleHouseMj.Size = new System.Drawing.Size(970, 400);
+            this.PanleHouseMj.Size = new System.Drawing.Size(1293, 536);
             // 
             // 
             // 
@@ -672,14 +711,15 @@
             // 
             // StoreView
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1132, 672);
+            this.ClientSize = new System.Drawing.Size(1509, 896);
             this.Controls.Add(this.groupPanel1);
             this.Controls.Add(this.statusStrip1);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MaximizeBox = false;
             this.Name = "StoreView";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

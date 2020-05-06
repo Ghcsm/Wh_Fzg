@@ -39,14 +39,15 @@ namespace getupdate
                 }
                 Process[] processes = Process.GetProcesses();
                 foreach (Process p in processes) {
-                    if (p.ProcessName == "bgkj") {
+                    if (p.ProcessName.ToLower().ToString().Contains("bgkj")) {
                         p.Kill();
                         Application.DoEvents();
                     }
                 }
                 Thread.Sleep(200);
+                processes = Process.GetProcesses();
                 foreach (Process p in processes) {
-                    if (p.ProcessName == "bgkj") {
+                    if (p.ProcessName.ToLower().ToString().Contains("bgkj")) {
                         p.Kill();
                         Application.DoEvents();
                     }

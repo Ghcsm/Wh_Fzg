@@ -32,6 +32,7 @@ namespace Csminfo
         UcDLInfo ucdL;
         private int archzt = 0;
         private Pubcls pub;
+        private List<int> strpage = new List<int>();
         private void Init()
         {
             try {
@@ -76,16 +77,20 @@ namespace Csminfo
         private void GArch_LineClickLoadInfo(object sender, EventArgs e)
         {
             LoadContents();
-            ucdL.LoadInfo(gArch.Archid);
+         //   ucdL.LoadInfo(gArch.Archid);
             gArch.LvData.Focus();
         }
 
         void Infoshow()
         {
-            ucdL = new UcDLInfo();
-            ucdL.Dock = DockStyle.Fill;
-            gr1_2.Controls.Add(ucdL);
-            ucdL.LoadInfo(Clscheck.Archid);
+            ucInfo = new UcInfoEnter();
+            ucInfo.Dock = DockStyle.Fill;
+            gr1_2.Controls.Add(ucInfo);
+            ucInfo.GetInfoCol();
+            //ucdL = new UcDLInfo();
+            //ucdL.Dock = DockStyle.Fill;
+            //gr1_2.Controls.Add(ucdL);
+            //ucdL.LoadInfo(Clscheck.Archid);
         }
 
 
@@ -96,8 +101,18 @@ namespace Csminfo
             try {
                 p = Convert.ToInt32(page);
             } catch { }
+
             if (p > 0 && p <= Clscheck.MaxPage)
-                Himg._Gotopage(p);
+                //Himg._Gotopage(p);
+            {
+                int id = 0;
+                for (int i = 0; i < strpage.Count; i++) {
+                    int s = strpage[i];
+                    if (s < p)
+                        id += 1;
+                }
+                Himg._Gotopage(p + id);
+            }
         }
 
         private void FrmIndex_Load(object sender, EventArgs e)
@@ -124,6 +139,7 @@ namespace Csminfo
 
         private void Garch_LineLoadFile(object sender, EventArgs e)
         {
+            strpage.Clear();
             try {
                 if (ImgView.Image == null && Clscheck.ArchPos == null ||
                     ImgView.Image == null && Clscheck.ArchPos.Trim().Length <= 0) {
@@ -266,8 +282,20 @@ namespace Csminfo
             if (ImgView.Image != null && Clscheck.CrrentPage > 1) {
                 Thread.Sleep(100);
                 ShowPage();
-                Himg._Pagenext(0);
-                ucContents1.OnChangContents(Clscheck.CrrentPage);
+                // Himg._Pagenext(0);
+                // ucContents1.OnChangContents(Clscheck.CrrentPage);
+                int p = Clscheck.CrrentPage;
+                int id = 0;
+                for (int i = 0; i < strpage.Count; i++) {
+                    int s = strpage[i];
+                    if (s < p)
+                        id += 1;
+                }
+                p = p - id - 1;
+                if (p <= 0)
+                    return;
+                Himg._Gotopage(p);
+                ucContents1.OnChangContents(p);
             }
         }
 
@@ -282,8 +310,24 @@ namespace Csminfo
                 if (Clscheck.CrrentPage != Clscheck.MaxPage) {
                     // Himg._SavePage();
                     Thread.Sleep(50);
-                    Himg._Pagenext(1);
-                    ucContents1.OnChangContents(Clscheck.CrrentPage);
+                    // Himg._Pagenext(1);
+                    // ucContents1.OnChangContents(Clscheck.CrrentPage);
+                    int p = Clscheck.CrrentPage;
+                    int id = 0;
+                    for (int i = 0; i < strpage.Count; i++) {
+                        int s = strpage[i];
+                        if (s < p)
+                            id += 1;
+                    }
+                    p = id + p + 1;
+                    if (p >= Clscheck.MaxPage) {
+                        Himg._SavePage();
+                        Thread.Sleep(50);
+                        toolStripSave_Click(null, null);
+                        return;
+                    }
+                    Himg._Gotopage(p);
+                    ucContents1.OnChangContents(p);
                 }
                 else if (Clscheck.CrrentPage == Clscheck.MaxPage) {
                     // Himg._SavePage();
@@ -310,26 +354,27 @@ namespace Csminfo
 
         private void toolStripSave_Click(object sender, EventArgs e)
         {
-            if (ImgView.Image == null)
-                return;
-            if (!ucContents1.IsGetywid() || !Entertag())
-                return;
-            int arid = Clscheck.Archid;
-            string filename = Clscheck.FileNametmp;
-            string filepath = Clscheck.ScanFilePath;
-            Cledata();
-            try {
-                if (T_ConFigure.FtpStyle == 1)
-                    Imgclose(arid, filename);
-                else {
-                    if (File.Exists(filepath)) {
-                        File.Delete(filepath);
-                        Directory.Delete(Path.GetDirectoryName(filepath));
-                    }
-                }
-            } catch {
-            }
-            gArch.LvData.Focus();
+            toolStripClose_Click(null, null);
+            //if (ImgView.Image == null)
+            //    return;
+            //if (!ucContents1.IsGetywid() || !Entertag())
+            //    return;
+            //int arid = Clscheck.Archid;
+            //string filename = Clscheck.FileNametmp;
+            //string filepath = Clscheck.ScanFilePath;
+            //Cledata();
+            //try {
+            //    if (T_ConFigure.FtpStyle == 1)
+            //        Imgclose(arid, filename);
+            //    else {
+            //        if (File.Exists(filepath)) {
+            //            File.Delete(filepath);
+            //            Directory.Delete(Path.GetDirectoryName(filepath));
+            //        }
+            //    }
+            //} catch {
+            //}
+            //gArch.LvData.Focus();
 
         }
 
@@ -337,8 +382,8 @@ namespace Csminfo
         {
             if (ImgView.Image == null)
                 return;
-            if (!ucContents1.IsGetywid() || !Entertag())
-                return;
+            //if (!ucContents1.IsGetywid() || !Entertag())
+            //    return;
             int arid = Clscheck.Archid;
             string filename = Clscheck.FileNametmp;
             string filepath = Clscheck.ScanFilePath;
@@ -443,8 +488,8 @@ namespace Csminfo
             if (Clscheck.keystr.Trim().Length > 0)
                 KeysDownEve(Clscheck.keystr.Trim());
             Keys keyCode = e.KeyCode;
-            if (e.KeyCode == Keys.ShiftKey)
-                ucContents1.txtCode.Focus();
+            //if (e.KeyCode == Keys.ShiftKey)
+            //    ucContents1.txtCode.Focus();
             if (e.KeyCode == Keys.Escape) {
                 gArch.txtBoxsn.Focus();
                 gArch.txtBoxsn.SelectAll();
@@ -618,30 +663,41 @@ namespace Csminfo
                 DataTable dt = Common.ReadPageIndexInfo(Clscheck.Archid);
                 if (dt != null && dt.Rows.Count > 0) {
                     DataRow dr = dt.Rows[0];
-                    string PageIndexInfo = dr["PageIndexInfo"].ToString();
-                    int page = Convert.ToInt32(dr["pages"].ToString());
-                    if (!string.IsNullOrEmpty(PageIndexInfo)) {
-                        string[] arrPage = PageIndexInfo.Split(';');
+                    string arpage = dr["archpage"].ToString();
+                    if (!string.IsNullOrEmpty(arpage)) {
+                        string[] arrPage = arpage.Split(';');
                         if (arrPage.Length > 0) {
                             for (int i = 0; i < arrPage.Length; i++) {
-                                string[] str = arrPage[i].Trim().Split(':');
-                                if (str.Length <= 0)
-                                    continue;
-                                int p = Convert.ToInt32(str[0]);
-                                if (p > page)
-                                    continue;
-                                if (!isExists(str[1].ToString()) && str[1].IndexOf("-") < 0)
-                                    pagenumber.Add(p, Convert.ToInt32(str[1]));
-                                else if (str[1].IndexOf("-") >= 0)
-                                    fuhao.Add(p, str[1].ToString());
-                                else
-                                    pageabc.Add(p, str[1].ToString());
+                                string[] str = arrPage[i].Trim().Split('-');
+                                if (str.Length > 0)
+                                    strpage.Add(Convert.ToInt32(str[0]));
                             }
                         }
                     }
-                    Himg._PageNumber = pagenumber;
-                    Himg._PageAbc = pageabc;
-                    Himg._PageFuhao = fuhao;
+                    //string PageIndexInfo = dr["PageIndexInfo"].ToString();
+                    //int page = Convert.ToInt32(dr["pages"].ToString());
+                    //if (!string.IsNullOrEmpty(PageIndexInfo)) {
+                    //    string[] arrPage = PageIndexInfo.Split(';');
+                    //    if (arrPage.Length > 0) {
+                    //        for (int i = 0; i < arrPage.Length; i++) {
+                    //            string[] str = arrPage[i].Trim().Split(':');
+                    //            if (str.Length <= 0)
+                    //                continue;
+                    //            int p = Convert.ToInt32(str[0]);
+                    //            if (p > page)
+                    //                continue;
+                    //            if (!isExists(str[1].ToString()) && str[1].IndexOf("-") < 0)
+                    //                pagenumber.Add(p, Convert.ToInt32(str[1]));
+                    //            else if (str[1].IndexOf("-") >= 0)
+                    //                fuhao.Add(p, str[1].ToString());
+                    //            else
+                    //                pageabc.Add(p, str[1].ToString());
+                    //        }
+                    //    }
+                    //}
+                    //Himg._PageNumber = pagenumber;
+                    //Himg._PageAbc = pageabc;
+                    //Himg._PageFuhao = fuhao;
                 }
             } catch { }
         }
@@ -708,7 +764,7 @@ namespace Csminfo
                     }
                     Himg.Filename = Clscheck.ScanFilePath;
                     Himg.LoadPage(pages);
-                    // ReadDict();
+                     ReadDict();
                     LoadContents();
                     Getuser();
                     Ispages();

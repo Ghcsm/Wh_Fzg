@@ -772,7 +772,6 @@ namespace CsmGenSet
         {
             CleImport();
             try {
-                if (ClsGenSet.PrintInfo != null && ClsGenSet.PrintInfo.Rows.Count > 0) {
                     DataTable dt = T_Sysset.GetImportDt();
                     if (dt == null || dt.Rows.Count <= 0)
                         return;
@@ -795,8 +794,7 @@ namespace CsmGenSet
                             ClsImportTable.ImportInfo.Add(b);
                         }
                     }
-
-                }
+                
             } catch (Exception e) {
                 MessageBox.Show("导入信息表加载失败:" + e.ToString());
             }

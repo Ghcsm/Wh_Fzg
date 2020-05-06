@@ -42,6 +42,7 @@
             this.butAdd = new DevComponents.DotNetBar.ButtonX();
             this.gr1 = new System.Windows.Forms.GroupBox();
             this.splitCont = new System.Windows.Forms.SplitContainer();
+            this.panel2 = new System.Windows.Forms.Panel();
             this.LvContents = new DevComponents.DotNetBar.Controls.ListViewEx();
             this.colContentsSn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colContentsTitle = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -59,6 +60,7 @@
             this.splitCont.Panel1.SuspendLayout();
             this.splitCont.Panel2.SuspendLayout();
             this.splitCont.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.gr2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -101,7 +103,7 @@
             this.panel1.AutoScroll = true;
             this.panel1.Location = new System.Drawing.Point(6, 42);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(529, 148);
+            this.panel1.Size = new System.Drawing.Size(527, 148);
             this.panel1.TabIndex = 3;
             // 
             // txtCode
@@ -202,26 +204,40 @@
             this.gr1.Controls.Add(this.splitCont);
             this.gr1.Location = new System.Drawing.Point(6, 3);
             this.gr1.Name = "gr1";
-            this.gr1.Size = new System.Drawing.Size(449, 310);
+            this.gr1.Size = new System.Drawing.Size(448, 307);
             this.gr1.TabIndex = 2;
             this.gr1.TabStop = false;
             // 
             // splitCont
             // 
+            this.splitCont.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.splitCont.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitCont.Location = new System.Drawing.Point(3, 17);
             this.splitCont.Name = "splitCont";
             // 
             // splitCont.Panel1
             // 
-            this.splitCont.Panel1.Controls.Add(this.LvContents);
+            this.splitCont.Panel1.AutoScroll = true;
+            this.splitCont.Panel1.Controls.Add(this.panel2);
             // 
             // splitCont.Panel2
             // 
+            this.splitCont.Panel2.AutoScroll = true;
             this.splitCont.Panel2.Controls.Add(this.LvModule);
-            this.splitCont.Size = new System.Drawing.Size(443, 290);
-            this.splitCont.SplitterDistance = 170;
+            this.splitCont.Size = new System.Drawing.Size(442, 287);
+            this.splitCont.SplitterDistance = 187;
             this.splitCont.TabIndex = 0;
+            // 
+            // panel2
+            // 
+            this.panel2.AutoScroll = true;
+            this.panel2.Controls.Add(this.LvContents);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel2.Location = new System.Drawing.Point(0, 0);
+            this.panel2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(185, 285);
+            this.panel2.TabIndex = 0;
             // 
             // LvContents
             // 
@@ -241,7 +257,7 @@
             this.LvContents.HideSelection = false;
             this.LvContents.Location = new System.Drawing.Point(0, 0);
             this.LvContents.Name = "LvContents";
-            this.LvContents.Size = new System.Drawing.Size(170, 290);
+            this.LvContents.Size = new System.Drawing.Size(185, 285);
             this.LvContents.SmallImageList = this.imageList1;
             this.LvContents.TabIndex = 5;
             this.LvContents.TabStop = false;
@@ -249,6 +265,7 @@
             this.LvContents.View = System.Windows.Forms.View.Details;
             this.LvContents.SelectedIndexChanged += new System.EventHandler(this.LvContents_SelectedIndexChanged);
             this.LvContents.Click += new System.EventHandler(this.LvContents_Click);
+            this.LvContents.KeyDown += new System.Windows.Forms.KeyEventHandler(this.LvContents_KeyDown);
             // 
             // colContentsSn
             // 
@@ -284,7 +301,7 @@
             this.LvModule.HideSelection = false;
             this.LvModule.Location = new System.Drawing.Point(0, 0);
             this.LvModule.Name = "LvModule";
-            this.LvModule.Size = new System.Drawing.Size(269, 290);
+            this.LvModule.Size = new System.Drawing.Size(249, 285);
             this.LvModule.TabIndex = 0;
             this.LvModule.TabStop = false;
             this.LvModule.UseCompatibleStateImageBehavior = false;
@@ -331,10 +348,12 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.AutoScroll = true;
             this.splitContainer1.Panel1.Controls.Add(this.gr0);
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.AutoScroll = true;
             this.splitContainer1.Panel2.Controls.Add(this.gr2);
             this.splitContainer1.Panel2.Controls.Add(this.gr1);
             this.splitContainer1.Size = new System.Drawing.Size(541, 516);
@@ -358,6 +377,7 @@
             this.splitCont.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitCont)).EndInit();
             this.splitCont.ResumeLayout(false);
+            this.panel2.ResumeLayout(false);
             this.gr2.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
@@ -393,5 +413,6 @@
         public DevComponents.DotNetBar.Controls.ListViewEx LvContents;
         public DevComponents.DotNetBar.ButtonX butAdd;
         public System.Windows.Forms.GroupBox gr2;
+        private System.Windows.Forms.Panel panel2;
     }
 }

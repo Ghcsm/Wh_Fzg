@@ -67,12 +67,12 @@ namespace CsmCon
 
         private void dgvInfo_DoubleClick(object sender, EventArgs e)
         {
+            lsName.Clear();
+            lsdata.Clear();
             if (dgvInfo.RowCount < 1 || dgvInfo.SelectedRows.Count < 1) {
                 MessageBox.Show("请选择相关数据!");
                 return;
             }
-            lsName.Clear();
-            lsdata.Clear();
             int id = dgvInfo.CurrentRow.Index;
             for (int i = 0; i < dgvInfo.ColumnCount; i++) {
                 string str = dgvInfo.Rows[id].Cells[i].Value.ToString();
@@ -87,6 +87,8 @@ namespace CsmCon
         void Init()
         {
             combZd.Items.Clear();
+            lsName.Clear();
+            lsdata.Clear();
             DataTable dt = T_Sysset.GetInfoenterSql();
             if (dt == null || dt.Rows.Count <= 0)
                 return;

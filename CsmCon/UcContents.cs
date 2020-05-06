@@ -1,4 +1,5 @@
 ﻿using DAL;
+using Spire.Xls;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -34,6 +35,8 @@ namespace CsmCon
 
         public int Infoadd = 0;
         ClsContenInfo info = new ClsContenInfo();
+        private Workbook work = null;
+        Worksheet wsheek = null;
         private void Init()
         {
             if (Modulename == null)
@@ -90,8 +93,7 @@ namespace CsmCon
                     try {
                         string s = "TITLE like '%" + str + "%'";
                         dt1 = dt.Select(s).CopyToDataTable();
-                    } catch
-                    {
+                    } catch {
                         dt1 = null;
                     }
                     if (dt1 == null || dt1.Rows.Count <= 0)
@@ -128,7 +130,7 @@ namespace CsmCon
         {
             //if (!(Char.IsNumber(e.KeyChar)) && e.KeyChar != (char)13 && e.KeyChar != (char)8)
             //    e.Handled = true;
-             if (e.KeyChar == 13)
+            if (e.KeyChar == 13)
                 SendKeys.Send("{Tab}");
         }
 
@@ -273,10 +275,13 @@ namespace CsmCon
                 return;
             }
             AddTitle();
-            //if (this.LvContents.Items.Count > 0 && CrragePage > 0) {
-            //    LvContents.Items[CrragePage].Selected = true;
-            //    LvContents.Items[CrragePage].EnsureVisible();
-            //}
+            if (this.LvContents.Items.Count > 0 && CrragePage > 0) {
+                if (CrragePage < LvContents.Items.Count - 1)
+                {
+                    LvContents.Items[CrragePage].Selected = true;
+                    LvContents.Items[CrragePage].EnsureVisible();
+                }
+            }
             LineFocus?.Invoke(sender, new EventArgs());
             //info.Setinfofocus(panel1);
             txtCode.Text = "";
@@ -327,7 +332,6 @@ namespace CsmCon
                 return;
             ArchId = arid;
             ArchMaxPage = maxpage;
-
             info.LoadContentsinfo(ArchId, LvContents, chkTspages.Checked);
         }
 
@@ -346,7 +350,8 @@ namespace CsmCon
                     bool bl = int.TryParse(sttCode, out id);
                     if (!bl)
                         return;
-                    id -= 1;
+                    //id -= 1;
+                    id = info.LsModuleIndex.IndexOf(id.ToString().PadLeft(2,'0'));
                     if (id < 0)
                         return;
                     if (id > info.LsModule.Count - 1)
@@ -375,14 +380,18 @@ namespace CsmCon
             // }
             ContentsEdit();
             if (this.LvContents.Items.Count > 0) {
-                LvContents.Items[CrragePage].Selected = true;
-                LvContents.Items[CrragePage].EnsureVisible();
+                if (CrragePage < this.LvContents.Items.Count)
+                {
+                    LvContents.Items[CrragePage].Selected = true;
+                    LvContents.Items[CrragePage].EnsureVisible();
+                }
+                LvContents.Focus();
             }
         }
 
         private void LvContents_Click(object sender, EventArgs e)
         {
-            if (LvContents.SelectedItems != null && LvContents.SelectedItems.Count > 0) {
+            if (LvContents.SelectedItems != null && LvContents.SelectedItems.Count>0) {
                 Settxt(sender, e);
             }
         }
@@ -441,8 +450,7 @@ namespace CsmCon
 
         public static void Setadd(GroupBox g)
         {
-            try
-            {
+            try {
                 foreach (Control c in g.Controls) {
                     if (c is DevComponents.DotNetBar.ButtonX) {
                         if (c.Text.Contains("新增")) {
@@ -452,9 +460,24 @@ namespace CsmCon
                         }
                     }
                 }
+            } catch (Exception e) {
+                MessageBox.Show("此处错误:" + e.ToString());
             }
-            catch (Exception e)
-            {
+        }
+
+        public static void SetXg(GroupBox g)
+        {
+            try {
+                foreach (Control c in g.Controls) {
+                    if (c is DevComponents.DotNetBar.ButtonX) {
+                        if (c.Text.Contains("修改")) {
+                            DevComponents.DotNetBar.ButtonX but = (DevComponents.DotNetBar.ButtonX)c;
+                            but.PerformClick();
+                            //SendKeys.Send("{Enter}");
+                        }
+                    }
+                }
+            } catch (Exception e) {
                 MessageBox.Show("此处错误:" + e.ToString());
             }
         }
@@ -507,8 +530,8 @@ namespace CsmCon
         }
         private void LvContents_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (LvContents.Items.Count > 0)
-                LvContents_Click(null, null);
+            if (LvContents.SelectedItems.Count >0)
+                    LvContents_Click(null, null);
         }
 
         void DoubleModuleAddConte()
@@ -536,9 +559,144 @@ namespace CsmCon
                 return;
             int b;
             bool bl = int.TryParse(txtCode.Text.Trim(), out b);
-            if (!bl)
-            {
+            if (!bl) {
                 info.LoadModule1(LvModule, txtCode.Text.Trim());
+            }
+        }
+
+        //void Drxls()
+        //{
+        //    OpenFileDialog openFile = new OpenFileDialog();
+        //    openFile.Filter = "xls文件|*.xlsx";
+        //    if (openFile.ShowDialog() == DialogResult.OK) {
+        //        string xls = openFile.FileName;
+        //        work = new Workbook();
+        //        work.LoadFromFile(xls);
+        //        wsheek = work.Worksheets[0];
+        //        int rows = wsheek.LastRow;
+        //        for (int i = 0; i < rows; i++) {
+        //            string id = wsheek.Rows[i].Cells[0].Value;
+        //            string wensn = wsheek.Rows[i].Cells[1].Value;
+        //            string zrz = wsheek.Rows[i].Cells[2].Value;
+        //            string tit = wsheek.Rows[i].Cells[3].Value;
+        //            string date = wsheek.Rows[i].Cells[4].Value;
+        //            string page = wsheek.Rows[i].Cells[5].Value;
+        //                if (tit.Trim().Length <= 0)
+        //                    continue;
+        //                if (tit.Contains("备考表") || tit.Contains("题名"))
+        //                    continue;
+        //                if (page.Contains("页"))
+        //                    continue;
+        //                if (wensn.Trim().Length > 0)
+        //                    wensn = wensn.Replace(" ", "").ToString().Replace("'", "").Replace("【","").Replace("】","");
+        //                if (zrz.Trim().Length > 0)
+        //                    zrz = zrz.Replace(" ", "").ToString().Replace("'", "");
+        //                if (zrz.Contains("公诉科"))
+        //                    zrz = zrz.Replace("公诉科", "");
+        //                if (tit.Trim().Length > 0)
+        //                    tit = tit.Replace(" ", "").ToString().Replace("'", "");
+        //                if (tit == "讯问笔录")
+        //                    tit = "讯问XXX笔录";
+        //                if (tit == "讯问提纲")
+        //                    tit = "讯问XXX提纲";
+        //                if (date.Trim().Length > 0) {
+        //                    date = date.Replace(" ", "").ToString().Replace("'", "");
+        //                    date = Istime(date);
+        //                }
+        //                if (page.Trim().Length > 0) {
+        //                    page = page.Replace(" ", "").ToString().Replace("'", "");
+        //                    page = ispage(page);
+        //                }
+        //              if (tit.Trim().Length>0)
+        //                Common.ContentsInster2(wensn, zrz, tit, date, page, ArchId);
+        //            }
+        //        info.LoadContentsadd(ArchId, LvContents, chkTspages.Checked, Infoadd);
+        //    }
+        //}
+
+        string ispage(string p)
+        {
+            int id = p.IndexOf("-");
+            string str = p;
+            if (id >= 0)
+                str = p.Substring(0, id);
+            else {
+                id = p.IndexOf("\\");
+                if (id >= 0)
+                    str = p.Substring(0, id);
+            }
+            return str;
+        }
+
+
+        string Istime(string str)
+        {
+            string time = "";
+            DateTime dt;
+            try {
+                if (str.Contains(".")) {
+                    bool bl = DateTime.TryParse(str, out dt);
+                    if (bl) {
+                        time = dt.ToString("yyyyMMdd");
+                    }
+                }
+                else
+                    time = str;
+            } catch {
+                time = str;
+            }
+            return time;
+        }
+
+        //private void chkDrxls_Click(object sender, EventArgs e)
+        //{
+        //    if (ArchId <= 0)
+        //        return;
+        //    if (chkDrxls.Checked)
+        //        try {
+        //            Drxls();
+        //        } catch (Exception ex) {
+        //            MessageBox.Show("导入失败:" + ex.ToString());
+        //        }
+        //    chkDrxls.Checked = false;
+        //}
+
+        //private void butqu_Click(object sender, EventArgs e)
+        //{
+        //    if (ArchId <= 0)
+        //        return;
+        //    Common.ContenJmqu(1, ArchId);
+        //    info.LoadContentsadd(ArchId, LvContents, chkTspages.Checked, Infoadd);
+        //}
+
+        //private void butshi_Click(object sender, EventArgs e)
+        //{
+
+        //    if (ArchId <= 0)
+        //        return;
+        //    Common.ContenJmqu(2, ArchId);
+        //    info.LoadContentsadd(ArchId, LvContents, chkTspages.Checked, Infoadd);
+        //}
+     
+
+        private void LvContents_KeyDown(object sender, KeyEventArgs e)
+        {
+            e.Handled = true;
+            if (e.KeyCode == Keys.Down)
+            {
+                CrragePage = LvContents.SelectedItems[0].Index;
+                LvContents.Items[CrragePage].Selected = false;
+                if (CrragePage< LvContents.Items.Count-1)
+                LvContents.Items[CrragePage+1].Selected = true;
+                return;
+            }
+
+            if (e.KeyCode == Keys.Up)
+            {
+                CrragePage = LvContents.SelectedItems[0].Index;
+                LvContents.Items[CrragePage].Selected = false;
+                if (CrragePage>=1)
+                LvContents.Items[CrragePage -1].Selected = true;
             }
         }
     }

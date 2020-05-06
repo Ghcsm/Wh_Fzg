@@ -66,7 +66,7 @@ namespace Csmfztj
                     string guser = dr["UserName"].ToString();
                     string gansj = dr["Cabinet"].ToString();
                     string gdamlt = dr["damlt"].ToString();
-                    string gdamljuan = dr["damljuan"].ToString();
+                    string gdamljuan = dr["dajuan"].ToString();
                     string gxxblt = dr["dablt"].ToString();
                     string gxxblt2 = dr["dablt2"].ToString();
                     string gxxbljuan = dr["dabljuan"].ToString();

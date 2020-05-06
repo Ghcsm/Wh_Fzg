@@ -38,8 +38,9 @@
             this.gr1.DisabledBackColor = System.Drawing.Color.Empty;
             this.gr1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gr1.Location = new System.Drawing.Point(0, 0);
+            this.gr1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.gr1.Name = "gr1";
-            this.gr1.Size = new System.Drawing.Size(955, 425);
+            this.gr1.Size = new System.Drawing.Size(1273, 567);
             // 
             // 
             // 
@@ -72,16 +73,18 @@
             // 
             // FrmLsinfo
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(955, 425);
+            this.ClientSize = new System.Drawing.Size(1273, 567);
             this.Controls.Add(this.gr1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FrmLsinfo";
+            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "FrmLsinfo";
+            this.Text = "数据调用";
             this.Load += new System.EventHandler(this.FrmLsinfo_Load);
             this.ResumeLayout(false);
 
