@@ -186,5 +186,11 @@ namespace Csmxxbl
             page.ShowDialog();
 
         }
+
+        private void butZd_Click(object sender, EventArgs e)
+        {
+            FrmZd zd=new FrmZd();
+            zd.ShowDialog();
+        }
     }
 }

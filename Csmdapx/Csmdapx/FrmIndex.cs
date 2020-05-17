@@ -482,6 +482,7 @@ namespace Csmdapx
                 }
                 else
                     toolStripCut_Click(sender, e);
+                txtPages.Focus();
             }
             else {
                 if (Yuan == 0) {
@@ -1240,6 +1241,9 @@ namespace Csmdapx
                         str = "";
                 }
                 if (str.Trim().Length > 0)
+                    return false;
+                //屏蔽字母
+                if (!Char.IsNumber(e.KeyChar))
                     return false;
             }
             else if (isExists(str) && e.KeyChar != (char)13 && e.KeyChar != (char)8)

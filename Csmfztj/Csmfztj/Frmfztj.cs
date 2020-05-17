@@ -88,6 +88,7 @@ namespace Csmfztj
                     string infochkjuan = dr["infochjuan"].ToString();
                     string zchkpage = dr["zchkpage"].ToString();
                     string zchkjuan = dr["zhkjuan"].ToString();
+                    string luru = dr["luru"].ToString();
                     if (gansj == "") {
                         gansj = "0";
                     }
@@ -156,6 +157,8 @@ namespace Csmfztj
                         zchkjuan = "0";
                     if (zchkpage == "")
                         zchkpage = "0";
+                    if (luru == "")
+                        luru = "0";
                     int t = dgvWorkgroup.Rows.Add();
                     dgvWorkgroup.Rows[t].Cells["id"].Value = i.ToString();
                     dgvWorkgroup.Rows[t].Cells["T_user"].Value = guser;
@@ -171,6 +174,8 @@ namespace Csmfztj
                   //  dgvWorkgroup.Rows[t].Cells["T_zhuangD"].Value = gzhuangdjuan + "卷" + gzhuangdpage + "页";
                     dgvWorkgroup.Rows[t].Cells["T_Infochk"].Value = infochkywid + "手" + infochkjuan + "卷"+ infochkpage + "页";
                     dgvWorkgroup.Rows[t].Cells["T_Zchk"].Value = zchkjuan + "卷" +zchkpage + "页";
+                    dgvWorkgroup.Rows[t].Cells["T_luru"].Value = luru + "卷";
+                    dgvWorkgroup.Rows[t].Cells["T_zhangding"].Value = gzhuangdjuan + "卷" + gzhuangdpage + "页";
                     i++;
                 }
 

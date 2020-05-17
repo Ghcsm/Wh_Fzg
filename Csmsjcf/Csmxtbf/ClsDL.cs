@@ -15,6 +15,8 @@ namespace Csmsjcf
         public static string FilePath { get; set; } = "";
         public static string NewPath { get; set; } = "";
 
+        public static int dj { get; set; } = 0;
+
         public static string Zdtime { get; set; } = "";
 
         public static int Fanwei { get; set; } = 0;

@@ -32,6 +32,7 @@ namespace CsmZchk
         private int archzt = 0;
         private Pubcls pub;
         private List<int> strpage = new List<int>();
+        private string indexpage = "";
         private void Init()
         {
             try {
@@ -86,7 +87,7 @@ namespace CsmZchk
                 return;
             if (ucContents1.LvContents.Items.Count <= 0)
                 return;
-          
+
             int id = ucContents1.LvContents.SelectedItems[0].Index;
             string title = ucContents1.LvContents.Items[id].SubItems[2].Text;
             string page = ucContents1.LvContents.Items[id].SubItems[3].Text;
@@ -97,7 +98,7 @@ namespace CsmZchk
                 string Spage = Clscheck.lsPage[x];
                 string str = "";
                 try {
-                    int p1 = Convert.ToInt32(ucContents1.LvContents.Items[id+1].SubItems[3].Text);
+                    int p1 = Convert.ToInt32(ucContents1.LvContents.Items[id + 1].SubItems[3].Text);
                     if (Spage != (p1 - (Convert.ToInt32(page))).ToString()) {
                         str = page;
                     }
@@ -106,8 +107,8 @@ namespace CsmZchk
                         str = page;
                     }
                 }
-                if (str.Trim().Length>0)
-                MessageBox.Show( str + "页目录异常，请认真核对");
+                if (str.Trim().Length > 0)
+                    MessageBox.Show(str + "页目录异常，请认真核对");
 
             }
         }
@@ -133,8 +134,15 @@ namespace CsmZchk
             try {
                 p = Convert.ToInt32(page);
             } catch { }
-            if (p > 0 && p <= Clscheck.MaxPage)
-                Himg._Gotopage(p);
+            if (p > 0 && p <= Clscheck.MaxPage) {
+                int id = 0;
+                for (int i = 0; i < strpage.Count; i++) {
+                    int s = strpage[i];
+                    if (s < p)
+                        id += 1;
+                }
+                Himg._Gotopage(p + id);
+            }
         }
 
         private void FrmIndex_Load(object sender, EventArgs e)
@@ -296,20 +304,13 @@ namespace CsmZchk
         private void toolStripUppage_Click(object sender, EventArgs e)
         {
             if (ImgView.Image != null && Clscheck.CrrentPage > 1) {
-                Thread.Sleep(100);
                 ShowPage();
-                int p = Clscheck.CrrentPage;
-                int id = 0;
-                for (int i = 0; i < strpage.Count; i++) {
-                    int s = strpage[i];
-                    if (s < p)
-                        id += 1;
-                }
-                p = p - id - 1;
-                if (p <= 0)
-                    return;
-                Himg._Gotopage(p);
-                ucContents1.OnChangContents(p);
+                Thread.Sleep(10);
+                Himg._Pagenext(0);
+                int indx;
+                bool bl = int.TryParse(indexpage, out indx);
+                if (bl)
+                    ucContents1.OnChangContents(indx);
                 //Himg._Pagenext(0);
                 //ucContents1.OnChangContents(Clscheck.CrrentPage);
             }
@@ -319,34 +320,24 @@ namespace CsmZchk
         {
             NextPage();
             ShowPage();
+            int indx;
+            bool bl = int.TryParse(indexpage, out indx);
+            if (bl)
+                ucContents1.OnChangContents(indx);
         }
         private void NextPage()
         {
             try {
                 if (Clscheck.CrrentPage != Clscheck.MaxPage) {
                     Himg._SavePage();
-                    Thread.Sleep(50);
-                    int p = Clscheck.CrrentPage;
-                    int id = 0;
-                    for (int i = 0; i < strpage.Count; i++) {
-                        int s = strpage[i];
-                        if (s < p)
-                            id += 1;
-                    }
-                    p = id + p + 1;
-                    if (p >= Clscheck.MaxPage) {
-                        Himg._SavePage();
-                        Thread.Sleep(50);
-                        toolStripSave_Click(null, null);
-                        return;
-                    }
-                    Himg._Gotopage(p);
-                    ucContents1.OnChangContents(p);
-                   // CheckPage();
+                    Thread.Sleep(10);
+                    Himg._Pagenext(1);
+                    //int p = Clscheck.CrrentPage;
+                    //ucContents1.OnChangContents(p);
                 }
                 else if (Clscheck.CrrentPage == Clscheck.MaxPage) {
-                    Himg._SavePage();
-                    Thread.Sleep(50);
+                    //Himg._SavePage();
+                    Thread.Sleep(10);
                     toolStripSave_Click(null, null);
                 }
             } catch (Exception ex) {
@@ -435,23 +426,25 @@ namespace CsmZchk
             if (ImgView.Image == null)
                 return;
             //if (!ucContents1.IsGetywid() || !Entertag())
-            //    return;
-            int arid = Clscheck.Archid;
-            string filename = Clscheck.FileNametmp;
-            string filepath = Clscheck.ScanFilePath;
-            Cledata();
-            try {
-                if (T_ConFigure.FtpStyle == 1)
-                    Imgclose(arid, filename);
-                else {
-                    if (File.Exists(filepath)) {
-                        File.Delete(filepath);
-                        Directory.Delete(Path.GetDirectoryName(filepath));
+            if (MessageBox.Show("质检完成您确定要上传档案吗？", "提示", MessageBoxButtons.OKCancel,
+                    MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.OK) {
+                ;
+                int arid = Clscheck.Archid;
+                string filename = Clscheck.FileNametmp;
+                string filepath = Clscheck.ScanFilePath;
+                Cledata();
+                try {
+                    if (T_ConFigure.FtpStyle == 1)
+                        Imgclose(arid, filename);
+                    else {
+                        if (File.Exists(filepath)) {
+                            File.Delete(filepath);
+                            Directory.Delete(Path.GetDirectoryName(filepath));
+                        }
                     }
+                } catch {
                 }
-            } catch {
             }
-
             gArch.txtBoxsn.Focus();
             gArch.txtBoxsn.SelectAll();
         }
@@ -724,6 +717,7 @@ namespace CsmZchk
         {
             try {
                 string txt = Himg._Readpage();
+                indexpage = txt;
                 labpage.Text = string.Format("第 {0} 页", txt);
             } catch { }
 
@@ -770,7 +764,7 @@ namespace CsmZchk
                     }
                     Himg.Filename = Clscheck.ScanFilePath;
                     Himg.LoadPage(pages);
-                     ReadDict();
+                    ReadDict();
                     LoadContents();
                     Getuser();
                     Ispages();
@@ -911,7 +905,7 @@ namespace CsmZchk
                     return;
                 this.BeginInvoke(new Action(() =>
                 {
-                    for (int i = 0; i <1; i++) {
+                    for (int i = 0; i < 1; i++) {
                         string user = dt.Rows[i][0].ToString();
                         string time = dt.Rows[i][1].ToString();
                         toollabinfochk.Text = string.Format("目录录入:{0}", user);
@@ -979,7 +973,31 @@ namespace CsmZchk
                             }
                         }
                     }
-                    
+                    string PageIndexInfo = dr["PageIndexInfo"].ToString();
+                    int page = Convert.ToInt32(dr["pages"].ToString());
+                    if (!string.IsNullOrEmpty(PageIndexInfo)) {
+                        string[] arrPage = PageIndexInfo.Split(';');
+                        if (arrPage.Length > 0) {
+                            for (int i = 0; i < arrPage.Length; i++) {
+                                string[] str = arrPage[i].Trim().Split(':');
+                                if (str.Length <= 0)
+                                    continue;
+                                int p = Convert.ToInt32(str[0]);
+                                if (p > page)
+                                    continue;
+                                if (!isExists(str[1].ToString()) && str[1].IndexOf("-") < 0)
+                                    pagenumber.Add(p, Convert.ToInt32(str[1]));
+                                else if (str[1].IndexOf("-") >= 0)
+                                    fuhao.Add(p, str[1].ToString());
+                                else
+                                    pageabc.Add(p, str[1].ToString());
+                            }
+                        }
+                    }
+                    Himg._PageNumber = pagenumber;
+                    Himg._PageAbc = pageabc;
+                    Himg._PageFuhao = fuhao;
+
                 }
             } catch { }
         }

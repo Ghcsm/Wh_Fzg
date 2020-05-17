@@ -36,14 +36,14 @@
             this.gr1_1 = new System.Windows.Forms.GroupBox();
             this.gr1_2 = new System.Windows.Forms.GroupBox();
             this.statUser = new System.Windows.Forms.StatusStrip();
+            this.toollabenter = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toollabentertime = new System.Windows.Forms.ToolStripStatusLabel();
             this.toollabscan = new System.Windows.Forms.ToolStripStatusLabel();
             this.toollabscantime = new System.Windows.Forms.ToolStripStatusLabel();
             this.toollabindex = new System.Windows.Forms.ToolStripStatusLabel();
             this.toollabindextime = new System.Windows.Forms.ToolStripStatusLabel();
             this.toollabcheck = new System.Windows.Forms.ToolStripStatusLabel();
             this.toollabchecktime = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toollabenter = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toollabentertime = new System.Windows.Forms.ToolStripStatusLabel();
             this.toollabinfochk = new System.Windows.Forms.ToolStripStatusLabel();
             this.toollabinfochktime = new System.Windows.Forms.ToolStripStatusLabel();
             this.toollabezchk = new System.Windows.Forms.ToolStripStatusLabel();
@@ -181,6 +181,7 @@
             // 
             // statUser
             // 
+            this.statUser.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.statUser.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toollabenter,
             this.toollabentertime,
@@ -193,10 +194,19 @@
             this.toollabinfochk,
             this.toollabinfochktime,
             this.toollabezchk,
-            this.toollabzchktime
-            });
+            this.toollabzchktime});
             resources.ApplyResources(this.statUser, "statUser");
             this.statUser.Name = "statUser";
+            // 
+            // toollabenter
+            // 
+            this.toollabenter.Name = "toollabenter";
+            resources.ApplyResources(this.toollabenter, "toollabenter");
+            // 
+            // toollabentertime
+            // 
+            this.toollabentertime.Name = "toollabentertime";
+            resources.ApplyResources(this.toollabentertime, "toollabentertime");
             // 
             // toollabscan
             // 
@@ -227,16 +237,6 @@
             // 
             this.toollabchecktime.Name = "toollabchecktime";
             resources.ApplyResources(this.toollabchecktime, "toollabchecktime");
-            // 
-            // toollabenter
-            // 
-            this.toollabenter.Name = "toollabenter";
-            resources.ApplyResources(this.toollabenter, "toollabenter");
-            // 
-            // toollabentertime
-            // 
-            this.toollabentertime.Name = "toollabentertime";
-            resources.ApplyResources(this.toollabentertime, "toollabentertime");
             // 
             // toollabinfochk
             // 
@@ -313,6 +313,7 @@
             // 
             // toolStrip1
             // 
+            this.toolStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             resources.ApplyResources(this.toolStrip1, "toolStrip1");
             this.toolStrip1.Name = "toolStrip1";
             // 
@@ -345,7 +346,7 @@
             this.dockSite9.Controls.Add(this.bar2);
             resources.ApplyResources(this.dockSite9, "dockSite9");
             this.dockSite9.DocumentDockContainer = new DevComponents.DotNetBar.DocumentDockContainer(new DevComponents.DotNetBar.DocumentBaseContainer[] {
-            ((DevComponents.DotNetBar.DocumentBaseContainer)(new DevComponents.DotNetBar.DocumentBarContainer(this.bar2, 991, 683)))}, DevComponents.DotNetBar.eOrientation.Horizontal);
+            ((DevComponents.DotNetBar.DocumentBaseContainer)(new DevComponents.DotNetBar.DocumentBarContainer(this.bar2, 1321, 860)))}, DevComponents.DotNetBar.eOrientation.Horizontal);
             this.dockSite9.Name = "dockSite9";
             this.dockSite9.TabStop = false;
             // 
@@ -394,6 +395,7 @@
             // 
             // toolstripmain2
             // 
+            this.toolstripmain2.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.toolstripmain2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripCenter,
             this.toolStripSeparator1,
@@ -523,6 +525,7 @@
             // 
             // toolstripmain1
             // 
+            this.toolstripmain1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.toolstripmain1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripRepair,
             this.toolStripRevImg,
@@ -634,7 +637,7 @@
             this.dockSite1.Controls.Add(this.bar1);
             resources.ApplyResources(this.dockSite1, "dockSite1");
             this.dockSite1.DocumentDockContainer = new DevComponents.DotNetBar.DocumentDockContainer(new DevComponents.DotNetBar.DocumentBaseContainer[] {
-            ((DevComponents.DotNetBar.DocumentBaseContainer)(new DevComponents.DotNetBar.DocumentBarContainer(this.bar1, 392, 683)))}, DevComponents.DotNetBar.eOrientation.Horizontal);
+            ((DevComponents.DotNetBar.DocumentBaseContainer)(new DevComponents.DotNetBar.DocumentBarContainer(this.bar1, 524, 860)))}, DevComponents.DotNetBar.eOrientation.Horizontal);
             this.dockSite1.Name = "dockSite1";
             this.dockSite1.TabStop = false;
             // 
@@ -733,11 +736,6 @@
             this.dockSite3.DocumentDockContainer = new DevComponents.DotNetBar.DocumentDockContainer();
             this.dockSite3.Name = "dockSite3";
             this.dockSite3.TabStop = false;
-            // 
-            // toolStripStatusLabel1
-            // 
-            //this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            //resources.ApplyResources(this.toolStripStatusLabel1, "toolStripStatusLabel1");
             // 
             // FrmZchk
             // 

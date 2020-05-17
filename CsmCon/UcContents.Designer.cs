@@ -54,6 +54,7 @@
             this.colDodulelx = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.gr2 = new System.Windows.Forms.GroupBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.butTs = new DevComponents.DotNetBar.ButtonX();
             this.gr0.SuspendLayout();
             this.gr1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitCont)).BeginInit();
@@ -151,9 +152,9 @@
             // 
             this.butModule.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.butModule.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.butModule.Location = new System.Drawing.Point(16, 181);
+            this.butModule.Location = new System.Drawing.Point(11, 176);
             this.butModule.Name = "butModule";
-            this.butModule.Size = new System.Drawing.Size(59, 31);
+            this.butModule.Size = new System.Drawing.Size(61, 40);
             this.butModule.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.butModule.TabIndex = 7;
             this.butModule.Text = "模版";
@@ -163,9 +164,9 @@
             // 
             this.butDel.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.butDel.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.butDel.Location = new System.Drawing.Point(16, 126);
+            this.butDel.Location = new System.Drawing.Point(11, 121);
             this.butDel.Name = "butDel";
-            this.butDel.Size = new System.Drawing.Size(56, 31);
+            this.butDel.Size = new System.Drawing.Size(61, 40);
             this.butDel.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.butDel.TabIndex = 6;
             this.butDel.Text = "删除";
@@ -175,9 +176,9 @@
             // 
             this.butEdit.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.butEdit.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.butEdit.Location = new System.Drawing.Point(16, 73);
+            this.butEdit.Location = new System.Drawing.Point(11, 68);
             this.butEdit.Name = "butEdit";
-            this.butEdit.Size = new System.Drawing.Size(55, 31);
+            this.butEdit.Size = new System.Drawing.Size(61, 40);
             this.butEdit.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.butEdit.TabIndex = 5;
             this.butEdit.Text = "修改";
@@ -187,10 +188,10 @@
             // 
             this.butAdd.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.butAdd.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.butAdd.Location = new System.Drawing.Point(16, 22);
+            this.butAdd.Location = new System.Drawing.Point(11, 17);
             this.butAdd.Name = "butAdd";
             this.butAdd.Shortcuts.Add(DevComponents.DotNetBar.eShortcut.CtrlZ);
-            this.butAdd.Size = new System.Drawing.Size(54, 31);
+            this.butAdd.Size = new System.Drawing.Size(61, 40);
             this.butAdd.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.butAdd.TabIndex = 4;
             this.butAdd.Text = "新增(Z)";
@@ -234,7 +235,7 @@
             this.panel2.Controls.Add(this.LvContents);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(0, 0);
-            this.panel2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel2.Margin = new System.Windows.Forms.Padding(2);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(185, 285);
             this.panel2.TabIndex = 0;
@@ -328,6 +329,7 @@
             // 
             // gr2
             // 
+            this.gr2.Controls.Add(this.butTs);
             this.gr2.Controls.Add(this.butAdd);
             this.gr2.Controls.Add(this.butEdit);
             this.gr2.Controls.Add(this.butModule);
@@ -360,6 +362,18 @@
             this.splitContainer1.SplitterDistance = 196;
             this.splitContainer1.TabIndex = 3;
             this.splitContainer1.TabStop = false;
+            // 
+            // butTs
+            // 
+            this.butTs.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.butTs.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.butTs.Location = new System.Drawing.Point(11, 230);
+            this.butTs.Name = "butTs";
+            this.butTs.Size = new System.Drawing.Size(61, 40);
+            this.butTs.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.butTs.TabIndex = 8;
+            this.butTs.Text = "记录条数";
+            this.butTs.Click += new System.EventHandler(this.butTs_Click);
             // 
             // UcContents
             // 
@@ -414,5 +428,6 @@
         public DevComponents.DotNetBar.ButtonX butAdd;
         public System.Windows.Forms.GroupBox gr2;
         private System.Windows.Forms.Panel panel2;
+        private DevComponents.DotNetBar.ButtonX butTs;
     }
 }

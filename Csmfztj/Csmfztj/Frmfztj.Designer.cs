@@ -73,6 +73,8 @@
             this.T_zhengli = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.T_Infochk = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.T_Zchk = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.T_luru = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.T_zhangding = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1.SuspendLayout();
             this.gr2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.superTabControl1)).BeginInit();
@@ -182,7 +184,9 @@
             this.T_check,
             this.T_zhengli,
             this.T_Infochk,
-            this.T_Zchk});
+            this.T_Zchk,
+            this.T_luru,
+            this.T_zhangding});
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -541,6 +545,18 @@
             this.T_Zchk.Name = "T_Zchk";
             this.T_Zchk.ReadOnly = true;
             // 
+            // T_luru
+            // 
+            this.T_luru.HeaderText = "页码录入";
+            this.T_luru.Name = "T_luru";
+            this.T_luru.ReadOnly = true;
+            // 
+            // T_zhangding
+            // 
+            this.T_zhangding.HeaderText = "装订产量";
+            this.T_zhangding.Name = "T_zhangding";
+            this.T_zhangding.ReadOnly = true;
+            // 
             // Frmfztj
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -623,5 +639,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn T_zhengli;
         private System.Windows.Forms.DataGridViewTextBoxColumn T_Infochk;
         private System.Windows.Forms.DataGridViewTextBoxColumn T_Zchk;
+        private System.Windows.Forms.DataGridViewTextBoxColumn T_luru;
+        private System.Windows.Forms.DataGridViewTextBoxColumn T_zhangding;
     }
 }

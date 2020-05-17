@@ -36,6 +36,7 @@ namespace Csmdajc
         private int Round = 0;
         private int ImgSize = 0;
         private List<int> strpage = new List<int>();
+        private string indexpage = "";
         private void Init()
         {
             try {
@@ -312,21 +313,21 @@ namespace Csmdajc
             if (ImgView.Image != null && Clscheck.CrrentPage > 1) {
                 if (ImgNum >= 1)
                     ImgNum -= 1;
-                Thread.Sleep(100);
+              
+                Himg._Pagenext(0);
+                Thread.Sleep(10);
                 ShowPage();
-               // Himg._Pagenext(0);
-                int p = Clscheck.CrrentPage;
-                int id = 0;
-                for (int i = 0; i < strpage.Count; i++) {
-                    int s = strpage[i];
-                    if (s < p)
-                        id += 1;
-                }
-                p =p-id-1;
-                if (p <= 0)
-                    return;
-                Himg._Gotopage(p);
-                ucContents1.OnChangContents(p);
+              //  int p = Clscheck.CrrentPage;
+                //int id = 0;
+                //for (int i = 0; i < strpage.Count; i++) {
+                //    int s = strpage[i];
+                //    if (s < p)
+                //        id += 1;
+                //}
+                int indx;
+                bool bl = int.TryParse(indexpage, out indx);
+                if (bl)
+                    ucContents1.OnChangContents(indx);
             }
         }
 
@@ -334,6 +335,10 @@ namespace Csmdajc
         {
             NextPage();
             ShowPage();
+            int indx;
+            bool bl = int.TryParse(indexpage, out indx);
+            if (bl)
+                ucContents1.OnChangContents(indx);
         }
         private void NextPage()
         {
@@ -342,26 +347,14 @@ namespace Csmdajc
                     ImgNum += 1;
                     Himg._SavePage();
                     Thread.Sleep(50);
-                    int p = Clscheck.CrrentPage;
-                    int id = 0;
-                    for (int i = 0; i < strpage.Count; i++) {
-                        int s = strpage[i];
-                        if (s < p)
-                            id += 1;
-                    }
-                    p = id+p+1;
-                    if (p >=Clscheck.MaxPage)
-                    {
-                        Himg._SavePage();
-                        Thread.Sleep(50);
-                        toolStripSave_Click(null, null);
-                        return;
-                    }
-                    Himg._Gotopage(p);
-                    //ucContents1.OnChangContents(p);
-                    //Himg._Pagenext(1);
-
-                    ucContents1.OnChangContents(p);
+                    Himg._Pagenext(1);
+                    //int p = Clscheck.CrrentPage;
+                    //int id = 0;
+                    //for (int i = 0; i < strpage.Count; i++) {
+                    //    int s = strpage[i];
+                    //    if (s < p)
+                    //        id += 1;
+                    //}
                 }
                 else if (Clscheck.CrrentPage == Clscheck.MaxPage) {
                     ImgNum += 1;
@@ -791,6 +784,7 @@ namespace Csmdajc
         {
             try {
                 string txt = Himg._Readpage();
+                indexpage = txt;
                 labpage.Text = string.Format("第 {0} 页", txt);
             } catch { }
 
@@ -1005,6 +999,8 @@ namespace Csmdajc
                 string entertime = string.Empty;
                 string zj = string.Empty;
                 string zjtime = string.Empty;
+                string ml = string.Empty;
+                string mltime = string.Empty;
                 DataTable dt = Common.GetOperator(Clscheck.Archid);
                 if (dt == null || dt.Rows.Count <= 0)
                     return;
@@ -1017,8 +1013,10 @@ namespace Csmdajc
                 chktime = dr["质检时间"].ToString();
                 enter = dr["录入"].ToString();
                 entertime = dr["录入时间"].ToString();
-               // zj = dr["总检"].ToString();
-                //zjtime = dr["总检时间"].ToString();
+                ml = dr["目录"].ToString();
+                mltime = dr["目录时间"].ToString();
+                //zj = dr[""].ToString();
+                //zjtime = dr[""].ToString();
                 this.BeginInvoke(new Action(() =>
                 {
                     toollabscan.Text = string.Format("扫描:{0}", Scanner);
@@ -1029,24 +1027,26 @@ namespace Csmdajc
                     toollabchecktime.Text = string.Format("时间:{0}", chktime);
                     toollabenter.Text = string.Format("录入:{0}", enter);
                     toollabentertime.Text = string.Format("时间:{0}", entertime);
-                    //toollabezchk.Text = string.Format("总质检:{0}", zj);
-                    //toollabzchktime.Text = string.Format("时间:{0}", zjtime);
+                    toollabinfochk.Text = string.Format("目录:{0}", ml);
+                    toollabinfochktime.Text = string.Format("目录时间:{0}", mltime);
+                    toollabezchk.Text = string.Format("总检:{0}", zj);
+                    toollabzchktime.Text = string.Format("总检时间:{0}", zjtime);
 
                 }));
-                dt = Common.GetOperatorchk(Clscheck.Archid);
-                if (dt == null || dt.Rows.Count <= 0)
-                    return;
-                this.BeginInvoke(new Action(() =>
-                {
-                    for (int i = 0; i < dt.Rows.Count; i++) {
-                        string user = dt.Rows[i][0].ToString();
-                        string time = dt.Rows[i][1].ToString();
-                        toollabinfochk.Text = string.Format("信息质检:{0}", user);
-                        toollabinfochktime.Text = string.Format("时间:{0}", time);
+                //dt = Common.GetOperatorchk(Clscheck.Archid);
+                //if (dt == null || dt.Rows.Count <= 0)
+                //    return;
+                //this.BeginInvoke(new Action(() =>
+                //{
+                //    for (int i = 0; i < dt.Rows.Count; i++) {
+                //        string user = dt.Rows[i][0].ToString();
+                //        string time = dt.Rows[i][1].ToString();
+                //        toollabinfochk.Text = string.Format("信息质检:{0}", user);
+                //        toollabinfochktime.Text = string.Format("时间:{0}", time);
 
-                    }
-                }));
-                dt.Dispose();
+                //    }
+                //}));
+                //dt.Dispose();
             }));
         }
 

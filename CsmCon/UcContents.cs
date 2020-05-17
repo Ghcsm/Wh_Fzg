@@ -241,6 +241,8 @@ namespace CsmCon
                 if (t.Tag != null && t.Tag.ToString() != "") {
                     string str = t.Text.Trim();
                     dic1.Add(Convert.ToInt32(t.Tag), str);
+                    if (t.Tag.ToString() == "3")
+                        CrragePage = Convert.ToInt32(str) - 1;
                 }
             }
             dicxx = dic1.OrderBy(o => o.Key).ToDictionary(o => o.Key, p => p.Value);
@@ -276,8 +278,7 @@ namespace CsmCon
             }
             AddTitle();
             if (this.LvContents.Items.Count > 0 && CrragePage > 0) {
-                if (CrragePage < LvContents.Items.Count - 1)
-                {
+                if (CrragePage < LvContents.Items.Count - 1) {
                     LvContents.Items[CrragePage].Selected = true;
                     LvContents.Items[CrragePage].EnsureVisible();
                 }
@@ -351,7 +352,7 @@ namespace CsmCon
                     if (!bl)
                         return;
                     //id -= 1;
-                    id = info.LsModuleIndex.IndexOf(id.ToString().PadLeft(2,'0'));
+                    id = info.LsModuleIndex.IndexOf(id.ToString().PadLeft(2, '0'));
                     if (id < 0)
                         return;
                     if (id > info.LsModule.Count - 1)
@@ -380,8 +381,7 @@ namespace CsmCon
             // }
             ContentsEdit();
             if (this.LvContents.Items.Count > 0) {
-                if (CrragePage < this.LvContents.Items.Count)
-                {
+                if (CrragePage < this.LvContents.Items.Count) {
                     LvContents.Items[CrragePage].Selected = true;
                     LvContents.Items[CrragePage].EnsureVisible();
                 }
@@ -391,7 +391,7 @@ namespace CsmCon
 
         private void LvContents_Click(object sender, EventArgs e)
         {
-            if (LvContents.SelectedItems != null && LvContents.SelectedItems.Count>0) {
+            if (LvContents.SelectedItems != null && LvContents.SelectedItems.Count > 0) {
                 Settxt(sender, e);
             }
         }
@@ -509,14 +509,40 @@ namespace CsmCon
                 CrragePage = x;
                 if (x >= 0) {
                     LvContents.SelectedItems.Clear();
-                    LvContents.Items[x].Selected = true;
+                    //LvContents.Items[x].Selected = true;
+                    // LvContents.Items[x].BackColor = System.Drawing.Color.Red;
+                    for (int i = 0; i < LvContents.Items.Count; i++) {
+                        LvContents.Items[i].BackColor = System.Drawing.Color.White;
+                    }
+                    LvContents.Items[CrragePage].BackColor = System.Drawing.Color.Red;
+                    for (int i = 1; i < LvContents.Columns.Count; i++) {
+                        string str = LvContents.Items[x].SubItems[i].Text;
+                        if (i == 1)
+                            Mtmpid = Convert.ToInt32(str);
+                        else {
+                            info.SetInfoTxt(panel1, (i - 1), str);
+                        }
+                        // if (i == pid + 2)
+                        //    page = str;
+                        //else if (i == tid + 2)
+                        //    title = str;
+                        //if (i == 5)
+                        //    ywid = str;
+                    }
+
+                    //lvi.BackColor = Color.Red;
                 }
                 else if (page > 0)
                     info.SetInfoTxtcls(panel1, info.PagesWz + 1, page.ToString());
-                if (LvContents.Items.Count > 0) {
-                    LvContents.Items[CrragePage].Selected = true;
-                    LvContents.Items[CrragePage].EnsureVisible();
-                }
+                //if (LvContents.Items.Count > 0) {
+                //    // LvContents.Items[CrragePage].Selected = true;
+                //    for (int i = 0; i < LvContents.Items.Count; i++) {
+                //        LvContents.Items[i].BackColor = System.Drawing.Color.White;
+                //    }
+                //   // LvContents.BackColor = System.Drawing.Color.White;
+                //    LvContents.Items[CrragePage].BackColor = System.Drawing.Color.Red;
+                //    LvContents.Items[CrragePage].EnsureVisible();
+                //}
             } catch { }
         }
 
@@ -530,8 +556,8 @@ namespace CsmCon
         }
         private void LvContents_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (LvContents.SelectedItems.Count >0)
-                    LvContents_Click(null, null);
+            if (LvContents.SelectedItems.Count > 0)
+                LvContents_Click(null, null);
         }
 
         void DoubleModuleAddConte()
@@ -677,27 +703,37 @@ namespace CsmCon
         //    Common.ContenJmqu(2, ArchId);
         //    info.LoadContentsadd(ArchId, LvContents, chkTspages.Checked, Infoadd);
         //}
-     
+
 
         private void LvContents_KeyDown(object sender, KeyEventArgs e)
         {
             e.Handled = true;
-            if (e.KeyCode == Keys.Down)
-            {
+            if (e.KeyCode == Keys.Down) {
                 CrragePage = LvContents.SelectedItems[0].Index;
                 LvContents.Items[CrragePage].Selected = false;
-                if (CrragePage< LvContents.Items.Count-1)
-                LvContents.Items[CrragePage+1].Selected = true;
+                if (CrragePage < LvContents.Items.Count - 1)
+                    LvContents.Items[CrragePage + 1].Selected = true;
                 return;
             }
 
-            if (e.KeyCode == Keys.Up)
-            {
+            if (e.KeyCode == Keys.Up) {
                 CrragePage = LvContents.SelectedItems[0].Index;
                 LvContents.Items[CrragePage].Selected = false;
-                if (CrragePage>=1)
-                LvContents.Items[CrragePage -1].Selected = true;
+                if (CrragePage >= 1)
+                    LvContents.Items[CrragePage - 1].Selected = true;
             }
+        }
+
+        private void butTs_Click(object sender, EventArgs e)
+        {
+            if (LvContents.Items.Count <= 0 || ArchId <= 0)
+                return;
+            int id = Common.UpdatecontenTs(ArchId, LvContents.Items.Count.ToString());
+            if (id > 0)
+                MessageBox.Show("记录成功!");
+            else
+                MessageBox.Show("记录失败!");
+
         }
     }
 }

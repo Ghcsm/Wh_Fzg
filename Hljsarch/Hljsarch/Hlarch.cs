@@ -1828,58 +1828,85 @@ namespace HLjscom
             }
         }
 
-        public string _SplitImgjpgPdf(string tffile, string jpgpath, string pdfpath, string fileformat, List<int> page, int p1, int p2,int imgp1,int imgp2)
+        public string _SplitImgjpgPdf(string tffile, string jpgpath, string pdfpath, string fileformat, List<string> page, int p1, int p2, int imgp1, int imgp2, int tag)
         {
             try {
-                int id = 0;
+                int img = imgp1;
+                int a = 0;
+                // a 标记为是否为带杠
+                //id 记录带杠的次数
                 using (RasterCodecs _codecs = new RasterCodecs()) {
-                    CodecsImageInfo info = _codecs.GetInformation(tffile, true);
+
                     for (int i = p1; i <= p2; i++) {
-                        id += 1;
-                        RasterImage _imagepx = _codecs.Load(tffile, 0, CodecsLoadByteOrder.BgrOrGrayOrRomm, i, i);
-                        int bit = _imagepx.BitsPerPixel;
-                        int fp = 0;
-                        for (int j = 0; j < page.Count; j++)
-                        {
+                        int id = 0;
+                        a = 0;
+                        for (int j = 0; j <= page.Count; j++) {
+                            string s = i.ToString() + "-" + j.ToString();
+                            if (page.Contains(s)) {
+                                id += 1;
+                            }
+                            else
+                                a += 1;
 
-                        }
+                            if (a >= 2) {
+                                a = 0;
+                                break;
+                            }
+                            RasterImage _imagepx = _codecs.Load(tffile, 0, CodecsLoadByteOrder.BgrOrGrayOrRomm, img, img);
+                            int bit = _imagepx.BitsPerPixel;
+                            string jpgpath1 = Path.Combine(jpgpath, i.ToString().PadLeft(4, '0') + "_" + id.ToString().PadLeft(2, '0') + ".jpg");
+                            string pdfpath1 = Path.Combine(pdfpath, i.ToString().PadLeft(4, '0') + "_" + id.ToString().PadLeft(2, '0') + ".pdf");
+                            _codecs.Options.Jpeg.Save.QualityFactor = Factor;
+                            if (tag == 1) {
+                                if (File.Exists(jpgpath1))
+                                    continue;
+                                if (File.Exists(pdfpath1))
+                                    continue;
+                            }
+                            else if (tag == 2) {
+                                try {
+                                    if (File.Exists(jpgpath1))
+                                        File.Delete(jpgpath1);
+                                    if (File.Exists(pdfpath1))
+                                        File.Delete(pdfpath1);
+                                } catch { }
+                            }
+                            if (bit != 1) {
+                                if (bit != 8) {
+                                    if (fileformat == "jpg")
+                                        _codecs.Save(_imagepx, jpgpath1, RasterImageFormat.TifJpeg, bit, 1, 1, i, CodecsSavePageMode.Append);
+                                    else if (fileformat == "pdf")
+                                        _codecs.Save(_imagepx, pdfpath1, RasterImageFormat.RasPdfJpeg, bit, 1, 1, i, CodecsSavePageMode.Append);
+                                    else if (fileformat == "jpgpdf") {
+                                        _codecs.Save(_imagepx, jpgpath1, RasterImageFormat.TifJpeg, bit, 1, 1, i, CodecsSavePageMode.Append);
+                                        _codecs.Save(_imagepx, pdfpath1, RasterImageFormat.RasPdfJpeg, bit, 1, 1, i, CodecsSavePageMode.Append);
+                                    }
+                                }
+                                else {
 
-                        jpgpath = Path.Combine(jpgpath, id.ToString().PadLeft(4,'0') +"_"+fp.ToString().PadLeft(2,'0')+ ".jpg");
-                        pdfpath = Path.Combine(jpgpath, id.ToString().PadLeft(4,'0') +"_"+fp.ToString().PadLeft(2,'0')+ ".pdf");
-                        _codecs.Options.Jpeg.Save.QualityFactor = Factor;
-                        if (bit != 1) {
-                            if (bit != 8) {
-                                if (fileformat == "jpg")
-                                    _codecs.Save(_imagepx, jpgpath, RasterImageFormat.TifJpeg, bit, 1, 1, i, CodecsSavePageMode.Append);
-                                else if (fileformat == "pdf")
-                                    _codecs.Save(_imagepx, pdfpath, RasterImageFormat.RasPdfJpeg, bit, 1, 1, i, CodecsSavePageMode.Append);
-                                else if (fileformat == "jpgpdf") {
-                                    _codecs.Save(_imagepx, jpgpath, RasterImageFormat.TifJpeg, bit, 1, 1, i, CodecsSavePageMode.Append);
-                                    _codecs.Save(_imagepx, pdfpath, RasterImageFormat.RasPdfJpeg, bit, 1, 1, i, CodecsSavePageMode.Append);
+                                    if (fileformat == "jpg")
+                                        _codecs.Save(_imagepx, jpgpath1, RasterImageFormat.TifJpeg, 8, 1, 1, i, CodecsSavePageMode.Append);
+                                    else if (fileformat == "pdf")
+                                        _codecs.Save(_imagepx, pdfpath1, RasterImageFormat.RasPdfJpeg, 8, 1, 1, i, CodecsSavePageMode.Append);
+                                    else if (fileformat == "jpgpdf") {
+                                        _codecs.Save(_imagepx, jpgpath1, RasterImageFormat.TifJpeg, 8, 1, 1, i, CodecsSavePageMode.Append);
+                                        _codecs.Save(_imagepx, pdfpath1, RasterImageFormat.RasPdfJpeg, 8, 1, 1, i, CodecsSavePageMode.Append);
+                                    }
                                 }
                             }
                             else {
-
                                 if (fileformat == "jpg")
-                                    _codecs.Save(_imagepx, jpgpath, RasterImageFormat.TifJpeg, 8, 1, 1, i, CodecsSavePageMode.Append);
+                                    _codecs.Save(_imagepx, jpgpath1, RasterImageFormat.TifJpeg, 1, 1, 1, i, CodecsSavePageMode.Append);
                                 else if (fileformat == "pdf")
-                                    _codecs.Save(_imagepx, pdfpath, RasterImageFormat.RasPdfJpeg, 8, 1, 1, i, CodecsSavePageMode.Append);
+                                    _codecs.Save(_imagepx, pdfpath1, RasterImageFormat.RasPdfJpeg, 1, 1, 1, i, CodecsSavePageMode.Append);
                                 else if (fileformat == "jpgpdf") {
-                                    _codecs.Save(_imagepx, jpgpath, RasterImageFormat.TifJpeg, 8, 1, 1, i, CodecsSavePageMode.Append);
-                                    _codecs.Save(_imagepx, pdfpath, RasterImageFormat.RasPdfJpeg, 8, 1, 1, i, CodecsSavePageMode.Append);
+                                    _codecs.Save(_imagepx, jpgpath1, RasterImageFormat.TifJpeg, 1, 1, 1, i, CodecsSavePageMode.Append);
+                                    _codecs.Save(_imagepx, pdfpath1, RasterImageFormat.RasPdfJpeg, 1, 1, 1, i, CodecsSavePageMode.Append);
                                 }
                             }
+                            img += 1;
                         }
-                        else {
-                            if (fileformat == "jpg")
-                                _codecs.Save(_imagepx, jpgpath, RasterImageFormat.TifJpeg, 1, 1, 1, i, CodecsSavePageMode.Append);
-                            else if (fileformat == "pdf")
-                                _codecs.Save(_imagepx, pdfpath, RasterImageFormat.RasPdfJpeg, 1, 1, 1, i, CodecsSavePageMode.Append);
-                            else if (fileformat == "jpgpdf") {
-                                _codecs.Save(_imagepx, jpgpath, RasterImageFormat.TifJpeg, 1, 1, 1, i, CodecsSavePageMode.Append);
-                                _codecs.Save(_imagepx, pdfpath, RasterImageFormat.RasPdfJpeg, 1, 1, 1, i, CodecsSavePageMode.Append);
-                            }
-                        }
+
                     }
                 }
                 return "ok";

@@ -102,9 +102,9 @@
             this.LvData.FullRowSelect = true;
             this.LvData.GridLines = true;
             this.LvData.HideSelection = false;
-            this.LvData.Location = new System.Drawing.Point(5, 63);
+            this.LvData.Location = new System.Drawing.Point(5, 82);
             this.LvData.Name = "LvData";
-            this.LvData.Size = new System.Drawing.Size(348, 348);
+            this.LvData.Size = new System.Drawing.Size(348, 329);
             this.LvData.SmallImageList = this.ImgList;
             this.LvData.StateImageList = this.ImgList;
             this.LvData.TabIndex = 1;
@@ -184,7 +184,7 @@
             this.panelTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelTop.Location = new System.Drawing.Point(3, 17);
             this.panelTop.Name = "panelTop";
-            this.panelTop.Size = new System.Drawing.Size(353, 40);
+            this.panelTop.Size = new System.Drawing.Size(353, 64);
             this.panelTop.TabIndex = 0;
             // 
             // combLx
