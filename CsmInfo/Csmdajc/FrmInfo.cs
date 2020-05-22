@@ -368,6 +368,7 @@ namespace Csminfo
                 int arid = Clscheck.Archid;
                 string filename = Clscheck.FileNametmp;
                 string filepath = Clscheck.ScanFilePath;
+                Common.WriteArchlog(Clscheck.Archid, "退出目录著录");
                 Cledata();
                 try {
                     if (T_ConFigure.FtpStyle == 1)
@@ -750,6 +751,7 @@ namespace Csminfo
                     LoadContents();
                     Getuser();
                     Ispages();
+                    Common.WriteArchlog(Clscheck.Archid,"进入目录著录");
                     return;
                 }
                 MessageBox.Show("文件加载失败或不存在!");

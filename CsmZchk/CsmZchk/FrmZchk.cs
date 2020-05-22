@@ -77,6 +77,7 @@ namespace CsmZchk
         private void GArch_LineClickLoadInfo(object sender, EventArgs e)
         {
             LoadContents();
+            Common.WriteArchlog(Clscheck.Archid, "进入总检档案!");
             //ucdL.LoadInfo(gArch.Archid);
             gArch.LvData.Focus();
         }
@@ -432,6 +433,7 @@ namespace CsmZchk
                 int arid = Clscheck.Archid;
                 string filename = Clscheck.FileNametmp;
                 string filepath = Clscheck.ScanFilePath;
+                Common.WriteArchlog(arid, "总检完成退出!");
                 Cledata();
                 try {
                     if (T_ConFigure.FtpStyle == 1)

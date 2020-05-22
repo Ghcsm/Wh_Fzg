@@ -85,6 +85,9 @@
             // comQi
             // 
             this.comQi.FormattingEnabled = true;
+            this.comQi.Items.AddRange(new object[] {
+            "长期",
+            "永久"});
             this.comQi.Location = new System.Drawing.Point(60, 100);
             this.comQi.Name = "comQi";
             this.comQi.Size = new System.Drawing.Size(62, 20);

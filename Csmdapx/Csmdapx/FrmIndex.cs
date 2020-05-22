@@ -482,7 +482,6 @@ namespace Csmdapx
                 }
                 else
                     toolStripCut_Click(sender, e);
-                txtPages.Focus();
             }
             else {
                 if (Yuan == 0) {
@@ -493,7 +492,6 @@ namespace Csmdapx
                     Yuan = 0;
                 }
             }
-
         }
         private void toolStripSplitTag_Click(object sender, EventArgs e)
         {
@@ -824,6 +822,7 @@ namespace Csmdapx
                 Himg.Filename = ClsIndex.ScanFilePath;
                 Himg.LoadPage(pages);
                 Getuser();
+                Common.WriteArchlog(ClsIndex.Archid, "进入案卷");
                 return;
             }
             MessageBox.Show("文件加载失败或不存在!");
@@ -919,14 +918,23 @@ namespace Csmdapx
                 if (dt == null || dt.Rows.Count <= 0)
                     return;
                 DataRow dr = dt.Rows[0];
-                Scanner = dr["扫描"].ToString();
-                scantime = dr["扫描时间"].ToString();
+                //Scanner = dr["扫描"].ToString();
+                //scantime = dr["扫描时间"].ToString();
                 Indexer = dr["排序"].ToString();
                 indextime = dr["排序时间"].ToString();
                 Checker = dr["质检"].ToString();
                 chktime = dr["质检时间"].ToString();
                 enter = dr["录入"].ToString();
                 entertime = dr["录入时间"].ToString();
+                foreach (DataRow d in dt.Rows)
+                {
+                    string s = d["扫描"].ToString();
+                    if (!Scanner.Contains(s))
+                    {
+                        Scanner += s + ",";
+                        scantime += d["扫描时间"].ToString() + ",";
+                    }
+                }
                 this.BeginInvoke(new Action(() =>
                 {
                     this.labScanUser.Text = string.Format("扫描：{0}", Scanner);
@@ -1000,6 +1008,7 @@ namespace Csmdapx
         private void FtpUpFinish(string file2, int tagpage, int regpage, string filetmp, int arid, string archpos, Dictionary<int, string> pageAbc, Dictionary<int, int> pagenumber, Dictionary<int, string> fuhao)
         {
             try {
+                Common.WriteArchlog(arid, "排序保存完成");
                 if (File.Exists(filetmp)) {
                     string PageIndexInfo = "";
                     string PageIndexInfoOk = "";
@@ -1132,7 +1141,7 @@ namespace Csmdapx
                     Common.SetArchWorkState(arid, (int)T_ConFigure.ArchStat.扫描完);
                 }
                 else
-                    Common.Writelog(arid, "排序完成退出时未找到文件!");
+                    Common.WriteArchlog(arid, "排序完成保存时未找到文件!");
             } catch (Exception ex) {
                 MessageBox.Show("上传失败!" + ex.ToString());
                 Common.SetArchWorkState(arid, (int)T_ConFigure.ArchStat.扫描完);
@@ -1145,6 +1154,7 @@ namespace Csmdapx
         private void FtpUpCanCel(string filetmp, string filetmp2, int arid, string archpos, Dictionary<int, string> pageAbc, Dictionary<int, int> pagenumber, int pages, Dictionary<int, string> fuhao, int tag)
         {
             try {
+                Common.WriteArchlog(arid, "排序退出未保存!");
                 if (File.Exists(filetmp)) {
                     Common.WiteUpTask(arid, archpos, T_ConFigure.ScanTempFile, (int)T_ConFigure.ArchStat.扫描完, pages, filetmp, tag.ToString());
                     string PageIndexInfo = "";
@@ -1210,7 +1220,7 @@ namespace Csmdapx
                    // Common.SetArchWorkState(arid, (int)T_ConFigure.ArchStat.扫描完);
                 }
                 else
-                    Common.Writelog(arid, "排序退出时未找到文件!");
+                    Common.WriteArchlog(arid, "排序退出时未找到文件!");
 
             } catch {
                // Common.SetArchWorkState(arid, (int)T_ConFigure.ArchStat.扫描完);
@@ -1251,20 +1261,11 @@ namespace Csmdapx
             return true;
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        private void ImgView_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right) 
+                txtPages.Focus();
+        }
 
 
         #endregion

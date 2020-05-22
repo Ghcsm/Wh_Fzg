@@ -346,7 +346,7 @@
             this.dockSite9.Controls.Add(this.bar2);
             resources.ApplyResources(this.dockSite9, "dockSite9");
             this.dockSite9.DocumentDockContainer = new DevComponents.DotNetBar.DocumentDockContainer(new DevComponents.DotNetBar.DocumentBaseContainer[] {
-            ((DevComponents.DotNetBar.DocumentBaseContainer)(new DevComponents.DotNetBar.DocumentBarContainer(this.bar2, 1321, 860)))}, DevComponents.DotNetBar.eOrientation.Horizontal);
+            ((DevComponents.DotNetBar.DocumentBaseContainer)(new DevComponents.DotNetBar.DocumentBarContainer(this.bar2, 808, 681)))}, DevComponents.DotNetBar.eOrientation.Horizontal);
             this.dockSite9.Name = "dockSite9";
             this.dockSite9.TabStop = false;
             // 
@@ -637,7 +637,7 @@
             this.dockSite1.Controls.Add(this.bar1);
             resources.ApplyResources(this.dockSite1, "dockSite1");
             this.dockSite1.DocumentDockContainer = new DevComponents.DotNetBar.DocumentDockContainer(new DevComponents.DotNetBar.DocumentBaseContainer[] {
-            ((DevComponents.DotNetBar.DocumentBaseContainer)(new DevComponents.DotNetBar.DocumentBarContainer(this.bar1, 524, 860)))}, DevComponents.DotNetBar.eOrientation.Horizontal);
+            ((DevComponents.DotNetBar.DocumentBaseContainer)(new DevComponents.DotNetBar.DocumentBarContainer(this.bar1, 392, 681)))}, DevComponents.DotNetBar.eOrientation.Horizontal);
             this.dockSite1.Name = "dockSite1";
             this.dockSite1.TabStop = false;
             // 

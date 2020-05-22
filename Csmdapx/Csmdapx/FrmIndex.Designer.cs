@@ -349,6 +349,7 @@
             this.ImgView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ImgView_MouseClick);
             this.ImgView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ImgView_MouseDoubleClick);
             this.ImgView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ImgView_MouseDown);
+            this.ImgView.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ImgView_MouseUp);
             // 
             // gr4
             // 
@@ -596,21 +597,21 @@
             // toolStripAutoRectSet
             // 
             this.toolStripAutoRectSet.Name = "toolStripAutoRectSet";
-            this.toolStripAutoRectSet.Size = new System.Drawing.Size(180, 24);
+            this.toolStripAutoRectSet.Size = new System.Drawing.Size(163, 24);
             this.toolStripAutoRectSet.Text = "设置RGB";
             this.toolStripAutoRectSet.Click += new System.EventHandler(this.toolStripAutoRectSet_Click_1);
             // 
             // toolStripAutoRectMouseGetcolor
             // 
             this.toolStripAutoRectMouseGetcolor.Name = "toolStripAutoRectMouseGetcolor";
-            this.toolStripAutoRectMouseGetcolor.Size = new System.Drawing.Size(180, 24);
+            this.toolStripAutoRectMouseGetcolor.Size = new System.Drawing.Size(163, 24);
             this.toolStripAutoRectMouseGetcolor.Text = "鼠标取色3*3";
             this.toolStripAutoRectMouseGetcolor.Click += new System.EventHandler(this.toolStripAutoRectMouseGetcolor_Click);
             // 
             // toolStripAutoRectMouseGetcolor5
             // 
             this.toolStripAutoRectMouseGetcolor5.Name = "toolStripAutoRectMouseGetcolor5";
-            this.toolStripAutoRectMouseGetcolor5.Size = new System.Drawing.Size(180, 24);
+            this.toolStripAutoRectMouseGetcolor5.Size = new System.Drawing.Size(163, 24);
             this.toolStripAutoRectMouseGetcolor5.Text = "鼠标取色5*5";
             this.toolStripAutoRectMouseGetcolor5.Click += new System.EventHandler(this.toolStripAutoRectMouseGetcolor5_Click);
             // 

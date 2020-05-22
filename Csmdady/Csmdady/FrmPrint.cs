@@ -707,8 +707,7 @@ namespace Csmdady
                  }
                  else {
                      int arid = 0;
-                     try
-                     {
+                     try {
                          bool bl = chkCq.Checked;
                          int boxsn = Convert.ToInt32(txtBosn.Text.Trim());
                          int box1 = Convert.ToInt32(txtArchno.Text.Trim());
@@ -741,56 +740,13 @@ namespace Csmdady
                 WriteLog(str);
                 return false;
             }
-            DataTable dt = Common.GetArchPages1(archid);
-            if (dt == null || dt.Rows.Count <= 0) {
-                string str = "ID号:" + archid + "总页码或条码获取失败!";
-                WriteLog(str);
-                return false;
-            }
-
-            string page = dt.Rows[0][0].ToString();
-            if (page.Trim().Length <= 0) {
-                string str = "ID号:" + archid + "总页码获取失败!";
-                WriteLog(str);
-                return false;
-            }
-            int countpage;
-            bool bl = int.TryParse(page, out countpage);
-            if (!bl || countpage <= 0) {
-                string str = "ID号:" + archid + "总页码获取失败!";
-                WriteLog(str);
-                return false;
-            }
-            string tm = dt.Rows[0][1].ToString();
-            string xyr = dt.Rows[0][2].ToString();
-            if (countpage <= 0) {
-                string str = "ID号:" + archid + "总页码获取失败!";
-                WriteLog(str);
-                return false;
-            }
-            if (tm.Trim().Length <= 0) {
-                string str = "ID号:" + archid + "条码信息获取失败!";
-                WriteLog(str);
-                return false;
-            }
-            //if (xyr.Trim().Length <= 0) {
-            //    string str = "ID号:" + archid + "嫌疑人不能为空!";
-            //    WriteLog(str);
-            //    return false;
-            //}
+            int countpage = Common.GetArchPages(archid);
             try {
                 Workbook work = new Workbook();
                 Worksheet wsheek = null;
-                work.LoadFromFile(Path.Combine(Application.StartupPath, "目录模版.xlsx"));
+                work.LoadFromFile(Path.Combine(Application.StartupPath, "目录.xls"));
                 wsheek = work.Worksheets[0];
-                //生成条码
-                Bitmap bmp = CreateTm(tm);
-                if (bmp == null)
-                    return false;
-                wsheek.Pictures.Add(2, 2, bmp);
                 string strsn = ClsPrintConten.PrintContenSn;
-                wsheek.Range["A3:A3"].Text = tm;
-                //  string[] strxls = ClsPrintConten.printContenXls.ToArray();
                 //获取起始行和列
                 int rowsn = 0;
                 int colsn = 0;
@@ -803,70 +759,20 @@ namespace Csmdady
                 int dz = 0;
                 for (int i = 0; i < ArchConten.Rows.Count; i++) {
                     dz = 0;
-                    string zrz = ArchConten.Rows[i][0].ToString();
                     for (int j = 0; j < ArchConten.Columns.Count; j++) {
                         string str = ArchConten.Rows[i][j].ToString();
-                        if (i == ArchConten.Rows.Count - 1 & j == ArchConten.Columns.Count - 1)
-                            str = str + "/" + countpage.ToString();
-
-                        if (zrz.Contains("即墨区")) {
-                            if (!zrz.Contains("青岛市"))
-                                zrz = "青岛市" + zrz;
-                        }
-
-                        if (j == 0) {
-                            if (str.Contains("即墨区")) {
-                                if (!str.Contains("青岛市"))
-                                    str = "青岛市" + str;
-                            }
-                        }
-
+                        if (j == 4)
+                            str = str.PadLeft(3, '0');
                         if (j == 1) {
-                            if (!str.Contains("即墨市") && !str.Contains("即墨区")) {
-                                if (zrz.Contains("检察院")) {
-                                    int id = zrz.IndexOf("院");
-                                    zrz = zrz.Substring(0, id + 1);
-                                    str = zrz + str;
-                                }
-                                else if (zrz.Trim().Length == 3 && !zrz.Contains("即墨"))
-                                    str = "即墨市人民检察院" + zrz + str;
-                                else if (!str.Contains("事务所"))
-                                    str = zrz + str;
-                            }
-                            if (str.ToLower().Contains("xxx"))
-                                str = str.Replace("xxx", xyr);
-                            if (str.Contains("XXX"))
-                                str = str.Replace("XXX", xyr);
-                            if (str.Contains("刑事判决书") || str.Contains("刑事附带民事判决书")) {
-                                int id = str.IndexOf("院");
-                                str = str.Insert(id + 1, "关于" + xyr + "案");
-                            }
-                            else if (str.Contains("起诉书")) {
-                                int id = str.IndexOf("院");
-                                str = str.Insert(id + 1, "关于" + xyr + "案");
-                            }
-                            else if (str.Contains("即墨市人民检察院起诉书"))
-                                str = str.Insert(8, "关于" + xyr + "案");
-                            else if (str.Contains("批准逮捕决定书")) {
-                                int id = str.IndexOf("院");
-                                if (id >= 0)
-                                    str = str.Insert(id + 1, "关于" + xyr + "案");
-                                else {
-                                    id = str.IndexOf("分局");
-                                    if (id >= 0) {
-                                        str = str.Insert(id + 2, "关于" + xyr + "案");
-                                    }
-                                    else {
-                                        id = str.IndexOf("局");
-                                        if (id >= 0)
-                                            str = str.Insert(id + 1, "关于" + xyr + "案");
-                                    }
-                                }
-                            }
-
+                            string s = str.Substring(0, 1);
+                            if (s.Contains("\\") || s.Contains("/"))
+                                str = str.Substring(1, str.Length - 1);
+                            s = str.Substring(str.Length - 1, 1);
+                            if (s.Contains("\\") || s.Contains("/"))
+                                str = str.Substring(0,str.Length-1);
                         }
                         if (rowsn > 0)
-                            wsheek.Range[rowsn + i, colsn].Text = "0" + (i + 1).ToString();
+                            wsheek.Range[rowsn + i, colsn].Text = (i + 1).ToString();
                         if (ClsPrintConten.printContenXls.Count > 0) {
                             if (dz < ClsPrintConten.printContenXls.Count) {
                                 arow = Convert.ToInt32(ClsPrintConten.printContenXls[dz].Remove(0, 1));
@@ -899,6 +805,13 @@ namespace Csmdady
                                         return false;
                                     }
                                 }
+                                else {
+                                    if (i == ArchConten.Rows.Count - 1) {
+                                        //int p = Convert.ToInt32(str);
+                                        int p1 = countpage;
+                                        str = str.PadLeft(3, '0') + "-" + p1.ToString().PadLeft(3, '0');
+                                    }
+                                }
                                 wsheek.Range[arow + i, bcol].Text = str;
                             }
                             //else if (dz < ClsPrintConten.PrintContenDz.Count && ClsPrintConten.PrintContenDz[dz] == "True")
@@ -906,16 +819,21 @@ namespace Csmdady
                             //else if (arow == i && j == bcol) {
                             //    wsheek.Range[arow + i, bcol].Text = str;
                             //}
-                            else
+                            else if (ClsPrintConten.PrintContenDz[dz] == "False") {
+                                string s = ClsPrintConten.printContenXls[dz].ToString();
+                                if (str.Trim().Length > 0)
+                                    wsheek.Range[s].Text = str.PadLeft(4, '0');
+                            }
+                            else if (ClsPrintConten.PrintContenDz[dz] == "True")
                                 wsheek.Range[arow + i, bcol].Text = str;
                         }
                         dz += 1;
                     }
                 }
                 rowsn = wsheek.LastRow;
-                string fontname = wsheek.Rows[5].Cells[3].Style.Font.FontName;
+                string fontname = wsheek.Rows[6].Cells[3].Style.Font.FontName;
                 double fontsize = wsheek.Rows[6].Cells[3].Style.Font.Size;
-                CellRange range = wsheek.Range["A6" + ":G" + rowsn];
+                CellRange range = wsheek.Range["A6" + ":H" + rowsn];
                 range.BorderInside(LineStyleType.Thin, ExcelColors.Black);
                 range.BorderAround(LineStyleType.Thin, ExcelColors.Black);
                 range.Style.Font.Size = fontsize;
@@ -924,34 +842,13 @@ namespace Csmdady
                 range.VerticalAlignment = VerticalAlignType.Center;
                 range.Style.WrapText = true;
                 range.AutoFitRows();
-                double rowcount = 0;
-                for (int i = 5; i < rowsn; i++) {
+                for (int i = 6; i < rowsn; i++) {
                     double row = wsheek.Rows[i].RowHeight;
-                    if (row < 29)
-                        wsheek.Rows[i].SetRowHeight(30, true);
-                }
-                for (int i = 5; i < 5 + ArchConten.Rows.Count; i++) {
-                    double row = wsheek.Rows[i].RowHeight;
-                    rowcount += row;
-                }
-                double pa1 = rowcount / (double)420;
-                string pa11 = pa1.ToString();
-                string s1 = "";
-                if (pa11.Trim().Length > 2)
-                    s1 = pa1.ToString().Substring(0, 3);
-                else
-                    s1 = pa1.ToString();
-                double x1 = Math.Ceiling(Convert.ToDouble(s1));
-                int inserrow = InsterRow((int)x1, rowcount);
-                for (int i = 0; i < inserrow; i++) {
-                    wsheek.InsertRow(i + rowsn + 1);
-                    range = wsheek.Range["A" + (i + rowsn + 1) + ":G" + (i + rowsn + 1)];
-                    range.BorderInside(LineStyleType.Thin, ExcelColors.Black);
-                    range.BorderAround(LineStyleType.Thin, ExcelColors.Black);
-                    wsheek.Rows[i + rowsn].SetRowHeight(30, true);
+                    if (row < 50)
+                        wsheek.Rows[i].SetRowHeight(50, true);
+                    wsheek.Range["E" + (i + 1) + ":F" + (i + 1)].Merge();
                 }
                 wsheek.PageSetup.PrintTitleRows = "$1:$5";
-                // work.SaveToFile("d:\\123.xls");
                 work.PrintDocument.Print();
                 return true;
             } catch (Exception e) {

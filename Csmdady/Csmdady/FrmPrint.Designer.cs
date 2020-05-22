@@ -45,12 +45,8 @@
             this.tabItemInfoColXy = new DevComponents.DotNetBar.TabItem(this.components);
             this.gr1 = new System.Windows.Forms.GroupBox();
             this.tabContrSelect = new DevComponents.DotNetBar.TabControl();
-            this.tabControlSelectPanel1 = new DevComponents.DotNetBar.TabControlPanel();
-            this.rbboxOne = new System.Windows.Forms.RadioButton();
-            this.rbBoxAll = new System.Windows.Forms.RadioButton();
-            this.gArchSelect1 = new CsmCon.gArchSelect();
-            this.tabSelectbox = new DevComponents.DotNetBar.TabItem(this.components);
             this.tabControlPanel4 = new DevComponents.DotNetBar.TabControlPanel();
+            this.chkCq = new System.Windows.Forms.CheckBox();
             this.labprint = new System.Windows.Forms.Label();
             this.txtArchno2 = new System.Windows.Forms.TextBox();
             this.txtArchno = new System.Windows.Forms.TextBox();
@@ -58,6 +54,11 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.TabBoxsnArchno = new DevComponents.DotNetBar.TabItem(this.components);
+            this.tabControlSelectPanel1 = new DevComponents.DotNetBar.TabControlPanel();
+            this.rbboxOne = new System.Windows.Forms.RadioButton();
+            this.rbBoxAll = new System.Windows.Forms.RadioButton();
+            this.gArchSelect1 = new CsmCon.gArchSelect();
+            this.tabSelectbox = new DevComponents.DotNetBar.TabItem(this.components);
             this.tabControlPanel1 = new DevComponents.DotNetBar.TabControlPanel();
             this.lbInfo = new System.Windows.Forms.Label();
             this.butDelbox = new DevComponents.DotNetBar.ButtonX();
@@ -72,7 +73,6 @@
             this.c_box2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabItemboxRange = new DevComponents.DotNetBar.TabItem(this.components);
             this.labStat = new System.Windows.Forms.Label();
-            this.chkCq = new System.Windows.Forms.CheckBox();
             this.gr0.SuspendLayout();
             this.gr2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tabControlPrint)).BeginInit();
@@ -82,8 +82,8 @@
             this.gr1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tabContrSelect)).BeginInit();
             this.tabContrSelect.SuspendLayout();
-            this.tabControlSelectPanel1.SuspendLayout();
             this.tabControlPanel4.SuspendLayout();
+            this.tabControlSelectPanel1.SuspendLayout();
             this.tabControlPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -92,7 +92,7 @@
             this.toolStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1239, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(929, 25);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -110,9 +110,8 @@
             this.gr0.DisabledBackColor = System.Drawing.Color.Empty;
             this.gr0.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gr0.Location = new System.Drawing.Point(0, 25);
-            this.gr0.Margin = new System.Windows.Forms.Padding(4);
             this.gr0.Name = "gr0";
-            this.gr0.Size = new System.Drawing.Size(1239, 684);
+            this.gr0.Size = new System.Drawing.Size(929, 542);
             // 
             // 
             // 
@@ -148,10 +147,9 @@
             this.butPrintTm.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.butPrintTm.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.butPrintTm.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.butPrintTm.Location = new System.Drawing.Point(945, 611);
-            this.butPrintTm.Margin = new System.Windows.Forms.Padding(4);
+            this.butPrintTm.Location = new System.Drawing.Point(709, 484);
             this.butPrintTm.Name = "butPrintTm";
-            this.butPrintTm.Size = new System.Drawing.Size(100, 56);
+            this.butPrintTm.Size = new System.Drawing.Size(75, 45);
             this.butPrintTm.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.butPrintTm.TabIndex = 6;
             this.butPrintTm.Text = "打印条码";
@@ -162,10 +160,9 @@
             this.butLog.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.butLog.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.butLog.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.butLog.Location = new System.Drawing.Point(1124, 614);
-            this.butLog.Margin = new System.Windows.Forms.Padding(4);
+            this.butLog.Location = new System.Drawing.Point(843, 486);
             this.butLog.Name = "butLog";
-            this.butLog.Size = new System.Drawing.Size(88, 56);
+            this.butLog.Size = new System.Drawing.Size(66, 45);
             this.butLog.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.butLog.TabIndex = 5;
             this.butLog.Text = "日志";
@@ -176,10 +173,9 @@
             this.butPrintConten.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.butPrintConten.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.butPrintConten.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.butPrintConten.Location = new System.Drawing.Point(803, 611);
-            this.butPrintConten.Margin = new System.Windows.Forms.Padding(4);
+            this.butPrintConten.Location = new System.Drawing.Point(602, 484);
             this.butPrintConten.Name = "butPrintConten";
-            this.butPrintConten.Size = new System.Drawing.Size(100, 56);
+            this.butPrintConten.Size = new System.Drawing.Size(75, 45);
             this.butPrintConten.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.butPrintConten.TabIndex = 3;
             this.butPrintConten.Text = "打印目录";
@@ -190,10 +186,9 @@
             this.butPrintInfo.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.butPrintInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.butPrintInfo.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.butPrintInfo.Location = new System.Drawing.Point(671, 611);
-            this.butPrintInfo.Margin = new System.Windows.Forms.Padding(4);
+            this.butPrintInfo.Location = new System.Drawing.Point(503, 484);
             this.butPrintInfo.Name = "butPrintInfo";
-            this.butPrintInfo.Size = new System.Drawing.Size(100, 56);
+            this.butPrintInfo.Size = new System.Drawing.Size(75, 45);
             this.butPrintInfo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.butPrintInfo.TabIndex = 2;
             this.butPrintInfo.Text = "打印信息";
@@ -206,11 +201,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.gr2.BackColor = System.Drawing.Color.Transparent;
             this.gr2.Controls.Add(this.tabControlPrint);
-            this.gr2.Location = new System.Drawing.Point(523, 12);
-            this.gr2.Margin = new System.Windows.Forms.Padding(4);
+            this.gr2.Location = new System.Drawing.Point(392, 10);
             this.gr2.Name = "gr2";
-            this.gr2.Padding = new System.Windows.Forms.Padding(4);
-            this.gr2.Size = new System.Drawing.Size(699, 565);
+            this.gr2.Size = new System.Drawing.Size(524, 447);
             this.gr2.TabIndex = 1;
             this.gr2.TabStop = false;
             // 
@@ -221,12 +214,11 @@
             this.tabControlPrint.Controls.Add(this.tabControlPanel2);
             this.tabControlPrint.Controls.Add(this.tabControlPanel3);
             this.tabControlPrint.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControlPrint.Location = new System.Drawing.Point(4, 22);
-            this.tabControlPrint.Margin = new System.Windows.Forms.Padding(4);
+            this.tabControlPrint.Location = new System.Drawing.Point(3, 17);
             this.tabControlPrint.Name = "tabControlPrint";
             this.tabControlPrint.SelectedTabFont = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold);
             this.tabControlPrint.SelectedTabIndex = 0;
-            this.tabControlPrint.Size = new System.Drawing.Size(691, 539);
+            this.tabControlPrint.Size = new System.Drawing.Size(518, 427);
             this.tabControlPrint.TabIndex = 0;
             this.tabControlPrint.TabLayoutType = DevComponents.DotNetBar.eTabLayoutType.FixedWithNavigationBox;
             this.tabControlPrint.Tabs.Add(this.tabItemInfoColShow);
@@ -238,11 +230,10 @@
             this.tabControlPanel2.Controls.Add(this.panePrintInfoShow);
             this.tabControlPanel2.DisabledBackColor = System.Drawing.Color.Empty;
             this.tabControlPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControlPanel2.Location = new System.Drawing.Point(0, 29);
-            this.tabControlPanel2.Margin = new System.Windows.Forms.Padding(4);
+            this.tabControlPanel2.Location = new System.Drawing.Point(0, 26);
             this.tabControlPanel2.Name = "tabControlPanel2";
             this.tabControlPanel2.Padding = new System.Windows.Forms.Padding(1);
-            this.tabControlPanel2.Size = new System.Drawing.Size(691, 510);
+            this.tabControlPanel2.Size = new System.Drawing.Size(518, 401);
             this.tabControlPanel2.Style.BackColor1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(142)))), ((int)(((byte)(179)))), ((int)(((byte)(231)))));
             this.tabControlPanel2.Style.BackColor2.Color = System.Drawing.Color.FromArgb(((int)(((byte)(223)))), ((int)(((byte)(237)))), ((int)(((byte)(254)))));
             this.tabControlPanel2.Style.Border = DevComponents.DotNetBar.eBorderType.SingleLine;
@@ -261,9 +252,8 @@
             this.panePrintInfoShow.DisabledBackColor = System.Drawing.Color.Empty;
             this.panePrintInfoShow.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panePrintInfoShow.Location = new System.Drawing.Point(1, 1);
-            this.panePrintInfoShow.Margin = new System.Windows.Forms.Padding(4);
             this.panePrintInfoShow.Name = "panePrintInfoShow";
-            this.panePrintInfoShow.Size = new System.Drawing.Size(689, 508);
+            this.panePrintInfoShow.Size = new System.Drawing.Size(516, 399);
             this.panePrintInfoShow.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.panePrintInfoShow.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground;
             this.panePrintInfoShow.Style.BackColor2.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2;
@@ -285,11 +275,10 @@
             this.tabControlPanel3.Controls.Add(this.butPrintXyinfo);
             this.tabControlPanel3.DisabledBackColor = System.Drawing.Color.Empty;
             this.tabControlPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControlPanel3.Location = new System.Drawing.Point(0, 29);
-            this.tabControlPanel3.Margin = new System.Windows.Forms.Padding(4);
+            this.tabControlPanel3.Location = new System.Drawing.Point(0, 26);
             this.tabControlPanel3.Name = "tabControlPanel3";
             this.tabControlPanel3.Padding = new System.Windows.Forms.Padding(1);
-            this.tabControlPanel3.Size = new System.Drawing.Size(691, 510);
+            this.tabControlPanel3.Size = new System.Drawing.Size(518, 401);
             this.tabControlPanel3.Style.BackColor1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(142)))), ((int)(((byte)(179)))), ((int)(((byte)(231)))));
             this.tabControlPanel3.Style.BackColor2.Color = System.Drawing.Color.FromArgb(((int)(((byte)(223)))), ((int)(((byte)(237)))), ((int)(((byte)(254)))));
             this.tabControlPanel3.Style.Border = DevComponents.DotNetBar.eBorderType.SingleLine;
@@ -310,9 +299,8 @@
             this.panelPrintXY.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.panelPrintXY.DisabledBackColor = System.Drawing.Color.Empty;
             this.panelPrintXY.Location = new System.Drawing.Point(0, 0);
-            this.panelPrintXY.Margin = new System.Windows.Forms.Padding(4);
             this.panelPrintXY.Name = "panelPrintXY";
-            this.panelPrintXY.Size = new System.Drawing.Size(685, 450);
+            this.panelPrintXY.Size = new System.Drawing.Size(514, 353);
             this.panelPrintXY.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.panelPrintXY.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground;
             this.panelPrintXY.Style.BackColor2.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2;
@@ -327,10 +315,9 @@
             this.butPrintXyinfo.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.butPrintXyinfo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.butPrintXyinfo.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.butPrintXyinfo.Location = new System.Drawing.Point(5, 456);
-            this.butPrintXyinfo.Margin = new System.Windows.Forms.Padding(4);
+            this.butPrintXyinfo.Location = new System.Drawing.Point(4, 358);
             this.butPrintXyinfo.Name = "butPrintXyinfo";
-            this.butPrintXyinfo.Size = new System.Drawing.Size(113, 49);
+            this.butPrintXyinfo.Size = new System.Drawing.Size(85, 39);
             this.butPrintXyinfo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.butPrintXyinfo.TabIndex = 9;
             this.butPrintXyinfo.Text = "保存";
@@ -349,11 +336,9 @@
             this.gr1.AutoSize = true;
             this.gr1.BackColor = System.Drawing.Color.Transparent;
             this.gr1.Controls.Add(this.tabContrSelect);
-            this.gr1.Location = new System.Drawing.Point(4, 4);
-            this.gr1.Margin = new System.Windows.Forms.Padding(4);
+            this.gr1.Location = new System.Drawing.Point(3, 3);
             this.gr1.Name = "gr1";
-            this.gr1.Padding = new System.Windows.Forms.Padding(4);
-            this.gr1.Size = new System.Drawing.Size(512, 662);
+            this.gr1.Size = new System.Drawing.Size(384, 525);
             this.gr1.TabIndex = 0;
             this.gr1.TabStop = false;
             // 
@@ -361,22 +346,117 @@
             // 
             this.tabContrSelect.BackColor = System.Drawing.Color.Transparent;
             this.tabContrSelect.CanReorderTabs = true;
-            this.tabContrSelect.Controls.Add(this.tabControlPanel4);
             this.tabContrSelect.Controls.Add(this.tabControlSelectPanel1);
+            this.tabContrSelect.Controls.Add(this.tabControlPanel4);
             this.tabContrSelect.Controls.Add(this.tabControlPanel1);
             this.tabContrSelect.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabContrSelect.Location = new System.Drawing.Point(4, 22);
-            this.tabContrSelect.Margin = new System.Windows.Forms.Padding(4);
+            this.tabContrSelect.Location = new System.Drawing.Point(3, 17);
             this.tabContrSelect.Name = "tabContrSelect";
             this.tabContrSelect.SelectedTabFont = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold);
             this.tabContrSelect.SelectedTabIndex = 0;
-            this.tabContrSelect.Size = new System.Drawing.Size(504, 636);
+            this.tabContrSelect.Size = new System.Drawing.Size(378, 505);
             this.tabContrSelect.TabIndex = 0;
             this.tabContrSelect.TabLayoutType = DevComponents.DotNetBar.eTabLayoutType.FixedWithNavigationBox;
             this.tabContrSelect.Tabs.Add(this.tabSelectbox);
             this.tabContrSelect.Tabs.Add(this.tabItemboxRange);
             this.tabContrSelect.Tabs.Add(this.TabBoxsnArchno);
             this.tabContrSelect.Text = "tabControl1";
+            // 
+            // tabControlPanel4
+            // 
+            this.tabControlPanel4.Controls.Add(this.chkCq);
+            this.tabControlPanel4.Controls.Add(this.labprint);
+            this.tabControlPanel4.Controls.Add(this.txtArchno2);
+            this.tabControlPanel4.Controls.Add(this.txtArchno);
+            this.tabControlPanel4.Controls.Add(this.txtBosn);
+            this.tabControlPanel4.Controls.Add(this.label4);
+            this.tabControlPanel4.Controls.Add(this.label3);
+            this.tabControlPanel4.DisabledBackColor = System.Drawing.Color.Empty;
+            this.tabControlPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControlPanel4.Location = new System.Drawing.Point(0, 26);
+            this.tabControlPanel4.Name = "tabControlPanel4";
+            this.tabControlPanel4.Padding = new System.Windows.Forms.Padding(1);
+            this.tabControlPanel4.Size = new System.Drawing.Size(378, 479);
+            this.tabControlPanel4.Style.BackColor1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(142)))), ((int)(((byte)(179)))), ((int)(((byte)(231)))));
+            this.tabControlPanel4.Style.BackColor2.Color = System.Drawing.Color.FromArgb(((int)(((byte)(223)))), ((int)(((byte)(237)))), ((int)(((byte)(254)))));
+            this.tabControlPanel4.Style.Border = DevComponents.DotNetBar.eBorderType.SingleLine;
+            this.tabControlPanel4.Style.BorderColor.Color = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(97)))), ((int)(((byte)(156)))));
+            this.tabControlPanel4.Style.BorderSide = ((DevComponents.DotNetBar.eBorderSide)(((DevComponents.DotNetBar.eBorderSide.Left | DevComponents.DotNetBar.eBorderSide.Right) 
+            | DevComponents.DotNetBar.eBorderSide.Bottom)));
+            this.tabControlPanel4.Style.GradientAngle = 90;
+            this.tabControlPanel4.TabIndex = 9;
+            this.tabControlPanel4.TabItem = this.TabBoxsnArchno;
+            // 
+            // chkCq
+            // 
+            this.chkCq.AutoSize = true;
+            this.chkCq.BackColor = System.Drawing.Color.Transparent;
+            this.chkCq.Location = new System.Drawing.Point(93, 169);
+            this.chkCq.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.chkCq.Name = "chkCq";
+            this.chkCq.Size = new System.Drawing.Size(72, 16);
+            this.chkCq.TabIndex = 5;
+            this.chkCq.Text = "打印长期";
+            this.chkCq.UseVisualStyleBackColor = false;
+            // 
+            // labprint
+            // 
+            this.labprint.AutoSize = true;
+            this.labprint.BackColor = System.Drawing.Color.Transparent;
+            this.labprint.Location = new System.Drawing.Point(52, 202);
+            this.labprint.Name = "labprint";
+            this.labprint.Size = new System.Drawing.Size(0, 12);
+            this.labprint.TabIndex = 4;
+            // 
+            // txtArchno2
+            // 
+            this.txtArchno2.Location = new System.Drawing.Point(192, 112);
+            this.txtArchno2.Name = "txtArchno2";
+            this.txtArchno2.Size = new System.Drawing.Size(58, 21);
+            this.txtArchno2.TabIndex = 3;
+            this.txtArchno2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtArchno2_KeyPress);
+            // 
+            // txtArchno
+            // 
+            this.txtArchno.Location = new System.Drawing.Point(93, 112);
+            this.txtArchno.Name = "txtArchno";
+            this.txtArchno.Size = new System.Drawing.Size(57, 21);
+            this.txtArchno.TabIndex = 2;
+            this.txtArchno.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtArchno_KeyPress);
+            // 
+            // txtBosn
+            // 
+            this.txtBosn.Location = new System.Drawing.Point(93, 69);
+            this.txtBosn.Name = "txtBosn";
+            this.txtBosn.Size = new System.Drawing.Size(157, 21);
+            this.txtBosn.TabIndex = 1;
+            this.txtBosn.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtBosn_KeyPress);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.BackColor = System.Drawing.Color.Transparent;
+            this.label4.Location = new System.Drawing.Point(52, 118);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(131, 12);
+            this.label4.TabIndex = 0;
+            this.label4.Text = "卷号:            ----";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.BackColor = System.Drawing.Color.Transparent;
+            this.label3.Location = new System.Drawing.Point(52, 72);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(35, 12);
+            this.label3.TabIndex = 0;
+            this.label3.Text = "盒号:";
+            // 
+            // TabBoxsnArchno
+            // 
+            this.TabBoxsnArchno.AttachedControl = this.tabControlPanel4;
+            this.TabBoxsnArchno.Name = "TabBoxsnArchno";
+            this.TabBoxsnArchno.Text = "批量打印2";
             // 
             // tabControlSelectPanel1
             // 
@@ -385,11 +465,10 @@
             this.tabControlSelectPanel1.Controls.Add(this.gArchSelect1);
             this.tabControlSelectPanel1.DisabledBackColor = System.Drawing.Color.Empty;
             this.tabControlSelectPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControlSelectPanel1.Location = new System.Drawing.Point(0, 29);
-            this.tabControlSelectPanel1.Margin = new System.Windows.Forms.Padding(4);
+            this.tabControlSelectPanel1.Location = new System.Drawing.Point(0, 26);
             this.tabControlSelectPanel1.Name = "tabControlSelectPanel1";
             this.tabControlSelectPanel1.Padding = new System.Windows.Forms.Padding(1);
-            this.tabControlSelectPanel1.Size = new System.Drawing.Size(504, 607);
+            this.tabControlSelectPanel1.Size = new System.Drawing.Size(378, 479);
             this.tabControlSelectPanel1.Style.BackColor1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(142)))), ((int)(((byte)(179)))), ((int)(((byte)(231)))));
             this.tabControlSelectPanel1.Style.BackColor2.Color = System.Drawing.Color.FromArgb(((int)(((byte)(223)))), ((int)(((byte)(237)))), ((int)(((byte)(254)))));
             this.tabControlSelectPanel1.Style.Border = DevComponents.DotNetBar.eBorderType.SingleLine;
@@ -406,10 +485,9 @@
             this.rbboxOne.AutoSize = true;
             this.rbboxOne.BackColor = System.Drawing.Color.Transparent;
             this.rbboxOne.Checked = true;
-            this.rbboxOne.Location = new System.Drawing.Point(195, 574);
-            this.rbboxOne.Margin = new System.Windows.Forms.Padding(4);
+            this.rbboxOne.Location = new System.Drawing.Point(146, 452);
             this.rbboxOne.Name = "rbboxOne";
-            this.rbboxOne.Size = new System.Drawing.Size(88, 19);
+            this.rbboxOne.Size = new System.Drawing.Size(71, 16);
             this.rbboxOne.TabIndex = 2;
             this.rbboxOne.TabStop = true;
             this.rbboxOne.Text = "单卷档案";
@@ -420,10 +498,9 @@
             this.rbBoxAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.rbBoxAll.AutoSize = true;
             this.rbBoxAll.BackColor = System.Drawing.Color.Transparent;
-            this.rbBoxAll.Location = new System.Drawing.Point(53, 574);
-            this.rbBoxAll.Margin = new System.Windows.Forms.Padding(4);
+            this.rbBoxAll.Location = new System.Drawing.Point(40, 452);
             this.rbBoxAll.Name = "rbBoxAll";
-            this.rbBoxAll.Size = new System.Drawing.Size(88, 19);
+            this.rbBoxAll.Size = new System.Drawing.Size(71, 16);
             this.rbBoxAll.TabIndex = 1;
             this.rbBoxAll.Text = "整盒档案";
             this.rbBoxAll.UseVisualStyleBackColor = false;
@@ -446,11 +523,11 @@
             this.gArchSelect1.Boxsn = 0;
             this.gArchSelect1.GotoPages = false;
             this.gArchSelect1.LoadFileBoole = false;
-            this.gArchSelect1.Location = new System.Drawing.Point(11, 0);
-            this.gArchSelect1.Margin = new System.Windows.Forms.Padding(5);
+            this.gArchSelect1.Location = new System.Drawing.Point(8, 0);
+            this.gArchSelect1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.gArchSelect1.Name = "gArchSelect1";
             this.gArchSelect1.PagesEnd = true;
-            this.gArchSelect1.Size = new System.Drawing.Size(487, 551);
+            this.gArchSelect1.Size = new System.Drawing.Size(365, 434);
             this.gArchSelect1.TabIndex = 0;
             this.gArchSelect1.LineClickLoadInfo += new CsmCon.gArchSelect.ArchSelectHandle(this.gArchSelect1_LineClickLoadInfo);
             // 
@@ -459,97 +536,6 @@
             this.tabSelectbox.AttachedControl = this.tabControlSelectPanel1;
             this.tabSelectbox.Name = "tabSelectbox";
             this.tabSelectbox.Text = "案卷打印";
-            // 
-            // tabControlPanel4
-            // 
-            this.tabControlPanel4.Controls.Add(this.chkCq);
-            this.tabControlPanel4.Controls.Add(this.labprint);
-            this.tabControlPanel4.Controls.Add(this.txtArchno2);
-            this.tabControlPanel4.Controls.Add(this.txtArchno);
-            this.tabControlPanel4.Controls.Add(this.txtBosn);
-            this.tabControlPanel4.Controls.Add(this.label4);
-            this.tabControlPanel4.Controls.Add(this.label3);
-            this.tabControlPanel4.DisabledBackColor = System.Drawing.Color.Empty;
-            this.tabControlPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControlPanel4.Location = new System.Drawing.Point(0, 29);
-            this.tabControlPanel4.Margin = new System.Windows.Forms.Padding(4);
-            this.tabControlPanel4.Name = "tabControlPanel4";
-            this.tabControlPanel4.Padding = new System.Windows.Forms.Padding(1);
-            this.tabControlPanel4.Size = new System.Drawing.Size(504, 607);
-            this.tabControlPanel4.Style.BackColor1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(142)))), ((int)(((byte)(179)))), ((int)(((byte)(231)))));
-            this.tabControlPanel4.Style.BackColor2.Color = System.Drawing.Color.FromArgb(((int)(((byte)(223)))), ((int)(((byte)(237)))), ((int)(((byte)(254)))));
-            this.tabControlPanel4.Style.Border = DevComponents.DotNetBar.eBorderType.SingleLine;
-            this.tabControlPanel4.Style.BorderColor.Color = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(97)))), ((int)(((byte)(156)))));
-            this.tabControlPanel4.Style.BorderSide = ((DevComponents.DotNetBar.eBorderSide)(((DevComponents.DotNetBar.eBorderSide.Left | DevComponents.DotNetBar.eBorderSide.Right) 
-            | DevComponents.DotNetBar.eBorderSide.Bottom)));
-            this.tabControlPanel4.Style.GradientAngle = 90;
-            this.tabControlPanel4.TabIndex = 9;
-            this.tabControlPanel4.TabItem = this.TabBoxsnArchno;
-            // 
-            // labprint
-            // 
-            this.labprint.AutoSize = true;
-            this.labprint.BackColor = System.Drawing.Color.Transparent;
-            this.labprint.Location = new System.Drawing.Point(69, 252);
-            this.labprint.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.labprint.Name = "labprint";
-            this.labprint.Size = new System.Drawing.Size(0, 15);
-            this.labprint.TabIndex = 4;
-            // 
-            // txtArchno2
-            // 
-            this.txtArchno2.Location = new System.Drawing.Point(256, 140);
-            this.txtArchno2.Margin = new System.Windows.Forms.Padding(4);
-            this.txtArchno2.Name = "txtArchno2";
-            this.txtArchno2.Size = new System.Drawing.Size(76, 25);
-            this.txtArchno2.TabIndex = 3;
-            this.txtArchno2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtArchno2_KeyPress);
-            // 
-            // txtArchno
-            // 
-            this.txtArchno.Location = new System.Drawing.Point(124, 140);
-            this.txtArchno.Margin = new System.Windows.Forms.Padding(4);
-            this.txtArchno.Name = "txtArchno";
-            this.txtArchno.Size = new System.Drawing.Size(75, 25);
-            this.txtArchno.TabIndex = 2;
-            this.txtArchno.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtArchno_KeyPress);
-            // 
-            // txtBosn
-            // 
-            this.txtBosn.Location = new System.Drawing.Point(124, 86);
-            this.txtBosn.Margin = new System.Windows.Forms.Padding(4);
-            this.txtBosn.Name = "txtBosn";
-            this.txtBosn.Size = new System.Drawing.Size(208, 25);
-            this.txtBosn.TabIndex = 1;
-            this.txtBosn.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtBosn_KeyPress);
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.BackColor = System.Drawing.Color.Transparent;
-            this.label4.Location = new System.Drawing.Point(69, 147);
-            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(173, 15);
-            this.label4.TabIndex = 0;
-            this.label4.Text = "卷号:            ----";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.BackColor = System.Drawing.Color.Transparent;
-            this.label3.Location = new System.Drawing.Point(69, 90);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(45, 15);
-            this.label3.TabIndex = 0;
-            this.label3.Text = "盒号:";
-            // 
-            // TabBoxsnArchno
-            // 
-            this.TabBoxsnArchno.AttachedControl = this.tabControlPanel4;
-            this.TabBoxsnArchno.Name = "TabBoxsnArchno";
-            this.TabBoxsnArchno.Text = "批量打印2";
             // 
             // tabControlPanel1
             // 
@@ -563,11 +549,10 @@
             this.tabControlPanel1.Controls.Add(this.lvboxRange);
             this.tabControlPanel1.DisabledBackColor = System.Drawing.Color.Empty;
             this.tabControlPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControlPanel1.Location = new System.Drawing.Point(0, 29);
-            this.tabControlPanel1.Margin = new System.Windows.Forms.Padding(4);
+            this.tabControlPanel1.Location = new System.Drawing.Point(0, 26);
             this.tabControlPanel1.Name = "tabControlPanel1";
             this.tabControlPanel1.Padding = new System.Windows.Forms.Padding(1);
-            this.tabControlPanel1.Size = new System.Drawing.Size(504, 607);
+            this.tabControlPanel1.Size = new System.Drawing.Size(378, 479);
             this.tabControlPanel1.Style.BackColor1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(142)))), ((int)(((byte)(179)))), ((int)(((byte)(231)))));
             this.tabControlPanel1.Style.BackColor2.Color = System.Drawing.Color.FromArgb(((int)(((byte)(223)))), ((int)(((byte)(237)))), ((int)(((byte)(254)))));
             this.tabControlPanel1.Style.Border = DevComponents.DotNetBar.eBorderType.SingleLine;
@@ -582,10 +567,9 @@
             // 
             this.lbInfo.AutoSize = true;
             this.lbInfo.BackColor = System.Drawing.Color.Transparent;
-            this.lbInfo.Location = new System.Drawing.Point(261, 558);
-            this.lbInfo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbInfo.Location = new System.Drawing.Point(196, 446);
             this.lbInfo.Name = "lbInfo";
-            this.lbInfo.Size = new System.Drawing.Size(0, 15);
+            this.lbInfo.Size = new System.Drawing.Size(0, 12);
             this.lbInfo.TabIndex = 6;
             // 
             // butDelbox
@@ -593,10 +577,9 @@
             this.butDelbox.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.butDelbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.butDelbox.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.butDelbox.Location = new System.Drawing.Point(33, 549);
-            this.butDelbox.Margin = new System.Windows.Forms.Padding(4);
+            this.butDelbox.Location = new System.Drawing.Point(25, 433);
             this.butDelbox.Name = "butDelbox";
-            this.butDelbox.Size = new System.Drawing.Size(100, 49);
+            this.butDelbox.Size = new System.Drawing.Size(75, 39);
             this.butDelbox.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.butDelbox.TabIndex = 5;
             this.butDelbox.Text = "删除";
@@ -606,10 +589,9 @@
             // 
             this.butBoxRangeAdd.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.butBoxRangeAdd.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.butBoxRangeAdd.Location = new System.Drawing.Point(361, 3);
-            this.butBoxRangeAdd.Margin = new System.Windows.Forms.Padding(4);
+            this.butBoxRangeAdd.Location = new System.Drawing.Point(271, 2);
             this.butBoxRangeAdd.Name = "butBoxRangeAdd";
-            this.butBoxRangeAdd.Size = new System.Drawing.Size(100, 37);
+            this.butBoxRangeAdd.Size = new System.Drawing.Size(75, 30);
             this.butBoxRangeAdd.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.butBoxRangeAdd.TabIndex = 4;
             this.butBoxRangeAdd.Text = "添加";
@@ -617,28 +599,25 @@
             // 
             // txtBox2
             // 
-            this.txtBox2.Location = new System.Drawing.Point(248, 8);
-            this.txtBox2.Margin = new System.Windows.Forms.Padding(4);
+            this.txtBox2.Location = new System.Drawing.Point(186, 6);
             this.txtBox2.Name = "txtBox2";
-            this.txtBox2.Size = new System.Drawing.Size(81, 25);
+            this.txtBox2.Size = new System.Drawing.Size(62, 21);
             this.txtBox2.TabIndex = 3;
             // 
             // txtBox1
             // 
-            this.txtBox1.Location = new System.Drawing.Point(123, 8);
-            this.txtBox1.Margin = new System.Windows.Forms.Padding(4);
+            this.txtBox1.Location = new System.Drawing.Point(92, 6);
             this.txtBox1.Name = "txtBox1";
-            this.txtBox1.Size = new System.Drawing.Size(81, 25);
+            this.txtBox1.Size = new System.Drawing.Size(62, 21);
             this.txtBox1.TabIndex = 2;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.BackColor = System.Drawing.Color.Transparent;
-            this.label2.Location = new System.Drawing.Point(209, 16);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Location = new System.Drawing.Point(157, 13);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(31, 15);
+            this.label2.Size = new System.Drawing.Size(23, 12);
             this.label2.TabIndex = 1;
             this.label2.Text = "---";
             // 
@@ -646,10 +625,9 @@
             // 
             this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.Color.Transparent;
-            this.label1.Location = new System.Drawing.Point(31, 15);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(23, 12);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(82, 15);
+            this.label1.Size = new System.Drawing.Size(65, 12);
             this.label1.TabIndex = 1;
             this.label1.Text = "盒号范围：";
             // 
@@ -663,10 +641,9 @@
             this.c_box2});
             this.lvboxRange.FullRowSelect = true;
             this.lvboxRange.GridLines = true;
-            this.lvboxRange.Location = new System.Drawing.Point(7, 44);
-            this.lvboxRange.Margin = new System.Windows.Forms.Padding(4);
+            this.lvboxRange.Location = new System.Drawing.Point(5, 35);
             this.lvboxRange.Name = "lvboxRange";
-            this.lvboxRange.Size = new System.Drawing.Size(493, 497);
+            this.lvboxRange.Size = new System.Drawing.Size(371, 392);
             this.lvboxRange.TabIndex = 0;
             this.lvboxRange.UseCompatibleStateImageBehavior = false;
             this.lvboxRange.View = System.Windows.Forms.View.Details;
@@ -697,35 +674,22 @@
             // 
             this.labStat.BackColor = System.Drawing.Color.Transparent;
             this.labStat.ForeColor = System.Drawing.Color.Red;
-            this.labStat.Location = new System.Drawing.Point(529, 575);
-            this.labStat.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labStat.Location = new System.Drawing.Point(397, 460);
             this.labStat.Name = "labStat";
-            this.labStat.Size = new System.Drawing.Size(189, 29);
+            this.labStat.Size = new System.Drawing.Size(142, 23);
             this.labStat.TabIndex = 4;
             this.labStat.Text = "未质检无法打印录入信息";
             this.labStat.Visible = false;
             // 
-            // chkCq
-            // 
-            this.chkCq.AutoSize = true;
-            this.chkCq.BackColor = System.Drawing.Color.Transparent;
-            this.chkCq.Location = new System.Drawing.Point(124, 211);
-            this.chkCq.Name = "chkCq";
-            this.chkCq.Size = new System.Drawing.Size(89, 19);
-            this.chkCq.TabIndex = 5;
-            this.chkCq.Text = "打印长期";
-            this.chkCq.UseVisualStyleBackColor = false;
-            // 
             // FrmPrint
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1239, 709);
+            this.ClientSize = new System.Drawing.Size(929, 567);
             this.Controls.Add(this.gr0);
             this.Controls.Add(this.toolStrip1);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FrmPrint";
             this.Text = "FrmPrint";
             this.Load += new System.EventHandler(this.FrmPrint_Load);
@@ -740,10 +704,10 @@
             this.gr1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.tabContrSelect)).EndInit();
             this.tabContrSelect.ResumeLayout(false);
-            this.tabControlSelectPanel1.ResumeLayout(false);
-            this.tabControlSelectPanel1.PerformLayout();
             this.tabControlPanel4.ResumeLayout(false);
             this.tabControlPanel4.PerformLayout();
+            this.tabControlSelectPanel1.ResumeLayout(false);
+            this.tabControlSelectPanel1.PerformLayout();
             this.tabControlPanel1.ResumeLayout(false);
             this.tabControlPanel1.PerformLayout();
             this.ResumeLayout(false);

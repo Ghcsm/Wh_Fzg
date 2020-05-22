@@ -172,7 +172,9 @@ namespace CsmCon
 
         private void Witeini()
         {
-            ClsIni.ArchNo = txtBoxsn.Text.Trim();
+            string str = txtzong.Text.Trim() + "-" + txtml.Text.Trim() + "-" + comQi.Text.Trim() + "-" +
+                         txtBoxsn.Text.Trim();
+            ClsIni.ArchNo = str;
             ClsIni.Archbox = comboxClass.Text.Trim();
             ClsIni.Rabchk = combLx.SelectedIndex.ToString();
             new ClsWriteini().WriteInt();
@@ -238,7 +240,11 @@ namespace CsmCon
             if (combLx.SelectedIndex == 0)
                 dt = Common.QueryBoxsn(txtBoxsn.Text.Trim());
             else if (combLx.SelectedIndex == 1)
-                dt = Common.QueryBoxsnid(txtBoxsn.Text.Trim());
+            {
+                string s = txtzong.Text.Trim() + "-" + txtml.Text.Trim() + "-" + comQi.Text.Trim() + "-" +
+                           txtBoxsn.Text.Trim();
+                dt = Common.QueryBoxsnid(s);
+            }
             else if (combLx.SelectedIndex == 2)
             {
                 if (comboxClass.Text.Trim().Contains("c"))
@@ -310,7 +316,16 @@ namespace CsmCon
                         comboxClass.Items.Clear();
                         comboxClass.Items.Add(ClsIni.Archbox);
                         comboxClass.Text = ClsIni.Archbox;
-                        txtBoxsn.Text = ClsIni.ArchNo;
+                        try
+                        {
+                            string[] s = ClsIni.ArchNo.Split('-');
+                            txtzong.Text = s[0].ToString();
+                            txtml.Text = s[1].ToString();
+                            comQi.Text = s[2].ToString();
+                            txtBoxsn.Text = s[3].ToString();
+                        }
+                        catch 
+                        {}
                         if (ClsIni.Rabchk.Trim().Length > 0) {
                             try {
                                 int id = Convert.ToInt32(ClsIni.Rabchk.Trim());
@@ -396,8 +411,25 @@ namespace CsmCon
             }
         }
 
+
         #endregion
 
+        private void txtzong_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+                txtml.Focus();
+        }
 
+        private void txtml_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+                comQi.Focus();
+        }
+
+        private void comQi_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+                txtBoxsn.Focus();
+        }
     }
 }

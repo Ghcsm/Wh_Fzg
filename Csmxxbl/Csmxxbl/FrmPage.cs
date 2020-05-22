@@ -121,6 +121,7 @@ namespace Csmxxbl
             }
             int p = Convert.ToInt32(txtNumpage.Text.Trim()) + (lspage.Count);
             Common.SetInfoPages(Archid.ToString(), str, txtNumpage.Text.Trim(), p.ToString(), txtUserid.Text.Trim());
+            Common.WriteArchlog(Archid,"修改页码为:"+p.ToString());
         }
 
         void GetPage()

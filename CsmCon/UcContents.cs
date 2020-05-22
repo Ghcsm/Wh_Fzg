@@ -241,8 +241,6 @@ namespace CsmCon
                 if (t.Tag != null && t.Tag.ToString() != "") {
                     string str = t.Text.Trim();
                     dic1.Add(Convert.ToInt32(t.Tag), str);
-                    if (t.Tag.ToString() == "3")
-                        CrragePage = Convert.ToInt32(str) - 1;
                 }
             }
             dicxx = dic1.OrderBy(o => o.Key).ToDictionary(o => o.Key, p => p.Value);
@@ -277,7 +275,7 @@ namespace CsmCon
                 return;
             }
             AddTitle();
-            if (this.LvContents.Items.Count > 0 && CrragePage > 0) {
+            if (this.LvContents.Items.Count > 0 && CrragePage >=0) {
                 if (CrragePage < LvContents.Items.Count - 1) {
                     LvContents.Items[CrragePage].Selected = true;
                     LvContents.Items[CrragePage].EnsureVisible();

@@ -2,6 +2,7 @@
 using DAL;
 using HLFtp;
 using HLjscom;
+using Spire.Xls;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -116,16 +117,14 @@ namespace Csmdajc
             bool bl = int.TryParse(page, out p);
             if (!bl || p <= 0)
                 return;
-            if (p > 0 && p <= Clscheck.MaxPage)
-            {
+            if (p > 0 && p <= Clscheck.MaxPage) {
                 int id = 0;
-                for (int i = 0; i < strpage.Count; i++)
-                {
+                for (int i = 0; i < strpage.Count; i++) {
                     int s = strpage[i];
                     if (s < p)
                         id += 1;
                 }
-                Himg._Gotopage(p+id);
+                Himg._Gotopage(p + id);
             }
             //string ywid = ucContents1.ywid;
             //ucdL.Getywid(ywid);
@@ -141,6 +140,7 @@ namespace Csmdajc
                 Getsqlkey();
                 pub = new Pubcls();
                 //  Startocr();
+                GetContenInfo();
             } catch (Exception ex) {
                 MessageBox.Show("初始化失败请重新加载" + ex.ToString());
                 Himg.Dispose();
@@ -189,6 +189,17 @@ namespace Csmdajc
         }
 
         #region ClickEve
+
+        private  void toolStripPrint_Click(object sender, EventArgs e)
+        {
+            //int stat = Common.GetArchWorkState(Clscheck.Archid);
+            //if (stat < (int)T_ConFigure.ArchStat.质检完) {
+            //    MessageBox.Show("未质检不允许打印目录!");
+            //    return;
+            //}
+            Task.Run(() => { GetArchContenWriteXlsPrint(Clscheck.Archid); });
+
+        }
         private void toolStripSharePenSet_Click(object sender, EventArgs e)
         {
             FrmSharePenSet penset = new FrmSharePenSet();
@@ -313,11 +324,11 @@ namespace Csmdajc
             if (ImgView.Image != null && Clscheck.CrrentPage > 1) {
                 if (ImgNum >= 1)
                     ImgNum -= 1;
-              
+
                 Himg._Pagenext(0);
                 Thread.Sleep(10);
                 ShowPage();
-              //  int p = Clscheck.CrrentPage;
+                //  int p = Clscheck.CrrentPage;
                 //int id = 0;
                 //for (int i = 0; i < strpage.Count; i++) {
                 //    int s = strpage[i];
@@ -417,6 +428,7 @@ namespace Csmdajc
             int arid = Clscheck.Archid;
             string filename = Clscheck.FileNametmp;
             string filepath = Clscheck.ScanFilePath;
+            Common.WriteArchlog(arid, "未质检完退出!");
             Cledata();
             try {
                 if (T_ConFigure.FtpStyle == 1)
@@ -546,6 +558,7 @@ namespace Csmdajc
                 toolStripCut_Click(sender, e);
             else
                 Himg._Rectang(true);
+
         }
 
         private void FrmIndex_KeyDown(object sender, KeyEventArgs e)
@@ -713,7 +726,7 @@ namespace Csmdajc
 
         private void LoadContents()
         {
-           // ucContents1.LoadContents(gArch.Archid, gArch.ArchRegPages);
+            // ucContents1.LoadContents(gArch.Archid, gArch.ArchRegPages);
         }
 
 
@@ -748,16 +761,13 @@ namespace Csmdajc
                             }
                         }
                     }
-                    if (!string.IsNullOrEmpty(arpage))
-                    {
+                    if (!string.IsNullOrEmpty(arpage)) {
                         string[] arrPage = arpage.Split(';');
-                        if (arrPage.Length > 0)
-                        {
-                            for (int i = 0; i < arrPage.Length; i++)
-                            {
+                        if (arrPage.Length > 0) {
+                            for (int i = 0; i < arrPage.Length; i++) {
                                 string[] str = arrPage[i].Trim().Split('-');
-                                if (str.Length>0)
-                                strpage.Add(Convert.ToInt32(str[0]));
+                                if (str.Length > 0)
+                                    strpage.Add(Convert.ToInt32(str[0]));
                             }
                         }
                     }
@@ -829,6 +839,7 @@ namespace Csmdajc
                         Cledata();
                         return;
                     }
+                    Common.WriteArchlog(Clscheck.Archid,"进入案卷质检");
                     Himg.Filename = Clscheck.ScanFilePath;
                     Himg.LoadPage(pages);
                     ReadDict();
@@ -1005,8 +1016,8 @@ namespace Csmdajc
                 if (dt == null || dt.Rows.Count <= 0)
                     return;
                 DataRow dr = dt.Rows[0];
-                Scanner = dr["扫描"].ToString();
-                scantime = dr["扫描时间"].ToString();
+                //Scanner = dr["扫描"].ToString();
+                //scantime = dr["扫描时间"].ToString();
                 Indexer = dr["排序"].ToString();
                 indextime = dr["排序时间"].ToString();
                 Checker = dr["质检"].ToString();
@@ -1015,8 +1026,14 @@ namespace Csmdajc
                 entertime = dr["录入时间"].ToString();
                 ml = dr["目录"].ToString();
                 mltime = dr["目录时间"].ToString();
-                //zj = dr[""].ToString();
-                //zjtime = dr[""].ToString();
+                foreach (DataRow d in dt.Rows) {
+
+                    string s = d["扫描"].ToString();
+                    if (!Scanner.Contains(s)) {
+                        Scanner += s + ",";
+                        scantime += d["扫描时间"].ToString() + ",";
+                    }
+                }
                 this.BeginInvoke(new Action(() =>
                 {
                     toollabscan.Text = string.Format("扫描:{0}", Scanner);
@@ -1091,6 +1108,7 @@ namespace Csmdajc
         private void FtpUpFinish(string filetmp, int arid, string filename, int pages, int tag)
         {
             try {
+                Common.WriteArchlog(arid, "质检完成退出!");
                 if (File.Exists(filetmp)) {
                     Common.WiteUpTask(arid, "", filename, (int)T_ConFigure.ArchStat.质检完, pages, filetmp, tag.ToString());
                     if (T_ConFigure.FtpStyle == 1) {
@@ -1148,7 +1166,7 @@ namespace Csmdajc
         private void Repair(string filetmp, int arid, string archpos, int page)
         {
             try {
-                Common.Writelog(arid, "质检返工!");
+                Common.WriteArchlog(arid, "质检返工!");
                 //if (ftp.SaveRemoteFileUp(T_ConFigure.gArchScanPath, archpos, filetmp, T_ConFigure.ScanTempFile)) {
                 //    Common.SetScanFinish(arid, page, 1, (int)T_ConFigure.ArchStat.扫描完);
                 //    Common.DelTask(Convert.ToInt32(arid));
@@ -1181,15 +1199,234 @@ namespace Csmdajc
                     } catch { }
                 }
             } catch {
-                Common.Writelog(arid, "质检退回失败!");
+                Common.WriteArchlog(arid, "质检退回失败!");
             }
         }
 
 
 
 
+
         #endregion
 
-       
+        #region PrintConte
+
+
+
+        private void GetContenInfo()
+        {
+            ClsPrintInfo.PrintInfo = T_Sysset.GetGensetPrint();
+            if (ClsPrintInfo.PrintInfo == null || ClsPrintInfo.PrintInfo.Rows.Count <= 0)
+                return;
+            DataRow dr = ClsPrintInfo.PrintInfo.Rows[0];
+            ClsPrintConten.PrintContenTable = dr["PrintContenTable"].ToString();
+            string str = dr["PrintContenInfo"].ToString();
+            if (str.Length > 0) {
+                string[] a = str.Split(';');
+                for (int i = 0; i < a.Length; i++) {
+                    string b = a[i];
+                    string[] c = b.Split(':');
+                    if (c.Length > 0) {
+                        if (c[0].IndexOf("SN0") >= 0) {
+                            string[] f = b.Split(':');
+                            ClsPrintConten.PrintContenSn = f[1];
+                        }
+                        else {
+                            string d = c[3];
+                            if (d == "True") {
+                                ClsPrintConten.PrintContenPagesn = c[0];
+                                ClsPrintConten.PrintContenPageMode = Convert.ToInt32(c[4]);
+                            }
+                            ClsPrintConten.PrintContenCol.Add(c[0]);
+                            ClsPrintConten.printContenXls.Add(c[1]);
+                            ClsPrintConten.PrintContenDz.Add(c[2]);
+                            ClsPrintConten.PrintContenPage.Add(c[3]);
+                        }
+                    }
+                    ClsPrintConten.PrintContenAll.Add(b);
+                }
+            }
+        }
+
+        private void WriteLog(string str)
+        {
+            FileStream fs = null;
+            StreamWriter sw = null;
+            string dt = DateTime.Now.ToString();
+            try {
+                string file = "打印日志.txt";
+                string filepath = Path.Combine(Application.StartupPath, file);
+                if (!File.Exists(filepath)) {
+                    fs = new FileStream(filepath, FileMode.Create);
+                    sw = new StreamWriter(fs);
+                    sw.WriteLine(str + " 操作时间 " + dt);
+                    sw.Flush();
+                }
+                else {
+                    fs = new FileStream(filepath, FileMode.Append);
+                    sw = new StreamWriter(fs);
+                    sw.WriteLine(str + " 操作时间 " + dt);
+                    sw.Flush();
+                }
+            } catch { } finally {
+                sw.Close();
+                fs.Close();
+            }
+        }
+
+        private bool GetArchContenWriteXlsPrint(int archid)
+        {
+            DataTable ArchConten = Common.GetPrintConten(archid, ClsPrintConten.PrintContenTable, ClsPrintConten.PrintContenCol, ClsPrintConten.PrintContenPagesn);
+            if (ArchConten == null || ArchConten.Rows.Count <= 0) {
+                string str = "ID号:" + archid + "目录获取失败!";
+                WriteLog(str);
+                return false;
+            }
+            int countpage = Common.GetArchPages(archid);
+            try {
+                Workbook work = new Workbook();
+                Worksheet wsheek = null;
+                work.LoadFromFile(Path.Combine(Application.StartupPath, "目录.xls"));
+                wsheek = work.Worksheets[0];
+                string strsn = ClsPrintConten.PrintContenSn;
+                //获取起始行和列
+                int rowsn = 0;
+                int colsn = 0;
+                if (strsn.Trim().Length > 1) {
+                    rowsn = Convert.ToInt32(strsn.Remove(0, 1));
+                    colsn = ToNum(strsn.Substring(0, 1)) + 1;
+                }
+                int arow = 0;
+                int bcol = 0;
+                int dz = 0;
+                for (int i = 0; i < ArchConten.Rows.Count; i++) {
+                    dz = 0;
+                    for (int j = 0; j < ArchConten.Columns.Count; j++) {
+                        string str = ArchConten.Rows[i][j].ToString();
+                        if (j == 4)
+                            str = str.PadLeft(3, '0');
+                        if (j == 1) {
+                            string s = str.Substring(0, 1);
+                            if (s.Contains("\\") || s.Contains("/"))
+                                str = str.Substring(1, str.Length - 1);
+                            s = str.Substring(str.Length - 1, 1);
+                            if (s.Contains("\\") || s.Contains("/"))
+                                str = str.Substring(0, str.Length - 1);
+                        }
+                        if (rowsn > 0)
+                            wsheek.Range[rowsn + i, colsn].Text = (i + 1).ToString();
+                        if (ClsPrintConten.printContenXls.Count > 0) {
+                            if (dz < ClsPrintConten.printContenXls.Count) {
+                                arow = Convert.ToInt32(ClsPrintConten.printContenXls[dz].Remove(0, 1));
+                                bcol = ToNum(ClsPrintConten.printContenXls[dz].Substring(0, 1)) + 1;
+                            }
+                            if (dz < ClsPrintConten.PrintContenPage.Count && ClsPrintConten.PrintContenPage[dz] == "True") {
+                                if (ClsPrintConten.PrintContenPageMode == 2) {
+                                    int p = Convert.ToInt32(str);
+                                    int p1 = 0;
+                                    try {
+                                        if (i != ArchConten.Rows.Count - 1) {
+                                            p1 = Convert.ToInt32(ArchConten.Rows[i + 1][j].ToString());
+                                            if (p == p1)
+                                                str = p + "-" + p1;
+                                            else {
+                                                str = p + "-" + (p1 - 1);
+                                            }
+                                        }
+                                        else {
+                                            p1 = countpage;
+                                            if (p == p1)
+                                                str = p + "-" + p1;
+                                            else {
+                                                str = p + "-" + (p1 - 1);
+                                            }
+                                        }
+                                    } catch {
+                                        string str1 = "ID号:" + archid + "目录页码不正确";
+                                        WriteLog(str1);
+                                        return false;
+                                    }
+                                }
+                                else {
+                                    if (i == ArchConten.Rows.Count - 1) {
+                                        //int p = Convert.ToInt32(str);
+                                        int p1 = countpage;
+                                        str = str.PadLeft(3, '0') + "-" + p1.ToString().PadLeft(3, '0');
+                                    }
+                                }
+                                wsheek.Range[arow + i, bcol].Text = str;
+                            }
+                            //else if (dz < ClsPrintConten.PrintContenDz.Count && ClsPrintConten.PrintContenDz[dz] == "True")
+                            //    wsheek.Range[arow + i, bcol].Text = str;
+                            //else if (arow == i && j == bcol) {
+                            //    wsheek.Range[arow + i, bcol].Text = str;
+                            //}
+                            else if (ClsPrintConten.PrintContenDz[dz] == "False") {
+                                string s = ClsPrintConten.printContenXls[dz].ToString();
+                                if (str.Trim().Length > 0)
+                                    wsheek.Range[s].Text = str.PadLeft(4, '0');
+                            }
+                            else if (ClsPrintConten.PrintContenDz[dz] == "True")
+                                wsheek.Range[arow + i, bcol].Text = str;
+                        }
+                        dz += 1;
+                    }
+                }
+                rowsn = wsheek.LastRow;
+                string fontname = wsheek.Rows[6].Cells[3].Style.Font.FontName;
+                double fontsize = wsheek.Rows[6].Cells[3].Style.Font.Size;
+                CellRange range = wsheek.Range["A6" + ":H" + rowsn];
+                range.BorderInside(LineStyleType.Thin, ExcelColors.Black);
+                range.BorderAround(LineStyleType.Thin, ExcelColors.Black);
+                range.Style.Font.Size = fontsize;
+                range.Style.Font.FontName = fontname;
+                range.HorizontalAlignment = HorizontalAlignType.Center;
+                range.VerticalAlignment = VerticalAlignType.Center;
+                range.Style.WrapText = true;
+                range.AutoFitRows();
+                for (int i = 6; i < rowsn; i++) {
+                    double row = wsheek.Rows[i].RowHeight;
+                    if (row < 50)
+                        wsheek.Rows[i].SetRowHeight(50, true);
+                    wsheek.Range["E" + (i + 1) + ":F" + (i + 1)].Merge();
+                }
+                wsheek.PageSetup.PrintTitleRows = "$1:$5";
+                work.PrintDocument.Print();
+                return true;
+            } catch (Exception e) {
+                string str = "ID号:" + archid + ":" + e;
+                WriteLog(str);
+                return false;
+            }
+        }
+
+        private int ToNum(string columnName)
+        {
+            if (!Regex.IsMatch(columnName.ToUpper(), @"[A-Z]+") && !Regex.IsMatch(columnName.ToUpper(), @"[a-z]+"))
+                return 0;
+            int index = 0;
+            char[] chars = columnName.ToUpper().ToCharArray();
+            for (int i = 0; i < chars.Length; i++) {
+                index += ((int)chars[i] - (int)'A' + 1) * (int)Math.Pow(26, chars.Length - i - 1);
+            }
+            return index - 1;
+        }
+        private string ToName(int index)
+        {
+            if (index < 0) { return ""; }
+
+            List<string> chars = new List<string>();
+            do {
+                if (chars.Count > 0) index--;
+                chars.Insert(0, ((char)(index % 26 + (int)'A')).ToString());
+                index = (int)((index - index % 26) / 26);
+            } while (index > 0);
+
+            return String.Join(string.Empty, chars.ToArray());
+        }
+
+        #endregion
+
+
     }
 }

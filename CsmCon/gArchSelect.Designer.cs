@@ -44,6 +44,11 @@
             this.c_archxq = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ImgList = new System.Windows.Forms.ImageList(this.components);
             this.panelTop = new System.Windows.Forms.Panel();
+            this.comQi = new DevComponents.DotNetBar.Controls.ComboBoxEx();
+            this.comboItem1 = new DevComponents.Editors.ComboItem();
+            this.comboItem2 = new DevComponents.Editors.ComboItem();
+            this.txtml = new System.Windows.Forms.TextBox();
+            this.txtzong = new System.Windows.Forms.TextBox();
             this.combLx = new DevComponents.DotNetBar.Controls.ComboBoxEx();
             this.comboItem3 = new DevComponents.Editors.ComboItem();
             this.comboItem4 = new DevComponents.Editors.ComboItem();
@@ -176,6 +181,9 @@
             // 
             // panelTop
             // 
+            this.panelTop.Controls.Add(this.comQi);
+            this.panelTop.Controls.Add(this.txtml);
+            this.panelTop.Controls.Add(this.txtzong);
             this.panelTop.Controls.Add(this.combLx);
             this.panelTop.Controls.Add(this.label2);
             this.panelTop.Controls.Add(this.butOk);
@@ -186,6 +194,46 @@
             this.panelTop.Name = "panelTop";
             this.panelTop.Size = new System.Drawing.Size(353, 64);
             this.panelTop.TabIndex = 0;
+            // 
+            // comQi
+            // 
+            this.comQi.DisplayMember = "Text";
+            this.comQi.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.comQi.FormattingEnabled = true;
+            this.comQi.ItemHeight = 15;
+            this.comQi.Items.AddRange(new object[] {
+            this.comboItem1,
+            this.comboItem2});
+            this.comQi.Location = new System.Drawing.Point(135, 38);
+            this.comQi.Name = "comQi";
+            this.comQi.Size = new System.Drawing.Size(75, 21);
+            this.comQi.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.comQi.TabIndex = 9;
+            this.comQi.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.comQi_KeyPress);
+            // 
+            // comboItem1
+            // 
+            this.comboItem1.Text = "永久";
+            // 
+            // comboItem2
+            // 
+            this.comboItem2.Text = "长期";
+            // 
+            // txtml
+            // 
+            this.txtml.Location = new System.Drawing.Point(72, 38);
+            this.txtml.Name = "txtml";
+            this.txtml.Size = new System.Drawing.Size(54, 21);
+            this.txtml.TabIndex = 8;
+            this.txtml.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtml_KeyPress);
+            // 
+            // txtzong
+            // 
+            this.txtzong.Location = new System.Drawing.Point(13, 38);
+            this.txtzong.Name = "txtzong";
+            this.txtzong.Size = new System.Drawing.Size(52, 21);
+            this.txtzong.TabIndex = 7;
+            this.txtzong.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtzong_KeyPress);
             // 
             // combLx
             // 
@@ -200,7 +248,7 @@
             this.comboItem5});
             this.combLx.Location = new System.Drawing.Point(43, 11);
             this.combLx.Name = "combLx";
-            this.combLx.Size = new System.Drawing.Size(72, 21);
+            this.combLx.Size = new System.Drawing.Size(101, 21);
             this.combLx.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.combLx.TabIndex = 6;
             this.combLx.SelectedIndexChanged += new System.EventHandler(this.combLx_SelectedIndexChanged);
@@ -231,9 +279,9 @@
             this.butOk.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.butOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.butOk.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.butOk.Location = new System.Drawing.Point(290, 7);
+            this.butOk.Location = new System.Drawing.Point(290, 13);
             this.butOk.Name = "butOk";
-            this.butOk.Size = new System.Drawing.Size(53, 26);
+            this.butOk.Size = new System.Drawing.Size(53, 42);
             this.butOk.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.butOk.TabIndex = 4;
             this.butOk.Tag = "5";
@@ -243,11 +291,9 @@
             // 
             // txtBoxsn
             // 
-            this.txtBoxsn.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtBoxsn.Location = new System.Drawing.Point(205, 11);
+            this.txtBoxsn.Location = new System.Drawing.Point(223, 38);
             this.txtBoxsn.Name = "txtBoxsn";
-            this.txtBoxsn.Size = new System.Drawing.Size(73, 21);
+            this.txtBoxsn.Size = new System.Drawing.Size(50, 21);
             this.txtBoxsn.TabIndex = 3;
             this.txtBoxsn.Tag = "4";
             this.txtBoxsn.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtBoxsn_KeyPress);
@@ -258,9 +304,9 @@
             this.comboxClass.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.comboxClass.FormattingEnabled = true;
             this.comboxClass.ItemHeight = 15;
-            this.comboxClass.Location = new System.Drawing.Point(121, 11);
+            this.comboxClass.Location = new System.Drawing.Point(151, 11);
             this.comboxClass.Name = "comboxClass";
-            this.comboxClass.Size = new System.Drawing.Size(76, 21);
+            this.comboxClass.Size = new System.Drawing.Size(122, 21);
             this.comboxClass.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.comboxClass.TabIndex = 2;
             this.comboxClass.Tag = "3";
@@ -370,5 +416,10 @@
         private DevComponents.Editors.ComboItem comboItem5;
         private System.Windows.Forms.ColumnHeader c_archxq;
         public System.Windows.Forms.TextBox txtBoxsn;
+        private DevComponents.DotNetBar.Controls.ComboBoxEx comQi;
+        private System.Windows.Forms.TextBox txtml;
+        private System.Windows.Forms.TextBox txtzong;
+        private DevComponents.Editors.ComboItem comboItem1;
+        private DevComponents.Editors.ComboItem comboItem2;
     }
 }

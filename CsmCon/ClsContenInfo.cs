@@ -272,12 +272,12 @@ namespace CsmCon
                     i++;
                 }
 
-                if (info > 0) {
-                    if (lsv.Items.Count > 0) {
-                        lsv.Items[lsv.Items.Count - 1].Selected = true;
-                        lsv.Items[lsv.Items.Count - 1].EnsureVisible();
-                    }
-                }
+                //if (info > 0) {
+                //    if (lsv.Items.Count > 0) {
+                //        lsv.Items[lsv.Items.Count - 1].Selected = true;
+                //        lsv.Items[lsv.Items.Count - 1].EnsureVisible();
+                //    }
+                //}
             } catch {
             } finally {
                 loadcon = false;

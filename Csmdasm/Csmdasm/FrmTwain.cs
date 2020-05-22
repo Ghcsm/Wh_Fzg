@@ -28,6 +28,10 @@ namespace Csmdasm
         Hljsimage Himg = new Hljsimage();
         HFTP ftp = new HFTP();
         private Pubcls pub;
+        private int pages = 0;
+        private int maxpage = 0;
+        private List<int> UserAll = new List<int>();
+        private List<int> Workint = new List<int>();
 
         #endregion
 
@@ -73,6 +77,7 @@ namespace Csmdasm
                 Init();
                 Himg._Instimagtwain(this.ImgView, this.Handle, 1);
                 Himg._Rectang(true);
+                Himg.Userid = T_User.UserId;
                 Writeini.Fileini = Path.Combine(Application.StartupPath, "Csmkeyval.ini");
                 Getsqlkey();
                 pub = new Pubcls();
@@ -122,6 +127,8 @@ namespace Csmdasm
                 Himg.LoadPage(pages);
                 Getuser();
                 GetQspage();
+                GetScanPage();
+                Common.WriteArchlog(ClsTwain.Archid,"进入案卷");
             }
 
         }
@@ -213,14 +220,21 @@ namespace Csmdasm
                 if (dt == null || dt.Rows.Count <= 0)
                     return;
                 DataRow dr = dt.Rows[0];
-                Scanner = dr["扫描"].ToString();
-                scantime = dr["扫描时间"].ToString();
+                // Scanner = dr["扫描"].ToString();
+                //scantime = dr["扫描时间"].ToString();
                 Indexer = dr["排序"].ToString();
                 indextime = dr["排序时间"].ToString();
                 Checker = dr["质检"].ToString();
                 chktime = dr["质检时间"].ToString();
                 enter = dr["录入"].ToString();
                 entertime = dr["录入时间"].ToString();
+                foreach (DataRow d in dt.Rows) {
+                    string s = d["扫描"].ToString();
+                    if (!Scanner.Contains(s)) {
+                        Scanner += s + ",";
+                        scantime += d["扫描时间"].ToString() + ",";
+                    }
+                }
                 this.BeginInvoke(new Action(() =>
                 {
                     this.labScanUser.Text = string.Format("扫描：{0}", Scanner);
@@ -285,11 +299,41 @@ namespace Csmdasm
 
         }
 
+        private void GetScanPage()
+        {
+            UserAll.Clear();
+            Workint.Clear();
+            Task.Run(() =>
+            {
+                try {
+                    DataTable dt = Common.ReadScanPage(ClsTwain.Archid);
+                    if (dt == null || dt.Rows.Count <= 0)
+                        return;
+                    for (int i = 0; i < dt.Rows.Count; i++) {
+                        string u = dt.Rows[i][0].ToString();
+                        string w = dt.Rows[i][1].ToString();
+                        int w1;
+                        bool bl = int.TryParse(w, out w1);
+                        if (!bl)
+                            continue;
+                        UserAll.Add(Convert.ToInt32(u));
+                        Workint.Add(Convert.ToInt32(w));
+                    }
+                } catch {
+
+                }
+            });
+        }
+
         private void GetPages(int page, int counpage)
         {
             ClsTwain.MaxPage = counpage;
             if (page > counpage)
                 page = counpage;
+            //if (maxpage == 0)
+            //    maxpage = counpage;
+            //else if (counpage > maxpage)
+            //    pages += 1;
             labPagesCrrent.Text = string.Format("第  {0}   页", page);
             labPagesCount.Text = string.Format("共  {0}   页", counpage);
             GetImgInfo();
@@ -383,23 +427,23 @@ namespace Csmdasm
                 labArchNo.Text = "当前卷号:";
                 labQsPages.Text = "当前卷缺少:";
                 ClsTwain.task = false;
+                Himg.UserScanPage = 0;
                 gArch.butLoad.Enabled = true;
             }));
         }
 
-        private void FtpUp(string filetmp, string archpos, int maxpage, int arid, int regpage,bool bl)
+        private void FtpUp(string filetmp, string archpos, int maxpage, int arid, int regpage, bool bl)
         {
             try {
+                Common.WriteArchlog(arid, "退出案卷");
                 if (File.Exists(filetmp)) {
                     Common.WiteUpTask(arid, archpos, T_ConFigure.ScanTempFile, (int)T_ConFigure.ArchStat.扫描完, maxpage, filetmp, "0");
-                    if (bl)
-                    {
+                    if (bl) {
                         List<string> lsfile = new List<string>();
-                        Himg._SplitImgScan(filetmp,out lsfile);
+                        Himg._SplitImgScan(filetmp, out lsfile);
                         ClsImg.CleHole(lsfile);
                         string f = Himg.MergeImg(lsfile).Trim();
-                        if (f.Length > 0)
-                        {
+                        if (f.Length > 0) {
                             File.Delete(filetmp);
                             filetmp = f;
                         }
@@ -452,7 +496,7 @@ namespace Csmdasm
                     }
                 }
                 else
-                    Common.Writelog(arid, "扫描退出时未找到文件!");
+                    Common.WriteArchlog(ClsTwain.Archid, "退出时未找到图像文件");
                 Common.SetScanFinish(arid, maxpage, 0, (int)T_ConFigure.ArchStat.无);
             } catch {
                 Common.SetScanFinish(arid, maxpage, 0, (int)T_ConFigure.ArchStat.无);
@@ -618,7 +662,8 @@ namespace Csmdasm
         {
             string filetmp = ClsTwain.ScanFileTmp;
             string archpos = ClsTwain.ArchPos;
-            int maxpage = ClsTwain.MaxPage;
+            //int maxpage = ClsTwain.MaxPage;
+            int maxpage = GetPages();
             int arid = ClsTwain.Archid;
             int regpage = ClsTwain.RegPage;
             bool blimg = chkImg.Checked;
@@ -627,6 +672,17 @@ namespace Csmdasm
             gArch.LvData.Focus();
         }
 
+        private int GetPages()
+        {
+            int id = UserAll.IndexOf(T_User.UserId);
+            if (id < 0)
+                return Himg.UserScanPage;
+            else {
+                int c = Workint[id];
+                c = c + Himg.UserScanPage;
+                return c;
+            }
+        }
 
         #endregion
 
@@ -808,8 +864,7 @@ namespace Csmdasm
         void KeysDownEve(string key)
         {
             string[] str = key.Split(':');
-            for (int i = 0; i < str.Length; i++)
-            {
+            for (int i = 0; i < str.Length; i++) {
                 string k = str[i];
                 bool bl = false;
                 switch (k) {

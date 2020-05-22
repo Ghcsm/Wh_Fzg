@@ -1538,7 +1538,8 @@ namespace Csmsjcf
 
             if (chkdj.Checked)
                 ClsDL.dj = 1;
-
+            else
+                ClsDL.dj = 0;
             if (rabdlboxsn.Checked) {
                 if (txtB1.Text.Trim().Length <= 0 || txtB2.Text.Trim().Length <= 0) {
                     MessageBox.Show("盒号范围不能为空!");
@@ -1580,7 +1581,7 @@ namespace Csmsjcf
                 ClsDL.jpgpdf = "jpg";
             else if (chkpdf.Checked)
                 ClsDL.jpgpdf = "pdf";
-            if (chkjpgxml.Checked && chkpdf.Checked) {
+            if (!chkxlsbiao.Checked) {
                 ClsDL.lx = 1;
                 if (chkxlsbiao.Checked) {
                     MessageBox.Show("单导xls无需选择重新转换!");
@@ -1688,25 +1689,26 @@ namespace Csmsjcf
                 }
                 else if (ClsDL.Fanwei == 2) {
                     if (ClsDL.Zlcy == 2) {
-                        Common.DataSplitshantou(ClsDL.Houseid, ClsDL.Quhao);
+                        Common.DataSplitshantou(ClsDL.Houseid, ClsDL.Quhao, ClsDL.dj);
                     }
-
                     if (ClsDL.dj == 0) {
                         if (ClsDL.lx == 1)
-                            ClsDL.dtboxsn = Common.DataSplitGetdatashantou(ClsDL.Houseid, ClsDL.Quhao);
+                            ClsDL.dtboxsn = Common.DataSplitGetdatashantou(ClsDL.Houseid, ClsDL.Quhao, ClsDL.dj);
                         else
-                            ClsDL.dtboxsn = Common.DataSplitGetdatashantou2(ClsDL.Houseid, ClsDL.Quhao);
+                            ClsDL.dtboxsn = Common.DataSplitGetdatashantou2(ClsDL.Houseid, ClsDL.Quhao, ClsDL.dj);
                     }
                     else {
                         if (ClsDL.lx == 1)
-                            ClsDL.dtboxsn = Common.DataSplitGetdatashantoud(ClsDL.Houseid, ClsDL.Quhao);
+                            ClsDL.dtboxsn = Common.DataSplitGetdatashantoud(ClsDL.Houseid, ClsDL.Quhao, ClsDL.dj);
                         else
-                            ClsDL.dtboxsn = Common.DataSplitGetdatashantoud2(ClsDL.Houseid, ClsDL.Quhao);
+                            ClsDL.dtboxsn = Common.DataSplitGetdatashantoud2(ClsDL.Houseid, ClsDL.Quhao, ClsDL.dj);
                     }
-
                 }
-                if (ClsDL.dtboxsn == null || ClsDL.dtboxsn.Rows.Count <= 0)
+                if (ClsDL.dtboxsn == null || ClsDL.dtboxsn.Rows.Count <= 0) {
+                    string str = "盒号:" + ClsDL.BoxsnTag + "未发现拆分数据";
+                    ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
                     return;
+                }
                 this.BeginInvoke(new Action(() => { lab_dl_juan.Text = "共计:" + ClsDL.dtboxsn.Rows.Count.ToString(); }));
                 XmlSpite();
 
@@ -1744,11 +1746,13 @@ namespace Csmsjcf
                         string[] s = archpage.Split(';');
                         if (s.Length > 0) {
                             for (int a = 0; a < s.Length; a++) {
+                                string d = s[a].Trim();
+                                if (d.Trim().Length <= 0)
+                                    continue;
                                 Apage.Add(s[a].Trim());
                                 string[] c = s[a].Trim().Split('-');
                                 Aintpage.Add(Convert.ToInt32(c[0]));
                             }
-
                         }
                         if (ClsDL.Pcbox) {
                             if (ClsDL.Lspcbox.IndexOf(boxsn) >= 0) {
@@ -1769,12 +1773,7 @@ namespace Csmsjcf
                             ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
                             continue;
                         }
-                        string jpgpath = Path.Combine(ClsDL.NewPath, "jpg");
-                        string pdfpath = Path.Combine(ClsDL.NewPath, "pdf");
-                        if (!Directory.Exists(jpgpath))
-                            Directory.CreateDirectory(jpgpath);
-                        if (!Directory.Exists(pdfpath))
-                            Directory.CreateDirectory(pdfpath);
+
                         DataTable dt = Common.Getmlinfo(ClsDL.Archid);
                         if (dt == null || dt.Rows.Count <= 0) {
                             string str = "盒号:" + boxsn + "获取目录信息失败";
@@ -1788,7 +1787,6 @@ namespace Csmsjcf
                             ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
                             continue;
                         }
-
                         if (ClsDL.lx == 1) {
                             for (int j = 0; j < dt.Rows.Count; j++) {
                                 string zong = dt.Rows[0][0].ToString();
@@ -1797,36 +1795,45 @@ namespace Csmsjcf
                                 string anjuan = dt.Rows[0][3].ToString();
                                 string tit = dt.Rows[j][8].ToString();
                                 string mpage = dt.Rows[j][10].ToString();
-                             
-                                int p1, p2;
+                                string zongsn = zong + "-" + mlsn.PadLeft(3, '0') + "-" + qi + "-" + anjuan.PadLeft(4, '0');
+                                string jpgpath = Path.Combine(ClsDL.NewPath, zong, "jpg", zongsn);
+                                string pdfpath = Path.Combine(ClsDL.NewPath, zong, "pdf", zongsn);
+                                string pdffile = zongsn + "-" + (j + 1).ToString().PadLeft(3,'0');
+                                if (ClsDL.jpgpdf == "jpg") {
+                                    if (!Directory.Exists(jpgpath))
+                                        Directory.CreateDirectory(jpgpath);
+                                }
+                                else if (ClsDL.jpgpdf == "pdf") {
+                                    if (!Directory.Exists(pdfpath))
+                                        Directory.CreateDirectory(pdfpath);
+                                }
+                                else if (ClsDL.jpgpdf == "jpgpdf") {
+                                    if (!Directory.Exists(jpgpath))
+                                        Directory.CreateDirectory(jpgpath);
+                                    if (!Directory.Exists(pdfpath))
+                                        Directory.CreateDirectory(pdfpath);
+                                }
+                                int p1, p2, Cpages;
+                                Cpages = 0;
                                 p1 = Convert.ToInt32(mpage);
                                 if (j < dt.Rows.Count - 1) {
                                     string tpage = dt.Rows[j + 1][10].ToString();
                                     p2 = Convert.ToInt32(tpage) - 1;
                                 }
-                                else
+                                else {
                                     p2 = Convert.ToInt32(page);
-                                string jpgpath1 = Path.Combine(jpgpath, zong, mlsn, qi, anjuan, p1.ToString().PadLeft(3,'0'));
-                                if (!Directory.Exists(jpgpath1))
-                                    Directory.CreateDirectory(jpgpath1);
-                                string pdfpath1 = Path.Combine(pdfpath, zong, mlsn, qi, anjuan, p1.ToString().PadLeft(3,'0'));
-                                if (!Directory.Exists(pdfpath1))
-                                    Directory.CreateDirectory(pdfpath1);
-                                if (zong.Trim().Length <= 0 || mlsn.Trim().Length <= 0 || anjuan.Trim().Length <= 0 ||
-                                    tit.Trim().Length <= 0) {
-                                    string str = "盒号:" + boxsn + " ,行号:" + j.ToString() + "请检查全宗号，目录号，案卷号，标题是否为空!";
-                                    ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
-                                    continue;
+                                    Cpages = p2;
                                 }
-
                                 int imgp1, imgp2;
-                                if (!Getnum(Aintpage, p1, p2, out imgp1, out imgp2)) {
+                                if (!Getnum(Aintpage, p1, p2, Cpages, out imgp1, out imgp2)) {
                                     string str = "盒号:" + boxsn + " ,行号:" + j.ToString() + "计算页码失败!";
                                     ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
                                     continue;
                                 }
-                                if (Himg._SplitImgjpgPdf(loadfile, jpgpath1, pdfpath1, ClsDL.jpgpdf, Apage, p1, p2, imgp1,
-                                        imgp2, ClsDL.Zlcy) != "ok") {
+                                if (Cpages > 0)
+                                    p2 = imgp2;
+                                if (Himg._SplitImgjpgPdf(loadfile, jpgpath, pdfpath, ClsDL.jpgpdf, Apage, p1, p2, imgp1,
+                                        imgp2, ClsDL.Zlcy, pdffile) != "ok") {
                                     string str = "盒号:" + boxsn + " ,行号:" + j.ToString() + "拆分图像失败!";
                                     ClsWritelog.Writelog(ClsFrmInfoPar.LogPath, str);
                                     continue;
@@ -1857,7 +1864,7 @@ namespace Csmsjcf
             }
         }
 
-        private Boolean Getnum(List<int> str, int p1, int p2, out int imgp1, out int imgp2)
+        private Boolean Getnum(List<int> str, int p1, int p2, int p3, out int imgp1, out int imgp2)
         {
             imgp1 = 0;
             imgp2 = 0;
@@ -1870,7 +1877,10 @@ namespace Csmsjcf
                         imgp2 += 1;
                 }
                 imgp1 = p1 + imgp1;
-                imgp2 = p2 + imgp2;
+                if (p3 <= 0)
+                    imgp2 = p2 + imgp2;
+                else
+                    imgp2 = p3- imgp2;
                 return true;
             } catch {
                 return false;

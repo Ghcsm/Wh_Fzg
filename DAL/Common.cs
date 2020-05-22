@@ -764,6 +764,18 @@ namespace DAL
             }
         }
 
+        public static DataTable ReadScanPage(int arcid)
+        {
+            try {
+                string strSql = "SELECT SCANSTAFF,SUM(Pages) FROM dbo.M_ScanWork WHERE ARCHID=@arid GROUP BY SCANSTAFF";
+                SqlParameter p1 = new SqlParameter("@arid", arcid);
+                DataTable dt = DAL.SQLHelper.ExcuteTable(strSql, p1);
+                return dt;
+            } catch {
+                return null;
+            }
+        }
+
         public static void WiteUpTask(int arid, string archpos, string filename, int archstat, int page, string fileapth, string tagpage)
         {
             string strSql = "PUpTask";
@@ -1002,7 +1014,7 @@ namespace DAL
         public static DataTable GetArchPages1(int ArchID)
         {
             try {
-                string strSql = "select 页码,条码,嫌疑人 from V_GetML where Archid=@id ";
+                string strSql = "select pages,boxsn,ArchImportID from M_IMAGEFILE where id=@id ";
                 SqlParameter p1 = new SqlParameter("@id", ArchID);
                 DataTable dt = SQLHelper.ExcuteTable(strSql, p1);
                 return dt;
@@ -1036,8 +1048,18 @@ namespace DAL
 
         public static void Writelog(int ArchID, string str)
         {
-
             string strSql = "Plog";
+            SqlParameter[] p = new SqlParameter[4];
+            p[0] = new SqlParameter("@UserID", T_User.UserId);
+            p[1] = new SqlParameter("@Archid", ArchID);
+            p[2] = new SqlParameter("@Operation", str);
+            p[3] = new SqlParameter("@ipadd", T_ConFigure.IPAddress);
+            int i = DAL.SQLHelper.ExecuteNonQuery(strSql, CommandType.StoredProcedure, p);
+        }
+
+        public static void WriteArchlog(int ArchID, string str)
+        {
+            string strSql = "Parchlog";
             SqlParameter[] p = new SqlParameter[4];
             p[0] = new SqlParameter("@UserID", T_User.UserId);
             p[1] = new SqlParameter("@Archid", ArchID);
@@ -1439,13 +1461,13 @@ namespace DAL
             return dt;
         }
 
-        public static void InsterbingNum( string archimid)
+        public static void InsterbingNum(string archimid)
         {
             string strSql = "INSERT INTO M_BindNum(ArchImportID,Userid,UserName) values (@arimpid,@useid,@usename)";
             SqlParameter p2 = new SqlParameter("@arimpid", archimid);
             SqlParameter p3 = new SqlParameter("@useid", T_User.UserId);
             SqlParameter p4 = new SqlParameter("@usename", T_User.LoginName);
-            SQLHelper.ExecScalar(strSql,p2, p3, p4);
+            SQLHelper.ExecScalar(strSql, p2, p3, p4);
         }
 
         #endregion
@@ -1473,7 +1495,7 @@ namespace DAL
 
         public static DataTable DataSplitGetdataxls(int houseid, string box1, string box2)
         {
-            string strSql = "select id,BOXSN,PAGES,IMGFILE,ArchXqStat,ArchLx from  M_IMAGEFILE where  boxsn>=@box1 and boxsn<=@box2 and HOUSEID=@houseid and CHECKED=1";
+            string strSql = "select id,BOXSN,PAGES,IMGFILE,ArchXqStat,ArchLx from  M_IMAGEFILE where  boxsn>=@box1 and boxsn<=@box2 and HOUSEID=@houseid and CHECKED=1 and SPLITERROR is null";
             SqlParameter p1 = new SqlParameter("@box1", box1);
             SqlParameter p2 = new SqlParameter("@box2", box2);
             SqlParameter p3 = new SqlParameter("@houseid", houseid);
@@ -2358,43 +2380,63 @@ namespace DAL
 
         #region 汕头
 
-        public static void DataSplitshantou(int houseid, string qu)
+        public static void DataSplitshantou(int houseid, string qu, int id)
         {
-            string strSql = "update M_IMAGEFILE set SPLITERROR=null where ArchImportID like '%" + qu + "%' and HOUSEID=@houseid ";
+            string strSql = "";
+            if (id == 1)
+                strSql = "update M_IMAGEFILE set SPLITERROR=null where ArchImportID=@qu and HOUSEID=@houseid ";
+            else
+                strSql = "update M_IMAGEFILE set SPLITERROR=null where ArchImportID like '%" + qu + "%' and HOUSEID=@houseid ";
             SqlParameter p1 = new SqlParameter("@qu", qu);
             SqlParameter p2 = new SqlParameter("@houseid", houseid);
             SQLHelper.ExecScalar(strSql, p1, p2);
         }
 
-        public static DataTable DataSplitGetdatashantou(int houseid, string qu)
+        public static DataTable DataSplitGetdatashantou(int houseid, string qu, int id)
         {
-            string strSql = "select id,BOXSN,PAGES,IMGFILE,archpage,ArchLx from  M_IMAGEFILE where  ArchImportID like '%" + qu + "%' and HOUSEID=@houseid and CHECKED=1";
+            string strSql = "";
+            if (id == 1)
+                strSql = "select id,BOXSN,PAGES,IMGFILE,archpage,ArchLx from  M_IMAGEFILE where  ArchImportID =@qu and HOUSEID=@houseid and CHECKED=1 and SPLITERROR is null";
+            else
+                strSql = "select id,BOXSN,PAGES,IMGFILE,archpage,ArchLx from  M_IMAGEFILE where  ArchImportID like '%" + qu + "%' and HOUSEID=@houseid and CHECKED=1 and SPLITERROR is null";
             SqlParameter p1 = new SqlParameter("@qu", qu);
             SqlParameter p2 = new SqlParameter("@houseid", houseid);
             DataTable dt = SQLHelper.ExcuteTable(strSql, p1, p2);
             return dt;
         }
-        public static DataTable DataSplitGetdatashantoud(int houseid, string qu)
+        public static DataTable DataSplitGetdatashantoud(int houseid, string qu, int id)
         {
-            string strSql = "select id,BOXSN,PAGES,IMGFILE,archpage,ArchLx from  M_IMAGEFILE where  ArchImportID =@qu and HOUSEID=@houseid and CHECKED=1";
+            string strSql = "";
+            if (id == 1)
+                strSql = "select id,BOXSN,PAGES,IMGFILE,archpage,ArchLx from  M_IMAGEFILE where  ArchImportID =@qu and HOUSEID=@houseid and CHECKED=1 and SPLITERROR is null";
+            else
+                strSql = "select id,BOXSN,PAGES,IMGFILE,archpage,ArchLx from  M_IMAGEFILE where  ArchImportID like '%" + qu + "%' and HOUSEID=@houseid and CHECKED=1 and SPLITERROR is null";
             SqlParameter p1 = new SqlParameter("@qu", qu);
             SqlParameter p2 = new SqlParameter("@houseid", houseid);
             DataTable dt = SQLHelper.ExcuteTable(strSql, p1, p2);
             return dt;
         }
 
-        public static DataTable DataSplitGetdatashantou2(int houseid, string qu)
+        public static DataTable DataSplitGetdatashantou2(int houseid, string qu, int id)
         {
-            string strSql = "select id,BOXSN,PAGES,IMGFILE,archpage,ArchLx from  M_IMAGEFILE where  SPLITERROR is null and  ArchImportID like '%" + qu + "%' and HOUSEID=@houseid and CHECKED=1 ORDER BY CONVERT(INT,BOXSN)";
+            string strSql = "";
+            if (id == 1)
+                strSql = "select id,BOXSN,PAGES,IMGFILE,archpage,ArchLx from  M_IMAGEFILE where  SPLITERROR is null and  ArchImportID=@qu and HOUSEID=@houseid and CHECKED=1 ORDER BY CONVERT(INT,BOXSN)";
+            else
+                strSql = "select id,BOXSN,PAGES,IMGFILE,archpage,ArchLx from  M_IMAGEFILE where  SPLITERROR is null and  ArchImportID like '%" + qu + "%' and HOUSEID=@houseid and CHECKED=1 ORDER BY CONVERT(INT,BOXSN)";
             SqlParameter p1 = new SqlParameter("@qu", qu);
             SqlParameter p2 = new SqlParameter("@houseid", houseid);
             DataTable dt = SQLHelper.ExcuteTable(strSql, p1, p2);
             return dt;
         }
 
-        public static DataTable DataSplitGetdatashantoud2(int houseid, string qu)
+        public static DataTable DataSplitGetdatashantoud2(int houseid, string qu, int id)
         {
-            string strSql = "select id,BOXSN,PAGES,IMGFILE,archpage,ArchLx from  M_IMAGEFILE where  SPLITERROR is null and  ArchImportID =@qu and HOUSEID=@houseid and CHECKED=1 ORDER BY CONVERT(INT,BOXSN)";
+            string strSql = "";
+            if (id == 1)
+                strSql = "select id,BOXSN,PAGES,IMGFILE,archpage,ArchLx from  M_IMAGEFILE where  SPLITERROR is null and  ArchImportID =@qu and HOUSEID=@houseid and CHECKED=1 ORDER BY CONVERT(INT,BOXSN)";
+            else
+                strSql = "select id,BOXSN,PAGES,IMGFILE,archpage,ArchLx from  M_IMAGEFILE where  SPLITERROR is null and  ArchImportID like '%" + qu + "%' and HOUSEID=@houseid and CHECKED=1 ORDER BY CONVERT(INT,BOXSN)";
             SqlParameter p1 = new SqlParameter("@qu", qu);
             SqlParameter p2 = new SqlParameter("@houseid", houseid);
             DataTable dt = SQLHelper.ExcuteTable(strSql, p1, p2);

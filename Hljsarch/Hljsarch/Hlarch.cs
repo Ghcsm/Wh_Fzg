@@ -18,6 +18,7 @@ using System.Drawing.Printing;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Mime;
 using System.Runtime.ExceptionServices;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
@@ -88,9 +89,14 @@ namespace HLjscom
         //设置扫描模式，追加替换
         public int Scanms = 0;
         public int TagPage = 0;
+        //图像复制
         private RasterImage Imgcopy;
         public int CopyImgid = 0;
-
+        //用户id写入图像
+        public int Userid = 0;
+        public int UserScanPage = 0;
+        const int TifTagId = 0x8298;
+        private RasterTagMetadata tag = null;
         #endregion
 
 
@@ -138,6 +144,7 @@ namespace HLjscom
                     _twains.Startup(x, "Leadtools", "Leadtools ", "Version 1.0", "TWAIN Test Application",
                         TwainStartupFlags.None);
                     _twains.AcquirePage += new EventHandler<TwainAcquirePageEventArgs>(_twanscan_AcquirePage);
+                     tag = new RasterTagMetadata(TifTagId, RasterTagMetadataDataType.Ascii, null);
 
                 }
             }
@@ -1828,13 +1835,14 @@ namespace HLjscom
             }
         }
 
-        public string _SplitImgjpgPdf(string tffile, string jpgpath, string pdfpath, string fileformat, List<string> page, int p1, int p2, int imgp1, int imgp2, int tag)
+        public string _SplitImgjpgPdf(string tffile, string jpgpath, string pdfpath, string fileformat, List<string> page, int p1, int p2, int imgp1, int imgp2, int tag,string pdffile)
         {
             try {
                 int img = imgp1;
                 int a = 0;
                 // a 标记为是否为带杠
                 //id 记录带杠的次数
+                string pdfpath1 = Path.Combine(pdfpath,pdffile+".pdf");
                 using (RasterCodecs _codecs = new RasterCodecs()) {
 
                     for (int i = p1; i <= p2; i++) {
@@ -1855,12 +1863,10 @@ namespace HLjscom
                             RasterImage _imagepx = _codecs.Load(tffile, 0, CodecsLoadByteOrder.BgrOrGrayOrRomm, img, img);
                             int bit = _imagepx.BitsPerPixel;
                             string jpgpath1 = Path.Combine(jpgpath, i.ToString().PadLeft(4, '0') + "_" + id.ToString().PadLeft(2, '0') + ".jpg");
-                            string pdfpath1 = Path.Combine(pdfpath, i.ToString().PadLeft(4, '0') + "_" + id.ToString().PadLeft(2, '0') + ".pdf");
+                           // string pdfpath1 = Path.Combine(pdfpath, i.ToString().PadLeft(4, '0') + "_" + id.ToString().PadLeft(2, '0') + ".pdf");
                             _codecs.Options.Jpeg.Save.QualityFactor = Factor;
                             if (tag == 1) {
                                 if (File.Exists(jpgpath1))
-                                    continue;
-                                if (File.Exists(pdfpath1))
                                     continue;
                             }
                             else if (tag == 2) {
@@ -1874,34 +1880,34 @@ namespace HLjscom
                             if (bit != 1) {
                                 if (bit != 8) {
                                     if (fileformat == "jpg")
-                                        _codecs.Save(_imagepx, jpgpath1, RasterImageFormat.TifJpeg, bit, 1, 1, i, CodecsSavePageMode.Append);
+                                        _codecs.Save(_imagepx, jpgpath1, RasterImageFormat.TifJpeg, bit, 1, 1, -1, CodecsSavePageMode.Append);
                                     else if (fileformat == "pdf")
-                                        _codecs.Save(_imagepx, pdfpath1, RasterImageFormat.RasPdfJpeg, bit, 1, 1, i, CodecsSavePageMode.Append);
+                                        _codecs.Save(_imagepx, pdfpath1, RasterImageFormat.RasPdfJpeg, bit, 1, 1, -1, CodecsSavePageMode.Append);
                                     else if (fileformat == "jpgpdf") {
-                                        _codecs.Save(_imagepx, jpgpath1, RasterImageFormat.TifJpeg, bit, 1, 1, i, CodecsSavePageMode.Append);
-                                        _codecs.Save(_imagepx, pdfpath1, RasterImageFormat.RasPdfJpeg, bit, 1, 1, i, CodecsSavePageMode.Append);
+                                        _codecs.Save(_imagepx, jpgpath1, RasterImageFormat.TifJpeg, bit, 1, 1, -1, CodecsSavePageMode.Append);
+                                        _codecs.Save(_imagepx, pdfpath1, RasterImageFormat.RasPdfJpeg, bit, 1, 1, -1, CodecsSavePageMode.Append);
                                     }
                                 }
                                 else {
 
                                     if (fileformat == "jpg")
-                                        _codecs.Save(_imagepx, jpgpath1, RasterImageFormat.TifJpeg, 8, 1, 1, i, CodecsSavePageMode.Append);
+                                        _codecs.Save(_imagepx, jpgpath1, RasterImageFormat.TifJpeg, 8, 1, 1, -1, CodecsSavePageMode.Append);
                                     else if (fileformat == "pdf")
-                                        _codecs.Save(_imagepx, pdfpath1, RasterImageFormat.RasPdfJpeg, 8, 1, 1, i, CodecsSavePageMode.Append);
+                                        _codecs.Save(_imagepx, pdfpath1, RasterImageFormat.RasPdfJpeg, 8, 1, 1, -1, CodecsSavePageMode.Append);
                                     else if (fileformat == "jpgpdf") {
                                         _codecs.Save(_imagepx, jpgpath1, RasterImageFormat.TifJpeg, 8, 1, 1, i, CodecsSavePageMode.Append);
-                                        _codecs.Save(_imagepx, pdfpath1, RasterImageFormat.RasPdfJpeg, 8, 1, 1, i, CodecsSavePageMode.Append);
+                                        _codecs.Save(_imagepx, pdfpath1, RasterImageFormat.RasPdfJpeg, 8, 1, 1, -1, CodecsSavePageMode.Append);
                                     }
                                 }
                             }
                             else {
                                 if (fileformat == "jpg")
-                                    _codecs.Save(_imagepx, jpgpath1, RasterImageFormat.TifJpeg, 1, 1, 1, i, CodecsSavePageMode.Append);
+                                    _codecs.Save(_imagepx, jpgpath1, RasterImageFormat.TifJpeg, 1, 1, 1, -1, CodecsSavePageMode.Append);
                                 else if (fileformat == "pdf")
-                                    _codecs.Save(_imagepx, pdfpath1, RasterImageFormat.RasPdfJpeg, 1, 1, 1, i, CodecsSavePageMode.Append);
+                                    _codecs.Save(_imagepx, pdfpath1, RasterImageFormat.RasPdfJpeg, 1, 1, 1, -1, CodecsSavePageMode.Append);
                                 else if (fileformat == "jpgpdf") {
-                                    _codecs.Save(_imagepx, jpgpath1, RasterImageFormat.TifJpeg, 1, 1, 1, i, CodecsSavePageMode.Append);
-                                    _codecs.Save(_imagepx, pdfpath1, RasterImageFormat.RasPdfJpeg, 1, 1, 1, i, CodecsSavePageMode.Append);
+                                    _codecs.Save(_imagepx, jpgpath1, RasterImageFormat.TifJpeg, 1, 1, 1, -1, CodecsSavePageMode.Append);
+                                    _codecs.Save(_imagepx, pdfpath1, RasterImageFormat.RasPdfJpeg, 1, 1, 1, -1, CodecsSavePageMode.Append);
                                 }
                             }
                             img += 1;
@@ -2517,6 +2523,28 @@ namespace HLjscom
         }
 
 
+        private  void WriteTagsWithoutLoadingImage(RasterCodecs rasterCodecsInstance, string fileName)
+        {
+            // RasterCodecs.WriteTags will throw an exception if fileName does not 
+            // support tags. If required, use RasterCodecs.TagsSupported first 
+
+            // Create the tags 
+            const int exifCopyrightTagId = 0x8298;
+            const int exifImageTitleTagId = 0x010E;
+
+            RasterCollection<RasterTagMetadata> tags = new RasterCollection<RasterTagMetadata>();
+
+            RasterTagMetadata tag = new RasterTagMetadata(exifCopyrightTagId, RasterTagMetadataDataType.Ascii, null);
+            tag.FromAscii("Copyright (c) My Company");
+            tags.Add(tag);
+
+            tag = new RasterTagMetadata(exifImageTitleTagId, RasterTagMetadataDataType.Ascii, null);
+            tag.FromAscii("My Image");
+            tags.Add(tag);
+
+            // Write them to the file 
+            rasterCodecsInstance.WriteTags(fileName, 1, tags);
+        }
         //扫描保存
         private void Scanepage(RasterImage scanimg)
         {
@@ -2526,6 +2554,9 @@ namespace HLjscom
                 if (bit != 1) {
                     if (bit != 8) {
                         _Codefile.Options.Jpeg.Save.QualityFactor = Factor;
+                        tag.FromAscii(Userid.ToString());
+                        scanimg.Tags.Add(tag);
+                        _Codefile.Options.Save.Tags = true;
                         if (Scanms == 0)
                             _Codefile.Save(scanimg, Filename, RasterImageFormat.TifJpeg, 24, 1, 1, _CurrectPage, CodecsSavePageMode.Append);
                         if (Scanms == 1)
@@ -2553,10 +2584,32 @@ namespace HLjscom
                         _Codefile.Save(scanimg, Filename, RasterImageFormat.CcittGroup4, 8, 1, 1, _CurrectPage, CodecsSavePageMode.Append);
 
                 }
+                UserScanPage += 1;
+                //var ta1 = scanimg.Tags.GetEnumerator();
+                //_Codefile.TagFound += new EventHandler<CodecsEnumTagsEventArgs>(codecs_TagFound);
+                //_Codefile.EnumTags(Filename, 1);
+                //const int exifImageTitleTagId = 0x8298;
+                //RasterTagMetadata imageTitleTag = null;
+                //foreach (RasterTagMetadata tag in scanimg.Tags) {
+                //    if (tag.Id == exifImageTitleTagId) {
+                //        imageTitleTag = tag;
+                //        break;
+                //    }
+                //}
 
-            } catch (Exception ex) {
-                throw ex;
+                //if (imageTitleTag != null)
+                //{
+                //    string s = imageTitleTag.ToAscii();
+                //}
+            } catch  {
             }
+        }
+
+        private void codecs_TagFound(object sender, CodecsEnumTagsEventArgs e)
+        {
+            int x = e.Id;
+            int c = e.Count;
+            var a=e.MetadataType;
         }
 
         //获取文件总页码

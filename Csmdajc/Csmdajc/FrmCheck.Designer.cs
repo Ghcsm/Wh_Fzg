@@ -116,6 +116,7 @@
             this.dockSite7 = new DevComponents.DotNetBar.DockSite();
             this.dockSite3 = new DevComponents.DotNetBar.DockSite();
             this.odgInsterFile = new System.Windows.Forms.OpenFileDialog();
+            this.toolStripPrint = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -560,6 +561,7 @@
             this.toolStripRound,
             this.toolStripcopy,
             this.toolStripPase,
+            this.toolStripPrint,
             this.toolStripMagin,
             this.toolStripFiltr,
             this.toolProess,
@@ -806,6 +808,12 @@
             this.dockSite3.Name = "dockSite3";
             this.dockSite3.TabStop = false;
             // 
+            // toolStripPrint
+            // 
+            resources.ApplyResources(this.toolStripPrint, "toolStripPrint");
+            this.toolStripPrint.Name = "toolStripPrint";
+            this.toolStripPrint.Click += new System.EventHandler(this.toolStripPrint_Click);
+            // 
             // FrmCheck
             // 
             resources.ApplyResources(this, "$this");
@@ -948,5 +956,6 @@
         private DevComponents.DotNetBar.Controls.CollapsibleSplitContainer splitCont;
         private System.Windows.Forms.GroupBox gr1_2;
         private System.Windows.Forms.GroupBox gr1_1;
+        private System.Windows.Forms.ToolStripButton toolStripPrint;
     }
 }
