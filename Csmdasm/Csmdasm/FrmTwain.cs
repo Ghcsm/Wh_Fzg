@@ -115,6 +115,8 @@ namespace Csmdasm
                     return;
                 }
             }
+            Himg.UserScanPage = 0;
+            Common.WriteArchlog(ClsTwain.Archid, "进入案卷");
             bool loadfile = await LoadFile();
             Himg.Filename = ClsTwain.ScanFileTmp;
             gArch.butLoad.Enabled = true;
@@ -125,12 +127,10 @@ namespace Csmdasm
                     return;
                 }
                 Himg.LoadPage(pages);
-                Getuser();
-                GetQspage();
-                GetScanPage();
-                Common.WriteArchlog(ClsTwain.Archid,"进入案卷");
             }
-
+            Getuser();
+            GetQspage();
+            GetScanPage();
         }
 
         private Task<bool> LoadFile()

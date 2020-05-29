@@ -605,7 +605,7 @@ namespace WareHouse
         #region 档案状态
         private void butSetzt_Click(object sender, EventArgs e)
         {
-            if (txtbox1.Text.Trim().Length <= 0 || txtbox2.Text.Trim().Length <= 0 || combzt.Text.Trim().Length <= 0 || txtXqdm.Text.Trim().Length<=0) {
+            if (txtbox1.Text.Trim().Length <= 0 || txtbox2.Text.Trim().Length <= 0 || txtXqdm.Text.Trim().Length<=0) {
                 MessageBox.Show("请先输入盒号范围及选择档案状态!");
                 return;
             }
@@ -619,7 +619,7 @@ namespace WareHouse
             } catch {
             }
             bool chk = chkcheck.Checked;
-            Common.SetArchxqStat(txtbox1.Text.Trim(),txtbox2.Text.Trim(),combzt.Text.Trim(),txtXqdm.Text.Trim().PadLeft(4,'0'), chk);
+            Common.SetArchxqStat(txtbox1.Text.Trim(),txtbox2.Text.Trim(),txtXqdm.Text.Trim(), chk);
             MessageBox.Show("完成!");
         }
 

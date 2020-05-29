@@ -121,6 +121,8 @@
             this.dockSite7 = new DevComponents.DotNetBar.DockSite();
             this.dockSite3 = new DevComponents.DotNetBar.DockSite();
             this.odgInsterFile = new System.Windows.Forms.OpenFileDialog();
+            this.label2 = new System.Windows.Forms.Label();
+            this.txtLeiBie = new System.Windows.Forms.TextBox();
             this.dockSite9.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bar2)).BeginInit();
             this.bar2.SuspendLayout();
@@ -353,12 +355,14 @@
             // 
             // gr4
             // 
+            this.gr4.Controls.Add(this.txtLeiBie);
             this.gr4.Controls.Add(this.labCheckUser);
             this.gr4.Controls.Add(this.labIndexUser);
             this.gr4.Controls.Add(this.labScanUser);
             this.gr4.Controls.Add(this.labPageCount);
             this.gr4.Controls.Add(this.labPageCrrent);
             this.gr4.Controls.Add(this.txtPages);
+            this.gr4.Controls.Add(this.label2);
             this.gr4.Controls.Add(this.label1);
             this.gr4.Location = new System.Drawing.Point(3, 4);
             this.gr4.Name = "gr4";
@@ -369,7 +373,7 @@
             // labCheckUser
             // 
             this.labCheckUser.AutoSize = true;
-            this.labCheckUser.Location = new System.Drawing.Point(540, 20);
+            this.labCheckUser.Location = new System.Drawing.Point(653, 22);
             this.labCheckUser.Name = "labCheckUser";
             this.labCheckUser.Size = new System.Drawing.Size(35, 12);
             this.labCheckUser.TabIndex = 6;
@@ -378,7 +382,7 @@
             // labIndexUser
             // 
             this.labIndexUser.AutoSize = true;
-            this.labIndexUser.Location = new System.Drawing.Point(441, 20);
+            this.labIndexUser.Location = new System.Drawing.Point(554, 22);
             this.labIndexUser.Name = "labIndexUser";
             this.labIndexUser.Size = new System.Drawing.Size(35, 12);
             this.labIndexUser.TabIndex = 5;
@@ -387,7 +391,7 @@
             // labScanUser
             // 
             this.labScanUser.AutoSize = true;
-            this.labScanUser.Location = new System.Drawing.Point(334, 20);
+            this.labScanUser.Location = new System.Drawing.Point(447, 22);
             this.labScanUser.Name = "labScanUser";
             this.labScanUser.Size = new System.Drawing.Size(35, 12);
             this.labScanUser.TabIndex = 4;
@@ -396,7 +400,7 @@
             // labPageCount
             // 
             this.labPageCount.AutoSize = true;
-            this.labPageCount.Location = new System.Drawing.Point(251, 20);
+            this.labPageCount.Location = new System.Drawing.Point(364, 22);
             this.labPageCount.Name = "labPageCount";
             this.labPageCount.Size = new System.Drawing.Size(59, 12);
             this.labPageCount.TabIndex = 3;
@@ -405,7 +409,7 @@
             // labPageCrrent
             // 
             this.labPageCrrent.AutoSize = true;
-            this.labPageCrrent.Location = new System.Drawing.Point(167, 20);
+            this.labPageCrrent.Location = new System.Drawing.Point(280, 22);
             this.labPageCrrent.Name = "labPageCrrent";
             this.labPageCrrent.Size = new System.Drawing.Size(59, 12);
             this.labPageCrrent.TabIndex = 2;
@@ -413,7 +417,7 @@
             // 
             // txtPages
             // 
-            this.txtPages.Location = new System.Drawing.Point(82, 16);
+            this.txtPages.Location = new System.Drawing.Point(195, 18);
             this.txtPages.Name = "txtPages";
             this.txtPages.Size = new System.Drawing.Size(65, 21);
             this.txtPages.TabIndex = 1;
@@ -422,7 +426,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(19, 21);
+            this.label1.Location = new System.Drawing.Point(127, 23);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(59, 12);
             this.label1.TabIndex = 0;
@@ -1101,6 +1105,24 @@
             this.dockSite3.TabIndex = 3;
             this.dockSite3.TabStop = false;
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(19, 23);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(41, 12);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "类 别:";
+            // 
+            // txtLeiBie
+            // 
+            this.txtLeiBie.Location = new System.Drawing.Point(64, 19);
+            this.txtLeiBie.Name = "txtLeiBie";
+            this.txtLeiBie.Size = new System.Drawing.Size(42, 21);
+            this.txtLeiBie.TabIndex = 7;
+            this.txtLeiBie.TabStop = false;
+            this.txtLeiBie.Text = "1";
+            // 
             // FrmIndex
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -1243,5 +1265,7 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripAutoRectSet;
         private System.Windows.Forms.ToolStripMenuItem toolStripAutoRectMouseGetcolor;
         private System.Windows.Forms.ToolStripMenuItem toolStripAutoRectMouseGetcolor5;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox txtLeiBie;
     }
 }

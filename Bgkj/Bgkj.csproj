@@ -70,7 +70,7 @@
     <StartupObject />
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>bg.ico</ApplicationIcon>
+    <ApplicationIcon>file.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Csmborr">
@@ -267,7 +267,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="bg.ico" />
+    <Content Include="file.ico" />
     <Content Include="hw.ico" />
+    <None Include="Resources\LOGO4.png" />
     <None Include="Resources\hw1.png" />
     <None Include="Resources\hw.jpg" />
     <None Include="Resources\hw.png" />

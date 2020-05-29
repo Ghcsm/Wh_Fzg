@@ -549,7 +549,7 @@ namespace Csmdajc
         }
         private void ImgView_MouseDoubleClick_1(object sender, MouseEventArgs e)
         {
-            Himg._ImgFill(e);
+           // Himg._ImgFill(e);
         }
 
         private void ImgView_MouseDown_1(object sender, MouseEventArgs e)

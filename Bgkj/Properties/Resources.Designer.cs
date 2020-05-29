@@ -103,6 +103,16 @@ namespace Bgkj.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        internal static System.Drawing.Bitmap LOGO4 {
+            get {
+                object obj = ResourceManager.GetObject("LOGO4", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         internal static System.Drawing.Bitmap 登录界面 {
             get {
                 object obj = ResourceManager.GetObject("登录界面", resourceCulture);

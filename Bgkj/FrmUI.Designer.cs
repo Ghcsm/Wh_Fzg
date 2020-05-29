@@ -55,9 +55,8 @@
             this.panle.Controls.Add(this.btnOk);
             this.panle.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panle.Location = new System.Drawing.Point(0, 0);
-            this.panle.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panle.Name = "panle";
-            this.panle.Size = new System.Drawing.Size(824, 474);
+            this.panle.Size = new System.Drawing.Size(618, 379);
             this.panle.TabIndex = 2;
             this.panle.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panle_MouseDown);
             this.panle.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panle_MouseMove);
@@ -67,10 +66,9 @@
             this.lbinfo.AutoSize = true;
             this.lbinfo.BackColor = System.Drawing.Color.Transparent;
             this.lbinfo.ForeColor = System.Drawing.Color.White;
-            this.lbinfo.Location = new System.Drawing.Point(597, 448);
-            this.lbinfo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbinfo.Location = new System.Drawing.Point(448, 358);
             this.lbinfo.Name = "lbinfo";
-            this.lbinfo.Size = new System.Drawing.Size(195, 15);
+            this.lbinfo.Size = new System.Drawing.Size(155, 12);
             this.lbinfo.TabIndex = 6;
             this.lbinfo.Text = "数据库连接失败,请检查网络";
             this.lbinfo.Visible = false;
@@ -78,22 +76,20 @@
             // panleLogo
             // 
             this.panleLogo.BackColor = System.Drawing.Color.Transparent;
-            this.panleLogo.BackgroundImage = global::Bgkj.Properties.Resources._11;
+            this.panleLogo.BackgroundImage = global::Bgkj.Properties.Resources.LOGO4;
             this.panleLogo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.panleLogo.Location = new System.Drawing.Point(100, 68);
-            this.panleLogo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panleLogo.Location = new System.Drawing.Point(81, 54);
             this.panleLogo.Name = "panleLogo";
-            this.panleLogo.Size = new System.Drawing.Size(415, 64);
+            this.panleLogo.Size = new System.Drawing.Size(305, 75);
             this.panleLogo.TabIndex = 5;
             // 
             // labPwd
             // 
             this.labPwd.AutoSize = true;
             this.labPwd.BackColor = System.Drawing.Color.Transparent;
-            this.labPwd.Location = new System.Drawing.Point(521, 342);
-            this.labPwd.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labPwd.Location = new System.Drawing.Point(391, 274);
             this.labPwd.Name = "labPwd";
-            this.labPwd.Size = new System.Drawing.Size(52, 15);
+            this.labPwd.Size = new System.Drawing.Size(41, 12);
             this.labPwd.TabIndex = 4;
             this.labPwd.Text = "密码：";
             // 
@@ -101,10 +97,9 @@
             // 
             this.labUser.AutoSize = true;
             this.labUser.BackColor = System.Drawing.Color.Transparent;
-            this.labUser.Location = new System.Drawing.Point(521, 305);
-            this.labUser.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labUser.Location = new System.Drawing.Point(391, 244);
             this.labUser.Name = "labUser";
-            this.labUser.Size = new System.Drawing.Size(52, 15);
+            this.labUser.Size = new System.Drawing.Size(41, 12);
             this.labUser.TabIndex = 4;
             this.labUser.Text = "用户：";
             // 
@@ -114,10 +109,9 @@
             this.txtUser.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.txtUser.FormattingEnabled = true;
             this.txtUser.ItemHeight = 15;
-            this.txtUser.Location = new System.Drawing.Point(592, 299);
-            this.txtUser.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtUser.Location = new System.Drawing.Point(444, 239);
             this.txtUser.Name = "txtUser";
-            this.txtUser.Size = new System.Drawing.Size(151, 21);
+            this.txtUser.Size = new System.Drawing.Size(114, 21);
             this.txtUser.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.txtUser.TabIndex = 1;
             this.txtUser.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtUser_KeyPress);
@@ -129,12 +123,11 @@
             // 
             this.txtPwd.Border.Class = "TextBoxBorder";
             this.txtPwd.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.txtPwd.Location = new System.Drawing.Point(592, 335);
-            this.txtPwd.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtPwd.Location = new System.Drawing.Point(444, 268);
             this.txtPwd.Name = "txtPwd";
             this.txtPwd.PasswordChar = '*';
             this.txtPwd.PreventEnterBeep = true;
-            this.txtPwd.Size = new System.Drawing.Size(152, 25);
+            this.txtPwd.Size = new System.Drawing.Size(114, 21);
             this.txtPwd.TabIndex = 2;
             this.txtPwd.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPwd_KeyPress);
             // 
@@ -142,10 +135,9 @@
             // 
             this.btnCle.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.btnCle.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.btnCle.Location = new System.Drawing.Point(668, 385);
-            this.btnCle.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnCle.Location = new System.Drawing.Point(501, 308);
             this.btnCle.Name = "btnCle";
-            this.btnCle.Size = new System.Drawing.Size(96, 44);
+            this.btnCle.Size = new System.Drawing.Size(72, 35);
             this.btnCle.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.btnCle.TabIndex = 4;
             this.btnCle.Text = "取消";
@@ -155,10 +147,9 @@
             // 
             this.btnOk.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.btnOk.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.btnOk.Location = new System.Drawing.Point(537, 385);
-            this.btnOk.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnOk.Location = new System.Drawing.Point(403, 308);
             this.btnOk.Name = "btnOk";
-            this.btnOk.Size = new System.Drawing.Size(93, 44);
+            this.btnOk.Size = new System.Drawing.Size(70, 35);
             this.btnOk.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.btnOk.TabIndex = 3;
             this.btnOk.Text = "确定";
@@ -166,14 +157,13 @@
             // 
             // FrmUI
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(824, 474);
+            this.ClientSize = new System.Drawing.Size(618, 379);
             this.Controls.Add(this.panle);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FrmUI";

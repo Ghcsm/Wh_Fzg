@@ -332,19 +332,18 @@ namespace DAL
             SQLHelper.ExecuteNonQuery(strSql, CommandType.StoredProcedure, p);
         }
 
-        public static void SetArchxqStat(string b1, string b2, string zt, string lx, bool chk)
+        public static void SetArchxqStat(string b1, string b2, string zt,  bool chk)
         {
             string strSq = "";
             if (chk)
-                strSq = "update M_IMAGEFILE set ArchXqStat=@zt,ArchLx=@lx where Boxsn>=@b1 and Boxsn<=@b2 ";
+                strSq = "update M_IMAGEFILE set ArchXqStat=@zt where Boxsn>=@b1 and Boxsn<=@b2 ";
             else
-                strSq = "update M_IMAGEFILE set ArchXqStat=@zt,ArchLx=@lx where Boxsn>=@b1 and Boxsn<=@b2 and CHECKED is null or CHECKED<>1 ";
+                strSq = "update M_IMAGEFILE set ArchXqStat=@zt where Boxsn>=@b1 and Boxsn<=@b2 and (CHECKED is null or CHECKED<>1) ";
             SqlParameter p1 = new SqlParameter("@b1", b1);
             SqlParameter p2 = new SqlParameter("@b2", b2);
-            SqlParameter p3 = new SqlParameter("@zt", lx);
-            SqlParameter p4 = new SqlParameter("@lx", zt);
-            SQLHelper.ExecScalar(strSq, p1, p2, p3, p4);
-            string str = "设置小区状态范围:" + b1 + "-" + b2 + " 小区状态:" + zt + " 类型:" + lx + " 更新状态:" + chk;
+            SqlParameter p3 = new SqlParameter("@zt", zt);
+            SQLHelper.ExecScalar(strSq, p1, p2, p3);
+            string str = "设置小区状态范围:" + b1 + "-" + b2 + " 小区状态:" + zt +  " 更新状态:" + chk;
             Writelog(0, str);
         }
 
@@ -559,7 +558,7 @@ namespace DAL
         public static DataTable QueryBoxsnArchno(string boxsn, string archno)
         {
             try {
-                string strSql = "select top 1 * from V_ImgFile where houseid=@houseid and Boxsn=@boxsn and ArchNo=@archno ";
+                string strSql = "select top 1 * from V_ImgFile where houseid=@houseid and Archxqstat=@boxsn and ArchNo=@archno ";
                 SqlParameter p1 = new SqlParameter("@boxsn", boxsn);
                 SqlParameter p2 = new SqlParameter("@archno", archno);
                 SqlParameter p3 = new SqlParameter("@houseid", V_HouseSetCs.Houseid);
@@ -670,6 +669,32 @@ namespace DAL
             p[4] = new SqlParameter("@ScanError", error);
             SQLHelper.ExecuteNonQuery(strSql, CommandType.StoredProcedure, p);
         }
+        public static void SetScanPage(int arid, int a0, int a1, int a2, int a3, int a4,int uid)
+        {
+            string strSql = "PScanWorkPage";
+            SqlParameter[] p = new SqlParameter[7];
+            p[0] = new SqlParameter("@UserID", uid);
+            p[1] = new SqlParameter("@Archid", arid);
+            p[2] = new SqlParameter("@a0", a0);
+            p[3] = new SqlParameter("@a1", a1);
+            p[4] = new SqlParameter("@a2", a2);
+            p[5] = new SqlParameter("@a3", a3);
+            p[6] = new SqlParameter("@a4", a4);
+            SQLHelper.ExecuteNonQuery(strSql, CommandType.StoredProcedure, p);
+        }
+
+        public static void UpdaeImgPage(int arid, int a0, int a1, int a2, int a3, int a4)
+        {
+            string strSql = "UPDATE dbo.M_IMAGEFILE SET A0=@a0,a1=@a1,a2=@a2,a3=@a3,a4=@a4 WHERE id=@arid";
+            SqlParameter p1 = new SqlParameter("@a0", a0);
+            SqlParameter p2 = new SqlParameter("@a1", a1);
+            SqlParameter p3 = new SqlParameter("@a2", a2);
+            SqlParameter p4 = new SqlParameter("@a3", a3);
+            SqlParameter p5 = new SqlParameter("@a4", a4);
+            SqlParameter p6 = new SqlParameter("@arid", arid);
+            SQLHelper.ExecScalar(strSql, p1,p2,p3,p4,p5,p6);
+        }
+
 
         public static void SetIndexFinish(int arid, string file, int zt, string pageinfo)
         {
@@ -1418,18 +1443,16 @@ namespace DAL
             return dt;
         }
 
-        public static void SetInfoPages(string arid, string str, string page, string counpage, string userid)
+        public static void SetInfoPages(string arid,  string page, string tpage)
         {
-            string strSql = "update M_IMAGEFILE set PAGES=@p,ArchPage=@gpage,ArchTmpPage=@page,RelateStaff=@staff,REGSTAFF=@reguseid ,RelateTime=@relatime where id=@arid and (CHECKED <>1 or CHECKED is null)";
-            SqlParameter p1 = new SqlParameter("@gpage", str);
-            SqlParameter p2 = new SqlParameter("@page", page);
+            string strSql = "update M_IMAGEFILE set PAGES=@p,ArchPage=@page,REGSTAFF=@reguseid ,RelateTime=@relatime where id=@arid and (CHECKED <>1 or CHECKED is null)";
+            SqlParameter p2 = new SqlParameter("@p", page);
             SqlParameter p3 = new SqlParameter("@arid", arid);
-            SqlParameter p4 = new SqlParameter("@p", counpage);
-            SqlParameter p5 = new SqlParameter("@staff", userid);
+            SqlParameter p4 = new SqlParameter("@page", tpage);
             SqlParameter p6 = new SqlParameter("@reguseid", T_User.UserId);
             SqlParameter p7 = new SqlParameter("@relatime", DateTime.Now.ToString());
-            SQLHelper.ExecScalar(strSql, p1, p2, p3, p4, p5, p6, p7);
-            string str1 = "修改Archid" + arid + "页码为：" + counpage;
+            SQLHelper.ExecScalar(strSql,  p2, p3, p4, p6, p7);
+            string str1 = "修改Archid" + arid + "页码为：" + tpage;
             Writelog(0, str1);
         }
         public static DataTable GetInfoPages(string arid)

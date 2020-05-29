@@ -95,8 +95,9 @@ namespace HLjscom
         //用户id写入图像
         public int Userid = 0;
         public int UserScanPage = 0;
-        const int TifTagId = 0x8298;
+        const int TifTagId = 33432;
         private RasterTagMetadata tag = null;
+
         #endregion
 
 
@@ -144,7 +145,7 @@ namespace HLjscom
                     _twains.Startup(x, "Leadtools", "Leadtools ", "Version 1.0", "TWAIN Test Application",
                         TwainStartupFlags.None);
                     _twains.AcquirePage += new EventHandler<TwainAcquirePageEventArgs>(_twanscan_AcquirePage);
-                     tag = new RasterTagMetadata(TifTagId, RasterTagMetadataDataType.Ascii, null);
+                    tag = new RasterTagMetadata(TifTagId, RasterTagMetadataDataType.Ascii, null);
 
                 }
             }
@@ -1835,14 +1836,14 @@ namespace HLjscom
             }
         }
 
-        public string _SplitImgjpgPdf(string tffile, string jpgpath, string pdfpath, string fileformat, List<string> page, int p1, int p2, int imgp1, int imgp2, int tag,string pdffile)
+        public string _SplitImgjpgPdf(string tffile, string jpgpath, string pdfpath, string fileformat, List<string> page, int p1, int p2, int imgp1, int imgp2, int tag, string pdffile)
         {
             try {
                 int img = imgp1;
                 int a = 0;
                 // a 标记为是否为带杠
                 //id 记录带杠的次数
-                string pdfpath1 = Path.Combine(pdfpath,pdffile+".pdf");
+                string pdfpath1 = Path.Combine(pdfpath, pdffile + ".pdf");
                 using (RasterCodecs _codecs = new RasterCodecs()) {
 
                     for (int i = p1; i <= p2; i++) {
@@ -1863,7 +1864,7 @@ namespace HLjscom
                             RasterImage _imagepx = _codecs.Load(tffile, 0, CodecsLoadByteOrder.BgrOrGrayOrRomm, img, img);
                             int bit = _imagepx.BitsPerPixel;
                             string jpgpath1 = Path.Combine(jpgpath, i.ToString().PadLeft(4, '0') + "_" + id.ToString().PadLeft(2, '0') + ".jpg");
-                           // string pdfpath1 = Path.Combine(pdfpath, i.ToString().PadLeft(4, '0') + "_" + id.ToString().PadLeft(2, '0') + ".pdf");
+                            // string pdfpath1 = Path.Combine(pdfpath, i.ToString().PadLeft(4, '0') + "_" + id.ToString().PadLeft(2, '0') + ".pdf");
                             _codecs.Options.Jpeg.Save.QualityFactor = Factor;
                             if (tag == 1) {
                                 if (File.Exists(jpgpath1))
@@ -2294,42 +2295,50 @@ namespace HLjscom
             }
         }
         //排序
-        public bool _OrderSave(string oldfile, string _path)
-        {
-            try {
+        //public bool _OrderSave(string oldfile, string _path)
+        //{
+        //    try {
 
-                if (_PageAbc.Count >= 1) {
-                    int zimu_a = (int)Convert.ToByte('a');
-                    int oldpage = 97;
-                    for (int abc = 1; abc <= _PageAbc.Count; abc++) {
-                        string zimu = (Convert.ToChar(oldpage)).ToString();
-                        var abckeys = _PageAbc.Where(q => q.Value == zimu).Select(q => q.Key);
+        //        if (_PageAbc.Count >= 1) {
+        //            int zimu_a = (int)Convert.ToByte('a');
+        //            int oldpage = 97;
+        //            for (int abc = 1; abc <= _PageAbc.Count; abc++) {
+        //                string zimu = (Convert.ToChar(oldpage)).ToString();
+        //                var abckeys = _PageAbc.Where(q => q.Value == zimu).Select(q => q.Key);
 
-                        foreach (var a in abckeys) {
-                            OrderSave(a, abc, oldfile, _path);
-                        }
-                        oldpage = zimu_a + abc;
-                    }
-                }
-                if (_PageNumber.Count >= 1) {
-                    for (int i = 1; i <= RegPage - _PageAbc.Count; i++) {
-                        int k = _PageNumber.First(q => q.Value == i).Key;
-                        if (_PageNumber[k].Equals(i)) {
+        //                foreach (var a in abckeys) {
+        //                    OrderSave(a, abc, oldfile, _path);
+        //                }
+        //                oldpage = zimu_a + abc;
+        //            }
+        //        }
+        //        if (_PageNumber.Count >= 1) {
+        //            for (int i = 1; i <= RegPage - _PageAbc.Count; i++) {
+        //                int k = _PageNumber.First(q => q.Value == i).Key;
+        //                if (_PageNumber[k].Equals(i)) {
 
-                            OrderSave(k, _PageAbc.Count + i, oldfile, _path);
+        //                    OrderSave(k, _PageAbc.Count + i, oldfile, _path);
 
-                        }
-                    }
-                }
-                return true;
+        //                }
+        //            }
+        //        }
+        //        return true;
 
-            } catch {
-                return false;
-            }
-        }
+        //    } catch {
+        //        return false;
+        //    }
+        //}
         //排序
-        public bool _OrderSave(int tagpage, int regpage, string oldfile, string _path, Dictionary<int, string> Pabc, Dictionary<int, int> Pnumber, Dictionary<int, string> fuhao, out string newkey)
+        public bool _OrderSave(int tagpage, int regpage, string oldfile, string _path, Dictionary<int, string> Pabc, Dictionary<int, int> Pnumber, Dictionary<int, string> fuhao, out string newkey
+            , out List<int> userid, out List<int> a0, out List<int> a1, out List<int> a2, out List<int> a3, out List<int> a4)
         {
+            userid = new List<int>();
+            a0 = new List<int>();
+            a1 = new List<int>();
+            a2 = new List<int>();
+            a3 = new List<int>();
+            a4 = new List<int>();
+            int uid = 0, page = 0;
             int pagecoun = 0;
             newkey = "";
             try {
@@ -2341,11 +2350,65 @@ namespace HLjscom
                         var abckeys = Pabc.Where(q => q.Value == zimu).Select(q => q.Key);
                         foreach (var a in abckeys) {
                             pagecoun += 1;
-                            OrderSave(a, pagecoun, oldfile, _path);
+                            OrderSave(a, pagecoun, oldfile, _path, out uid, out page);
                             if (newkey.Trim().Length <= 0)
                                 newkey += pagecoun.ToString() + ":" + zimu;
                             else
                                 newkey += ";" + pagecoun.ToString() + ":" + zimu;
+                            int g = userid.IndexOf(uid);
+                            if (g < 0) {
+                                userid.Add(uid);
+                                if (page == 0) {
+                                    a0.Add(1);
+                                    a1.Add(0);
+                                    a2.Add(0);
+                                    a3.Add(0);
+                                    a4.Add(0);
+                                }
+                                else if (page == 1) {
+                                    a0.Add(0);
+                                    a1.Add(1);
+                                    a2.Add(0);
+                                    a3.Add(0);
+                                    a4.Add(0);
+                                }
+                                else if (page == 2) {
+                                    a0.Add(0);
+                                    a1.Add(0);
+                                    a2.Add(1);
+                                    a3.Add(0);
+                                    a4.Add(0);
+                                }
+                                else if (page == 3) {
+                                    a0.Add(0);
+                                    a1.Add(0);
+                                    a2.Add(0);
+                                    a3.Add(1);
+                                    a4.Add(0);
+
+                                }
+                                else if (page == 4 || page == -1) {
+                                    a0.Add(0);
+                                    a1.Add(0);
+                                    a2.Add(0);
+                                    a3.Add(0);
+                                    a4.Add(1);
+                                }
+                            }
+                            else {
+                                if (page == 0)
+                                    a0[g] += 1;
+                                else if (page == 1)
+                                    a1[g] += 1;
+                                else if (page == 2)
+                                    a2[g] += 1;
+                                else if (page == 3)
+                                    a3[g] += 1;
+                                else if (page == 4)
+                                    a4[g] += 1;
+                                else if (page == -1)
+                                    a4[g] += 1;
+                            }
                         }
                         oldpage = zimu_a + abc;
                     }
@@ -2357,7 +2420,7 @@ namespace HLjscom
                             int k = Pnumber.First(q => q.Value == i).Key;
                             if (Pnumber[k].Equals(i)) {
                                 pagecoun += 1;
-                                OrderSave(k, pagecoun, oldfile, _path);
+                                OrderSave(k, pagecoun, oldfile, _path, out uid, out page);
                                 if (newkey.Trim().Length <= 0)
                                     newkey += pagecoun.ToString() + ":" + i.ToString();
                                 else
@@ -2371,14 +2434,122 @@ namespace HLjscom
                                         } catch { }
                                         if (oldpage > 0) {
                                             pagecoun += 1;
-                                            OrderSave(oldpage, pagecoun, oldfile, _path);
+                                            OrderSave(oldpage, pagecoun, oldfile, _path, out uid, out page);
                                             fuhao.Remove(oldpage);
                                             if (newkey.Trim().Length <= 0)
                                                 newkey += pagecoun.ToString() + ":" + str;
                                             else
                                                 newkey += ";" + pagecoun.ToString() + ":" + str;
                                         }
+                                        int g1 = userid.IndexOf(uid);
+                                        if (g1 < 0) {
+                                            userid.Add(uid);
+                                            if (page == 0) {
+                                                a0.Add(1);
+                                                a1.Add(0);
+                                                a2.Add(0);
+                                                a3.Add(0);
+                                                a4.Add(0);
+
+                                            }
+                                            else if (page == 1) {
+                                                a0.Add(0);
+                                                a1.Add(1);
+                                                a2.Add(0);
+                                                a3.Add(0);
+                                                a4.Add(0);
+                                            }
+                                            else if (page == 2) {
+                                                a0.Add(0);
+                                                a1.Add(0);
+                                                a2.Add(1);
+                                                a3.Add(0);
+                                                a4.Add(0);
+                                            }
+                                            else if (page == 3) {
+                                                a0.Add(0);
+                                                a1.Add(0);
+                                                a2.Add(0);
+                                                a3.Add(1);
+                                                a4.Add(0);
+
+                                            }
+                                            else if (page == 4 || page == -1) {
+                                                a0.Add(0);
+                                                a1.Add(0);
+                                                a2.Add(0);
+                                                a3.Add(0);
+                                                a4.Add(1);
+                                            }
+                                        }
+                                        else {
+                                            if (page == 0)
+                                                a0[g1] += 1;
+                                            else if (page == 1)
+                                                a1[g1] += 1;
+                                            else if (page == 2)
+                                                a2[g1] += 1;
+                                            else if (page == 3)
+                                                a3[g1] += 1;
+                                            else if (page == 4)
+                                                a4[g1] += 1;
+                                            else if (page == -1)
+                                                a4[g1] += 1;
+                                        }
                                     }
+                                }
+                                int g = userid.IndexOf(uid);
+                                if (g < 0) {
+                                    userid.Add(uid);
+                                    if (page == 0) {
+                                        a0.Add(1);
+                                        a1.Add(0);
+                                        a2.Add(0);
+                                        a3.Add(0);
+                                        a4.Add(0);
+                                    }
+                                    else if (page == 1) {
+                                        a0.Add(0);
+                                        a1.Add(1);
+                                        a2.Add(0);
+                                        a3.Add(0);
+                                        a4.Add(0);
+                                    }
+                                    else if (page == 2) {
+                                        a0.Add(0);
+                                        a1.Add(0);
+                                        a2.Add(1);
+                                        a3.Add(0);
+                                        a4.Add(0);
+                                    }
+                                    else if (page == 3) {
+                                        a0.Add(0);
+                                        a1.Add(0);
+                                        a2.Add(0);
+                                        a3.Add(1);
+                                        a4.Add(0);
+                                    }
+                                    else if (page == 4 || page == -1) {
+                                        a0.Add(0);
+                                        a1.Add(0);
+                                        a2.Add(0);
+                                        a3.Add(0);
+                                        a4.Add(1);
+                                    }
+                                }
+                                else {
+                                    if (page == 0)
+                                        a0[g] += 1;
+                                    else if (page == 1)
+                                        a1[g] += 1;
+                                    else if (page == 2)
+                                        a2[g] += 1;
+                                    else if (page == 3)
+                                        a3[g] += 1;
+                                    else if (page == 4)
+                                        a4[g] += 1;
+                                    else if (page == -1)
+                                        a4[g] += 1;
                                 }
                             }
                         }
@@ -2392,7 +2563,7 @@ namespace HLjscom
                             int k = Pnumber.First(q => q.Value == i).Key;
                             if (Pnumber[k].Equals(i)) {
                                 pagecoun += 1;
-                                OrderSave(k, pagecoun, oldfile, _path);
+                                OrderSave(k, pagecoun, oldfile, _path, out uid, out page);
                                 if (newkey.Trim().Length <= 0)
                                     newkey += pagecoun.ToString() + ":" + i.ToString();
                                 else
@@ -2406,14 +2577,121 @@ namespace HLjscom
                                         } catch { }
                                         if (oldpage > 0) {
                                             pagecoun += 1;
-                                            OrderSave(oldpage, pagecoun, oldfile, _path);
+                                            OrderSave(oldpage, pagecoun, oldfile, _path, out uid, out page);
                                             fuhao.Remove(oldpage);
                                             if (newkey.Trim().Length <= 0)
                                                 newkey += pagecoun.ToString() + ":" + str;
                                             else
                                                 newkey += ";" + pagecoun.ToString() + ":" + str;
                                         }
+                                        int g2 = userid.IndexOf(uid);
+                                        if (g2 < 0) {
+                                            userid.Add(uid);
+                                            if (page == 0) {
+                                                a0.Add(1);
+                                                a1.Add(0);
+                                                a2.Add(0);
+                                                a3.Add(0);
+                                                a4.Add(0);
+                                            }
+                                            else if (page == 1) {
+                                                a0.Add(0);
+                                                a1.Add(1);
+                                                a2.Add(0);
+                                                a3.Add(0);
+                                                a4.Add(0);
+                                            }
+                                            else if (page == 2) {
+                                                a0.Add(0);
+                                                a1.Add(0);
+                                                a2.Add(1);
+                                                a3.Add(0);
+                                                a4.Add(0);
+                                            }
+                                            else if (page == 3) {
+                                                a0.Add(0);
+                                                a1.Add(0);
+                                                a2.Add(0);
+                                                a3.Add(1);
+                                                a4.Add(0);
+                                            }
+                                            else if (page == 4 || page == -1) {
+                                                a0.Add(0);
+                                                a1.Add(0);
+                                                a2.Add(0);
+                                                a3.Add(0);
+                                                a4.Add(1);
+                                            }
+                                        }
+                                        else {
+                                            if (page == 0)
+                                                a0[g2] += 1;
+                                            else if (page == 1)
+                                                a1[g2] += 1;
+                                            else if (page == 2)
+                                                a2[g2] += 1;
+                                            else if (page == 3)
+                                                a3[g2] += 1;
+                                            else if (page == 4)
+                                                a4[g2] += 1;
+                                            else if (page == -1)
+                                                a4[g2] += 1;
+                                        }
                                     }
+                                }
+                                int g = userid.IndexOf(uid);
+                                if (g < 0) {
+                                    userid.Add(uid);
+                                    if (page == 0) {
+                                        a0.Add(1);
+                                        a1.Add(0);
+                                        a2.Add(0);
+                                        a3.Add(0);
+                                        a4.Add(0);
+                                    }
+                                    else if (page == 1) {
+                                        a0.Add(0);
+                                        a1.Add(1);
+                                        a2.Add(0);
+                                        a3.Add(0);
+                                        a4.Add(0);
+                                    }
+
+                                    else if (page == 2) {
+                                        a0.Add(0);
+                                        a1.Add(0);
+                                        a2.Add(1);
+                                        a3.Add(0);
+                                        a4.Add(0);
+                                    }
+                                    else if (page == 3) {
+                                        a0.Add(0);
+                                        a1.Add(0);
+                                        a2.Add(0);
+                                        a3.Add(1);
+                                        a4.Add(0);
+                                    }
+                                    else if (page == 4 || page == -1) {
+                                        a0.Add(0);
+                                        a1.Add(0);
+                                        a2.Add(0);
+                                        a3.Add(0);
+                                        a4.Add(1);
+                                    }
+                                }
+                                else {
+                                    if (page == 0)
+                                        a0[g] += 1;
+                                    else if (page == 1)
+                                        a1[g] += 1;
+                                    else if (page == 2)
+                                        a2[g] += 1;
+                                    else if (page == 3)
+                                        a3[g] += 1;
+                                    else if (page == 4)
+                                        a4[g] += 1;
+                                    else if (page == -1)
+                                        a4[g] += 1;
                                 }
                             }
                         }
@@ -2422,7 +2700,7 @@ namespace HLjscom
                 }
 
 
-            } catch (Exception ex) {
+            } catch {
                 return false;
             }
         }
@@ -2449,15 +2727,21 @@ namespace HLjscom
                 else {
                     _Codef.Save(_imagepx, _path, RasterImageFormat.CcittGroup4, 1, 1, 1, -1, CodecsSavePageMode.Append);
                 }
+                _imagepx.Dispose();
+                _Codef.Dispose();
             } catch { }
         }
         //排序生成文件
-        private void OrderSave(int k, int i, string oldfile, string _path)
+        private void OrderSave(int k, int i, string oldfile, string _path, out int userid, out int page)
         {
+            userid = 0; page = -1;
             try {
-                RasterImage _imagepx;
                 RasterCodecs _Codef = new RasterCodecs();
-                _imagepx = _Codef.Load(oldfile, 0, CodecsLoadByteOrder.BgrOrGrayOrRomm, k, k);
+                _Codef.Options.Load.Markers = false;
+                _Codef.Options.Load.Tags = true;
+                _Codef.Options.Load.Comments = false;
+                _Codef.Options.Load.GeoKeys = false;
+                RasterImage _imagepx = _Codef.Load(oldfile, 0, CodecsLoadByteOrder.BgrOrGrayOrRomm, k, k);
                 int bit = _imagepx.BitsPerPixel;
                 if (bit != 1) {
                     if (bit != 8) {
@@ -2472,6 +2756,55 @@ namespace HLjscom
                 else {
                     _Codef.Save(_imagepx, _path, RasterImageFormat.CcittGroup4, 1, 1, 1, -1, CodecsSavePageMode.Append);
                 }
+                if (_imagepx.XResolution == 200) {
+                    _imagepx.XResolution = 300;
+                    _imagepx.YResolution = 300;
+                    int w1 = (_imagepx.ImageWidth / 200) * 300;
+                    int h1 = (_imagepx.ImageHeight / 200) * 300;
+                    SizeCommand sizeCommand = new SizeCommand();
+                    sizeCommand.Flags = RasterSizeFlags.None;
+                    sizeCommand.Width = w1;
+                    sizeCommand.Height = h1;
+                    sizeCommand.Run(_imagepx);
+                }
+                int num = _imagepx.ImageWidth;
+                int num2 = _imagepx.ImageHeight;
+                int num3 = num;
+                if (num > num2) {
+                    num = num2;
+                    num2 = num3;
+                }
+                double w = (double)(num / 300) * 25.4;
+                double h = (double)(num2 / 300) * 25.4;
+                if (h >= 200 && h < 297)
+                    page = 4;
+                else if (h >= 297 && h < 420)
+                    page = 3;
+                else if (h >= 420 && h < 592)
+                    page = 2;
+                else if (h >= 592 && h < 840)
+                    page = 1;
+                else if (h > 841)
+                    page = 0;
+                else page = 4;
+                RasterTagMetadata imageTitleTag = null;
+                foreach (RasterTagMetadata tag in _imagepx.Tags) {
+                    if (tag.Id == TifTagId) {
+                        imageTitleTag = tag;
+                        break;
+                    }
+                }
+                if (imageTitleTag != null) {
+                    string s = imageTitleTag.ToAscii();
+                    int u;
+                    bool bl = int.TryParse(s, out u);
+                    if (!bl || u <= 0)
+                        userid = 0;
+                    else
+                        userid = u;
+                }
+                _imagepx.Dispose();
+                _Codef.Dispose();
             } catch { }
         }
 
@@ -2523,7 +2856,7 @@ namespace HLjscom
         }
 
 
-        private  void WriteTagsWithoutLoadingImage(RasterCodecs rasterCodecsInstance, string fileName)
+        private void WriteTagsWithoutLoadingImage(RasterCodecs rasterCodecsInstance, string fileName)
         {
             // RasterCodecs.WriteTags will throw an exception if fileName does not 
             // support tags. If required, use RasterCodecs.TagsSupported first 
@@ -2550,67 +2883,44 @@ namespace HLjscom
         {
             try {
                 int bit = scanimg.BitsPerPixel;
-                int _CurrectPage = scanimg.Page;
                 if (bit != 1) {
                     if (bit != 8) {
                         _Codefile.Options.Jpeg.Save.QualityFactor = Factor;
                         tag.FromAscii(Userid.ToString());
-                        scanimg.Tags.Add(tag);
                         _Codefile.Options.Save.Tags = true;
                         if (Scanms == 0)
-                            _Codefile.Save(scanimg, Filename, RasterImageFormat.TifJpeg, 24, 1, 1, _CurrectPage, CodecsSavePageMode.Append);
+                            _Codefile.Save(scanimg, Filename, RasterImageFormat.TifJpeg, 24, 1, 1, -1, CodecsSavePageMode.Append);
                         if (Scanms == 1)
-                            _Codefile.Save(scanimg, Filename, RasterImageFormat.TifJpeg, 24, 1, 1, _CurrectPage, CodecsSavePageMode.Insert);
+                            _Codefile.Save(scanimg, Filename, RasterImageFormat.TifJpeg, 24, 1, 1, CrrentPage, CodecsSavePageMode.Insert);
                         if (Scanms == 2)
-                            _Codefile.Save(scanimg, Filename, RasterImageFormat.TifJpeg, 24, 1, 1, _CurrectPage, CodecsSavePageMode.Replace);
-
+                            _Codefile.Save(scanimg, Filename, RasterImageFormat.TifJpeg, 24, 1, 1, CrrentPage, CodecsSavePageMode.Replace);
                     }
                     else {
-                        _Codefile.Options.Jpeg.Save.QualityFactor = Factor;
                         if (Scanms == 0)
-                            _Codefile.Save(scanimg, Filename, RasterImageFormat.TifJpeg, 8, 1, 1, _CurrectPage, CodecsSavePageMode.Append);
+                            _Codefile.Save(scanimg, Filename, RasterImageFormat.TifJpeg, 8, 1, 1, -1, CodecsSavePageMode.Append);
                         if (Scanms == 1)
-                            _Codefile.Save(scanimg, Filename, RasterImageFormat.TifJpeg, 8, 1, 1, _CurrectPage, CodecsSavePageMode.Insert);
+                            _Codefile.Save(scanimg, Filename, RasterImageFormat.TifJpeg, 8, 1, 1, CrrentPage, CodecsSavePageMode.Insert);
                         if (Scanms == 2)
-                            _Codefile.Save(scanimg, Filename, RasterImageFormat.TifJpeg, 8, 1, 1, _CurrectPage, CodecsSavePageMode.Replace);
+                            _Codefile.Save(scanimg, Filename, RasterImageFormat.TifJpeg, 8, 1, 1, CrrentPage, CodecsSavePageMode.Replace);
                     }
                 }
                 else {
                     if (Scanms == 0)
-                        _Codefile.Save(scanimg, Filename, RasterImageFormat.CcittGroup4, 1, 1, 1, _CurrectPage, CodecsSavePageMode.Append);
+                        _Codefile.Save(scanimg, Filename, RasterImageFormat.CcittGroup4, 1, 1, 1, -1, CodecsSavePageMode.Append);
                     if (Scanms == 1)
-                        _Codefile.Save(scanimg, Filename, RasterImageFormat.CcittGroup4, 8, 1, 1, _CurrectPage, CodecsSavePageMode.Append);
+                        _Codefile.Save(scanimg, Filename, RasterImageFormat.CcittGroup4, 8, 1, 1, CrrentPage, CodecsSavePageMode.Insert);
                     if (Scanms == 2)
-                        _Codefile.Save(scanimg, Filename, RasterImageFormat.CcittGroup4, 8, 1, 1, _CurrectPage, CodecsSavePageMode.Append);
+                        _Codefile.Save(scanimg, Filename, RasterImageFormat.CcittGroup4, 8, 1, 1, CrrentPage, CodecsSavePageMode.Replace);
 
                 }
                 UserScanPage += 1;
-                //var ta1 = scanimg.Tags.GetEnumerator();
-                //_Codefile.TagFound += new EventHandler<CodecsEnumTagsEventArgs>(codecs_TagFound);
-                //_Codefile.EnumTags(Filename, 1);
-                //const int exifImageTitleTagId = 0x8298;
-                //RasterTagMetadata imageTitleTag = null;
-                //foreach (RasterTagMetadata tag in scanimg.Tags) {
-                //    if (tag.Id == exifImageTitleTagId) {
-                //        imageTitleTag = tag;
-                //        break;
-                //    }
-                //}
+                _Codefile.WriteTag(Filename, CountPage, tag);
 
-                //if (imageTitleTag != null)
-                //{
-                //    string s = imageTitleTag.ToAscii();
-                //}
-            } catch  {
+
+            } catch {
             }
         }
 
-        private void codecs_TagFound(object sender, CodecsEnumTagsEventArgs e)
-        {
-            int x = e.Id;
-            int c = e.Count;
-            var a=e.MetadataType;
-        }
 
         //获取文件总页码
         public int GetFilePage(string str)
@@ -3601,11 +3911,11 @@ namespace HLjscom
         {
             try {
                 if (e.Image != null) {
+                    CountPage++;
                     Action<RasterImage> Act = Scanepage;
                     _Imageview.Zoom(ControlSizeMode.FitAlways, 1, _Imageview.DefaultZoomOrigin);
                     Act(e.Image);
                     _Imageview.Image = e.Image;
-                    CountPage++;
                     Setpage(CountPage, CountPage);
                     CrrentPage = CountPage;
                     Application.DoEvents();
@@ -3627,6 +3937,120 @@ namespace HLjscom
         #endregion
 
         #region pageorder
+
+        //查询重复页码
+        private Dictionary<int, string> Addcfpages2()
+        {
+            Dictionary<int, string> tmp = new Dictionary<int, string>();
+            _PageAbc.GroupBy(item => item.Value)
+                .Where(item => item.Count() > 1 && item.Key != "-1" && item.Key != "-9999")
+                .SelectMany(item => item)
+                .ToList()
+                .ForEach(item => tmp.Add(item.Key, item.Value.ToString()));
+            if (tmp.Count >= 2) {
+                return tmp;
+            }
+            return tmp;
+        }
+
+        //查超出页码
+        private Dictionary<int, string> SoMorePage(string[] zpage)
+        {
+            Dictionary<int, string> tmp = new Dictionary<int, string>();
+            //记录超出页码
+            List<string> tmpval = new List<string>();
+            //记录类别超出
+            List<string> tmp1 = new List<string>();
+
+            for (int i = 0; i < zpage.Length; i++) {
+                int cpage = Convert.ToInt32(zpage[i]);
+                foreach (var item in _PageAbc.Values) {
+                    string s = item.ToString();
+                    if (s == "-9999")
+                        continue;
+                    string[] c = s.Split('*');
+                    int mx = Convert.ToInt32(c[0].ToString());
+                    if (tmp1.IndexOf(mx.ToString()) < 0) {
+                        if (mx <=cpage)
+                            tmp1.Add(c[0].ToString());
+                        else {
+                            var keys = _PageAbc.Where(q => q.Value == s).Select(q => q.Key);
+                            foreach (var v in keys) {
+                                tmp.Add(v, s);
+                            }
+                            return tmp;
+                        }
+                    }
+                    if (tmp1.Count > zpage.Length) {
+                        var keys = _PageAbc.Where(q => q.Value == s).Select(q => q.Key);
+                        foreach (var v in keys) {
+                            tmp.Add(v, s);
+                        }
+                        return tmp;
+                    }
+                    string[] d = c[1].ToString().Split('-');
+                    string n = d[0];
+                    int nu;
+                    bool bl = int.TryParse(n, out nu);
+                    if (!bl || nu <= 0)
+                        continue;
+                    if (nu > cpage) {
+                        if (tmpval.IndexOf(s) < 0)
+                            tmpval.Add(s);
+                    }
+                }
+            }
+
+            for (int i = 0; i < tmpval.Count; i++) {
+                string s = tmpval[i];
+                var abckeys = _PageAbc.Where(q => q.Value == s).Select(q => q.Key);
+                foreach (var a in abckeys) {
+                    tmp.Add(a, s);
+                    continue;
+                }
+            }
+            if (dianjicount >= tmp.Count) {
+                dianjicount = 0;
+            }
+            return tmp;
+        }
+
+        //缺少页码
+        private List<string> SolackPage(string[] zpage)
+        {
+            List<string> tmp = new List<string>();
+            List<int> p = new List<int>();
+            for (int t = 0; t < zpage.Length; t++) {
+                int Cpage = Convert.ToInt32(zpage[t]);
+                string str = (t + 1).ToString() + "*";
+                var query = _PageAbc.Values.Where(x => x.Contains(str));
+                foreach (var v in query) {
+                    string s = v;
+                    if (s == "-9999")
+                        continue;
+                    string[] c = s.Split('*');
+                    string[] d = c[1].ToString().Split('-');
+                    string n = d[0];
+                    int nu;
+                    bool bl = int.TryParse(n, out nu);
+                    if (!bl || nu <= 0)
+                        continue;
+                    p.Add(nu);
+                }
+                for (int i = 1; i <= Cpage; i++) {
+                    if (p.IndexOf(i) < 0) {
+                        string r = "第" + (t + 1).ToString() + "类," + i.ToString() + "页";
+                        tmp.Add(r);
+                    }
+                }
+            }
+            //var query1 = _PageAbc.Values.Where(x => x.Contains("-9999"));
+            //int b = _PageAbc.Count - query1.Count();
+            //if (RegPage != b)
+            //    tmp.Add("缺少未知页码");
+            return tmp;
+        }
+
 
         //找重复页码
         private Dictionary<int, string> addcfpage()
@@ -3752,6 +4176,8 @@ namespace HLjscom
             return tmp;
         }
 
+
+
         //查找超出登记页码
         private Dictionary<int, string> addpagedy()
         {
@@ -3810,57 +4236,58 @@ namespace HLjscom
         }
 
         //校对页码
-        public Boolean _Checkpage()
+        public Boolean _Checkpage(string[] Zpage)
         {
             if (_Imageview.Image == null || Filename.Trim().Length <= 0)
                 return false;
-            if (_PageNumber.Count > 0) {
-                if (addcfpage() != null) {
-                    Dictionary<int, string> tmp = addcfpage();
-                    if (dianjicount >= tmp.Count) {
-                        dianjicount = 0;
-                    }
-                    if (tmp.Count - 1 >= dianjicount) {
-                        MessageBox.Show(string.Format("第{0}页重复", tmp.ElementAt(dianjicount).Value.ToString()));
-                        int page = Convert.ToInt32(tmp.ElementAt(dianjicount).Key);
-                        _Gotopage(page);
-                        dianjicount++;
-                        return false;
-                    }
-                }
-                Dictionary<int, string> tmp1 = addpagedy();
-                {
-                    if (dianjicount >= tmp1.Count) {
-                        dianjicount = 0;
-                    }
-                    if (tmp1.Count - 1 >= dianjicount) {
-                        string s = "";
-                        foreach (var s1 in tmp1.Values) {
-                            if (s1.Trim().Length <= 0)
-                                continue;
-                            if (s.Trim().Length <= 0)
-                                s += s1;
-                            else
-                                s += "," + s1;
-                        }
-                        MessageBox.Show(string.Format("第{0}页超出", s));
-                        int page = Convert.ToInt32(tmp1.ElementAt(dianjicount).Key);
-                        _Gotopage(page);
-                        dianjicount++;
-                        return false;
-                    }
-                }
-                List<string> lstmp = addpageqs().ToList();
-                if (lstmp.Count > 0) {
-                    MessageBox.Show("缺少页码：" + string.Join(",", lstmp.ToArray()));
-                    return false;
-                }
-                return true;
-            }
-            else {
-                MessageBox.Show("未发现页码或未排序!");
+            if (_PageAbc.Count <= 0) {
+                MessageBox.Show("未找到排序记录页码！");
                 return false;
             }
+            Dictionary<int, string> tmp = Addcfpages2();
+            if (dianjicount >= tmp.Count) {
+                dianjicount = 0;
+            }
+            if (tmp.Count - 1 >= dianjicount) {
+                string s = tmp.ElementAt(dianjicount).Value.ToString();
+                s = s.Replace("*", "类别，第");
+                s = s.Replace("-0", "页");
+                MessageBox.Show(string.Format("第{0}重复", s));
+                int page = Convert.ToInt32(tmp.ElementAt(dianjicount).Key);
+                _Gotopage(page);
+                dianjicount++;
+                return false;
+            }
+            Dictionary<int, string> tmp1 = SoMorePage(Zpage);
+            {
+                if (dianjicount >= tmp1.Count) {
+                    dianjicount = 0;
+                }
+                if (tmp1.Count - 1 >= dianjicount) {
+                    string s = "";
+                    foreach (var s1 in tmp1.Values) {
+                        if (s1.Trim().Length <= 0)
+                            continue;
+                        string c = s1.Replace("*", "类别:第");
+                        c = c.Replace("-0", "页");
+                        if (s.Trim().Length <= 0)
+                            s += c;
+                        else
+                            s += "," + c;
+                    }
+                    MessageBox.Show(string.Format("{0}超出", s));
+                    int page = Convert.ToInt32(tmp1.ElementAt(dianjicount).Key);
+                    _Gotopage(page);
+                    dianjicount++;
+                    return false;
+                }
+            }
+            List<string> lstmp = SolackPage(Zpage).ToList();
+            if (lstmp.Count > 0) {
+                MessageBox.Show("缺少页码：" + string.Join(",", lstmp.ToArray()));
+                return false;
+            }
+            return true;
         }
 
         //保存英文页码
@@ -3874,7 +4301,7 @@ namespace HLjscom
             else if (_PageAbc.Count <= 0 || !_PageAbc.ContainsKey(oldpage)) {
                 _PageAbc.Add(oldpage, npage);
             }
-            //_SavePage();
+            _SavePage();
         }
 
         private bool isExists(string str)
@@ -3903,6 +4330,15 @@ namespace HLjscom
                     _PageNumber.Add(p, -9999);
                 }
             }
+        }
+
+        public void _OderPage(string page)
+        {
+            if (page.Contains("已删除"))
+                page = "-9999";
+            if (_PageAbc.ContainsKey(CrrentPage))
+                _PageAbc.Remove(CrrentPage);
+            OderAbc(page);
         }
 
         //判断数字或英文页码
@@ -3958,7 +4394,7 @@ namespace HLjscom
         }
 
         //读取已保存页码
-        public string _Readpage()
+        public string _Readpage1()
         {
             try {
                 if (_Imageview.Image == null)
@@ -3975,6 +4411,20 @@ namespace HLjscom
                 }
                 else
                     return _PageNumber[CrrentPage].ToString();
+
+            } catch {
+                return "";
+            }
+        }
+        public string _Readpage()
+        {
+            try {
+                if (_Imageview.Image == null)
+                    return "";
+                if (!_PageAbc.ContainsKey(CrrentPage))
+                    return "";
+                else
+                    return _PageAbc[CrrentPage].ToString();
 
             } catch {
                 return "";

@@ -30,6 +30,7 @@ namespace Csmdapx
         private MouseEventArgs exArgs;
         private int AutoRect = 0;
         private int AutoRectid = 0;
+        private string[] Pagetmp;
         private void Init()
         {
             try {
@@ -69,10 +70,8 @@ namespace Csmdapx
         private void Garch_LineLoadFile(object sender, EventArgs e)
         {
             try {
-
                 if (ImgView.Image == null && ClsIndex.ArchPos == null ||
                     ImgView.Image == null && ClsIndex.ArchPos.Trim().Length <= 0) {
-
                     if (ClsIndex.task)
                         return;
                     ClsIndex.task = true;
@@ -109,7 +108,7 @@ namespace Csmdapx
         }
         private void ImgView_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            Himg._ImgFill(e);
+            //Himg._ImgFill(e);
             txtPages.Focus();
         }
 
@@ -245,21 +244,31 @@ namespace Csmdapx
             if (ImgView.Image == null)
                 return;
             NexPage();
-            if (AutoRect==1)
-            Himg.SetAutoRect(ClsIndex.RgbR,ClsIndex.RgbG,ClsIndex.RgbB,ClsIndex.Sc);
+            if (AutoRect == 1)
+                Himg.SetAutoRect(ClsIndex.RgbR, ClsIndex.RgbG, ClsIndex.RgbB, ClsIndex.Sc);
             txtPages.Focus();
         }
 
         void NexPage()
         {
             string txt = txtPages.Text.Trim();
+            if (txtLeiBie.Text.Trim().Length <= 0) {
+                MessageBox.Show("类别不能空!");
+                txtLeiBie.Focus();
+                txtLeiBie.SelectAll();
+                return;
+            }
             if (txt.Trim().Length <= 0 || txt.Trim() == "0") {
                 MessageBox.Show("页码不能为空!");
                 txtPages.Focus();
                 txtPages.SelectAll();
                 return;
             }
-            Himg._Oderpage(txt);
+            else if (!txt.Contains("-"))
+                txt = txt + "-" + "0";
+            string s = txtLeiBie.Text.Trim() + "*" + txt;
+            // Himg._Oderpage(txt);
+            Himg._OderPage(s);
             if (ClsIndex.CrrentPage == ClsIndex.MaxPage)
                 this.toolStripSave_Click(null, null);
             else
@@ -269,7 +278,7 @@ namespace Csmdapx
 
         private void toolStripSave_Click(object sender, EventArgs e)
         {
-            if (Himg._Checkpage() == true) {
+            if (Himg._Checkpage(Pagetmp) == true) {
                 if (MessageBox.Show("排序完成您确定要上传档案吗？", "提示", MessageBoxButtons.OKCancel,
                         MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.OK) {
                     string filetmp = ClsIndex.ScanFilePath;
@@ -378,7 +387,7 @@ namespace Csmdapx
 
         private void toolStripCheckImg_Click(object sender, EventArgs e)
         {
-            if (Himg._Checkpage()) {
+            if (Himg._Checkpage(Pagetmp)) {
                 MessageBox.Show("校验完成未发现问题!");
             }
         }
@@ -678,16 +687,21 @@ namespace Csmdapx
             if (txt == "-9999") {
                 txt = "已删除";
                 txtPages.ReadOnly = true;
+                txtLeiBie.ReadOnly = true;
             }
             else
+            {
                 txtPages.ReadOnly = false;
+                txtLeiBie.ReadOnly = false;
+            }
             if (txt.Trim().Length <= 0) {
                 if (txtpage.Trim().Length > 0) {
+
                     if (txtPages.Text.Trim().IndexOf('-') < 0) {
                         int p;
                         bool bl = int.TryParse(txtpage, out p);
                         if (bl)
-                            txt = (p +1).ToString();
+                            txt = (p + 1).ToString();
                         else
                             txt = ClsIndex.CrrentPage.ToString();
                     }
@@ -700,10 +714,20 @@ namespace Csmdapx
                         else
                             txt = ClsIndex.CrrentPage.ToString();
                     }
-
                 }
                 else
                     txt = ClsIndex.CrrentPage.ToString();
+            }
+            else {
+                string[] s = txt.Split('*');
+                txtLeiBie.Text = s[0];
+                string t = s[1];
+                if (t.Contains("-0")) {
+                    string[] c = t.Split('-');
+                    txt = c[0];
+                }
+                else
+                    txt = t;
             }
             txtPages.Text = txt;
             txtPages.SelectAll();
@@ -753,25 +777,20 @@ namespace Csmdapx
                                 int p = Convert.ToInt32(str[0]);
                                 //if (p > page)
                                 //    continue;
-                                if (str[1].ToString() == "-9999")
-                                    pagenumber.Add(p, Convert.ToInt32(str[1]));
-                                else if (!isExists(str[1].ToString()) && str[1].IndexOf("-") < 0)
-                                    pagenumber.Add(p, Convert.ToInt32(str[1]));
-                                else if (str[1].IndexOf("-") >= 0)
-                                    fuhao.Add(p, str[1].ToString());
-                                else
-                                    pageabc.Add(p, str[1].ToString());
+                               // if (str[1].ToString() == "-9999")
+                              //     pagenumber.Add(p, Convert.ToInt32(str[1]));
+                               // else if (!isExists(str[1].ToString()) && str[1].IndexOf("-") < 0)
+                               //     pagenumber.Add(p, Convert.ToInt32(str[1]));
+                               // else if (str[1].IndexOf("-") >= 0)
+                                //    fuhao.Add(p, str[1].ToString());
+                               // else
+                               pageabc.Add(p, str[1].ToString());
                             }
                         }
                     }
-                    if (Page.Trim().Length > 0) {
-                        string[] s = Page.Split(';');
-                        for (int i = 0; i < s.Length; i++) {
-                            string s1 = s[i];
-                            if (s1.Trim().Length <= 0)
-                                continue;
-                            Himg.Fuhao.Add(s1);
-                        }
+                    if (Page.Trim().Length > 0)
+                    {
+                        Pagetmp = Page.Split('-');
                     }
                     Himg._PageNumber = pagenumber;
                     Himg._PageAbc = pageabc;
@@ -926,11 +945,9 @@ namespace Csmdapx
                 chktime = dr["质检时间"].ToString();
                 enter = dr["录入"].ToString();
                 entertime = dr["录入时间"].ToString();
-                foreach (DataRow d in dt.Rows)
-                {
+                foreach (DataRow d in dt.Rows) {
                     string s = d["扫描"].ToString();
-                    if (!Scanner.Contains(s))
-                    {
+                    if (!Scanner.Contains(s)) {
                         Scanner += s + ",";
                         scantime += d["扫描时间"].ToString() + ",";
                     }
@@ -1005,10 +1022,17 @@ namespace Csmdapx
             }));
         }
 
-        private void FtpUpFinish(string file2, int tagpage, int regpage, string filetmp, int arid, string archpos, Dictionary<int, string> pageAbc, Dictionary<int, int> pagenumber, Dictionary<int, string> fuhao)
+        private void FtpUpFinish(string file2, int tagpage, int regpage, string filetmp, int arid, string archpos,
+            Dictionary<int, string> pageAbc, Dictionary<int, int> pagenumber, Dictionary<int, string> fuhao)
         {
             try {
                 Common.WriteArchlog(arid, "排序保存完成");
+                List<int> userid = new List<int>();
+                List<int> A0 = new List<int>();
+                List<int> A1 = new List<int>();
+                List<int> A2 = new List<int>();
+                List<int> A3 = new List<int>();
+                List<int> A4 = new List<int>();
                 if (File.Exists(filetmp)) {
                     string PageIndexInfo = "";
                     string PageIndexInfoOk = "";
@@ -1034,38 +1058,6 @@ namespace Csmdapx
                         else
                             PageIndexInfo += ";" + item.Key + ":" + item.Value;
                     }
-                    //Dictionary<int, string> dicxxabc = pageAbc.OrderBy(o => o.Key).ToDictionary(o => o.Key, p => p.Value);
-                    //int id = 0;
-                    //foreach (var item in dicxxabc) {
-                    //    string vale = item.Value;
-                    //    if (vale == "-9999")
-                    //        continue;
-                    //    id += 1;
-                    //    if (PageIndexInfoOk.Trim().Length <= 0)
-                    //        PageIndexInfoOk += id + ":" + item.Value;
-                    //    else
-                    //        PageIndexInfoOk += ";" + id + ":" + item.Value;
-                    //}
-                    //Dictionary<int, int> dicxxnum = pagenumber.OrderBy(o => o.Key).ToDictionary(o => o.Key, p => p.Value);
-                    //foreach (var item in dicxxnum) {
-                    //    string vale = item.Value.ToString();
-                    //    if (vale == "-9999")
-                    //        continue;
-                    //    if (PageIndexInfoOk.Trim().Length <= 0)
-                    //        PageIndexInfoOk += item.Key + ":" + item.Value;
-                    //    else
-                    //        PageIndexInfoOk += ";" + item.Key + ":" + item.Value;
-                    //}
-                    //Dictionary<int, string> dicxxfh = fuhao.OrderBy(o => o.Key).ToDictionary(o => o.Key, p => p.Value);
-                    //foreach (var item in dicxxfh) {
-                    //    string vale = item.Value.ToString();
-                    //    if (vale == "-9999")
-                    //        continue;
-                    //    if (PageIndexInfoOk.Trim().Length <= 0)
-                    //        PageIndexInfoOk += item.Key + ":" + item.Value;
-                    //    else
-                    //        PageIndexInfoOk += ";" + item.Key + ":" + item.Value;
-                    //}
                     PageIndexInfo = PageIndexInfo.Trim();
                     //PageIndexInfoOk = PageIndexInfoOk.Trim();
                     Common.SetIndexCancel(arid, PageIndexInfo);
@@ -1078,8 +1070,27 @@ namespace Csmdapx
                         string LocalIndexFile = Path.Combine(T_ConFigure.FtpTmpPath, T_ConFigure.TmpIndex,
                             IndexFileName);
                         Common.WiteUpTask(arid, archpos, IndexFileName, (int)T_ConFigure.ArchStat.排序完, regpage, filetmp, tagpage.ToString());
-                        if (!Himg._OrderSave(tagpage, regpage, filetmp, LocalIndexFile, pageAbc, pagenumber, fuhao, out PageIndexInfoOk)) {
+                        if (!Himg._OrderSave(tagpage, regpage, filetmp, LocalIndexFile, pageAbc, pagenumber, fuhao, out PageIndexInfoOk,
+                            out userid, out A0, out A1, out A2, out A3, out A4)) {
                             return;
+                        }
+                        else {
+                            int p0 = 0, p1 = 0, p2 = 0, p3 = 0, p4 = 0;
+                            for (int i = 0; i < userid.Count; i++) {
+                                int uid = userid[i];
+                                int a0 = A0[i];
+                                int a1 = A1[i];
+                                int a2 = A2[i];
+                                int a3 = A3[i];
+                                int a4 = A4[i];
+                                p0 += a0;
+                                p1 += a1;
+                                p2 += a2;
+                                p3 += a3;
+                                p4 += a4;
+                                Common.SetScanPage(arid, a0, a1, a2, a3, a4, uid);
+                            }
+                            Common.UpdaeImgPage(arid, p0, p1, p2, p3, p4);
                         }
                         string sourcefile = Path.Combine(T_ConFigure.FtpTmp, T_ConFigure.TmpIndex, IndexFileName);
                         string goalfile = Path.Combine(T_ConFigure.FtpArchIndex, RemoteDir, IndexFileName);
@@ -1100,8 +1111,27 @@ namespace Csmdapx
                     else {
                         string LocalIndexFile = Path.Combine(@T_ConFigure.LocalTempPath, IndexFileName);
                         Common.WiteUpTask(arid, archpos, IndexFileName, (int)T_ConFigure.ArchStat.排序完, regpage, filetmp, tagpage.ToString());
-                        if (!Himg._OrderSave(tagpage, regpage, filetmp, LocalIndexFile, pageAbc, pagenumber, fuhao, out PageIndexInfoOk)) {
+                        if (!Himg._OrderSave(tagpage, regpage, filetmp, LocalIndexFile, pageAbc, pagenumber, fuhao, out PageIndexInfoOk,
+                            out userid, out A0, out A1, out A2, out A3, out A4)) {
                             return;
+                        }
+                        else {
+                            int p0 = 0, p1 = 0, p2 = 0, p3 = 0, p4 = 0;
+                            for (int i = 0; i < userid.Count; i++) {
+                                int uid = userid[i];
+                                int a0 = A0[i];
+                                int a1 = A1[i];
+                                int a2 = A2[i];
+                                int a3 = A3[i];
+                                int a4 = A4[i];
+                                p0 += a0;
+                                p1 += a1;
+                                p2 += a2;
+                                p3 += a3;
+                                p4 += a4;
+                                Common.SetScanPage(arid, a0, a1, a2, a3, a4, uid);
+                            }
+                            Common.UpdaeImgPage(arid, p0, p1, p2, p3, p4);
                         }
                         if (ftp.SaveRemoteFileUp(T_ConFigure.FtpArchIndex, RemoteDir, LocalIndexFile, IndexFileName)) {
                             Common.SetIndexFinish(arid, DESEncrypt.DesEncrypt(IndexFileName), (int)T_ConFigure.ArchStat.排序完, PageIndexInfoOk);
@@ -1194,7 +1224,7 @@ namespace Csmdapx
                     else {
 
                         if (ftp.SaveRemoteFileUp(T_ConFigure.gArchScanPath, archpos, filetmp, T_ConFigure.ScanTempFile)) {
-                           // Common.SetArchWorkState(arid, (int)T_ConFigure.ArchStat.扫描完);
+                            // Common.SetArchWorkState(arid, (int)T_ConFigure.ArchStat.扫描完);
                             Common.DelTask(Convert.ToInt32(arid));
                             try {
                                 File.Delete(filetmp);
@@ -1217,13 +1247,13 @@ namespace Csmdapx
                         //}
 
                     }
-                   // Common.SetArchWorkState(arid, (int)T_ConFigure.ArchStat.扫描完);
+                    // Common.SetArchWorkState(arid, (int)T_ConFigure.ArchStat.扫描完);
                 }
                 else
                     Common.WriteArchlog(arid, "排序退出时未找到文件!");
 
             } catch {
-               // Common.SetArchWorkState(arid, (int)T_ConFigure.ArchStat.扫描完);
+                // Common.SetArchWorkState(arid, (int)T_ConFigure.ArchStat.扫描完);
                 Common.Writelog(ClsIndex.Archid, "排序未完成失败");
 
             } finally {
@@ -1263,7 +1293,7 @@ namespace Csmdapx
 
         private void ImgView_MouseUp(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Right) 
+            if (e.Button == MouseButtons.Right)
                 txtPages.Focus();
         }
 

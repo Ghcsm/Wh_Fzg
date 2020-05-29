@@ -172,9 +172,7 @@ namespace CsmCon
 
         private void Witeini()
         {
-            string str = txtzong.Text.Trim() + "-" + txtml.Text.Trim() + "-" + comQi.Text.Trim() + "-" +
-                         txtBoxsn.Text.Trim();
-            ClsIni.ArchNo = str;
+            ClsIni.ArchNo = txtBoxsn.Text.Trim();
             ClsIni.Archbox = comboxClass.Text.Trim();
             ClsIni.Rabchk = combLx.SelectedIndex.ToString();
             new ClsWriteini().WriteInt();
@@ -217,7 +215,7 @@ namespace CsmCon
             }
             else if (combLx.SelectedIndex == 2) {
                 try {
-                    if (!comboxClass.Text.Trim().Contains("c"))
+                    if (!comboxClass.Text.Trim().Contains("-"))
                     {
                         int boxNo = int.Parse(txtBoxsn.Text.Trim());
                         boxNo = int.Parse(comboxClass.Text.Trim());
@@ -241,15 +239,13 @@ namespace CsmCon
                 dt = Common.QueryBoxsn(txtBoxsn.Text.Trim());
             else if (combLx.SelectedIndex == 1)
             {
-                string s = txtzong.Text.Trim() + "-" + txtml.Text.Trim() + "-" + comQi.Text.Trim() + "-" +
-                           txtBoxsn.Text.Trim();
-                dt = Common.QueryBoxsnid(s);
+                dt = Common.QueryBoxsnid(txtBoxsn.Text.Trim());
             }
             else if (combLx.SelectedIndex == 2)
             {
-                if (comboxClass.Text.Trim().Contains("c"))
-                    dt = Common.QueryBoxsnArchnoc(comboxClass.Text.Trim(), txtBoxsn.Text.Trim());
-                else 
+                //if (comboxClass.Text.Trim().Contains("c"))
+                //    dt = Common.QueryBoxsnArchnoc(comboxClass.Text.Trim(), txtBoxsn.Text.Trim());
+                //else 
                   dt = Common.QueryBoxsnArchno(comboxClass.Text.Trim(), txtBoxsn.Text.Trim());
             }
             if (dt != null && dt.Rows.Count > 0) {
@@ -318,11 +314,7 @@ namespace CsmCon
                         comboxClass.Text = ClsIni.Archbox;
                         try
                         {
-                            string[] s = ClsIni.ArchNo.Split('-');
-                            txtzong.Text = s[0].ToString();
-                            txtml.Text = s[1].ToString();
-                            comQi.Text = s[2].ToString();
-                            txtBoxsn.Text = s[3].ToString();
+                            txtBoxsn.Text =ClsIni.ArchNo;
                         }
                         catch 
                         {}
@@ -400,10 +392,10 @@ namespace CsmCon
         private void combLx_SelectedIndexChanged(object sender, EventArgs e)
         {
             comboxClass.Enabled = true;
+            comboxClass.Items.Clear();
             if (combLx.SelectedIndex == 0)
                 comboxClass.Enabled = false;
             if (combLx.SelectedIndex == 1) {
-                comboxClass.Items.Clear();
                 comboxClass.Text = "";
                 comboxClass.Items.Add("案卷信息");
                 comboxClass.Items.Add("目录信息");
@@ -414,22 +406,6 @@ namespace CsmCon
 
         #endregion
 
-        private void txtzong_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == 13)
-                txtml.Focus();
-        }
-
-        private void txtml_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == 13)
-                comQi.Focus();
-        }
-
-        private void comQi_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == 13)
-                txtBoxsn.Focus();
-        }
+     
     }
 }
