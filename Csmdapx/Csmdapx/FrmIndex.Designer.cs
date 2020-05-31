@@ -49,12 +49,14 @@
             this.gr3 = new System.Windows.Forms.GroupBox();
             this.ImgView = new Leadtools.Controls.ImageViewer();
             this.gr4 = new System.Windows.Forms.GroupBox();
+            this.txtLeiBie = new System.Windows.Forms.TextBox();
             this.labCheckUser = new System.Windows.Forms.Label();
             this.labIndexUser = new System.Windows.Forms.Label();
             this.labScanUser = new System.Windows.Forms.Label();
             this.labPageCount = new System.Windows.Forms.Label();
             this.labPageCrrent = new System.Windows.Forms.Label();
             this.txtPages = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.toolstripmain2 = new System.Windows.Forms.ToolStrip();
             this.toolStripCenter = new System.Windows.Forms.ToolStripButton();
@@ -121,8 +123,6 @@
             this.dockSite7 = new DevComponents.DotNetBar.DockSite();
             this.dockSite3 = new DevComponents.DotNetBar.DockSite();
             this.odgInsterFile = new System.Windows.Forms.OpenFileDialog();
-            this.label2 = new System.Windows.Forms.Label();
-            this.txtLeiBie = new System.Windows.Forms.TextBox();
             this.dockSite9.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bar2)).BeginInit();
             this.bar2.SuspendLayout();
@@ -370,6 +370,17 @@
             this.gr4.TabIndex = 0;
             this.gr4.TabStop = false;
             // 
+            // txtLeiBie
+            // 
+            this.txtLeiBie.Location = new System.Drawing.Point(64, 19);
+            this.txtLeiBie.Name = "txtLeiBie";
+            this.txtLeiBie.Size = new System.Drawing.Size(42, 21);
+            this.txtLeiBie.TabIndex = 7;
+            this.txtLeiBie.TabStop = false;
+            this.txtLeiBie.Text = "1";
+            this.txtLeiBie.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtLeiBie_KeyPress);
+            this.txtLeiBie.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtLeiBie_KeyUp);
+            // 
             // labCheckUser
             // 
             this.labCheckUser.AutoSize = true;
@@ -422,6 +433,15 @@
             this.txtPages.Size = new System.Drawing.Size(65, 21);
             this.txtPages.TabIndex = 1;
             this.txtPages.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPages_KeyPress);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(19, 23);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(41, 12);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "类 别:";
             // 
             // label1
             // 
@@ -1104,24 +1124,6 @@
             this.dockSite3.Size = new System.Drawing.Size(1378, 0);
             this.dockSite3.TabIndex = 3;
             this.dockSite3.TabStop = false;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(19, 23);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(41, 12);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "类 别:";
-            // 
-            // txtLeiBie
-            // 
-            this.txtLeiBie.Location = new System.Drawing.Point(64, 19);
-            this.txtLeiBie.Name = "txtLeiBie";
-            this.txtLeiBie.Size = new System.Drawing.Size(42, 21);
-            this.txtLeiBie.TabIndex = 7;
-            this.txtLeiBie.TabStop = false;
-            this.txtLeiBie.Text = "1";
             // 
             // FrmIndex
             // 

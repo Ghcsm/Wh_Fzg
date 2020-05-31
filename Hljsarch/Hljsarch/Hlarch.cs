@@ -63,7 +63,7 @@ namespace HLjscom
         // PrintDocument 对象
         private PrintDocument _PrintDoc;
         //压缩质量
-        private const int Factor = 80;
+        private const int Factor = 90;
         //系统临时目录
         public string Filename = "c:\\temp\\scantmp.tif";
         //句柄
@@ -2328,8 +2328,120 @@ namespace HLjscom
         //        return false;
         //    }
         //}
+
+
+        public bool _OrderSave(int tagpage, int regpage, string oldfile, string _path, Dictionary<int, string> Pabc, out string newkey
+      , out List<int> userid, out List<int> a0, out List<int> a1, out List<int> a2, out List<int> a3, out List<int> a4,string []leibie)
+        {
+            userid = new List<int>();
+            a0 = new List<int>();
+            a1 = new List<int>();
+            a2 = new List<int>();
+            a3 = new List<int>();
+            a4 = new List<int>();
+            int uid = 0, page = 0;
+            int pagecoun = 0;
+            newkey = "";
+            try {
+                if (Pabc.Count >= 1) {
+
+                    //循环类别
+                    for (int abc = 1; abc <= leibie.Length; abc++) {
+
+                        string lb= abc.ToString() + "*";
+                        //筛选 类别
+                        var keysleibie = Pabc.Where(x => x.Value.Contains(lb));
+                        int newpage=0;
+                        //按类别 提取页码
+                        for (int i = 1; i <=keysleibie.Count(); i++) {
+                            //提取 1-页码
+                            string pg = lb+i.ToString() + "-";
+                            //提取实际图像，新页码
+                            var pageG = keysleibie.Where(x => x.Value.Contains(pg));
+                            // 提取 1-0 1-1 1-2
+                            for (int c = 0; c <=pageG.Count(); c++)
+                            {
+                                string g = "-"+c.ToString();
+                                //提取 1-0  1-1  1-2
+                                var pageGzero = pageG.Where(x => x.Value.Contains(g));
+                                foreach (var v in pageGzero) {
+                                    int p = v.Key;
+                                    pagecoun += 1;
+                                    newpage += 1;
+                                    OrderSave(p, pagecoun, oldfile, _path, out uid, out page);
+                                    if (newkey.Trim().Length <= 0)
+                                        newkey += abc+"*"+ newpage.ToString() + "-" + c.ToString();
+                                    else
+                                        newkey += ";" +abc + "*"+ newpage.ToString() + "-" + c.ToString();
+                                    int h = userid.IndexOf(uid);
+                                    if (h < 0) {
+                                        userid.Add(uid);
+                                        if (page == 0) {
+                                            a0.Add(1);
+                                            a1.Add(0);
+                                            a2.Add(0);
+                                            a3.Add(0);
+                                            a4.Add(0);
+                                        }
+                                        else if (page == 1) {
+                                            a0.Add(0);
+                                            a1.Add(1);
+                                            a2.Add(0);
+                                            a3.Add(0);
+                                            a4.Add(0);
+                                        }
+                                        else if (page == 2) {
+                                            a0.Add(0);
+                                            a1.Add(0);
+                                            a2.Add(1);
+                                            a3.Add(0);
+                                            a4.Add(0);
+                                        }
+                                        else if (page == 3) {
+                                            a0.Add(0);
+                                            a1.Add(0);
+                                            a2.Add(0);
+                                            a3.Add(1);
+                                            a4.Add(0);
+
+                                        }
+                                        else if (page == 4 || page == -1) {
+                                            a0.Add(0);
+                                            a1.Add(0);
+                                            a2.Add(0);
+                                            a3.Add(0);
+                                            a4.Add(1);
+                                        }
+                                    }
+                                    else {
+                                        if (page == 0)
+                                            a0[h] += 1;
+                                        else if (page == 1)
+                                            a1[h] += 1;
+                                        else if (page == 2)
+                                            a2[h] += 1;
+                                        else if (page == 3)
+                                            a3[h] += 1;
+                                        else if (page == 4 || page==-1)
+                                            a4[h] += 1;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                return true;
+               
+            } catch {
+                return false;
+            }
+        }
+
+
+
+
         //排序
-        public bool _OrderSave(int tagpage, int regpage, string oldfile, string _path, Dictionary<int, string> Pabc, Dictionary<int, int> Pnumber, Dictionary<int, string> fuhao, out string newkey
+        public bool _OrderSave1(int tagpage, int regpage, string oldfile, string _path, Dictionary<int, string> Pabc, Dictionary<int, int> Pnumber, Dictionary<int, string> fuhao, out string newkey
             , out List<int> userid, out List<int> a0, out List<int> a1, out List<int> a2, out List<int> a3, out List<int> a4)
         {
             userid = new List<int>();
@@ -3959,35 +4071,15 @@ namespace HLjscom
             Dictionary<int, string> tmp = new Dictionary<int, string>();
             //记录超出页码
             List<string> tmpval = new List<string>();
-            //记录类别超出
-            List<string> tmp1 = new List<string>();
-
             for (int i = 0; i < zpage.Length; i++) {
                 int cpage = Convert.ToInt32(zpage[i]);
-                foreach (var item in _PageAbc.Values) {
+                string str = (i + 1).ToString() + "*";
+                var query = _PageAbc.Values.Where(x => x.Contains(str));
+                foreach (var item in query) {
                     string s = item.ToString();
                     if (s == "-9999")
                         continue;
                     string[] c = s.Split('*');
-                    int mx = Convert.ToInt32(c[0].ToString());
-                    if (tmp1.IndexOf(mx.ToString()) < 0) {
-                        if (mx <=cpage)
-                            tmp1.Add(c[0].ToString());
-                        else {
-                            var keys = _PageAbc.Where(q => q.Value == s).Select(q => q.Key);
-                            foreach (var v in keys) {
-                                tmp.Add(v, s);
-                            }
-                            return tmp;
-                        }
-                    }
-                    if (tmp1.Count > zpage.Length) {
-                        var keys = _PageAbc.Where(q => q.Value == s).Select(q => q.Key);
-                        foreach (var v in keys) {
-                            tmp.Add(v, s);
-                        }
-                        return tmp;
-                    }
                     string[] d = c[1].ToString().Split('-');
                     string n = d[0];
                     int nu;

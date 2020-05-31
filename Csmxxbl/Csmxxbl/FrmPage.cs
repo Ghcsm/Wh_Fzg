@@ -24,12 +24,12 @@ namespace Csmxxbl
         private void FrmPage_Shown(object sender, EventArgs e)
         {
             GetPage();
-           
+
         }
 
         private string strnum = "";
-       
-       
+
+
 
         void SavePage(string page)
         {
@@ -46,7 +46,7 @@ namespace Csmxxbl
             string str = dt.Rows[0][0].ToString();
             txtPage.Text = str;
         }
-        
+
 
         private void txtPage_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -55,17 +55,10 @@ namespace Csmxxbl
         private void FrmPage_FormClosing(object sender, FormClosingEventArgs e)
         {
             int p = 0;
-            if (txtPage.Text.Trim().Length <= 0) {
-                MessageBox.Show("页码不为能空");
-                txtPage.Focus();
-                e.Cancel = true;
-                return;
-            }
-            else {
+            if (txtPage.Text.Trim().Length > 0) {
                 try {
                     string[] s = txtPage.Text.Trim().Split('-');
-                    for (int i = 0; i < s.Length; i++)
-                    {
+                    for (int i = 0; i < s.Length; i++) {
                         p += Convert.ToInt32(s[i]);
                     }
                     if (s.Length < 0) {

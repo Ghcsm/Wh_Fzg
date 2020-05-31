@@ -92,8 +92,8 @@ namespace Csmdajc
             UcContents.ArchMaxPage = Clscheck.RegPage;
             // UcContents.ArchStat = Convert.ToInt32(gArchSelect1.Archstat);
             ucContents1.LoadContents(arid, UcContents.ArchMaxPage);
-            int p;
-            ucInfo.LoadInfo(arid, 1, "案卷信息", out p);
+          //  int p;
+          //  ucInfo.LoadInfo(arid, 1, "案卷信息", out p);
             gArch.LvData.Focus();
         }
 

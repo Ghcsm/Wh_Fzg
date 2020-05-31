@@ -663,7 +663,7 @@ namespace Csmdasm
             string filetmp = ClsTwain.ScanFileTmp;
             string archpos = ClsTwain.ArchPos;
             //int maxpage = ClsTwain.MaxPage;
-            int maxpage = GetPages();
+            int maxpage = Himg.UserScanPage;
             int arid = ClsTwain.Archid;
             int regpage = ClsTwain.RegPage;
             bool blimg = chkImg.Checked;

@@ -81,6 +81,7 @@ namespace Csmdapx
                     Himg.RegPage = ClsIndex.RegPage;
                     toolArchno.Text = string.Format("当前卷号:{0}", ClsIndex.ArchPos);
                     gArch.butLoad.Enabled = false;
+                    txtLeiBie.Text = "1";
                     LoadArch();
                     txtPages.Focus();
                     return;
@@ -93,7 +94,16 @@ namespace Csmdapx
             }
         }
         #region ClickEve
-
+        private void txtLeiBie_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!(Char.IsNumber(e.KeyChar)) && e.KeyChar != (char)13 && e.KeyChar != (char)8) {
+                e.Handled = true;
+            }
+            if (e.KeyChar == 13) {
+                txtPages.Focus();
+                txtPages.SelectAll();
+            }
+        }
         private void toolStripSplit2_Click(object sender, EventArgs e)
         {
             FrmCombin frmCombin2 = new FrmCombin();
@@ -213,12 +223,14 @@ namespace Csmdapx
         {
             if (txtPages.ReadOnly) {
                 txtPages.ReadOnly = false;
+                txtLeiBie.ReadOnly = false;
                 txtPages.Text = "";
                 txtPages.SelectAll();
             }
             else {
                 txtPages.Text = "已删除";
                 txtPages.ReadOnly = true;
+                txtLeiBie.ReadOnly = true;
             }
         }
 
@@ -288,14 +300,14 @@ namespace Csmdapx
                     int tagpage = Himg.TagPage;
                     string file2 = ClsIndex.ScanFilePathtmp;
                     Dictionary<int, string> pageabc = new Dictionary<int, string>(Himg._PageAbc);
-                    Dictionary<int, int> pagenum = new Dictionary<int, int>(Himg._PageNumber);
-                    Dictionary<int, string> fuhao = new Dictionary<int, string>(Himg._PageFuhao);
+                    //Dictionary<int, int> pagenum = new Dictionary<int, int>(Himg._PageNumber);
+                    //Dictionary<int, string> fuhao = new Dictionary<int, string>(Himg._PageFuhao);
                     Himg._PageAbc.Clear();
                     Himg._PageNumber.Clear();
                     //天津东丽专用，以后删除
                     Setpages(regpage, pageabc.Count, arid);
                     // Task.Run(() => { FtpUpFinish(tagpage, regpage, filetmp, arid, archpos, pageabc, pagenum, fuhao); });
-                    Task.Run(new Action(() => { FtpUpFinish(file2, tagpage, regpage, filetmp, arid, archpos, pageabc, pagenum, fuhao); }));
+                    Task.Run(new Action(() => { FtpUpFinish(file2, tagpage, regpage, filetmp, arid, archpos, pageabc); }));
                     Cledata();
                     txtPages.Text = "";
                     gArch.txtBoxsn.Focus();
@@ -318,8 +330,8 @@ namespace Csmdapx
             int arid = ClsIndex.Archid;
             string archpos = ClsIndex.ArchPos;
             Dictionary<int, string> pageabc = new Dictionary<int, string>(Himg._PageAbc);
-            Dictionary<int, int> pagenum = new Dictionary<int, int>(Himg._PageNumber);
-            Dictionary<int, string> fuhao = new Dictionary<int, string>(Himg._PageFuhao);
+            //Dictionary<int, int> pagenum = new Dictionary<int, int>(Himg._PageNumber);
+            //Dictionary<int, string> fuhao = new Dictionary<int, string>(Himg._PageFuhao);
             Himg._PageAbc.Clear();
             Himg._PageNumber.Clear();
             int tag = Himg.TagPage;
@@ -327,7 +339,7 @@ namespace Csmdapx
             string file2 = ClsIndex.ScanFilePathtmp;
             Cledata();
             // Task.Run(() => { FtpUpCanCel(filetmp, arid, archpos, pageabc, pagenum, pages, fuhao, tag); });
-            Task.Run(new Action(() => { FtpUpCanCel(filetmp, file2, arid, archpos, pageabc, pagenum, pages, fuhao, tag); }));
+            Task.Run(new Action(() => { FtpUpCanCel(filetmp, file2, arid, archpos, pageabc, pages, tag); }));
             txtPages.Text = "";
             gArch.LvData.Focus();
         }
@@ -689,8 +701,7 @@ namespace Csmdapx
                 txtPages.ReadOnly = true;
                 txtLeiBie.ReadOnly = true;
             }
-            else
-            {
+            else {
                 txtPages.ReadOnly = false;
                 txtLeiBie.ReadOnly = false;
             }
@@ -718,7 +729,8 @@ namespace Csmdapx
                 else
                     txt = ClsIndex.CrrentPage.ToString();
             }
-            else {
+            else if (txt.Contains("*"))
+            {
                 string[] s = txt.Split('*');
                 txtLeiBie.Text = s[0];
                 string t = s[1];
@@ -771,50 +783,31 @@ namespace Csmdapx
                         string[] arrPage = PageIndexInfo.Split(';');
                         if (arrPage.Length > 0) {
                             for (int i = 0; i < arrPage.Length; i++) {
-                                string[] str = arrPage[i].Trim().Split(':');
-                                if (str.Length <= 0)
-                                    continue;
-                                int p = Convert.ToInt32(str[0]);
-                                //if (p > page)
+                                //string[] str = arrPage[i].Trim().Split('*');
+                                //if (str.Length <= 0)
                                 //    continue;
-                               // if (str[1].ToString() == "-9999")
-                              //     pagenumber.Add(p, Convert.ToInt32(str[1]));
-                               // else if (!isExists(str[1].ToString()) && str[1].IndexOf("-") < 0)
-                               //     pagenumber.Add(p, Convert.ToInt32(str[1]));
-                               // else if (str[1].IndexOf("-") >= 0)
-                                //    fuhao.Add(p, str[1].ToString());
-                               // else
-                               pageabc.Add(p, str[1].ToString());
+                                //string[] c = str[1].Split('-');
+                                //int p = Convert.ToInt32(c[0]);
+                                //string d = c[1];
+                                //if (d == "0")
+                                //    d = c[0];
+                                //else
+                                //    d = str[1];
+                                int id = i + 1;
+                                pageabc.Add(id, arrPage[i].ToString());
                             }
                         }
                     }
-                    if (Page.Trim().Length > 0)
-                    {
+                    if (Page.Trim().Length > 0) {
                         Pagetmp = Page.Split('-');
                     }
-                    Himg._PageNumber = pagenumber;
                     Himg._PageAbc = pageabc;
-                    Himg._PageFuhao = fuhao;
-                    int n, a, f;
-                    if (pagenumber.Count <= 0)
-                        n = 0;
-                    else
-                        n = pagenumber.Keys.Max();
+                    int a;
                     if (pageabc.Count <= 0)
                         a = 0;
                     else
                         a = pageabc.Keys.Max();
-                    if (fuhao.Count <= 0)
-                        f = 0;
-                    else
-                        f = fuhao.Keys.Max();
-                    int[] array = { n, a, f };
-                    if (array.Length <= 0)
-                        maxpage = 1;
-                    else
-                        maxpage = array.Max();
-                    if (maxpage == 0)
-                        maxpage = 1;
+                    maxpage = a;
                 }
                 else {
                     txtPages.Text = "1";
@@ -823,7 +816,10 @@ namespace Csmdapx
             } catch (Exception ex) {
                 maxpage = 1;
                 MessageBox.Show("排序页码读取错误：" + ex.ToString());
-            } finally {
+            } finally
+            {
+                if (maxpage == 0)
+                    maxpage = 1;
                 LoadImgShow(maxpage);
             }
         }
@@ -1023,7 +1019,7 @@ namespace Csmdapx
         }
 
         private void FtpUpFinish(string file2, int tagpage, int regpage, string filetmp, int arid, string archpos,
-            Dictionary<int, string> pageAbc, Dictionary<int, int> pagenumber, Dictionary<int, string> fuhao)
+            Dictionary<int, string> pageAbc)
         {
             try {
                 Common.WriteArchlog(arid, "排序保存完成");
@@ -1039,24 +1035,10 @@ namespace Csmdapx
 
                     foreach (var item in pageAbc) {
                         if (PageIndexInfo.Trim().Length <= 0)
-                            PageIndexInfo += item.Key + ":" + item.Value;
+                            PageIndexInfo += item.Value;
                         else
-                            PageIndexInfo += ";" + item.Key + ":" + item.Value;
+                            PageIndexInfo += ";"+item.Value;
 
-                    }
-                    foreach (var item in pagenumber) {
-                        if (PageIndexInfo.Trim().Length <= 0)
-                            PageIndexInfo += item.Key + ":" + item.Value;
-                        else
-                            PageIndexInfo += ";" + item.Key + ":" + item.Value;
-
-                        string vale = item.Value.ToString();
-                    }
-                    foreach (var item in fuhao) {
-                        if (PageIndexInfo.Trim().Length <= 0)
-                            PageIndexInfo += item.Key + ":" + item.Value;
-                        else
-                            PageIndexInfo += ";" + item.Key + ":" + item.Value;
                     }
                     PageIndexInfo = PageIndexInfo.Trim();
                     //PageIndexInfoOk = PageIndexInfoOk.Trim();
@@ -1070,8 +1052,8 @@ namespace Csmdapx
                         string LocalIndexFile = Path.Combine(T_ConFigure.FtpTmpPath, T_ConFigure.TmpIndex,
                             IndexFileName);
                         Common.WiteUpTask(arid, archpos, IndexFileName, (int)T_ConFigure.ArchStat.排序完, regpage, filetmp, tagpage.ToString());
-                        if (!Himg._OrderSave(tagpage, regpage, filetmp, LocalIndexFile, pageAbc, pagenumber, fuhao, out PageIndexInfoOk,
-                            out userid, out A0, out A1, out A2, out A3, out A4)) {
+                        if (!Himg._OrderSave(tagpage, regpage, filetmp, LocalIndexFile, pageAbc, out PageIndexInfoOk,
+                            out userid, out A0, out A1, out A2, out A3, out A4, Pagetmp)) {
                             return;
                         }
                         else {
@@ -1111,8 +1093,8 @@ namespace Csmdapx
                     else {
                         string LocalIndexFile = Path.Combine(@T_ConFigure.LocalTempPath, IndexFileName);
                         Common.WiteUpTask(arid, archpos, IndexFileName, (int)T_ConFigure.ArchStat.排序完, regpage, filetmp, tagpage.ToString());
-                        if (!Himg._OrderSave(tagpage, regpage, filetmp, LocalIndexFile, pageAbc, pagenumber, fuhao, out PageIndexInfoOk,
-                            out userid, out A0, out A1, out A2, out A3, out A4)) {
+                        if (!Himg._OrderSave(tagpage, regpage, filetmp, LocalIndexFile, pageAbc, out PageIndexInfoOk,
+                            out userid, out A0, out A1, out A2, out A3, out A4, Pagetmp)) {
                             return;
                         }
                         else {
@@ -1181,7 +1163,7 @@ namespace Csmdapx
             }
         }
 
-        private void FtpUpCanCel(string filetmp, string filetmp2, int arid, string archpos, Dictionary<int, string> pageAbc, Dictionary<int, int> pagenumber, int pages, Dictionary<int, string> fuhao, int tag)
+        private void FtpUpCanCel(string filetmp, string filetmp2, int arid, string archpos, Dictionary<int, string> pageAbc,  int pages, int tag)
         {
             try {
                 Common.WriteArchlog(arid, "排序退出未保存!");
@@ -1190,22 +1172,22 @@ namespace Csmdapx
                     string PageIndexInfo = "";
                     foreach (var item in pageAbc) {
                         if (PageIndexInfo.Trim().Length <= 0)
-                            PageIndexInfo += item.Key + ":" + item.Value;
+                            PageIndexInfo +=  item.Value;
                         else
-                            PageIndexInfo += ";" + item.Key + ":" + item.Value;
+                            PageIndexInfo += ";" +item.Value;
                     }
-                    foreach (var item in pagenumber) {
-                        if (PageIndexInfo.Trim().Length <= 0)
-                            PageIndexInfo += item.Key + ":" + item.Value;
-                        else
-                            PageIndexInfo += ";" + item.Key + ":" + item.Value;
-                    }
-                    foreach (var item in fuhao) {
-                        if (PageIndexInfo.Trim().Length <= 0)
-                            PageIndexInfo += item.Key + ":" + item.Value;
-                        else
-                            PageIndexInfo += ";" + item.Key + ":" + item.Value;
-                    }
+                    //foreach (var item in pagenumber) {
+                    //    if (PageIndexInfo.Trim().Length <= 0)
+                    //        PageIndexInfo += item.Key + ":" + item.Value;
+                    //    else
+                    //        PageIndexInfo += ";" + item.Key + ":" + item.Value;
+                    //}
+                    //foreach (var item in fuhao) {
+                    //    if (PageIndexInfo.Trim().Length <= 0)
+                    //        PageIndexInfo += item.Key + ":" + item.Value;
+                    //    else
+                    //        PageIndexInfo += ";" + item.Key + ":" + item.Value;
+                    //}
                     PageIndexInfo = PageIndexInfo.Trim();
                     Common.SetIndexCancel(arid, PageIndexInfo);
                     if (T_ConFigure.FtpStyle == 1) {
@@ -1297,6 +1279,10 @@ namespace Csmdapx
                 txtPages.Focus();
         }
 
+        private void txtLeiBie_KeyUp(object sender, KeyEventArgs e)
+        {
+            txtPages.Text = "1";
+        }
 
         #endregion
 
